@@ -1,0 +1,25 @@
+title Resource Access Sequence with Access Token
+
+ This walks through a listing request of a secured resource (MD-SAL topology) 
+ from a client to the ODL controller using an access token (either one generated
+ by the ODL token endpoint, or a token from a third-party IdP) and shows how the
+ authentication context get set upon successful token validation.  If token 
+ validation fails, the TokenAuthFilter will return a 401, and the REST layer 
+ will be oblivious to the failed request.
+
+Client -> ServletContainer: list topologies
+note right of Client
+(Authorization = access token)
+end note
+ServletContainer -> TokenAuthFilter: access token
+loop foreach TokenAuth
+    TokenAuthFilter -> TokenAuth: validate(token)
+    TokenAuth -> TokenAuth: validateToken
+end
+TokenAuth -> TokenAuthFilter: Authentication
+note left of TokenAuth
+(user/domain/roles/expiration)
+end note
+TokenAuthFilter -> AuthenticationService: set(Authentication)
+TokenAuthFilter -> RestConf: list topologies
+RestConf -> AuthenticationService: get: Authentication
