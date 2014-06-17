@@ -23,6 +23,9 @@ public interface ClaimAuth {
      * example of an opaque claim map entry is
      * <code>"USER_NAME" -> "joe".</code>
      * <p>
+     * If there is no applicable claim information for the current
+     * implementation, this method should return a <code>null</code>.
+     * <p>
      * In-bound claims are extracted from HttpServletRequest attributes and
      * headers.
      *
@@ -30,5 +33,5 @@ public interface ClaimAuth {
      *            opaque claim
      * @return normalized claim, or null if not applicable
      */
-    Claim transform(Map<String, Object> claim) throws AuthenticationException;
+    Claim transform(Map<String, Object> claim);
 }

@@ -24,27 +24,6 @@ public interface AuthConstants {
     static final WebApplicationException UNAUTHORIZED_EX =
             new WebApplicationException(Status.UNAUTHORIZED);
 
-    /** Authentication status attribute. */
-    static final String AUTH_IDENTITY_STATUS = "AAA-IDENTITY-STATUS";
-
-    /** Authentication status value representing confirmed identity. */
-    static final String AUTH_IDENTITY_CONFIRMED = "CONFIRMED";
-
-    /** Authentication domain ID attribute. */
-    static final String AUTH_DOMAIN_ID = "AAA-DOMAIN-ID";
-
-    /** Authentication domain name attribute. */
-    static final String AUTH_DOMAIN_NAME = "AAA-DOMAIN-NAME";
-
-    /** Authentication user ID attribute. */
-    static final String AUTH_USER_ID = "AAA-USER-ID";
-
-    /** Authentication user name attribute. */
-    static final String AUTH_USER_NAME = "AAA-USER-NAME";
-
-    /** Authentication user roles attribute, comma-separated roles.  */
-    static final String AUTH_ROLES = "AAA-ROLES";
-
     /** An in-bound authentication claim */
     static final String AUTH_CLAIM = "AAA-CLAIM";
 

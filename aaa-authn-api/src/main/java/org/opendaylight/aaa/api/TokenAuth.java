@@ -8,6 +8,9 @@
  */
 package org.opendaylight.aaa.api;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * An interface for in-bound token authentication.
  *
@@ -16,10 +19,20 @@ package org.opendaylight.aaa.api;
 public interface TokenAuth {
 
     /**
-     * Validate the given token.
-     * @param token token to validate
-     * @return authenticated context
+     * Validate the given token contained in the in-bound headers.
+     * <p>
+     * If there is no token signature in the given headers for this
+     * implementation, this method should return a null. If there is an
+     * applicable token signature, but the token validation fails, this method
+     * should throw an {@link AuthenticationException}.
+     *
+     * @param headers
+     *            headers containing token to validate
+     * @return authenticated context, or null if not applicable
+     * @throws AuthenticationException
+     *             if authentication fails
      */
-    Authentication validate(String token) throws AuthenticationException;
+    Authentication validate(Map<String, List<String>> headers)
+            throws AuthenticationException;
 
 }

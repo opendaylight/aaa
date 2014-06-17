@@ -11,7 +11,6 @@ package org.opendaylight.aaa.sssd;
 import java.util.Map;
 
 import org.opendaylight.aaa.ClaimBuilder;
-import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.ClaimAuth;
 import org.slf4j.Logger;
@@ -26,8 +25,10 @@ public class SssdClaimAuth implements ClaimAuth {
             .getLogger(SssdClaimAuth.class);
 
     @Override
-    public Claim transform(Map<String, Object> sssdClaims) throws AuthenticationException {
-        // TODO: Transform/overlay the claims from SSSD into Claim object
+    public Claim transform(Map<String, Object> sssdClaims) {
+        // TODO: Transform/overlay the claims from SSSD into Claim object. If
+        // there is no SSSD claim signature, this method should return a null
+        // per contract.
         ClaimBuilder cb = new ClaimBuilder().setUserId("1234")
                 .setUserName("sssd").setTenantId("5678").setTenantName("pepsi")
                 .addRole("admin").addRole("user");

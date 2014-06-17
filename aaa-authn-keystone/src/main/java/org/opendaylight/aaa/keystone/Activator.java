@@ -9,11 +9,11 @@
 package org.opendaylight.aaa.keystone;
 
 import org.apache.felix.dm.Component;
-import org.opendaylight.aaa.api.AuthenticationService;
+import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.controller.sal.core.ComponentActivatorAbstractBase;
 
 /**
- * An activator for {@link KeystoneTokenAuthFilter}.
+ * An activator for {@link KeystoneTokenAuth}.
  *
  * @author liemmn
  *
@@ -22,15 +22,14 @@ public class Activator extends ComponentActivatorAbstractBase {
 
     @Override
     public Object[] getImplementations() {
-        Object[] res = { ServiceLocator.INSTANCE };
+        Object[] res = { KeystoneTokenAuth.class };
         return res;
     }
 
     @Override
     public void configureInstance(Component c, Object imp, String containerName) {
-        if (imp.equals(ServiceLocator.INSTANCE)) {
-            c.add(createServiceDependency().setService(
-                    AuthenticationService.class).setRequired(true));
+        if (imp.equals(KeystoneTokenAuth.class)) {
+            c.setInterface(TokenAuth.class.getName(), null);
         }
     }
 

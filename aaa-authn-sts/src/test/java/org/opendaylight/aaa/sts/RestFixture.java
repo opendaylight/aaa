@@ -6,15 +6,13 @@
  * terms of the Eclipse License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.keystone;
+package org.opendaylight.aaa.sts;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-
-import org.opendaylight.aaa.AuthConstants;
 
 /**
  * Fixture for testing RESTful stuff.
@@ -31,7 +29,6 @@ public class RestFixture {
     @GET
     @Produces("text/plain")
     public String msg() {
-        return (httpRequest.getAttribute(AuthConstants.AUTH_IDENTITY_STATUS) == null) ? "failed"
-                : "ok";
+        return "ok";
     }
 }

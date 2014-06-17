@@ -45,12 +45,12 @@ public class ClaimAuthFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp,
             FilterChain chain) throws IOException, ServletException {
-        // TODO: Potentially support a list of ClaimAuths, not just one
-        if (ServiceLocator.INSTANCE.ca != null) {
-            Claim claim = ServiceLocator.INSTANCE.ca
-                    .transform(claims((HttpServletRequest) req));
+        for (ClaimAuth ca : ServiceLocator.INSTANCE.ca) {
+            Claim claim = ca.transform(claims((HttpServletRequest) req));
             if (claim != null) {
                 req.setAttribute(AUTH_CLAIM, claim);
+                // No need to do further transformation since it has been done
+                break;
             }
         }
         chain.doFilter(req, resp);
