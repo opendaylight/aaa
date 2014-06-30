@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.oltu.oauth2.as.request.AbstractOAuthTokenRequest;
 import org.apache.oltu.oauth2.as.validator.UnauthenticatedAuthorizationCodeValidator;
-import org.apache.oltu.oauth2.as.validator.UnauthenticatedRefreshTokenValidator;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
@@ -35,8 +34,8 @@ public class OAuthRequest extends AbstractOAuthTokenRequest {
     protected OAuthValidator<HttpServletRequest> initValidator()
             throws OAuthProblemException, OAuthSystemException {
         validators.put(GrantType.PASSWORD.toString(), AnonymousPasswordValidator.class);
+        validators.put(GrantType.REFRESH_TOKEN.toString(), AnonymousRefreshTokenValidator.class);
         validators.put(GrantType.AUTHORIZATION_CODE.toString(), UnauthenticatedAuthorizationCodeValidator.class);
-        validators.put(GrantType.REFRESH_TOKEN.toString(), UnauthenticatedRefreshTokenValidator.class);
         return super.initValidator();
     }
 

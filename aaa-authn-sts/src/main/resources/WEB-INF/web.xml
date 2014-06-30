@@ -20,6 +20,10 @@
         <servlet-name>STS</servlet-name>
         <url-pattern>/revoke</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>STS</servlet-name>
+        <url-pattern>/federation</url-pattern>
+    </servlet-mapping>    
 
   <filter>
     <filter-name>CorsFilter</filter-name>
@@ -55,14 +59,14 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   
-  <!-- Claim Auth filter -->
+  <!-- Federation Auth filter -->
   <filter>
     <filter-name>ClaimAuthFilter</filter-name>
     <filter-class>org.opendaylight.aaa.sts.ClaimAuthFilter</filter-class>       
   </filter>
   <filter-mapping>
     <filter-name>ClaimAuthFilter</filter-name>
-    <url-pattern>/token</url-pattern>
+    <url-pattern>/federation</url-pattern>
   </filter-mapping>
   
 </web-app>
