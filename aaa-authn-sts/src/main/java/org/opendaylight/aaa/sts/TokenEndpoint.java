@@ -17,6 +17,7 @@ import static org.opendaylight.aaa.AuthConstants.AUTH_CLAIM;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -109,15 +110,24 @@ public class TokenEndpoint extends HttpServlet {
                                 oauthRequest.getPassword());
                 String tenant = oauthRequest.getScopes().iterator().next();
                 // Authenticate...
-                claim = ServiceLocator.INSTANCE.da.authenticate(pc, tenant);
+                if (tenant != null)
+                    claim = ServiceLocator.INSTANCE.da.authenticate(pc, tenant);
             } else if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(
                     GrantType.REFRESH_TOKEN.toString())) {
+                // Refresh token...
                 String token = oauthRequest.getRefreshToken();
-                String tenant = oauthRequest.getScopes().iterator().next();
+                String domain = oauthRequest.getScopes().iterator().next();
+                // Authenticate...
                 Authentication auth = ServiceLocator.INSTANCE.ts.get(token);
-                // TODO: Look up user roles on the given tenant
-                if (auth != null)
-                    claim = new ClaimBuilder(auth).setTenantName(tenant);
+                if (auth != null && domain != null) {
+                    ClaimBuilder cb = new ClaimBuilder(auth);
+                    cb.setDomain(domain); // scope domain
+                    // Add roles for the scoped domain
+                    for (String role : ServiceLocator.INSTANCE.is.listRoles(
+                            auth.userId(), domain))
+                        cb.addRole(role);
+                    claim = cb.build();
+                }
             } else {
                 // Support authorization code later...
                 error(resp, SC_NOT_IMPLEMENTED, NOT_IMPLEMENTED);
@@ -161,30 +171,62 @@ public class TokenEndpoint extends HttpServlet {
         }
     }
 
-    // Build OAuth refresh token response from the given claim
+    // Build OAuth refresh token response from the given claim mapped and
+    // injected by the external IdP
     private void oauthRefreshTokenResponse(HttpServletResponse resp, Claim claim) {
+        // Must have a non-null mapped claim
         if (claim == null) {
             error(resp, SC_UNAUTHORIZED, UNAUTHORIZED);
             return;
         }
+
+        String userName = claim.user();
+        // Need to have at least a mapped username!
+        if (userName == null) {
+            error(resp, SC_UNAUTHORIZED, UNAUTHORIZED);
+            return;
+        }
+
+        // Need to have a corresponding user id in ODL
+        String userId = ServiceLocator.INSTANCE.is.getUserId(userName);
+        if (userId == null) {
+            error(resp, SC_UNAUTHORIZED, UNAUTHORIZED);
+            return;
+        }
+
+        // Create an unscoped ODL context from the external claim
+        Authentication auth = new AuthenticationBuilder(claim)
+                .setUserId(userId)
+                .setExpiration(exp);
+
+        // Create OAuth response
         try {
             String token = oi.refreshToken();
-            // TODO: Get all the domains associated with this user if not yet
-            // provided by the external IdP...
-            OAuthResponse r = OAuthASResponse.tokenResponse(SC_CREATED)
+            OAuthResponse r = OAuthASResponse
+                    .tokenResponse(SC_CREATED)
                     .setRefreshToken(token)
                     .setExpiresIn(Integer.toString(exp))
-                    .setScope(claim.tenantName() == null ? "coke pepsi" : claim.tenantName())
+                    .setScope(
+                    // Use mapped domain if there is one, else list
+                    // all the ones that this user has access to
+                            claim.domain() != null ? claim.domain()
+                                    : listToString(ServiceLocator.INSTANCE.is
+                                            .listDomains(userId)))
                     .buildJSONMessage();
-
             // Cache this token...
-            Authentication auth = new AuthenticationBuilder(claim)
-                    .setExpiration(exp);
             ServiceLocator.INSTANCE.ts.put(token, auth);
             write(resp, r);
         } catch (Exception e) {
             error(resp, e);
         }
+    }
+
+    // Space-delimited string from a list of strings
+    private String listToString(List<String> list) {
+        StringBuffer sb = new StringBuffer();
+        for (String s : list)
+            sb.append(s).append(" ");
+        return sb.toString().trim();
     }
 
     // Emit an error OAuthResponse with the given HTTP code

@@ -32,9 +32,8 @@ public class AuthenticationBuilder extends ClaimBuilder implements
 
     public AuthenticationBuilder(Claim claim) {
         userId = claim.userId();
-        userName = claim.userName();
-        tenantId = claim.tenantId();
-        tenantName = claim.tenantName();
+        user = claim.user();
+        domain = claim.domain();
         roles.addAll(claim.roles());
     }
 
@@ -55,20 +54,14 @@ public class AuthenticationBuilder extends ClaimBuilder implements
     }
 
     @Override
-    public AuthenticationBuilder setUserName(String userName) {
-        this.userName = userName;
+    public AuthenticationBuilder setUser(String userName) {
+        this.user = userName;
         return this;
     }
 
     @Override
-    public AuthenticationBuilder setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-        return this;
-    }
-
-    @Override
-    public AuthenticationBuilder setTenantName(String tenantName) {
-        this.tenantName = tenantName;
+    public AuthenticationBuilder setDomain(String domain) {
+        this.domain = domain;
         return this;
     }
 

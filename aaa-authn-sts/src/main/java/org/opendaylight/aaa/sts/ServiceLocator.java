@@ -14,6 +14,7 @@ import java.util.List;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.ClaimAuth;
 import org.opendaylight.aaa.api.CredentialAuth;
+import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
@@ -36,6 +37,8 @@ public enum ServiceLocator {
     volatile TokenStore ts;
 
     volatile AuthenticationService as;
+
+    volatile IdMService is;
 
     protected void claimAuthAdded(ClaimAuth ca) {
         this.ca.add(ca);

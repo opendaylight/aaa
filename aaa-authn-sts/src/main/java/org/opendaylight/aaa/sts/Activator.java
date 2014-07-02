@@ -12,6 +12,7 @@ import org.apache.felix.dm.Component;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.ClaimAuth;
 import org.opendaylight.aaa.api.CredentialAuth;
+import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.controller.sal.core.ComponentActivatorAbstractBase;
@@ -45,6 +46,8 @@ public class Activator extends ComponentActivatorAbstractBase {
                     TokenStore.class).setRequired(true));
             c.add(createContainerServiceDependency(container).setService(
                     AuthenticationService.class).setRequired(true));
+            c.add(createContainerServiceDependency(container).setService(
+                    IdMService.class).setRequired(true));
         }
     }
 }

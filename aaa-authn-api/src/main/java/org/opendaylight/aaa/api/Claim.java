@@ -11,35 +11,28 @@ import java.util.Set;
  */
 public interface Claim {
     /**
-     * Get the user id.
+     * Get the user id. User IDs are system-created.
      *
      * @return unique user id
      */
     String userId();
 
     /**
-     * Get the user name.
+     * Get the user name. User names are externally created.
      *
-     * @return user name
+     * @return unique user name
      */
-    String userName();
+    String user();
 
     /**
-     * Get the tenant id.
+     * Get the fully-qualified domain name. Domain names are externally created.
      *
-     * @return unique tenant id
+     * @return unique domain name
      */
-    String tenantId();
+    String domain();
 
     /**
-     * Get the tenant name.
-     *
-     * @return tenant name
-     */
-    String tenantName();
-
-    /**
-     * Get a set of user roles.
+     * Get a set of user roles. Roles are externally created.
      *
      * @return set of user roles
      */

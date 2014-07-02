@@ -29,9 +29,7 @@ public class SssdClaimAuth implements ClaimAuth {
         // TODO: Transform/overlay the claims from SSSD into Claim object. If
         // there is no SSSD claim signature, this method should return a null
         // per contract.
-        ClaimBuilder cb = new ClaimBuilder().setUserId("1234")
-                .setUserName("sssd").setTenantId("5678").setTenantName("pepsi")
-                .addRole("admin").addRole("user");
+        ClaimBuilder cb = new ClaimBuilder().setUser("sssd");
         Claim claim = cb.build();
         logger.info(claim.toString());
         return claim;

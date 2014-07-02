@@ -11,7 +11,6 @@ package org.opendaylight.aaa.keystone;
 import java.util.List;
 import java.util.Map;
 
-import org.opendaylight.aaa.AuthenticationBuilder;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.slf4j.Logger;
@@ -33,21 +32,9 @@ public class KeystoneTokenAuth implements TokenAuth {
         if (!headers.containsKey(TOKEN))
             return null;    // Not a Keystone token
 
-        AuthenticationBuilder ab = new AuthenticationBuilder();
-        Authentication auth;
         // TODO: Call into Keystone to get security context...
-        if (headers.get(TOKEN).get(0).trim().equalsIgnoreCase("admin")) {
-            auth = ab.setUserId("1234").setUserName("Bob").addRole("admin")
-                    .addRole("user").setTenantId("5678")
-                    .setTenantName("tenantX")
-                    .setExpiration(System.currentTimeMillis() + 1000).build();
-        } else {
-            auth = ab.setUserId("abcd").setUserName("Alice").addRole("user")
-                    .setTenantId("efgh").setTenantName("tenantY")
-                    .setExpiration(System.currentTimeMillis() + 1000).build();
-        }
-        logger.info(auth.toString());
-        return auth;
+        logger.info("Not yet validating token " + headers.get(TOKEN).get(0));
+        return null;
     }
 
 }

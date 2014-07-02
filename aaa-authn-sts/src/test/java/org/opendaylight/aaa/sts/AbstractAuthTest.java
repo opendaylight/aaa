@@ -29,8 +29,8 @@ public abstract class AbstractAuthTest extends JerseyTest {
     protected static final String GOOD_TOKEN = "9b01b7cf-8a49-346d-8c47-6a61193e2b60";
     protected static final String BAD_TOKEN = "9b01b7cf-8a49-346d-8c47-6a611badbeef";
     protected static Authentication auth = new AuthenticationBuilder()
-            .setUserId("1234").setUserName("Bob").addRole("admin")
-            .addRole("user").setTenantId("5678").setTenantName("tenantX")
+            .setUserId("1234").setUser("Bob").addRole("admin")
+            .addRole("user").setDomain("tenantX")
             .setExpiration(System.currentTimeMillis() + 1000).build();
 
     static {

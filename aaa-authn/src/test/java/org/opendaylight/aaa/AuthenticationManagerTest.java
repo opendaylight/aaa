@@ -63,7 +63,7 @@ public class AuthenticationManagerTest {
     }
 
     private Authentication setAuth(String name) {
-        Authentication auth = new AuthenticationBuilder().setUserName(name)
+        Authentication auth = new AuthenticationBuilder().setUser(name)
                 .addRole("admin").addRole("guest").build();
         as.set(auth);
         return auth;

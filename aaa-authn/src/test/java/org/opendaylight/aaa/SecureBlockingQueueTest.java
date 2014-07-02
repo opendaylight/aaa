@@ -49,7 +49,7 @@ public class SecureBlockingQueueTest {
         for (int cnt = 1; cnt <= MAX_TASKS; cnt++) {
             assertEquals(Integer.toString(cnt),
                     executor.submit(new Task(Integer.toString(cnt))).get()
-                            .userName());
+                            .user());
         }
         executor.shutdown();
     }
@@ -142,7 +142,7 @@ public class SecureBlockingQueueTest {
         Task(String name) {
             // Mock that each task has its original authentication context
             AuthenticationManager.instance().set(
-                    new AuthenticationBuilder().setUserName(name).build());
+                    new AuthenticationBuilder().setUser(name).build());
         }
 
         @Override
@@ -164,7 +164,7 @@ public class SecureBlockingQueueTest {
         @Override
         public String call() throws InterruptedException {
             AuthenticationManager.instance().set(
-                    new AuthenticationBuilder().setUserName(name).build());
+                    new AuthenticationBuilder().setUser(name).build());
             queue.put(name);
             return name;
         }
@@ -182,7 +182,7 @@ public class SecureBlockingQueueTest {
         public String call() {
             queue.remove();
             Authentication auth = AuthenticationManager.instance().get();
-            return (auth == null) ? null : auth.userName();
+            return (auth == null) ? null : auth.user();
         }
     }
 

@@ -28,18 +28,16 @@ public class ClaimBuilder implements Claim {
     protected int hashCode = 0;
 
     protected String userId;
-    protected String userName;
-    protected String tenantId;
-    protected String tenantName;
+    protected String user;
+    protected String domain;
     protected final Set<String> roles = new HashSet<String>();
 
     public ClaimBuilder() {}
 
     public ClaimBuilder(Claim claim) {
         userId = claim.userId();
-        userName = claim.userName();
-        tenantId = claim.tenantId();
-        tenantName = claim.tenantName();
+        user = claim.user();
+        domain = claim.domain();
         roles.addAll(claim.roles());
     }
 
@@ -54,32 +52,22 @@ public class ClaimBuilder implements Claim {
     }
 
     @Override
-    public String userName() {
-        return userName;
+    public String user() {
+        return user;
     }
 
-    public ClaimBuilder setUserName(String userName) {
-        this.userName = userName;
+    public ClaimBuilder setUser(String userName) {
+        this.user = userName;
         return this;
     }
 
     @Override
-    public String tenantId() {
-        return tenantId;
+    public String domain() {
+        return domain;
     }
 
-    public ClaimBuilder setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-        return this;
-    }
-
-    @Override
-    public String tenantName() {
-        return tenantName;
-    }
-
-    public ClaimBuilder setTenantName(String tenantName) {
-        this.tenantName = tenantName;
+    public ClaimBuilder setDomain(String domain) {
+        this.domain = domain;
         return this;
     }
 
@@ -110,10 +98,9 @@ public class ClaimBuilder implements Claim {
             return false;
         Claim a = (Claim) o;
         return areEqual(roles, a.roles())
-                && areEqual(tenantId, a.tenantId())
-                && areEqual(tenantName, a.tenantName())
+                && areEqual(domain, a.domain())
                 && areEqual(userId, a.userId())
-                && areEqual(userName, a.userName());
+                && areEqual(user, a.user());
     }
 
     @Override
@@ -121,9 +108,8 @@ public class ClaimBuilder implements Claim {
         if (hashCode == 0) {
             int result = HashCodeUtil.SEED;
             result = hash(result, userId);
-            result = hash(result, userName);
-            result = hash(result, tenantId);
-            result = hash(result, tenantName);
+            result = hash(result, user);
+            result = hash(result, domain);
             result = hash(result, roles);
             hashCode = result;
         }
@@ -134,9 +120,8 @@ public class ClaimBuilder implements Claim {
     public String toString() {
         StringBuffer sb = new StringBuffer();
         if (userId != null) sb.append("userId:").append(userId).append(",");
-        if (userName != null) sb.append("userName:").append(userName).append(",");
-        if (tenantId != null) sb.append("tenantId:").append(tenantId).append(",");
-        if (tenantName != null) sb.append("tenantName:").append(tenantName).append(",");
+        if (user != null) sb.append("userName:").append(user).append(",");
+        if (domain != null) sb.append("domain:").append(domain).append(",");
         sb.append("roles:").append(roles);
         return sb.toString();
     }

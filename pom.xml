@@ -21,9 +21,9 @@
     <module>aaa-authn</module>
     <module>aaa-authn-sts</module>
     <module>aaa-authn-store</module>
-    <module>aaa-authn-direct</module>
     <module>aaa-authn-sssd</module>
     <module>aaa-authn-keystone</module>
+    <module>aaa-idmlight</module>
   </modules>
 
   <build>
