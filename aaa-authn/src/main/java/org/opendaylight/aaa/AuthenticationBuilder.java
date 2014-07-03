@@ -22,92 +22,94 @@ import org.opendaylight.aaa.api.Claim;
  * @author liemmn
  *
  */
-public class AuthenticationBuilder extends ClaimBuilder implements
-        Authentication {
+public class AuthenticationBuilder extends ClaimBuilder {
 
-    private long expiration;
+    private final MutableAuthentication ma = new MutableAuthentication();
 
     public AuthenticationBuilder() {
     }
 
     public AuthenticationBuilder(Claim claim) {
-        userId = claim.userId();
-        user = claim.user();
-        domain = claim.domain();
-        roles.addAll(claim.roles());
-    }
-
-    @Override
-    public long expiration() {
-        return expiration;
+        setClaim(claim);
     }
 
     public AuthenticationBuilder setExpiration(long expiration) {
-        this.expiration = expiration;
+        ma.expiration = expiration;
         return this;
     }
 
     @Override
     public AuthenticationBuilder setUserId(String userId) {
-        this.userId = userId;
+        ma.userId = userId;
         return this;
     }
 
     @Override
     public AuthenticationBuilder setUser(String userName) {
-        this.user = userName;
+        ma.user = userName;
         return this;
     }
 
     @Override
     public AuthenticationBuilder setDomain(String domain) {
-        this.domain = domain;
+        ma.domain = domain;
         return this;
     }
 
     @Override
     public AuthenticationBuilder addRoles(Set<String> roles) {
-        this.roles.addAll(roles);
+        ma.roles.addAll(roles);
         return this;
     }
 
     @Override
     public AuthenticationBuilder addRole(String role) {
-        this.roles.add(role);
+        ma.roles.add(role);
         return this;
     }
 
     @Override
     public Authentication build() {
-        return this;
+        return ma;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof Authentication))
-            return false;
-        Authentication a = (Authentication) o;
-        return areEqual(expiration, a.expiration()) && super.equals(o);
-    }
+    // Mutable Authentication
+    protected static class MutableAuthentication extends
+            ClaimBuilder.MutableClaim implements Authentication {
+        long expiration = 0L;
 
-    @Override
-    public int hashCode() {
-        if (hashCode == 0) {
-            int result = HashCodeUtil.SEED;
-            result = hash(result, expiration);
-            result = hash(result, super.hashCode());
-            hashCode = result;
+        @Override
+        public long expiration() {
+            return expiration;
         }
-        return hashCode;
-    }
 
-    @Override
-    public String toString() {
-        StringBuffer sb = new StringBuffer();
-        sb.append("expiration:").append(expiration).append(",");
-        sb.append(super.toString());
-        return sb.toString();
+        @Override
+        public boolean equals(Object o) {
+            if (this == o)
+                return true;
+            if (!(o instanceof Authentication))
+                return false;
+            Authentication a = (Authentication) o;
+            return areEqual(expiration, a.expiration()) && super.equals(o);
+        }
+
+        @Override
+        public int hashCode() {
+            if (hashCode == 0) {
+                int result = HashCodeUtil.SEED;
+                result = hash(result, expiration);
+                result = hash(result, super.hashCode());
+                hashCode = result;
+            }
+            return hashCode;
+        }
+
+        @Override
+        public String toString() {
+            StringBuffer sb = new StringBuffer();
+            sb.append("expiration:").append(expiration).append(",");
+            sb.append(super.toString());
+            return sb.toString();
+        }
     }
 }

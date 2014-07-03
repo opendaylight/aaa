@@ -163,7 +163,7 @@ public class TokenEndpoint extends HttpServlet {
 
             // Cache this token...
             Authentication auth = new AuthenticationBuilder(claim)
-                    .setExpiration(exp);
+                    .setExpiration(exp).build();
             ServiceLocator.INSTANCE.ts.put(token, auth);
             write(resp, r);
         } catch (Exception e) {
@@ -196,8 +196,7 @@ public class TokenEndpoint extends HttpServlet {
 
         // Create an unscoped ODL context from the external claim
         Authentication auth = new AuthenticationBuilder(claim)
-                .setUserId(userId)
-                .setExpiration(exp);
+                .setUserId(userId).setExpiration(exp).build();
 
         // Create OAuth response
         try {
