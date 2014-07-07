@@ -12,7 +12,7 @@
   <version>0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <prerequisites>
-    <maven>3.0</maven>
+    <maven>3.0.4</maven>
   </prerequisites>
 
   <modules>
@@ -24,6 +24,7 @@
     <module>aaa-authn-direct</module>
     <module>aaa-authn-sssd</module>
     <module>aaa-authn-keystone</module>
+    <module>aaa-authz</module>
   </modules>
 
   <build>
