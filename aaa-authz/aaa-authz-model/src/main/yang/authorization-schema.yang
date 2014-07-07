@@ -1,0 +1,102 @@
+module authorization-schema {
+	yang-version 1;
+	namespace "urn:aaa:yang:authz:ds";
+  prefix "authz";
+    organization "TBD";
+
+    contact "wdec@cisco.com";
+
+    revision 2014-06-26 {
+        description
+            "Initial revision.";
+    }
+//Main module begins
+
+//TODO: Refactor types as URIs
+
+typedef service-type {
+    type string;
+}
+typedef resource-type {
+    type string;
+    default "*";
+}
+
+typedef role-type {
+        type string;
+}
+
+typedef domain-type {
+    type string;
+}
+
+typedef username-type {
+  type string;
+}
+
+typedef action-type {
+    type enumeration {
+        enum create;
+        enum read;
+        enum update;
+        enum delete;
+        enum execute;
+        enum subscribe;
+        enum any;
+        enum none;
+    }
+    default "any";
+}
+
+grouping authorization-grp {
+    list policies {
+        key "service action";
+        leaf service {
+          type service-type;
+        }
+        leaf action {
+          type action-type;
+
+        }
+
+        leaf resources {
+          type resource-type;
+          mandatory true;
+        }
+
+        leaf role {
+          type role-type;
+          mandatory true;
+        }
+//Username should be in a username -> role mapping
+/*        leaf username {
+          type username-type;
+        } */
+    }
+ }
+
+
+container domain-authorizations {
+  list domains {
+    key "domain-name";
+    leaf domain-name {
+      type domain-type;
+      }
+    uses authorization-grp;
+    list authz-domain-chain {
+      ordered-by user;
+      key "domain-name";
+      leaf domain-name {
+        type leafref  {
+          path "/domain-authorizations/domains/domain-name";
+        }
+      }
+    }
+  }
+ }
+
+container simple-authorization {
+  uses authorization-grp;
+}
+
+}
