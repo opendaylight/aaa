@@ -12,7 +12,7 @@ This project is aimed at providing a flexible, pluggable framework with out-of-t
 
 *Prerequisite:*  The followings are required for building AAA:
 
-- Maven3
+- Maven 3
 - Java 7
 
 Get the code:
