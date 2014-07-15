@@ -8,30 +8,32 @@
  */
 package org.opendaylight.aaa.idm;
 
-import org.apache.felix.dm.Component;
+import org.apache.felix.dm.DependencyActivatorBase;
+import org.apache.felix.dm.DependencyManager;
 import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.IdMService;
-import org.opendaylight.controller.sal.core.ComponentActivatorAbstractBase;
+import org.osgi.framework.BundleContext;
 
 /**
  * An activator to publish the {@link CredentialAuth} implementation provided by
  * this bundle into OSGi.
- *
+ * 
  * @author liemmn
- *
+ * 
  */
-public class Activator extends ComponentActivatorAbstractBase {
-    @Override
-    public Object[] getImplementations() {
-        Object[] res = { IdmLightProxy.class };
-        return res;
-    }
+public class Activator extends DependencyActivatorBase {
 
-    @Override
-    public void configureInstance(Component c, Object imp, String containerName) {
-        if (imp.equals(IdmLightProxy.class)) {
-            c.setInterface(new String[] { CredentialAuth.class.getName(),
-                    IdMService.class.getName() }, null);
-        }
-    }
+	@Override
+	public void init(BundleContext context, DependencyManager manager)
+			throws Exception {
+		manager.add(createComponent().setInterface(
+				new String[] { CredentialAuth.class.getName(),
+						IdMService.class.getName() }, null).setImplementation(
+				IdmLightProxy.class));
+	}
+
+	@Override
+	public void destroy(BundleContext context, DependencyManager manager)
+			throws Exception {
+	}
 }

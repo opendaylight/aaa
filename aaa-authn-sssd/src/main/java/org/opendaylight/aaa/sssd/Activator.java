@@ -8,22 +8,23 @@
  */
 package org.opendaylight.aaa.sssd;
 
-import org.apache.felix.dm.Component;
-import org.opendaylight.aaa.api.ClaimAuth;
-import org.opendaylight.controller.sal.core.ComponentActivatorAbstractBase;
+import org.apache.felix.dm.DependencyActivatorBase;
+import org.apache.felix.dm.DependencyManager;
+import org.osgi.framework.BundleContext;
 
-public class Activator extends ComponentActivatorAbstractBase {
+public class Activator extends DependencyActivatorBase {
+	
+	@Override
+	public void init(BundleContext context, DependencyManager manager)
+			throws Exception {
+		manager.add(createComponent().setInterface(
+				new String[] { SssdClaimAuth.class.getName() }, null)
+				.setImplementation(SssdClaimAuth.class));
+	}
 
-    @Override
-    public Object[] getImplementations() {
-        Object[] res = { SssdClaimAuth.class };
-        return res;
-    }
+	@Override
+	public void destroy(BundleContext context, DependencyManager manager)
+			throws Exception {
+	}
 
-    @Override
-    public void configureInstance(Component c, Object imp, String container) {
-        if (imp.equals(SssdClaimAuth.class)) {
-            c.setInterface(ClaimAuth.class.getName(), null);
-        }
-    }
 }

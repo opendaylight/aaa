@@ -8,9 +8,10 @@
  */
 package org.opendaylight.aaa.keystone;
 
-import org.apache.felix.dm.Component;
+import org.apache.felix.dm.DependencyActivatorBase;
+import org.apache.felix.dm.DependencyManager;
 import org.opendaylight.aaa.api.TokenAuth;
-import org.opendaylight.controller.sal.core.ComponentActivatorAbstractBase;
+import org.osgi.framework.BundleContext;
 
 /**
  * An activator for {@link KeystoneTokenAuth}.
@@ -18,19 +19,19 @@ import org.opendaylight.controller.sal.core.ComponentActivatorAbstractBase;
  * @author liemmn
  *
  */
-public class Activator extends ComponentActivatorAbstractBase {
+public class Activator extends DependencyActivatorBase {
+	
+	@Override
+	public void init(BundleContext context, DependencyManager manager)
+			throws Exception {
+		manager.add(createComponent().setInterface(
+				new String[] { TokenAuth.class.getName() }, null)
+				.setImplementation(KeystoneTokenAuth.class));
+	}
 
-    @Override
-    public Object[] getImplementations() {
-        Object[] res = { KeystoneTokenAuth.class };
-        return res;
-    }
-
-    @Override
-    public void configureInstance(Component c, Object imp, String containerName) {
-        if (imp.equals(KeystoneTokenAuth.class)) {
-            c.setInterface(TokenAuth.class.getName(), null);
-        }
-    }
+	@Override
+	public void destroy(BundleContext context, DependencyManager manager)
+			throws Exception {
+	}
 
 }

@@ -15,9 +15,10 @@ import static org.opendaylight.aaa.store.DefaultTokenStore.SECS_TO_LIVE;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-import org.apache.felix.dm.Component;
+import org.apache.felix.dm.DependencyActivatorBase;
+import org.apache.felix.dm.DependencyManager;
 import org.opendaylight.aaa.api.TokenStore;
-import org.opendaylight.controller.sal.core.ComponentActivatorAbstractBase;
+import org.osgi.framework.BundleContext;
 
 /**
  * An activator for the default datastore implementation of {@link TokenStore}.
@@ -25,27 +26,28 @@ import org.opendaylight.controller.sal.core.ComponentActivatorAbstractBase;
  * @author liemmn
  *
  */
-public class Activator extends ComponentActivatorAbstractBase {
+public class Activator extends DependencyActivatorBase {
     // Defaults
     private static final int maxCachedTokens = 8192;
     private static final int secondsToLive = 3600;
     private static final int secondsToIdle = 3600;
+    
+	@Override
+	public void init(BundleContext context, DependencyManager manager)
+			throws Exception {
+		Dictionary<String, String> props = new Hashtable<>();
+        props.put(MAX_CACHED, Integer.toString(maxCachedTokens));
+        props.put(SECS_TO_IDLE, Integer.toString(secondsToIdle));
+        props.put(SECS_TO_LIVE, Integer.toString(secondsToLive));
 
-    @Override
-    public Object[] getImplementations() {
-        Object[] res = { DefaultTokenStore.class };
-        return res;
-    }
+		manager.add(createComponent().setInterface(
+				new String[] { TokenStore.class.getName() }, props)
+				.setImplementation(DefaultTokenStore.class));
+	}
 
-    @Override
-    public void configureInstance(Component c, Object imp, String container) {
-        if (imp.equals(DefaultTokenStore.class)) {
-            Dictionary<String, String> props = new Hashtable<>();
-            props.put(MAX_CACHED, Integer.toString(maxCachedTokens));
-            props.put(SECS_TO_IDLE, Integer.toString(secondsToIdle));
-            props.put(SECS_TO_LIVE, Integer.toString(secondsToLive));
+	@Override
+	public void destroy(BundleContext context, DependencyManager manager)
+			throws Exception {
+	}
 
-            c.setInterface(TokenStore.class.getName(), props);
-        }
-    }
 }
