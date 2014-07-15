@@ -8,9 +8,10 @@
  */
 package org.opendaylight.aaa;
 
-import org.apache.felix.dm.Component;
+import org.apache.felix.dm.DependencyActivatorBase;
+import org.apache.felix.dm.DependencyManager;
 import org.opendaylight.aaa.api.AuthenticationService;
-import org.opendaylight.controller.sal.core.ComponentActivatorAbstractBase;
+import org.osgi.framework.BundleContext;
 
 /**
  * Activator to register {@link AuthenticationService} with OSGi.
@@ -18,21 +19,19 @@ import org.opendaylight.controller.sal.core.ComponentActivatorAbstractBase;
  * @author liemmn
  *
  */
-public class Activator extends ComponentActivatorAbstractBase {
+public class Activator extends DependencyActivatorBase {
 
     @Override
-    public Object[] getImplementations() {
-        return new Object[] { AuthenticationManager.instance() };
+    public void init(BundleContext context, DependencyManager manager)
+            throws Exception {
+        manager.add(createComponent().setInterface(
+                new String[] { AuthenticationService.class.getName() }, null)
+                .setImplementation(AuthenticationManager.instance()));
     }
 
     @Override
-    public void configureInstance(Component c, Object impl, String containerName) {
-        if (impl.equals(AuthenticationManager.instance())) {
-            // export service
-            c.setInterface(
-                    new String[] { AuthenticationService.class.getName() },
-                    null);
-        }
+    public void destroy(BundleContext context, DependencyManager manager)
+            throws Exception {
     }
 
 }
