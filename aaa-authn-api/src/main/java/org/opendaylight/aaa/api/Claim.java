@@ -11,6 +11,14 @@ import java.util.Set;
  */
 public interface Claim {
     /**
+     * Get the id of the authorized client.  If the id is null, it
+     * means that the client is anonymous.
+     *
+     * @return id of the authorized client, or null if anonymous
+     */
+    String clientId();
+
+    /**
      * Get the user id. User IDs are system-created.
      *
      * @return unique user id

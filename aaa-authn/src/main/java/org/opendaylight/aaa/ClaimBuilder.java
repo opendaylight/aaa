@@ -34,10 +34,16 @@ public class ClaimBuilder {
     }
 
     protected void setClaim(Claim claim) {
+        mc.clientId = claim.clientId();
         mc.userId = claim.userId();
         mc.user = claim.user();
         mc.domain = claim.domain();
         mc.roles.addAll(claim.roles());
+    }
+
+    public ClaimBuilder setClientId(String clientId) {
+        mc.clientId = clientId;
+        return this;
     }
 
     public ClaimBuilder setUserId(String userId) {
@@ -72,10 +78,16 @@ public class ClaimBuilder {
     // Mutable claim
     protected static class MutableClaim implements Claim {
         int hashCode = 0;
+        String clientId;
         String userId;
         String user;
         String domain;
         final Set<String> roles = new HashSet<String>();
+
+        @Override
+        public String clientId() {
+            return clientId;
+        }
 
         @Override
         public String userId() {
@@ -105,13 +117,15 @@ public class ClaimBuilder {
                 return false;
             Claim a = (Claim) o;
             return areEqual(roles, a.roles()) && areEqual(domain, a.domain())
-                    && areEqual(userId, a.userId()) && areEqual(user, a.user());
+                    && areEqual(userId, a.userId()) && areEqual(user, a.user())
+                    && areEqual(clientId, a.clientId());
         }
 
         @Override
         public int hashCode() {
             if (hashCode == 0) {
                 int result = HashCodeUtil.SEED;
+                result = hash(result, clientId);
                 result = hash(result, userId);
                 result = hash(result, user);
                 result = hash(result, domain);
@@ -124,6 +138,8 @@ public class ClaimBuilder {
         @Override
         public String toString() {
             StringBuffer sb = new StringBuffer();
+            if (clientId != null)
+                sb.append("clientId:").append(clientId).append(",");
             if (userId != null)
                 sb.append("userId:").append(userId).append(",");
             if (user != null)

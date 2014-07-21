@@ -39,6 +39,12 @@ public class AuthenticationBuilder extends ClaimBuilder {
     }
 
     @Override
+    public AuthenticationBuilder setClientId(String clientId) {
+        ma.clientId = clientId;
+        return this;
+    }
+
+    @Override
     public AuthenticationBuilder setUserId(String userId) {
         ma.userId = userId;
         return this;

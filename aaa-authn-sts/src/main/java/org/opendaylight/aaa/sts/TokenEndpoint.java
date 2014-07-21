@@ -100,8 +100,16 @@ public class TokenEndpoint extends HttpServlet {
     private void createAccessToken(HttpServletRequest req,
             HttpServletResponse resp) {
         Claim claim = null;
+        String clientId = null;
+
         try {
             OAuthRequest oauthRequest = new OAuthRequest(req);
+            // Any client credentials?
+            clientId = oauthRequest.getClientId();
+            if (clientId != null)
+                ServiceLocator.INSTANCE.cs.validate(clientId,
+                        oauthRequest.getClientSecret());
+
             // Credential request...
             if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(
                     GrantType.PASSWORD.toString())) {
@@ -137,8 +145,9 @@ public class TokenEndpoint extends HttpServlet {
         } catch (Exception e) {
             error(resp, e);
         }
+
         // Respond with OAuth token
-        oauthAccessTokenResponse(resp, claim);
+        oauthAccessTokenResponse(resp, claim, clientId);
     }
 
     // Create a refresh token
@@ -149,7 +158,8 @@ public class TokenEndpoint extends HttpServlet {
     }
 
     // Build OAuth access token response from the given claim
-    private void oauthAccessTokenResponse(HttpServletResponse resp, Claim claim) {
+    private void oauthAccessTokenResponse(HttpServletResponse resp,
+            Claim claim, String clientId) {
         if (claim == null) {
             error(resp, SC_UNAUTHORIZED, UNAUTHORIZED);
             return;
@@ -163,7 +173,7 @@ public class TokenEndpoint extends HttpServlet {
 
             // Cache this token...
             Authentication auth = new AuthenticationBuilder(claim)
-                    .setExpiration(exp).build();
+                    .setClientId(clientId).setExpiration(exp).build();
             ServiceLocator.INSTANCE.ts.put(token, auth);
             write(resp, r);
         } catch (Exception e) {

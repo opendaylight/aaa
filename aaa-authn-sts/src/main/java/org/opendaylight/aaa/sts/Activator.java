@@ -12,6 +12,7 @@ import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.ClaimAuth;
+import org.opendaylight.aaa.api.ClientService;
 import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.TokenAuth;
@@ -44,6 +45,8 @@ public class Activator extends DependencyActivatorBase {
                 .add(createServiceDependency().setService(
                         AuthenticationService.class).setRequired(true))
                 .add(createServiceDependency().setService(IdMService.class)
+                        .setRequired(true))
+                .add(createServiceDependency().setService(ClientService.class)
                         .setRequired(true)));
     }
 

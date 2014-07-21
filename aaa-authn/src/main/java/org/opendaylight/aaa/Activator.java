@@ -11,6 +11,7 @@ package org.opendaylight.aaa;
 import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
 import org.opendaylight.aaa.api.AuthenticationService;
+import org.opendaylight.aaa.api.ClientService;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -27,6 +28,9 @@ public class Activator extends DependencyActivatorBase {
         manager.add(createComponent().setInterface(
                 new String[] { AuthenticationService.class.getName() }, null)
                 .setImplementation(AuthenticationManager.instance()));
+        manager.add(createComponent().setInterface(
+                new String[] { ClientService.class.getName() }, null)
+                .setImplementation(ClientManager.class));
     }
 
     @Override
