@@ -6,7 +6,7 @@ module authorization-schema {
 
     contact "wdec@cisco.com";
 
-    revision 2014-06-26 {
+    revision 2014-07-22 {
         description
             "Initial revision.";
     }
@@ -14,25 +14,34 @@ module authorization-schema {
 
 //TODO: Refactor types as URIs
 
+//Define the servicetype; Service is used to identify the requestors' name, which would correspond to an ODL component eg Restconf. Possibly
+//the naming will derive from the OSGi bundle name of the AuthZ requesting party.
+
 typedef service-type {
     type string;
 }
+
+//Resource denotes the actual resource that is the subject of the AuthZ request.
+
 typedef resource-type {
     type string;
     default "*";
 }
 
+//Role denotes the normalized role that is attributed to the AuthZ requestor, eg "admin"
+
 typedef role-type {
         type string;
 }
+
+//Domain denotes the customer domain that is the attributed of the AuthZ requestor, eg cisco.com
 
 typedef domain-type {
     type string;
 }
 
-typedef username-type {
-  type string;
-}
+//Action denotes the requested AuthZ action on the resource
+//TODO: Refactor as identities to allow for augmentation.
 
 typedef action-type {
     type enumeration {
@@ -43,10 +52,27 @@ typedef action-type {
         enum execute;
         enum subscribe;
         enum any;
-        enum none;
     }
     default "any";
 }
+
+typedef username-type {
+  type string;
+}
+
+typedef authorization-response-type {
+    type enumeration {
+        enum not-authorized { value 0;}
+        enum authorized { value 1;}
+    }
+}
+
+typedef authorization-duration-type {
+    type uint32;
+}
+
+// Following grouping is the core AuthZ policy permissions data-structure, dual keyed by service and action.
+// Permissions will be set-up per application. NOTE: Group and role can be equivalent. do we need both?
 
 grouping authorization-grp {
     list policies {
@@ -58,25 +84,34 @@ grouping authorization-grp {
           type action-type;
 
         }
-
-        leaf resources {
+        leaf resource {
           type resource-type;
           mandatory true;
         }
-
         leaf role {
           type role-type;
           mandatory true;
         }
-//Username should be in a username -> role mapping
+//Username ideally shouldn't be in the AuthZ module; a username should always be mapped to a role.
+
 /*        leaf username {
           type username-type;
         } */
     }
  }
 
+// Following container provides the simple, non-domain specific AuthZ policy data-structure, dual keyed by service and action.
 
-container domain-authorizations {
+container simple-authorization {
+  uses authorization-grp;
+}
+
+// Following container provides the domain AuthZ policy data-structure. Each Policy is extended with a authz-domain-chain,
+// which contains a prioritized list of the leafrefs to additional domain policies that also apply to this domain.
+// The construct allows the chaining of policies like foo.com -> customer.sp.com -> customer.carrier.com.
+
+
+container domain-authorization {
   list domains {
     key "domain-name";
     leaf domain-name {
@@ -84,19 +119,91 @@ container domain-authorizations {
       }
     uses authorization-grp;
     list authz-domain-chain {
-      ordered-by user;
-      key "domain-name";
+      key "priority";
+      leaf priority {
+        type uint32;
+      }
       leaf domain-name {
         type leafref  {
-          path "/domain-authorizations/domains/domain-name";
+          path "/additional-domain-authz/domains/domain-name";
         }
       }
     }
   }
  }
 
-container simple-authorization {
-  uses authorization-grp;
-}
+ container additional-domain-authz {
+   list domains {
+     key "domain-name";
+     leaf domain-name {
+       type domain-type;
+       }
+     uses authorization-grp;
+   }
+  }
+
+
+
+/* The following is a place holder for the AuthZ RPC definition, pending the outcome of investigations into shiro
+
+  rpc req-authorization {
+     description
+       "Check Authorization for a given combination of action and role.
+        A not-authorized  will be returned if unsuccessful.";
+
+     input {
+       leaf domain-name {
+             type domain-type;
+             }
+
+        leaf action {
+          type action-type;
+        }
+
+        leaf resource {
+          type resource-type;
+        }
+        leaf role {
+          type role-type;
+          mandatory true;
+        }
+
+     } //input
+     output {
+
+    leaf authorization-response {
+        type authorization-response-type;
+        mandatory true;
+        }
+    leaf authorization-duration {
+        type authorization-duration-type;
+       }
+     } //output
+
+   }// rpc req-authorization
+
+   rpc cancel-authorization-req {
+        description
+          "Cancel an authorization request. Place holder to allow for AuthZ service clean-up";
+        input {
+          leaf domain-name {
+                type domain-type;
+                }
+
+           leaf action {
+             type action-type;
+           }
+
+           leaf resource {
+             type resource-type;
+           }
+           leaf role {
+             type role-type;
+             mandatory true;
+           }
+
+        } //input
+      }
+*/
 
 }
