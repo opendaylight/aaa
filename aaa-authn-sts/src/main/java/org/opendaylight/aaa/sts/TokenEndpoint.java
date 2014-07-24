@@ -13,6 +13,7 @@ import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 import static javax.servlet.http.HttpServletResponse.SC_NOT_IMPLEMENTED;
 import static javax.servlet.http.HttpServletResponse.SC_NO_CONTENT;
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
+import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 import static org.opendaylight.aaa.AuthConstants.AUTH_CLAIM;
 
 import java.io.IOException;
@@ -43,19 +44,20 @@ import org.opendaylight.aaa.api.PasswordCredentials;
 
 /**
  * Secure Token Service (STS) endpoint.
- *
+ * 
  * @author liemmn
- *
+ * 
  */
 public class TokenEndpoint extends HttpServlet {
     private static final long serialVersionUID = 8272453849539659999L;
 
+    private static final String DOMAIN_SCOPE_REQUIRED = "Domain scope required";
     private static final String NOT_IMPLEMENTED = "not_implemented";
     private static final String UNAUTHORIZED = "unauthorized";
 
-    private static final String TOKEN_GRANT_ENDPOINT = "/token";
-    private static final String TOKEN_REVOKE_ENDPOINT = "/revoke";
-    private static final String FEDERATION_ENDPOINT = "/federation";
+    static final String TOKEN_GRANT_ENDPOINT = "/token";
+    static final String TOKEN_REVOKE_ENDPOINT = "/revoke";
+    static final String FEDERATION_ENDPOINT = "/federation";
 
     private static final String TOKEN_EXP_PARAM = "org.opendaylight.aaa.sts.TokenExpirationSecs";
     private static final int DEFAULT_TOKEN_EXP_SECS = 3600;
@@ -114,27 +116,34 @@ public class TokenEndpoint extends HttpServlet {
             if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(
                     GrantType.PASSWORD.toString())) {
                 PasswordCredentials pc = new PasswordCredentialBuilder()
-                        .setUserName(oauthRequest.getUsername()).setPassword(
-                                oauthRequest.getPassword());
-                String tenant = oauthRequest.getScopes().iterator().next();
-                // Authenticate...
-                if (tenant != null)
-                    claim = ServiceLocator.INSTANCE.da.authenticate(pc, tenant);
+                        .setUserName(oauthRequest.getUsername())
+                        .setPassword(oauthRequest.getPassword()).build();
+                if (!oauthRequest.getScopes().isEmpty()) {
+                    String domain = oauthRequest.getScopes().iterator().next();
+                    claim = ServiceLocator.INSTANCE.da.authenticate(pc, domain);
+                }
             } else if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(
                     GrantType.REFRESH_TOKEN.toString())) {
                 // Refresh token...
                 String token = oauthRequest.getRefreshToken();
-                String domain = oauthRequest.getScopes().iterator().next();
-                // Authenticate...
-                Authentication auth = ServiceLocator.INSTANCE.ts.get(token);
-                if (auth != null && domain != null) {
-                    ClaimBuilder cb = new ClaimBuilder(auth);
-                    cb.setDomain(domain); // scope domain
-                    // Add roles for the scoped domain
-                    for (String role : ServiceLocator.INSTANCE.is.listRoles(
-                            auth.userId(), domain))
-                        cb.addRole(role);
-                    claim = cb.build();
+                if (!oauthRequest.getScopes().isEmpty()) {
+                    String domain = oauthRequest.getScopes().iterator().next();
+                    // Authenticate...
+                    Authentication auth = ServiceLocator.INSTANCE.ts.get(token);
+                    if (auth != null && domain != null) {
+                        List<String> roles = ServiceLocator.INSTANCE.is
+                                .listRoles(auth.userId(), domain);
+                        if (!roles.isEmpty()) {
+                            ClaimBuilder cb = new ClaimBuilder(auth);
+                            cb.setDomain(domain); // scope domain
+                            // Add roles for the scoped domain
+                            for (String role : roles)
+                                cb.addRole(role);
+                            claim = cb.build();
+                        }
+                    }
+                } else {
+                    error(resp, SC_BAD_REQUEST, DOMAIN_SCOPE_REQUIRED);
                 }
             } else {
                 // Support authorization code later...
@@ -184,7 +193,6 @@ public class TokenEndpoint extends HttpServlet {
     // Build OAuth refresh token response from the given claim mapped and
     // injected by the external IdP
     private void oauthRefreshTokenResponse(HttpServletResponse resp, Claim claim) {
-        // Must have a non-null mapped claim
         if (claim == null) {
             error(resp, SC_UNAUTHORIZED, UNAUTHORIZED);
             return;

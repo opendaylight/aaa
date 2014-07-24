@@ -15,55 +15,63 @@ import org.opendaylight.aaa.api.PasswordCredentials;
 
 /**
  * {@link PasswordCredentials} builder.
- *
+ * 
  * @author liemmn
- *
+ * 
  */
-public class PasswordCredentialBuilder implements PasswordCredentials {
-    private int hashCode = 0;
-
-    private String username;
-    private String password;
-
-    @Override
-    public String username() {
-        return username;
-    }
-
-    @Override
-    public String password() {
-        return password;
-    }
+public class PasswordCredentialBuilder {
+    private final MutablePasswordCredentials pc = new MutablePasswordCredentials();
 
     public PasswordCredentialBuilder setUserName(String username) {
-        this.username = username;
+        pc.username = username;
         return this;
     }
 
     public PasswordCredentialBuilder setPassword(String password) {
-        this.password = password;
+        pc.password = password;
         return this;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof PasswordCredentials))
-            return false;
-        PasswordCredentials p = (PasswordCredentials) o;
-        return areEqual(username, p.username())
-                && areEqual(password, p.password());
+    
+    public PasswordCredentials build() {
+        return pc;
     }
 
-    @Override
-    public int hashCode() {
-        if (hashCode == 0) {
-            int result = HashCodeUtil.SEED;
-            result = hash(result, username);
-            result = hash(result, password);
-            hashCode = result;
+    private static class MutablePasswordCredentials implements
+            PasswordCredentials {
+        private int hashCode = 0;
+        private String username;
+        private String password;
+
+        @Override
+        public String username() {
+            return username;
         }
-        return hashCode;
+
+        @Override
+        public String password() {
+            return password;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o)
+                return true;
+            if (!(o instanceof PasswordCredentials))
+                return false;
+            PasswordCredentials p = (PasswordCredentials) o;
+            return areEqual(username, p.username())
+                    && areEqual(password, p.password());
+        }
+
+        @Override
+        public int hashCode() {
+            if (hashCode == 0) {
+                int result = HashCodeUtil.SEED;
+                result = hash(result, username);
+                result = hash(result, password);
+                hashCode = result;
+            }
+            return hashCode;
+        }
     }
 }
