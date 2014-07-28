@@ -26,6 +26,13 @@ typedef service-type {
 typedef resource-type {
     type string;
     default "*";
+
+    //Examples of resources:
+    //Data : /operational/opendaylight-inventory:nodes/node/openflow:1/node-connector/openflow:1:1
+    //Wildcarded data: /operational/opendaylight-inventory:nodes/node/*/node-connector/*
+    //RPC: /operations/example-ops:reboot
+    //Wildcarded RPC: /operations/example-ops:*
+    //Notification: /notifications/example-ops:startup
 }
 
 //Role denotes the normalized role that is attributed to the AuthZ requestor, eg "admin"
@@ -49,7 +56,7 @@ typedef action-type {
         enum read;
         enum update;
         enum delete;
-        enum execute;
+        enum execute;  //RPC's should always map to execute
         enum subscribe;
         enum any;
     }
@@ -76,7 +83,7 @@ typedef authorization-duration-type {
 
 grouping authorization-grp {
     list policies {
-        key "service action";
+        key "service";
         leaf service {
           type service-type;
         }
@@ -144,7 +151,7 @@ container domain-authorization {
 
 
 
-/* The following is a place holder for the AuthZ RPC definition, pending the outcome of investigations into shiro
+/* The following is the AuthZ RPC definition */
 
   rpc req-authorization {
      description
@@ -155,13 +162,17 @@ container domain-authorization {
        leaf domain-name {
              type domain-type;
              }
-
+       leaf service {
+                 type service-type;
+               }
         leaf action {
           type action-type;
+          mandatory true;
         }
 
         leaf resource {
           type resource-type;
+          mandatory true;
         }
         leaf role {
           type role-type;
@@ -182,28 +193,7 @@ container domain-authorization {
 
    }// rpc req-authorization
 
-   rpc cancel-authorization-req {
-        description
-          "Cancel an authorization request. Place holder to allow for AuthZ service clean-up";
-        input {
-          leaf domain-name {
-                type domain-type;
-                }
 
-           leaf action {
-             type action-type;
-           }
 
-           leaf resource {
-             type resource-type;
-           }
-           leaf role {
-             type role-type;
-             mandatory true;
-           }
-
-        } //input
-      }
-*/
 
 }
