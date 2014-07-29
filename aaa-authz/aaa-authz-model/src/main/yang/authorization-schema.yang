@@ -12,7 +12,7 @@ module authorization-schema {
     }
 //Main module begins
 
-//TODO: Refactor types as URIs
+//TODO: Refactor service type as URI
 
 //Define the servicetype; Service is used to identify the requestors' name, which would correspond to an ODL component eg Restconf. Possibly
 //the naming will derive from the OSGi bundle name of the AuthZ requesting party.
@@ -186,9 +186,7 @@ container domain-authorization {
         type authorization-response-type;
         mandatory true;
         }
-    leaf authorization-duration {
-        type authorization-duration-type;
-       }
+
      } //output
 
    }// rpc req-authorization
