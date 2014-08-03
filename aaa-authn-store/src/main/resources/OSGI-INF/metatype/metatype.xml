@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metatype:MetaData xmlns:metatype="http://www.osgi.org/xmlns/metatype/v1.0.0"
+    localization="OSGI-INF/metatype/metatype">
+    <OCD id="org.opendaylight.aaa.tokens" name="%org.opendaylight.aaa.tokens.name"
+        description="%org.opendaylight.aaa.tokens.description">
+        <AD id="maxCachedTokensInMemory" type="Long" default="10000"
+            name="%org.opendaylight.aaa.tokens.maxCachedTokensInMemory.name"
+            description="%org.opendaylight.aaa.tokens.maxCachedTokensInMemory.description" />
+        <AD id="maxCachedTokensOnDisk" type="Long" default="1000000"
+            name="%org.opendaylight.aaa.tokens.maxCachedTokensOnDisk.name"
+            description="%org.opendaylight.aaa.tokens.maxCachedTokensOnDisk.description" />
+        <AD id="secondsToLive" type="Long" default="3600"
+            name="%org.opendaylight.aaa.tokens.secondsToLive.name"
+            description="%org.opendaylight.aaa.tokens.secondsToLive.description" />
+        <AD id="secondsToIdle" type="Long" default="3600"
+            name="%org.opendaylight.aaa.tokens.secondsToIdle.name"
+            description="%org.opendaylight.aaa.tokens.secondsToIdle.description" />
+    </OCD>
+    <Designate pid="org.opendaylight.aaa.tokens">
+        <Object ocdref="org.opendaylight.aaa.tokens" />
+    </Designate>
+</metatype:MetaData>

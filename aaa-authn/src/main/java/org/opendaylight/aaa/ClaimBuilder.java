@@ -11,6 +11,7 @@ package org.opendaylight.aaa;
 import static org.opendaylight.aaa.EqualUtil.areEqual;
 import static org.opendaylight.aaa.HashCodeUtil.hash;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -76,7 +77,8 @@ public class ClaimBuilder {
     }
 
     // Mutable claim
-    protected static class MutableClaim implements Claim {
+    protected static class MutableClaim implements Claim, Serializable {
+        private static final long serialVersionUID = -8115027645190209129L;
         int hashCode = 0;
         String clientId;
         String userId;

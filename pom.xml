@@ -25,6 +25,7 @@
     <module>aaa-authn-keystone</module>
     <module>aaa-idmlight</module>
     <module>aaa-authz</module>
+    <module>feature</module>
   </modules>
 
   <build>
