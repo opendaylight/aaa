@@ -82,6 +82,7 @@ public class AuthenticationBuilder extends ClaimBuilder {
     // Mutable Authentication
     protected static class MutableAuthentication extends
             ClaimBuilder.MutableClaim implements Authentication {
+        private static final long serialVersionUID = 4919078164955609987L;
         long expiration = 0L;
 
         @Override

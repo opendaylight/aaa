@@ -11,8 +11,8 @@ package org.opendaylight.aaa.store;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.opendaylight.aaa.store.DefaultTokenStore.MAX_CACHED;
+import static org.opendaylight.aaa.store.DefaultTokenStore.MAX_CACHED_DISK;
+import static org.opendaylight.aaa.store.DefaultTokenStore.MAX_CACHED_MEMORY;
 import static org.opendaylight.aaa.store.DefaultTokenStore.SECS_TO_IDLE;
 import static org.opendaylight.aaa.store.DefaultTokenStore.SECS_TO_LIVE;
 
@@ -25,20 +25,23 @@ import org.junit.Before;
 import org.junit.Test;
 import org.opendaylight.aaa.AuthenticationBuilder;
 import org.opendaylight.aaa.api.Authentication;
+import org.osgi.service.cm.ConfigurationException;
 
 public class DefaultTokenStoreTest {
     private static final String FOO_TOKEN = "foo_token";
     private final DefaultTokenStore dts = new DefaultTokenStore();
+    private static final Dictionary<String, String> config = new Hashtable<>();
+    static {
+        config.put(MAX_CACHED_MEMORY, Long.toString(3));
+        config.put(MAX_CACHED_DISK, Long.toString(3));
+        config.put(SECS_TO_IDLE, Long.toString(1));
+        config.put(SECS_TO_LIVE, Long.toString(1));
+    }
 
     @Before
-    public void setup() {
-        Dictionary<String, String> props = new Hashtable<>();
-        props.put(MAX_CACHED, Integer.toString(3));
-        props.put(SECS_TO_IDLE, Integer.toString(1));
-        props.put(SECS_TO_LIVE, Integer.toString(1));
-        Component c = mock(Component.class);
-        when(c.getServiceProperties()).thenReturn(props);
-        dts.init(c);
+    public void setup() throws ConfigurationException {
+        dts.init(mock(Component.class));
+        dts.updated(config);
     }
 
     @After

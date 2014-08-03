@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metatype:MetaData xmlns:metatype="http://www.osgi.org/xmlns/metatype/v1.0.0"
+    localization="OSGI-INF/metatype/metatype">
+    <OCD id="org.opendaylight.aaa.clients" name="%org.opendaylight.aaa.clients.name"
+        description="%org.opendaylight.aaa.clients.description">
+        <AD id="authorizedClients" type="String" default="dlux:secrete"
+            name="%org.opendaylight.aaa.clients.authorizedClients.name"
+            description="%org.opendaylight.aaa.clients.authorizedClients.description" />
+    </OCD>
+    <Designate pid="org.opendaylight.aaa.clients">
+        <Object ocdref="org.opendaylight.aaa.clients" />
+    </Designate>
+</metatype:MetaData>

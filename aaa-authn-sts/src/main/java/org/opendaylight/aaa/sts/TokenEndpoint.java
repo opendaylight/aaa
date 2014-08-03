@@ -32,6 +32,7 @@ import org.apache.oltu.oauth2.as.issuer.UUIDValueGenerator;
 import org.apache.oltu.oauth2.as.response.OAuthASResponse;
 import org.apache.oltu.oauth2.common.OAuth;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
+import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.OAuthResponse;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.apache.oltu.oauth2.common.message.types.TokenType;
@@ -39,14 +40,15 @@ import org.opendaylight.aaa.AuthenticationBuilder;
 import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.PasswordCredentialBuilder;
 import org.opendaylight.aaa.api.Authentication;
+import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.PasswordCredentials;
 
 /**
  * Secure Token Service (STS) endpoint.
- * 
+ *
  * @author liemmn
- * 
+ *
  */
 public class TokenEndpoint extends HttpServlet {
     private static final long serialVersionUID = 8272453849539659999L;
@@ -76,12 +78,20 @@ public class TokenEndpoint extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        if (req.getServletPath().equals(FEDERATION_ENDPOINT))
-            createRefreshToken(req, resp);
-        else if (req.getServletPath().equals(TOKEN_GRANT_ENDPOINT))
-            createAccessToken(req, resp);
-        else if (req.getServletPath().equals(TOKEN_REVOKE_ENDPOINT))
-            deleteAccessToken(req, resp);
+        try {
+            if (req.getServletPath().equals(FEDERATION_ENDPOINT))
+                createRefreshToken(req, resp);
+            else if (req.getServletPath().equals(TOKEN_GRANT_ENDPOINT))
+                createAccessToken(req, resp);
+            else if (req.getServletPath().equals(TOKEN_REVOKE_ENDPOINT))
+                deleteAccessToken(req, resp);
+        } catch (AuthenticationException e) {
+            error(resp, SC_UNAUTHORIZED, e.getMessage());
+        } catch (OAuthProblemException oe) {
+            error(resp, oe);
+        } catch (Throwable t) {
+            error(resp, t);
+        }
     }
 
     // Delete an access token
@@ -92,67 +102,62 @@ public class TokenEndpoint extends HttpServlet {
             if (ServiceLocator.INSTANCE.ts.delete(token.trim()))
                 resp.setStatus(SC_NO_CONTENT);
             else
-                error(resp, SC_UNAUTHORIZED, UNAUTHORIZED);
+                throw new AuthenticationException(UNAUTHORIZED);
         } else {
-            error(resp, SC_UNAUTHORIZED, UNAUTHORIZED);
+            throw new AuthenticationException(UNAUTHORIZED);
         }
     }
 
     // Create an access token
     private void createAccessToken(HttpServletRequest req,
-            HttpServletResponse resp) {
+            HttpServletResponse resp) throws OAuthSystemException,
+            OAuthProblemException, IOException {
         Claim claim = null;
         String clientId = null;
 
-        try {
-            OAuthRequest oauthRequest = new OAuthRequest(req);
-            // Any client credentials?
-            clientId = oauthRequest.getClientId();
-            if (clientId != null)
-                ServiceLocator.INSTANCE.cs.validate(clientId,
-                        oauthRequest.getClientSecret());
+        OAuthRequest oauthRequest = new OAuthRequest(req);
+        // Any client credentials?
+        clientId = oauthRequest.getClientId();
+        if (clientId != null)
+            ServiceLocator.INSTANCE.cs.validate(clientId,
+                    oauthRequest.getClientSecret());
 
-            // Credential request...
-            if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(
-                    GrantType.PASSWORD.toString())) {
-                PasswordCredentials pc = new PasswordCredentialBuilder()
-                        .setUserName(oauthRequest.getUsername())
-                        .setPassword(oauthRequest.getPassword()).build();
-                if (!oauthRequest.getScopes().isEmpty()) {
-                    String domain = oauthRequest.getScopes().iterator().next();
-                    claim = ServiceLocator.INSTANCE.da.authenticate(pc, domain);
-                }
-            } else if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(
-                    GrantType.REFRESH_TOKEN.toString())) {
-                // Refresh token...
-                String token = oauthRequest.getRefreshToken();
-                if (!oauthRequest.getScopes().isEmpty()) {
-                    String domain = oauthRequest.getScopes().iterator().next();
-                    // Authenticate...
-                    Authentication auth = ServiceLocator.INSTANCE.ts.get(token);
-                    if (auth != null && domain != null) {
-                        List<String> roles = ServiceLocator.INSTANCE.is
-                                .listRoles(auth.userId(), domain);
-                        if (!roles.isEmpty()) {
-                            ClaimBuilder cb = new ClaimBuilder(auth);
-                            cb.setDomain(domain); // scope domain
-                            // Add roles for the scoped domain
-                            for (String role : roles)
-                                cb.addRole(role);
-                            claim = cb.build();
-                        }
+        // Credential request...
+        if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(
+                GrantType.PASSWORD.toString())) {
+            PasswordCredentials pc = new PasswordCredentialBuilder()
+                    .setUserName(oauthRequest.getUsername())
+                    .setPassword(oauthRequest.getPassword()).build();
+            if (!oauthRequest.getScopes().isEmpty()) {
+                String domain = oauthRequest.getScopes().iterator().next();
+                claim = ServiceLocator.INSTANCE.da.authenticate(pc, domain);
+            }
+        } else if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(
+                GrantType.REFRESH_TOKEN.toString())) {
+            // Refresh token...
+            String token = oauthRequest.getRefreshToken();
+            if (!oauthRequest.getScopes().isEmpty()) {
+                String domain = oauthRequest.getScopes().iterator().next();
+                // Authenticate...
+                Authentication auth = ServiceLocator.INSTANCE.ts.get(token);
+                if (auth != null && domain != null) {
+                    List<String> roles = ServiceLocator.INSTANCE.is.listRoles(
+                            auth.userId(), domain);
+                    if (!roles.isEmpty()) {
+                        ClaimBuilder cb = new ClaimBuilder(auth);
+                        cb.setDomain(domain); // scope domain
+                        // Add roles for the scoped domain
+                        for (String role : roles)
+                            cb.addRole(role);
+                        claim = cb.build();
                     }
-                } else {
-                    error(resp, SC_BAD_REQUEST, DOMAIN_SCOPE_REQUIRED);
                 }
             } else {
-                // Support authorization code later...
-                error(resp, SC_NOT_IMPLEMENTED, NOT_IMPLEMENTED);
+                error(resp, SC_BAD_REQUEST, DOMAIN_SCOPE_REQUIRED);
             }
-        } catch (OAuthProblemException e) {
-            error(resp, e);
-        } catch (Exception e) {
-            error(resp, e);
+        } else {
+            // Support authorization code later...
+            error(resp, SC_NOT_IMPLEMENTED, NOT_IMPLEMENTED);
         }
 
         // Respond with OAuth token
@@ -161,55 +166,49 @@ public class TokenEndpoint extends HttpServlet {
 
     // Create a refresh token
     private void createRefreshToken(HttpServletRequest req,
-            HttpServletResponse resp) {
+            HttpServletResponse resp) throws OAuthSystemException, IOException {
         Claim claim = (Claim) req.getAttribute(AUTH_CLAIM);
         oauthRefreshTokenResponse(resp, claim);
     }
 
     // Build OAuth access token response from the given claim
     private void oauthAccessTokenResponse(HttpServletResponse resp,
-            Claim claim, String clientId) {
+            Claim claim, String clientId) throws OAuthSystemException,
+            IOException {
         if (claim == null) {
-            error(resp, SC_UNAUTHORIZED, UNAUTHORIZED);
-            return;
+            throw new AuthenticationException(UNAUTHORIZED);
         }
-        try {
-            String token = oi.accessToken();
-            OAuthResponse r = OAuthASResponse.tokenResponse(SC_CREATED)
-                    .setAccessToken(token)
-                    .setTokenType(TokenType.BEARER.toString())
-                    .setExpiresIn(Integer.toString(exp)).buildJSONMessage();
+        String token = oi.accessToken();
+        OAuthResponse r = OAuthASResponse.tokenResponse(SC_CREATED)
+                .setAccessToken(token)
+                .setTokenType(TokenType.BEARER.toString())
+                .setExpiresIn(Integer.toString(exp)).buildJSONMessage();
 
-            // Cache this token...
-            Authentication auth = new AuthenticationBuilder(claim)
-                    .setClientId(clientId).setExpiration(exp).build();
-            ServiceLocator.INSTANCE.ts.put(token, auth);
-            write(resp, r);
-        } catch (Exception e) {
-            error(resp, e);
-        }
+        // Cache this token...
+        Authentication auth = new AuthenticationBuilder(claim)
+                .setClientId(clientId).setExpiration(exp).build();
+        ServiceLocator.INSTANCE.ts.put(token, auth);
+        write(resp, r);
     }
 
     // Build OAuth refresh token response from the given claim mapped and
     // injected by the external IdP
-    private void oauthRefreshTokenResponse(HttpServletResponse resp, Claim claim) {
+    private void oauthRefreshTokenResponse(HttpServletResponse resp, Claim claim)
+            throws OAuthSystemException, IOException {
         if (claim == null) {
-            error(resp, SC_UNAUTHORIZED, UNAUTHORIZED);
-            return;
+            throw new AuthenticationException(UNAUTHORIZED);
         }
 
         String userName = claim.user();
         // Need to have at least a mapped username!
         if (userName == null) {
-            error(resp, SC_UNAUTHORIZED, UNAUTHORIZED);
-            return;
+            throw new AuthenticationException(UNAUTHORIZED);
         }
 
         // Need to have a corresponding user id in ODL
         String userId = ServiceLocator.INSTANCE.is.getUserId(userName);
         if (userId == null) {
-            error(resp, SC_UNAUTHORIZED, UNAUTHORIZED);
-            return;
+            throw new AuthenticationException(UNAUTHORIZED);
         }
 
         // Create an unscoped ODL context from the external claim
@@ -217,25 +216,22 @@ public class TokenEndpoint extends HttpServlet {
                 .setUserId(userId).setExpiration(exp).build();
 
         // Create OAuth response
-        try {
-            String token = oi.refreshToken();
-            OAuthResponse r = OAuthASResponse
-                    .tokenResponse(SC_CREATED)
-                    .setRefreshToken(token)
-                    .setExpiresIn(Integer.toString(exp))
-                    .setScope(
-                    // Use mapped domain if there is one, else list
-                    // all the ones that this user has access to
-                            claim.domain() != null ? claim.domain()
-                                    : listToString(ServiceLocator.INSTANCE.is
-                                            .listDomains(userId)))
-                    .buildJSONMessage();
-            // Cache this token...
-            ServiceLocator.INSTANCE.ts.put(token, auth);
-            write(resp, r);
-        } catch (Exception e) {
-            error(resp, e);
-        }
+        String token = oi.refreshToken();
+        OAuthResponse r = OAuthASResponse
+                .tokenResponse(SC_CREATED)
+                .setRefreshToken(token)
+                .setExpiresIn(Integer.toString(exp))
+                .setScope(
+                // Use mapped domain if there is one, else list
+                // all the ones that this user has access to
+                        claim.domain() != null ? claim.domain()
+                                : listToString(ServiceLocator.INSTANCE.is
+                                        .listDomains(userId)))
+                .buildJSONMessage();
+        // Cache this token...
+        ServiceLocator.INSTANCE.ts.put(token, auth);
+        write(resp, r);
+
     }
 
     // Space-delimited string from a list of strings
@@ -261,17 +257,17 @@ public class TokenEndpoint extends HttpServlet {
     // Emit an error OAuthResponse for the given OAuth-related exception
     private void error(HttpServletResponse resp, OAuthProblemException e) {
         try {
-            OAuthResponse r = OAuthResponse.errorResponse(SC_UNAUTHORIZED)
+            OAuthResponse r = OAuthResponse.errorResponse(SC_BAD_REQUEST)
                     .error(e).buildJSONMessage();
             write(resp, r);
-            resp.sendError(SC_UNAUTHORIZED);
+            resp.sendError(SC_BAD_REQUEST);
         } catch (Exception e1) {
             // Nothing to do here
         }
     }
 
     // Emit an error OAuthResponse for the given generic exception
-    private void error(HttpServletResponse resp, Exception e) {
+    private void error(HttpServletResponse resp, Throwable e) {
         try {
             OAuthResponse r = OAuthResponse
                     .errorResponse(SC_INTERNAL_SERVER_ERROR)

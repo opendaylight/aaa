@@ -8,11 +8,15 @@
  */
 package org.opendaylight.aaa;
 
+import java.util.Dictionary;
+
 import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.ClientService;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.service.cm.ManagedService;
 
 /**
  * Activator to register {@link AuthenticationService} with OSGi.
@@ -22,15 +26,21 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends DependencyActivatorBase {
 
+    private static final String CLIENT_PID = "org.opendaylight.aaa.clients";
+
     @Override
     public void init(BundleContext context, DependencyManager manager)
             throws Exception {
         manager.add(createComponent().setInterface(
                 new String[] { AuthenticationService.class.getName() }, null)
                 .setImplementation(AuthenticationManager.instance()));
+
+        ClientManager cm = new ClientManager();
         manager.add(createComponent().setInterface(
                 new String[] { ClientService.class.getName() }, null)
-                .setImplementation(ClientManager.class));
+                .setImplementation(cm));
+        context.registerService(ManagedService.class.getName(), cm,
+                addPid(ClientManager.defaults));
     }
 
     @Override
@@ -38,4 +48,8 @@ public class Activator extends DependencyActivatorBase {
             throws Exception {
     }
 
+    private Dictionary<String, ?> addPid(Dictionary<String, String> dict) {
+        dict.put(Constants.SERVICE_PID, CLIENT_PID);
+        return dict;
+    }
 }
