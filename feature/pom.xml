@@ -15,6 +15,8 @@
 
     <properties>
         <features.file>features.xml</features.file>
+        <clientCfg.file>clients.cfg</clientCfg.file>
+        <tokenCfg.file>tokens.cfg</tokenCfg.file>
     </properties>
 
     <build>
@@ -25,23 +27,6 @@
             </resource>
         </resources>
         <plugins>
-            <plugin>
-                <groupId>org.apache.karaf.tooling</groupId>
-                <artifactId>karaf-maven-plugin</artifactId>
-                <version>${karaf.version}</version>
-                <extensions>true</extensions>
-                <executions>
-                    <execution>
-                        <id>features-create-kar</id>
-                        <goals>
-                            <goal>features-create-kar</goal>
-                        </goals>
-                        <configuration>
-                            <featuresFile>${project.build.directory}/classes/${features.file}</featuresFile>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -68,24 +53,19 @@
                         <configuration>
                             <artifacts>
                                 <artifact>
-                                    <file>${project.build.directory}/classes/features.xml</file>
+                                    <file>${project.build.directory}/classes/${features.file}</file>
                                     <type>xml</type>
                                     <classifier>features</classifier>
                                 </artifact>
                                 <artifact>
-                                    <file>${project.build.directory}/classes/clients.cfg</file>
+                                    <file>${project.build.directory}/classes/${clientCfg.file}</file>
                                     <type>cfg</type>
                                     <classifier>clients</classifier>
                                 </artifact>
                                 <artifact>
-                                    <file>${project.build.directory}/classes/tokens.cfg</file>
+                                    <file>${project.build.directory}/classes/${tokenCfg.file}</file>
                                     <type>cfg</type>
                                     <classifier>tokens</classifier>
-                                </artifact>
-                                <artifact>
-                                    <file>${project.build.directory}/${project.artifactId}-${project.version}.kar</file>
-                                    <type>kar</type>
-                                    <classifier>features</classifier>
                                 </artifact>
                             </artifacts>
                         </configuration>
