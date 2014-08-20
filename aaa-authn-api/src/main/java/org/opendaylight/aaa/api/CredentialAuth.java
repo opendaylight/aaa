@@ -10,15 +10,18 @@ package org.opendaylight.aaa.api;
 
 /**
  * An interface for direct authentication with some given credentials.
+ *
+ * @author liemmn
  */
 public interface CredentialAuth<T extends Credentials> {
 
     /**
-     * Authenticate a claim with the given credentials and tenant scope.
+     * Authenticate a claim with the given credentials and domain scope.
      *
      * @param cred credentials
-     * @param tenant tenant name
+     * @param domain domain name, or null if not known
+     * @throws AuthenticationException if failed authentication
      * @return authenticated claim
      */
-    Claim authenticate(T cred, String tenant) throws AuthenticationException;
+    Claim authenticate(T cred, String domain) throws AuthenticationException;
 }
