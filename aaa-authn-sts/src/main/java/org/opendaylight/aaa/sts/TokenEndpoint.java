@@ -61,17 +61,10 @@ public class TokenEndpoint extends HttpServlet {
     static final String TOKEN_REVOKE_ENDPOINT = "/revoke";
     static final String FEDERATION_ENDPOINT = "/federation";
 
-    private static final String TOKEN_EXP_PARAM = "org.opendaylight.aaa.sts.TokenExpirationSecs";
-    private static final int DEFAULT_TOKEN_EXP_SECS = 3600;
-
-    private transient int exp;
     private transient OAuthIssuer oi;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        String s = config.getInitParameter(TOKEN_EXP_PARAM);
-        exp = (s == null || s.isEmpty()) ? DEFAULT_TOKEN_EXP_SECS : Integer
-                .valueOf(s);
         oi = new OAuthIssuerImpl(new UUIDValueGenerator());
     }
 
@@ -179,15 +172,17 @@ public class TokenEndpoint extends HttpServlet {
             throw new AuthenticationException(UNAUTHORIZED);
         }
         String token = oi.accessToken();
-        OAuthResponse r = OAuthASResponse.tokenResponse(SC_CREATED)
-                .setAccessToken(token)
-                .setTokenType(TokenType.BEARER.toString())
-                .setExpiresIn(Integer.toString(exp)).buildJSONMessage();
 
         // Cache this token...
         Authentication auth = new AuthenticationBuilder(claim)
-                .setClientId(clientId).setExpiration(exp).build();
+                .setClientId(clientId).setExpiration(tokenExpiration()).build();
         ServiceLocator.INSTANCE.ts.put(token, auth);
+
+        OAuthResponse r = OAuthASResponse.tokenResponse(SC_CREATED)
+                .setAccessToken(token)
+                .setTokenType(TokenType.BEARER.toString())
+                .setExpiresIn(Long.toString(auth.expiration()))
+                .buildJSONMessage();
         write(resp, r);
     }
 
@@ -213,14 +208,14 @@ public class TokenEndpoint extends HttpServlet {
 
         // Create an unscoped ODL context from the external claim
         Authentication auth = new AuthenticationBuilder(claim)
-                .setUserId(userId).setExpiration(exp).build();
+                .setUserId(userId).setExpiration(tokenExpiration()).build();
 
         // Create OAuth response
         String token = oi.refreshToken();
         OAuthResponse r = OAuthASResponse
                 .tokenResponse(SC_CREATED)
                 .setRefreshToken(token)
-                .setExpiresIn(Integer.toString(exp))
+                .setExpiresIn(Long.toString(auth.expiration()))
                 .setScope(
                 // Use mapped domain if there is one, else list
                 // all the ones that this user has access to
@@ -232,6 +227,11 @@ public class TokenEndpoint extends HttpServlet {
         ServiceLocator.INSTANCE.ts.put(token, auth);
         write(resp, r);
 
+    }
+
+    // Token expiration
+    private long tokenExpiration() {
+        return ServiceLocator.INSTANCE.ts.tokenExpiration();
     }
 
     // Space-delimited string from a list of strings

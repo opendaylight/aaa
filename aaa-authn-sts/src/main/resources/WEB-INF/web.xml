@@ -6,10 +6,6 @@
     <servlet>
         <servlet-name>STS</servlet-name>
         <servlet-class>org.opendaylight.aaa.sts.TokenEndpoint</servlet-class>
-        <init-param>
-            <param-name>org.opendaylight.aaa.sts.TokenExpirationSecs</param-name>
-            <param-value>3600</param-value>
-        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>

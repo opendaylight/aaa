@@ -37,7 +37,7 @@ import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
 
 public class TokenEndpointTest {
-    private static final String TOKEN_TIMEOUT_SECS = "10";
+    private static final long TOKEN_TIMEOUT_SECS = 10;
     private static final String CONTEXT = "/oauth2";
     private static final String DIRECT_AUTH = "grant_type=password&username=admin&password=odl&scope=pepsi&client_id=dlux&client_secret=secrete";
     private static final String REFRESH_TOKEN = "grant_type=refresh_token&refresh_token=whateverisgood&scope=pepsi";
@@ -52,15 +52,9 @@ public class TokenEndpointTest {
         server.setContextPath(CONTEXT);
 
         // Add our servlet under test
-        server.addServlet(TokenEndpoint.class, "/federation").setInitParameter(
-                "org.opendaylight.aaa.sts.TokenExpirationSecs",
-                TOKEN_TIMEOUT_SECS);
-        server.addServlet(TokenEndpoint.class, "/revoke").setInitParameter(
-                "org.opendaylight.aaa.sts.TokenExpirationSecs",
-                TOKEN_TIMEOUT_SECS);
-        server.addServlet(TokenEndpoint.class, "/token").setInitParameter(
-                "org.opendaylight.aaa.sts.TokenExpirationSecs",
-                TOKEN_TIMEOUT_SECS);
+        server.addServlet(TokenEndpoint.class, "/federation");
+        server.addServlet(TokenEndpoint.class, "/revoke");
+        server.addServlet(TokenEndpoint.class, "/token");
 
         // Add ClaimAuth filter
         server.addFilter(ClaimAuthFilter.class, "/federation", 0);
@@ -77,6 +71,8 @@ public class TokenEndpointTest {
     @Before
     public void setup() {
         mockServiceLocator();
+        when(ServiceLocator.INSTANCE.ts.tokenExpiration()).thenReturn(
+                TOKEN_TIMEOUT_SECS);
     }
 
     @After
@@ -175,12 +171,12 @@ public class TokenEndpointTest {
         assertTrue(resp.getContent().contains("expires_in\":10"));
         assertTrue(resp.getContent().contains("Bearer"));
     }
-    
+
     @Test
     public void testDeleteToken() throws Exception {
         when(ServiceLocator.INSTANCE.ts.delete("token_to_be_deleted"))
                 .thenReturn(true);
-        
+
         HttpTester req = new HttpTester();
         req.setMethod("POST");
         req.setHeader("Content-Type", "application/x-www-form-urlencoded");

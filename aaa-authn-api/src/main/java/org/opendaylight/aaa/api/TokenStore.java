@@ -12,4 +12,6 @@ public interface TokenStore {
     Authentication get(String token);
 
     boolean delete(String token);
+
+    long tokenExpiration();
 }
