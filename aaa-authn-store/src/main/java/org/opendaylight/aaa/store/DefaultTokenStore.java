@@ -1,5 +1,6 @@
 package org.opendaylight.aaa.store;
 
+import java.io.File;
 import java.lang.management.ManagementFactory;
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -34,6 +35,7 @@ public class DefaultTokenStore implements TokenStore, ManagedService {
 
     private static final String TOKEN_CACHE_MANAGER = "org.opendaylight.aaa";
     private static final String TOKEN_CACHE = "tokens";
+    private static final String EHCACHE_XML = "etc/ehcache.xml";
 
     static final String MAX_CACHED_MEMORY = "maxCachedTokensInMemory";
     static final String MAX_CACHED_DISK = "maxCachedTokensOnDisk";
@@ -56,13 +58,15 @@ public class DefaultTokenStore implements TokenStore, ManagedService {
     private Cache tokens;
 
     // This should be a singleton
-    DefaultTokenStore() {
-    }
+    DefaultTokenStore() {}
 
     // Called by DM when all required dependencies are satisfied.
     void init(Component c) {
-        logger.info("Initializing token store...");
-        CacheManager cm = CacheManager.getInstance();
+        File ehcache = new File(EHCACHE_XML);
+        logger.info("Initializing token store... " + ehcache.exists());
+
+        CacheManager cm = ehcache.exists() ? CacheManager.create(ehcache
+                .getAbsolutePath()) : CacheManager.getInstance();
         cm.setName(TOKEN_CACHE_MANAGER);
 
         tokens = new Cache(new CacheConfiguration(TOKEN_CACHE,
@@ -99,6 +103,11 @@ public class DefaultTokenStore implements TokenStore, ManagedService {
     @Override
     public boolean delete(String token) {
         return tokens.remove(token);
+    }
+
+    @Override
+    public long tokenExpiration() {
+        return tokens.getCacheConfiguration().getTimeToLiveSeconds();
     }
 
     @Override
