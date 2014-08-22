@@ -25,9 +25,19 @@ Build it:
 
 ### Installing
 
-AAA installs into an existing Opendaylight controller installation.  If you don't have an Opendaylight installation, please refer to this [page](https://wiki.opendaylight.org/view/OpenDaylight_Controller:Installation).
+AAA installs into an existing Opendaylight controller Karaf installation.  If you don't have an Opendaylight installation, please refer to this [page](https://wiki.opendaylight.org/view/OpenDaylight_Controller:Installation).
 
-    ./install <your controller installation dir>/distribution/opendaylight/target/distribution.opendaylight-?.?.?-SNAPSHOT-osgipackage/opendaylight
+Start the controller Karaf container:
+
+	bin/karaf
+
+Install AAA repository from the Karaf shell:
+
+	repo-add mvn:org.opendaylight.aaa/features-aaa/0.1.0-SNAPSHOT/xml/features
+
+Install all AAA features:
+
+	feature:install odl-aaa-all
 
 ### Protecting your REST/RestConf resources
 
@@ -58,7 +68,7 @@ Rebuild and re-install your REST resource.
 
 Once the installation finishes, one can authenticates with the Opendaylight controller by presenting a username/password and a domain name (scope) to be logged into:
 
-    curl -s -d 'grant_type=password&username=admin&password=odl&scope=pepsi' http://localhost:8080/oauth2/token
+    curl -s -d 'grant_type=password&username=admin&password=odl&scope=pepsi' http://<controller>:<port>/oauth2/token
 
 Upon successful authentication, the controller returns an access token with a configurable expiration in seconds, something similar to the followings:
 
@@ -66,7 +76,7 @@ Upon successful authentication, the controller returns an access token with a co
 
 The access token can then be used to access protected resources on the controller by passing it along in the standard HTTP Authorization header with the resource request.  Example:
 
-    curl -s -H 'Authorization: Bearer d772d85e-34c7-3099-bea5-cfafd3c747cb' http://localhost:8080/restconf/operational/opendaylight-inventory:nodes
+    curl -s -H 'Authorization: Bearer d772d85e-34c7-3099-bea5-cfafd3c747cb' http://<controller>:<port>/restconf/operational/opendaylight-inventory:nodes
 
 ## Framework Overview
 
