@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa82b9bf_21578159",
+        "filename": "aaa-idp-mapping/src/main/java/org/opendaylight/aaa/idp_mapping/IdpJson.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-08-22T18:17:42Z",
+      "side": 1,
+      "message": "Minor comment:  Use Java typing to avoid a compilation warning in Eclipse:\n\nprivate List\u003cObject\u003e loadJsonArray(JsonParser parser, Event event) {\n    List\u003cObject\u003e list \u003d new ArrayList\u003c\u003e();",
+      "revId": "1e1bc1ee568fb472c09dbbc5d6cdb4b4c5625c4f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_4152c567",
+        "filename": "aaa-idp-mapping/src/main/java/org/opendaylight/aaa/idp_mapping/IdpJson.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-08-22T18:17:42Z",
+      "side": 1,
+      "message": "Same comment as above",
+      "revId": "1e1bc1ee568fb472c09dbbc5d6cdb4b4c5625c4f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_81d3edd3",
+        "filename": "aaa-idp-mapping/src/main/java/org/opendaylight/aaa/idp_mapping/IdpJson.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-08-22T18:17:42Z",
+      "side": 1,
+      "message": "Favor the use of custom Exception (like your InvalidTypeException for example), rather than generic Exception, so we can catch and handle them at the upper layer generically.",
+      "revId": "1e1bc1ee568fb472c09dbbc5d6cdb4b4c5625c4f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_21dea1dd",
+        "filename": "aaa-idp-mapping/src/main/java/org/opendaylight/aaa/idp_mapping/IdpJson.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-08-22T18:17:42Z",
+      "side": 1,
+      "message": "Similar comment as above",
+      "revId": "1e1bc1ee568fb472c09dbbc5d6cdb4b4c5625c4f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_41d965f1",
+        "filename": "aaa-idp-mapping/src/main/java/org/opendaylight/aaa/idp_mapping/InvalidRuleException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-08-22T18:17:42Z",
+      "side": 1,
+      "message": "Extends RuntimeException instead, so intermediate services do not need to handle them (code clutter) and just allow the exception to bubble all the way up to a generic layer that can handle them.\n\nAlso, don\u0027t forget to add a private static final long serialVersionUID \u003d 1L;\n\nsince Exceptions in Java are Serializable.",
+      "revId": "1e1bc1ee568fb472c09dbbc5d6cdb4b4c5625c4f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_c1f4955c",
+        "filename": "aaa-idp-mapping/src/main/java/org/opendaylight/aaa/idp_mapping/RuleProcessor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-08-22T18:17:42Z",
+      "side": 1,
+      "message": "Since this is a package private class, consider putting it in a separate Java file, so this file does not get so big.  If it is private, then having it in the same file is ok.",
+      "revId": "1e1bc1ee568fb472c09dbbc5d6cdb4b4c5625c4f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_61e7c9ac",
+        "filename": "aaa-idp-mapping/src/main/java/org/opendaylight/aaa/idp_mapping/RuleProcessor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-08-22T18:17:42Z",
+      "side": 1,
+      "message": "Looks like these public static variables are not referenced outside this class...  consider limiting them to the narrowest scope possible (private).",
+      "revId": "1e1bc1ee568fb472c09dbbc5d6cdb4b4c5625c4f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
