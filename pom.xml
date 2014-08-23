@@ -26,6 +26,9 @@
     <module>aaa-idmlight</module>
     <module>aaa-authz</module>
     <module>feature</module>
+    <!-- Does not work on Jenkins but work locally?!? 
+    <module>aaa-it</module>
+    -->
   </modules>
 
   <build>
