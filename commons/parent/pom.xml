@@ -25,7 +25,7 @@
       <slf4j.version>1.7.2</slf4j.version>
       <logback.version>1.0.9</logback.version>
       <osgi.core.version>5.0.0</osgi.core.version>
-      <exam.version>3.0.0</exam.version>
+      <exam.version>4.1.0</exam.version>
       <controller.model.version>1.1-SNAPSHOT</controller.model.version>
       <nexusproxy>http://nexus.opendaylight.org/content</nexusproxy>
       <ietf.inet.types.version>2010.09.24.4-SNAPSHOT</ietf.inet.types.version>
