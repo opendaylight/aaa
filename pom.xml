@@ -26,6 +26,7 @@
     <module>aaa-idmlight</module>
     <module>aaa-authz</module>
     <module>feature</module>
+    <module>aaa-it</module>
   </modules>
 
   <build>
