@@ -155,12 +155,18 @@
             <id>opendaylight-public</id>
             <name>opendaylight-public</name>
             <url>http://nexus.opendaylight.org/content/groups/public/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
         <!-- OpenDayLight Released artifact -->
         <repository>
             <id>opendaylight-release</id>
             <name>opendaylight-release</name>
             <url>http://nexus.opendaylight.org/content/repositories/opendaylight.release/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
         <!-- OpenDayLight Snapshot artifact -->
         <repository>
@@ -175,22 +181,42 @@
 
     <pluginRepositories>
         <pluginRepository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
             <id>opendaylight-public</id>
             <name>opendaylight-public</name>
             <url>http://nexus.opendaylight.org/content/groups/public/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </pluginRepository>
         <pluginRepository>
             <id>opendaylight-release</id>
             <name>central2</name>
             <url>http://nexus.opendaylight.org/content/repositories/opendaylight.release/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </pluginRepository>
         <pluginRepository>
             <id>opendaylight-snapshot</id>
             <name>central2</name>
             <url>http://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </pluginRepository>
     </pluginRepositories>
+
+    <distributionManagement>
+        <!-- OpenDayLight Released artifact -->
+        <repository>
+            <id>opendaylight-release</id>
+            <url>http://nexus.opendaylight.org/content/repositories/opendaylight.release/</url>
+        </repository>
+        <!-- OpenDayLight Snapshot artifact -->
+        <snapshotRepository>
+            <id>opendaylight-snapshot</id>
+            <url>http://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>

@@ -32,4 +32,11 @@ public interface AuthenticationService {
      * Clear the current security context.
      */
     void clear();
+
+    /**
+     * Checks to see if authentication is enabled.
+     *
+     * @return true if it is, false otherwise
+     */
+    boolean isAuthEnabled();
 }

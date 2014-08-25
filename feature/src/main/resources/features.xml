@@ -35,7 +35,7 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-store/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}</bundle>
-        <configfile finalname="/etc/org.opendaylight.aaa.clients.cfg">mvn:org.opendaylight.aaa/features-aaa/${project.version}/cfg/clients</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/features-aaa/${project.version}/cfg/authn</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/features-aaa/${project.version}/cfg/tokens</configfile>
     </feature>
 
