@@ -26,7 +26,7 @@ import org.osgi.service.cm.ManagedService;
  */
 public class Activator extends DependencyActivatorBase {
 
-    private static final String CLIENT_PID = "org.opendaylight.aaa.clients";
+    private static final String AUTHN_PID = "org.opendaylight.aaa.authn";
 
     @Override
     public void init(BundleContext context, DependencyManager manager)
@@ -41,6 +41,9 @@ public class Activator extends DependencyActivatorBase {
                 .setImplementation(cm));
         context.registerService(ManagedService.class.getName(), cm,
                 addPid(ClientManager.defaults));
+        context.registerService(ManagedService.class.getName(),
+                AuthenticationManager.instance(),
+                addPid(ClientManager.defaults));
     }
 
     @Override
@@ -49,7 +52,7 @@ public class Activator extends DependencyActivatorBase {
     }
 
     private Dictionary<String, ?> addPid(Dictionary<String, String> dict) {
-        dict.put(Constants.SERVICE_PID, CLIENT_PID);
+        dict.put(Constants.SERVICE_PID, AUTHN_PID);
         return dict;
     }
 }

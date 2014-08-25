@@ -40,29 +40,33 @@ public class TokenAuthFilter implements ContainerRequestFilter {
 
     @Override
     public ContainerRequest filter(ContainerRequest request) {
-        Map<String, List<String>> headers = request.getRequestHeaders();
+        // Are we doing authentication or not?
+        if (ServiceLocator.INSTANCE.as.isAuthEnabled()) {
+            Map<String, List<String>> headers = request.getRequestHeaders();
 
-        // Go through and invoke other TokenAuth first...
-        for (TokenAuth ta : ServiceLocator.INSTANCE.ta) {
-            try {
-                Authentication auth = ta.validate(headers);
-                if (auth != null) {
-                    ServiceLocator.INSTANCE.as.set(auth);
-                    return request;
+            // Go through and invoke other TokenAuth first...
+            for (TokenAuth ta : ServiceLocator.INSTANCE.ta) {
+                try {
+                    Authentication auth = ta.validate(headers);
+                    if (auth != null) {
+                        ServiceLocator.INSTANCE.as.set(auth);
+                        return request;
+                    }
+                } catch (AuthenticationException ae) {
+                    throw unauthorized();
                 }
-            } catch (AuthenticationException ae) {
+            }
+
+            // OK, last chance to validate token...
+            try {
+                OAuthAccessResourceRequest or = new OAuthAccessResourceRequest(
+                        httpRequest, ParameterStyle.HEADER);
+                validate(or.getAccessToken());
+            } catch (OAuthSystemException | OAuthProblemException e) {
                 throw unauthorized();
             }
         }
 
-        // OK, last chance to validate token...
-        try {
-            OAuthAccessResourceRequest or = new OAuthAccessResourceRequest(
-                    httpRequest, ParameterStyle.HEADER);
-            validate(or.getAccessToken());
-        } catch (OAuthSystemException | OAuthProblemException e) {
-            throw unauthorized();
-        }
         return request;
     }
 

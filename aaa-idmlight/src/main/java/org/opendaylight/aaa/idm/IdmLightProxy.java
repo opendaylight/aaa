@@ -33,7 +33,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
                 && creds.password().equalsIgnoreCase("odl")) {
             ClaimBuilder claim = new ClaimBuilder();
             claim.setUserId("1234").setUser(creds.username()).addRole("admin")
-                    .addRole("user").setDomain("coke").build();
+                    .addRole("user").setDomain("sdn").build();
             return claim.build();
         }
         throw new AuthenticationException("Bad username or password");

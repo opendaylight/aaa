@@ -51,6 +51,7 @@ public class TokenAuthTest extends JerseyTest {
         ServiceLocator.INSTANCE.ts = mock(TokenStore.class);
         when(ServiceLocator.INSTANCE.ts.get(GOOD_TOKEN)).thenReturn(auth);
         when(ServiceLocator.INSTANCE.ts.get(BAD_TOKEN)).thenReturn(null);
+        when(ServiceLocator.INSTANCE.as.isAuthEnabled()).thenReturn(Boolean.TRUE);
     }
 
     @Test()

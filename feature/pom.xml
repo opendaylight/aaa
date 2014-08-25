@@ -15,9 +15,25 @@
 
     <properties>
         <features.file>features.xml</features.file>
-        <clientCfg.file>clients.cfg</clientCfg.file>
+        <authnCfg.file>authn.cfg</authnCfg.file>
         <tokenCfg.file>tokens.cfg</tokenCfg.file>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.opendaylight.controller</groupId>
+            <artifactId>features-mdsal</artifactId>
+            <version>${mdsal.version}</version>
+            <classifier>features</classifier>
+            <type>xml</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.oltu.oauth2</groupId>
+            <artifactId>org.apache.oltu.oauth2.client</artifactId>
+            <version>${oauth.version}</version>
+            <scope>test</scope>
+        </dependency>        
+    </dependencies>
 
     <build>
         <resources>
@@ -58,9 +74,9 @@
                                     <classifier>features</classifier>
                                 </artifact>
                                 <artifact>
-                                    <file>${project.build.directory}/classes/${clientCfg.file}</file>
+                                    <file>${project.build.directory}/classes/${authnCfg.file}</file>
                                     <type>cfg</type>
-                                    <classifier>clients</classifier>
+                                    <classifier>authn</classifier>
                                 </artifact>
                                 <artifact>
                                     <file>${project.build.directory}/classes/${tokenCfg.file}</file>
