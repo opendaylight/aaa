@@ -8,19 +8,37 @@
  */
 package org.opendaylight.aaa;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationService;
+import org.osgi.service.cm.ConfigurationException;
+import org.osgi.service.cm.ManagedService;
 
 /**
  * An {@link InheritableThreadLocal}-based {@link AuthenticationService}.
  *
  * @author liemmn
  */
-public class AuthenticationManager implements AuthenticationService {
+public class AuthenticationManager implements AuthenticationService,
+        ManagedService {
+    private static final String AUTH_ENABLED_ERR = "Error setting authEnabled";
+
+    static final String AUTH_ENABLED = "authEnabled";
+    static final Dictionary<String, String> defaults = new Hashtable<>();
+    static {
+        defaults.put(AUTH_ENABLED, Boolean.FALSE.toString());
+    }
+
+    // In non-Karaf environments, authEnabled is set to false by default
+    private static volatile boolean authEnabled = false;
+
     private final static AuthenticationManager am = new AuthenticationManager();
     private final ThreadLocal<Authentication> auth = new InheritableThreadLocal<>();
 
-    private AuthenticationManager() {}
+    private AuthenticationManager() {
+    }
 
     static AuthenticationManager instance() {
         return am;
@@ -39,6 +57,21 @@ public class AuthenticationManager implements AuthenticationService {
     @Override
     public void clear() {
         auth.remove();
+    }
+
+    @Override
+    public void updated(Dictionary<String, ?> props)
+            throws ConfigurationException {
+        try {
+            authEnabled = Boolean.valueOf((String) props.get(AUTH_ENABLED));
+        } catch (Throwable t) {
+            throw new ConfigurationException(AUTH_ENABLED, AUTH_ENABLED_ERR);
+        }
+    }
+
+    @Override
+    public boolean isAuthEnabled() {
+        return authEnabled;
     }
 
 }
