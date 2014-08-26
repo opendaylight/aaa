@@ -59,7 +59,7 @@ public class AAATest {
         OAuthClientRequest request = OAuthClientRequest
                 .tokenLocation(TOKEN_URL).setGrantType(GrantType.PASSWORD)
                 .setClientId("dlux").setClientSecret("secrete")
-                .setUsername("admin").setPassword("odl").setScope("sdn")
+                .setUsername("admin").setPassword("admin").setScope("sdn")
                 .buildQueryMessage();
         OAuthClient client = new OAuthClient(new URLConnectionClient());
         OAuthJSONAccessTokenResponse resp = client.accessToken(request);
@@ -68,7 +68,7 @@ public class AAATest {
 
         // Test credential auth
         PasswordCredentials creds = new PasswordCredentialBuilder()
-                .setUserName("admin").setPassword("odl").build();
+                .setUserName("admin").setPassword("admin").build();
         Claim claim = ca.authenticate(creds, "sdn");
         assertEquals("admin", claim.user());
         assertFalse(claim.roles().isEmpty());

@@ -39,7 +39,7 @@ import org.opendaylight.aaa.api.TokenStore;
 public class TokenEndpointTest {
     private static final long TOKEN_TIMEOUT_SECS = 10;
     private static final String CONTEXT = "/oauth2";
-    private static final String DIRECT_AUTH = "grant_type=password&username=admin&password=odl&scope=pepsi&client_id=dlux&client_secret=secrete";
+    private static final String DIRECT_AUTH = "grant_type=password&username=admin&password=admin&scope=pepsi&client_id=dlux&client_secret=secrete";
     private static final String REFRESH_TOKEN = "grant_type=refresh_token&refresh_token=whateverisgood&scope=pepsi";
 
     private static final Claim claim = new ClaimBuilder().setUser("bob")

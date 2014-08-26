@@ -31,7 +31,7 @@ import com.sun.jersey.core.util.Base64;
 
 public class HttpBasicAuthTest {
     private static final String USERNAME = "admin";
-    private static final String PASSWORD = "odl";
+    private static final String PASSWORD = "admin";
     private HttpBasicAuth auth;
 
     @SuppressWarnings("unchecked")

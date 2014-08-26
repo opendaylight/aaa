@@ -68,7 +68,7 @@ Rebuild and re-install your REST resource.
 
 Once the installation finishes, one can authenticates with the Opendaylight controller by presenting a username/password and a domain name (scope) to be logged into:
 
-    curl -s -d 'grant_type=password&username=admin&password=odl&scope=sdn' http://<controller>:<port>/oauth2/token
+    curl -s -d 'grant_type=password&username=admin&password=admin&scope=sdn' http://<controller>:<port>/oauth2/token
 
 Upon successful authentication, the controller returns an access token with a configurable expiration in seconds, something similar to the followings:
 

@@ -30,7 +30,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
     public Claim authenticate(PasswordCredentials creds, String tenant) {
         // TODO Get this from the database/REST
         if (creds.username().equalsIgnoreCase("admin")
-                && creds.password().equalsIgnoreCase("odl")) {
+                && creds.password().equalsIgnoreCase("admin")) {
             ClaimBuilder claim = new ClaimBuilder();
             claim.setUserId("1234").setUser(creds.username()).addRole("admin")
                     .addRole("user").setDomain("sdn").build();
