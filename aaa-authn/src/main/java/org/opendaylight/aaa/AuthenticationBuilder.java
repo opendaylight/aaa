@@ -39,6 +39,15 @@ public class AuthenticationBuilder extends ClaimBuilder {
     }
 
     @Override
+    protected void setClaim(Claim claim) {
+        ma.clientId = claim.clientId();
+        ma.userId = claim.userId();
+        ma.user = claim.user();
+        ma.domain = claim.domain();
+        ma.roles.addAll(claim.roles());
+    }
+
+    @Override
     public AuthenticationBuilder setClientId(String clientId) {
         ma.clientId = clientId;
         return this;
