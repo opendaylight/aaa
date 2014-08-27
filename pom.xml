@@ -27,6 +27,7 @@
     <module>aaa-idmlight</module>
     <module>aaa-authz</module>
     <module>aaa-idp-mapping</module>
+    <module>aaa-authn-odl-plugin</module>
     <module>features</module>
     <module>distribution-karaf</module>
     <!-- FIXME: Add integration tests back in
