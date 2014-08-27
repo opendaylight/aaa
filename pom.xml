@@ -26,10 +26,9 @@
     <module>aaa-authn-basic</module>
     <module>aaa-idmlight</module>
     <module>aaa-authz</module>
-    <module>feature</module>
-    <!-- Not working on Jenkins :\
+    <module>features</module>
     <module>aaa-it</module>
-    -->
+    <module>distribution-karaf</module>
   </modules>
 
   <build>
