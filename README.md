@@ -1,6 +1,6 @@
 ## Welcome to the Opendaylight AAA Project!
 
-This project is aimed at providing a flexible, pluggable framework with out-of-the-box capabilities for:
+This project is really aimed at providing a flexible, pluggable framework with out-of-the-box capabilities for:
 
 * *Authentication*:  Means to authenticate the identity of both human and machine users (direct or federated).
 * *Authorization*:  Means to authorize human or machine user access to resources including RPCs, notification subscriptions, and subsets of the datatree.
