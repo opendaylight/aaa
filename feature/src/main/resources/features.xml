@@ -17,14 +17,14 @@
         <bundle>mvn:org.opendaylight.controller.thirdparty/com.sun.jersey.jersey-servlet/1.17</bundle>
         <bundle>mvn:com.sun.jersey/jersey-core/1.17</bundle>
         <bundle>mvn:com.sun.jersey/jersey-server/1.17</bundle>
-        
+
         <!-- OSGi -->
         <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/3.1.0</bundle>
-        
+
         <!-- EhCache -->
         <bundle>mvn:net.sf.ehcache/ehcache/2.8.3</bundle>
         <bundle>mvn:org.apache.geronimo.specs/geronimo-jta_1.1_spec/1.1.1</bundle>
-        
+
         <!-- OAuth -->
         <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.common/1.0.0</bundle>
         <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.authzserver/1.0.0</bundle>
@@ -35,7 +35,8 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-store/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/${project.version}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}</bundle>        
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-odl-plugin/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}</bundle>
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/features-aaa/${project.version}/cfg/authn</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/features-aaa/${project.version}/cfg/tokens</configfile>
     </feature>
