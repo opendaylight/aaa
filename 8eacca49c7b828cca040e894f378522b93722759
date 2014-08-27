@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa82b9bf_e904174b",
+        "filename": "feature/src/main/resources/features.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-08-27T17:29:26Z",
+      "side": 1,
+      "message": "To avoid dependency on netconf-auth from the authn feature, there are a couple of ways:\n1) move the plugin into its own feature, OR\n2) have direct dependency from netconf-auth on the authn feature, which should be fine since there is no dependency from authn on the controller (suggested in the email)",
+      "revId": "8eacca49c7b828cca040e894f378522b93722759",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
