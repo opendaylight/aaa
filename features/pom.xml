@@ -151,6 +151,11 @@
             <classifier>features</classifier>
             <type>xml</type>
         </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-authz-model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <!-- test to validate features.xml -->
         <dependency>
