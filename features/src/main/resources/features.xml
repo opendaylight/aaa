@@ -14,6 +14,7 @@
 
     <repository>mvn:org.opendaylight.yangtools/features-yangtools/0.6.2-SNAPSHOT/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-netconf/${netconf.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.controller/features-mdsal/${mdsal.version}/xml/features</repository>
 
     <feature name='odl-aaa-all' description='OpenDaylight :: AAA :: All Features'
         version='${project.version}'>
@@ -86,7 +87,11 @@
         <feature version='${yangtools.version}'>odl-yangtools-common</feature>
         <feature version='${yangtools.version}'>odl-yangtools-binding</feature>
         <feature version='${project.version}'>odl-aaa-authn</feature>
+        <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
         <bundle>mvn:org.opendaylight.aaa/aaa-authz-model/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authz-service/${project.version}</bundle>
+        <configfile finalname="${config.configfile.directory}/${config.authz.service.configfile}">mvn:org.opendaylight.aaa/authz-service-config/${project.version}/xml/config1</configfile>
+        <configfile finalname="${config.configfile.directory}/${config.restconf.configfile}">mvn:org.opendaylight.aaa/authz-service-config/${project.version}/xml/config2</configfile>
     </feature>
 
 </features>
