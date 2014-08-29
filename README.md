@@ -116,13 +116,44 @@ In this case, we use the IdP token directly as an access token to access protect
 
 ### Authorization & Access Control
 
-Upon successful authentication, an authentication context is created and is available for access via the OSGi service `org.opendaylight.aaa.api.AuthenticationService`.  The authentication context consists of the following information:
+Authorization is implemented via the aaa-authz modules, comprising of a yang based AuthZ policy schema, an MD-SAL AuthZ capable broker, an AuthZ
+service engine invoked by the broker and executing policies.
 
-* UserId/Name
-* DomainId/Name
-* Roles
+Initially the AuthZ functionality is only able to handle RestConf requests, and to do so the Restconf connnector configuration must
+ be explicitly modified as follows:
 
-Based on the current authentication context, it is the responsibility of the OSGi applications within the controller to provide the appropriate access control, via bespoke logic or the MD-SAL security framework.  
+ 0. Compile and install AAA as per the above instructions
+ 1. Locate and open in an editor the default 10-rest-connector.xml configuration file. Default location is at 'configuration/initial'
+ 2. Change the <dom-broker> configuration element
+    FROM:
+                    <dom-broker>
+                         <type xmlns:dom="urn:opendaylight:params:xml:ns:yang:controller:md:sal:dom">dom:dom-broker-osgi-registry</type>
+                         <name>dom-broker</name>
+                     </dom-broker>
+    TO:
+                    <dom-broker>
+                         <type xmlns:dom="urn:opendaylight:params:xml:ns:yang:controller:md:sal:dom">dom:dom-broker-osgi-registry</type>
+                         <name>authz-connector-default</name>
+                     </dom-broker>
+  3. Restart ODL
+
+Default authorization are loaded from the configuration subsystem (TODO: Provide a default set)
+They are accessible and editable via the restconf interface at: http://<odl address>/restconf/configuration/authorization-schema:simple-authorization/
+
+The schema for policies is a list consisting of the following items:
+
+  * Service : The application service that is the initiator of the request triggering an authorization check, eg Restconf.
+  NOTE: The service field is currently not enforced, and a wildcard "*" is recommended.
+  * Action: The action that is being authorized. Maps to one of: { create; read; update; delete; execute; subscribe; any }
+  * Resource: The URI or Yang instance id of the resource, including wildcards (see examples below)
+  * Role: The AuthN derived user role
+
+Some examples of resources are
+  Data : /operational/opendaylight-inventory:nodes/node/openflow:1/node-connector/openflow:1:1
+  Wildcarded data: /configuration/opendaylight-inventory:nodes/node/*/node-connector/*
+  RPC: /operations/example-ops:reboot
+  Wildcarded RPC: /operations/example-ops:*
+  Notification: /notifications/example-ops:startup
 
 *More on MD-SAL authorization later...*
 
