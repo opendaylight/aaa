@@ -61,8 +61,9 @@
         <bundle>wrap:mvn:org.xerial/sqlite-jdbc/3.7.2</bundle>
 
 
-        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/features-aaa/${project.version}/cfg/authn</configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/features-aaa/${project.version}/cfg/tokens</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/${project.version}/cfg/config</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/aaa-authn-store/${project.version}/cfg/config</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-sts/${project.version}/cfg/config</configfile>
     </feature>
 
     <feature name='odl-aaa-authn-sssd' description='OpenDaylight :: AAA :: SSSD Federation'

@@ -43,7 +43,7 @@ public class Activator extends DependencyActivatorBase {
                 addPid(ClientManager.defaults));
         context.registerService(ManagedService.class.getName(),
                 AuthenticationManager.instance(),
-                addPid(ClientManager.defaults));
+                addPid(AuthenticationManager.defaults));
     }
 
     @Override

@@ -26,8 +26,8 @@ public interface ClaimAuth {
      * If there is no applicable claim information for the current
      * implementation, this method should return a <code>null</code>.
      * <p>
-     * In-bound claims are extracted from HttpServletRequest attributes and
-     * headers.
+     * In-bound claims are extracted from HttpServletRequest attributes,
+     * headers, and CGI variables as documented per Servlet specs.
      *
      * @param claim
      *            opaque claim
