@@ -42,7 +42,6 @@
         <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.authzserver/1.0.0</bundle>
         <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.resourceserver/1.0.0</bundle>
         <bundle>mvn:commons-codec/commons-codec/1.8</bundle>
-        <bundle>wrap:mvn:org.json/json/20080701</bundle>
 
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-api/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn/${project.version}</bundle>
