@@ -19,8 +19,6 @@
 
     <properties>
         <features.file>features.xml</features.file>
-        <authnCfg.file>authn.cfg</authnCfg.file>
-        <tokenCfg.file>tokens.cfg</tokenCfg.file>
         <branding.version>1.0.0-SNAPSHOT</branding.version>
         <karaf.resources.version>1.4.2-SNAPSHOT</karaf.resources.version>
         <karaf.version>3.0.1</karaf.version>
@@ -159,17 +157,24 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>features-aaa</artifactId>
+            <artifactId>aaa-authn</artifactId>
             <version>${project.version}</version>
             <type>cfg</type>
-            <classifier>authn</classifier>
+            <classifier>config</classifier>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>features-aaa</artifactId>
+            <artifactId>aaa-authn-store</artifactId>
             <version>${project.version}</version>
             <type>cfg</type>
-            <classifier>tokens</classifier>
+            <classifier>config</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-authn-sts</artifactId>
+            <version>${project.version}</version>
+            <type>cfg</type>
+            <classifier>config</classifier>
         </dependency>
 
         <!-- odl-aaa-sssd -->
@@ -207,11 +212,6 @@
             <version>${karaf.empty.version}</version>
             <type>zip</type>
         </dependency>
-        <!-- Uncomment this if you get an error : java.lang.NoSuchMethodError: 
-            org.slf4j.helpers.MessageFormatter.format(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)Lorg/slf4j/helpers/FormattingTuple; 
-            <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-simple</artifactId> 
-            <version>1.7.2</version> </dependency> -->
-
     </dependencies>
     <build>
         <resources>
@@ -250,16 +250,6 @@
                                     <file>${project.build.directory}/classes/${features.file}</file>
                                     <type>xml</type>
                                     <classifier>features</classifier>
-                                </artifact>
-                                <artifact>
-                                    <file>${project.build.directory}/classes/${authnCfg.file}</file>
-                                    <type>cfg</type>
-                                    <classifier>authn</classifier>
-                                </artifact>
-                                <artifact>
-                                    <file>${project.build.directory}/classes/${tokenCfg.file}</file>
-                                    <type>cfg</type>
-                                    <classifier>tokens</classifier>
                                 </artifact>
                             </artifacts>
                         </configuration>

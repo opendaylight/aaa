@@ -8,6 +8,8 @@
  */
 package org.opendaylight.aaa.sts;
 
+import java.util.Dictionary;
+
 import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
 import org.opendaylight.aaa.api.AuthenticationService;
@@ -18,6 +20,8 @@ import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.service.cm.ManagedService;
 
 /**
  * An activator for the secure token server to inject in a
@@ -27,6 +31,8 @@ import org.osgi.framework.BundleContext;
  *
  */
 public class Activator extends DependencyActivatorBase {
+    private static final String FEDERATION_PID = "org.opendaylight.aaa.federation";
+
     @Override
     public void init(BundleContext context, DependencyManager manager)
             throws Exception {
@@ -48,6 +54,9 @@ public class Activator extends DependencyActivatorBase {
                         .setRequired(true))
                 .add(createServiceDependency().setService(ClientService.class)
                         .setRequired(true)));
+        context.registerService(ManagedService.class,
+                FederationConfiguration.instance(),
+                addPid(FederationConfiguration.defaults));
     }
 
     @Override
@@ -55,4 +64,8 @@ public class Activator extends DependencyActivatorBase {
             throws Exception {
     }
 
+    private Dictionary<String, ?> addPid(Dictionary<String, String> dict) {
+        dict.put(Constants.SERVICE_PID, FEDERATION_PID);
+        return dict;
+    }
 }
