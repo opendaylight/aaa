@@ -197,6 +197,12 @@
             <artifactId>aaa-authz-model</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-authz-config</artifactId>
+            <type>xml</type>
+            <classifier>config</classifier>
+        </dependency>
 
         <!-- odl-aaa-authn-plugin -->
         <dependency>
