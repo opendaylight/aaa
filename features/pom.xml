@@ -14,7 +14,6 @@
     </parent>
 
     <artifactId>features-aaa</artifactId>
-    <groupId>org.opendaylight.aaa</groupId>
     <packaging>jar</packaging>
 
     <properties>
@@ -197,6 +196,28 @@
             <artifactId>aaa-authz-model</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>authz-service-config</artifactId>
+            <version>${project.version}</version>
+            <type>xml</type>
+            <classifier>config</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.controller</groupId>
+            <artifactId>features-mdsal</artifactId>
+            <version>${mdsal.version}</version>
+            <classifier>features</classifier>
+            <type>xml</type>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.controller</groupId>
+            <artifactId>features-config</artifactId>
+            <version>${config.version}</version>
+            <classifier>features</classifier>
+            <type>xml</type>
+        </dependency>
+
 
         <!-- odl-aaa-authn-plugin -->
         <dependency>
