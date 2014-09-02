@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa82b9bf_f66b881d",
+        "filename": "aaa-authn-odl-plugin/src/main/java/org/opendaylight/aaa/odl/CredentialServiceAuthProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-09-02T16:41:53Z",
+      "side": 1,
+      "message": "Yes, domain can be null (per API).  That will default to the default domain.",
+      "revId": "03debe196f1b1f70827df3565f36e91a418b8870",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_967d5cea",
+        "filename": "aaa-authn-odl-plugin/src/main/java/org/opendaylight/aaa/odl/CredentialServiceAuthProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-09-02T16:41:53Z",
+      "side": 1,
+      "message": "Assuming the FIXME is for this line...  You can type the CredentialAuth to the one for password by something like the following:\nfinal ServiceTrackerCustomizer\u003cCredentialAuth\u003cPasswordCredentials\u003e, CredentialAuth\u003cPasswordCredentials\u003e\u003e customizer \u003d ...",
+      "revId": "03debe196f1b1f70827df3565f36e91a418b8870",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_762a18e9",
+        "filename": "features/src/main/resources/features.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-09-02T16:41:53Z",
+      "side": 1,
+      "message": "Please rename odl-aaa-authn-plugin to odl-aaa-netconf-plugin to be consistent with the description.",
+      "revId": "03debe196f1b1f70827df3565f36e91a418b8870",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
