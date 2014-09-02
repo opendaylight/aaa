@@ -27,6 +27,12 @@
                         <name>binding-data-broker</name>
                     </data-broker>
 
+                    <policies xmlns="urn:opendaylight:params:xml:ns:yang:controller:config:aaa-authz:srv">
+                        <service xmlns="urn:opendaylight:params:xml:ns:yang:controller:config:aaa-authz:srv">RestConfService</service>
+                        <action xmlns="urn:opendaylight:params:xml:ns:yang:controller:config:aaa-authz:srv">Any</action>
+                        <resource xmlns="urn:opendaylight:params:xml:ns:yang:controller:config:aaa-authz:srv">*</resource>
+                        <role xmlns="urn:opendaylight:params:xml:ns:yang:controller:config:aaa-authz:srv">admin</role>
+                    </policies>
 
                 </module>
             </modules>

@@ -37,6 +37,10 @@ public class AuthzDomDataBroker implements BrokerService, DOMDataBroker {
     this.authService = authService;
   }
 
+  public AuthenticationService getAuthService(){
+      return this.authService;
+  }
+
   @Override
   public DOMDataReadOnlyTransaction newReadOnlyTransaction() {
     // new Authz transaction +  real DOM Transaction
