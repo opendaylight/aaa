@@ -20,7 +20,7 @@ public class AuthzServiceImpl {
 
     private static final String WILDCARD_TOKEN = "*";
 
-    public void setPolicies(List<Policies> policies){
+    public static void setPolicies(List<Policies> policies){
 
         AuthzServiceImpl.listPolicies = policies;
     }
@@ -32,12 +32,11 @@ public class AuthzServiceImpl {
         if(authenticationService!=null && AuthzServiceImpl.listPolicies!=null && AuthzServiceImpl.listPolicies.size()>0){
             //Authentication Service exists. Can do authorization checks
             Authentication authentication = authenticationService.get();
+
             if(authentication!=null && authentication.roles()!=null && authentication.roles().size()>0){
                 //Authentication claim object exists with atleast one role
                 return checkAuthorization(actionType, authentication,logicalDatastoreType,yangInstanceIdentifier);
-
             }
-
         }
 
         return AuthorizationResponseType.Authorized;
@@ -48,12 +47,13 @@ public class AuthzServiceImpl {
 
         for(Policies policy : AuthzServiceImpl.listPolicies){
 
-            if(authentication.roles().contains(policy.getRole()) && policy.getResource().equals(yangInstanceIdentifier.toString()) && (policy.getAction().equals(WILDCARD_TOKEN) || actionType.equals(policy.getAction()))){
+            if(authentication.roles().contains(policy.getRole().getValue()) && (policy.getResource().getValue().equals(WILDCARD_TOKEN) || policy.getResource().getValue().equals(yangInstanceIdentifier.toString())) && (policy.getAction().equals(ActionType.Any) || actionType.equals(policy.getAction()))){
                return AuthorizationResponseType.Authorized;
             }
 
         }
 
+        //For helium release we unauthorize other requests.
         return AuthorizationResponseType.NotAuthorized;
     }
 

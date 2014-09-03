@@ -2,6 +2,7 @@ package org.opendaylight.controller.config.yang.config.aaa_authz.srv;
 
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.authz.srv.AuthzBrokerImpl;
+import org.opendaylight.aaa.authz.srv.AuthzServiceImpl;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.slf4j.Logger;
@@ -39,6 +40,10 @@ public class AuthzSrvModule extends org.opendaylight.controller.config.yang.conf
       ServiceReference<AuthenticationService> authServiceReference = bundleContext.getServiceReference(AuthenticationService.class);
       AuthenticationService as = bundleContext.getService(authServiceReference);
       authzBrokerImpl.setAuthenticationService(as);
+
+
+      //Set the policies list to authz serviceimpl
+        AuthzServiceImpl.setPolicies(getPolicies());
 
       // Register AuthZ broker with the real Broker as a provider; triggers "onSessionInitiated" in AuthzBrokerImpl
       getDomBrokerDependency().registerProvider(authzBrokerImpl);
