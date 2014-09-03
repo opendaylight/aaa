@@ -20,7 +20,7 @@
         <feature version='${project.version}'>odl-aaa-authn</feature>
         <feature version='${project.version}'>odl-aaa-authz</feature>
         <feature version='${project.version}'>odl-aaa-authn-sssd</feature>
-        <feature version='${project.version}'>odl-aaa-authn-plugin</feature>
+        <feature version='${project.version}'>odl-aaa-netconf-plugin</feature>
     </feature>
 
     <feature name='odl-aaa-authn' description='OpenDaylight :: AAA :: Authentication'
@@ -74,7 +74,7 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sssd/${project.version}</bundle>
     </feature>
 
-    <feature name='odl-aaa-authn-plugin' description='OpenDaylight :: AAA :: ODL NETCONF Plugin'
+    <feature name='odl-aaa-netconf-plugin' description='OpenDaylight :: AAA :: ODL NETCONF Plugin'
         version='${project.version}'>
         <feature version='${netconf.version}'>odl-netconf-api</feature>
         <feature version='${project.version}'>odl-aaa-authn</feature>

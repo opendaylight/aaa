@@ -26,38 +26,14 @@ import org.slf4j.LoggerFactory;
 public final class CredentialServiceAuthProvider implements AuthProvider {
     private static final Logger logger = LoggerFactory.getLogger(CredentialServiceAuthProvider.class);
 
-    // TODO what domain should be used for this ? can we leave null ?
     public static final String DOMAIN = null;
-
-    // FIXME CredentialAuth is generic and it causes warnings during compilation
-    // Maybe there should be a PasswordCredentialAuth implements CredentialAuth<PasswordCredentials>
-    private CredentialAuth<PasswordCredentials> nullableCredService;
+    private final CredServiceTrackerCustomizer credServiceTrackerCustomizer;
 
     public CredentialServiceAuthProvider(final BundleContext bundleContext) {
 
-        final ServiceTrackerCustomizer<CredentialAuth, CredentialAuth> customizer = new ServiceTrackerCustomizer<CredentialAuth, CredentialAuth>() {
-            @Override
-            public CredentialAuth addingService(final ServiceReference<CredentialAuth> reference) {
-                logger.trace("Credential service {} added", reference);
-                nullableCredService = bundleContext.getService(reference);
-                return nullableCredService;
-            }
-
-            @Override
-            public void modifiedService(final ServiceReference<CredentialAuth> reference, final CredentialAuth service) {
-                logger.trace("Replacing modified Credential service {}", reference);
-                nullableCredService = service;
-            }
-
-            @Override
-            public void removedService(final ServiceReference<CredentialAuth> reference, final CredentialAuth service) {
-                logger.trace("Removing Credential service {}. This AuthProvider will fail to authenticate every time", reference);
-                synchronized (CredentialServiceAuthProvider.this) {
-                    nullableCredService = null;
-                }
-            }
-        };
-        final ServiceTracker<CredentialAuth, CredentialAuth> listenerTracker = new ServiceTracker<>(bundleContext, CredentialAuth.class, customizer);
+        credServiceTrackerCustomizer = new CredServiceTrackerCustomizer(bundleContext);
+        final ServiceTracker<CredentialAuth<PasswordCredentials>, CredentialAuth<PasswordCredentials>> listenerTracker =
+                new ServiceTracker<>(bundleContext, CredentialAuth.class.getName(), credServiceTrackerCustomizer);
         listenerTracker.open();
     }
 
@@ -67,14 +43,15 @@ public final class CredentialServiceAuthProvider implements AuthProvider {
      */
     @Override
     public synchronized boolean authenticated(final String username, final String password) {
-        if (nullableCredService == null) {
+        CredentialAuth<PasswordCredentials> credService = credServiceTrackerCustomizer.getNullableCredService();
+        if (credService == null) {
             logger.warn("Cannot authenticate user '{}', Credential service is missing", username);
             throw new IllegalStateException("Credential service is not available");
         }
 
         Claim claim;
         try {
-            claim = nullableCredService.authenticate(new PasswordCredentialsWrapper(username, password), DOMAIN);
+            claim = credService.authenticate(new PasswordCredentialsWrapper(username, password), DOMAIN);
         } catch (AuthenticationException e) {
             logger.debug("Authentication failed for user '{}' : {}", username);
             return false;
@@ -101,6 +78,45 @@ public final class CredentialServiceAuthProvider implements AuthProvider {
         @Override
         public String password() {
             return password;
+        }
+    }
+
+    private static final class CredServiceTrackerCustomizer implements ServiceTrackerCustomizer<CredentialAuth<PasswordCredentials>, CredentialAuth<PasswordCredentials>> {
+        private final BundleContext bundleContext;
+
+        private CredentialAuth<PasswordCredentials> nullableCredService;
+
+        public CredServiceTrackerCustomizer(final BundleContext bundleContext) {
+            this.bundleContext = bundleContext;
+        }
+
+        public synchronized CredentialAuth<PasswordCredentials> getNullableCredService() {
+            return nullableCredService;
+        }
+
+        @Override
+        public CredentialAuth<PasswordCredentials> addingService(final ServiceReference<CredentialAuth<PasswordCredentials>> reference) {
+            logger.trace("Credential service {} added", reference);
+            synchronized (this) {
+                nullableCredService = bundleContext.getService(reference);
+            }
+            return nullableCredService;
+        }
+
+        @Override
+        public void modifiedService(final ServiceReference<CredentialAuth<PasswordCredentials>> reference, final CredentialAuth<PasswordCredentials> service) {
+            logger.trace("Replacing modified Credential service {}", reference);
+            synchronized (this) {
+                nullableCredService = service;
+            }
+        }
+
+        @Override
+        public void removedService(final ServiceReference<CredentialAuth<PasswordCredentials>> reference, final CredentialAuth<PasswordCredentials> service) {
+            logger.trace("Removing Credential service {}. This AuthProvider will fail to authenticate every time", reference);
+            synchronized (this) {
+                nullableCredService = null;
+            }
         }
     }
 }
