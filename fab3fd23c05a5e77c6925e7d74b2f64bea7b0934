@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa82b9bf_f01e22bb",
+        "filename": "aaa-authz/aaa-authz-service/src/main/java/org/opendaylight/aaa/authz/srv/AuthzServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-09-04T23:46:43Z",
+      "side": 1,
+      "message": "Another thing to check is that if the policy specifies a service, then you can check against the Authentication::clientId() to verify match.  This is the use-case where a policy exists for, say dlux, to access the API, but noone else can do so via RESTconf.",
+      "revId": "fab3fd23c05a5e77c6925e7d74b2f64bea7b0934",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
