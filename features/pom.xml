@@ -209,6 +209,13 @@
             <classifier>config</classifier>
         </dependency>
         <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>authz-restconf-connector-config</artifactId>
+            <version>${project.version}</version>
+            <type>xml</type>
+            <classifier>config</classifier>
+        </dependency>
+        <dependency>
             <groupId>org.opendaylight.controller</groupId>
             <artifactId>features-mdsal</artifactId>
             <version>${mdsal.version}</version>
@@ -235,6 +242,16 @@
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn-odl-plugin</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-authn-idpmapping</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-authz-service</artifactId>
             <version>${project.version}</version>
         </dependency>
 
