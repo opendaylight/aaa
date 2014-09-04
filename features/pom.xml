@@ -203,6 +203,11 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-authz-service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
             <artifactId>authz-service-config</artifactId>
             <version>${project.version}</version>
             <type>xml</type>
