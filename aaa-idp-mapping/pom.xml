@@ -8,7 +8,7 @@
     <relativePath>../</relativePath>
   </parent>
 
-  <artifactId>aaa-authn-idp-mapping</artifactId>
+  <artifactId>aaa-authn-idpmapping</artifactId>
   <version>0.1.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
 

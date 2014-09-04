@@ -24,6 +24,16 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>javax.json</artifactId>
+      <version>1.0.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-authn-idpmapping</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
     </dependency>

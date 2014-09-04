@@ -19,6 +19,7 @@
     <module>commons/parent</module>
     <module>aaa-authn-api</module>
     <module>aaa-authn</module>
+    <module>aaa-idp-mapping</module>
     <module>aaa-authn-sts</module>
     <module>aaa-authn-store</module>
     <module>aaa-authn-sssd</module>
@@ -26,7 +27,6 @@
     <module>aaa-authn-basic</module>
     <module>aaa-idmlight</module>
     <module>aaa-authz</module>
-    <module>aaa-idp-mapping</module>
     <module>aaa-authn-odl-plugin</module>
     <module>features</module>
     <module>distribution-karaf</module>
