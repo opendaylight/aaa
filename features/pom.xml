@@ -254,11 +254,6 @@
             <artifactId>aaa-authn-idpmapping</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authz-service</artifactId>
-            <version>${project.version}</version>
-        </dependency>
 
         <!-- test to validate features.xml -->
         <dependency>
