@@ -85,7 +85,7 @@ public class AuthzBrokerImpl implements Broker, AutoCloseable, Provider {
     final DOMDataBroker domDataBroker = providerSession.getService(DOMDataBroker.class);
     AuthzDomDataBroker.getInstance().setProviderSession(providerSession);
     AuthzDomDataBroker.getInstance().setDomDataBroker(domDataBroker);
-
+    AuthzDomDataBroker.getInstance().setAuthService(this.authenticationService);
   }
 
   @Override
