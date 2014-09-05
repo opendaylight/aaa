@@ -11,6 +11,7 @@ package org.opendaylight.aaa.sts;
 import static org.opendaylight.aaa.AuthConstants.AUTH_CLAIM;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -74,6 +75,9 @@ public class ClaimAuthFilter implements Filter {
 
     // Extract attributes and headers out of the request
     private Map<String, Object> claims(HttpServletRequest req) {
+        String name;
+        Object objectValue;
+        String stringValue;
         Map<String, Object> claims = new HashMap<>();
 
         /*
@@ -105,13 +109,27 @@ public class ClaimAuthFilter implements Filter {
         @SuppressWarnings("unchecked")
         Enumeration<String> attrs = req.getAttributeNames();
         while (attrs.hasMoreElements()) {
-            String attr = attrs.nextElement();
-            claims.put(attr, req.getAttribute(attr));
+            name = attrs.nextElement();
+            objectValue = req.getAttribute(name);
+            if (objectValue instanceof String) {
+                // metadata might be i18n, assume UTF8 and decode
+                stringValue = decodeUTF8((String) objectValue);
+                objectValue = stringValue;
+            }
+            claims.put(name, objectValue);
         }
 
         // Capture specific attributes which cannot be enumerated ...
-        for (String attr : FederationConfiguration.instance().httpAttributes()) {
-            claims.put(attr, req.getAttribute(attr));
+        for (String attr :
+             FederationConfiguration.instance().httpAttributes()) {
+            name = attr;
+            objectValue = req.getAttribute(name);
+            if (objectValue instanceof String) {
+                // metadata might be i18n, assume UTF8 and decode
+                stringValue = decodeUTF8((String) objectValue);
+                objectValue = stringValue;
+            }
+            claims.put(name, objectValue);
         }
 
         /*
@@ -134,7 +152,8 @@ public class ClaimAuthFilter implements Filter {
         claims.put(CGI_REMOTE_ADDR, req.getRemoteAddr());
         claims.put(CGI_REMOTE_HOST, req.getRemoteHost());
         claims.put(CGI_REMOTE_PORT, req.getRemotePort());
-        claims.put(CGI_REMOTE_USER, req.getRemoteUser());
+        // remote user might be i18n, assume UTF8 and decode
+        claims.put(CGI_REMOTE_USER, decodeUTF8(req.getRemoteUser()));
         claims.put(CGI_REQUEST_METHOD, req.getMethod());
         claims.put(CGI_SCRIPT_NAME, req.getServletPath());
         claims.put(CGI_SERVER_PROTOCOL, req.getProtocol());
@@ -144,6 +163,65 @@ public class ClaimAuthFilter implements Filter {
         }
 
         return claims;
+    }
+
+    /**
+     * Decode from UTF-8, return Unicode.
+     *
+     * If we're unable to UTF-8 decode the string the fallback is to
+     * return the string unmodified and log a warning.
+     *
+     * Some data, especially metadata attached to a user principal may be
+     * internationalized (i18n). The classic examples are the user's
+     * name, location, organization, etc. We need to be able to read
+     * this metadata and decode it into unicode characters so that we
+     * properly handle i18n string values.
+     *
+     * One of the the prolems is we often don't know the encoding
+     * (i.e. charset) of the string. RFC-5987 is supposed to define
+     * how non-ASCII values are transmitted in HTTP headers, this is a
+     * follow on from the work in RFC-2231. However at the time of
+     * this writing these RFC's are not implemented in the Servlet
+     * Request classes. Not only are these RFC's unimplemented
+     * but they are specific to HTTP headers, much of our metadata
+     * arrives via attributes as opposed to being in a header.
+     *
+     * Note: ASCII encoding is a subset of UTF-8 encoding therefore
+     * any strings which are pure ASCII will decode from UTF-8 just
+     * fine. However on the other hand Latin-1 (ISO-8859-1) encoding
+     * is not compatible with UTF-8 for code points in the range
+     * 128-255 (i.e. beyond 7-bit ascii). ISO-8859-1 is the default
+     * encoding for HTTP and HTML 4, however the consensus is the use
+     * of ISO-8859-1 was a mistake and Unicode with UTF-8 encoding is
+     * now the norm. If a string value is transmitted encoded in
+     * ISO-8859-1 contaiing code points in the range 128-255 and we
+     * try to UTF-8 decode it it will either not be the correct
+     * decoded string or it will throw a decoding exception.
+     *
+     * Conventional practice at the moment is for the sending side to
+     * encode internationalized values in UTF-8 with the receving end
+     * decoding the value back from UTF-8. We do not expect the use of
+     * ISO-8859-1 on these attributes. However due to peculiarities of
+     * the Java String implementation we have to specify the raw bytes
+     * are encoded in ISO-8859-1 just to get back the raw bytes to be
+     * able to feed into the UTF-8 decoder. This doesn't seem right
+     * but it is because we need the full 8-bit byte and the only way
+     * to say "unmodified 8-bit bytes" in Java is to call it
+     * ISO-8859-1. Ugh!
+     *
+     * @param string The input string in UTF-8 to be decoded.
+     * @return Unicode string
+     */
+    private String decodeUTF8(String string) {
+        if (string == null) {
+            return null;
+        }
+        try {
+            return new String(string.getBytes("ISO8859-1"), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            logger.warn("Unable to UTF-8 decode: " + string);
+            return string;
+        }
     }
 
 }
