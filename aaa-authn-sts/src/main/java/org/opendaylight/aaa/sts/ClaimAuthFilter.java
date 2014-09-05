@@ -101,7 +101,7 @@ public class ClaimAuthFilter implements Filter {
          * request.getAttributeNames().
          */
 
-        // Capture attributes...
+        // Capture attributes which can be enumerated ...
         @SuppressWarnings("unchecked")
         Enumeration<String> attrs = req.getAttributeNames();
         while (attrs.hasMoreElements()) {
@@ -109,21 +109,19 @@ public class ClaimAuthFilter implements Filter {
             claims.put(attr, req.getAttribute(attr));
         }
 
-        // Capture headers...
-        @SuppressWarnings("unchecked")
-        Enumeration<String> headers = req.getHeaderNames();
-        while (headers.hasMoreElements()) {
-            String header = headers.nextElement();
-            claims.put(header, req.getHeader(header));
-        }
-
-        // Capture custom attributes...
+        // Capture specific attributes which cannot be enumerated ...
         for (String attr : FederationConfiguration.instance().httpAttributes()) {
             claims.put(attr, req.getAttribute(attr));
         }
 
-        // Capture custom headers...
-        // See above comment concerning getAttributeNames() enumeration
+        /*
+         * In general we should not utilize HTTP headers as validated
+         * security assertions because they are too easy to
+         * forge. Therefore in general we don't include HTTP headers,
+         * however in certain circumstances specific headers may be
+         * acceptable, thus we permit an admin to configure the
+         * capture of specific headers.
+         */
         for (String header : FederationConfiguration.instance().httpHeaders()) {
             claims.put(header, req.getHeader(header));
         }
