@@ -20,6 +20,7 @@ import org.opendaylight.aaa.idm.rest.DomainHandler;
 import org.opendaylight.aaa.idm.rest.RoleHandler;
 import org.opendaylight.aaa.idm.rest.UserHandler;
 import org.opendaylight.aaa.idm.config.IdmLightConfig;
+import org.opendaylight.aaa.idm.persistence.StoreBuilder;
 
 /**
  * A JAX-RS application for IdmLight.
@@ -38,6 +39,9 @@ public class IdmLightApplication extends Application {
            logger.error("unable to load idmlight config ");
         else
            config.log();
+        StoreBuilder storeBuilder = new StoreBuilder();
+        if (!storeBuilder.exists())
+           storeBuilder.init();
     }
 
     @Override
