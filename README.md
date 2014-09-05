@@ -119,21 +119,30 @@ In this case, we use the IdP token directly as an access token to access protect
 Authorization is implemented via the aaa-authz modules, comprising of a yang based AuthZ policy schema, an MD-SAL AuthZ capable broker, an AuthZ
 service engine invoked by the broker and executing policies.
 
+NOTE: The Helium release features a trail of Authz functionality, in particular longest string matching is not implemented.
+
 Initially the AuthZ functionality is only able to handle RestConf requests, and to do so the Restconf connnector configuration must
  be explicitly modified as follows:
 
- 0. Compile as per the above instructions
- 1. If you have already run ODL with Restconf or the mdsal-all feature package under karaf, then proceed as per below. Alternatively skip to step 2.
- 1a.  consider deleting the assembly/data directory in your karaf install. This will require the re-activation of features at karaf startup.
- 1b. Delete the default restconf connector configuration file: "rm assembly/etc/opendaylight/karaf/10-rest-connector.xml"
- 2. Start karaf and install the odl-aaa-all feature as per the previous instructions
- 3. Start the odl-restconf feature via the command "feature:install odl-resctonf". An alternative can also be feature:install odl-mdsal-all
+    0. Compile as per the above instructions
+    
+    1. If you have already run ODL with Restconf or the mdsal-all feature package under karaf, then proceed as per below. Alternatively skip to step 2.
+ 
+      1a.  consider deleting the assembly/data directory in your karaf install. This will require the re-activation of features at karaf startup.
+ 
+      1b. Delete the default restconf connector configuration file: "rm assembly/etc/opendaylight/karaf/10-rest-connector.xml"
+ 
+    2. Start karaf and install the odl-aaa-all feature as per the previous instructions
+ 
+    3. Start the odl-restconf feature via the command "feature:install odl-resctonf". An alternative can also be feature:install odl-mdsal-all
+ 
  
 To unistall authz:
-1. Unistall the feature via "feature:uninstall feature:odl-aaa-authz"
-2. Either:
-2a. Locate and open in an editor the default 10-rest-connector.xml configuration file in assembly/etc/opendaylight/karaf/.
-     2. Change the <dom-broker> configuration element
+
+    1. Unistall the feature via "feature:uninstall feature:odl-aaa-authz"
+    2. Either:
+      2a. Locate and open in an editor the default 10-rest-connector.xml configuration file in assembly/etc/opendaylight/karaf/.
+     Change the <dom-broker> configuration element
         FROM:
                         <dom-broker>
                              <type xmlns:dom="urn:opendaylight:params:xml:ns:yang:controller:md:sal:dom">dom:dom-broker-osgi-registry</type>
@@ -144,27 +153,30 @@ To unistall authz:
                              <type xmlns:dom="urn:opendaylight:params:xml:ns:yang:controller:md:sal:dom">dom:dom-broker-osgi-registry</type>
                              <name>dom-broker</name>
                          </dom-broker>
-OR:
-2b. Reinstall resctonf via the command "feature:install odl-resctonf"
+    OR:
+      2b. Reinstall resctonf via the command "feature:install odl-resctonf"
  
 Legacy instructions for activating Authz in non karaf based ODL runtimes:
- 0. Build aaa project and copy all generated aaa jars to the plugins directory of your odl target install
- 1. Locate and open in an editor the default 10-rest-connector.xml configuration file. Default location is at 'configuration/initial'
- 2. Change the <dom-broker> configuration element
-    FROM:
+
+    0. Build aaa project and copy all generated aaa jars to the plugins directory of your odl target install
+    1. Locate and open in an editor the default 10-rest-connector.xml configuration file. Default location is at 'configuration/initial'
+    2. Change the <dom-broker> configuration element
+      FROM:
                     <dom-broker>
                          <type xmlns:dom="urn:opendaylight:params:xml:ns:yang:controller:md:sal:dom">dom:dom-broker-osgi-registry</type>
                          <name>dom-broker</name>
                      </dom-broker>
-    TO:
+      TO:
                     <dom-broker>
                          <type xmlns:dom="urn:opendaylight:params:xml:ns:yang:controller:md:sal:dom">dom:dom-broker-osgi-registry</type>
                          <name>authz-connector-default</name>
                      </dom-broker>
-  3. Restart ODL
+    3. Restart ODL
 
 Default authorization are loaded from the configuration subsystem (TODO: Provide a default set)
-They are accessible and editable via the restconf interface at: http://<odl address>/restconf/configuration/authorization-schema:simple-authorization/
+They are accessible and editable via the restconf interface at: 
+
+    http://<odl address>/restconf/configuration/authorization-schema:simple-authorization/
 
 The schema for policies is a list consisting of the following items:
 
@@ -174,12 +186,18 @@ The schema for policies is a list consisting of the following items:
   * Resource: The URI or Yang instance id of the resource, including wildcards (see examples below)
   * Role: The AuthN derived user role
 
-Some examples of resources are
-  Data : /operational/opendaylight-inventory:nodes/node/openflow:1/node-connector/openflow:1:1
-  Wildcarded data: /configuration/opendaylight-inventory:nodes/node/*/node-connector/*
-  RPC: /operations/example-ops:reboot
-  Wildcarded RPC: /operations/example-ops:*
-  Notification: /notifications/example-ops:startup
+Some examples of resources are:
+
+      Data : /operational/opendaylight-inventory:nodes/node/openflow:1/node-connector/openflow:1:1
+  
+      Wildcarded data: /configuration/opendaylight-inventory:nodes/node/*/node-connector/*
+  
+      RPC: /operations/example-ops:reboot
+  
+      Wildcarded RPC: /operations/example-ops:*
+  
+      Notification: /notifications/example-ops:startup
+  
 
 *More on MD-SAL authorization later...*
 
