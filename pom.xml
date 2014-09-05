@@ -30,9 +30,7 @@
     <module>aaa-authn-odl-plugin</module>
     <module>features</module>
     <module>distribution-karaf</module>
-    <!-- FIXME: Add integration tests back in
     <module>aaa-it</module>
-    -->
   </modules>
 
   <build>

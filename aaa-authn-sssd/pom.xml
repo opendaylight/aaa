@@ -26,7 +26,7 @@
     <dependency>
       <groupId>org.glassfish</groupId>
       <artifactId>javax.json</artifactId>
-      <version>1.0.4</version>
+      <version>${glassfish.json.version}</version>
     </dependency>
     <dependency>
       <groupId>org.opendaylight.aaa</groupId>
@@ -45,7 +45,6 @@
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
-      <version>2.5</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -62,7 +61,6 @@
     <dependency>
       <groupId>com.sun.jersey.jersey-test-framework</groupId>
       <artifactId>jersey-test-framework-grizzly2</artifactId>
-      <version>1.17</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -73,7 +71,6 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>1.7.7</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

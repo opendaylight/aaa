@@ -18,7 +18,7 @@
         <dependency>
             <groupId>org.opendaylight.yangtools</groupId>
             <artifactId>yang-binding</artifactId>
-            <version>${yang.codegen.version}</version>
+            <version>${yangtools.version}</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.yangtools.model</groupId>
@@ -39,13 +39,11 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
-                <version>2.3.6</version>
                 <extensions>true</extensions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.8.1</version>
                 <configuration>
                     <stylesheet>maven</stylesheet>
                 </configuration>
@@ -61,7 +59,7 @@
             <plugin>
                 <groupId>org.opendaylight.yangtools</groupId>
                 <artifactId>yang-maven-plugin</artifactId>
-                <version>${yang.maven.plugin.version}</version>
+                <version>${yangtools.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -86,7 +84,7 @@
                     <dependency>
                         <groupId>org.opendaylight.yangtools</groupId>
                         <artifactId>maven-sal-api-gen-plugin</artifactId>
-                        <version>${yang.codegen.version}</version>
+                        <version>${yangtools.version}</version>
                         <type>jar</type>
                     </dependency>
                 </dependencies>
@@ -94,7 +92,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.7</version>
                 <executions>
                     <execution>
                         <phase>generate-sources</phase>

@@ -60,18 +60,18 @@ public class AuthenticationManager implements AuthenticationService,
     }
 
     @Override
-    public void updated(Dictionary<String, ?> props)
-            throws ConfigurationException {
-        try {
-            authEnabled = Boolean.valueOf((String) props.get(AUTH_ENABLED));
-        } catch (Throwable t) {
-            throw new ConfigurationException(AUTH_ENABLED, AUTH_ENABLED_ERR);
-        }
+    public boolean isAuthEnabled() {
+        return authEnabled;
     }
 
     @Override
-    public boolean isAuthEnabled() {
-        return authEnabled;
+    public void updated(Dictionary<String, ?> properties)
+            throws ConfigurationException {
+        try {
+            authEnabled = Boolean.valueOf((String) properties.get(AUTH_ENABLED));
+        } catch (Throwable t) {
+            throw new ConfigurationException(AUTH_ENABLED, AUTH_ENABLED_ERR);
+        }
     }
 
 }
