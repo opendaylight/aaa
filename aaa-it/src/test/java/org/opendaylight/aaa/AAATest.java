@@ -11,13 +11,8 @@ package org.opendaylight.aaa;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.ops4j.pax.exam.CoreOptions.maven;
-import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
-import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.configureConsole;
-import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.features;
-import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.karafDistributionConfiguration;
-import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.keepRuntimeFolder;
-import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.logLevel;
+import static org.ops4j.pax.exam.CoreOptions.*;
+import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.*;
 
 import java.io.File;
 
@@ -39,6 +34,7 @@ import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.PaxExam;
 import org.ops4j.pax.exam.karaf.options.LogLevelOption.LogLevel;
+import org.sonatype.aether.repository.LocalRepository;
 
 /**
  * Karaf integration tests for AAA.
@@ -77,15 +73,19 @@ public class AAATest {
     @Configuration
     public Option[] config() {
         return new Option[] {
+                // Repo hack
+                when(System.getProperty("maven.repo.local") != null)
+                        .useOptions(
+                                systemProperty("org.ops4j.pax.url.mvn.localRepository")
+                                .value(System.getProperty("maven.repo.local"))),
                 // Provision and launch a container based on a distribution of
                 // Karaf (Apache ServiceMix).
                 karafDistributionConfiguration()
                         .frameworkUrl(
                                 maven().groupId("org.opendaylight.controller")
-                                        .artifactId(
-                                                "distribution.opendaylight-karaf")
+                                        .artifactId("opendaylight-karaf-empty")
                                         .type("zip").versionAsInProject())
-                        .karafVersion("3.0.1").name("OpenDaylight")
+                        .name("OpenDaylight")
                         .unpackDirectory(new File("target/pax"))
                         .useDeployFolder(false),
                 // It is really nice if the container sticks around after the
@@ -104,7 +104,7 @@ public class AAATest {
                         "odl-aaa-all"),
                 mavenBundle().groupId("org.apache.oltu.oauth2")
                         .artifactId("org.apache.oltu.oauth2.client")
-                        .versionAsInProject()
+                        .versionAsInProject(),
         // debugConfiguration("5000", true),
         };
     }
