@@ -167,6 +167,32 @@ public class GrantStore {
       return grants;
    }
 
+   public Grants getGrants(long uid) throws StoreException {
+      Grants grants = new Grants();
+      List<Grant> grantList = new ArrayList<Grant>();
+      Connection conn = dbConnect();
+      Statement stmt=null;
+      String query = "SELECT * FROM grants WHERE userid="+uid;
+      try {
+         stmt=conn.createStatement();
+         ResultSet rs=stmt.executeQuery(query);
+         while (rs.next()) {
+            Grant grant = rsToGrant(rs);
+            grantList.add(grant);
+         }
+         rs.close();
+         stmt.close();
+         dbClose();
+      }
+      catch (SQLException s) {
+         dbClose();
+         throw new StoreException("SQL Exception : " + s);
+      }
+      grants.setGrants(grantList);
+      return grants;
+   }
+
+
    public Grant  getGrant(long id) throws StoreException {
       Connection conn = dbConnect();
       Statement stmt=null;

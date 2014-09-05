@@ -161,6 +161,32 @@ public class DomainStore {
       return domains;
    }
 
+    public Domains getDomains(String domainName) throws StoreException {
+      Domains domains = new Domains();
+      List<Domain> domainList = new ArrayList<Domain>();
+      Connection conn = dbConnect();
+      Statement stmt=null;
+      String query = "SELECT * FROM domains WHERE name=" + domainName;
+      try {
+         stmt=conn.createStatement();
+         ResultSet rs=stmt.executeQuery(query);
+         while (rs.next()) {
+            Domain domain = rsToDomain(rs);
+            domainList.add(domain);
+         }
+         rs.close();
+         stmt.close();
+         dbClose();
+      }
+      catch (SQLException s) {
+         dbClose();
+         throw new StoreException("SQL Exception : " + s);
+      }
+      domains.setDomains(domainList);
+      return domains;
+   }
+
+
    public Domain getDomain(long id) throws StoreException {
       Connection conn = dbConnect();
       Statement stmt=null;
