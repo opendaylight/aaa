@@ -11,13 +11,8 @@ package org.opendaylight.aaa;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.ops4j.pax.exam.CoreOptions.maven;
-import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
-import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.configureConsole;
-import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.features;
-import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.karafDistributionConfiguration;
-import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.keepRuntimeFolder;
-import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.logLevel;
+import static org.ops4j.pax.exam.CoreOptions.*;
+import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.*;
 
 import java.io.File;
 
@@ -39,6 +34,7 @@ import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.PaxExam;
 import org.ops4j.pax.exam.karaf.options.LogLevelOption.LogLevel;
+import org.sonatype.aether.repository.LocalRepository;
 
 /**
  * Karaf integration tests for AAA.
@@ -82,10 +78,9 @@ public class AAATest {
                 karafDistributionConfiguration()
                         .frameworkUrl(
                                 maven().groupId("org.opendaylight.controller")
-                                        .artifactId(
-                                                "distribution.opendaylight-karaf")
+                                        .artifactId("opendaylight-karaf-empty")
                                         .type("zip").versionAsInProject())
-                        .karafVersion("3.0.1").name("OpenDaylight")
+                        .name("OpenDaylight")
                         .unpackDirectory(new File("target/pax"))
                         .useDeployFolder(false),
                 // It is really nice if the container sticks around after the
@@ -99,12 +94,21 @@ public class AAATest {
                 // the test. It defaults to WARN.
                 logLevel(LogLevel.INFO),
                 // Provision the feature exercised by this test
-                features(
-                        "mvn:org.opendaylight.aaa/features-aaa/0.1.0-SNAPSHOT/xml/features",
-                        "odl-aaa-all"),
+                when(System.getProperty("maven.repo.local") == null)
+                        .useOptions(
+                                features(
+                                        "mvn:org.opendaylight.aaa/features-aaa/0.1.0-SNAPSHOT/xml/features",
+                                        "odl-aaa-all")),
+                when(System.getProperty("maven.repo.local") != null)
+                        .useOptions(
+                                features(
+                                        "mvn:file://"
+                                                + System.getProperty("maven.repo.local")
+                                                + "/org.opendaylight.aaa/features-aaa/0.1.0-SNAPSHOT/xml/features",
+                                        "odl-aaa-all")),
                 mavenBundle().groupId("org.apache.oltu.oauth2")
                         .artifactId("org.apache.oltu.oauth2.client")
-                        .versionAsInProject()
+                        .versionAsInProject(),
         // debugConfiguration("5000", true),
         };
     }
