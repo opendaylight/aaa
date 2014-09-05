@@ -13,6 +13,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.ops4j.pax.exam.CoreOptions.maven;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
+import static org.ops4j.pax.exam.CoreOptions.provision;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.configureConsole;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.features;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.karafDistributionConfiguration;
@@ -82,10 +83,10 @@ public class AAATest {
                 karafDistributionConfiguration()
                         .frameworkUrl(
                                 maven().groupId("org.opendaylight.controller")
-                                        .artifactId(
-                                                "distribution.opendaylight-karaf")
-                                        .type("zip").versionAsInProject())
-                        .karafVersion("3.0.1").name("OpenDaylight")
+                                        .artifactId("opendaylight-karaf-empty")
+                                        .type("zip")
+                                        .versionAsInProject())
+                        .name("OpenDaylight")
                         .unpackDirectory(new File("target/pax"))
                         .useDeployFolder(false),
                 // It is really nice if the container sticks around after the
@@ -104,8 +105,8 @@ public class AAATest {
                         "odl-aaa-all"),
                 mavenBundle().groupId("org.apache.oltu.oauth2")
                         .artifactId("org.apache.oltu.oauth2.client")
-                        .versionAsInProject()
-        // debugConfiguration("5000", true),
+                        .versionAsInProject(),
+                //debugConfiguration("5000", true),
         };
     }
 }
