@@ -11,13 +11,8 @@ package org.opendaylight.aaa;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.ops4j.pax.exam.CoreOptions.maven;
-import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
-import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.configureConsole;
-import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.features;
-import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.karafDistributionConfiguration;
-import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.keepRuntimeFolder;
-import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.logLevel;
+import static org.ops4j.pax.exam.CoreOptions.*;
+import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.*;
 
 import java.io.File;
 
@@ -102,10 +97,10 @@ public class AAATest {
                 features(
                         "mvn:org.opendaylight.aaa/features-aaa/0.1.0-SNAPSHOT/xml/features",
                         "odl-aaa-all"),
-                mavenBundle().groupId("org.apache.oltu.oauth2")
+                provision(mavenBundle().groupId("org.apache.oltu.oauth2")
                         .artifactId("org.apache.oltu.oauth2.client")
-                        .versionAsInProject()
-        // debugConfiguration("5000", true),
+                        .versionAsInProject()),
+                //debugConfiguration("5000", true),
         };
     }
 }
