@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg viewBox="0 0 1024 1227" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc>seqdiag {
+    // Set edge properties
+    //edge_length = 300;  // default value is 192
+    //span_height = 80;  // default value is 40
+
+    // Set fontsize.
+    //default_fontsize = 12;  // default value is 11
+
+    // Numbering edges automaticaly
+     autonumber = False;
+
+    // Change note color
+    default_note_color = lightblue;
+
+    Client -&gt; Apache [label = "Request"];
+    === Apache mod_auth_kerb ===
+    Client &lt;- Apache [label = "401 Unauthorized"];
+    Client -&gt; Apache [label = "Authorization: Credentials"];
+    Apache -&gt; Apache [label = "Set\nUser Name\nAuth Type"];
+    === Apache mod_lookup_identity ===
+    Apache -&gt; SSSD [label = "Get User Info"];
+    SSSD --&gt; IdP [label = "Get User Info", leftnote = "Only if\nnot cached\nby SSSD"];
+    SSSD &lt;-- IdP [label = "Return User Info"];
+    Apache &lt;- SSSD [label = "Return User Info"];
+    Apache -&gt; Apache [label = "Set User specific\nenvironment\nvariables"];
+    === Apache mod_proxy ===
+    Apache -&gt; Container [label = "Proxy With User's Metadata"];    
+    Apache &lt;- Container [label = "Response"];    
+    Client &lt;- Apache [label = "Response"];    
+    
+}
+</desc>
+  <rect fill="rgb(0,0,0)" height="1065" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="127" y="140" />
+  <rect fill="rgb(0,0,0)" height="142" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="319" y="140" />
+  <rect fill="rgb(0,0,0)" height="815" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="319" y="344" />
+  <rect fill="rgb(0,0,0)" height="200" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="511" y="586" />
+  <rect fill="rgb(0,0,0)" height="70" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="703" y="654" />
+  <rect fill="rgb(0,0,0)" height="64" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="895" y="1031" />
+  <polygon fill="rgb(0,0,0)" points="420,636 491,636 499,644 499,672 420,672 420,636" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="67" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="259" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="451" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="643" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="835" y="46" />
+  <path d="M 128 80 L 128 1215" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="1065" stroke="rgb(0,0,0)" width="8" x="124" y="134" />
+  <path d="M 320 80 L 320 1215" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="142" stroke="rgb(0,0,0)" width="8" x="316" y="134" />
+  <rect fill="moccasin" height="815" stroke="rgb(0,0,0)" width="8" x="316" y="338" />
+  <path d="M 512 80 L 512 1215" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="200" stroke="rgb(0,0,0)" width="8" x="508" y="580" />
+  <path d="M 704 80 L 704 1215" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="70" stroke="rgb(0,0,0)" width="8" x="700" y="648" />
+  <path d="M 896 80 L 896 1215" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="64" stroke="rgb(0,0,0)" width="8" x="892" y="1025" />
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="64" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="113" y="64">Client</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="256" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="302" y="65">Apache</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="448" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="498" y="64">SSSD</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="640" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="697" y="64">IdP</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="832" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="871" y="64">Container</text>
+  <path d="M 136 134 L 312 134" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="304,130 312,134 304,138" stroke="rgb(0,0,0)" />
+  <path d="M 136 276 L 312 276" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="144,272 136,276 144,280" stroke="rgb(0,0,0)" />
+  <path d="M 136 338 L 312 338" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="304,334 312,338 304,342" stroke="rgb(0,0,0)" />
+  <path d="M 328 422 L 416 422" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 416 422 L 416 438" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 416 438 L 328 438" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="336,434 328,438 336,442" stroke="rgb(0,0,0)" />
+  <path d="M 328 580 L 504 580" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="496,576 504,580 496,584" stroke="rgb(0,0,0)" />
+  <path d="M 520 648 L 696 648" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="4" />
+  <polygon fill="rgb(0,0,0)" points="688,644 696,648 688,652" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(173,216,230)" points="417,630 488,630 496,638 496,666 417,666 417,630" stroke="rgb(0,0,0)" />
+  <path d="M 488 630 L 488 638" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 488 638 L 496 638" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="425" y="642">Only if</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="425" y="652">not cached</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="425" y="664">by SSSD</text>
+  <path d="M 520 718 L 696 718" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="4" />
+  <polygon fill="rgb(0,0,0)" points="528,714 520,718 528,722" stroke="rgb(0,0,0)" />
+  <path d="M 328 780 L 504 780" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="336,776 328,780 336,784" stroke="rgb(0,0,0)" />
+  <path d="M 328 864 L 416 864" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 416 864 L 416 880" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 416 880 L 328 880" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="336,876 328,880 336,884" stroke="rgb(0,0,0)" />
+  <path d="M 328 1025 L 888 1025" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="880,1021 888,1025 880,1029" stroke="rgb(0,0,0)" />
+  <path d="M 328 1089 L 888 1089" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="336,1085 328,1089 336,1093" stroke="rgb(0,0,0)" />
+  <path d="M 136 1153 L 312 1153" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="144,1149 136,1153 144,1157" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="140" y="132">Request</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="217" y="274">401 Unauthorized</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="140" y="336">Authorization: Credentials</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="328" y="398">Set</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="328" y="408">User Name</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="328" y="420">Auth Type</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="332" y="578">Get User Info</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="524" y="646">Get User Info</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="608" y="716">Return User Info</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="416" y="778">Return User Info</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="328" y="842">Set User specific</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="328" y="852">environment</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="328" y="862">variables</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="332" y="1023">Proxy With User's Metadata</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="841" y="1087">Response</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="265" y="1151">Response</text>
+  <path d="M 40 202 L 442 202" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 40 206 L 442 206" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 581 202 L 984 202" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 581 206 L 984 206" fill="none" stroke="rgb(0,0,0)" />
+  <rect fill="rgb(208,208,208)" height="18" stroke="rgb(0,0,0)" width="139" x="442" y="195" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="452" y="209">Apache mod_auth_kerb</text>
+  <path d="M 40 506 L 429 506" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 40 510 L 429 510" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 594 506 L 984 506" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 594 510 L 984 510" fill="none" stroke="rgb(0,0,0)" />
+  <rect fill="rgb(208,208,208)" height="18" stroke="rgb(0,0,0)" width="165" x="429" y="499" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="439" y="513">Apache mod_lookup_identity</text>
+  <path d="M 40 948 L 455 948" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 40 952 L 455 952" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 568 948 L 984 948" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 568 952 L 984 952" fill="none" stroke="rgb(0,0,0)" />
+  <rect fill="rgb(208,208,208)" height="18" stroke="rgb(0,0,0)" width="113" x="455" y="941" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="465" y="955">Apache mod_proxy</text>
+</svg>
