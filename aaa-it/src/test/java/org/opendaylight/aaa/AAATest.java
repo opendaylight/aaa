@@ -81,11 +81,10 @@ public class AAATest {
                 // Karaf (Apache ServiceMix).
                 karafDistributionConfiguration()
                         .frameworkUrl(
-                                maven().groupId("org.opendaylight.controller")
-                                        .artifactId(
-                                                "distribution.opendaylight-karaf")
+                                maven().groupId("org.opendaylight.aaa")
+                                        .artifactId("distribution-karaf")
                                         .type("zip").versionAsInProject())
-                        .karafVersion("3.0.1").name("OpenDaylight")
+                        .name("OpenDaylight")
                         .unpackDirectory(new File("target/pax"))
                         .useDeployFolder(false),
                 // It is really nice if the container sticks around after the
@@ -98,13 +97,12 @@ public class AAATest {
                 // Force the log level to INFO so we have more details during
                 // the test. It defaults to WARN.
                 logLevel(LogLevel.INFO),
-                // Provision the feature exercised by this test
                 features(
                         "mvn:org.opendaylight.aaa/features-aaa/0.1.0-SNAPSHOT/xml/features",
                         "odl-aaa-all"),
                 mavenBundle().groupId("org.apache.oltu.oauth2")
                         .artifactId("org.apache.oltu.oauth2.client")
-                        .versionAsInProject()
+                        .versionAsInProject(),
         // debugConfiguration("5000", true),
         };
     }
