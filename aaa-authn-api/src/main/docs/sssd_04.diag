@@ -1,0 +1,25 @@
+blockdiag {
+    Connector -> SssdFilter;
+    SssdFilter -> ClaimAuthFilter;
+    ClaimAuthFilter -> SssdClaimAuth;
+    SssdClaimAuth -> Assertion [folded];
+        
+    group {
+    orientation = portrait
+    Assertion -> JsonAssertion;
+    JsonAssertion -> IdPMapper;
+    IdPMapper -> JsonMapped;
+    }
+
+    JsonMapped -> Claim;
+
+    Connector [numbered = 1]
+    SssdFilter [numbered = 2]
+    ClaimAuthFilter [numbered = 3]
+    SssdClaimAuth [numbered = 4]
+    Assertion [numbered = 4.1]
+    JsonAssertion [numbered = 4.2]
+    IdPMapper  [numbered = 4.3]
+    JsonMapped [numbered = 4.4]
+    Claim [numbered = 5]
+}
