@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg viewBox="0 0 448 120" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc>blockdiag {
+   User &lt;-&gt; AAA;
+   User [numbered = 1, shape = actor]
+   AAA [numbered = 2, label = "App Server\nAAA"]
+}
+
+</desc>
+  <polygon fill="rgb(0,0,0)" points="134,56 134,61 151,61 151,66 134,66 134,71 148,86 141,86 131,76 121,86 114,86 128,71 128,66 111,66 111,61 128,61 128,56" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <ellipse cx="131" cy="51" fill="rgb(0,0,0)" rx="7" ry="7" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="259" y="46" />
+  <polygon fill="rgb(255,255,255)" points="131,50 131,55 148,55 148,60 131,60 131,65 145,80 138,80 128,70 118,80 111,80 125,65 125,60 108,60 108,55 125,55 125,50" stroke="rgb(0,0,0)" />
+  <ellipse cx="128" cy="45" fill="rgb(255,255,255)" rx="7" ry="7" stroke="rgb(0,0,0)" />
+  <ellipse cx="64" cy="40" fill="pink" rx="12" ry="12" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="61" y="44">1</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="256" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="293" y="60">App Server</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="310" y="70">AAA</text>
+  <ellipse cx="256" cy="40" fill="pink" rx="12" ry="12" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="253" y="44">2</text>
+  <path d="M 156 60 L 248 60" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="149,60 156,56 156,64 149,60" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="255,60 248,56 248,64 255,60" stroke="rgb(0,0,0)" />
+</svg>

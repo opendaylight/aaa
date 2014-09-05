@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg viewBox="0 0 594 200" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc>blockdiag {
+   span_width = 30
+   User &lt;-&gt; Apache;
+   Proxy &lt;-&gt; AAA;
+   group {
+   Apache &lt;-&gt; Proxy;
+   group {
+       orientation = portrait
+       Apache &lt;-&gt; SSSD;
+   }
+   }
+   User [numbered = 1, shape = actor, width = 60]
+   Apache [numbered = 2, label = "Apache\nAuthenticates user"]
+   SSSD [numbered = 3, label = "SSSD\nProvides user info"]
+   Proxy [numbered = 4, label = "Proxy Transport\nRequest + Metadata"]
+   AAA [numbered = 5, label = "App Server\nAAA"]
+}
+
+</desc>
+  <rect fill="rgb(243,152,0)" height="140" style="filter:url(#filter_blur)" width="292" x="117" y="30" />
+  <rect fill="rgb(243,152,0)" height="140" style="filter:url(#filter_blur)" width="134" x="117" y="30" />
+  <polygon fill="rgb(0,0,0)" points="66,56 66,61 83,61 83,66 66,66 66,71 80,86 73,86 63,76 53,86 46,86 60,71 60,66 43,66 43,61 60,61 60,56" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <ellipse cx="63" cy="51" fill="rgb(0,0,0)" rx="7" ry="7" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="123" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="123" y="126" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="281" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="439" y="46" />
+  <polygon fill="rgb(255,255,255)" points="63,50 63,55 80,55 80,60 63,60 63,65 77,80 70,80 60,70 50,80 43,80 57,65 57,60 40,60 40,55 57,55 57,50" stroke="rgb(0,0,0)" />
+  <ellipse cx="60" cy="45" fill="rgb(255,255,255)" rx="7" ry="7" stroke="rgb(0,0,0)" />
+  <ellipse cx="30" cy="40" fill="pink" rx="12" ry="12" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="27" y="44">1</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="120" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="166" y="60">Apache</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="133" y="70">Authenticates user</text>
+  <ellipse cx="120" cy="40" fill="pink" rx="12" ry="12" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="117" y="44">2</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="120" y="120" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="170" y="139">SSSD</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="138" y="149">Provides user info</text>
+  <ellipse cx="120" cy="120" fill="pink" rx="12" ry="12" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="117" y="124">3</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="278" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="300" y="59">Proxy Transport</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="289" y="71">Request + Metadata</text>
+  <ellipse cx="278" cy="40" fill="pink" rx="12" ry="12" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="275" y="44">4</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="436" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="473" y="60">App Server</text>
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="490" y="70">AAA</text>
+  <ellipse cx="436" cy="40" fill="pink" rx="12" ry="12" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sansserif" font-size="11" font-style="normal" font-weight="normal" x="433" y="44">5</text>
+  <path d="M 88 60 L 112 60" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="81,60 88,56 88,64 81,60" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="119,60 112,56 112,64 119,60" stroke="rgb(0,0,0)" />
+  <path d="M 414 60 L 428 60" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="407,60 414,56 414,64 407,60" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="435,60 428,56 428,64 435,60" stroke="rgb(0,0,0)" />
+  <path d="M 184 88 L 184 112" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="184,81 180,88 188,88 184,81" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="184,119 180,112 188,112 184,119" stroke="rgb(0,0,0)" />
+  <path d="M 256 60 L 270 60" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="249,60 256,56 256,64 249,60" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="277,60 270,56 270,64 277,60" stroke="rgb(0,0,0)" />
+  <path d="M 184 88 L 184 112" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="184,81 180,88 188,88 184,81" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="184,119 180,112 188,112 184,119" stroke="rgb(0,0,0)" />
+  <path d="M 256 60 L 270 60" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="249,60 256,56 256,64 249,60" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="277,60 270,56 270,64 277,60" stroke="rgb(0,0,0)" />
+</svg>
