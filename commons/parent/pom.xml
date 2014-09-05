@@ -2,11 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.opendaylight.controller</groupId>
-        <artifactId>commons.opendaylight</artifactId>
-        <version>1.4.2-SNAPSHOT</version>
-    </parent>
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>commons.aaa</artifactId>
     <version>0.1.0-SNAPSHOT</version>
@@ -14,31 +9,74 @@
     <prerequisites>
         <maven>3.0.4</maven>
     </prerequisites>
+
     <properties>
-        <!-- common -->
+        <!-- Common -->
         <java.version.source>1.7</java.version.source>
         <java.version.target>1.7</java.version.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
-        <java.source.version>1.7</java.source.version>
-        <java.target.varsion>1.7</java.target.varsion>
         <slf4j.version>1.7.2</slf4j.version>
         <logback.version>1.0.9</logback.version>
+
+        <!-- Karaf -->
+        <karaf.version>3.0.1</karaf.version>
+        <karaf.branding.version>1.0.0-SNAPSHOT</karaf.branding.version>
+        <karaf.resources.version>1.4.2-SNAPSHOT</karaf.resources.version>
+        <karaf.empty.version>1.4.2-SNAPSHOT</karaf.empty.version>
+
+        <!-- Plugins -->
+        <checkstyle.version>2.12</checkstyle.version>
+        <compiler.plugin.version>3.1</compiler.plugin.version>
+        <resource.plugin.version>2.6</resource.plugin.version>
+        <helper.plugin.version>1.9.1</helper.plugin.version>
+        <surefire.plugin.version>2.15</surefire.plugin.version>
+        <paxexam.plugin.version>1.2.4</paxexam.plugin.version>
+        <bundle.plugin.version>2.5.3</bundle.plugin.version>
+        <javadoc.plugin.version>2.8.1</javadoc.plugin.version>
+
+        <!-- OSGi -->
         <osgi.core.version>5.0.0</osgi.core.version>
+        <osgi.compendium.version>5.0.0</osgi.compendium.version>
+        <osgi.dm.version>3.1.0</osgi.dm.version>
+        <osgi.metatype.version>1.0.10</osgi.metatype.version>
+
         <!-- AuthZ -->
         <ietf.inet.types.version>2010.09.24.4-SNAPSHOT</ietf.inet.types.version>
         <ietf.yang.types.version>2010.09.24.4-SNAPSHOT</ietf.yang.types.version>
         <yang.ext.version>2013.09.07.4-SNAPSHOT</yang.ext.version>
-        <sal.binding.config.version>1.1-SNAPSHOT</sal.binding.config.version>
-        <yang.maven.plugin.version>0.6.2-SNAPSHOT</yang.maven.plugin.version>
-        <yang.codegen.version>0.6.2-SNAPSHOT</yang.codegen.version>
+        <yangtools.version>0.6.2-SNAPSHOT</yangtools.version>
+        <jmxGeneratorPath>src/main/yang-gen-config</jmxGeneratorPath>
+        <salGeneratorPath>src/main/yang-gen-sal</salGeneratorPath>
+        <mdsal.version>1.1-SNAPSHOT</mdsal.version>
+        <config.version>0.2.5-SNAPSHOT</config.version>
+        <jaxrs.version>3.0.4.Final</jaxrs.version>
         <config.authz.service.configfile>08-authz-config.xml</config.authz.service.configfile>
         <config.restconf.configfile>10-rest-connector.xml</config.restconf.configfile>
+
         <!-- AuthN -->
         <ehcache.version>2.8.3</ehcache.version>
         <oauth.version>1.0.0</oauth.version>
-        <!-- Integration Test -->
+        <jersey.version>1.17</jersey.version>
+        <servlet.version>2.5</servlet.version>
+        <jta.version>1.1.1</jta.version>
+        <oltu.version>1.0.0</oltu.version>
+
+        <!-- Netconf plugin -->
+        <netconf.version>0.2.5-SNAPSHOT</netconf.version>
+
+        <!-- IdmLight -->
+        <glassfish.json.version>1.0.4</glassfish.json.version>
+        <jackson.version>1.9.2</jackson.version>
+        <jettison.version>1.1</jettison.version>
+        <sqlite.jdbc.version>3.7.2</sqlite.jdbc.version>
+
+        <!-- Test -->
         <exam.version>4.1.0</exam.version>
+        <aether.version>2.1.0</aether.version>
+        <javax.inject.version>1</javax.inject.version>
+        <mockito.version>1.9.5</mockito.version>
+        <servlet.tester.version>7.0.0.M2</servlet.tester.version>
     </properties>
 
     <dependencyManagement>
@@ -84,9 +122,14 @@
                 <version>${logback.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.osgi</groupId>
-                <artifactId>org.osgi.core</artifactId>
-                <version>${osgi.core.version}</version>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.7</version>
+            </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>20131018</version>
             </dependency>
             <dependency>
                 <groupId>org.opendaylight.yangtools.model</groupId>
@@ -104,16 +147,117 @@
                 <version>${yang.ext.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.opendaylight.controller</groupId>
-                <artifactId>sal-binding-config</artifactId>
-                <version>${sal.binding.config.version}</version>
+                <groupId>com.sun.jersey</groupId>
+                <artifactId>jersey-servlet</artifactId>
+                <version>${jersey.version}</version>
             </dependency>
             <dependency>
-                <groupId>commons-codec</groupId>
-                <artifactId>commons-codec</artifactId>
-                <version>1.7</version>
+                <groupId>com.sun.jersey</groupId>
+                <artifactId>jersey-core</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.jersey</groupId>
+                <artifactId>jersey-server</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.jersey</groupId>
+                <artifactId>jersey-json</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.osgi</groupId>
+                <artifactId>org.osgi.core</artifactId>
+                <version>${osgi.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.osgi</groupId>
+                <artifactId>org.osgi.compendium</artifactId>
+                <version>${osgi.compendium.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>org.apache.felix.dependencymanager</artifactId>
+                <version>${osgi.dm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>org.apache.felix.metatype</artifactId>
+                <version>${osgi.metatype.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+                <version>${ehcache.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.geronimo.specs</groupId>
+                <artifactId>geronimo-jta_1.1_spec</artifactId>
+                <version>${jta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.oltu.oauth2</groupId>
+                <artifactId>org.apache.oltu.oauth2.common</artifactId>
+                <version>${oltu.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.oltu.oauth2</groupId>
+                <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
+                <version>${oltu.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.oltu.oauth2</groupId>
+                <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
+                <version>${oltu.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish</groupId>
+                <artifactId>javax.json</artifactId>
+                <version>${glassfish.json.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-core-asl</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-mapper-asl</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-jaxrs</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-xc</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jettison</groupId>
+                <artifactId>jettison</artifactId>
+                <version>${jettison.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.xerial</groupId>
+                <artifactId>sqlite-jdbc</artifactId>
+                <version>${sqlite.jdbc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>${servlet.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>jaxrs-api</artifactId>
+                <version>${jaxrs.version}</version>
             </dependency>
 
+            <!-- Test stuff -->
             <dependency>
                 <groupId>org.opendaylight.yangtools.thirdparty</groupId>
                 <artifactId>xtend-lib-osgi</artifactId>
@@ -126,6 +270,72 @@
                 <version>4.8.1</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>1.7.7</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.ops4j.pax.exam</groupId>
+                <artifactId>pax-exam-container-karaf</artifactId>
+                <version>${exam.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.ops4j.pax.exam</groupId>
+                <artifactId>pax-exam-junit4</artifactId>
+                <version>${exam.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.ops4j.pax.exam</groupId>
+                <artifactId>pax-exam</artifactId>
+                <version>${exam.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.ops4j.pax.exam</groupId>
+                <artifactId>pax-exam-link-mvn</artifactId>
+                <version>${exam.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.ops4j.pax.url</groupId>
+                <artifactId>pax-url-aether</artifactId>
+                <version>${aether.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.inject</groupId>
+                <artifactId>javax.inject</artifactId>
+                <version>${javax.inject.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.karaf.features</groupId>
+                <artifactId>org.apache.karaf.features.core</artifactId>
+                <version>${karaf.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.jersey.jersey-test-framework</groupId>
+                <artifactId>jersey-test-framework-grizzly2</artifactId>
+                <version>${jersey.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-servlet-tester</artifactId>
+                <version>${servlet.tester.version}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -135,22 +345,54 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${compiler.plugin.version}</version>
                     <configuration>
                         <source>${java.version.source}</source>
                         <target>${java.version.target}</target>
-                        <testSource>${java.version.source}</testSource>
-                        <testTarget>${java.version.target}</testTarget>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <version>${bundle.plugin.version}</version>
+                    <extensions>true</extensions>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${helper.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${resource.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${surefire.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${javadoc.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.ops4j.pax.exam</groupId>
+                    <artifactId>maven-paxexam-plugin</artifactId>
+                    <version>${paxexam.plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
     </build>
+
     <url>https://wiki.opendaylight.org/view/AAA:Main</url>
     <scm>
         <connection>scm:git:ssh://git.opendaylight.org:29418/aaa.git</connection>
         <developerConnection>scm:git:ssh://git.opendaylight.org:29418/aaa.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
+
     <repositories>
         <!-- Opendaylight public group -->
         <repository>
@@ -175,9 +417,9 @@
             <id>opendaylight-snapshot</id>
             <name>opendaylight-snapshot</name>
             <url>http://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
         </repository>
     </repositories>
 
@@ -202,9 +444,9 @@
             <id>opendaylight-snapshot</id>
             <name>central2</name>
             <url>http://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
         </pluginRepository>
     </pluginRepositories>
 
