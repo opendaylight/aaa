@@ -19,7 +19,8 @@ import org.slf4j.LoggerFactory;
 
 public class IdmLightConfig {
    private static Logger logger = LoggerFactory.getLogger(IdmLightConfig.class);
-	
+
+   public static String dbName;	
    public String dbPath;
    public String dbDriver;
    public String dbUser;
@@ -27,7 +28,8 @@ public class IdmLightConfig {
    public int dbValidTimeOut;
 	
    public boolean load() {		
-      dbPath = "jdbc:sqlite:idmlight.db";
+      dbName = "idmlight.db";
+      dbPath = "jdbc:sqlite:" + dbName;
       dbDriver = "org.sqlite.JDBC";
       dbUser = "foo";
       dbPwd = "bar";
