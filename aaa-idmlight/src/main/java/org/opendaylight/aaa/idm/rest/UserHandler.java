@@ -33,13 +33,11 @@ import java.util.ArrayList;
 import org.opendaylight.aaa.idm.model.Users;
 import org.opendaylight.aaa.idm.model.User;
 import org.opendaylight.aaa.idm.model.IDMError;
-
 import org.opendaylight.aaa.idm.persistence.UserStore;
 import org.opendaylight.aaa.idm.persistence.StoreException;
 	
 @Path("/v1/users")
 public class UserHandler {
-	
    private static Logger logger = LoggerFactory.getLogger(UserHandler.class);
    private static UserStore userStore = new UserStore();
    protected final static String DEFAULT_PWD = "changeme";
@@ -47,17 +45,19 @@ public class UserHandler {
    @GET
    @Produces("application/json")
    public Response getUsers() {
+      logger.info("get all users");
       Users users=null;
       try {
          users = userStore.getUsers();
       }
       catch (StoreException se) {
-         logger.error("StoreException : " + se);
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Internal error getting users");
-         idmerror.setDetails(se.message);
-         return Response.status(500).entity(idmerror).build();
+         return new IDMError(500,"internal error getting users",se.message).response();
       }
+
+      // obsfucate pwd
+      for (int z=0;z<users.getUsers().size();z++)
+          users.getUsers().get(z).setPassword("**********");
+ 
       return Response.ok(users).build();
    }
 
@@ -66,33 +66,26 @@ public class UserHandler {
    @Path("/{id}")
    @Produces("application/json")
    public Response getUser(@PathParam("id") String id)  {
-      logger.info("Get /users/" + id);
-      User user = null;
+      logger.info("get /users/" + id);
+      User user=null;
       long longId=0;
       try {
-         longId= Long.parseLong(id);
+         longId=Long.parseLong(id);
       }
       catch (NumberFormatException nfe) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Invalid User id :" + id);
-         return Response.status(404).entity(idmerror).build();
+         return new IDMError(400,"invalid user id :" + id,"").response();
       }
       try {
          user = userStore.getUser(longId);
       }
       catch(StoreException se) {
-         logger.error("Store Exception : " + se);
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Internal error getting user");
-         idmerror.setDetails(se.message);
-         return Response.status(500).entity(idmerror).build();
+         return new IDMError(500,"internal error getting user",se.message).response();
       }
-
       if (user==null) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("User Not found!  id :" + id);
-         return Response.status(404).entity(idmerror).build();
+         return new IDMError(404,"user not found! id:" + id,"").response(); 
       }
+      // obsfucate pwd
+      user.setPassword("*********");
       return Response.ok(user).build();
    }
 
@@ -100,28 +93,48 @@ public class UserHandler {
    @Consumes("application/json")
    @Produces("application/json")
    public Response createUser(@Context UriInfo info,User user) {
-      logger.info("Post /users");
+      logger.info("post /users");
       try {
+         // enabled by default
          if (user.getEnabled()==null)
-            user.setEnabled(false);
+            user.setEnabled(true);
+         
+         // user name is required
          if (user.getName()==null)
-            user.setName("");
+            return new IDMError(400,"user name is required","").response();
+         else
+            if (user.getName().length()>UserStore.MAX_FIELD_LEN)
+               return new IDMError(400,"user name max length is :" + UserStore.MAX_FIELD_LEN,"").response();
+
+         // user description is optional
          if (user.getDescription()==null)
             user.setDescription("");
+         else
+            if (user.getDescription().length()>UserStore.MAX_FIELD_LEN)
+               return new IDMError(400,"user description max length is :" + UserStore.MAX_FIELD_LEN,"").response();
+
+         // user email is optional
          if (user.getEmail()==null)
             user.setEmail("");
+         else
+            if (user.getEmail().length()>UserStore.MAX_FIELD_LEN)
+               return new IDMError(400,"user email max length is :" + UserStore.MAX_FIELD_LEN,"").response();
+
+         // user password optional and will default if not provided
          if (user.getPassword()==null)
             user.setPassword(DEFAULT_PWD);
+         else
+            if (user.getPassword().length()>UserStore.MAX_FIELD_LEN)
+               return new IDMError(400,"user password max length is :" + UserStore.MAX_FIELD_LEN,"").response();
+
+         // create user
          user = userStore.createUser(user);
       }
       catch (StoreException se) {
-         logger.error("Store Exception : " + se);
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Internal error creating user");
-         idmerror.setDetails(se.message);
-         return Response.status(500).entity(idmerror).build();
+         return new IDMError(500,"internal error creating user",se.message).response();
       } 
 
+      // created!
       return Response.status(201).entity(user).build();
    } 
 
@@ -132,33 +145,24 @@ public class UserHandler {
    @Produces("application/json")
    public Response putUser(@Context UriInfo info,User user,@PathParam("id") String id) {
       long longId=0;
-      logger.info("Put /users/" + id);
+      logger.info("put /users/" + id);
        try {
          longId= Long.parseLong(id);
       }
       catch (NumberFormatException nfe) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Invalid User id :" + id);
-         return Response.status(404).entity(idmerror).build();
+         return new IDMError(400,"invalid user id:"+id,"").response();
       }
 
       try {
          user.setUserid((int)longId);
          user = userStore.putUser(user);
          if (user==null) {
-            IDMError idmerror = new IDMError();
-            idmerror.setMessage("Not found! User id :" + id);
-            return Response.status(404).entity(idmerror).build();
+            return new IDMError(404,"user id not found id :"+id,"").response();
          }
-
          return Response.status(200).entity(user).build();
       }
       catch (StoreException se) {
-         logger.error("StoreException : " + se);
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Internal error putting user");
-         idmerror.setDetails(se.message);
-         return Response.status(500).entity(idmerror).build();
+         return new IDMError(500,"internal error putting user",se.message).response();
       }
    }
 
@@ -166,14 +170,12 @@ public class UserHandler {
    @Path("/{id}")
    public Response deleteUser(@Context UriInfo info,@PathParam("id") String id) {
       long longId=0;
-      logger.info("Delete /users/" + id);
+      logger.info("delete /users/" + id);
        try {
          longId= Long.parseLong(id);
       }
       catch (NumberFormatException nfe) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Invalid User id :" + id);
-         return Response.status(404).entity(idmerror).build();
+         return new IDMError(400,"invalid user id:"+id,"").response();
       }
 
       try {
@@ -181,17 +183,11 @@ public class UserHandler {
          user.setUserid((int)longId);
          user = userStore.deleteUser(user);
          if (user==null) {
-            IDMError idmerror = new IDMError();
-            idmerror.setMessage("Not found! User id :" + id);
-            return Response.status(404).entity(idmerror).build();
+            return new IDMError(404,"user id not found id :"+id,"").response();
          }
       }
       catch (StoreException se) {
-         logger.error("StoreException : " + se);
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Internal error deleting user");
-         idmerror.setDetails(se.message);
-         return Response.status(500).entity(idmerror).build();
+         return new IDMError(500,"internal error deleting user",se.message).response();
       }
 
       return Response.status(204).build();

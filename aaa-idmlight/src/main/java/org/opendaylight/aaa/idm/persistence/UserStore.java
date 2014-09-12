@@ -38,11 +38,11 @@ public class UserStore {
    protected final static String SQL_PASSWORD       = "password";
    protected final static String SQL_DESCR          = "description";
    protected final static String SQL_ENABLED        = "enabled";
+   public final static int       MAX_FIELD_LEN      = 128;
 	
    protected Connection getDBConnect() throws StoreException {
       if ( dbConnection==null ) {
          try {           
-	    //Class.forName (IdmLightApplication.config.dbDriver).newInstance ();
             JDBC jdbc = new JDBC();
 	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath); 
             return dbConnection;
@@ -55,7 +55,6 @@ public class UserStore {
          try {
             if ( dbConnection.isClosed()) {
                try {          
-		  //Class.forName (IdmLightApplication.config.dbDriver).newInstance ();
                   JDBC jdbc = new JDBC();
 		  dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
 		  return dbConnection;
@@ -97,8 +96,8 @@ public class UserStore {
                          "name       VARCHAR(128)      NOT NULL, " +
                          "email      VARCHAR(128)      NOT NULL, " +
                          "password   VARCHAR(128)      NOT NULL, " +
-                         "description VARCHAR(128)      NOT NULL, " +
-                         "enabled     INTEGER           NOT NULL)" ;
+                         "description VARCHAR(128)     NOT NULL, " +
+                         "enabled     INTEGER          NOT NULL)" ;
            stmt.executeUpdate(sql);
            stmt.close();
          }
@@ -132,7 +131,7 @@ public class UserStore {
          user.setUserid(rs.getInt(SQL_ID));
          user.setName(rs.getString(SQL_NAME));
          user.setEmail(rs.getString(SQL_EMAIL));
-         user.setPassword(rs.getString(SQL_PASSWORD));
+         user.setPassword(rs.getString(SQL_PASSWORD)); 
          user.setDescription(rs.getString(SQL_DESCR));
          user.setEnabled(rs.getInt(SQL_ENABLED)==1?true:false);
       }
