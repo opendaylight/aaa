@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa82b9bf_8643d16b",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/IdmLightProxy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-09-12T01:04:49Z",
+      "side": 1,
+      "message": "Domains domains \u003d domainStore\t\t\t\t.getDomains((domainName \u003d\u003d null) ? \"sdn\" : domainName);",
+      "revId": "dfb25eba33ab6a2793e77feab4c6a863e10ef49d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
