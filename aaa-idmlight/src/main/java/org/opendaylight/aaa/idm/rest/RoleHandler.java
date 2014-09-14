@@ -44,17 +44,13 @@ public class RoleHandler {
    @GET
    @Produces("application/json")
    public Response getRoles() {
-      logger.info("Get /roles");
+      logger.info("get /roles");
       Roles roles=null;
       try {
          roles = roleStore.getRoles();
       }
       catch (StoreException se) {
-         logger.error("StoreException : " + se);
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Internal error getting roles");
-         idmerror.setDetails(se.message);
-         return Response.status(500).entity(idmerror).build();
+         return new IDMError(500,"internal error getting roles",se.message).response();
       }
       return Response.ok(roles).build();
    }
@@ -63,32 +59,25 @@ public class RoleHandler {
    @Path("/{id}")
    @Produces("application/json")
    public Response getRole(@PathParam("id") String id)  {
-      logger.info("Get /roles/" + id);
-      Role role = null;
+      logger.info("get /roles/" + id);
+      Role role=null;
       long longId=0;
       try {
-         longId= Long.parseLong(id);
+         longId=Long.parseLong(id);
       }
       catch (NumberFormatException nfe) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Invalid Role id :" + id);
-         return Response.status(404).entity(idmerror).build();
+         return new IDMError(404,"invalid role id :" + id,"").response();
       }
+
       try {
          role = roleStore.getRole(longId);
       }
       catch(StoreException se) {
-         logger.error("Store Exception : " + se);
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Internal error getting role");
-         idmerror.setDetails(se.message);
-         return Response.status(500).entity(idmerror).build();
+         return new IDMError(500,"internal error getting roles",se.message).response();
       }
 
       if (role==null) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Role Not found!  id :" + id);
-         return Response.status(404).entity(idmerror).build();
+         return new IDMError(404,"role not found id :" + id,"").response();
       }
       return Response.ok(role).build();
    }
@@ -99,23 +88,29 @@ public class RoleHandler {
    public Response createRole(@Context UriInfo info,Role role) {
       logger.info("Post /roles");
       try {
+         // TODO: role names should be unique! 	
+         // name
          if (role.getName()==null)
-            role.setName("");
+            return new IDMError(404,"name must be defined on role create","").response();
+         else 
+            if (role.getName().length()>RoleStore.MAX_FIELD_LEN)
+               return new IDMError(400,"role name max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
+         
+         // description   
          if (role.getDescription()==null)
             role.setDescription("");
+         else
+            if (role.getDescription().length()>RoleStore.MAX_FIELD_LEN)
+               return new IDMError(400,"role description max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
+
          role = roleStore.createRole(role);
       }
       catch (StoreException se) {
-         logger.error("Store Exception : " + se);
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Internal error creating role");
-         idmerror.setDetails(se.message);
-         return Response.status(500).entity(idmerror).build();
+         return new IDMError(500,"internal error creating role",se.message).response();
       } 
 
       return Response.status(201).entity(role).build();
    } 
-
 
    @PUT
    @Path("/{id}")
@@ -123,33 +118,35 @@ public class RoleHandler {
    @Produces("application/json")
    public Response putRole(@Context UriInfo info,Role role,@PathParam("id") String id) {
       long longId=0;
-      logger.info("Put /roles/" + id);
+      logger.info("put /roles/" + id);
        try {
          longId= Long.parseLong(id);
       }
       catch (NumberFormatException nfe) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Invalid Role id :" + id);
-         return Response.status(404).entity(idmerror).build();
+         return new IDMError(404,"invalid role id :" + id,"").response();
       }
 
       try {
          role.setRoleid((int)longId);
+
+         // name
+         // TODO: names should be unique
+         if ((role.getName()!=null) && (role.getName().length()>RoleStore.MAX_FIELD_LEN))
+            return new IDMError(400,"role name max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
+
+         // description
+         if ((role.getDescription()!=null) && (role.getDescription().length()>RoleStore.MAX_FIELD_LEN))
+            return new IDMError(400,"role description max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
+
          role = roleStore.putRole(role);
          if (role==null) {
-            IDMError idmerror = new IDMError();
-            idmerror.setMessage("Not found! Role id :" + id);
-            return Response.status(404).entity(idmerror).build();
+            return new IDMError(404,"role id not found :" + id,"").response();
          }
 
          return Response.status(200).entity(role).build();
       }
       catch (StoreException se) {
-         logger.error("StoreException : " + se);
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Internal error putting role");
-         idmerror.setDetails(se.message);
-         return Response.status(500).entity(idmerror).build();
+         return new IDMError(500,"internal error putting role",se.message).response();
       }
    }
 
@@ -162,9 +159,7 @@ public class RoleHandler {
          longId= Long.parseLong(id);
       }
       catch (NumberFormatException nfe) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Invalid Role id :" + id);
-         return Response.status(404).entity(idmerror).build();
+         return new IDMError(404,"invalid role id :" + id,"").response();
       }
 
       try {
@@ -172,17 +167,11 @@ public class RoleHandler {
          role.setRoleid((int)longId);
          role = roleStore.deleteRole(role);
          if (role==null) {
-            IDMError idmerror = new IDMError();
-            idmerror.setMessage("Not found! Role id :" + id);
-            return Response.status(404).entity(idmerror).build();
+            return new IDMError(404,"role id not found :" + id,"").response();
          }
       }
       catch (StoreException se) {
-         logger.error("StoreException : " + se);
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Internal error deleting role");
-         idmerror.setDetails(se.message);
-         return Response.status(500).entity(idmerror).build();
+         return new IDMError(500,"internal error deleting role",se.message).response();
       }
 
       return Response.status(204).build();

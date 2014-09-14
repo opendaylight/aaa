@@ -35,6 +35,7 @@ public class RoleStore {
    protected final static String SQL_ID             = "roleid";
    protected final static String SQL_NAME           = "name";
    protected final static String SQL_DESCR          = "description";
+   public final static int       MAX_FIELD_LEN      = 128;
 	
    protected Connection getDBConnect() throws StoreException {
       if ( dbConnection==null ) {
