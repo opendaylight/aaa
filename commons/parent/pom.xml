@@ -11,6 +11,11 @@
     </prerequisites>
 
     <properties>
+        <!-- Repos -->
+        <nexusproxy>http://nexus.opendaylight.org/content</nexusproxy>
+        <nexus.repository.release>opendaylight.release</nexus.repository.release>
+        <nexus.repository.snapshot>opendaylight.snapshot</nexus.repository.snapshot>
+
         <!-- Common -->
         <java.version.source>1.7</java.version.source>
         <java.version.target>1.7</java.version.target>
@@ -402,12 +407,16 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
         </repository>
         <!-- OpenDayLight Released artifact -->
         <repository>
             <id>opendaylight-release</id>
             <name>opendaylight-release</name>
-            <url>http://nexus.opendaylight.org/content/repositories/opendaylight.release/</url>
+            <url>${nexusproxy}/repositories/${nexus.repository.release}/</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
@@ -416,7 +425,7 @@
         <repository>
             <id>opendaylight-snapshot</id>
             <name>opendaylight-snapshot</name>
-            <url>http://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/</url>
+            <url>${nexusproxy}/repositories/${nexus.repository.snapshot}/</url>
             <releases>
                 <enabled>false</enabled>
             </releases>
@@ -427,15 +436,19 @@
         <pluginRepository>
             <id>opendaylight-public</id>
             <name>opendaylight-public</name>
-            <url>http://nexus.opendaylight.org/content/groups/public/</url>
+            <url>${nexusproxy}/groups/public/</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>            
         </pluginRepository>
         <pluginRepository>
             <id>opendaylight-release</id>
             <name>central2</name>
-            <url>http://nexus.opendaylight.org/content/repositories/opendaylight.release/</url>
+            <url>${nexusproxy}/repositories/${nexus.repository.release}/</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
@@ -443,7 +456,7 @@
         <pluginRepository>
             <id>opendaylight-snapshot</id>
             <name>central2</name>
-            <url>http://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/</url>
+            <url>${nexusproxy}/repositories/${nexus.repository.snapshot}/</url>
             <releases>
                 <enabled>false</enabled>
             </releases>
@@ -454,12 +467,12 @@
         <!-- OpenDayLight Released artifact -->
         <repository>
             <id>opendaylight-release</id>
-            <url>http://nexus.opendaylight.org/content/repositories/opendaylight.release/</url>
+            <url>${nexusproxy}/repositories/${nexus.repository.release}/</url>
         </repository>
         <!-- OpenDayLight Snapshot artifact -->
         <snapshotRepository>
             <id>opendaylight-snapshot</id>
-            <url>http://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/</url>
+            <url>${nexusproxy}/repositories/${nexus.repository.snapshot}/</url>
         </snapshotRepository>
     </distributionManagement>
 
