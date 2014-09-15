@@ -82,6 +82,9 @@
         <javax.inject.version>1</javax.inject.version>
         <mockito.version>1.9.5</mockito.version>
         <servlet.tester.version>7.0.0.M2</servlet.tester.version>
+
+        <!-- Code coverage -->
+        <jacoco.version>0.6.2.201302030002</jacoco.version>
     </properties>
 
     <dependencyManagement>
@@ -387,8 +390,39 @@
                     <artifactId>maven-paxexam-plugin</artifactId>
                     <version>${paxexam.plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <includes>
+                        <include>org.opendaylight.aaa.*</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>pre-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>post-test</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <phase>test</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
     <url>https://wiki.opendaylight.org/view/AAA:Main</url>
