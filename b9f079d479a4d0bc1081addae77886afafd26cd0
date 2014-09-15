@@ -16,6 +16,24 @@
       "revId": "b9f079d479a4d0bc1081addae77886afafd26cd0",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_f29db45a",
+        "filename": "commons/parent/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1840
+      },
+      "writtenOn": "2014-09-15T19:04:52Z",
+      "side": 1,
+      "message": "It comes from odlparent. Generally projects have redefined it as well, but there isn\u0027t a need from what I can tell, because the \"repositories\" section is used to get odlparent, to then resolve all variables etc.",
+      "parentUuid": "fa82b9bf_52c7c064",
+      "revId": "b9f079d479a4d0bc1081addae77886afafd26cd0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
