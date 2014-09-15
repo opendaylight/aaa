@@ -28,6 +28,14 @@
             <classifier>features</classifier>
             <type>xml</type>
         </dependency>
+        <!-- MDSAL -->
+        <dependency>
+            <groupId>org.opendaylight.controller</groupId>
+            <artifactId>features-mdsal</artifactId>
+            <version>${mdsal.version}</version>
+            <classifier>features</classifier>
+            <type>xml</type>
+        </dependency>
         <!-- Dependencies for pax exam karaf container -->
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
