@@ -54,10 +54,11 @@
         <jmxGeneratorPath>src/main/yang-gen-config</jmxGeneratorPath>
         <salGeneratorPath>src/main/yang-gen-sal</salGeneratorPath>
         <mdsal.version>1.1-SNAPSHOT</mdsal.version>
+        <restconf.version>1.1-SNAPSHOT</restconf.version>
         <config.version>0.2.5-SNAPSHOT</config.version>
         <jaxrs.version>3.0.4.Final</jaxrs.version>
         <config.authz.service.configfile>08-authz-config.xml</config.authz.service.configfile>
-        <config.restconf.configfile>10-rest-connector.xml</config.restconf.configfile>
+        <config.restconf.configfile>09-rest-connector.xml</config.restconf.configfile>
         <config.configfile.directory>etc/opendaylight/karaf</config.configfile.directory>
 
         <!-- AuthN -->

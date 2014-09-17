@@ -121,40 +121,25 @@ service engine invoked by the broker and executing policies.
 
 NOTE: The Helium release features a trail of Authz functionality, in particular longest string matching is not implemented.
 
-Initially the AuthZ functionality is only able to handle RestConf requests, and to do so the Restconf connnector configuration must
+Initially the AuthZ functionality is only able to handle RestConf requests, and to do so the Restconf connector configuration must
  be explicitly modified as follows:
 
     0. Compile as per the above instructions
     
-    1. If you have already run ODL with Restconf or the mdsal-all feature package under karaf, then proceed as per below. Alternatively skip to step 2.
+    1. If you have already run ODL with Restconf or the mdsal-all feature package under karaf, then proceed as per 1b, otherwise skip to step 2.
  
       1a.  consider deleting the assembly/data directory in your karaf install. This will require the re-activation of features at karaf startup.
  
-      1b. Delete the default restconf connector configuration file: "rm assembly/etc/opendaylight/karaf/10-rest-connector.xml"
- 
     2. Start karaf and install the odl-aaa-all feature as per the previous instructions
  
-    3. Start the odl-restconf feature via the command "feature:install odl-resctonf". An alternative can also be feature:install odl-mdsal-all
+    Note: At this stage, with a default configuration, there is no MD-SAL data to test against. To test you can install the toaster service using feature:install odl-toaster
  
  
-To unistall authz:
+To uninstall authz:
 
     1. Unistall the feature via "feature:uninstall feature:odl-aaa-authz"
-    2. Either:
-      2a. Locate and open in an editor the default 10-rest-connector.xml configuration file in assembly/etc/opendaylight/karaf/.
-     Change the <dom-broker> configuration element
-        FROM:
-                        <dom-broker>
-                             <type xmlns:dom="urn:opendaylight:params:xml:ns:yang:controller:md:sal:dom">dom:dom-broker-osgi-registry</type>
-                             <name>authz-connector-default</name>
-                         </dom-broker>
-        TO:
-                        <dom-broker>
-                             <type xmlns:dom="urn:opendaylight:params:xml:ns:yang:controller:md:sal:dom">dom:dom-broker-osgi-registry</type>
-                             <name>dom-broker</name>
-                         </dom-broker>
-    OR:
-      2b. Reinstall resctonf via the command "feature:install odl-resctonf"
+    2. Delete the 09-rest-connector.xml configuration file in <your karaf distribution directory>/etc/opendaylight/karaf/.
+    3. Reinstall resctonf via the command "feature:install odl-resctonf"
  
 Legacy instructions for activating Authz in non karaf based ODL runtimes:
 

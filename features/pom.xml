@@ -189,7 +189,7 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>authz-restconf-connector-config</artifactId>
+            <artifactId>authz-restconf-config</artifactId>
             <version>${project.version}</version>
             <type>xml</type>
             <classifier>config</classifier>
@@ -208,6 +208,7 @@
             <classifier>features</classifier>
             <type>xml</type>
         </dependency>
+
 
         <!-- odl-aaa-authn-plugin -->
         <dependency>
