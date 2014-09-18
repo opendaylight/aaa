@@ -16,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.opendaylight.aaa.authz.srv.AuthzServiceImpl;
 
+import static org.opendaylight.controller.config.api.JmxAttributeValidationException.checkNotNull;
+
 public class AuthzSrvModule extends org.opendaylight.controller.config.yang.config.aaa_authz.srv.AbstractAuthzSrvModule {
   private static final Logger log = LoggerFactory.getLogger(AuthzSrvModule.class);
   private static boolean simple_config_switch;
@@ -31,7 +33,7 @@ public class AuthzSrvModule extends org.opendaylight.controller.config.yang.conf
 
     @Override
     public void customValidation() {
-      // add custom validation form module attributes here.
+      checkNotNull(getDomBrokerDependency(), domBrokerJmxAttribute);
       }
 
 
