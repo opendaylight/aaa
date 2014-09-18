@@ -16,6 +16,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
@@ -31,8 +33,9 @@ public class FederationConfiguration implements ManagedService {
 
     static final String HTTP_HEADERS = "httpHeaders";
     static final String HTTP_ATTRIBUTES = "httpAttributes";
+    static final String SECURE_PROXY_PORTS = "secureProxyPorts";
 
-    private static final FederationConfiguration instance = new FederationConfiguration();
+    static FederationConfiguration instance = new FederationConfiguration();
 
     static final Hashtable<String, String> defaults = new Hashtable<>();
     static {
@@ -79,4 +82,17 @@ public class FederationConfiguration implements ManagedService {
         return (attributes == null) ? new ArrayList<String>() : Arrays
                 .asList(attributes.split(" "));
     }
+
+    public Set<Integer> secureProxyPorts() {
+        String ports = configs.get(SECURE_PROXY_PORTS);
+        Set<Integer> secureProxyPorts = new TreeSet<Integer>();
+
+        if (ports != null) {
+            for (String port : ports.split(" ")) {
+                secureProxyPorts.add(Integer.parseInt(port));
+            }
+        }
+        return secureProxyPorts;
+    }
+
 }
