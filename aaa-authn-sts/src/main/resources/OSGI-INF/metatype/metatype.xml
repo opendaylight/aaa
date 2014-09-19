@@ -9,6 +9,9 @@
         <AD id="httpAttributes" type="String" default=""
             name="%org.opendaylight.aaa.federation.httpAttributes.name"
             description="%org.opendaylight.aaa.federation.httpAttributes.description" />
+        <AD id="secureProxyPorts" type="String" default=""
+            name="%org.opendaylight.aaa.federation.secureProxyPorts.name"
+            description="%org.opendaylight.aaa.federation.secureProxyPorts.description" />
     </OCD>
     <Designate pid="org.opendaylight.aaa.federation">
         <Object ocdref="org.opendaylight.aaa.federation" />

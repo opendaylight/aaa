@@ -15,6 +15,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -39,6 +41,12 @@ public class ClaimAuthFilter implements Filter {
     private static final Logger logger =
         LoggerFactory.getLogger(ClaimAuthFilter.class);
 
+    /**
+     * Set of local ports numbers request arrived on which are not in the
+     * set of secure proxy ports. Used to emit error message only once.
+     */
+    private static Set<Integer> invalidPorts = null;
+
     private static final String CGI_AUTH_TYPE = "AUTH_TYPE";
     private static final String CGI_PATH_INFO = "PATH_INFO";
     private static final String CGI_PATH_TRANSLATED = "PATH_TRANSLATED";
@@ -53,6 +61,7 @@ public class ClaimAuthFilter implements Filter {
 
     @Override
     public void init(FilterConfig fc) throws ServletException {
+        invalidPorts = new TreeSet<Integer>();
     }
 
     @Override
@@ -62,6 +71,43 @@ public class ClaimAuthFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp,
             FilterChain chain) throws IOException, ServletException {
+        Set<Integer> secureProxyPorts;
+        int localPort;
+
+        /*
+         * This filter trusts any authentication metadata bound to a
+         * request. A request with fake authentication claims could be
+         * forged by an attacker and submitted to one of the Connector
+         * ports the engine is listening on and we would blindly
+         * accept the forged information in this filter. Therefore it
+         * is vital we only accept authentication claims from a
+         * trusted proxy. It is incumbent upon the site administrator
+         * to dedicate specific connector ports on which previously
+         * authenticated requests from a trusted proxy will be sent to
+         * and to assure only a trusted proxy can connect to that
+         * port. The site administrator must enumerate those ports in
+         * the configuration. We reject any request which did not
+         * originate on one of the configured secure proxy ports.
+         */
+
+        secureProxyPorts = FederationConfiguration.instance().secureProxyPorts();
+        localPort = req.getLocalPort();
+        if (!secureProxyPorts.contains(localPort)) {
+            // Not a secure port, do nothing, call next filter in chain.
+            if (!invalidPorts.contains(localPort)) {
+                // Emit the warning only once to avoid flooding the log
+                invalidPorts.add(localPort);
+
+                logger.warn(String.format("ignoring requests from " +
+                                          "local port %d " +
+                                          "which is not one of the " +
+                                          "secure proxy ports: %s",
+                                          localPort, secureProxyPorts));
+            }
+            chain.doFilter(req, resp);
+            return;
+        }
+
         for (ClaimAuth ca : ServiceLocator.INSTANCE.ca) {
             Claim claim = ca.transform(claims((HttpServletRequest) req));
             if (claim != null) {

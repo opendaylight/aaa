@@ -14,6 +14,7 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
+import java.util.TreeSet;
 
 import javax.naming.AuthenticationException;
 
@@ -104,6 +105,10 @@ public class TokenEndpointTest {
                 Arrays.asList("pepsi", "coke"));
         doThrow(AuthenticationException.class).when(ServiceLocator.INSTANCE.cs)
                 .validate(isNull(String.class), isNull(String.class));
+
+        FederationConfiguration.instance = mock(FederationConfiguration.class);
+        when(FederationConfiguration.instance.secureProxyPorts()).thenReturn(
+                new TreeSet<Integer>(Arrays.asList(0)));
 
         HttpTester req = new HttpTester();
         req.setMethod("POST");
