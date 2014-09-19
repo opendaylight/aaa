@@ -15,6 +15,14 @@
 
     <!-- Federation Auth filter -->
     <filter>
+        <filter-name>SssdFilter</filter-name>
+        <filter-class>org.opendaylight.aaa.federation.SssdFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SssdFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
         <filter-name>ClaimAuthFilter</filter-name>
         <filter-class>org.opendaylight.aaa.federation.ClaimAuthFilter</filter-class>
     </filter>
