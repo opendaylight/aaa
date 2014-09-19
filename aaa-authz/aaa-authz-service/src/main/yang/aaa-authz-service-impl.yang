@@ -49,7 +49,7 @@ module aaa-authz-service-impl {
             container data-broker {
                 uses config:service-ref {
                     refine type {
-                        mandatory false;
+                        mandatory true;
                         config:required-identity mdsal:binding-data-broker;
 
                     }

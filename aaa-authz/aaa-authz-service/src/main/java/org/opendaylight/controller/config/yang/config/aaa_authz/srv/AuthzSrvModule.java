@@ -10,13 +10,11 @@ package org.opendaylight.controller.config.yang.config.aaa_authz.srv;
 
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.authz.srv.AuthzBrokerImpl;
+import org.opendaylight.aaa.authz.srv.AuthzServiceImpl;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.opendaylight.aaa.authz.srv.AuthzServiceImpl;
-
-import static org.opendaylight.controller.config.api.JmxAttributeValidationException.checkNotNull;
 
 public class AuthzSrvModule extends org.opendaylight.controller.config.yang.config.aaa_authz.srv.AbstractAuthzSrvModule {
   private static final Logger log = LoggerFactory.getLogger(AuthzSrvModule.class);
@@ -33,7 +31,7 @@ public class AuthzSrvModule extends org.opendaylight.controller.config.yang.conf
 
     @Override
     public void customValidation() {
-      checkNotNull(getDomBrokerDependency(), domBrokerJmxAttribute);
+//      checkNotNull(getDomBroker(), domBrokerJmxAttribute);
       }
 
 
