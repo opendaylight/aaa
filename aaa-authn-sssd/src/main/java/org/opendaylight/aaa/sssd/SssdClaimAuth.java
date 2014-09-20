@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014 Hewlett-Packard Development Company, L.P. and others. All rights reserved.
- * 
+ *
  * This program and the accompanying materials are made available under the terms of the Eclipse
  * License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.felix.dm.Component;
 import org.opendaylight.aaa.idpmapping.RuleProcessor;
 import org.opendaylight.aaa.idpmapping.InvalidValueException;
 import org.opendaylight.aaa.ClaimBuilder;
@@ -31,7 +32,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An SSSD {@link ClaimAuth} implementation.
- * 
+ *
  * @author John Dennis <jdennis@redhat.com>
  */
 public class SssdClaimAuth implements ClaimAuth {
@@ -43,7 +44,9 @@ public class SssdClaimAuth implements ClaimAuth {
     private JsonGeneratorFactory generatorFactory = null;
     private RuleProcessor ruleProcessor = null;
 
-    SssdClaimAuth() {
+    // Called by DM when all required dependencies are satisfied.
+    void init(Component c) {
+        logger.info("Initializing SSSD Plugin");
         Map<String, Object> properties = new HashMap<String, Object>(1);
         properties.put(JsonGenerator.PRETTY_PRINTING, true);
         generatorFactory = Json.createGeneratorFactory(properties);
@@ -75,7 +78,7 @@ public class SssdClaimAuth implements ClaimAuth {
     }
 
     /**
-     * Transform a Map of assertions into a {@link Claim} via a set of 
+     * Transform a Map of assertions into a {@link Claim} via a set of
      * mapping rules.
      *
      * A set of mapping rules have been previously loaded. the
@@ -114,7 +117,7 @@ public class SssdClaimAuth implements ClaimAuth {
      *   </dd>
      *
      * </dl>
-     * 
+     *
      * @param assertion A Map of name/value assertions provided by
      *                   an external IdP
      * @return A {@link Claim} if successful, null otherwise.
@@ -198,7 +201,7 @@ public class SssdClaimAuth implements ClaimAuth {
      *              into a JSON assertion document.
      * @return A string formatted as a JSON object.
      * @throws InvalidValueException If value in the claim is unsupported.
-     * @see {@link ClaimAuth} 
+     * @see {@link ClaimAuth}
      */
 
     public String claimToJson(Map<String, Object> claim) {
@@ -207,7 +210,7 @@ public class SssdClaimAuth implements ClaimAuth {
                 generatorFactory.createGenerator(stringWriter);
 
         generator.writeStartObject();
-        for (Map.Entry<String, Object> entry : ((Map<String, Object>) claim)
+        for (Map.Entry<String, Object> entry : claim
                 .entrySet()) {
             String name = entry.getKey();
             Object value = entry.getValue();

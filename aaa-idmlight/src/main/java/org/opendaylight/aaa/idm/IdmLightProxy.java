@@ -8,9 +8,8 @@
  */
 package org.opendaylight.aaa.idm;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.AuthenticationException;
@@ -18,25 +17,19 @@ import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.PasswordCredentials;
-
-import java.util.ArrayList;
-import org.opendaylight.aaa.idm.model.Users;
-import org.opendaylight.aaa.idm.model.User;
-import org.opendaylight.aaa.idm.model.Grants;
-import org.opendaylight.aaa.idm.model.Grant;
-import org.opendaylight.aaa.idm.model.Roles;
-import org.opendaylight.aaa.idm.model.Role;
-import org.opendaylight.aaa.idm.model.Domains;
 import org.opendaylight.aaa.idm.model.Domain;
-import org.opendaylight.aaa.idm.model.IDMError;
-
-import org.opendaylight.aaa.idm.persistence.UserStore;
-import org.opendaylight.aaa.idm.persistence.GrantStore;
+import org.opendaylight.aaa.idm.model.Domains;
+import org.opendaylight.aaa.idm.model.Grant;
+import org.opendaylight.aaa.idm.model.Grants;
+import org.opendaylight.aaa.idm.model.Role;
+import org.opendaylight.aaa.idm.model.User;
+import org.opendaylight.aaa.idm.model.Users;
 import org.opendaylight.aaa.idm.persistence.DomainStore;
+import org.opendaylight.aaa.idm.persistence.GrantStore;
 import org.opendaylight.aaa.idm.persistence.RoleStore;
-import org.opendaylight.aaa.idm.persistence.StoreException;
 import org.opendaylight.aaa.idm.persistence.StoreBuilder;
-
+import org.opendaylight.aaa.idm.persistence.StoreException;
+import org.opendaylight.aaa.idm.persistence.UserStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
         IdMService {
-    
+
     private static Logger logger = LoggerFactory.getLogger(IdmLightProxy.class);
     private static UserStore userStore = new UserStore();
     private static GrantStore grantStore = new GrantStore();
@@ -59,26 +52,26 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
         Domain domain=null;
         User user=null;
 
-        logger.info("authenticate");
+        debug("authenticate");
 
         // check to see domain exists
         // TODO: ensure domain names are unique change to 'getDomain'
-        logger.info("get domain");
+        debug("get domain");
         try {
            Domains domains = domainStore.getDomains((domainName==null) ? StoreBuilder.DEFAULT_DOMAIN : domainName);
            List<Domain> domainList = domains.getDomains();
            if (domainList.size()==0) {
-              throw new AuthenticationException("Domain :" + domainName + " does not exist"); 
+              throw new AuthenticationException("Domain :" + domainName + " does not exist");
            }
            domain = domainList.get(0);
         }
         catch (StoreException se) {
-           throw new AuthenticationException("idm data store exception :" + se.toString()); 
+           throw new AuthenticationException("idm data store exception :" + se.toString());
         }
 
         // check to see user exists and passes cred check
         try {
-           logger.info("check user / pwd");
+           debug("check user / pwd");
            Users users = userStore.getUsers(creds.username());
            List<User> userList = users.getUsers();
            if (userList.size()==0) {
@@ -90,7 +83,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
            }
 
            // get all grants & roles for this domain and user
-           logger.info("get grants");
+           debug("get grants");
            List<String> roles = new ArrayList<String>();
            Grants grants = grantStore.getGrants(domain.getDomainid(),user.getUserid());
            List<Grant> grantList = grants.getGrants();
@@ -101,7 +94,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
            }
 
            // build up the claim
-           logger.info("build a claim");
+           debug("build a claim");
            ClaimBuilder claim = new ClaimBuilder();
            claim.setUserId(user.getUserid().toString());
            claim.setUser(creds.username());
@@ -118,25 +111,25 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
 
     @Override
     public String getUserId(String userName) {
-        logger.info("getUserid for userName:" + userName);
-        try { 
-           Users users = userStore.getUsers(userName); 
+        debug("getUserid for userName:" + userName);
+        try {
+           Users users = userStore.getUsers(userName);
            List<User> userList = users.getUsers();
            if (userList.size()==0)
               return null;
            User user = userList.get(0);
            return user.getUserid().toString();
-        } 
-        catch (StoreException se) { 
-           logger.warn("error getting user " + se.toString());        
+        }
+        catch (StoreException se) {
+           logger.warn("error getting user " + se.toString());
            return null;
         }
     }
 
     @Override
     public List<String> listDomains(String userId) {
-        logger.info("list Domains for userId:" + userId);
-        List<String> domains = new ArrayList<String>(); 
+        debug("list Domains for userId:" + userId);
+        List<String> domains = new ArrayList<String>();
         long uid=0;
         try {
            uid = Long.parseLong(userId);
@@ -144,7 +137,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
         catch (NumberFormatException nfe) {
            logger.warn("not a valid userid:" + userId);
            return domains;
-        } 
+        }
         try {
            Grants grants = grantStore.getGrants(uid);
            List<Grant> grantList = grants.getGrants();
@@ -164,7 +157,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
 
     @Override
     public List<String> listRoles(String userId, String domainName) {
-        logger.info("listRoles");
+        debug("listRoles");
         List<String> roles = new ArrayList<String>();
 
         try {
@@ -172,7 +165,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
            Domains domains = domainStore.getDomains(domainName);
            List<Domain> domainList = domains.getDomains();
            if (domainList.size()==0) {
-              logger.info("DomainName: " + domainName + " Not found!");
+              debug("DomainName: " + domainName + " Not found!");
               return roles;
            }
            long did = domainList.get(0).getDomainid();
@@ -186,7 +179,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
               logger.warn("not a valid userid:" + userId);
               return roles;
            }
- 
+
            // find all grants for uid and did
            Grants grants = grantStore.getGrants(did,uid);
            List<Grant> grantList = grants.getGrants();
@@ -196,12 +189,16 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
               roles.add(role.getName());
            }
 
-           return roles; 
+           return roles;
         }
         catch (StoreException se) {
            logger.warn("error getting roles " + se.toString());
            return roles;
         }
-         
+    }
+
+    private static final void debug(String msg) {
+        if (logger.isDebugEnabled())
+            logger.debug(msg);
     }
 }

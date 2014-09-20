@@ -110,6 +110,7 @@
                     <instructions>
                         <Import-Package>*,com.sun.jersey.spi.container.servlet</Import-Package>
                         <Web-ContextPath>/auth</Web-ContextPath>
+                        <Web-Connectors>adminConn</Web-Connectors>
                         <Bundle-Activator>org.opendaylight.aaa.idm.Activator</Bundle-Activator>
                     </instructions>
                     <manifestLocation>${project.basedir}/META-INF</manifestLocation>

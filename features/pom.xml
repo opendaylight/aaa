@@ -149,7 +149,7 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authn-sts</artifactId>
+            <artifactId>aaa-authn-federation</artifactId>
             <version>${project.version}</version>
             <type>cfg</type>
             <classifier>config</classifier>

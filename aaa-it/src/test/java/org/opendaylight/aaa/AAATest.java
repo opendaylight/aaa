@@ -18,6 +18,7 @@ import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.features;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.karafDistributionConfiguration;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.keepRuntimeFolder;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.logLevel;
+import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.replaceConfigurationFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -105,6 +106,22 @@ public class AAATest {
                     + new String(Base64.encode(BASIC_AUTH.getBytes("utf-8"))));
             httpClient.connect();
             assertEquals(200, httpClient.getResponseCode());
+            httpClient.disconnect();
+
+            // Test IdM
+            httpClient = (HttpURLConnection) new URL(
+                    "http://localhost:8282/auth/v1/domains").openConnection();
+            httpClient.connect();
+            assertEquals(200, httpClient.getResponseCode());
+            httpClient.disconnect();
+
+            // Test ClaimAuth federation
+            // Since we have not configured the secured proxy ports -> 401
+            httpClient = (HttpURLConnection) new URL(
+                    "http://localhost:8383/oauth2/federation/").openConnection();
+            httpClient.setDoOutput(true);
+            httpClient.connect();
+            assertEquals(401, httpClient.getResponseCode());
         } finally {
             if (oauthClient != null)
                 oauthClient.shutdown();
@@ -134,6 +151,9 @@ public class AAATest {
                 // cluttering the logs
                 configureConsole().ignoreLocalConsole(),
                 logLevel(LogLevel.WARN),
+                // Configure jetty connectors
+                replaceConfigurationFile("etc/jetty.xml", new File(
+                        "src/test/resources/jetty.xml")),
                 features(
                         maven().groupId("org.opendaylight.aaa")
                                 .artifactId("features-aaa").type("xml")

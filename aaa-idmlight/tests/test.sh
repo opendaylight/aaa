@@ -1,5 +1,5 @@
 # GLOBAL VARS
-TARGET="localhost:8181/auth"
+TARGET="localhost:8282/auth"
 TESTCOUNT=0
 PASSCOUNT=0
 FAILCOUNT=0

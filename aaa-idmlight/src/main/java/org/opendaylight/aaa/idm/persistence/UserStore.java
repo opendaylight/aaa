@@ -10,28 +10,30 @@ package org.opendaylight.aaa.idm.persistence;
 
 /**
  *
- * @author peter.mellquist@hp.com 
+ * @author peter.mellquist@hp.com
  *
  */
 
-import java.text.SimpleDateFormat;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.sql.*;
+
+import org.opendaylight.aaa.idm.IdmLightApplication;
+import org.opendaylight.aaa.idm.model.User;
+import org.opendaylight.aaa.idm.model.Users;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.opendaylight.aaa.idm.IdmLightApplication;
-import org.opendaylight.aaa.idm.model.Users;
-import org.opendaylight.aaa.idm.model.User;
 import org.sqlite.JDBC;
 
 public class UserStore {
    private static Logger logger = LoggerFactory.getLogger(UserStore.class);
    protected Connection  dbConnection = null;
-   private static Calendar calendar = Calendar.getInstance();
-   
    protected final static String SQL_ID             = "userid";
    protected final static String SQL_NAME           = "name";
    protected final static String SQL_EMAIL          = "email";
@@ -39,29 +41,29 @@ public class UserStore {
    protected final static String SQL_DESCR          = "description";
    protected final static String SQL_ENABLED        = "enabled";
    public final static int       MAX_FIELD_LEN      = 128;
-	
+
    protected Connection getDBConnect() throws StoreException {
       if ( dbConnection==null ) {
-         try {           
+         try {
             JDBC jdbc = new JDBC();
-	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath); 
+	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
             return dbConnection;
          }
          catch (Exception e) {
             throw new StoreException("Cannot connect to database server "+ e);
-         }       
+         }
       }
       else {
          try {
             if ( dbConnection.isClosed()) {
-               try {          
+               try {
                   JDBC jdbc = new JDBC();
 		  dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
 		  return dbConnection;
                }
                catch (Exception e) {
                   throw new StoreException("Cannot connect to database server "+ e);
-               }      
+               }
             }
             else
                return dbConnection;
@@ -84,7 +86,7 @@ public class UserStore {
          DatabaseMetaData dbm = conn.getMetaData();
          ResultSet rs = dbm.getTables(null, null, "users", null);
          if (rs.next()) {
-            logger.info("users Table already exists");
+            debug("users Table already exists");
          }
          else
          {
@@ -108,20 +110,21 @@ public class UserStore {
       return conn;
    }
 
-      
+
    protected void dbClose() {
       if (dbConnection != null)
       {
          try {
             dbConnection.close ();
           }
-          catch (Exception e) { 
+          catch (Exception e) {
             logger.error("Cannot close Database Connection " + e);
           }
        }
    }
-	
-   protected void finalize ()  {
+
+   @Override
+protected void finalize ()  {
       dbClose();
    }
 
@@ -131,7 +134,7 @@ public class UserStore {
          user.setUserid(rs.getInt(SQL_ID));
          user.setName(rs.getString(SQL_NAME));
          user.setEmail(rs.getString(SQL_EMAIL));
-         user.setPassword(rs.getString(SQL_PASSWORD)); 
+         user.setPassword(rs.getString(SQL_PASSWORD));
          user.setDescription(rs.getString(SQL_DESCR));
          user.setEnabled(rs.getInt(SQL_ENABLED)==1?true:false);
       }
@@ -141,7 +144,7 @@ public class UserStore {
       }
       return user;
    }
-   
+
    public Users getUsers() throws StoreException {
       Users users = new Users();
       List<User> userList = new ArrayList<User>();
@@ -211,8 +214,8 @@ public class UserStore {
             rs.close();
             stmt.close();
             dbClose();
-            return null; 
-         } 
+            return null;
+         }
       }
       catch (SQLException s) {
          dbClose();
@@ -232,12 +235,12 @@ public class UserStore {
           statement.setString(4,user.getDescription());
           statement.setInt(5,user.getEnabled()?1:0);
           int affectedRows = statement.executeUpdate();
-          if (affectedRows == 0) 
-             throw new StoreException("Creating user failed, no rows affected."); 
+          if (affectedRows == 0)
+             throw new StoreException("Creating user failed, no rows affected.");
           ResultSet generatedKeys = statement.getGeneratedKeys();
-          if (generatedKeys.next()) 
+          if (generatedKeys.next())
              key = generatedKeys.getInt(1);
-          else 
+          else
              throw new StoreException("Creating user failed, no generated key obtained.");
           user.setUserid(key);
           dbClose();
@@ -250,17 +253,17 @@ public class UserStore {
    }
 
    public User putUser(User user) throws StoreException {
-      
+
       User savedUser = this.getUser(user.getUserid());
       if (savedUser==null)
          return null;
-    
+
       if (user.getDescription()!=null)
          savedUser.setDescription(user.getDescription());
       if (user.getName()!=null)
          savedUser.setName(user.getName());
       if (user.getEnabled()!=null)
-         savedUser.setEnabled(user.getEnabled()); 
+         savedUser.setEnabled(user.getEnabled());
       if (user.getEmail()!=null)
          savedUser.setEmail(user.getEmail());
       if (user.getPassword()!=null)
@@ -299,7 +302,7 @@ public class UserStore {
       try {
          stmt=conn.createStatement();
          int deleteCount = stmt.executeUpdate(query);
-         logger.info("deleted " + deleteCount + " records");
+         debug("deleted " + deleteCount + " records");
          stmt.close();
          dbClose();
          return savedUser;
@@ -309,6 +312,10 @@ public class UserStore {
          throw new StoreException("SQL Exception : " + s);
       }
    }
-   
+
+   private static final void debug(String msg) {
+       if (logger.isDebugEnabled())
+           logger.debug(msg);
+   }
 }
 

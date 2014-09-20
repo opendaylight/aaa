@@ -10,28 +10,30 @@ package org.opendaylight.aaa.idm.persistence;
 
 /**
  *
- * @author peter.mellquist@hp.com 
+ * @author peter.mellquist@hp.com
  *
  */
 
-import java.text.SimpleDateFormat;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.sql.*;
+
+import org.opendaylight.aaa.idm.IdmLightApplication;
+import org.opendaylight.aaa.idm.model.Grant;
+import org.opendaylight.aaa.idm.model.Grants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.opendaylight.aaa.idm.IdmLightApplication;
-import org.opendaylight.aaa.idm.model.Grants;
-import org.opendaylight.aaa.idm.model.Grant;
 import org.sqlite.JDBC;
 
 public class GrantStore {
    private static Logger logger = LoggerFactory.getLogger(GrantStore.class);
    protected Connection  dbConnection = null;
-   private static Calendar calendar = Calendar.getInstance();
-   
    protected final static String SQL_ID             = "grantid";
    protected final static String SQL_DESCR          = "description";
    protected final static String SQL_TENANTID       = "domainid";
@@ -40,28 +42,28 @@ public class GrantStore {
 
    protected Connection getDBConnect() throws StoreException {
       if ( dbConnection==null ) {
-         try {           
+         try {
 	    //Class.forName (IdmLightApplication.config.dbDriver).newInstance ();
             JDBC jdbc = new JDBC();
-	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath); 
+	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
             return dbConnection;
          }
          catch (Exception e) {
             throw new StoreException("Cannot connect to database server "+ e);
-         }       
+         }
       }
       else {
          try {
             if ( dbConnection.isClosed()) {
-               try {          
+               try {
 		  //Class.forName (IdmLightApplication.config.dbDriver).newInstance ();
-                  JDBC jdbc = new JDBC(); 
+                  JDBC jdbc = new JDBC();
 		  dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
 		  return dbConnection;
                }
                catch (Exception e) {
                   throw new StoreException("Cannot connect to database server "+ e);
-               }      
+               }
             }
             else
                return dbConnection;
@@ -84,7 +86,7 @@ public class GrantStore {
          DatabaseMetaData dbm = conn.getMetaData();
          ResultSet rs = dbm.getTables(null, null, "grants", null);
          if (rs.next()) {
-            logger.info("grants Table already exists");
+            debug("grants Table already exists");
          }
          else
          {
@@ -109,20 +111,21 @@ public class GrantStore {
 
 
 
-      
+
    protected void dbClose() {
       if (dbConnection != null)
       {
          try {
             dbConnection.close ();
           }
-          catch (Exception e) { 
+          catch (Exception e) {
             logger.error("Cannot close Database Connection " + e);
           }
        }
    }
-	
-   protected void finalize ()  {
+
+   @Override
+protected void finalize ()  {
       dbClose();
    }
 
@@ -141,7 +144,7 @@ public class GrantStore {
       }
       return grant;
    }
-   
+
    public Grants getGrants(long did, long uid) throws StoreException {
       Grants grants = new Grants();
       List<Grant> grantList = new ArrayList<Grant>();
@@ -211,8 +214,8 @@ public class GrantStore {
             rs.close();
             stmt.close();
             dbClose();
-            return null; 
-         } 
+            return null;
+         }
       }
       catch (SQLException s) {
          dbClose();
@@ -259,12 +262,12 @@ public class GrantStore {
           statement.setInt(3,grant.getUserid());
           statement.setInt(4,grant.getRoleid());
           int affectedRows = statement.executeUpdate();
-          if (affectedRows == 0) 
-             throw new StoreException("Creating grant failed, no rows affected."); 
+          if (affectedRows == 0)
+             throw new StoreException("Creating grant failed, no rows affected.");
           ResultSet generatedKeys = statement.getGeneratedKeys();
-          if (generatedKeys.next()) 
+          if (generatedKeys.next())
              key = generatedKeys.getInt(1);
-          else 
+          else
              throw new StoreException("Creating grant failed, no generated key obtained.");
           grant.setGrantid(key);
           dbClose();
@@ -287,7 +290,7 @@ public class GrantStore {
       try {
          stmt=conn.createStatement();
          int deleteCount = stmt.executeUpdate(query);
-         logger.info("deleted " + deleteCount + " records");
+         debug("deleted " + deleteCount + " records");
          stmt.close();
          dbClose();
          return savedGrant;
@@ -297,6 +300,10 @@ public class GrantStore {
          throw new StoreException("SQL Exception : " + s);
       }
    }
-   
+
+   private static final void debug(String msg) {
+       if (logger.isDebugEnabled())
+           logger.debug(msg);
+   }
 }
 
