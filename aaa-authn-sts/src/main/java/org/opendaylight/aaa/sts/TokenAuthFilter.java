@@ -8,14 +8,13 @@
  */
 package org.opendaylight.aaa.sts;
 
-import static org.opendaylight.aaa.AuthConstants.UNAUTHORIZED_EX;
-
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response.Status;
 
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
@@ -35,6 +34,10 @@ import com.sun.jersey.spi.container.ContainerRequestFilter;
  *
  */
 public class TokenAuthFilter implements ContainerRequestFilter {
+    /** 401 exception */
+    private static final WebApplicationException UNAUTHORIZED_EX = new WebApplicationException(
+            Status.UNAUTHORIZED);
+
     @Context
     private HttpServletRequest httpRequest;
 

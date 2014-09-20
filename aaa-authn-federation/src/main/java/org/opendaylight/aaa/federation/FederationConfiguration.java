@@ -6,7 +6,7 @@
  * terms of the Eclipse License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.sts;
+package org.opendaylight.aaa.federation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -87,7 +87,7 @@ public class FederationConfiguration implements ManagedService {
         String ports = configs.get(SECURE_PROXY_PORTS);
         Set<Integer> secureProxyPorts = new TreeSet<Integer>();
 
-        if (ports != null) {
+        if (ports != null && !ports.isEmpty()) {
             for (String port : ports.split(" ")) {
                 secureProxyPorts.add(Integer.parseInt(port));
             }

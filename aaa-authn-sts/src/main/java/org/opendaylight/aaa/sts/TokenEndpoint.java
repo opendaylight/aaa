@@ -14,7 +14,6 @@ import static javax.servlet.http.HttpServletResponse.SC_NOT_IMPLEMENTED;
 import static javax.servlet.http.HttpServletResponse.SC_NO_CONTENT;
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
-import static org.opendaylight.aaa.AuthConstants.AUTH_CLAIM;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -59,7 +58,6 @@ public class TokenEndpoint extends HttpServlet {
 
     static final String TOKEN_GRANT_ENDPOINT = "/token";
     static final String TOKEN_REVOKE_ENDPOINT = "/revoke";
-    static final String FEDERATION_ENDPOINT = "/federation";
 
     private transient OAuthIssuer oi;
 
@@ -72,9 +70,7 @@ public class TokenEndpoint extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         try {
-            if (req.getServletPath().equals(FEDERATION_ENDPOINT))
-                createRefreshToken(req, resp);
-            else if (req.getServletPath().equals(TOKEN_GRANT_ENDPOINT))
+            if (req.getServletPath().equals(TOKEN_GRANT_ENDPOINT))
                 createAccessToken(req, resp);
             else if (req.getServletPath().equals(TOKEN_REVOKE_ENDPOINT))
                 deleteAccessToken(req, resp);
@@ -82,8 +78,8 @@ public class TokenEndpoint extends HttpServlet {
             error(resp, SC_UNAUTHORIZED, e.getMessage());
         } catch (OAuthProblemException oe) {
             error(resp, oe);
-        } catch (Throwable t) {
-            error(resp, t);
+        } catch (Exception e) {
+            error(resp, e);
         }
     }
 
@@ -157,13 +153,6 @@ public class TokenEndpoint extends HttpServlet {
         oauthAccessTokenResponse(resp, claim, clientId);
     }
 
-    // Create a refresh token
-    private void createRefreshToken(HttpServletRequest req,
-            HttpServletResponse resp) throws OAuthSystemException, IOException {
-        Claim claim = (Claim) req.getAttribute(AUTH_CLAIM);
-        oauthRefreshTokenResponse(resp, claim);
-    }
-
     // Build OAuth access token response from the given claim
     private void oauthAccessTokenResponse(HttpServletResponse resp,
             Claim claim, String clientId) throws OAuthSystemException,
@@ -186,60 +175,9 @@ public class TokenEndpoint extends HttpServlet {
         write(resp, r);
     }
 
-    // Build OAuth refresh token response from the given claim mapped and
-    // injected by the external IdP
-    private void oauthRefreshTokenResponse(HttpServletResponse resp, Claim claim)
-            throws OAuthSystemException, IOException {
-        if (claim == null) {
-            throw new AuthenticationException(UNAUTHORIZED);
-        }
-
-        String userName = claim.user();
-        // Need to have at least a mapped username!
-        if (userName == null) {
-            throw new AuthenticationException(UNAUTHORIZED);
-        }
-
-        // Need to have a corresponding user id in ODL
-        String userId = ServiceLocator.INSTANCE.is.getUserId(userName);
-        if (userId == null) {
-            throw new AuthenticationException(UNAUTHORIZED);
-        }
-
-        // Create an unscoped ODL context from the external claim
-        Authentication auth = new AuthenticationBuilder(claim)
-                .setUserId(userId).setExpiration(tokenExpiration()).build();
-
-        // Create OAuth response
-        String token = oi.refreshToken();
-        OAuthResponse r = OAuthASResponse
-                .tokenResponse(SC_CREATED)
-                .setRefreshToken(token)
-                .setExpiresIn(Long.toString(auth.expiration()))
-                .setScope(
-                // Use mapped domain if there is one, else list
-                // all the ones that this user has access to
-                        claim.domain() != null ? claim.domain()
-                                : listToString(ServiceLocator.INSTANCE.is
-                                        .listDomains(userId)))
-                .buildJSONMessage();
-        // Cache this token...
-        ServiceLocator.INSTANCE.ts.put(token, auth);
-        write(resp, r);
-
-    }
-
     // Token expiration
     private long tokenExpiration() {
         return ServiceLocator.INSTANCE.ts.tokenExpiration();
-    }
-
-    // Space-delimited string from a list of strings
-    private String listToString(List<String> list) {
-        StringBuffer sb = new StringBuffer();
-        for (String s : list)
-            sb.append(s).append(" ");
-        return sb.toString().trim();
     }
 
     // Emit an error OAuthResponse with the given HTTP code
@@ -248,7 +186,6 @@ public class TokenEndpoint extends HttpServlet {
             OAuthResponse r = OAuthResponse.errorResponse(httpCode)
                     .setError(error).buildJSONMessage();
             write(resp, r);
-            resp.sendError(httpCode);
         } catch (Exception e1) {
             // Nothing to do here
         }
@@ -260,21 +197,19 @@ public class TokenEndpoint extends HttpServlet {
             OAuthResponse r = OAuthResponse.errorResponse(SC_BAD_REQUEST)
                     .error(e).buildJSONMessage();
             write(resp, r);
-            resp.sendError(SC_BAD_REQUEST);
         } catch (Exception e1) {
             // Nothing to do here
         }
     }
 
     // Emit an error OAuthResponse for the given generic exception
-    private void error(HttpServletResponse resp, Throwable e) {
+    private void error(HttpServletResponse resp, Exception e) {
         try {
             OAuthResponse r = OAuthResponse
                     .errorResponse(SC_INTERNAL_SERVER_ERROR)
                     .setError(e.getClass().getName())
                     .setErrorDescription(e.getMessage()).buildJSONMessage();
             write(resp, r);
-            resp.sendError(SC_INTERNAL_SERVER_ERROR);
         } catch (Exception e1) {
             // Nothing to do here
         }

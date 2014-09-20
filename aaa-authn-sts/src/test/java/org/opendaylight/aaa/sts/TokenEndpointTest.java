@@ -10,13 +10,12 @@ package org.opendaylight.aaa.sts;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import java.util.TreeSet;
-
-import javax.naming.AuthenticationException;
 
 import org.eclipse.jetty.testing.HttpTester;
 import org.eclipse.jetty.testing.ServletTester;
@@ -29,7 +28,6 @@ import org.opendaylight.aaa.AuthenticationBuilder;
 import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.Claim;
-import org.opendaylight.aaa.api.ClaimAuth;
 import org.opendaylight.aaa.api.ClientService;
 import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.IdMService;
@@ -37,6 +35,12 @@ import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
 
+/**
+ * A unit test for token endpoint.
+ *
+ * @author liemmn
+ *
+ */
 public class TokenEndpointTest {
     private static final long TOKEN_TIMEOUT_SECS = 10;
     private static final String CONTEXT = "/oauth2";
@@ -53,12 +57,8 @@ public class TokenEndpointTest {
         server.setContextPath(CONTEXT);
 
         // Add our servlet under test
-        server.addServlet(TokenEndpoint.class, "/federation");
         server.addServlet(TokenEndpoint.class, "/revoke");
         server.addServlet(TokenEndpoint.class, "/token");
-
-        // Add ClaimAuth filter
-        server.addFilter(ClaimAuthFilter.class, "/federation", 0);
 
         // Let's do dis
         server.start();
@@ -78,47 +78,7 @@ public class TokenEndpointTest {
 
     @After
     public void teardown() {
-        ServiceLocator.INSTANCE.ca.clear();
         ServiceLocator.INSTANCE.ta.clear();
-    }
-
-    @Test
-    public void testFederation401() throws Exception {
-        HttpTester req = new HttpTester();
-        req.setMethod("POST");
-        req.setURI(CONTEXT + TokenEndpoint.FEDERATION_ENDPOINT);
-        req.setVersion("HTTP/1.0");
-
-        HttpTester resp = new HttpTester();
-        resp.parse(server.getResponses(req.generate()));
-        assertEquals(401, resp.getStatus());
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testFederation() throws Exception {
-        when(ServiceLocator.INSTANCE.ca.get(0).transform(anyMap())).thenReturn(
-                claim);
-        when(ServiceLocator.INSTANCE.is.getUserId(anyString())).thenReturn(
-                "1234");
-        when(ServiceLocator.INSTANCE.is.listDomains(anyString())).thenReturn(
-                Arrays.asList("pepsi", "coke"));
-        doThrow(AuthenticationException.class).when(ServiceLocator.INSTANCE.cs)
-                .validate(isNull(String.class), isNull(String.class));
-
-        FederationConfiguration.instance = mock(FederationConfiguration.class);
-        when(FederationConfiguration.instance.secureProxyPorts()).thenReturn(
-                new TreeSet<Integer>(Arrays.asList(0)));
-
-        HttpTester req = new HttpTester();
-        req.setMethod("POST");
-        req.setURI(CONTEXT + TokenEndpoint.FEDERATION_ENDPOINT);
-        req.setVersion("HTTP/1.0");
-
-        HttpTester resp = new HttpTester();
-        resp.parse(server.getResponses(req.generate()));
-        assertEquals(201, resp.getStatus());
-        assertTrue(resp.getContent().contains("pepsi coke"));
     }
 
     @Test
@@ -201,7 +161,6 @@ public class TokenEndpointTest {
         ServiceLocator.INSTANCE.as = mock(AuthenticationService.class);
         ServiceLocator.INSTANCE.ts = mock(TokenStore.class);
         ServiceLocator.INSTANCE.da = mock(CredentialAuth.class);
-        ServiceLocator.INSTANCE.ca.add(mock(ClaimAuth.class));
         ServiceLocator.INSTANCE.ta.add(mock(TokenAuth.class));
     }
 }

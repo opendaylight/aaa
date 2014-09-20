@@ -9,19 +9,19 @@
         <relativePath>../</relativePath>
     </parent>
 
-    <artifactId>aaa-authn-sts</artifactId>
+    <artifactId>aaa-authn-federation</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <dependencies>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authn</artifactId>
+            <artifactId>aaa-authn-api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authn-api</artifactId>
+            <artifactId>aaa-authn</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -52,7 +52,7 @@
             <groupId>org.apache.oltu.oauth2</groupId>
             <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
             <scope>provided</scope>
-        </dependency>
+        </dependency>        
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
@@ -63,7 +63,7 @@
             <artifactId>org.apache.felix.dependencymanager</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!-- Testing Dependencies -->     
+        <!-- Testing Dependencies -->
         <dependency>
             <groupId>com.sun.jersey.jersey-test-framework</groupId>
             <artifactId>jersey-test-framework-grizzly2</artifactId>
@@ -100,11 +100,34 @@
                 <configuration>
                     <instructions>
                         <Import-Package>*,com.sun.jersey.spi.container.servlet</Import-Package>
-                        <Web-ContextPath>/oauth2</Web-ContextPath>
-                        <Bundle-Activator>org.opendaylight.aaa.sts.Activator</Bundle-Activator>
+                        <Web-ContextPath>/oauth2/federation</Web-ContextPath>
+                        <Web-Connectors>federationConn</Web-Connectors>
+                        <Bundle-Activator>org.opendaylight.aaa.federation.Activator</Bundle-Activator>
                         <manifestLocation>${project.basedir}/META-INF</manifestLocation>
                     </instructions>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>${project.build.directory}/classes/federation.cfg</file>
+                                    <type>cfg</type>
+                                    <classifier>config</classifier>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

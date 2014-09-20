@@ -10,56 +10,58 @@ package org.opendaylight.aaa.idm.persistence;
 
 /**
  *
- * @author peter.mellquist@hp.com 
+ * @author peter.mellquist@hp.com
  *
  */
 
-import java.text.SimpleDateFormat;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.sql.*;
+
+import org.opendaylight.aaa.idm.IdmLightApplication;
+import org.opendaylight.aaa.idm.model.Domain;
+import org.opendaylight.aaa.idm.model.Domains;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.opendaylight.aaa.idm.IdmLightApplication;
-import org.opendaylight.aaa.idm.model.Domains;
-import org.opendaylight.aaa.idm.model.Domain;
 import org.sqlite.JDBC;
 
 public class DomainStore {
    private static Logger logger = LoggerFactory.getLogger(DomainStore.class);
 
    protected Connection  dbConnection = null;
-   private static Calendar calendar = Calendar.getInstance();
-   
    protected final static String SQL_ID             = "domainid";
    protected final static String SQL_NAME           = "name";
    protected final static String SQL_DESCR          = "description";
    protected final static String SQL_ENABLED        = "enabled";
-	
+
    protected Connection getDBConnect() throws StoreException {
       if ( dbConnection==null ) {
-         try {           
+         try {
             JDBC jdbc = new JDBC();
-	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath); 
+	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
             return dbConnection;
          }
          catch (Exception e) {
             throw new StoreException("Cannot connect to database server "+ e);
-         }       
+         }
       }
       else {
          try {
             if ( dbConnection.isClosed()) {
-               try {          
+               try {
                   JDBC jdbc = new JDBC();
 		  dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
 		  return dbConnection;
                }
                catch (Exception e) {
                   throw new StoreException("Cannot connect to database server "+ e);
-               }      
+               }
             }
             else
                return dbConnection;
@@ -82,42 +84,43 @@ public class DomainStore {
          DatabaseMetaData dbm = conn.getMetaData();
          ResultSet rs = dbm.getTables(null, null, "domains", null);
          if (rs.next()) {
-            logger.info("domains Table already exists"); 
-         } 
-         else 
+            debug("domains Table already exists");
+         }
+         else
          {
-            logger.info("domains Table does not exist, creating table"); 
+            logger.info("domains Table does not exist, creating table");
             Statement stmt = null;
             stmt = conn.createStatement();
             String sql = "CREATE TABLE domains " +
                          "(domainid    INTEGER PRIMARY KEY AUTOINCREMENT," +
-                         "name        VARCHAR(128)      NOT NULL, " + 
-                         "description VARCHAR(128)      NOT NULL, " + 
-                         "enabled     INTEGER           NOT NULL)" ; 
+                         "name        VARCHAR(128)      NOT NULL, " +
+                         "description VARCHAR(128)      NOT NULL, " +
+                         "enabled     INTEGER           NOT NULL)" ;
            stmt.executeUpdate(sql);
-           stmt.close(); 
-         }    
-      } 
+           stmt.close();
+         }
+      }
       catch (SQLException sqe) {
          throw new StoreException("Cannot connect to database server "+ sqe);
       }
       return conn;
    }
 
-      
+
    protected void dbClose() {
       if (dbConnection != null)
       {
          try {
             dbConnection.close ();
           }
-          catch (Exception e) { 
+          catch (Exception e) {
             logger.error("Cannot close Database Connection " + e);
           }
        }
    }
-	
-   protected void finalize ()  {
+
+   @Override
+protected void finalize ()  {
       dbClose();
    }
 
@@ -135,7 +138,7 @@ public class DomainStore {
       }
       return domain;
    }
-   
+
    public Domains getDomains() throws StoreException {
       Domains domains = new Domains();
       List<Domain> domainList = new ArrayList<Domain>();
@@ -162,13 +165,13 @@ public class DomainStore {
    }
 
    public Domains getDomains(String domainName) throws StoreException {
-      logger.info("getDomains for:" + domainName);
+      debug("getDomains for:" + domainName);
       Domains domains = new Domains();
       List<Domain> domainList = new ArrayList<Domain>();
       Connection conn = dbConnect();
       Statement stmt=null;
       String query = "SELECT * FROM domains WHERE name=\"" + domainName + "\"";
-      logger.info("query string: " + query);
+      debug("query string: " + query);
       try {
          stmt=conn.createStatement();
          ResultSet rs=stmt.executeQuery(query);
@@ -207,8 +210,8 @@ public class DomainStore {
             rs.close();
             stmt.close();
             dbClose();
-            return null; 
-         } 
+            return null;
+         }
       }
       catch (SQLException s) {
          dbClose();
@@ -226,12 +229,12 @@ public class DomainStore {
           statement.setString(2,domain.getDescription());
           statement.setInt(3,domain.getEnabled()?1:0);
           int affectedRows = statement.executeUpdate();
-          if (affectedRows == 0) 
-             throw new StoreException("Creating domain failed, no rows affected."); 
+          if (affectedRows == 0)
+             throw new StoreException("Creating domain failed, no rows affected.");
           ResultSet generatedKeys = statement.getGeneratedKeys();
-          if (generatedKeys.next()) 
+          if (generatedKeys.next())
              key = generatedKeys.getInt(1);
-          else 
+          else
              throw new StoreException("Creating domain failed, no generated key obtained.");
           domain.setDomainid(key);
           dbClose();
@@ -247,13 +250,13 @@ public class DomainStore {
       Domain savedDomain = this.getDomain(domain.getDomainid());
       if (savedDomain==null)
          return null;
-    
+
       if (domain.getDescription()!=null)
          savedDomain.setDescription(domain.getDescription());
       if (domain.getName()!=null)
          savedDomain.setName(domain.getName());
       if (domain.getEnabled()!=null)
-         savedDomain.setEnabled(domain.getEnabled()); 
+         savedDomain.setEnabled(domain.getEnabled());
 
       Connection conn = dbConnect();
       try {
@@ -286,7 +289,7 @@ public class DomainStore {
       try {
          stmt=conn.createStatement();
          int deleteCount = stmt.executeUpdate(query);
-         logger.info("deleted " + deleteCount + " records");
+         debug("deleted " + deleteCount + " records");
          stmt.close();
          dbClose();
          return savedDomain;
@@ -296,6 +299,10 @@ public class DomainStore {
          throw new StoreException("SQL Exception : " + s);
       }
    }
-   
+
+   private static final void debug(String msg) {
+       if (logger.isDebugEnabled())
+           logger.debug(msg);
+   }
 }
 
