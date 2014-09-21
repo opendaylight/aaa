@@ -135,6 +135,11 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-authn-federation</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn</artifactId>
             <version>${project.version}</version>
             <type>cfg</type>
