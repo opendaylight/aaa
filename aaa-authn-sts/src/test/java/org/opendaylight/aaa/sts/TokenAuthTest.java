@@ -9,6 +9,7 @@
 package org.opendaylight.aaa.sts;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -21,7 +22,9 @@ import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
+import org.opendaylight.aaa.sts.TokenAuthFilter.UnauthorizedException;
 
+import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.test.framework.JerseyTest;
 import com.sun.jersey.test.framework.WebAppDescriptor;
@@ -51,7 +54,8 @@ public class TokenAuthTest extends JerseyTest {
         ServiceLocator.INSTANCE.ts = mock(TokenStore.class);
         when(ServiceLocator.INSTANCE.ts.get(GOOD_TOKEN)).thenReturn(auth);
         when(ServiceLocator.INSTANCE.ts.get(BAD_TOKEN)).thenReturn(null);
-        when(ServiceLocator.INSTANCE.as.isAuthEnabled()).thenReturn(Boolean.TRUE);
+        when(ServiceLocator.INSTANCE.as.isAuthEnabled()).thenReturn(
+                Boolean.TRUE);
     }
 
     @Test()
@@ -60,7 +64,11 @@ public class TokenAuthTest extends JerseyTest {
             resource().path("test").get(String.class);
             fail("Shoulda failed with 401!");
         } catch (UniformInterfaceException e) {
-            assertEquals(401, e.getResponse().getStatus());
+            ClientResponse resp = e.getResponse();
+            assertEquals(401, resp.getStatus());
+            assertTrue(resp.getHeaders()
+                    .get(UnauthorizedException.WWW_AUTHENTICATE)
+                    .contains(UnauthorizedException.OPENDAYLIGHT));
         }
     }
 

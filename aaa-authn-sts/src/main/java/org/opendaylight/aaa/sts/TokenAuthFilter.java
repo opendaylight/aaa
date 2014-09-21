@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
@@ -35,8 +36,7 @@ import com.sun.jersey.spi.container.ContainerRequestFilter;
  */
 public class TokenAuthFilter implements ContainerRequestFilter {
     /** 401 exception */
-    private static final WebApplicationException UNAUTHORIZED_EX = new WebApplicationException(
-            Status.UNAUTHORIZED);
+    private static final WebApplicationException UNAUTHORIZED_EX = new UnauthorizedException();
 
     @Context
     private HttpServletRequest httpRequest;
@@ -90,4 +90,17 @@ public class TokenAuthFilter implements ContainerRequestFilter {
         return UNAUTHORIZED_EX;
     }
 
+    // A custom 401 web exception that handles http basic response as well
+    static final class UnauthorizedException extends
+            WebApplicationException {
+        private static final long serialVersionUID = -1732363804773027793L;
+        static final String WWW_AUTHENTICATE = "WWW-Authenticate";
+        static final Object OPENDAYLIGHT = "Basic realm=\"opendaylight\"";
+        private static final Response response = Response.status(Status.UNAUTHORIZED)
+                .header(WWW_AUTHENTICATE, OPENDAYLIGHT).build();
+
+        public UnauthorizedException() {
+            super(response);
+        }
+    }
 }
