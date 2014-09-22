@@ -39,7 +39,7 @@ import org.opendaylight.aaa.api.TokenStore;
  */
 public class FederationEndpointTest {
     private static final long TOKEN_TIMEOUT_SECS = 10;
-    private static final String CONTEXT = "/federation/v1";
+    private static final String CONTEXT = "/oauth2/federation";
 
     private final static ServletTester server = new ServletTester();
     private static final Claim claim = new ClaimBuilder().setUser("bob")
@@ -87,8 +87,6 @@ public class FederationEndpointTest {
         HttpTester resp = new HttpTester();
         resp.parse(server.getResponses(req.generate()));
         assertEquals(401, resp.getStatus());
-        assertTrue(resp.getContent().contains(
-                ClaimAuthFilter.UNAUTHORIZED_PORT_ERR));
     }
 
     @Test
