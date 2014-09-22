@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2014 Hewlett-Packard Development Company, L.P. and others.
+/* Copyright (c) 2014 Hewlett-Packard Development Company, L.P. and others.
  * All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -8,8 +7,12 @@
  */
 package org.opendaylight.aaa.idm;
 
+import static org.opendaylight.aaa.idm.persistence.StoreBuilder.DEFAULT_DOMAIN;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.AuthenticationException;
@@ -27,7 +30,6 @@ import org.opendaylight.aaa.idm.model.Users;
 import org.opendaylight.aaa.idm.persistence.DomainStore;
 import org.opendaylight.aaa.idm.persistence.GrantStore;
 import org.opendaylight.aaa.idm.persistence.RoleStore;
-import org.opendaylight.aaa.idm.persistence.StoreBuilder;
 import org.opendaylight.aaa.idm.persistence.StoreException;
 import org.opendaylight.aaa.idm.persistence.UserStore;
 import org.slf4j.Logger;
@@ -36,7 +38,6 @@ import org.slf4j.LoggerFactory;
 /**
  * An OSGi proxy for the IdmLight server.
  *
- * @author liemmn
  */
 public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
         IdMService {
@@ -47,18 +48,48 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
     private static DomainStore domainStore = new DomainStore();
     private static RoleStore roleStore = new RoleStore();
 
+    // Simple map of claim cache by domain names
+    private static Map<String, Map<PasswordCredentials, Claim>> claimCache = new ConcurrentHashMap<>();
+    static {
+        claimCache.put(DEFAULT_DOMAIN, new ConcurrentHashMap<PasswordCredentials, Claim>());
+    }
+
     @Override
-    public Claim authenticate(PasswordCredentials creds, String domainName) {
+    public Claim authenticate(PasswordCredentials creds, String domain) {
+        String domainName = (domain == null) ? DEFAULT_DOMAIN : domain;
+        // FIXME: Add cache invalidation
+        Map<PasswordCredentials, Claim> cache = claimCache.get(domainName);
+        if (cache == null) {
+            cache = new ConcurrentHashMap<PasswordCredentials, Claim>();
+            claimCache.put(domainName, cache);
+        }
+        Claim claim = cache.get(creds);
+        if (claim == null) {
+            synchronized (claimCache) {
+                claim = cache.get(creds);
+                if (claim == null) {
+                    claim = dbAuthenticate(creds, domainName);
+                    if (claim != null)
+                        cache.put(creds, claim);
+                }
+            }
+        }
+        return claim;
+    }
+
+    public static synchronized void clearClaimCache() {
+        for (Map<PasswordCredentials, Claim> cache : claimCache.values())
+            cache.clear();
+    }
+
+    private static Claim dbAuthenticate(PasswordCredentials creds, String domainName) {
         Domain domain=null;
         User user=null;
-
-        debug("authenticate");
-
         // check to see domain exists
         // TODO: ensure domain names are unique change to 'getDomain'
         debug("get domain");
         try {
-           Domains domains = domainStore.getDomains((domainName==null) ? StoreBuilder.DEFAULT_DOMAIN : domainName);
+           Domains domains = domainStore.getDomains(domainName);
            List<Domain> domainList = domains.getDomains();
            if (domainList.size()==0) {
               throw new AuthenticationException("Domain :" + domainName + " does not exist");
@@ -106,7 +137,6 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
         catch (StoreException se) {
            throw new AuthenticationException("idm data store exception :" + se.toString());
         }
-
     }
 
     @Override
@@ -202,3 +232,4 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
             logger.debug(msg);
     }
 }
+
