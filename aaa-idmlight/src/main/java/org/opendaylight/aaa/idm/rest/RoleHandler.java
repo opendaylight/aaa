@@ -35,6 +35,7 @@ import org.opendaylight.aaa.idm.model.Role;
 import org.opendaylight.aaa.idm.model.IDMError;
 import org.opendaylight.aaa.idm.persistence.RoleStore;
 import org.opendaylight.aaa.idm.persistence.StoreException;
+import org.opendaylight.aaa.idm.IdmLightProxy;
 	
 @Path("/v1/roles")
 public class RoleHandler {
@@ -142,7 +143,7 @@ public class RoleHandler {
          if (role==null) {
             return new IDMError(404,"role id not found :" + id,"").response();
          }
-
+         IdmLightProxy.clearClaimCache();
          return Response.status(200).entity(role).build();
       }
       catch (StoreException se) {
@@ -173,7 +174,7 @@ public class RoleHandler {
       catch (StoreException se) {
          return new IDMError(500,"internal error deleting role",se.message).response();
       }
-
+      IdmLightProxy.clearClaimCache();
       return Response.status(204).build();
    }
 

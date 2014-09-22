@@ -35,6 +35,7 @@ import org.opendaylight.aaa.idm.model.User;
 import org.opendaylight.aaa.idm.model.IDMError;
 import org.opendaylight.aaa.idm.persistence.UserStore;
 import org.opendaylight.aaa.idm.persistence.StoreException;
+import org.opendaylight.aaa.idm.IdmLightProxy;
 	
 @Path("/v1/users")
 public class UserHandler {
@@ -159,6 +160,7 @@ public class UserHandler {
          if (user==null) {
             return new IDMError(404,"user id not found id :"+id,"").response();
          }
+         IdmLightProxy.clearClaimCache();
          return Response.status(200).entity(user).build();
       }
       catch (StoreException se) {
@@ -189,7 +191,7 @@ public class UserHandler {
       catch (StoreException se) {
          return new IDMError(500,"internal error deleting user",se.message).response();
       }
-
+      IdmLightProxy.clearClaimCache();
       return Response.status(204).build();
    }
 

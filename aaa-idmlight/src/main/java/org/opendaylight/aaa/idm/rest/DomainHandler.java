@@ -47,6 +47,7 @@ import org.opendaylight.aaa.idm.persistence.RoleStore;
 import org.opendaylight.aaa.idm.persistence.GrantStore;
 import org.opendaylight.aaa.idm.persistence.UserStore;
 import org.opendaylight.aaa.idm.persistence.StoreException;
+import org.opendaylight.aaa.idm.IdmLightProxy;
 
 @Path("/v1/domains")
 public class DomainHandler {
@@ -129,7 +130,6 @@ public class DomainHandler {
          idmerror.setDetails(se.message);
          return Response.status(500).entity(idmerror).build();
       } 
-
       return Response.status(201).entity(domain).build();
    } 
 
@@ -157,7 +157,7 @@ public class DomainHandler {
             idmerror.setMessage("Not found! Domain id :" + id);
             return Response.status(404).entity(idmerror).build();
          }
-
+         IdmLightProxy.clearClaimCache();
          return Response.status(200).entity(domain).build();
       }
       catch (StoreException se) {
@@ -200,7 +200,7 @@ public class DomainHandler {
          idmerror.setDetails(se.message);
          return Response.status(500).entity(idmerror).build();
       }
-
+      IdmLightProxy.clearClaimCache();
       return Response.status(204).build();
    }
 
@@ -332,6 +332,7 @@ public class DomainHandler {
          return Response.status(500).entity(idmerror).build();
       }
 
+      IdmLightProxy.clearClaimCache();
       return Response.status(201).entity(grant).build();
    }
 
@@ -628,7 +629,7 @@ public class DomainHandler {
          idmerror.setDetails(se.message);
          return Response.status(500).entity(idmerror).build();
       }
-
+      IdmLightProxy.clearClaimCache();
       return Response.status(204).build();
    }
 
