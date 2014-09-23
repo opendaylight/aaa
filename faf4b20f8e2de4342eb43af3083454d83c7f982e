@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa82b9bf_4f9b8bc9",
+        "filename": "features/aaa/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 9
+      },
+      "writtenOn": "2014-09-23T23:12:55Z",
+      "side": 1,
+      "message": "I tend to agree with you... but as a matter of pragmatism... if we rename features-aaa to features-authn... I have to correct that in controller and integration, which will be broken until the multihour verify/merge cycle completes (as will autorelease).",
+      "parentUuid": "fa82b9bf_cf679be9",
+      "revId": "faf4b20f8e2de4342eb43af3083454d83c7f982e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa82b9bf_2f73a7b2",
         "filename": "features/aaa/pom.xml",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fa82b9bf_6fa0cff4",
+        "filename": "features/aaa/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 9
+      },
+      "writtenOn": "2014-09-23T23:12:55Z",
+      "side": 1,
+      "message": "Will do",
+      "parentUuid": "fa82b9bf_2f73a7b2",
+      "revId": "faf4b20f8e2de4342eb43af3083454d83c7f982e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa82b9bf_ef64dfe6",
         "filename": "features/authz/src/main/resources/features.xml",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2014-09-23T23:06:06Z",
       "side": 1,
       "message": "All Features -\u003e All AuthZ Features",
+      "revId": "faf4b20f8e2de4342eb43af3083454d83c7f982e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_2faac7d4",
+        "filename": "features/authz/src/main/resources/features.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 9
+      },
+      "writtenOn": "2014-09-23T23:12:55Z",
+      "side": 1,
+      "message": "Will do :)",
+      "parentUuid": "fa82b9bf_ef64dfe6",
       "revId": "faf4b20f8e2de4342eb43af3083454d83c7f982e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false

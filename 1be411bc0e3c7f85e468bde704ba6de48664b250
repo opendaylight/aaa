@@ -16,6 +16,24 @@
       "revId": "1be411bc0e3c7f85e468bde704ba6de48664b250",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_0fa58303",
+        "filename": "features/aaa/src/main/resources/features.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 9
+      },
+      "writtenOn": "2014-09-23T23:12:55Z",
+      "side": 0,
+      "message": "I would tend to agree with you... but it would require changes in controller and integration to fix the breakage :(",
+      "parentUuid": "fa82b9bf_0f6ee3c9",
+      "revId": "1be411bc0e3c7f85e468bde704ba6de48664b250",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
