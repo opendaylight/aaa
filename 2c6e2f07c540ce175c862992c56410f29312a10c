@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa82b9bf_2c5f3574",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/TokenAuthFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 9
+      },
+      "writtenOn": "2014-09-23T20:45:52Z",
+      "side": 1,
+      "message": "Would something like \u0027Authentication service still starting up, please retry shortly\u0027 make sense so it provides more guidance to the user and they don\u0027t just thing authn is missing forever?",
+      "revId": "2c6e2f07c540ce175c862992c56410f29312a10c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
