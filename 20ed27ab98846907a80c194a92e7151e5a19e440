@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa82b9bf_2fcf27b2",
+        "filename": "features/aaa/src/main/resources/features.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-09-23T23:57:30Z",
+      "side": 1,
+      "message": "Missing:  \u003crepository\u003emvn:org.opendaylight.controller/features-netconf/${netconf.version}/xml/features\u003c/re\npository\u003e \n\nfor odl-netconf-api",
+      "revId": "20ed27ab98846907a80c194a92e7151e5a19e440",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
