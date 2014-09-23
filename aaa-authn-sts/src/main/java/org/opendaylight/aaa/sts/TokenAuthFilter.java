@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -35,14 +36,22 @@ import com.sun.jersey.spi.container.ContainerRequestFilter;
  *
  */
 public class TokenAuthFilter implements ContainerRequestFilter {
-    /** 401 exception */
     private static final WebApplicationException UNAUTHORIZED_EX = new UnauthorizedException();
+    private static final WebApplicationException UNAVAILABLE_EX = new WebApplicationException(
+            Response.status(Status.SERVICE_UNAVAILABLE)
+                    .type(MediaType.APPLICATION_JSON)
+                    .entity("{\"error\":\"Authentication service unavailable\"}")
+                    .build());
 
     @Context
     private HttpServletRequest httpRequest;
 
     @Override
     public ContainerRequest filter(ContainerRequest request) {
+        // Are we up yet?
+        if (ServiceLocator.INSTANCE.as == null)
+            throw UNAVAILABLE_EX;
+
         // Are we doing authentication or not?
         if (ServiceLocator.INSTANCE.as.isAuthEnabled()) {
             Map<String, List<String>> headers = request.getRequestHeaders();
@@ -91,12 +100,12 @@ public class TokenAuthFilter implements ContainerRequestFilter {
     }
 
     // A custom 401 web exception that handles http basic response as well
-    static final class UnauthorizedException extends
-            WebApplicationException {
+    static final class UnauthorizedException extends WebApplicationException {
         private static final long serialVersionUID = -1732363804773027793L;
         static final String WWW_AUTHENTICATE = "WWW-Authenticate";
         static final Object OPENDAYLIGHT = "Basic realm=\"opendaylight\"";
-        private static final Response response = Response.status(Status.UNAUTHORIZED)
+        private static final Response response = Response
+                .status(Status.UNAUTHORIZED)
                 .header(WWW_AUTHENTICATE, OPENDAYLIGHT).build();
 
         public UnauthorizedException() {
