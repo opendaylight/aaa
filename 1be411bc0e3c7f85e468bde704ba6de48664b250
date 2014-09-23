@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa82b9bf_0f6ee3c9",
+        "filename": "features/aaa/src/main/resources/features.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-09-23T23:06:06Z",
+      "side": 0,
+      "message": "Can we rename this to be \"odl-aaa-authn-all\" instead?  since there is no authz and calling it all is a misnomer.  And \"All Features\" -\u003e \"All AuthN Features\"",
+      "revId": "1be411bc0e3c7f85e468bde704ba6de48664b250",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
