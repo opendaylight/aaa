@@ -20,7 +20,6 @@
     <feature name='odl-aaa-all' description='OpenDaylight :: AAA :: All Features'
         version='${project.version}'>
         <feature version='${project.version}'>odl-aaa-authn</feature>
-        <feature version='${project.version}'>odl-aaa-authz</feature>
         <feature version='${project.version}'>odl-aaa-authn-sssd</feature>
         <feature version='${project.version}'>odl-aaa-authn-plugin</feature>
     </feature>
@@ -86,21 +85,6 @@
         <feature version='${netconf.version}'>odl-netconf-api</feature>
         <feature version='${project.version}'>odl-aaa-authn</feature>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-odl-plugin/${project.version}</bundle>
-    </feature>
-
-    <feature name='odl-aaa-authz' description='OpenDaylight :: AAA :: Authorization'
-        version='${project.version}'>
-        <feature version='${yangtools.version}'>odl-yangtools-common</feature>
-        <feature version='${yangtools.version}'>odl-yangtools-binding</feature>
-        <feature version='${project.version}'>odl-aaa-authn</feature>
-       <!--  <feature version='${mdsal.version}'>odl-mdsal-common</feature> -->
-        <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
-        <feature version='${config.version}'>odl-config-core</feature>
-        <feature version='${restconf.version}'>odl-restconf</feature>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authz-model/${project.version}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authz-service/${project.version}</bundle>
-        <configfile finalname="${config.configfile.directory}/${config.authz.service.configfile}">mvn:org.opendaylight.aaa/authz-service-config/${project.version}/xml/config</configfile>
-        <configfile finalname="${config.configfile.directory}/${config.restconf.configfile}">mvn:org.opendaylight.aaa/authz-restconf-config/${project.version}/xml/config</configfile>
     </feature>
 
 </features>
