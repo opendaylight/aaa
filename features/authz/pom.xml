@@ -74,6 +74,12 @@
             <classifier>features</classifier>
             <type>xml</type>
         </dependency>
+        <dependency>
+            <groupId>org.opendaylight.controller</groupId>
+            <artifactId>sal-common-impl</artifactId>
+            <version>${mdsal.version}</version>
+            <scope>compile</scope>
+        </dependency>
 
         <!-- test to validate features.xml -->
         <dependency>
