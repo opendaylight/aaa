@@ -5,12 +5,12 @@
     <parent>
         <groupId>org.opendaylight.aaa</groupId>
         <artifactId>aaa.project</artifactId>
-        <version>0.1.0-Helium</version>
+        <version>0.1.1-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
     <artifactId>aaa-authn-basic</artifactId>
-    <version>0.1.0-Helium</version>
+    <version>0.1.1-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <dependencies>
