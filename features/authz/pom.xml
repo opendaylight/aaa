@@ -9,7 +9,7 @@
     <parent>
         <artifactId>features-aggregator</artifactId>
         <groupId>org.opendaylight.aaa</groupId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.2.0-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
@@ -73,6 +73,12 @@
             <version>${config.version}</version>
             <classifier>features</classifier>
             <type>xml</type>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.controller</groupId>
+            <artifactId>sal-common-impl</artifactId>
+            <version>${mdsal.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- test to validate features.xml -->
