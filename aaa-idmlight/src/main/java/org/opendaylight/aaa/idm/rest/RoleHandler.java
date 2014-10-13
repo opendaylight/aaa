@@ -10,11 +10,10 @@ package org.opendaylight.aaa.idm.rest;
 
 /**
  *
- * @author peter.mellquist@hp.com 
+ * @author peter.mellquist@hp.com
  *
  */
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -28,20 +27,18 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.List;
-import java.util.ArrayList;
 import org.opendaylight.aaa.idm.model.Roles;
 import org.opendaylight.aaa.idm.model.Role;
 import org.opendaylight.aaa.idm.model.IDMError;
 import org.opendaylight.aaa.idm.persistence.RoleStore;
 import org.opendaylight.aaa.idm.persistence.StoreException;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-	
+
 @Path("/v1/roles")
 public class RoleHandler {
    private static Logger logger = LoggerFactory.getLogger(RoleHandler.class);
    private static RoleStore roleStore = new RoleStore();
-   
+
    @GET
    @Produces("application/json")
    public Response getRoles() {
@@ -89,15 +86,15 @@ public class RoleHandler {
    public Response createRole(@Context UriInfo info,Role role) {
       logger.info("Post /roles");
       try {
-         // TODO: role names should be unique! 	
+         // TODO: role names should be unique!
          // name
          if (role.getName()==null)
             return new IDMError(404,"name must be defined on role create","").response();
-         else 
+         else
             if (role.getName().length()>RoleStore.MAX_FIELD_LEN)
                return new IDMError(400,"role name max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
-         
-         // description   
+
+         // description
          if (role.getDescription()==null)
             role.setDescription("");
          else
@@ -108,10 +105,10 @@ public class RoleHandler {
       }
       catch (StoreException se) {
          return new IDMError(500,"internal error creating role",se.message).response();
-      } 
+      }
 
       return Response.status(201).entity(role).build();
-   } 
+   }
 
    @PUT
    @Path("/{id}")

@@ -10,11 +10,10 @@ package org.opendaylight.aaa.idm.rest;
 
 /**
  *
- * @author peter.mellquist@hp.com 
+ * @author peter.mellquist@hp.com
  *
  */
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -28,21 +27,19 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.List;
-import java.util.ArrayList;
 import org.opendaylight.aaa.idm.model.Users;
 import org.opendaylight.aaa.idm.model.User;
 import org.opendaylight.aaa.idm.model.IDMError;
 import org.opendaylight.aaa.idm.persistence.UserStore;
 import org.opendaylight.aaa.idm.persistence.StoreException;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-	
+
 @Path("/v1/users")
 public class UserHandler {
    private static Logger logger = LoggerFactory.getLogger(UserHandler.class);
    private static UserStore userStore = new UserStore();
    protected final static String DEFAULT_PWD = "changeme";
-   
+
    @GET
    @Produces("application/json")
    public Response getUsers() {
@@ -58,7 +55,7 @@ public class UserHandler {
       // obsfucate pwd
       for (int z=0;z<users.getUsers().size();z++)
           users.getUsers().get(z).setPassword("**********");
- 
+
       return Response.ok(users).build();
    }
 
@@ -83,7 +80,7 @@ public class UserHandler {
          return new IDMError(500,"internal error getting user",se.message).response();
       }
       if (user==null) {
-         return new IDMError(404,"user not found! id:" + id,"").response(); 
+         return new IDMError(404,"user not found! id:" + id,"").response();
       }
       // obsfucate pwd
       user.setPassword("*********");
@@ -99,7 +96,7 @@ public class UserHandler {
          // enabled by default
          if (user.getEnabled()==null)
             user.setEnabled(true);
-         
+
          // user name is required
          if (user.getName()==null)
             return new IDMError(400,"user name is required","").response();
@@ -133,11 +130,11 @@ public class UserHandler {
       }
       catch (StoreException se) {
          return new IDMError(500,"internal error creating user",se.message).response();
-      } 
+      }
 
       // created!
       return Response.status(201).entity(user).build();
-   } 
+   }
 
 
    @PUT
@@ -195,5 +192,5 @@ public class UserHandler {
       return Response.status(204).build();
    }
 
- 
+
 }

@@ -10,18 +10,17 @@ package org.opendaylight.aaa.idm.model;
 
 /**
  *
- * @author peter.mellquist@hp.com 
+ * @author peter.mellquist@hp.com
  *
  */
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
-import java.util.ArrayList;
 
 @XmlRootElement(name = "Claim")
 public class Claim {
    private Integer domainid;
-   private Integer userid; 
+   private Integer userid;
    private String username;
    private List<Role> roles;
 
@@ -47,7 +46,7 @@ public class Claim {
 
    public void setUsername(String name) {
       this.username = name;
-   }  
+   }
 
    public List<Role> getRoles() {
       return roles;

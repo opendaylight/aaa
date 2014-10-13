@@ -10,11 +10,10 @@ package org.opendaylight.aaa.idm.rest;
 
 /**
  *
- * @author peter.mellquist@hp.com 
+ * @author peter.mellquist@hp.com
  *
  */
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -45,7 +44,6 @@ import org.opendaylight.aaa.idm.persistence.DomainStore;
 import org.opendaylight.aaa.idm.persistence.UserStore;
 import org.opendaylight.aaa.idm.persistence.RoleStore;
 import org.opendaylight.aaa.idm.persistence.GrantStore;
-import org.opendaylight.aaa.idm.persistence.UserStore;
 import org.opendaylight.aaa.idm.persistence.StoreException;
 import org.opendaylight.aaa.idm.IdmLightProxy;
 
@@ -55,8 +53,8 @@ public class DomainHandler {
    private static DomainStore domainStore = new DomainStore();
    private static UserStore userStore = new UserStore();
    private static RoleStore roleStore = new RoleStore();
-   private static GrantStore grantStore = new GrantStore(); 
-   
+   private static GrantStore grantStore = new GrantStore();
+
    @GET
    @Produces("application/json")
    public Response getDomains() {
@@ -129,9 +127,9 @@ public class DomainHandler {
          idmerror.setMessage("Internal error creating domain");
          idmerror.setDetails(se.message);
          return Response.status(500).entity(idmerror).build();
-      } 
+      }
       return Response.status(201).entity(domain).build();
-   } 
+   }
 
    @PUT
    @Path("/{id}")
@@ -209,9 +207,9 @@ public class DomainHandler {
    @Path("/{did}/users/{uid}/roles")
    @Consumes("application/json")
    @Produces("application/json")
-   public Response createGrant( @Context UriInfo info, 
+   public Response createGrant( @Context UriInfo info,
                                 @PathParam("did") String did,
-                                @PathParam("uid") String uid,  
+                                @PathParam("uid") String uid,
                                 Grant grant) {
       logger.info("Post /domains/"+did+"/users/"+uid+"/roles");
       Domain domain=null;
@@ -302,7 +300,7 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
 
-      // see if grant already exists for this 
+      // see if grant already exists for this
       try {
          Grant existingGrant = grantStore.getGrant(longDid,longUid,longRid);
          if (existingGrant != null) {
@@ -320,7 +318,7 @@ public class DomainHandler {
       }
 
 
-      // create grant 
+      // create grant
       try {
          grant = grantStore.createGrant(grant);
       }
@@ -390,7 +388,7 @@ public class DomainHandler {
          return Response.status(400).entity(idmerror).build();
       }
 
-      // find userid for user 
+      // find userid for user
       try {
          Users users = userStore.getUsers(username);
          List<User> userList = users.getUsers();
@@ -405,7 +403,7 @@ public class DomainHandler {
          if (!userPwd.equals(reqPwd)) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("password does not match for username: "+username);
-            return Response.status(401).entity(idmerror).build(); 
+            return Response.status(401).entity(idmerror).build();
          }
          claim.setDomainid((int)longDid);
          claim.setUsername(username);
@@ -426,7 +424,7 @@ public class DomainHandler {
             idmerror.setDetails(se.message);
             return Response.status(500).entity(idmerror).build();
          }
-         claim.setRoles(roleList); 
+         claim.setRoles(roleList);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -437,7 +435,7 @@ public class DomainHandler {
       }
 
       return Response.ok(claim).build();
-   }  
+   }
 
    @GET
    @Path("/{did}/users/{uid}/roles")
@@ -611,8 +609,8 @@ public class DomainHandler {
          idmerror.setMessage("Not found! Role id :" + rid);
          return Response.status(404).entity(idmerror).build();
       }
-      
-      // see if grant already exists 
+
+      // see if grant already exists
       try {
          Grant existingGrant = grantStore.getGrant(longDid,longUid,longRid);
          if (existingGrant == null) {

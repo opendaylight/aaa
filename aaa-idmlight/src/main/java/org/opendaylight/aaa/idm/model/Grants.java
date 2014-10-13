@@ -10,12 +10,11 @@ package org.opendaylight.aaa.idm.model;
 
 /**
  *
- * @author peter.mellquist@hp.com 
+ * @author peter.mellquist@hp.com
  *
  */
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlElement;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -25,7 +24,7 @@ public class Grants {
 
    public void setGrants(List<Grant> grants) {
       this.grants = grants;
-   } 
+   }
 
    public List<Grant> getGrants() {
       return grants;
