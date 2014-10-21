@@ -223,6 +223,23 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_20ff5f36",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-10-21T18:48:50Z",
+      "side": 1,
+      "message": "For AAA, my_resource would be the federation endpoint, which is /oauth2/federation.  We may want to mention that.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_80a18bab",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -291,6 +308,57 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_409f0304",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-10-21T18:48:50Z",
+      "side": 1,
+      "message": "We have an example of a Jetty connector for the proxy port here:\nhttps://github.com/opendaylight/aaa/blob/master/aaa-it/src/test/resources/jetty.xml",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_c0fb1346",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-10-21T18:48:50Z",
+      "side": 1,
+      "message": "The default admin role in AAA is \u0027admin\u0027.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_a09a8f12",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-10-21T18:48:50Z",
+      "side": 1,
+      "message": "I think $user should be $username",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_c09eb363",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -302,6 +370,23 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "This should be \"$roles\", not \"$groups\".",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_80950be6",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-10-21T18:48:50Z",
+      "side": 1,
+      "message": "May want to mention that in this example, we assume that an AD domain (EXAMPLE.COM) corresponds to a AAA domain, but that is not always the case (and unlikely to be the case with AAA hierarchical domains).\n\nAlso, while this example shows that roles can be mapped via mapping rules and user groups,  one can also let AAA figure out what domains a user has access to by simply supplying the REMOTE_USER.  So, the sequence for obtaining an access token would be 2-step:\n\n# Obtain an unscoped token with a list of domains (coke \u0026 pepsi) accessible to that user:\ncurl -s -XPOST http://\u003ccontroller\u003e:8383/oauth2/federation\n returns:\n{\n    \"\"expires_in\"\": 3600, \n    \"\"refresh_token\"\": \"\"93f94421-b73d-3fdc-94d8-90257f4c65ba\"\", \n    \"\"scope\"\": \"\"coke sdn\"\"\n}\n\n# Use the unscoped token to scope to a domain:\ncurl -s -d \u0027grant_type\u003drefresh_token\u0026refresh_token\u003d93f94421-b73d-3fdc-94d8-90257f4c65ba\u0026scope\u003dcoke\u0027 http://\u003ccontroller\u003e:8181/oauth2/token\n\nI think separating the 2 would leave the responsibility of deciding who has what role/permission on what part of the controller/network resources more in the hands of the SDN controller admin than the IdP admin, which is what we want.",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -489,6 +574,23 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "You have an extra ` at the end of this line that should be removed.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_c09233f6",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1120
+      },
+      "writtenOn": "2014-10-21T18:48:50Z",
+      "side": 1,
+      "message": "We actually return a 401 (unauthorized) right away:\nhttps://github.com/opendaylight/aaa/blob/master/aaa-authn-federation/src/main/java/org/opendaylight/aaa/federation/ClaimAuthFilter.java#L90",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
