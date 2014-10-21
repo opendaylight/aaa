@@ -1,0 +1,531 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba8cc1f7_201d1f10",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) Add a space in \"Active Directory\".",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_c019d323",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) Add a comma after \"Active Directory\".  Make \"POSIX\" all caps.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_e01657f1",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) The \u0027\u0026\u0027 followed by \u0027and\u0027 makes this a bit odd to read.  Perhaps say \"POSIX passwd/gecos, and SQL\".",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_80d3cb37",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) Use \"regardless\" instead of \"irregardless\".  The double-negative can cause confusion.  There are some other occurrences of this throughout the document that should also be changed.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_a0d84f54",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) Remove the extra \"the\".  \"...the AJP Connector\"",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_40ddc341",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) s/irregardless/regardless/",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_60e24705",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) Use \u0027FreeIPA\u0027 instead of \u0027IPA\u0027 throughout this whole section.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_20e43f0c",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) Add a space in \u0027Active Directory\u0027.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_a0bfefcf",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) You should probably mention that the  web server is to be installed on the application (ODL) or proxy system.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_40b4e3f1",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) Say \"mail attribute\" instead of \"email attribute\".",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_60b9e7e8",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) s/email/mail/",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_c0c79363",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "When rendered, the \u0027_\u0027 is not shown for this prefix since this is interpreted as a RST reference.  I think escaping it with a \u0027\\\u0027 should address this.  The same problem occurs for the following line.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_e0c41761",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) Add \"is\".  \"...object is assigned\".",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_80a18bab",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) s/email/mail/",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_a0a60fc0",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) s/email/mail/",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_60b007f5",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) Add \"the\".  \"...to the servlet...\"",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_2092ff57",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "It might be nice to explain the separator configuration before this example is shown.  A brief explaination would fit in well in the \"Configure SSSD IFP\" section.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_c09eb363",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "This should be \"$roles\", not \"$groups\".",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_e09bb770",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "This should be \"RemoteAddrValve\", not \"RemoteAddrValue\".",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_a08daf33",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) s/irregardless/regardless/",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_8088ab23",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) s/it/in/",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_6087a710",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) Add \"the\".  \"...if the address...\"",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_007c9b1f",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "Add \"manager\".  \"...security manager permissions...\"",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_20799f2f",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(typo) s/qdespite/despite/\n\nAlso, this extra ` character is messing up the formatting/rendering in this paragraph.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_808f4b23",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) Remove \"the\".  \"...support for AJP\"",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_a094cf37",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) Add \"a\".  \"...configures a shared secret...\"",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_4099436d",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1187,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) Add \"the\".  \"...and the reverse proxy...\"",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_c0ac738f",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "It\u0027s a bit unclear where these configuration settings live.  It might be worth providing those details.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_e0a9777c",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "You have an extra ` at the end of this line that should be removed.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_80b66bdb",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1245,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "It seems like there\u0027s half a sentence here before the image.  This partial sentence should probably just be removed.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_a0bb6fc3",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 2914
+      },
+      "writtenOn": "2014-10-21T15:06:53Z",
+      "side": 1,
+      "message": "(nit) You should probably make this read better by saying:\n\nThe ``secureProxyPorts`` configuration option is set...",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
