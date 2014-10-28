@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_a6b620db",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_201d1f10",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_c019d323",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "(nit) Add a comma after \"Active Directory\".  Make \"POSIX\" all caps.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_c6bb24c3",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_c019d323",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_26ca1050",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_e01657f1",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_80d3cb37",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "(nit) Use \"regardless\" instead of \"irregardless\".  The double-negative can cause confusion.  There are some other occurrences of this throughout the document that should also be changed.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_46c71446",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_80d3cb37",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_e6c3c836",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_a0d84f54",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_40ddc341",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "(nit) s/irregardless/regardless/",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_06c10c2e",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_40ddc341",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_a6ddc016",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_60e24705",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_20e43f0c",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "(nit) Add a space in \u0027Active Directory\u0027.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_66e7b8e5",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_20e43f0c",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_46ce345c",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_a0bfefcf",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_40b4e3f1",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -166,6 +328,24 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "(nit) Say \"mail attribute\" instead of \"email attribute\".",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_e6dae816",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_40b4e3f1",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_a604e07e",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_60b9e7e8",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_c0c79363",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_06efccb1",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_c0c79363",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_e0c41761",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -217,6 +433,24 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "(nit) Add \"is\".  \"...object is assigned\".",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_c6300459",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_e0c41761",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -257,6 +491,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_66357845",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_80a18bab",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_a0a60fc0",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -268,6 +520,24 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "(nit) s/email/mail/",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_863afc34",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_a0a60fc0",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -291,6 +561,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_e61f48b6",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_60b007f5",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_2092ff57",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -302,6 +590,24 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "It might be nice to explain the separator configuration before this example is shown.  A brief explaination would fit in well in the \"Configure SSSD IFP\" section.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_061d8cbd",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done, made it a footnote referenced from 2 places.",
+      "parentUuid": "ba8cc1f7_2092ff57",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -325,6 +631,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_41c13e7f",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Example provided. But did not reference the example in the test source.",
+      "parentUuid": "ba8cc1f7_409f0304",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_c0fb1346",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -336,6 +660,24 @@
       "writtenOn": "2014-10-21T18:48:50Z",
       "side": 1,
       "message": "The default admin role in AAA is \u0027admin\u0027.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_c1eeae22",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_c0fb1346",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -359,6 +701,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_a1e92a1c",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done. Good catch!",
+      "parentUuid": "ba8cc1f7_a09a8f12",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_c09eb363",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -370,6 +730,24 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "This should be \"$roles\", not \"$groups\".",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_018d767b",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done. Good catch!",
+      "parentUuid": "ba8cc1f7_c09eb363",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -393,6 +771,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_41937ea3",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Added a footnote explaining this is an example only to illustration features of the federated mapping and how other mechanisms are available in AAA (i.e. unscoped tokens to scoped tokens.",
+      "parentUuid": "ba8cc1f7_80950be6",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_e09bb770",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -404,6 +800,24 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "This should be \"RemoteAddrValve\", not \"RemoteAddrValue\".",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_466ab41b",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_e09bb770",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -427,6 +841,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_e6766806",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_a08daf33",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_8088ab23",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -438,6 +870,24 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "(nit) s/it/in/",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_0674acfb",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_8088ab23",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -461,6 +911,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_a6606036",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_6087a710",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_007c9b1f",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -472,6 +940,24 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "Add \"manager\".  \"...security manager permissions...\"",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_665a5885",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_007c9b1f",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -495,6 +981,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_865f5c72",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_20799f2f",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_808f4b23",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -506,6 +1010,24 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "(nit) Remove \"the\".  \"...support for AJP\"",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_26545053",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_808f4b23",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -529,6 +1051,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_46515461",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_a094cf37",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_4099436d",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -540,6 +1080,24 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "(nit) Add \"the\".  \"...and the reverse proxy...\"",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_e64d08c6",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1187,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_4099436d",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -563,6 +1121,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_a1828a50",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Yes, it is a bit unclear to me as well, I do not fully understand the deployment mechanism (bundles vs. config files) so I was deliberately vague.",
+      "parentUuid": "ba8cc1f7_c0ac738f",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_e0a9777c",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -574,6 +1150,24 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "You have an extra ` at the end of this line that should be removed.",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_064b4cb1",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_e0a9777c",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -597,6 +1191,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_01b6d63d",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_c09233f6",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_80b66bdb",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -614,6 +1226,24 @@
     },
     {
       "key": {
+        "uuid": "ba8cc1f7_a6c70012",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1245,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_80b66bdb",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8cc1f7_a0bb6fc3",
         "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
         "patchSetId": 1
@@ -625,6 +1255,24 @@
       "writtenOn": "2014-10-21T15:06:53Z",
       "side": 1,
       "message": "(nit) You should probably make this read better by saying:\n\nThe ``secureProxyPorts`` configuration option is set...",
+      "revId": "4770124a34443568118757e0a619005402cdc47f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8cc1f7_c6cc8438",
+        "filename": "aaa-authn-api/src/main/docs/sssd_configuration.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 2084
+      },
+      "writtenOn": "2014-10-28T12:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc1f7_a0bb6fc3",
       "revId": "4770124a34443568118757e0a619005402cdc47f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
