@@ -62,6 +62,7 @@ public class ClaimAuthFilter implements Filter {
     private static final String CGI_REMOTE_HOST = "REMOTE_HOST";
     private static final String CGI_REMOTE_PORT = "REMOTE_PORT";
     private static final String CGI_REMOTE_USER = "REMOTE_USER";
+    private static final String CGI_REMOTE_USER_GROUPS = "REMOTE_USER_GROUPS";
     private static final String CGI_REQUEST_METHOD = "REQUEST_METHOD";
     private static final String CGI_SCRIPT_NAME = "SCRIPT_NAME";
     private static final String CGI_SERVER_PROTOCOL = "SERVER_PROTOCOL";
@@ -180,6 +181,7 @@ public class ClaimAuthFilter implements Filter {
         claims.put(CGI_REMOTE_PORT, req.getRemotePort());
         // remote user might be i18n, assume UTF8 and decode
         claims.put(CGI_REMOTE_USER, decodeUTF8(req.getRemoteUser()));
+        claims.put(CGI_REMOTE_USER_GROUPS, req.getAttribute(CGI_REMOTE_USER_GROUPS));
         claims.put(CGI_REQUEST_METHOD, req.getMethod());
         claims.put(CGI_SCRIPT_NAME, req.getServletPath());
         claims.put(CGI_SERVER_PROTOCOL, req.getProtocol());
