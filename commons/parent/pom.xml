@@ -2,6 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.opendaylight.odlparent</groupId>
+        <artifactId>odlparent</artifactId>
+        <version>1.5.0-SNAPSHOT</version>
+    </parent>
+
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>commons.aaa</artifactId>
     <version>0.2.0-SNAPSHOT</version>
@@ -11,21 +17,7 @@
     </prerequisites>
 
     <properties>
-        <!-- Repos -->
-        <nexusproxy>http://nexus.opendaylight.org/content</nexusproxy>
-        <nexus.repository.release>opendaylight.release</nexus.repository.release>
-        <nexus.repository.snapshot>opendaylight.snapshot</nexus.repository.snapshot>
-
-        <!-- Common -->
-        <java.version.source>1.7</java.version.source>
-        <java.version.target>1.7</java.version.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
-        <slf4j.version>1.7.2</slf4j.version>
-        <logback.version>1.0.9</logback.version>
-
         <!-- Karaf -->
-        <karaf.version>3.0.1</karaf.version>
         <karaf.branding.version>1.1.0-SNAPSHOT</karaf.branding.version>
         <karaf.resources.version>1.5.0-SNAPSHOT</karaf.resources.version>
         <karaf.empty.version>1.5.0-SNAPSHOT</karaf.empty.version>
@@ -41,9 +33,6 @@
         <javadoc.plugin.version>2.8.1</javadoc.plugin.version>
 
         <!-- OSGi -->
-        <osgi.core.version>5.0.0</osgi.core.version>
-        <osgi.compendium.version>5.0.0</osgi.compendium.version>
-        <osgi.dm.version>3.1.0</osgi.dm.version>
         <osgi.metatype.version>1.0.10</osgi.metatype.version>
 
         <!-- AuthZ -->
@@ -56,16 +45,15 @@
         <mdsal.version>1.2.0-SNAPSHOT</mdsal.version>
         <restconf.version>1.2.0-SNAPSHOT</restconf.version>
         <config.version>0.3.0-SNAPSHOT</config.version>
-        <jaxrs.version>3.0.4.Final</jaxrs.version>
         <config.authz.service.configfile>08-authz-config.xml</config.authz.service.configfile>
         <config.restconf.configfile>09-rest-connector.xml</config.restconf.configfile>
         <config.configfile.directory>etc/opendaylight/karaf</config.configfile.directory>
 
         <!-- AuthN -->
+        <glassfish.json.version>1.0.4</glassfish.json.version>
+        <servlet.api.version>2.5</servlet.api.version>
         <ehcache.version>2.8.3</ehcache.version>
         <oauth.version>1.0.0</oauth.version>
-        <jersey.version>1.17</jersey.version>
-        <servlet.version>2.5</servlet.version>
         <jta.version>1.1.1</jta.version>
         <oltu.version>1.0.0</oltu.version>
 
@@ -73,74 +61,16 @@
         <netconf.version>0.3.0-SNAPSHOT</netconf.version>
 
         <!-- IdmLight -->
-        <glassfish.json.version>1.0.4</glassfish.json.version>
-        <jackson.version>1.9.2</jackson.version>
-        <jettison.version>1.1</jettison.version>
         <sqlite.jdbc.version>3.7.2</sqlite.jdbc.version>
 
         <!-- Test -->
-        <exam.version>4.1.0</exam.version>
-        <aether.version>2.1.0</aether.version>
         <javax.inject.version>1</javax.inject.version>
-        <mockito.version>1.9.5</mockito.version>
         <servlet.tester.version>7.0.0.M2</servlet.tester.version>
-
-        <!-- Code coverage -->
-        <jacoco.version>0.6.2.201302030002</jacoco.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.javassist</groupId>
-                <artifactId>javassist</artifactId>
-                <version>3.17.1-GA</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>14.0.1</version>
-            </dependency>
-            <dependency>
-                <groupId>equinoxSDK381</groupId>
-                <artifactId>org.eclipse.osgi</artifactId>
-                <version>3.8.1.v20120830-144521</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>log4j-over-slf4j</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-core</artifactId>
-                <version>${logback.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>${logback.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-codec</groupId>
-                <artifactId>commons-codec</artifactId>
-                <version>1.7</version>
-            </dependency>
-            <dependency>
-                <groupId>org.json</groupId>
-                <artifactId>json</artifactId>
-                <version>20131018</version>
-            </dependency>
+            <!-- ODL -->
             <dependency>
                 <groupId>org.opendaylight.yangtools.model</groupId>
                 <artifactId>ietf-inet-types</artifactId>
@@ -155,6 +85,17 @@
                 <groupId>org.opendaylight.yangtools.model</groupId>
                 <artifactId>yang-ext</artifactId>
                 <version>${yang.ext.version}</version>
+            </dependency>
+            <!-- Third-party -->
+            <dependency>
+                <groupId>org.glassfish</groupId>
+                <artifactId>javax.json</artifactId>
+                <version>${glassfish.json.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>${servlet.api.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.sun.jersey</groupId>
@@ -175,21 +116,6 @@
                 <groupId>com.sun.jersey</groupId>
                 <artifactId>jersey-json</artifactId>
                 <version>${jersey.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.osgi</groupId>
-                <artifactId>org.osgi.core</artifactId>
-                <version>${osgi.core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.osgi</groupId>
-                <artifactId>org.osgi.compendium</artifactId>
-                <version>${osgi.compendium.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>org.apache.felix.dependencymanager</artifactId>
-                <version>${osgi.dm.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.felix</groupId>
@@ -222,49 +148,9 @@
                 <version>${oltu.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.glassfish</groupId>
-                <artifactId>javax.json</artifactId>
-                <version>${glassfish.json.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-core-asl</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-mapper-asl</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-jaxrs</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-xc</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.codehaus.jettison</groupId>
-                <artifactId>jettison</artifactId>
-                <version>${jettison.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.xerial</groupId>
                 <artifactId>sqlite-jdbc</artifactId>
                 <version>${sqlite.jdbc.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>servlet-api</artifactId>
-                <version>${servlet.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.resteasy</groupId>
-                <artifactId>jaxrs-api</artifactId>
-                <version>${jaxrs.version}</version>
             </dependency>
 
             <!-- Test stuff -->
@@ -275,63 +161,9 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.8.1</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-simple</artifactId>
-                <version>1.7.7</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-all</artifactId>
-                <version>${mockito.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.ops4j.pax.exam</groupId>
-                <artifactId>pax-exam-container-karaf</artifactId>
-                <version>${exam.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.ops4j.pax.exam</groupId>
-                <artifactId>pax-exam-junit4</artifactId>
-                <version>${exam.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.ops4j.pax.exam</groupId>
-                <artifactId>pax-exam</artifactId>
-                <version>${exam.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.ops4j.pax.exam</groupId>
-                <artifactId>pax-exam-link-mvn</artifactId>
-                <version>${exam.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.ops4j.pax.url</groupId>
-                <artifactId>pax-url-aether</artifactId>
-                <version>${aether.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
                 <groupId>javax.inject</groupId>
                 <artifactId>javax.inject</artifactId>
                 <version>${javax.inject.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.karaf.features</groupId>
-                <artifactId>org.apache.karaf.features.core</artifactId>
-                <version>${karaf.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -376,11 +208,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>${resource.plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${surefire.plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -434,12 +261,36 @@
         <tag>HEAD</tag>
     </scm>
 
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>${findbugs.maven.plugin.version}</version>
+                <configuration>
+                    <effort>Max</effort>
+                    <threshold>Low</threshold>
+                    <goal>site</goal>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jdepend-maven-plugin</artifactId>
+                <version>${jdepend.maven.plugin.version}</version>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <!-- Note: we can not use variables for these URLs because we need to 
+        be able to download the parent pom from the repository the first time we 
+        go to use it (since it is in a different project). To override the settings, 
+        use the "mirror" section of the settings.xml. See http://maven.apache.org/settings.html -->
     <repositories>
-        <!-- Opendaylight public group -->
+        <!-- OpenDayLight Repo Mirror -->
         <repository>
-            <id>opendaylight-public</id>
-            <name>opendaylight-public</name>
-            <url>${nexusproxy}/groups/public/</url>
+            <id>opendaylight-mirror</id>
+            <name>opendaylight-mirror</name>
+            <url>http://nexus.opendaylight.org/content/groups/public/</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
@@ -448,68 +299,19 @@
                 <updatePolicy>never</updatePolicy>
             </releases>
         </repository>
-        <!-- OpenDayLight Released artifact -->
-        <repository>
-            <id>opendaylight-release</id>
-            <name>opendaylight-release</name>
-            <url>${nexusproxy}/repositories/${nexus.repository.release}/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
+
         <!-- OpenDayLight Snapshot artifact -->
         <repository>
             <id>opendaylight-snapshot</id>
             <name>opendaylight-snapshot</name>
-            <url>${nexusproxy}/repositories/${nexus.repository.snapshot}/</url>
+            <url>http://nexus.opendaylight.org/content/repositories/opendaylight.snapshot/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
             <releases>
                 <enabled>false</enabled>
             </releases>
         </repository>
     </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>opendaylight-public</id>
-            <name>opendaylight-public</name>
-            <url>${nexusproxy}/groups/public/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>            
-        </pluginRepository>
-        <pluginRepository>
-            <id>opendaylight-release</id>
-            <name>central2</name>
-            <url>${nexusproxy}/repositories/${nexus.repository.release}/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-        <pluginRepository>
-            <id>opendaylight-snapshot</id>
-            <name>central2</name>
-            <url>${nexusproxy}/repositories/${nexus.repository.snapshot}/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
-
-    <distributionManagement>
-        <!-- OpenDayLight Released artifact -->
-        <repository>
-            <id>opendaylight-release</id>
-            <url>${nexusproxy}/repositories/${nexus.repository.release}/</url>
-        </repository>
-        <!-- OpenDayLight Snapshot artifact -->
-        <snapshotRepository>
-            <id>opendaylight-snapshot</id>
-            <url>${nexusproxy}/repositories/${nexus.repository.snapshot}/</url>
-        </snapshotRepository>
-    </distributionManagement>
 
 </project>
