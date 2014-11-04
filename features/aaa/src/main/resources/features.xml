@@ -47,6 +47,7 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-store/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-store/aaa-authn-mdsal-config/${project.version}</bundle>
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}</bundle>
