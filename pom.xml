@@ -29,9 +29,10 @@
     <module>aaa-idmlight</module>
     <module>aaa-authz</module>
     <module>aaa-authn-odl-plugin</module>
+    <module>aaa-authn-mdsal-store</module>
     <module>features</module>
     <module>distribution-karaf</module>
-    <module>aaa-authn-mdsal-store</module>
+
   </modules>
 
   <profiles>
@@ -56,11 +57,11 @@
       </plugin>
     </plugins>
   </build>
-  <scm>
+ <!-- <scm>
     <connection>scm:git:ssh://git.opendaylight.org:29418/aaa.git</connection>
     <developerConnection>scm:git:ssh://git.opendaylight.org:29418/aaa.git</developerConnection>
     <tag>HEAD</tag>
     <url>https://wiki.opendaylight.org/view/AAA:Main</url>
-  </scm>
+  </scm> -->
 
 </project>
