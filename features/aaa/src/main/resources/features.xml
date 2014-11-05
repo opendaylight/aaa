@@ -12,6 +12,11 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
     <repository>mvn:org.opendaylight.controller/features-netconf/${netconf.version}/xml/features</repository>
+
+    <repository>mvn:org.opendaylight.yangtools/features-yangtools/${yangtools.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.controller/features-mdsal/${mdsal.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.controller/features-config/${config.version}/xml/features</repository>
+
     <feature name='odl-aaa-all' description='OpenDaylight :: AAA :: Authentication :: All Features'
         version='${project.version}'>
         <feature version='${project.version}'>odl-aaa-authn</feature>
@@ -92,7 +97,8 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-api/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/${project.version}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-store/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-store-impl/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-model/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/${project.version}</bundle>
 
         <!-- IDMLight -->
@@ -117,7 +123,7 @@
         <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
         <feature version='${config.version}'>odl-config-core</feature>
 
-        <configfile finalname="${config.configfile.directory}/${config.authz.service.configfile}">mvn:org.opendaylight.aaa/authn-store-config/${project.version}/xml/config</configfile>
+        <configfile finalname="${config.configfile.directory}/${config.authz.service.configfile}">mvn:org.opendaylight.aaa/aaa-authn-mdsal-config/${project.version}/xml/config</configfile>
 
 
     </feature>
