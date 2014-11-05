@@ -96,6 +96,16 @@
             <artifactId>slf4j-simple</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlets</artifactId>
+            <version>8.1.14.v20131031</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -106,7 +116,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Import-Package>*,com.sun.jersey.spi.container.servlet</Import-Package>
+                        <Import-Package>*,com.sun.jersey.spi.container.servlet, org.eclipse.jetty.servlets</Import-Package>
                         <Web-ContextPath>/auth</Web-ContextPath>
                         <Web-Connectors>adminConn</Web-Connectors>
                         <Bundle-Activator>org.opendaylight.aaa.idm.Activator</Bundle-Activator>
