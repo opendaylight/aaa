@@ -17,8 +17,9 @@ module aaa-authn-model {
 // Following container provides the AuthN Claims data-structure
 
   container tokencache {
+    config false;
     list claims {
-      key token;
+      key "userId token";
 
       leaf token {
         type string;
@@ -45,11 +46,16 @@ module aaa-authn-model {
         type string;
         description "Assigned user roles";
       }
-            container authorization {
+
         leaf expiration {
+
           type int64;
           description "Expiration milliseconds since start of UTC epoch";
         }
+
+      leaf timestamp {
+
+        type uint64;
       }
     }
   }

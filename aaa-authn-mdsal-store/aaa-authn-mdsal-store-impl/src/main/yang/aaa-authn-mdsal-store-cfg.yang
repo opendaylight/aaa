@@ -55,6 +55,12 @@ module aaa-authn-mdsal-store-cfg {
                 }
             }
 
+            leaf timeToLive {
+            description "Time to live for tokens. 0 by default = never expire";
+              type uint64;
+              default 0;
+            }
+
             }
         }
 
