@@ -17,10 +17,11 @@ import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.Tokencac
 import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.tokencache.Claims;
 import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.tokencache.ClaimsBuilder;
 import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.tokencache.ClaimsKey;
-import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.tokencache.claims.AuthorizationBuilder;
+
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.opendaylight.yangtools.yang.common.RpcResult;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,10 +38,14 @@ import java.util.List;
     private DataBroker broker;
     private Broker.ProviderSession providerSession;
     private AuthenticationService authenticationService;
+    private BigInteger timeToLive;
 
-    public void setBroker(DataBroker dataBrokerService) {
+  public void setBroker(DataBroker dataBrokerService) {
       this.broker = dataBrokerService;
     }
+  public void setTimeToLive(BigInteger timeToLive) {
+    this.timeToLive = timeToLive;
+  }
 
     @Override
     public void close() throws Exception {
@@ -49,13 +54,13 @@ import java.util.List;
     
     private Tokencache buildTokencache() {
         
-        AuthorizationBuilder authorizationBuilder = new AuthorizationBuilder();
-        authorizationBuilder.setExpiration(256L);
+
+
         
-        ClaimsKey claimsKey = new ClaimsKey("KK0001");
+        ClaimsKey claimsKey = new ClaimsKey("KK0001", null);
         
         ClaimsBuilder claimsBuilder = new ClaimsBuilder();
-        claimsBuilder.setAuthorization(authorizationBuilder.build());
+        claimsBuilder.setExpiration(256L);
         claimsBuilder.setClientId("AA001");
         claimsBuilder.setDomain("AAA");
         claimsBuilder.setKey(claimsKey);
@@ -132,5 +137,7 @@ import java.util.List;
   public long tokenExpiration() {
     return 0;
   }
+
+
 }
 

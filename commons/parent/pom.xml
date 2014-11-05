@@ -62,7 +62,7 @@
         <config.configfile.directory>etc/opendaylight/karaf</config.configfile.directory>
 
         <!-- AuthN MD-SAL Store -->
-        <config.authn.store.configfile>08-authn-config.xml</config.authn.store.configfile>
+        <config.authn.store.configfile>08-authn-store-config.xml</config.authn.store.configfile>
 
         <!-- AuthN -->
         <ehcache.version>2.8.3</ehcache.version>
@@ -447,7 +447,7 @@
                 <enabled>false</enabled>
             </snapshots>
             <releases>
-                <enabled>true</enabled>
+                <enabled>false</enabled>
                 <updatePolicy>never</updatePolicy>
             </releases>
         </repository>
@@ -480,7 +480,7 @@
                 <enabled>false</enabled>
             </snapshots>
             <releases>
-                <enabled>true</enabled>
+                <enabled>false</enabled>
                 <updatePolicy>never</updatePolicy>
             </releases>            
         </pluginRepository>

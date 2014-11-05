@@ -31,6 +31,7 @@ public class AuthNStoreModule extends org.opendaylight.yang.gen.v1.config.aaa.au
 
         DataBroker dataBrokerService = getDataBrokerDependency();
         authNStore.setBroker(dataBrokerService);
+        authNStore.setTimeToLive(getTimeToLive());
 
       //Register the MD-SAL Token store with OSGI
         bundleContext.registerService(TokenStore.class.getName(), authNStore, null);
