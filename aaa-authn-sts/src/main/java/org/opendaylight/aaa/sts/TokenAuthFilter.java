@@ -43,11 +43,21 @@ public class TokenAuthFilter implements ContainerRequestFilter {
                     .entity("{\"error\":\"Authentication service unavailable\"}")
                     .build());
 
+    private final String OPTIONS = "OPTIONS";
+    private final String ACCESS_CONTROL_REQUEST_HEADERS = "Access-Control-Request-Headers";
+    private final String AUTHORIZATION = "authorization";
+
     @Context
     private HttpServletRequest httpRequest;
 
     @Override
     public ContainerRequest filter(ContainerRequest request) {
+
+        // Do the CORS check first
+       if(checkCORSOptionRequest(request)) {
+           return request;
+       }
+
         // Are we up yet?
         if (ServiceLocator.INSTANCE.as == null)
             throw UNAVAILABLE_EX;
@@ -80,6 +90,28 @@ public class TokenAuthFilter implements ContainerRequestFilter {
         }
 
         return request;
+    }
+
+    /**
+     * CORS access control : when browser sends cross-origin request, it first sends the OPTIONS method
+     * with a list of access control request headers, which has a list of custom headers and access control method
+     * such as GET. POST etc. You custom header "Authorization will not be present in request header, instead it
+     * will be present as a value inside Access-Control-Request-Headers.
+     * We should not do any authorization against such request.
+     * for more details : https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS
+     */
+
+    private boolean checkCORSOptionRequest(ContainerRequest request) {
+        if(OPTIONS.equals(request.getMethod())) {
+            List<String> headerList = request.getRequestHeader(ACCESS_CONTROL_REQUEST_HEADERS);
+            if(headerList != null && !headerList.isEmpty()) {
+                String header = headerList.get(0);
+                if (header != null && header.toLowerCase().contains(AUTHORIZATION)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     // Validate an ODL token...
