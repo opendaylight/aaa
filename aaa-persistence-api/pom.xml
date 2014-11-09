@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.opendaylight.aaa</groupId>
+	<artifactId>object-store-api</artifactId>
+	<version>0.2.0-SNAPSHOT</version>
+	<packaging>bundle</packaging>
+
+	<prerequisites>
+		<maven>3.0.4</maven>
+	</prerequisites>
+
+	<properties>
+		<java.version.source>1.7</java.version.source>
+		<java.version.target>1.7</java.version.target>
+		<compiler.plugin.version>3.1</compiler.plugin.version>
+		<resource.plugin.version>2.6</resource.plugin.version>
+		<helper.plugin.version>1.9.1</helper.plugin.version>
+		<bundle.plugin.version>2.5.3</bundle.plugin.version>
+        <junit.version>4.11</junit.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${compiler.plugin.version}</version>
+				<configuration>
+					<source>${java.version.source}</source>
+					<target>${java.version.target}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>${bundle.plugin.version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>${helper.plugin.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>${resource.plugin.version}</version>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
