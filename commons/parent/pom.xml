@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>commons.aaa</artifactId>
-    <version>0.1.1-Helium-SR1</version>
+    <version>0.1.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <prerequisites>
         <maven>3.0.4</maven>
@@ -26,9 +26,9 @@
 
         <!-- Karaf -->
         <karaf.version>3.0.1</karaf.version>
-        <karaf.branding.version>1.0.1-Helium-SR1</karaf.branding.version>
-        <karaf.resources.version>1.4.3-Helium-SR1</karaf.resources.version>
-        <karaf.empty.version>1.4.3-Helium-SR1</karaf.empty.version>
+        <karaf.branding.version>1.0.2-SNAPSHOT</karaf.branding.version>
+        <karaf.resources.version>1.4.4-SNAPSHOT</karaf.resources.version>
+        <karaf.empty.version>1.4.4-SNAPSHOT</karaf.empty.version>
 
         <!-- Plugins -->
         <checkstyle.version>2.12</checkstyle.version>
@@ -47,15 +47,15 @@
         <osgi.metatype.version>1.0.10</osgi.metatype.version>
 
         <!-- AuthZ -->
-        <ietf.inet.types.version>2010.09.24.4.1-Helium-SR1</ietf.inet.types.version>
-        <ietf.yang.types.version>2010.09.24.4.1-Helium-SR1</ietf.yang.types.version>
-        <yang.ext.version>2013.09.07.4.1-Helium-SR1</yang.ext.version>
-        <yangtools.version>0.6.3-Helium-SR1</yangtools.version>
+        <ietf.inet.types.version>2010.09.24.4.2-SNAPSHOT</ietf.inet.types.version>
+        <ietf.yang.types.version>2010.09.24.4.2-SNAPSHOT</ietf.yang.types.version>
+        <yang.ext.version>2013.09.07.4.2-SNAPSHOT</yang.ext.version>
+        <yangtools.version>0.6.4-SNAPSHOT</yangtools.version>
         <jmxGeneratorPath>src/main/yang-gen-config</jmxGeneratorPath>
         <salGeneratorPath>src/main/yang-gen-sal</salGeneratorPath>
-        <mdsal.version>1.1.1-Helium-SR1</mdsal.version>
-        <restconf.version>1.1.1-Helium-SR1</restconf.version>
-        <config.version>0.2.6-Helium-SR1</config.version>
+        <mdsal.version>1.1.2-SNAPSHOT</mdsal.version>
+        <restconf.version>1.1.2-SNAPSHOT</restconf.version>
+        <config.version>0.2.7-SNAPSHOT</config.version>
         <jaxrs.version>3.0.4.Final</jaxrs.version>
         <config.authz.service.configfile>08-authz-config.xml</config.authz.service.configfile>
         <config.restconf.configfile>09-rest-connector.xml</config.restconf.configfile>
@@ -70,7 +70,7 @@
         <oltu.version>1.0.0</oltu.version>
 
         <!-- Netconf plugin -->
-        <netconf.version>0.2.6-Helium-SR1</netconf.version>
+        <netconf.version>0.2.7-SNAPSHOT</netconf.version>
 
         <!-- IdmLight -->
         <glassfish.json.version>1.0.4</glassfish.json.version>
