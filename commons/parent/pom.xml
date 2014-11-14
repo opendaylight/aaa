@@ -62,7 +62,11 @@
 
         <!-- IdmLight -->
         <sqlite.jdbc.version>3.7.2</sqlite.jdbc.version>
-
+        <datastax.cassandra.version>2.1.0</datastax.cassandra.version>
+        <google.guava.version>15.0</google.guava.version>
+        <codahale.metrics.version>3.0.0</codahale.metrics.version>
+		<netty.version>4.0.23.Final</netty.version>
+                        
         <!-- Test -->
         <javax.inject.version>1</javax.inject.version>
         <servlet.tester.version>7.0.0.M2</servlet.tester.version>
@@ -152,6 +156,28 @@
                 <artifactId>sqlite-jdbc</artifactId>
                 <version>${sqlite.jdbc.version}</version>
             </dependency>
+			<dependency>
+			  <groupId>com.datastax.cassandra</groupId>
+			  <artifactId>cassandra-driver-core</artifactId>
+			  <version>${datastax.cassandra.version}</version>
+			</dependency>    
+			<dependency>
+			  <groupId>com.google.guava</groupId>
+			  <artifactId>guava</artifactId>
+			  <version>${google.guava.version}</version>
+			  <classifier>cdi1.0</classifier>
+			</dependency>    
+			<dependency>
+				<groupId>com.codahale.metrics</groupId>
+				<artifactId>metrics-core</artifactId>
+				<version>${codahale.metrics.version}</version>
+			</dependency>    
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-all</artifactId>
+				<version>${netty.version}</version>
+			</dependency>
+
 
             <!-- Test stuff -->
             <dependency>

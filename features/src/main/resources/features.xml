@@ -86,7 +86,10 @@
 		<bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/${jackson.version}</bundle>
 		<bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/${jackson.version}</bundle>
 		<bundle>wrap:mvn:org.xerial/sqlite-jdbc/${sqlite.jdbc.version}</bundle>
-
+		<bundle>wrap:mvn:com.datastax.cassandra/cassandra-driver-core/${datastax.cassandra.version}</bundle>
+		<bundle>wrap:mvn:com.codahale.metrics/metrics-core/${codahale.metrics.version}</bundle>
+		<bundle>wrap:mvn:io.netty/netty/${netty.version}</bundle>		
+		<bundle>wrap:mvn:com.google.guava/guava/${google.guava.version}</bundle>
 		<!-- Federation -->
 		<bundle>mvn:org.opendaylight.aaa/aaa-authn-federation/${project.version}</bundle>
 		<bundle>mvn:org.opendaylight.aaa/aaa-authn-idpmapping/${project.version}</bundle>

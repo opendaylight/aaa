@@ -16,6 +16,12 @@
 
     <dependencies>
         <!-- Basic Karaf dependencies -->
+<dependency>
+	<groupId>org.eclipse.equinox</groupId>
+	<artifactId>org.eclipse.equinox.region</artifactId>
+	<version>1.0.0.v20110506</version>
+</dependency>
+
         <dependency>
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>framework</artifactId>

@@ -12,7 +12,6 @@
     <artifactId>aaa-idmlight</artifactId>
     <version>0.2.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
-
     <dependencies>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
@@ -79,6 +78,24 @@
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
         </dependency>
+
+		<dependency>
+		  <groupId>com.datastax.cassandra</groupId>
+		  <artifactId>cassandra-driver-core</artifactId>
+		</dependency>    
+		<dependency>
+		  <groupId>com.google.guava</groupId>
+		  <artifactId>guava</artifactId>
+		  <classifier>cdi1.0</classifier>
+		</dependency>    
+		<dependency>
+			<groupId>com.codahale.metrics</groupId>
+			<artifactId>metrics-core</artifactId>
+		</dependency>    
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+		</dependency>
 
         <!-- Testing Dependencies -->
         <dependency>

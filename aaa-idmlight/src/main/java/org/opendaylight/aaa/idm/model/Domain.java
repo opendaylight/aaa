@@ -11,50 +11,32 @@ package org.opendaylight.aaa.idm.model;
 /**
  *
  * @author peter.mellquist@hp.com 
- *
+ * @author saichler@cisco.com
+ * 
  */
 
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.opendaylight.aaa.idm.persistence.IStorable;
+import org.opendaylight.aaa.idm.persistence.KeyMethod;
+
 @XmlRootElement(name = "domain")
-public class Domain {
-   private Integer domainid;
-   private String name;
-   private String description;
-   private Boolean enabled;
+public interface Domain extends IStorable{
+   public Integer getDomainid();
+   @KeyMethod
+   public void setDomainid(Integer id);
 
-   public Integer getDomainid() {
-      return domainid;
-   }
+   public String getName();
 
-   public void setDomainid(Integer id) {
-      this.domainid = id;
-   }
+   public void setName(String name);
 
-   public String getName() {
-      return name;
-   }
+   public String getDescription();
 
-   public void setName(String name) {
-      this.name = name;
-   }  
+   public void setDescription(String description);
 
-   public String getDescription() {
-      return description;
-   }
+   public Boolean getEnabled();
 
-   public void setDescription(String description) {
-      this.description = description;
-   }
-
-   public Boolean getEnabled() {
-      return enabled;
-   }
-
-   public void setEnabled(Boolean enabled) {
-      this.enabled = enabled;
-   }
-
+   public void setEnabled(Boolean enabled);
 }
 
