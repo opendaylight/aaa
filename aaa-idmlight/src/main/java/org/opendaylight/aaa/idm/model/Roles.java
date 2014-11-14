@@ -14,20 +14,31 @@ package org.opendaylight.aaa.idm.model;
  *
  */
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlElement;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.opendaylight.aaa.idm.persistence.IStorable;
+import org.opendaylight.aaa.idm.persistence.OStore;
 
 @XmlRootElement(name = "roles")
 public class Roles {
-   private List<Role> roles = new ArrayList<Role>();
+   private List<JSRole> roles = new ArrayList<JSRole>();
 
-   public void setRoles(List<Role> roles) {
+   public Roles(){
+	   Role r = (Role)OStore.newStorable(Role.class);
+	   List<IStorable> lst = r.find();
+	   for(IStorable s:lst){
+		   roles.add(JSRole.create((Role)s));
+	   }
+   }
+   
+   public void setRoles(List<JSRole> roles) {
       this.roles = roles;
    } 
 
-   public List<Role> getRoles() {
+   public List<JSRole> getRoles() {
       return roles;
    }
 

@@ -11,59 +11,34 @@ package org.opendaylight.aaa.idm.model;
 /**
  *
  * @author peter.mellquist@hp.com 
+ * @author saichler@cisco.com
  *
  */
 
 
-import javax.xml.bind.annotation.XmlRootElement;
+import org.opendaylight.aaa.idm.persistence.IStorable;
+import org.opendaylight.aaa.idm.persistence.KeyMethod;
 
-@XmlRootElement(name = "grant")
-public class Grant {
-   private Integer grantid;
-   private String description;
-   private Integer domainid;
-   private Integer userid;
-   private Integer roleid;
+public interface Grant extends IStorable{
 
-   public Integer getGrantid() {
-      return grantid;
-   }
+   public Integer getGrantid();
+   @KeyMethod
+   public void setGrantid(Integer id);
 
-   public void setGrantid(Integer id) {
-      this.grantid = id;
-   }
+   public String getDescription();
 
-   public String getDescription() {
-      return description;
-   }
+   public void setDescription(String description);
 
-   public void setDescription(String description) {
-      this.description = description;
-   }
+   public Integer getDomainid();
 
-   public Integer getDomainid() {
-      return domainid;
-   }
-
-   public void setDomainid(Integer id) {
-      this.domainid = id;
-   }
+   public void setDomainid(Integer id);
  
-   public Integer getUserid() {
-      return userid;
-   }
+   public Integer getUserid();
 
-   public void setUserid(Integer id) {
-      this.userid = id;
-   }
+   public void setUserid(Integer id);
 
-   public Integer getRoleid() {
-      return roleid;
-   }
+   public Integer getRoleid();
 
-   public void setRoleid(Integer id) {
-      this.roleid = id;
-   }
-
+   public void setRoleid(Integer id);
 }
 

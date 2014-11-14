@@ -15,20 +15,31 @@ package org.opendaylight.aaa.idm.model;
  */
 
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlElement;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.opendaylight.aaa.idm.persistence.IStorable;
+import org.opendaylight.aaa.idm.persistence.OStore;
 
 @XmlRootElement(name = "users")
 public class Users {
-   private List<User> users = new ArrayList<User>();
-
-   public void setUsers(List<User> users) {
+   private List<JSUser> users = new ArrayList<JSUser>();
+   
+   public Users(){
+	   User u = (User)OStore.newStorable(User.class);
+	   List<IStorable> lst = u.find();
+	   for(IStorable s:lst){
+		   users.add(JSUser.create((User)s));
+	   }
+   }
+   
+   public void setUsers(List<JSUser> users) {
       this.users = users;
    } 
 
-   public List<User> getUsers() {
+   public List<JSUser> getUsers() {
       return users;
    }
 
