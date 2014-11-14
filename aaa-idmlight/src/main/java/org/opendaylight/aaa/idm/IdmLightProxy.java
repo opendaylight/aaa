@@ -27,11 +27,7 @@ import org.opendaylight.aaa.idm.model.Grants;
 import org.opendaylight.aaa.idm.model.Role;
 import org.opendaylight.aaa.idm.model.User;
 import org.opendaylight.aaa.idm.model.Users;
-import org.opendaylight.aaa.idm.persistence.DomainStore;
-import org.opendaylight.aaa.idm.persistence.GrantStore;
-import org.opendaylight.aaa.idm.persistence.RoleStore;
-import org.opendaylight.aaa.idm.persistence.StoreException;
-import org.opendaylight.aaa.idm.persistence.UserStore;
+import org.opendaylight.aaa.idm.persistence.OStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,10 +39,10 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
         IdMService {
 
     private static Logger logger = LoggerFactory.getLogger(IdmLightProxy.class);
-    private static UserStore userStore = new UserStore();
-    private static GrantStore grantStore = new GrantStore();
-    private static DomainStore domainStore = new DomainStore();
-    private static RoleStore roleStore = new RoleStore();
+    //private static UserStore userStore = new UserStore();
+    //private static GrantStore grantStore = new GrantStore();
+    //private static DomainStore domainStore = new DomainStore();
+    //private static RoleStore roleStore = new RoleStore();
 
     // Simple map of claim cache by domain names
     private static Map<String, Map<PasswordCredentials, Claim>> claimCache = new ConcurrentHashMap<>();
@@ -88,22 +84,24 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
         // check to see domain exists
         // TODO: ensure domain names are unique change to 'getDomain'
         debug("get domain");
-        try {
-           Domains domains = domainStore.getDomains(domainName);
+        //try {
+           //Domains domains = domainStore.getDomains(domainName);
+           Domains domains = new Domains(domainName);
            List<Domain> domainList = domains.getDomains();
            if (domainList.size()==0) {
               throw new AuthenticationException("Domain :" + domainName + " does not exist");
            }
            domain = domainList.get(0);
-        }
-        catch (StoreException se) {
-           throw new AuthenticationException("idm data store exception :" + se.toString());
-        }
+        //}
+        //catch (StoreException se) {
+           //throw new AuthenticationException("idm data store exception :" + se.toString());
+       //}
 
         // check to see user exists and passes cred check
-        try {
+        //try {
            debug("check user / pwd");
-           Users users = userStore.getUsers(creds.username());
+           //Users users = userStore.getUsers(creds.username());
+           Users users = new Users();
            List<User> userList = users.getUsers();
            if (userList.size()==0) {
               throw new AuthenticationException("User :" + creds.username() + " does not exist");
@@ -116,11 +114,15 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
            // get all grants & roles for this domain and user
            debug("get grants");
            List<String> roles = new ArrayList<String>();
-           Grants grants = grantStore.getGrants(domain.getDomainid(),user.getUserid());
+           Grants grants = new Grants(domain.getDomainid(),user.getUserid());
+           //Grants grants = grantStore.getGrants(domain.getDomainid(),user.getUserid());
            List<Grant> grantList = grants.getGrants();
            for (int z=0;z<grantList.size();z++) {
               Grant grant = grantList.get(z);
-              Role role = roleStore.getRole(grant.getRoleid());
+              Role role = (Role)OStore.newStorable(Role.class);
+              role.setRoleid(grant.getRoleid());
+              role = (Role)role.get();
+              //Role role = roleStore.getRole(grant.getRoleid());
               roles.add(role.getName());
            }
 
@@ -133,27 +135,28 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
            for (int z=0;z<roles.size();z++)
               claim.addRole(roles.get(z));
            return claim.build();
-        }
-        catch (StoreException se) {
-           throw new AuthenticationException("idm data store exception :" + se.toString());
-        }
+        //}
+        //catch (StoreException se) {
+           //throw new AuthenticationException("idm data store exception :" + se.toString());
+        //}
     }
 
     @Override
     public String getUserId(String userName) {
         debug("getUserid for userName:" + userName);
-        try {
-           Users users = userStore.getUsers(userName);
+        //try {
+           //Users users = userStore.getUsers(userName);
+           Users users = new Users();
            List<User> userList = users.getUsers();
            if (userList.size()==0)
               return null;
            User user = userList.get(0);
            return user.getUserid().toString();
-        }
-        catch (StoreException se) {
-           logger.warn("error getting user " + se.toString());
-           return null;
-        }
+        //}
+        //catch (StoreException se) {
+          // logger.warn("error getting user " + se.toString());
+           //return null;
+        //}
     }
 
     @Override
@@ -168,20 +171,25 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
            logger.warn("not a valid userid:" + userId);
            return domains;
         }
-        try {
-           Grants grants = grantStore.getGrants(uid);
+        //try {
+        	
+           //Grants grants = grantStore.getGrants(uid);
+           Grants grants = new Grants((int)uid);
            List<Grant> grantList = grants.getGrants();
            for (int z=0;z<grantList.size();z++) {
               Grant grant = grantList.get(z);
-              Domain domain = domainStore.getDomain(grant.getDomainid());
+              Domain domain = (Domain)OStore.newStorable(Domain.class);
+              domain.setDomainid(grant.getDomainid());
+              domain = (Domain)domain.get();
+              //Domain domain = domainStore.getDomain(grant.getDomainid());
               domains.add(domain.getName());
            }
            return domains;
-        }
-        catch (StoreException se) {
-           logger.warn("error getting domains " + se.toString());
-           return domains;
-        }
+        //}
+        //catch (StoreException se) {
+           //logger.warn("error getting domains " + se.toString());
+           //return domains;
+        //}
 
     }
 
@@ -190,9 +198,10 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
         debug("listRoles");
         List<String> roles = new ArrayList<String>();
 
-        try {
+        //try {
            // find domain name for specied domain name
-           Domains domains = domainStore.getDomains(domainName);
+           //Domains domains = domainStore.getDomains(domainName);
+           Domains domains = new Domains(domainName);
            List<Domain> domainList = domains.getDomains();
            if (domainList.size()==0) {
               debug("DomainName: " + domainName + " Not found!");
@@ -211,20 +220,24 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
            }
 
            // find all grants for uid and did
-           Grants grants = grantStore.getGrants(did,uid);
+           Grants grants = new Grants((int)did,(int)uid);
+           //Grants grants = grantStore.getGrants(did,uid);
            List<Grant> grantList = grants.getGrants();
            for (int z=0;z<grantList.size();z++) {
               Grant grant = grantList.get(z);
-              Role role = roleStore.getRole(grant.getRoleid());
+              Role role = (Role)OStore.newStorable(Role.class);
+              role.setRoleid(grant.getRoleid());
+              role = (Role)role.get();              
+              //Role role = roleStore.getRole(grant.getRoleid());
               roles.add(role.getName());
            }
 
            return roles;
-        }
-        catch (StoreException se) {
-           logger.warn("error getting roles " + se.toString());
-           return roles;
-        }
+        //}
+        //catch (StoreException se) {
+           //logger.warn("error getting roles " + se.toString());
+           //return roles;
+        //}
     }
 
     private static final void debug(String msg) {

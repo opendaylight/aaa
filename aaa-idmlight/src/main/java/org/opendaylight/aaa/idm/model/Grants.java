@@ -16,6 +16,10 @@ package org.opendaylight.aaa.idm.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
+
+import org.opendaylight.aaa.idm.persistence.IStorable;
+import org.opendaylight.aaa.idm.persistence.OStore;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -23,6 +27,25 @@ import java.util.ArrayList;
 public class Grants {
    private List<Grant> grants = new ArrayList<Grant>();
 
+   public Grants(int domainID,int userID){
+	   Grant g = (Grant)OStore.newStorable(Grant.class);
+	   g.setDomainid(domainID);
+	   g.setUserid(userID);
+	   List<IStorable> lst = g.find();
+	   for(IStorable s:lst){
+		   grants.add((Grant)s);
+	   } 
+   }
+
+   public Grants(int userID){
+	   Grant g = (Grant)OStore.newStorable(Grant.class);
+	   g.setUserid(userID);
+	   List<IStorable> lst = g.find();
+	   for(IStorable s:lst){
+		   grants.add((Grant)s);
+	   } 
+   }
+      
    public void setGrants(List<Grant> grants) {
       this.grants = grants;
    } 
