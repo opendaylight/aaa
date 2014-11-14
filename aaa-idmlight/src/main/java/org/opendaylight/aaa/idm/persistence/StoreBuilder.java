@@ -8,34 +8,27 @@
  */
 package org.opendaylight.aaa.idm.persistence;
 
-import org.opendaylight.aaa.idm.persistence.DomainStore;
+import java.io.File;
+
+import org.opendaylight.aaa.idm.IdmLightApplication;
 import org.opendaylight.aaa.idm.model.Domain;
-import org.opendaylight.aaa.idm.persistence.UserStore;
-import org.opendaylight.aaa.idm.model.User;
-import org.opendaylight.aaa.idm.persistence.RoleStore;
-import org.opendaylight.aaa.idm.model.Role;
-import org.opendaylight.aaa.idm.persistence.GrantStore;
 import org.opendaylight.aaa.idm.model.Grant;
-
-
+import org.opendaylight.aaa.idm.model.Role;
+import org.opendaylight.aaa.idm.model.User;
 /**
  *
  * @author peter.mellquist@hp.com 
  *
  */
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.File;
-
-import org.opendaylight.aaa.idm.IdmLightApplication;
 
 public class StoreBuilder {
    private static Logger logger = LoggerFactory.getLogger(StoreBuilder.class);
-   private static DomainStore domainStore = new DomainStore();   
-   private static UserStore userStore = new UserStore(); 
-   private static RoleStore roleStore = new RoleStore(); 
-   private static GrantStore grantStore = new GrantStore();
+   //private static DomainStore domainStore = new DomainStore();   
+   //private static UserStore userStore = new UserStore(); 
+   //private static RoleStore roleStore = new RoleStore(); 
+   //private static GrantStore grantStore = new GrantStore();
    public static String DEFAULT_DOMAIN = "sdn";
   
    public boolean exists() {
@@ -47,79 +40,84 @@ public class StoreBuilder {
    public void init() {
       logger.info("creating idmlight db");
       // make domain
-      Domain domain = new Domain();
-      User adminUser = new User();
-      User userUser = new User();
-      Role adminRole = new Role();
-      Role userRole = new Role();
-      try {
+      Domain domain = (Domain)OStore.newStorable(Domain.class);//new Domain();
+      User adminUser = (User)OStore.newStorable(User.class);
+      User userUser = (User)OStore.newStorable(User.class);
+      Role adminRole = (Role)OStore.newStorable(Role.class);
+      Role userRole = (Role)OStore.newStorable(Role.class);
+      //try {
          domain.setEnabled(true);
          domain.setName(DEFAULT_DOMAIN);
          domain.setDescription("default odl sdn domain");
-         domain = domainStore.createDomain(domain);
-      }
-      catch (StoreException se) {
-         logger.error("StoreException : " + se);
-      }
+         domain = (Domain)domain.write();
+         //domain = domainStore.createDomain(domain);
+      //}
+      //catch (StoreException se) {
+         //logger.error("StoreException : " + se);
+      //}
       // create users
-      try {
+      //try {
          // admin user
          adminUser.setEnabled(true);
          adminUser.setName("admin");
          adminUser.setDescription("admin user");
          adminUser.setEmail("");
-         adminUser.setPassword("admin");
-         adminUser = userStore.createUser(adminUser);
+         adminUser.setPassword(MD5Calculator.getMD5("admin"));
+         //adminUser = (userStore.createUser(adminUser);
+         adminUser = (User)adminUser.write();
 
          // user user
          userUser.setEnabled(true);
          userUser.setName("user");
          userUser.setDescription("user user");
          userUser.setEmail("");
-         userUser.setPassword("user");
-         userUser = userStore.createUser(userUser); 
-      }
-      catch (StoreException se) {
-         logger.error("StoreException : " + se);
-      }
+         userUser.setPassword(MD5Calculator.getMD5("user"));
+         //userUser = userStore.createUser(userUser);
+         userUser = (User)userUser.write();
+      //}
+      //catch (StoreException se) {
+        // logger.error("StoreException : " + se);
+      //}
 
       // create Roles
-      try {
+      //try {
          adminRole.setName("admin");
          adminRole.setDescription("a role for admins");
-         adminRole = roleStore.createRole(adminRole);
+         adminRole = (Role)adminRole.write();
+         //adminRole = roleStore.createRole(adminRole);
          userRole.setName("user");
          userRole.setDescription("a role for users");
-         userRole = roleStore.createRole(userRole);
-      }
-       catch (StoreException se) {
-         logger.error("StoreException : " + se);
-      }
+         userRole = (Role)userRole.write();
+         //userRole = roleStore.createRole(userRole);
+      //}
+       //catch (StoreException se) {
+         //logger.error("StoreException : " + se);
+      //}
 
       // create grants
-      Grant grant = new Grant();
-      try {
+      Grant grant = (Grant)OStore.newStorable(Grant.class);
+      //try {
          grant.setDescription("user with user role");
          grant.setDomainid(domain.getDomainid());
          grant.setUserid(userUser.getUserid());
          grant.setRoleid(userRole.getRoleid());
-         grant = grantStore.createGrant(grant);
+         grant = (Grant)grant.write();
 
          grant.setDescription("admin with user role");
          grant.setDomainid(domain.getDomainid());
          grant.setUserid(adminUser.getUserid());
          grant.setRoleid(userRole.getRoleid());
-         grant = grantStore.createGrant(grant);
+         grant = (Grant)grant.write();
 
          grant.setDescription("admin with admin role");
          grant.setDomainid(domain.getDomainid());
          grant.setUserid(adminUser.getUserid());
          grant.setRoleid(adminRole.getRoleid());
-         grant = grantStore.createGrant(grant);
-      }
-      catch (StoreException se) {
-         logger.error("StoreException : " + se);
-      }
+         grant = (Grant)grant.write();
+      //}
+      //catch (StoreException se) {
+        // logger.error("StoreException : " + se);
+      //}
 
    }
 }

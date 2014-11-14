@@ -14,14 +14,34 @@ package org.opendaylight.aaa.idm.model;
  *
  */
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlElement;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.opendaylight.aaa.idm.persistence.IStorable;
+import org.opendaylight.aaa.idm.persistence.OStore;
 
 @XmlRootElement(name = "domains")
 public class Domains {
    private List<Domain> domains = new ArrayList<Domain>();
+   
+   public Domains() {
+	   Domain d = (Domain)OStore.newStorable(Domain.class);
+	   List<IStorable> lst = d.find();
+	   for(IStorable s:lst){
+		   domains.add((Domain)s);
+	   }	   
+   }
+
+   public Domains(String name) {
+	   Domain d = (Domain)OStore.newStorable(Domain.class);
+	   d.setName(name);
+	   List<IStorable> lst = d.find();
+	   for(IStorable s:lst){
+		   domains.add((Domain)s);
+	   }	   
+   }
 
    public void setDomains(List<Domain> domains) {
       this.domains = domains;
