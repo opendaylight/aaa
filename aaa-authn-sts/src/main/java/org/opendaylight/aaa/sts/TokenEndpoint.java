@@ -14,6 +14,7 @@ import static javax.servlet.http.HttpServletResponse.SC_NOT_IMPLEMENTED;
 import static javax.servlet.http.HttpServletResponse.SC_NO_CONTENT;
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
+import static javax.servlet.http.HttpServletResponse.SC_OK;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -58,6 +59,7 @@ public class TokenEndpoint extends HttpServlet {
 
     static final String TOKEN_GRANT_ENDPOINT = "/token";
     static final String TOKEN_REVOKE_ENDPOINT = "/revoke";
+    static final String TOKEN_VALIDATE_ENDPOINT = "/validate";
 
     private transient OAuthIssuer oi;
 
@@ -74,12 +76,31 @@ public class TokenEndpoint extends HttpServlet {
                 createAccessToken(req, resp);
             else if (req.getServletPath().equals(TOKEN_REVOKE_ENDPOINT))
                 deleteAccessToken(req, resp);
+            else if (req.getServletPath().equals(TOKEN_VALIDATE_ENDPOINT)) {
+                validateToken(req, resp);
+            }
         } catch (AuthenticationException e) {
             error(resp, SC_UNAUTHORIZED, e.getMessage());
         } catch (OAuthProblemException oe) {
             error(resp, oe);
         } catch (Exception e) {
             error(resp, e);
+        }
+    }
+
+    private void validateToken(HttpServletRequest req, HttpServletResponse resp)
+    throws IOException, OAuthSystemException {
+        String token = req.getReader().readLine();
+        if (token != null) {
+            Authentication authn = ServiceLocator.INSTANCE.ts.get(token.trim());
+            if (authn == null) {
+                throw new AuthenticationException(UNAUTHORIZED);
+            } else {
+                ServiceLocator.INSTANCE.as.set(authn);
+                resp.setStatus(SC_OK);
+            }
+        } else {
+            throw new AuthenticationException(UNAUTHORIZED);
         }
     }
 

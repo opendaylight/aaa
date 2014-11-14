@@ -16,5 +16,8 @@
         <servlet-name>STS</servlet-name>
         <url-pattern>/revoke</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>STS</servlet-name>
+        <url-pattern>/validate</url-pattern>
+    </servlet-mapping>
 </web-app>
