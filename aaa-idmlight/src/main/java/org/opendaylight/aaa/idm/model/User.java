@@ -11,68 +11,39 @@ package org.opendaylight.aaa.idm.model;
 /**
  *
  * @author peter.mellquist@hp.com 
+ * @author saichler@cisco.com
  *
  */
 
 
-import javax.xml.bind.annotation.XmlRootElement;
+import org.opendaylight.aaa.idm.persistence.IStorable;
+import org.opendaylight.aaa.idm.persistence.KeyMethod;
 
-@XmlRootElement(name = "user")
-public class User {
-   private Integer userid;
-   private String name;
-   private String description;
-   private Boolean enabled;
-   private String email;
-   private String password;
+public interface User extends IStorable{
 
-   public Integer getUserid() {
-      return userid;
-   }
+   public Integer getUserid();
+      
+   @KeyMethod
+   public void setUserid(Integer id);
 
-   public void setUserid(Integer id) {
-      this.userid = id;
-   }
+   public String getName();
 
-   public String getName() {
-      return name;
-   }
+   public void setName(String name);
 
-   public void setName(String name) {
-      this.name = name;
-   }  
+   public String getDescription();
+   
+   public void setDescription(String description);
 
-   public String getDescription() {
-      return description;
-   }
+   public Boolean getEnabled();
 
-   public void setDescription(String description) {
-      this.description = description;
-   }
+   public void setEnabled(Boolean enabled);
 
-   public Boolean getEnabled() {
-      return enabled;
-   }
-
-   public void setEnabled(Boolean enabled) {
-      this.enabled = enabled;
-   }
-
-   public void setEmail(String email) {
-      this.email = email;
-   }
-
-   public String getEmail() {
-      return email;
-   }
-
-   public void setPassword(String password) {
-      this.password = password;
-   }
-
-   public String getPassword() {
-      return password;
-   }
-
+   public void setEmail(String email);
+   
+   public String getEmail();
+   
+   public void setPassword(String password);
+   
+   public String getPassword();   
 }
 

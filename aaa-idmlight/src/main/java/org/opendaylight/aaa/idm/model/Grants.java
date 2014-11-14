@@ -14,20 +14,42 @@ package org.opendaylight.aaa.idm.model;
  *
  */
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlElement;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.opendaylight.aaa.idm.persistence.IStorable;
+import org.opendaylight.aaa.idm.persistence.OStore;
 
 @XmlRootElement(name = "grants")
 public class Grants {
-   private List<Grant> grants = new ArrayList<Grant>();
+   private List<JSGrant> grants = new ArrayList<JSGrant>();
 
-   public void setGrants(List<Grant> grants) {
+   public Grants(int domainID,int userID){
+	   Grant g = (Grant)OStore.newStorable(Grant.class);
+	   g.setDomainid(domainID);
+	   g.setUserid(userID);
+	   List<IStorable> lst = g.find();
+	   for(IStorable s:lst){
+		   grants.add(JSGrant.create((Grant)s));
+	   } 
+   }
+
+   public Grants(int userID){
+	   Grant g = (Grant)OStore.newStorable(Grant.class);
+	   g.setUserid(userID);
+	   List<IStorable> lst = g.find();
+	   for(IStorable s:lst){
+		   grants.add(JSGrant.create((Grant)s));
+	   } 
+   }
+      
+   public void setGrants(List<JSGrant> grants) {
       this.grants = grants;
    } 
 
-   public List<Grant> getGrants() {
+   public List<JSGrant> getGrants() {
       return grants;
    }
 
