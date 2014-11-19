@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_6e9b1fca",
+        "filename": "aaa-persistence-api/src/main/java/org/opendaylight/aaa/persistence/api/ObjectStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 2508
+      },
+      "writtenOn": "2014-11-19T17:05:20Z",
+      "side": 1,
+      "message": "Made return type a Map so caller has ID along with the return data.",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 7
+      },
+      "revId": "25506ce93627b97f89a936e581c020670445387b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
