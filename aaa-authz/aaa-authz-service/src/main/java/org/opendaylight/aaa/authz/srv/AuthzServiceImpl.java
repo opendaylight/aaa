@@ -55,7 +55,8 @@ public class AuthzServiceImpl {
 
         for(Policies policy : AuthzServiceImpl.listPolicies){
 
-            if(authentication.roles().contains(policy.getRole().getValue()) && (policy.getResource().getValue().equals(WILDCARD_TOKEN) || policy.getResource().getValue().equals(yangInstanceIdentifier.toString())) && (policy.getAction().equals(ActionType.Any) || actionType.equals(policy.getAction()))){
+            // Action type is compared as string, since its type is string in the config yang. Comparison is case insensitive
+            if(authentication.roles().contains(policy.getRole().getValue()) && (policy.getResource().getValue().equals(WILDCARD_TOKEN) || policy.getResource().getValue().equals(yangInstanceIdentifier.toString())) && (policy.getAction().toLowerCase().equals(ActionType.Any.name().toLowerCase()) || actionType.name().toLowerCase().equals(policy.getAction().toLowerCase()))){
                return AuthorizationResponseType.Authorized;
             }
 

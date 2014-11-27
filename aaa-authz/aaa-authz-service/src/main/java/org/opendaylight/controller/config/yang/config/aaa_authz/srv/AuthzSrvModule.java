@@ -44,6 +44,7 @@ public class AuthzSrvModule extends org.opendaylight.controller.config.yang.conf
       //Provide real broker to the new Authz broker
       authzBrokerImpl.setBroker(getDomBrokerDependency());
 
+
       //Get AuthN service reference and register it with the authzBroker
       ServiceReference<AuthenticationService> authServiceReference = bundleContext.getServiceReference(AuthenticationService.class);
       AuthenticationService as = bundleContext.getService(authServiceReference);
@@ -54,6 +55,7 @@ public class AuthzSrvModule extends org.opendaylight.controller.config.yang.conf
 
       // Register AuthZ broker with the real Broker as a provider; triggers "onSessionInitiated" in AuthzBrokerImpl
       getDomBrokerDependency().registerProvider(authzBrokerImpl);
+      // TODO ActionType is of type string, not ENUM due to improper serialization of ENUMs by config/netconf subsystem. This needs to be fixed as soon as config/netconf fixes the problem.
       getAction();
 
 
