@@ -61,12 +61,15 @@ module aaa-authz-service-impl {
                 leaf authz-role {
                     type string;
                 }
-
                 leaf service {
                   type authzs:service-type;
                 }
+
+                // ENUMs cannot be used right now (config subsystem + netconf cannot properly serialize enums), using strings instead
+                // In the generated module use Enum.valueOf from that string. In custom validation method validate that the string
                 leaf action {
-                  type authzs:action-type;
+                  type string;
+                  //type authzs:action-type;
 
                 }
                 leaf resource {
@@ -75,22 +78,21 @@ module aaa-authz-service-impl {
                 }
                 leaf role {
                   type authzs:role-type;
-
                 }
 
 
 
- //TODO: Check why uses below doesn't make the outer list be part of the source name-space in yang code generator.
-                  uses authzs:authorization-grp;
-
-                  /* The above "uses" statement is effectively and import of the following data structure:
+                  //TODO: Check why uses below doesn't make the outer list be part of the source name-space in yang code generator.
+                  //uses authzs:authorization-grp;
+                  // Grouping uses ENUMs and enums are not correctly serialized in Config + Netconf
                      list policies {
                                  key "service";
                                  leaf service {
                                    type authzs:service-type;
                                  }
                                  leaf action {
-                                   type authzs:action-type;
+                                   type string;
+                                   //type authzs:action-type;
 
                                  }
                                  leaf resource {
@@ -101,7 +103,7 @@ module aaa-authz-service-impl {
                                    type authzs:role-type;
 
                                  }
-                       } */
+                       }
 
 
             }
