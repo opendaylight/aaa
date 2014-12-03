@@ -22,7 +22,7 @@ import java.util.Map;
  * @param <ID>
  *            Identifier type of object to be stored
  */
-public interface ObjectStore<T, ID extends Serializable> {
+public interface ObjectStore<T extends Transportable<ID>, ID extends Serializable> {
 
     /**
      * Create or update an object.

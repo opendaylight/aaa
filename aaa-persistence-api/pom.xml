@@ -19,6 +19,12 @@
 		<resource.plugin.version>2.6</resource.plugin.version>
 		<helper.plugin.version>1.9.1</helper.plugin.version>
 		<bundle.plugin.version>2.5.3</bundle.plugin.version>
+
+        <mysql.connector.version>5.1.33</mysql.connector.version>
+        <hibernate.orm.version>4.3.7.Final</hibernate.orm.version>
+        <google.guava.version>12.0</google.guava.version>
+        <log4j.version>1.2.17</log4j.version>
+
         <junit.version>4.11</junit.version>
 	</properties>
 
@@ -29,6 +35,26 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.orm.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${google.guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
 	</dependencies>
 
 	<build>
