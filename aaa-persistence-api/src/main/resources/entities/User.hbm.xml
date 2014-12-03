@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.opendaylight.aaa.persistence.impl.hibernate.entity">
+    <class name="User" table="USERS">
+        <meta attribute="class-description">
+            User Details.
+        </meta>
+
+        <id name="id" column="id" type="integer"></id>
+
+        <property name="name" column="name" type="string"/>
+        <property name="description" column="description" type="string"/>
+        <property name="enabled" column="enabled" type="boolean"/>
+        <property name="email" column="email" type="string"/>
+        <property name="password" column="password" type="string"/>
+    </class>
+</hibernate-mapping>

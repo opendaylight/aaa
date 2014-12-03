@@ -8,7 +8,9 @@
  */
 package org.opendaylight.aaa.persistence;
 
-public class Hammer {
+import org.opendaylight.aaa.persistence.api.Transportable;
+
+public class Hammer implements Transportable<Long> {
     private Long id;
     private String manufacturer;
     private Integer weight;
@@ -31,6 +33,13 @@ public class Hammer {
     public void setTensile(Double tensile) {
         this.tensile = tensile;
     }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
     public Long getId() {
         return id;
     }
