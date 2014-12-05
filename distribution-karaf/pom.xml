@@ -49,7 +49,23 @@
         <!-- Project local feautures -->
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>features-aaa-api</artifactId>
+            <classifier>features</classifier>
+            <version>${project.version}</version>
+            <type>xml</type>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
             <artifactId>features-aaa</artifactId>
+            <classifier>features</classifier>
+            <version>${project.version}</version>
+            <type>xml</type>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>features-aaa-authz</artifactId>
             <classifier>features</classifier>
             <version>${project.version}</version>
             <type>xml</type>
