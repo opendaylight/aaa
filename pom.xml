@@ -33,15 +33,6 @@
     <module>distribution-karaf</module>
   </modules>
 
-  <profiles>
-    <profile>
-       <id>aaa-it</id>
-       <modules>
-          <module>aaa-it</module>
-       </modules>
-    </profile>
-  </profiles>
-
   <build>
     <plugins>
       <plugin>
