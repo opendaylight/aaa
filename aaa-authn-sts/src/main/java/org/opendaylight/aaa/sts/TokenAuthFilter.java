@@ -59,8 +59,9 @@ public class TokenAuthFilter implements ContainerRequestFilter {
        }
 
         // Are we up yet?
-        if (ServiceLocator.INSTANCE.as == null)
+        if (ServiceLocator.INSTANCE.as == null) {
             throw UNAVAILABLE_EX;
+        }
 
         // Are we doing authentication or not?
         if (ServiceLocator.INSTANCE.as.isAuthEnabled()) {
