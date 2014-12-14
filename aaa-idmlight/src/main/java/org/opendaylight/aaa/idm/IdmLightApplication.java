@@ -35,13 +35,16 @@ public class IdmLightApplication extends Application {
     public IdmLightApplication() {
         logger.info("starting idmlight .... ");
         config = new IdmLightConfig();
-        if (!config.load())
-           logger.error("unable to load idmlight config ");
-        else
-           config.log();
+        if (!config.load()) {
+            logger.error("unable to load idmlight config ");
+        }
+        else {
+            config.log();
+        }
         StoreBuilder storeBuilder = new StoreBuilder();
-        if (!storeBuilder.exists())
-           storeBuilder.init();
+        if (!storeBuilder.exists()) {
+            storeBuilder.init();
+        }
     }
 
     @Override
