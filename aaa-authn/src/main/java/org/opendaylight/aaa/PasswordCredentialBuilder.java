@@ -15,9 +15,9 @@ import org.opendaylight.aaa.api.PasswordCredentials;
 
 /**
  * {@link PasswordCredentials} builder.
- * 
+ *
  * @author liemmn
- * 
+ *
  */
 public class PasswordCredentialBuilder {
     private final MutablePasswordCredentials pc = new MutablePasswordCredentials();
@@ -31,7 +31,7 @@ public class PasswordCredentialBuilder {
         pc.password = password;
         return this;
     }
-    
+
     public PasswordCredentials build() {
         return pc;
     }
@@ -54,10 +54,12 @@ public class PasswordCredentialBuilder {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o)
+            if (this == o) {
                 return true;
-            if (!(o instanceof PasswordCredentials))
+            }
+            if (!(o instanceof PasswordCredentials)) {
                 return false;
+            }
             PasswordCredentials p = (PasswordCredentials) o;
             return areEqual(username, p.username())
                     && areEqual(password, p.password());

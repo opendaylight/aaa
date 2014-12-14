@@ -52,17 +52,20 @@ public class ClientManager implements ClientService, ManagedService {
     public void validate(String clientId, String clientSecret)
             throws AuthenticationException {
         // TODO: Post-Helium, we will support a CRUD API
-        if (!clients.containsKey(clientId))
+        if (!clients.containsKey(clientId)) {
             throw new AuthenticationException(UNAUTHORIZED_CLIENT_ERR);
-        if (!clients.get(clientId).equals(clientSecret))
+        }
+        if (!clients.get(clientId).equals(clientSecret)) {
             throw new AuthenticationException(UNAUTHORIZED_CLIENT_ERR);
+        }
     }
 
     @Override
     public void updated(Dictionary<String, ?> props)
             throws ConfigurationException {
-        if (props == null)
+        if (props == null) {
             props = defaults;
+        }
         reconfig(props);
     }
 
