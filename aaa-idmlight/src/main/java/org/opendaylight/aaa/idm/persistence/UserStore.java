@@ -65,8 +65,9 @@ public class UserStore {
                   throw new StoreException("Cannot connect to database server "+ e);
                }
             }
-            else
+            else {
                return dbConnection;
+            }
          }
 	 catch (SQLException sqe) {
             throw new StoreException("Cannot connect to database server "+ sqe);
@@ -235,13 +236,16 @@ protected void finalize ()  {
           statement.setString(4,user.getDescription());
           statement.setInt(5,user.getEnabled()?1:0);
           int affectedRows = statement.executeUpdate();
-          if (affectedRows == 0)
+          if (affectedRows == 0) {
              throw new StoreException("Creating user failed, no rows affected.");
+          }
           ResultSet generatedKeys = statement.getGeneratedKeys();
-          if (generatedKeys.next())
+          if (generatedKeys.next()) {
              key = generatedKeys.getInt(1);
-          else
+          }
+          else {
              throw new StoreException("Creating user failed, no generated key obtained.");
+          }
           user.setUserid(key);
           dbClose();
           return user;
@@ -255,19 +259,25 @@ protected void finalize ()  {
    public User putUser(User user) throws StoreException {
 
       User savedUser = this.getUser(user.getUserid());
-      if (savedUser==null)
+      if (savedUser==null) {
          return null;
+      }
 
-      if (user.getDescription()!=null)
+      if (user.getDescription()!=null) {
          savedUser.setDescription(user.getDescription());
-      if (user.getName()!=null)
+      }
+      if (user.getName()!=null) {
          savedUser.setName(user.getName());
-      if (user.getEnabled()!=null)
+      }
+      if (user.getEnabled()!=null) {
          savedUser.setEnabled(user.getEnabled());
-      if (user.getEmail()!=null)
+      }
+      if (user.getEmail()!=null) {
          savedUser.setEmail(user.getEmail());
-      if (user.getPassword()!=null)
+      }
+      if (user.getPassword()!=null) {
          savedUser.setPassword(user.getPassword());
+      }
 
       Connection conn = dbConnect();
       try {
@@ -293,8 +303,9 @@ protected void finalize ()  {
 
    public User deleteUser(User user) throws StoreException {
       User savedUser = this.getUser(user.getUserid());
-      if (savedUser==null)
+      if (savedUser==null) {
          return null;
+      }
 
       Connection conn = dbConnect();
       Statement stmt=null;
@@ -314,8 +325,9 @@ protected void finalize ()  {
    }
 
    private static final void debug(String msg) {
-       if (logger.isDebugEnabled())
+       if (logger.isDebugEnabled()) {
            logger.debug(msg);
+       }
    }
 }
 

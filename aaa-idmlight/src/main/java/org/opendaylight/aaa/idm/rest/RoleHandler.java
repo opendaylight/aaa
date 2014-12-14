@@ -10,7 +10,7 @@ package org.opendaylight.aaa.idm.rest;
 
 /**
  *
- * @author peter.mellquist@hp.com 
+ * @author peter.mellquist@hp.com
  *
  */
 
@@ -36,12 +36,12 @@ import org.opendaylight.aaa.idm.model.IDMError;
 import org.opendaylight.aaa.idm.persistence.RoleStore;
 import org.opendaylight.aaa.idm.persistence.StoreException;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-	
+
 @Path("/v1/roles")
 public class RoleHandler {
    private static Logger logger = LoggerFactory.getLogger(RoleHandler.class);
    private static RoleStore roleStore = new RoleStore();
-   
+
    @GET
    @Produces("application/json")
    public Response getRoles() {
@@ -89,29 +89,31 @@ public class RoleHandler {
    public Response createRole(@Context UriInfo info,Role role) {
       logger.info("Post /roles");
       try {
-         // TODO: role names should be unique! 	
+         // TODO: role names should be unique!
          // name
-         if (role.getName()==null)
+         if (role.getName()==null) {
             return new IDMError(404,"name must be defined on role create","").response();
-         else 
-            if (role.getName().length()>RoleStore.MAX_FIELD_LEN)
-               return new IDMError(400,"role name max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
-         
-         // description   
-         if (role.getDescription()==null)
+         }
+         else if (role.getName().length()>RoleStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"role name max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
+         }
+
+         // description
+         if (role.getDescription()==null) {
             role.setDescription("");
-         else
-            if (role.getDescription().length()>RoleStore.MAX_FIELD_LEN)
-               return new IDMError(400,"role description max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
+         }
+         else if (role.getDescription().length()>RoleStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"role description max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
+         }
 
          role = roleStore.createRole(role);
       }
       catch (StoreException se) {
          return new IDMError(500,"internal error creating role",se.message).response();
-      } 
+      }
 
       return Response.status(201).entity(role).build();
-   } 
+   }
 
    @PUT
    @Path("/{id}")
@@ -132,12 +134,14 @@ public class RoleHandler {
 
          // name
          // TODO: names should be unique
-         if ((role.getName()!=null) && (role.getName().length()>RoleStore.MAX_FIELD_LEN))
+         if ((role.getName()!=null) && (role.getName().length()>RoleStore.MAX_FIELD_LEN)) {
             return new IDMError(400,"role name max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
+         }
 
          // description
-         if ((role.getDescription()!=null) && (role.getDescription().length()>RoleStore.MAX_FIELD_LEN))
+         if ((role.getDescription()!=null) && (role.getDescription().length()>RoleStore.MAX_FIELD_LEN)) {
             return new IDMError(400,"role description max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
+         }
 
          role = roleStore.putRole(role);
          if (role==null) {

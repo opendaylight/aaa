@@ -65,8 +65,9 @@ public class GrantStore {
                   throw new StoreException("Cannot connect to database server "+ e);
                }
             }
-            else
+            else {
                return dbConnection;
+            }
          }
 	 catch (SQLException sqe) {
             throw new StoreException("Cannot connect to database server "+ sqe);
@@ -262,13 +263,16 @@ protected void finalize ()  {
           statement.setInt(3,grant.getUserid());
           statement.setInt(4,grant.getRoleid());
           int affectedRows = statement.executeUpdate();
-          if (affectedRows == 0)
+          if (affectedRows == 0) {
              throw new StoreException("Creating grant failed, no rows affected.");
+          }
           ResultSet generatedKeys = statement.getGeneratedKeys();
-          if (generatedKeys.next())
+          if (generatedKeys.next()) {
              key = generatedKeys.getInt(1);
-          else
+          }
+          else {
              throw new StoreException("Creating grant failed, no generated key obtained.");
+          }
           grant.setGrantid(key);
           dbClose();
           return grant;
@@ -281,8 +285,9 @@ protected void finalize ()  {
 
    public Grant deleteGrant(Grant grant) throws StoreException {
       Grant savedGrant = this.getGrant(grant.getGrantid());
-      if (savedGrant==null)
+      if (savedGrant==null) {
          return null;
+      }
 
       Connection conn = dbConnect();
       Statement stmt=null;
@@ -302,8 +307,9 @@ protected void finalize ()  {
    }
 
    private static final void debug(String msg) {
-       if (logger.isDebugEnabled())
+       if (logger.isDebugEnabled()) {
            logger.debug(msg);
+       }
    }
 }
 

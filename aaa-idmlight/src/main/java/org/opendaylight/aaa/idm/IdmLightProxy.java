@@ -69,8 +69,9 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
                 claim = cache.get(creds);
                 if (claim == null) {
                     claim = dbAuthenticate(creds, domainName);
-                    if (claim != null)
+                    if (claim != null) {
                         cache.put(creds, claim);
+                    }
                 }
             }
         }
@@ -78,8 +79,9 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
     }
 
     public static synchronized void clearClaimCache() {
-        for (Map<PasswordCredentials, Claim> cache : claimCache.values())
+        for (Map<PasswordCredentials, Claim> cache : claimCache.values()) {
             cache.clear();
+        }
     }
 
     private static Claim dbAuthenticate(PasswordCredentials creds, String domainName) {
@@ -130,8 +132,9 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
            claim.setUserId(user.getUserid().toString());
            claim.setUser(creds.username());
            claim.setDomain(domainName);
-           for (int z=0;z<roles.size();z++)
+           for (int z=0;z<roles.size();z++) {
               claim.addRole(roles.get(z));
+           }
            return claim.build();
         }
         catch (StoreException se) {
@@ -145,8 +148,9 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
         try {
            Users users = userStore.getUsers(userName);
            List<User> userList = users.getUsers();
-           if (userList.size()==0)
+           if (userList.size()==0) {
               return null;
+           }
            User user = userList.get(0);
            return user.getUserid().toString();
         }
@@ -228,8 +232,9 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
     }
 
     private static final void debug(String msg) {
-        if (logger.isDebugEnabled())
+        if (logger.isDebugEnabled()) {
             logger.debug(msg);
+        }
     }
 }
 
