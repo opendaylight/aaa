@@ -72,10 +72,12 @@ public class TokenEndpoint extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         try {
-            if (req.getServletPath().equals(TOKEN_GRANT_ENDPOINT))
+            if (req.getServletPath().equals(TOKEN_GRANT_ENDPOINT)) {
                 createAccessToken(req, resp);
-            else if (req.getServletPath().equals(TOKEN_REVOKE_ENDPOINT))
+            }
+            else if (req.getServletPath().equals(TOKEN_REVOKE_ENDPOINT)) {
                 deleteAccessToken(req, resp);
+            }
             else if (req.getServletPath().equals(TOKEN_VALIDATE_ENDPOINT)) {
                 validateToken(req, resp);
             }
@@ -109,10 +111,12 @@ public class TokenEndpoint extends HttpServlet {
             HttpServletResponse resp) throws IOException {
         String token = req.getReader().readLine();
         if (token != null) {
-            if (ServiceLocator.INSTANCE.ts.delete(token.trim()))
+            if (ServiceLocator.INSTANCE.ts.delete(token.trim())) {
                 resp.setStatus(SC_NO_CONTENT);
-            else
+            }
+            else {
                 throw new AuthenticationException(UNAUTHORIZED);
+            }
         } else {
             throw new AuthenticationException(UNAUTHORIZED);
         }
@@ -128,9 +132,10 @@ public class TokenEndpoint extends HttpServlet {
         OAuthRequest oauthRequest = new OAuthRequest(req);
         // Any client credentials?
         clientId = oauthRequest.getClientId();
-        if (clientId != null)
+        if (clientId != null) {
             ServiceLocator.INSTANCE.cs.validate(clientId,
                     oauthRequest.getClientSecret());
+        }
 
         // Credential request...
         if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(
@@ -157,8 +162,9 @@ public class TokenEndpoint extends HttpServlet {
                         ClaimBuilder cb = new ClaimBuilder(auth);
                         cb.setDomain(domain); // scope domain
                         // Add roles for the scoped domain
-                        for (String role : roles)
+                        for (String role : roles) {
                             cb.addRole(role);
+                        }
                         claim = cb.build();
                     }
                 }
