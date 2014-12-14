@@ -167,8 +167,9 @@ public class SecureBlockingQueue<T> implements BlockingQueue<T> {
         Iterator<SecureData<T>> it = queue.iterator();
         while (it.hasNext()) {
             SecureData<T> sd = it.next();
-            if (sd.data.equals(o))
+            if (sd.data.equals(o)) {
                 return queue.remove(sd);
+            }
         }
         return false;
     }
@@ -178,8 +179,9 @@ public class SecureBlockingQueue<T> implements BlockingQueue<T> {
         Iterator<SecureData<T>> it = queue.iterator();
         while (it.hasNext()) {
             SecureData<T> sd = it.next();
-            if (sd.data.equals(o))
+            if (sd.data.equals(o)) {
                 return true;
+            }
         }
         return false;
     }
@@ -210,8 +212,9 @@ public class SecureBlockingQueue<T> implements BlockingQueue<T> {
     @SuppressWarnings("unchecked")
     private Collection<SecureData<T>> fromData(Collection<?> c) {
         Collection<SecureData<T>> sd = new ArrayList<>(c.size());
-        for (Object d : c)
+        for (Object d : c) {
             sd.add((SecureData<T>) new SecureData<>(d));
+        }
         return sd;
     }
 
@@ -226,8 +229,9 @@ public class SecureBlockingQueue<T> implements BlockingQueue<T> {
     private Collection<T> toData(Collection<SecureData<T>> secureData) {
         Collection<T> data = new ArrayList<>(secureData.size());
         Iterator<SecureData<T>> it = secureData.iterator();
-        while (it.hasNext())
+        while (it.hasNext()) {
             data.add(it.next().data);
+        }
         return data;
     }
 
@@ -244,7 +248,9 @@ public class SecureBlockingQueue<T> implements BlockingQueue<T> {
         @SuppressWarnings("rawtypes")
         @Override
         public boolean equals(Object o) {
-            if (o == null) return false;
+            if (o == null) {
+                return false;
+            }
             return (o instanceof SecureData)
                     ? data.equals(((SecureData) o).data): false;
         }
