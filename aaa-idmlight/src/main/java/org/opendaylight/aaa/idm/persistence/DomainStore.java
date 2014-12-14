@@ -63,8 +63,9 @@ public class DomainStore {
                   throw new StoreException("Cannot connect to database server "+ e);
                }
             }
-            else
+            else {
                return dbConnection;
+            }
          }
 	 catch (SQLException sqe) {
             throw new StoreException("Cannot connect to database server "+ sqe);
@@ -229,13 +230,16 @@ protected void finalize ()  {
           statement.setString(2,domain.getDescription());
           statement.setInt(3,domain.getEnabled()?1:0);
           int affectedRows = statement.executeUpdate();
-          if (affectedRows == 0)
+          if (affectedRows == 0) {
              throw new StoreException("Creating domain failed, no rows affected.");
+          }
           ResultSet generatedKeys = statement.getGeneratedKeys();
-          if (generatedKeys.next())
+          if (generatedKeys.next()) {
              key = generatedKeys.getInt(1);
-          else
+          }
+          else {
              throw new StoreException("Creating domain failed, no generated key obtained.");
+          }
           domain.setDomainid(key);
           dbClose();
           return domain;
@@ -248,15 +252,19 @@ protected void finalize ()  {
 
    public Domain putDomain(Domain domain) throws StoreException {
       Domain savedDomain = this.getDomain(domain.getDomainid());
-      if (savedDomain==null)
+      if (savedDomain==null) {
          return null;
+      }
 
-      if (domain.getDescription()!=null)
+      if (domain.getDescription()!=null) {
          savedDomain.setDescription(domain.getDescription());
-      if (domain.getName()!=null)
+      }
+      if (domain.getName()!=null) {
          savedDomain.setName(domain.getName());
-      if (domain.getEnabled()!=null)
+      }
+      if (domain.getEnabled()!=null) {
          savedDomain.setEnabled(domain.getEnabled());
+      }
 
       Connection conn = dbConnect();
       try {
@@ -280,8 +288,9 @@ protected void finalize ()  {
 
    public Domain deleteDomain(Domain domain) throws StoreException {
       Domain savedDomain = this.getDomain(domain.getDomainid());
-      if (savedDomain==null)
+      if (savedDomain==null) {
          return null;
+      }
 
       Connection conn = dbConnect();
       Statement stmt=null;
@@ -301,8 +310,9 @@ protected void finalize ()  {
    }
 
    private static final void debug(String msg) {
-       if (logger.isDebugEnabled())
+       if (logger.isDebugEnabled()) {
            logger.debug(msg);
+       }
    }
 }
 

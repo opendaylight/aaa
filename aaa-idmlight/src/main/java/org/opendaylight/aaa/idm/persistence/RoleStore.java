@@ -64,8 +64,9 @@ public class RoleStore {
                   throw new StoreException("Cannot connect to database server "+ e);
                }
             }
-            else
+            else {
                return dbConnection;
+            }
          }
 	 catch (SQLException sqe) {
             throw new StoreException("Cannot connect to database server "+ sqe);
@@ -199,13 +200,16 @@ protected void finalize ()  {
           statement.setString(1,role.getName());
           statement.setString(2,role.getDescription());
           int affectedRows = statement.executeUpdate();
-          if (affectedRows == 0)
+          if (affectedRows == 0) {
              throw new StoreException("Creating role failed, no rows affected.");
+          }
           ResultSet generatedKeys = statement.getGeneratedKeys();
-          if (generatedKeys.next())
+          if (generatedKeys.next()) {
              key = generatedKeys.getInt(1);
-          else
+          }
+          else {
              throw new StoreException("Creating role failed, no generated key obtained.");
+          }
           role.setRoleid(key);
           dbClose();
           return role;
@@ -219,13 +223,16 @@ protected void finalize ()  {
    public Role putRole(Role role) throws StoreException {
 
       Role savedRole = this.getRole(role.getRoleid());
-      if (savedRole==null)
+      if (savedRole==null) {
          return null;
+      }
 
-      if (role.getDescription()!=null)
+      if (role.getDescription()!=null) {
          savedRole.setDescription(role.getDescription());
-      if (role.getName()!=null)
+      }
+      if (role.getName()!=null) {
          savedRole.setName(role.getName());
+      }
 
       Connection conn = dbConnect();
       try {
@@ -248,8 +255,9 @@ protected void finalize ()  {
 
    public Role deleteRole(Role role) throws StoreException {
       Role savedRole = this.getRole(role.getRoleid());
-      if (savedRole==null)
+      if (savedRole==null) {
          return null;
+      }
 
       Connection conn = dbConnect();
       Statement stmt=null;
@@ -269,8 +277,9 @@ protected void finalize ()  {
    }
 
    private static final void debug(String msg) {
-       if (logger.isDebugEnabled())
+       if (logger.isDebugEnabled()) {
            logger.debug(msg);
+       }
    }
 }
 

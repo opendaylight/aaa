@@ -10,7 +10,7 @@ package org.opendaylight.aaa.idm.rest;
 
 /**
  *
- * @author peter.mellquist@hp.com 
+ * @author peter.mellquist@hp.com
  *
  */
 
@@ -36,13 +36,13 @@ import org.opendaylight.aaa.idm.model.IDMError;
 import org.opendaylight.aaa.idm.persistence.UserStore;
 import org.opendaylight.aaa.idm.persistence.StoreException;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-	
+
 @Path("/v1/users")
 public class UserHandler {
    private static Logger logger = LoggerFactory.getLogger(UserHandler.class);
    private static UserStore userStore = new UserStore();
    protected final static String DEFAULT_PWD = "changeme";
-   
+
    @GET
    @Produces("application/json")
    public Response getUsers() {
@@ -56,9 +56,10 @@ public class UserHandler {
       }
 
       // obsfucate pwd
-      for (int z=0;z<users.getUsers().size();z++)
+      for (int z=0;z<users.getUsers().size();z++) {
           users.getUsers().get(z).setPassword("**********");
- 
+      }
+
       return Response.ok(users).build();
    }
 
@@ -83,7 +84,7 @@ public class UserHandler {
          return new IDMError(500,"internal error getting user",se.message).response();
       }
       if (user==null) {
-         return new IDMError(404,"user not found! id:" + id,"").response(); 
+         return new IDMError(404,"user not found! id:" + id,"").response();
       }
       // obsfucate pwd
       user.setPassword("*********");
@@ -97,47 +98,52 @@ public class UserHandler {
       logger.info("post /users");
       try {
          // enabled by default
-         if (user.getEnabled()==null)
+         if (user.getEnabled()==null) {
             user.setEnabled(true);
-         
+         }
+
          // user name is required
-         if (user.getName()==null)
+         if (user.getName()==null) {
             return new IDMError(400,"user name is required","").response();
-         else
-            if (user.getName().length()>UserStore.MAX_FIELD_LEN)
-               return new IDMError(400,"user name max length is :" + UserStore.MAX_FIELD_LEN,"").response();
+         }
+         else if (user.getName().length()>UserStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"user name max length is :" + UserStore.MAX_FIELD_LEN,"").response();
+         }
 
          // user description is optional
-         if (user.getDescription()==null)
+         if (user.getDescription()==null) {
             user.setDescription("");
-         else
-            if (user.getDescription().length()>UserStore.MAX_FIELD_LEN)
-               return new IDMError(400,"user description max length is :" + UserStore.MAX_FIELD_LEN,"").response();
+         }
+         else if (user.getDescription().length()>UserStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"user description max length is :" + UserStore.MAX_FIELD_LEN,"").response();
+         }
 
          // user email is optional
-         if (user.getEmail()==null)
+         if (user.getEmail()==null) {
             user.setEmail("");
-         else
-            if (user.getEmail().length()>UserStore.MAX_FIELD_LEN)
-               return new IDMError(400,"user email max length is :" + UserStore.MAX_FIELD_LEN,"").response();
+         }
+         else if (user.getEmail().length()>UserStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"user email max length is :" + UserStore.MAX_FIELD_LEN,"").response();
+         }
 
          // user password optional and will default if not provided
-         if (user.getPassword()==null)
+         if (user.getPassword()==null) {
             user.setPassword(DEFAULT_PWD);
-         else
-            if (user.getPassword().length()>UserStore.MAX_FIELD_LEN)
-               return new IDMError(400,"user password max length is :" + UserStore.MAX_FIELD_LEN,"").response();
+         }
+         else if (user.getPassword().length()>UserStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"user password max length is :" + UserStore.MAX_FIELD_LEN,"").response();
+         }
 
          // create user
          user = userStore.createUser(user);
       }
       catch (StoreException se) {
          return new IDMError(500,"internal error creating user",se.message).response();
-      } 
+      }
 
       // created!
       return Response.status(201).entity(user).build();
-   } 
+   }
 
 
    @PUT
@@ -195,5 +201,5 @@ public class UserHandler {
       return Response.status(204).build();
    }
 
- 
+
 }
