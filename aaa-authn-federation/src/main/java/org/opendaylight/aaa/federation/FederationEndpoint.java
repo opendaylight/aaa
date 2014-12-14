@@ -122,8 +122,9 @@ public class FederationEndpoint extends HttpServlet {
     // Space-delimited string from a list of strings
     private String listToString(List<String> list) {
         StringBuffer sb = new StringBuffer();
-        for (String s : list)
+        for (String s : list) {
             sb.append(s).append(" ");
+        }
         return sb.toString().trim();
     }
 
