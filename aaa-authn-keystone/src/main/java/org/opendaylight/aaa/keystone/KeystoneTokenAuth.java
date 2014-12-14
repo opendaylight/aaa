@@ -29,8 +29,9 @@ public class KeystoneTokenAuth implements TokenAuth {
 
     @Override
     public Authentication validate(Map<String, List<String>> headers) {
-        if (!headers.containsKey(TOKEN))
+        if (!headers.containsKey(TOKEN)) {
             return null;    // Not a Keystone token
+        }
 
         // TODO: Call into Keystone to get security context...
         logger.info("Not yet validating token " + headers.get(TOKEN).get(0));
