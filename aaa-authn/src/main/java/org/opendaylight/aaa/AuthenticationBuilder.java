@@ -101,10 +101,12 @@ public class AuthenticationBuilder extends ClaimBuilder {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o)
+            if (this == o) {
                 return true;
-            if (!(o instanceof Authentication))
+            }
+            if (!(o instanceof Authentication)) {
                 return false;
+            }
             Authentication a = (Authentication) o;
             return areEqual(expiration, a.expiration()) && super.equals(o);
         }

@@ -140,14 +140,18 @@ public class ClaimBuilder {
         @Override
         public String toString() {
             StringBuffer sb = new StringBuffer();
-            if (clientId != null)
+            if (clientId != null) {
                 sb.append("clientId:").append(clientId).append(",");
-            if (userId != null)
+            }
+            if (userId != null) {
                 sb.append("userId:").append(userId).append(",");
-            if (user != null)
+            }
+            if (user != null) {
                 sb.append("userName:").append(user).append(",");
-            if (domain != null)
+            }
+            if (domain != null) {
                 sb.append("domain:").append(domain).append(",");
+            }
             sb.append("roles:").append(roles);
             return sb.toString();
         }
