@@ -1,0 +1,204 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.hp</groupId>
+  <artifactId>hp</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0.0-SNAPSHOT</version>
+
+  <name>hp-util</name>
+  <description>Project Root</description>
+
+  <modules>
+    <!-- The order defined here is the order in which the modules will be compiled -->
+    <module>./hp-util</module>
+    <module>./hp-demo</module>
+  </modules>
+
+  <organization>
+    <name>Hewlett-Packard</name>
+    <url>http://www.hp.com</url>
+  </organization>
+
+  <properties>
+    <generated.sources.location>target/src-generated</generated.sources.location>
+  
+    <!-- Versions -->
+    
+    <!-- Dependencies -->
+
+    <junit.version>4.8</junit.version>
+    <easymock.version>3.0</easymock.version>
+    <jmockit.version>1.0</jmockit.version>
+    <jscience.version>4.3.1</jscience.version>
+    <postgresql.version>9.1-901.jdbc3</postgresql.version>
+    <slf4j-api.version>1.7.5</slf4j-api.version>
+    <log4j.version>1.2.17</log4j.version>
+    <slf4j-log4j12.version>1.7.0</slf4j-log4j12.version>
+    <commons-configuration.version>1.6</commons-configuration.version>
+    <commons-pool.version>1.6</commons-pool.version>
+    <!-- <astyanax.version>1.56.18</astyanax.version> -->
+    <astyanax.version>1.56.37</astyanax.version>
+    <cassandra-unit.version>1.1.2.1</cassandra-unit.version>
+    <hsqldb.version>2.0.0</hsqldb.version>
+    <hibernate.version>4.1.11.Final</hibernate.version>
+    <mysql.version>5.1.6</mysql.version>
+
+    <!-- Plugins -->
+
+    <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
+    <java.version>1.7</java.version>
+    <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
+    <maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
+    <maven-eclipse-plugin.version>2.9</maven-eclipse-plugin.version>
+    <maven-javadoc-plugin.version>2.9</maven-javadoc-plugin.version>
+    <maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
+    <maven-processor-plugin.version>2.2.0</maven-processor-plugin.version>
+    <findbugs-maven-plugin.version>2.5.2</findbugs-maven-plugin.version>
+    <build-helper-maven-plugin.version>1.7</build-helper-maven-plugin.version>
+    <javax-validation-api.version>1.1.0.Final</javax-validation-api.version>
+    <hibernate-jpamodelgen.version>1.2.0.Final</hibernate-jpamodelgen.version>
+    <hibernate3-maven-plugin.version>3.0</hibernate3-maven-plugin.version>              
+    <maven-replacer-plugin.version>1.4.1</maven-replacer-plugin.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.easymock</groupId>
+      <artifactId>easymock</artifactId>
+      <version>${easymock.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!--	
+    <dependency>
+      <groupId>com.googlecode.jmockit</groupId>
+      <artifactId>jmockit</artifactId>
+      <version>${jmockit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    -->
+    <dependency>
+      <groupId>org.jscience</groupId>
+      <artifactId>jscience</artifactId>
+      <version>${jscience.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <!-- 
+      Note: If a version is not specified, Maven downloads the latest. However this just
+      works for the plugins. Dependencies must specify a version.
+    -->
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>${maven-source-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <!-- 
+          The Surefire Plugin is used during the test phase of the build lifecycle to 
+          execute the unit tests of an application. This plug-in is optional. If removed
+          Maven still executes unit tests. It may be defined to configure the way unit test
+          is executed.
+        -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven-surefire-plugin.version}</version>
+        <configuration>
+          <!-- <skipTests>true</skipTests> -->
+          <argLine>-Xmx1024m -XX:MaxPermSize=1024m</argLine>
+        </configuration>                
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <version>${maven-eclipse-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>${maven-javadoc-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>${findbugs-maven-plugin.version}</version>
+        <configuration>
+          <xmlOutput>true</xmlOutput>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <!-- 
+          This plugin is used to insert @SuppressWarnings("all") in generated sources.
+        -->
+        <groupId>com.google.code.maven-replacer-plugin</groupId>
+        <artifactId>maven-replacer-plugin</artifactId>
+        <version>${maven-replacer-plugin.version}</version>
+        <executions>
+          <execution>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>replace</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <includes>
+            <include>${generated.sources.location}/**/*.java</include>
+          </includes>
+          <regex>true</regex>
+          <regexFlags>
+            <regexFlag>MULTILINE</regexFlag>
+          </regexFlags>
+          <replacements>
+            <replacement>
+              <token>^public class</token>
+              <value>@SuppressWarnings("all") public class</value>
+            </replacement>
+            <replacement>
+              <token>^public abstract class</token>
+              <value>@SuppressWarnings("all") public abstract class</value>
+            </replacement>
+          </replacements>
+        </configuration>
+      </plugin>        
+    </plugins>
+  </build>
+
+</project>

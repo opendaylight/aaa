@@ -1,0 +1,37 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.hp</groupId>
+    <artifactId>hp-util</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>hp-util-test-root</artifactId>
+  <packaging>pom</packaging>
+
+  <name>hp-util-test-root</name>
+  <description>General utility classes to write unit tests</description>
+
+  <modules>
+    <!-- The order defined here is the order in which the modules will be compiled. -->
+    <module>./hp-util-test</module>
+    <module>./hp-util-test-common</module>
+  </modules>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.easymock</groupId>
+      <artifactId>easymock</artifactId>
+      <version>${easymock.version}</version>
+    </dependency>
+  </dependencies>
+
+</project>

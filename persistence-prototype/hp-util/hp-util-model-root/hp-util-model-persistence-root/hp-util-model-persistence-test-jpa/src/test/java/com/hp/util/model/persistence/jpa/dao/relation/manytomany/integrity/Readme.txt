@@ -1,0 +1,1 @@
+Integrity rules are created by JPA because annotations are used to establish relations.

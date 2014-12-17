@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.hp</groupId>
+    <artifactId>hp-demo-plugable-persistence-root</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>hp-demo-plugable-persistence-model-persistence-cassandra</artifactId>
+  <packaging>jar</packaging>
+
+  <name>hp-demo-plugable-persistence-model-persistence-cassandra</name>    
+  <description>Persistence logic implementation using Cassandra</description>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.hp</groupId>
+      <artifactId>hp-demo-plugable-persistence-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.hp</groupId>
+      <artifactId>hp-demo-plugable-persistence-model-persistence-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.hp</groupId>
+      <artifactId>hp-util-model-persistence-test-framework-cassandra</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <!-- Embedded Cassandra Server -->
+      <groupId>org.cassandraunit</groupId>
+      <artifactId>cassandra-unit</artifactId>
+      <version>${cassandra-unit.version}</version>
+    </dependency>
+  </dependencies>
+
+</project>

@@ -1,0 +1,1 @@
+Cassandra does not support auto-generated keys. Thus a custom id DAO is a regular DAO.

@@ -1,0 +1,20 @@
+Make CassandraClient an interface to make easier replacing Astyanax by a different client.
+
+Make CassandraContext an interface and have an AstyanaxContext.
+
+The CassandraClient could be instantiated by the context to set the consistency level, and thus the context
+wouldn't be needed to be passed to the cassandra client.
+
+Add a ColumnFamily class. The com.netflix.astyanax.model.ColumnFamily would be used internally by 
+the CassandraClient implementation.
+
+CassandraContext would contain the CassandraClient and a ColumnDecoderProvider that provides column 
+decoders based on the type. ColumnDecoder is highly tied to Astyanax, because it reads from Astyanax 
+and produces a Column. This could be solved by using DataType<D> instead of the decoder and then have 
+the CassadnraClient implementation to internally get the right decoder based on the type. However, 
+CustomColumns (with composite values) would not be possible because they need their own decoder.
+Try implementing a generic AstyanaxSerializerAdapter that receives a com.hp.common.Serializer as the adaptee.
+
+
+
+

@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.hp</groupId>
+    <artifactId>hp-demo-plugable-persistence-root</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>hp-demo-plugable-persistence-model</artifactId>
+  <packaging>jar</packaging>
+
+  <name>hp-demo-plugable-persistence-model</name>    
+  <description>Business logic</description>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.hp</groupId>
+      <artifactId>hp-util-model-persistence</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.hp</groupId>
+      <artifactId>hp-util-model-persistence-jpa</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.hp</groupId>
+      <artifactId>hp-util-common-log-slf4j</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.hp</groupId>
+      <artifactId>hp-demo-plugable-persistence-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.hp</groupId>
+      <artifactId>hp-demo-plugable-persistence-model-persistence-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.hp</groupId>
+      <artifactId>hp-demo-plugable-persistence-model-persistence-jpa</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.hp</groupId>
+      <artifactId>hp-util-model-persistence-db-server-hsqldb</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.hp</groupId>
+      <artifactId>hp-demo-plugable-persistence-model-persistence-cassandra</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.hp</groupId>
+      <artifactId>hp-util-model-persistence-db-server-embedded-cassandra</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+
+</project>

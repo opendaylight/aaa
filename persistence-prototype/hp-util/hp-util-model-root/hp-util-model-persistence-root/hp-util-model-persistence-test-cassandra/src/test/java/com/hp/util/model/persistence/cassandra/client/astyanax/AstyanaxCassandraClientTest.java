@@ -1,0 +1,22 @@
+/*
+ * Copyright (c) 2014 Hewlett-Packard Development Company, L.P. and others. All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ */
+package com.hp.util.model.persistence.cassandra.client.astyanax;
+
+import com.hp.util.model.persistence.cassandra.CassandraClient;
+import com.hp.util.model.persistence.cassandra.client.CassandraClientTest;
+
+/**
+ * @author Fabiel Zuniga
+ */
+public class AstyanaxCassandraClientTest extends CassandraClientTest {
+
+    @Override
+    protected CassandraClient<Astyanax> getCassandraClient() {
+        return new AstyanaxCassandraClient();
+    }
+}
