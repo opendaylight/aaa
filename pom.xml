@@ -11,6 +11,7 @@
   <artifactId>aaa.project</artifactId>
   <version>0.1.2-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <name>aaa</name> <!-- Used by Sonar to set project name -->
   <prerequisites>
     <maven>3.0</maven>
   </prerequisites>
