@@ -5,12 +5,12 @@
     <parent>
         <groupId>org.opendaylight.aaa</groupId>
         <artifactId>aaa.project</artifactId>
-        <version>0.1.2-SNAPSHOT</version>
+        <version>0.1.2-Helium-SR2</version>
         <relativePath>../</relativePath>
     </parent>
 
     <artifactId>aaa-idmlight</artifactId>
-    <version>0.1.2-SNAPSHOT</version>
+    <version>0.1.2-Helium-SR2</version>
     <packaging>bundle</packaging>
 
     <dependencies>
