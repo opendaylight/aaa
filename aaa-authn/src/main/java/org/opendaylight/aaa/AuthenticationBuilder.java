@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Hewlett-Packard Development Company, L.P. and others.
+ * Copyright (c) 2014-2015 Hewlett-Packard Development Company, L.P. and others.
  * All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -17,14 +17,14 @@ import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.Claim;
 
 /**
- * A builder for the authentication context.
+ * A builder for the authentication context. The expiration, userId, user, and roles information is mandatory.
  *
  * @author liemmn
  *
  */
 public class AuthenticationBuilder extends ClaimBuilder {
 
-    private final MutableAuthentication ma = new MutableAuthentication();
+    private long expiration = 0L;
 
     public AuthenticationBuilder() {
     }
@@ -34,65 +34,73 @@ public class AuthenticationBuilder extends ClaimBuilder {
     }
 
     public AuthenticationBuilder setExpiration(long expiration) {
-        ma.expiration = expiration;
+        this.expiration = expiration;
         return this;
     }
 
     @Override
     protected void setClaim(Claim claim) {
-        ma.clientId = claim.clientId();
-        ma.userId = claim.userId();
-        ma.user = claim.user();
-        ma.domain = claim.domain();
-        ma.roles.addAll(claim.roles());
+        super.setClientId(claim.clientId());
+        super.setUserId(claim.userId());
+        super.setUser(claim.user());
+        super.setDomain(claim.domain());
+        super.addRoles(claim.roles());
     }
 
     @Override
     public AuthenticationBuilder setClientId(String clientId) {
-        ma.clientId = clientId;
+        super.setClientId(clientId);
         return this;
     }
 
     @Override
     public AuthenticationBuilder setUserId(String userId) {
-        ma.userId = userId;
+        super.setUserId(userId);
         return this;
     }
 
     @Override
     public AuthenticationBuilder setUser(String userName) {
-        ma.user = userName;
+        super.setUser(userName);
         return this;
     }
 
     @Override
     public AuthenticationBuilder setDomain(String domain) {
-        ma.domain = domain;
+        super.setDomain(domain);
         return this;
     }
 
     @Override
     public AuthenticationBuilder addRoles(Set<String> roles) {
-        ma.roles.addAll(roles);
+        super.addRoles(roles);
         return this;
     }
 
     @Override
     public AuthenticationBuilder addRole(String role) {
-        ma.roles.add(role);
+        super.addRole(role);
         return this;
     }
 
     @Override
     public Authentication build() {
-        return ma;
+        return new ImmutableAuthentication(this);
     }
 
-    // Mutable Authentication
-    protected static class MutableAuthentication extends
-            ClaimBuilder.MutableClaim implements Authentication {
+    protected static class ImmutableAuthentication extends
+        ImmutableClaim implements Authentication {
         private static final long serialVersionUID = 4919078164955609987L;
+        private int hashCode = 0;
         long expiration = 0L;
+
+        protected ImmutableAuthentication(AuthenticationBuilder base) {
+            super(base);
+            if (base.expiration < 0) {
+                throw new IllegalStateException("The expiration is less than 0.");
+            }
+            this.expiration = base.expiration;
+        }
 
         @Override
         public long expiration() {
@@ -124,7 +132,7 @@ public class AuthenticationBuilder extends ClaimBuilder {
 
         @Override
         public String toString() {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append("expiration:").append(expiration).append(",");
             sb.append(super.toString());
             return sb.toString();

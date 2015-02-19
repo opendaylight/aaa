@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Hewlett-Packard Development Company, L.P. and others.
+ * Copyright (c) 2014-2015 Hewlett-Packard Development Company, L.P. and others.
  * All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -63,7 +63,7 @@ public class AuthenticationManagerTest {
     }
 
     private Authentication setAuth(String name) {
-        Authentication auth = new AuthenticationBuilder().setUser(name)
+        Authentication auth = new AuthenticationBuilder().setUser(name).setUserId("123")
                 .addRole("admin").addRole("guest").build();
         as.set(auth);
         return auth;

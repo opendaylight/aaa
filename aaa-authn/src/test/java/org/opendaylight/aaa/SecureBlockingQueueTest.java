@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Hewlett-Packard Development Company, L.P. and others.
+ * Copyright (c) 2014-2015 Hewlett-Packard Development Company, L.P. and others.
  * All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -48,7 +48,7 @@ public class SecureBlockingQueueTest {
         executor.prestartAllCoreThreads();
         for (int cnt = 1; cnt <= MAX_TASKS; cnt++) {
             assertEquals(Integer.toString(cnt),
-                    executor.submit(new Task(Integer.toString(cnt))).get()
+                    executor.submit(new Task(Integer.toString(cnt), Integer.toString(cnt), "user")).get()
                             .user());
         }
         executor.shutdown();
@@ -62,7 +62,7 @@ public class SecureBlockingQueueTest {
                 TimeUnit.MILLISECONDS, queue);
         executor.prestartAllCoreThreads();
         for (int cnt = 1; cnt <= MAX_TASKS; cnt++) {
-            assertNull(executor.submit(new Task(Integer.toString(cnt))).get());
+            assertNull(executor.submit(new Task(Integer.toString(cnt), Integer.toString(cnt), "user")).get());
         }
         executor.shutdown();
     }
@@ -72,10 +72,10 @@ public class SecureBlockingQueueTest {
         BlockingQueue<String> queue = new SecureBlockingQueue<>(
                 new ArrayBlockingQueue<SecureData<String>>(3));
         ExecutorService es = Executors.newFixedThreadPool(3);
-        es.submit(new Producer("foo", queue)).get();
+        es.submit(new Producer("foo", "1111", "user", queue)).get();
         assertEquals(1, queue.size());
         assertEquals("foo", es.submit(new Consumer(queue)).get());
-        es.submit(new Producer("bar", queue)).get();
+        es.submit(new Producer("bar", "2222", "user", queue)).get();
         assertEquals("bar", queue.peek());
         assertEquals("bar", queue.element());
         assertEquals(1, queue.size());
@@ -139,10 +139,10 @@ public class SecureBlockingQueueTest {
 
     // Task to run in a ThreadPoolExecutor
     private class Task implements Callable<Authentication> {
-        Task(String name) {
+        Task(String name, String userId, String role) {
             // Mock that each task has its original authentication context
             AuthenticationManager.instance().set(
-                    new AuthenticationBuilder().setUser(name).build());
+                    new AuthenticationBuilder().setUser(name).setUserId(userId).addRole(role).build());
         }
 
         @Override
@@ -154,17 +154,21 @@ public class SecureBlockingQueueTest {
     // Producer sets auth context
     private class Producer implements Callable<String> {
         private final String name;
+        private final String userId;
+        private final String role;
         private final BlockingQueue<String> queue;
 
-        Producer(String name, BlockingQueue<String> queue) {
+        Producer(String name, String userId, String role, BlockingQueue<String> queue) {
             this.name = name;
+            this.userId = userId;
+            this.role = role;
             this.queue = queue;
         }
 
         @Override
         public String call() throws InterruptedException {
             AuthenticationManager.instance().set(
-                    new AuthenticationBuilder().setUser(name).build());
+                new AuthenticationBuilder().setUser(name).setUserId(userId).addRole(role).build());
             queue.put(name);
             return name;
         }
