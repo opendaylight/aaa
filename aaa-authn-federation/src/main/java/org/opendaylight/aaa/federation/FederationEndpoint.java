@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Hewlett-Packard Development Company, L.P. and others.
+ * Copyright (c) 2014-2015 Hewlett-Packard Development Company, L.P. and others.
  * All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -103,11 +103,11 @@ public class FederationEndpoint extends HttpServlet {
                 .setRefreshToken(token)
                 .setExpiresIn(Long.toString(auth.expiration()))
                 .setScope(
-                // Use mapped domain if there is one, else list
-                // all the ones that this user has access to
-                        claim.domain() != null ? claim.domain()
-                                : listToString(ServiceLocator.INSTANCE.is
-                                        .listDomains(userId)))
+                    // Use mapped domain if there is one, else list
+                    // all the ones that this user has access to
+                    (claim.domain() == null || claim.domain().isEmpty())
+                        ? listToString(ServiceLocator.INSTANCE.is.listDomains(userId)) : claim.domain()
+                )
                 .buildJSONMessage();
         // Cache this token...
         ServiceLocator.INSTANCE.ts.put(token, auth);
