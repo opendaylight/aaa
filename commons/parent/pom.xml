@@ -61,8 +61,8 @@
         <netconf.version>0.3.0-SNAPSHOT</netconf.version>
 
         <!-- IdmLight -->
-        <sqlite.jdbc.version>3.7.2</sqlite.jdbc.version>
-
+        <!-- <sqlite.jdbc.version>3.7.2</sqlite.jdbc.version> -->
+        <h2.version>1.4.185</h2.version>
         <!-- Test -->
         <javax.inject.version>1</javax.inject.version>
         <servlet.tester.version>7.0.0.M2</servlet.tester.version>
@@ -152,7 +152,11 @@
                 <artifactId>sqlite-jdbc</artifactId>
                 <version>${sqlite.jdbc.version}</version>
             </dependency>
-
+            <dependency>
+    		<groupId>com.h2database</groupId>
+    		<artifactId>h2</artifactId>
+    		<version>${h2.version}</version>
+	    </dependency>
             <!-- Test stuff -->
             <dependency>
                 <groupId>org.opendaylight.yangtools.thirdparty</groupId>

@@ -29,7 +29,7 @@ import org.opendaylight.aaa.idm.model.Domain;
 import org.opendaylight.aaa.idm.model.Domains;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sqlite.JDBC;
+import org.h2.Driver;
 
 public class DomainStore {
    private static Logger logger = LoggerFactory.getLogger(DomainStore.class);
@@ -43,8 +43,8 @@ public class DomainStore {
    protected Connection getDBConnect() throws StoreException {
       if ( dbConnection==null ) {
          try {
-            JDBC jdbc = new JDBC();
-	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
+            Driver jdbc = new org.h2.Driver();
+            dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
             return dbConnection;
          }
          catch (Exception e) {
@@ -55,7 +55,7 @@ public class DomainStore {
          try {
             if ( dbConnection.isClosed()) {
                try {
-                  JDBC jdbc = new JDBC();
+                   Driver jdbc = new org.h2.Driver();
 		  dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
 		  return dbConnection;
                }

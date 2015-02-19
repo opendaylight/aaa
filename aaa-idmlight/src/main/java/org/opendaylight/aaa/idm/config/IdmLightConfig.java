@@ -10,7 +10,7 @@ package org.opendaylight.aaa.idm.config;
 
 /**
  *
- * @author peter.mellquist@hp.com 
+ * @author peter.mellquist@hp.com
  *
  */
 
@@ -20,24 +20,24 @@ import org.slf4j.LoggerFactory;
 public class IdmLightConfig {
    private static Logger logger = LoggerFactory.getLogger(IdmLightConfig.class);
 
-   public static String dbName;	
+   public static String dbName;
    public String dbPath;
    public String dbDriver;
    public String dbUser;
    public String dbPwd;
    public int dbValidTimeOut;
-	
-   public boolean load() {		
+
+   public boolean load() {
       dbName = "idmlight.db";
-      dbPath = "jdbc:sqlite:" + dbName;
-      dbDriver = "org.sqlite.JDBC";
+      dbPath = "jdbc:h2:" + dbName;
+      dbDriver = "org.h2.Driver";
       dbUser = "foo";
       dbPwd = "bar";
       dbValidTimeOut = 3;
-	    	       
+
       return true;
    }
-	           
+
    public void log() {
       logger.info("DB Path                 : " + dbPath);
       logger.info("DB Driver               : " + dbDriver);
