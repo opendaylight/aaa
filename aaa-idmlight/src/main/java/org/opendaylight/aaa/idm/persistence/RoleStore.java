@@ -29,7 +29,7 @@ import org.opendaylight.aaa.idm.model.Role;
 import org.opendaylight.aaa.idm.model.Roles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sqlite.JDBC;
+import org.h2.Driver;
 
 public class RoleStore {
    private static Logger logger = LoggerFactory.getLogger(RoleStore.class);
@@ -43,7 +43,7 @@ public class RoleStore {
       if ( dbConnection==null ) {
          try {
 	    //Class.forName (IdmLightApplication.config.dbDriver).newInstance ();
-            JDBC jdbc = new JDBC();
+             Driver jdbc = new org.h2.Driver();
 	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
             return dbConnection;
          }
@@ -56,7 +56,7 @@ public class RoleStore {
             if ( dbConnection.isClosed()) {
                try {
 		  //Class.forName (IdmLightApplication.config.dbDriver).newInstance ();
-                  JDBC jdbc = new JDBC();
+            Driver jdbc = new org.h2.Driver();
 		  dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
 		  return dbConnection;
                }

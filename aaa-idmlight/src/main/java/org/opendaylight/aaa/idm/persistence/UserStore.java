@@ -29,7 +29,7 @@ import org.opendaylight.aaa.idm.model.User;
 import org.opendaylight.aaa.idm.model.Users;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sqlite.JDBC;
+import org.h2.Driver;
 
 public class UserStore {
    private static Logger logger = LoggerFactory.getLogger(UserStore.class);
@@ -45,7 +45,7 @@ public class UserStore {
    protected Connection getDBConnect() throws StoreException {
       if ( dbConnection==null ) {
          try {
-            JDBC jdbc = new JDBC();
+            Driver jdbc = new org.h2.Driver();
 	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
             return dbConnection;
          }
@@ -57,7 +57,7 @@ public class UserStore {
          try {
             if ( dbConnection.isClosed()) {
                try {
-                  JDBC jdbc = new JDBC();
+                    Driver jdbc = new org.h2.Driver();
 		  dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
 		  return dbConnection;
                }

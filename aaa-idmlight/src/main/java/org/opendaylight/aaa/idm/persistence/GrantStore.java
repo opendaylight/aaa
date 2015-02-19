@@ -29,7 +29,7 @@ import org.opendaylight.aaa.idm.model.Grant;
 import org.opendaylight.aaa.idm.model.Grants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sqlite.JDBC;
+import org.h2.Driver;
 
 public class GrantStore {
    private static Logger logger = LoggerFactory.getLogger(GrantStore.class);
@@ -44,7 +44,7 @@ public class GrantStore {
       if ( dbConnection==null ) {
          try {
 	    //Class.forName (IdmLightApplication.config.dbDriver).newInstance ();
-            JDBC jdbc = new JDBC();
+              Driver jdbc = new org.h2.Driver();
 	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
             return dbConnection;
          }
@@ -57,7 +57,7 @@ public class GrantStore {
             if ( dbConnection.isClosed()) {
                try {
 		  //Class.forName (IdmLightApplication.config.dbDriver).newInstance ();
-                  JDBC jdbc = new JDBC();
+                      Driver jdbc = new org.h2.Driver();
 		  dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
 		  return dbConnection;
                }
