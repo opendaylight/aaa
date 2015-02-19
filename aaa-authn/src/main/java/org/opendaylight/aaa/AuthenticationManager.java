@@ -67,9 +67,10 @@ public class AuthenticationManager implements AuthenticationService,
     @Override
     public void updated(Dictionary<String, ?> properties)
             throws ConfigurationException {
-        try {
-            authEnabled = Boolean.valueOf((String) properties.get(AUTH_ENABLED));
-        } catch (Throwable t) {
+        String s = (String) properties.get(AUTH_ENABLED);
+        if ("true".equalsIgnoreCase(s) || "false".equalsIgnoreCase(s)) {
+            authEnabled = Boolean.parseBoolean(s);
+        } else {
             throw new ConfigurationException(AUTH_ENABLED, AUTH_ENABLED_ERR);
         }
     }

@@ -8,69 +8,50 @@
  */
 package org.opendaylight.aaa;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationService;
+import org.osgi.service.cm.ConfigurationException;
 
 public class AuthenticationManagerTest {
-    private static final AuthenticationService as = AuthenticationManager
-            .instance();
-
-    @Before
-    public void tearDown() {
-        as.set(null);
+    @Test
+    public void testAuthenticationCrud() {
+        AuthenticationService as = AuthenticationManager.instance();
+        assertNotNull(as);
+        Authentication auth = new AuthenticationBuilder().setUser("Bob").addRole("admin").addRole("guest").build();
+        as.set(auth);
+        assertEquals(auth, as.get());
+        as.clear();
+        assertEquals(null, as.get());
     }
 
     @Test
-    public void testSameThread() {
-        assertEquals(setAuth(), as.get());
-    }
-
-    @Test
-    public void testSpawnedThread() throws InterruptedException,
-            ExecutionException {
-        Authentication auth = setAuth();
-        Future<Authentication> f = Executors.newSingleThreadExecutor().submit(
-                new Worker());
-        assertEquals(auth, f.get());
-    }
-
-    @Test
-    public void testSpawnedThreadPool() throws InterruptedException,
-            ExecutionException {
-        Authentication auth = setAuth();
-        List<Future<Authentication>> fs = Executors.newFixedThreadPool(2)
-                .invokeAll(Arrays.asList(new Worker(), new Worker()));
-        for (Future<Authentication> f : fs)
-            assertEquals(auth, f.get());
-    }
-
-    private class Worker implements Callable<Authentication> {
-        @Override
-        public Authentication call() throws Exception {
-            return as.get();
+    public void testAuthEnabled() {
+        AuthenticationManager as = AuthenticationManager.instance();
+        assertFalse(as.isAuthEnabled());
+        Dictionary<String, String> props = new Hashtable<>();
+        props.put(AuthenticationManager.AUTH_ENABLED, "TrUe");
+        try {
+            as.updated(props);
+            assertTrue(as.isAuthEnabled());
+            props.put(AuthenticationManager.AUTH_ENABLED, "FaLsE");
+            as.updated(props);
+            assertFalse(as.isAuthEnabled());
+        } catch(ConfigurationException ce) {
+            fail("Unexpected exception: " + ce);
         }
     }
 
-    private Authentication setAuth(String name) {
-        Authentication auth = new AuthenticationBuilder().setUser(name)
-                .addRole("admin").addRole("guest").build();
-        as.set(auth);
-        return auth;
+    @Test(expected=ConfigurationException.class)
+    public void testUpdatedException() throws ConfigurationException {
+        AuthenticationManager as = AuthenticationManager.instance();
+        Dictionary<String, String> props = new Hashtable<>();
+        props.put(AuthenticationManager.AUTH_ENABLED, "yes");
+        as.updated(props);
     }
-
-    private Authentication setAuth() {
-        return setAuth("Bob");
-    }
-
 }
