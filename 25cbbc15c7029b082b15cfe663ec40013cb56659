@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a96c907_f5e8bee3",
+        "filename": "aaa-authn/src/test/java/org/opendaylight/aaa/AuthenticationBuilderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-02-20T10:43:38Z",
+      "side": 1,
+      "message": "Could you add some negative tests, eg for null and empty strings?",
+      "revId": "25cbbc15c7029b082b15cfe663ec40013cb56659",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_b5d8f61e",
+        "filename": "aaa-authn/src/test/java/org/opendaylight/aaa/AuthenticationBuilderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-02-20T10:43:38Z",
+      "side": 1,
+      "message": "A testNotEquals would be nice too.",
+      "revId": "25cbbc15c7029b082b15cfe663ec40013cb56659",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
