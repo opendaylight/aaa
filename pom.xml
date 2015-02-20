@@ -27,6 +27,7 @@
     <module>aaa-authn-sssd</module>
     <module>aaa-authn-keystone</module>
     <module>aaa-authn-basic</module>
+    <module>aaa-idmlight-sqlite</module>
     <module>aaa-idmlight</module>
     <module>aaa-authz</module>
     <module>aaa-authn-odl-plugin</module>
