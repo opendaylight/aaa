@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a96c907_e6e1f22a",
+        "filename": "aaa-authn/src/test/java/org/opendaylight/aaa/AuthenticationBuilderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3350
+      },
+      "writtenOn": "2015-02-20T20:15:15Z",
+      "side": 1,
+      "message": "I\u0027d left those out here figuring I\u0027d add them as part of the ClaimBuilderTest, but since this class is overriding all of the ClaimBuilder methods I\u0027ll add them in here too.",
+      "parentUuid": "7a96c907_f5e8bee3",
+      "revId": "25cbbc15c7029b082b15cfe663ec40013cb56659",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a96c907_b5d8f61e",
         "filename": "aaa-authn/src/test/java/org/opendaylight/aaa/AuthenticationBuilderTest.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-02-20T10:43:38Z",
       "side": 1,
       "message": "A testNotEquals would be nice too.",
+      "revId": "25cbbc15c7029b082b15cfe663ec40013cb56659",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_a6d76a4a",
+        "filename": "aaa-authn/src/test/java/org/opendaylight/aaa/AuthenticationBuilderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 3350
+      },
+      "writtenOn": "2015-02-20T20:15:15Z",
+      "side": 1,
+      "message": "Ok. I\u0027ll split this out into 2 separate test cases.",
+      "parentUuid": "7a96c907_b5d8f61e",
       "revId": "25cbbc15c7029b082b15cfe663ec40013cb56659",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
