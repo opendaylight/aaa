@@ -50,7 +50,6 @@
 		<bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/${jackson.version}</bundle>
 		<bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/${jackson.version}</bundle>
 		<bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/${jackson.version}</bundle>
-		<bundle>wrap:mvn:org.xerial/sqlite-jdbc/${sqlite.jdbc.version}</bundle>
 
 		<!-- Federation -->
 		<bundle>mvn:org.opendaylight.aaa/aaa-authn-federation/${project.version}</bundle>

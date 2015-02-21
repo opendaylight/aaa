@@ -108,10 +108,14 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
+                <!-- override default version so we don't use bnd 2.3.0 when embedding sqlite -->
+                <version>2.4.0</version>
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Import-Package>*,com.sun.jersey.spi.container.servlet, org.eclipse.jetty.servlets</Import-Package>
+                        <Import-Package>javax.servlet.http,javax.ws.rs,javax.ws.rs.core,javax.xml.bind.annotation,org.apache.felix.dm,org.opendaylight.aaa,org.opendaylight.aaa.api,org.osgi.framework,org.slf4j,org.eclipse.jetty.servlets,com.sun.jersey.spi.container.servlet</Import-Package>
+                        <Private-Package>org.sqlite</Private-Package>
+                        <Embed-Dependency>sqlite-jdbc</Embed-Dependency>
                         <Web-ContextPath>/auth</Web-ContextPath>
                         <Web-Connectors>adminConn</Web-Connectors>
                         <Bundle-Activator>org.opendaylight.aaa.idm.Activator</Bundle-Activator>
