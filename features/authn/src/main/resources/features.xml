@@ -9,6 +9,9 @@
 	xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
 	<repository>mvn:org.opendaylight.controller/features-netconf/${netconf.version}/xml/features</repository>
 	<repository>mvn:org.opendaylight.aaa/features-aaa-api/${project.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.yangtools/features-yangtools/${yangtools.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.controller/features-config/${config.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.controller/features-mdsal/${mdsal.version}/xml/features</repository>
 
 	<feature name='odl-aaa-authn' description='OpenDaylight :: AAA :: Authentication'
 		version='${project.version}'>
@@ -124,7 +127,7 @@
 
     <feature name='odl-aaa-authn-sssd-cluster' description='OpenDaylight :: AAA :: SSSD Federation'
              version='${project.version}'>
-        <feature version='${project.version}'>odl-aaa-authn-mdsal</feature>
+        <feature version='${project.version}'>odl-aaa-authn-cluster</feature>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sssd/${project.version}</bundle>
     </feature>
 
@@ -138,7 +141,7 @@
     <feature name='odl-aaa-authn-plugin-cluster' description='OpenDaylight :: AAA :: ODL NETCONF Plugin'
              version='${project.version}'>
         <feature version='${netconf.version}'>odl-netconf-api</feature>
-        <feature version='${project.version}'>odl-aaa-authn-mdsal</feature>
+        <feature version='${project.version}'>odl-aaa-authn-cluster</feature>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-odl-plugin/${project.version}</bundle>
     </feature>
 
