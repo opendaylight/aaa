@@ -66,6 +66,7 @@
         <!-- Test -->
         <javax.inject.version>1</javax.inject.version>
         <servlet.tester.version>7.0.0.M2</servlet.tester.version>
+        <features.test.version>1.5.0-SNAPSHOT</features.test.version>
     </properties>
 
     <dependencyManagement>
@@ -154,6 +155,12 @@
             </dependency>
 
             <!-- Test stuff -->
+            <dependency>
+                <groupId>org.opendaylight.odlparent</groupId>
+                <artifactId>features-test</artifactId>
+                <version>${features.test.version}</version>
+                <scope>test</scope>
+            </dependency>
             <dependency>
                 <groupId>org.opendaylight.yangtools.thirdparty</groupId>
                 <artifactId>xtend-lib-osgi</artifactId>
@@ -281,9 +288,9 @@
         </plugins>
     </reporting>
 
-    <!-- Note: we can not use variables for these URLs because we need to 
-        be able to download the parent pom from the repository the first time we 
-        go to use it (since it is in a different project). To override the settings, 
+    <!-- Note: we can not use variables for these URLs because we need to
+        be able to download the parent pom from the repository the first time we
+        go to use it (since it is in a different project). To override the settings,
         use the "mirror" section of the settings.xml. See http://maven.apache.org/settings.html -->
     <repositories>
         <!-- OpenDayLight Repo Mirror -->
