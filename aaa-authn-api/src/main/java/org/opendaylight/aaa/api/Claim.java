@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2014-2015 Hewlett-Packard Development Company, L.P. and others.
+ * All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ */
 package org.opendaylight.aaa.api;
 
 import java.util.Set;
@@ -11,10 +19,10 @@ import java.util.Set;
  */
 public interface Claim {
     /**
-     * Get the id of the authorized client.  If the id is null, it
+     * Get the id of the authorized client.  If the id is an empty string, it
      * means that the client is anonymous.
      *
-     * @return id of the authorized client, or null if anonymous
+     * @return id of the authorized client, or empty string if anonymous
      */
     String clientId();
 
@@ -35,7 +43,7 @@ public interface Claim {
     /**
      * Get the fully-qualified domain name. Domain names are externally created.
      *
-     * @return unique domain name
+     * @return unique domain name, or empty string for a claim tied to no domain
      */
     String domain();
 
