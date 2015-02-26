@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Hewlett-Packard Development Company, L.P. and others.
+ * Copyright (c) 2014-2015 Hewlett-Packard Development Company, L.P. and others.
  * All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -43,7 +43,7 @@ public class HttpBasicAuthTest {
                 auth.ca.authenticate(new PasswordCredentialBuilder()
                         .setUserName(USERNAME).setPassword(PASSWORD).build(),
                         null)).thenReturn(
-                new ClaimBuilder().setUser("admin").addRole("admin").build());
+                new ClaimBuilder().setUser("admin").addRole("admin").setUserId("123").build());
         when(
                 auth.ca.authenticate(new PasswordCredentialBuilder()
                         .setUserName(USERNAME).setPassword("bozo").build(),

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Hewlett-Packard Development Company, L.P. and others.
+ * Copyright (c) 2014-2015 Hewlett-Packard Development Company, L.P. and others.
  * All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -52,7 +52,7 @@ public class DefaultTokenStoreTest {
     @Test
     public void testCache() throws InterruptedException {
         Authentication auth = new AuthenticationBuilder().setUser("foo")
-                .setUserId("1234").build();
+                .setUserId("1234").addRole("admin").build();
         dts.put(FOO_TOKEN, auth);
         assertEquals(auth, dts.get(FOO_TOKEN));
         dts.delete(FOO_TOKEN);

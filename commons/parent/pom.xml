@@ -56,6 +56,7 @@
         <oauth.version>1.0.0</oauth.version>
         <jta.version>1.1.1</jta.version>
         <oltu.version>1.0.0</oltu.version>
+        <google.guava.version>18.0</google.guava.version>
 
         <!-- Netconf plugin -->
         <netconf.version>0.3.0-SNAPSHOT</netconf.version>
@@ -151,6 +152,11 @@
                 <groupId>org.xerial</groupId>
                 <artifactId>sqlite-jdbc</artifactId>
                 <version>${sqlite.jdbc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${google.guava.version}</version>
             </dependency>
 
             <!-- Test stuff -->
@@ -281,9 +287,9 @@
         </plugins>
     </reporting>
 
-    <!-- Note: we can not use variables for these URLs because we need to 
-        be able to download the parent pom from the repository the first time we 
-        go to use it (since it is in a different project). To override the settings, 
+    <!-- Note: we can not use variables for these URLs because we need to
+        be able to download the parent pom from the repository the first time we
+        go to use it (since it is in a different project). To override the settings,
         use the "mirror" section of the settings.xml. See http://maven.apache.org/settings.html -->
     <repositories>
         <!-- OpenDayLight Repo Mirror -->
