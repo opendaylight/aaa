@@ -11,5 +11,6 @@
 	<feature name='odl-aaa-api' description='OpenDaylight :: AAA :: APIs'
 		version='${project.version}'>
 		<bundle>mvn:org.opendaylight.aaa/aaa-authn-api/${project.version}</bundle>
+		<bundle>mvn:org.opendaylight.aaa/aaa-credential-store-api/${project.version}</bundle>
 	</feature>
 </features>

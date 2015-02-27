@@ -30,6 +30,7 @@
     <module>aaa-idmlight</module>
     <module>aaa-authz</module>
     <module>aaa-authn-odl-plugin</module>
+    <module>aaa-credential-store-api</module>
     <module>features</module>
     <module>distribution-karaf</module>
   </modules>
