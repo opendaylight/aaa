@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a96c907_a33e6ed8",
+        "filename": "aaa-authn/src/main/java/org/opendaylight/aaa/AuthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 2527
+      },
+      "writtenOn": "2015-02-27T04:37:16Z",
+      "side": 1,
+      "message": "Do you want to handle the case where the property doesn\u0027t exist differently? see unit test comment.",
+      "range": {
+        "startLine": 74,
+        "startChar": 51,
+        "endLine": 74,
+        "endChar": 54
+      },
+      "revId": "0978059e02ef11924ffe8b4d4aa18163c660a39e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_43276aca",
+        "filename": "aaa-authn/src/main/java/org/opendaylight/aaa/AuthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 2527
+      },
+      "writtenOn": "2015-02-27T04:37:16Z",
+      "side": 1,
+      "message": "Seems like we\u0027re parsing twice when not necessary in the \"true\" case. Maybe:\n\nboolean value \u003d Boolean.parseBoolean(propertyValue);\n// ensure not false due to typo\nif(!value \u0026\u0026 !\"false\".equalsIgnoreCase(propertyValue)) throw ...;\nauthEnabled \u003d value;",
+      "revId": "0978059e02ef11924ffe8b4d4aa18163c660a39e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_032de2a7",
+        "filename": "aaa-authn/src/test/java/org/opendaylight/aaa/AuthenticationManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 2527
+      },
+      "writtenOn": "2015-02-27T04:37:16Z",
+      "side": 1,
+      "message": "This is the same test as above, the only difference being the executor used. I\u0027d refactor to a helper and pass the executor (single thread, same thread) to use for the respective test.",
+      "revId": "0978059e02ef11924ffe8b4d4aa18163c660a39e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_6324e6c4",
+        "filename": "aaa-authn/src/test/java/org/opendaylight/aaa/AuthenticationManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 2527
+      },
+      "writtenOn": "2015-02-27T04:37:16Z",
+      "side": 1,
+      "message": "Is there a reason to try/catch versus add a throw to the method like the tests above?",
+      "revId": "0978059e02ef11924ffe8b4d4aa18163c660a39e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_e338f6f0",
+        "filename": "aaa-authn/src/test/java/org/opendaylight/aaa/AuthenticationManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 2527
+      },
+      "writtenOn": "2015-02-27T04:37:16Z",
+      "side": 1,
+      "message": "Is this really what you expect if the property doesn\u0027t exist? I would assume no value \u003d\u003d some default (maybe with a warning), not an exception.",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 47
+      },
+      "revId": "0978059e02ef11924ffe8b4d4aa18163c660a39e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
