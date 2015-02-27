@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7a96c907_49d0eb1e",
+        "filename": "aaa-authn/src/main/java/org/opendaylight/aaa/AuthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3350
+      },
+      "writtenOn": "2015-02-27T21:42:11Z",
+      "side": 1,
+      "message": "See unit test response.",
+      "parentUuid": "7a96c907_a33e6ed8",
+      "range": {
+        "startLine": 74,
+        "startChar": 51,
+        "endLine": 74,
+        "endChar": 54
+      },
+      "revId": "0978059e02ef11924ffe8b4d4aa18163c660a39e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a96c907_43276aca",
         "filename": "aaa-authn/src/main/java/org/opendaylight/aaa/AuthenticationManager.java",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2015-02-27T04:37:16Z",
       "side": 1,
       "message": "Seems like we\u0027re parsing twice when not necessary in the \"true\" case. Maybe:\n\nboolean value \u003d Boolean.parseBoolean(propertyValue);\n// ensure not false due to typo\nif(!value \u0026\u0026 !\"false\".equalsIgnoreCase(propertyValue)) throw ...;\nauthEnabled \u003d value;",
+      "revId": "0978059e02ef11924ffe8b4d4aa18163c660a39e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_89a91392",
+        "filename": "aaa-authn/src/main/java/org/opendaylight/aaa/AuthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 3350
+      },
+      "writtenOn": "2015-02-27T21:42:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a96c907_43276aca",
       "revId": "0978059e02ef11924ffe8b4d4aa18163c660a39e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "7a96c907_e9e457e2",
+        "filename": "aaa-authn/src/test/java/org/opendaylight/aaa/AuthenticationManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3350
+      },
+      "writtenOn": "2015-02-27T21:42:11Z",
+      "side": 1,
+      "message": "I can do this once guava is pulled in (different commit).",
+      "parentUuid": "7a96c907_032de2a7",
+      "revId": "0978059e02ef11924ffe8b4d4aa18163c660a39e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a96c907_6324e6c4",
         "filename": "aaa-authn/src/test/java/org/opendaylight/aaa/AuthenticationManagerTest.java",
         "patchSetId": 1
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "7a96c907_49978b48",
+        "filename": "aaa-authn/src/test/java/org/opendaylight/aaa/AuthenticationManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 3350
+      },
+      "writtenOn": "2015-02-27T21:42:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a96c907_6324e6c4",
+      "revId": "0978059e02ef11924ffe8b4d4aa18163c660a39e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a96c907_e338f6f0",
         "filename": "aaa-authn/src/test/java/org/opendaylight/aaa/AuthenticationManagerTest.java",
         "patchSetId": 1
@@ -87,6 +165,30 @@
       "writtenOn": "2015-02-27T04:37:16Z",
       "side": 1,
       "message": "Is this really what you expect if the property doesn\u0027t exist? I would assume no value \u003d\u003d some default (maybe with a warning), not an exception.",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 47
+      },
+      "revId": "0978059e02ef11924ffe8b4d4aa18163c660a39e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_a9b72ff4",
+        "filename": "aaa-authn/src/test/java/org/opendaylight/aaa/AuthenticationManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 3350
+      },
+      "writtenOn": "2015-02-27T21:42:11Z",
+      "side": 1,
+      "message": "This is a required configuration item. The user would have to deliberately set it to null on the command line. Do we really want them to go check a log file to figure out they didn\u0027t change the configuration like they thought they did?",
+      "parentUuid": "7a96c907_e338f6f0",
       "range": {
         "startLine": 118,
         "startChar": 4,
