@@ -190,8 +190,8 @@ public class TokenEndpoint extends HttpServlet {
         String token = oi.accessToken();
 
         // Cache this token...
-        Authentication auth = new AuthenticationBuilder(claim)
-                .setClientId(clientId).setExpiration(tokenExpiration()).build();
+        Authentication auth = new AuthenticationBuilder(new ClaimBuilder(claim)
+                .setClientId(clientId).build()).setExpiration(tokenExpiration()).build();
         ServiceLocator.INSTANCE.ts.put(token, auth);
 
         OAuthResponse r = OAuthASResponse.tokenResponse(SC_CREATED)
