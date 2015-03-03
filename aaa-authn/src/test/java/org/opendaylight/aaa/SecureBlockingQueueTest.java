@@ -142,7 +142,7 @@ public class SecureBlockingQueueTest {
         Task(String name) {
             // Mock that each task has its original authentication context
             AuthenticationManager.instance().set(
-                    new AuthenticationBuilder().setUser(name).build());
+                    new AuthenticationBuilder(new ClaimBuilder().setUser(name).build()).build());
         }
 
         @Override
@@ -164,7 +164,7 @@ public class SecureBlockingQueueTest {
         @Override
         public String call() throws InterruptedException {
             AuthenticationManager.instance().set(
-                    new AuthenticationBuilder().setUser(name).build());
+                    new AuthenticationBuilder(new ClaimBuilder().setUser(name).build()).build());
             queue.put(name);
             return name;
         }

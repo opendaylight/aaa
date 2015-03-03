@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Hewlett-Packard Development Company, L.P. and others.
+ * Copyright (c) 2014-2015 Hewlett-Packard Development Company, L.P. and others.
  * All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -26,8 +26,8 @@ import org.osgi.service.cm.ConfigurationException;
 public class AuthenticationManagerTest {
     @Test
     public void testAuthenticationCrudSameThread() {
-        Authentication auth = new AuthenticationBuilder().setUser("Bob").setUserId("1234").addRole("admin")
-            .addRole("guest").build();
+        Authentication auth = new AuthenticationBuilder(new ClaimBuilder().setUser("Bob").setUserId("1234")
+            .addRole("admin").addRole("guest").build()).build();
         AuthenticationService as = AuthenticationManager.instance();
 
         assertNotNull(as);
@@ -42,8 +42,8 @@ public class AuthenticationManagerTest {
     @Test
     public void testAuthenticationCrudSpawnedThread() throws InterruptedException, ExecutionException {
         AuthenticationService as = AuthenticationManager.instance();
-        Authentication auth = new AuthenticationBuilder().setUser("Bob").setUserId("1234").addRole("admin")
-            .addRole("guest").build();
+        Authentication auth = new AuthenticationBuilder(new ClaimBuilder().setUser("Bob").setUserId("1234")
+            .addRole("admin").addRole("guest").build()).build();
 
         as.set(auth);
         Future<Authentication> f = Executors.newSingleThreadExecutor().submit(new Worker());
@@ -57,8 +57,8 @@ public class AuthenticationManagerTest {
     @Test
     public void testAuthenticationCrudSpawnedThreadPool() throws InterruptedException, ExecutionException {
         AuthenticationService as = AuthenticationManager.instance();
-        Authentication auth = new AuthenticationBuilder().setUser("Bob").setUserId("1234").addRole("admin")
-            .addRole("guest").build();
+        Authentication auth = new AuthenticationBuilder(new ClaimBuilder().setUser("Bob").setUserId("1234")
+            .addRole("admin").addRole("guest").build()).build();
 
         as.set(auth);
         List<Future<Authentication>> fs = Executors.newFixedThreadPool(2)
