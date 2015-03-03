@@ -18,6 +18,7 @@ import static org.mockito.Matchers.anyMap;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.opendaylight.aaa.AuthenticationBuilder;
+import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.TokenAuth;
@@ -35,9 +36,9 @@ public class TokenAuthTest extends JerseyTest {
     private static final String JERSEY_FILTERS = "com.sun.jersey.spi.container.ContainerRequestFilters";
     private static final String AUTH_FILTERS = TokenAuthFilter.class.getName();
 
-    private static Authentication auth = new AuthenticationBuilder()
+    private static Authentication auth = new AuthenticationBuilder(new ClaimBuilder()
             .setUserId("1234").setUser("Bob").addRole("admin").addRole("user")
-            .setDomain("tenantX")
+            .setDomain("tenantX").build())
             .setExpiration(System.currentTimeMillis() + 1000).build();
 
     private static final String GOOD_TOKEN = "9b01b7cf-8a49-346d-8c47-6a61193e2b60";
