@@ -1,0 +1,3 @@
+This project is a placeholder for the idmlight version of persistence provided in the aaa project currently.
+When the migration of data model and persistence layer logic to the new aaa-persistence is complete, this project could be potentially deleted.
+The objective of this project is to separate out the persistence logic from any other logic such as REST from the current aaa-idmlight project to ensure smooth migration.

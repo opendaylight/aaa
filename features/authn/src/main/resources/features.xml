@@ -9,6 +9,7 @@
 	xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
 	<repository>mvn:org.opendaylight.controller/features-netconf/${netconf.version}/xml/features</repository>
 	<repository>mvn:org.opendaylight.aaa/features-aaa-api/${project.version}/xml/features</repository>
+        <repository>mvn:org.opendaylight.persistence/features/${persistence.version}/xml/features</repository>
 
 	<feature name='odl-aaa-authn' description='OpenDaylight :: AAA :: Authentication'
 		version='${project.version}'>
@@ -74,5 +75,18 @@
 		<feature version='${project.version}'>odl-aaa-authn</feature>
 		<bundle>mvn:org.opendaylight.aaa/aaa-authn-odl-plugin/${project.version}</bundle>
 	</feature>
-
+        
+        <!-- TODO: Add odl-aaa-persistence to aaa-authn when the implementation is complete -->	
+	<feature name='odl-aaa-persistence' description='Opendaylight :: AAA :: Persistence' version='${project.version}'>
+	    <feature version='${project.version}'>odl-aaa-authn</feature>
+	    <feature version='${persistence.version}'>odl-persistence-api</feature>
+	    <feature version='${persistence.version}'>odl-persistence-jpa-impl</feature>
+	    <bundle>mvn:org.opendaylight.aaa/aaa-persistence/${project.version}</bundle>
+	</feature>
+        <!-- TODO: Use this in aaa-authn for persistence until migration is complete. Need to migrate existing persistence to this feature -->
+	<feature name='odl-aaa-idmlight-persistence' description='Opendaylight :: AAA :: IdmLight Persistence' 
+	    version='${project.version}'>
+	    <feature version='${project.version}'>odl-aaa-authn</feature>
+	    <bundle>mvn:org.opendaylight.aaa/aaa-idmlight-persistence/${project.version}</bundle>
+	</feature>	
 </features>
