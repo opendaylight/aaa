@@ -56,6 +56,7 @@
         <oauth.version>1.0.0</oauth.version>
         <jta.version>1.1.1</jta.version>
         <oltu.version>1.0.0</oltu.version>
+        <persistence.version>1.0.0-SNAPSHOT</persistence.version>
 
         <!-- Netconf plugin -->
         <netconf.version>0.3.0-SNAPSHOT</netconf.version>

@@ -30,6 +30,8 @@
     <module>aaa-idmlight</module>
     <module>aaa-authz</module>
     <module>aaa-authn-odl-plugin</module>
+    <module>aaa-persistence</module>
+    <module>aaa-idmlight-persistence</module>
     <module>features</module>
     <module>distribution-karaf</module>
   </modules>

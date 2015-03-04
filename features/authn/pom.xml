@@ -150,6 +150,16 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-persistence</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-idmlight-persistence</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn</artifactId>
             <version>${project.version}</version>
             <type>cfg</type>
@@ -209,6 +219,16 @@
             <artifactId>opendaylight-karaf-empty</artifactId>
             <version>${karaf.empty.version}</version>
             <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-persistence</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>${persistence.version}</version>
         </dependency>
     </dependencies>
     <build>
