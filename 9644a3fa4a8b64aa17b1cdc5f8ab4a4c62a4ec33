@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a96c907_fba736a5",
+        "filename": "features/authn/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 3205
+      },
+      "writtenOn": "2015-03-04T01:05:04Z",
+      "side": 1,
+      "message": "This dependency seems to be duplicated.",
+      "range": {
+        "startLine": 224,
+        "startChar": 25,
+        "endLine": 224,
+        "endChar": 37
+      },
+      "revId": "9644a3fa4a8b64aa17b1cdc5f8ab4a4c62a4ec33",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
