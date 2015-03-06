@@ -106,9 +106,9 @@ public class FederationEndpoint extends HttpServlet {
                 .setScope(
                 // Use mapped domain if there is one, else list
                 // all the ones that this user has access to
-                        claim.domain() != null ? claim.domain()
-                                : listToString(ServiceLocator.INSTANCE.is
-                            .listDomains(userId)))
+                    (claim.domain().isEmpty()) ? listToString(ServiceLocator.INSTANCE.is.listDomains(userId))
+                        : claim.domain()
+                )
                 .buildJSONMessage();
         // Cache this token...
         ServiceLocator.INSTANCE.ts.put(token, auth);

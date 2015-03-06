@@ -52,8 +52,8 @@ public class DefaultTokenStoreTest {
 
     @Test
     public void testCache() throws InterruptedException {
-        Authentication auth = new AuthenticationBuilder(new ClaimBuilder().setUser("foo").setUserId("1234").build())
-            .build();
+        Authentication auth = new AuthenticationBuilder(new ClaimBuilder().setUser("foo").setUserId("1234").addRole
+            ("admin").build()).build();
         dts.put(FOO_TOKEN, auth);
         assertEquals(auth, dts.get(FOO_TOKEN));
         dts.delete(FOO_TOKEN);
