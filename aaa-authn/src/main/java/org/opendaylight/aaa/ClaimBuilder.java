@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Hewlett-Packard Development Company, L.P. and others.
+ * Copyright (c) 2014-2015 Hewlett-Packard Development Company, L.P. and others.
  * All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -11,81 +11,94 @@ package org.opendaylight.aaa;
 import static org.opendaylight.aaa.EqualUtil.areEqual;
 import static org.opendaylight.aaa.HashCodeUtil.hash;
 
+import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableSet;
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.opendaylight.aaa.api.Claim;
 
 /**
- * Builder for a {@link Claim}
+ * Builder for a {@link Claim}. The userId, user, and roles information is mandatory.
  *
  * @author liemmn
  *
  */
 public class ClaimBuilder {
-    private final MutableClaim mc = new MutableClaim();
+    private String userId = "";
+    private String user = "";
+    private Set<String> roles = new HashSet<>();
+    private String clientId = "";
+    private String domain = "";
 
     public ClaimBuilder() {
     }
 
     public ClaimBuilder(Claim claim) {
-        setClaim(claim);
-    }
-
-    protected void setClaim(Claim claim) {
-        mc.clientId = claim.clientId();
-        mc.userId = claim.userId();
-        mc.user = claim.user();
-        mc.domain = claim.domain();
-        mc.roles.addAll(claim.roles());
+        clientId = claim.clientId();
+        userId = claim.userId();
+        user = claim.user();
+        domain = claim.domain();
+        roles.addAll(claim.roles());
     }
 
     public ClaimBuilder setClientId(String clientId) {
-        mc.clientId = clientId;
+        this.clientId = Strings.nullToEmpty(clientId).trim();
         return this;
     }
 
     public ClaimBuilder setUserId(String userId) {
-        mc.userId = userId;
+        this.userId = Strings.nullToEmpty(userId).trim();
         return this;
     }
 
     public ClaimBuilder setUser(String userName) {
-        mc.user = userName;
+        user = Strings.nullToEmpty(userName).trim();
         return this;
     }
 
     public ClaimBuilder setDomain(String domain) {
-        mc.domain = domain;
+        this.domain = Strings.nullToEmpty(domain).trim();
         return this;
     }
 
     public ClaimBuilder addRoles(Set<String> roles) {
-        mc.roles.addAll(roles);
+        for (String role : roles) {
+            addRole(role);
+        }
         return this;
     }
 
     public ClaimBuilder addRole(String role) {
-        mc.roles.add(role);
+        roles.add(Strings.nullToEmpty(role).trim());
         return this;
     }
 
     public Claim build() {
-        return mc;
+        return new ImmutableClaim(this);
     }
 
-    // Mutable claim
-    protected static class MutableClaim implements Claim, Serializable {
+    protected static class ImmutableClaim implements Claim, Serializable {
         private static final long serialVersionUID = -8115027645190209129L;
-        int hashCode = 0;
-        String clientId;
-        String userId;
-        String user;
-        String domain;
-        final Set<String> roles = new HashSet<String>();
+        private int hashCode = 0;
+        protected String clientId;
+        protected String userId;
+        protected String user;
+        protected String domain;
+        protected ImmutableSet<String> roles;
 
+        protected ImmutableClaim(ClaimBuilder base) {
+            clientId = base.clientId;
+            userId = base.userId;
+            user = base.user;
+            domain = base.domain;
+            roles = ImmutableSet.<String>builder().addAll(base.roles).build();
+
+            if (userId.isEmpty() || user.isEmpty() || roles.isEmpty() || roles.contains("")) {
+                throw new IllegalStateException("The Claim is missing one or more of the required fields.");
+            }
+        }
         @Override
         public String clientId() {
             return clientId;
@@ -108,7 +121,7 @@ public class ClaimBuilder {
 
         @Override
         public Set<String> roles() {
-            return Collections.unmodifiableSet(roles);
+            return roles;
         }
 
         @Override
@@ -119,8 +132,8 @@ public class ClaimBuilder {
                 return false;
             Claim a = (Claim) o;
             return areEqual(roles, a.roles()) && areEqual(domain, a.domain())
-                    && areEqual(userId, a.userId()) && areEqual(user, a.user())
-                    && areEqual(clientId, a.clientId());
+                && areEqual(userId, a.userId()) && areEqual(user, a.user())
+                && areEqual(clientId, a.clientId());
         }
 
         @Override
@@ -139,22 +152,13 @@ public class ClaimBuilder {
 
         @Override
         public String toString() {
-            StringBuffer sb = new StringBuffer();
-            if (clientId != null) {
-                sb.append("clientId:").append(clientId).append(",");
-            }
-            if (userId != null) {
-                sb.append("userId:").append(userId).append(",");
-            }
-            if (user != null) {
-                sb.append("userName:").append(user).append(",");
-            }
-            if (domain != null) {
-                sb.append("domain:").append(domain).append(",");
-            }
+            StringBuilder sb = new StringBuilder();
+            sb.append("clientId:").append(clientId).append(",");
+            sb.append("userId:").append(userId).append(",");
+            sb.append("userName:").append(user).append(",");
+            sb.append("domain:").append(domain).append(",");
             sb.append("roles:").append(roles);
             return sb.toString();
         }
     }
-
 }
