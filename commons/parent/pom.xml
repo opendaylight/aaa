@@ -63,6 +63,10 @@
         <!-- IdmLight -->
         <sqlite.jdbc.version>3.7.2</sqlite.jdbc.version>
 
+        <!-- Keystone plugin -->
+        <httpclient.version>4.4</httpclient.version>
+        <jackson.version>2.5.1</jackson.version>
+
         <!-- Test -->
         <javax.inject.version>1</javax.inject.version>
         <servlet.tester.version>7.0.0.M2</servlet.tester.version>
@@ -121,6 +125,31 @@
                 <groupId>org.apache.felix</groupId>
                 <artifactId>org.apache.felix.metatype</artifactId>
                 <version>${osgi.metatype.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient-osgi</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore-osgi</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>net.sf.ehcache</groupId>
