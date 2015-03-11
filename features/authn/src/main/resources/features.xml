@@ -61,6 +61,14 @@
 		<configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/${project.version}/cfg/config</configfile>
 	</feature>
 
+    <feature name='odl-aaa-keystone-plugin' description='OpenDayLight :: AAA :: Keytone Plugin'
+             version='${project.version}'>
+        <feature version="${project.version}">odl-aaa-authn</feature>
+        <bundle>mvn:org.apache.httpcomponents/httpcore-osgi/${httpclient.version}</bundle>
+        <bundle>mvn:org.apache.httpcomponents/httpclient-osgi/${httpclient.version}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-keystone/${project.version}</bundle>
+    </feature>
+
 	<feature name='odl-aaa-sssd-plugin' description='OpenDaylight :: AAA :: SSSD Federation Plugin'
 		version='${project.version}'>
 		<feature version='${project.version}'>odl-aaa-authn</feature>
