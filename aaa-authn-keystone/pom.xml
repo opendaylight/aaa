@@ -46,7 +46,33 @@
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.dependencymanager</artifactId>
       <scope>provided</scope>
-    </dependency>    
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient-osgi</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+          <groupId>org.apache.httpcomponents</groupId>
+          <artifactId>httpcore-osgi</artifactId>
+          <scope>provided</scope>
+    </dependency>
+
     <!-- Testing Dependencies -->
     <dependency>
       <groupId>com.sun.jersey.jersey-test-framework</groupId>
