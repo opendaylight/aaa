@@ -64,12 +64,14 @@
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
+      <version>${httpclient.version}</version>
       <artifactId>httpcore-osgi</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient-osgi</artifactId>
+      <version>${httpclient.version}</version>
       <scope>provided</scope>
     </dependency>
 
