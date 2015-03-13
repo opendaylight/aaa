@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a93c517_ca74849e",
+        "filename": "commons/parent/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-03-13T20:21:57Z",
+      "side": 1,
+      "message": "Is this version absolutely required, or could the existing {$jackson.version} 2.3.2 also do?",
+      "revId": "3bd0db8732c9ca181cb8c719bfeef01e9ae3aabe",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a93c517_97e8e97d",
         "filename": "commons/parent/pom.xml",
         "patchSetId": 1
