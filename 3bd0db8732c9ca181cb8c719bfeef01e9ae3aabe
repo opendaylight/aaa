@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_97e8e97d",
+        "filename": "commons/parent/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-03-13T18:20:13Z",
+      "side": 1,
+      "message": "Just wondering: Is it absolutely necessary to define these dependencies both in the parent and also module pom\u0027s? We\u0027re getting into pom bloat...",
+      "revId": "3bd0db8732c9ca181cb8c719bfeef01e9ae3aabe",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_b7ede58d",
+        "filename": "features/authn/src/main/resources/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-03-13T18:20:13Z",
+      "side": 1,
+      "message": "Ah, these empty white spaces at the end of the line will fall foul of the style-check police (they\u0027re out there...). Please remove them.",
+      "revId": "3bd0db8732c9ca181cb8c719bfeef01e9ae3aabe",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
