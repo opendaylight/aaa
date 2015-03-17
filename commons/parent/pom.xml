@@ -23,7 +23,6 @@
         <karaf.empty.version>1.5.0-SNAPSHOT</karaf.empty.version>
 
         <!-- Plugins -->
-        <checkstyle.version>2.12</checkstyle.version>
         <compiler.plugin.version>3.1</compiler.plugin.version>
         <resource.plugin.version>2.6</resource.plugin.version>
         <helper.plugin.version>1.9.1</helper.plugin.version>
