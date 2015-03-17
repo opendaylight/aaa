@@ -10,17 +10,14 @@ package org.opendaylight.aaa.authz.srv;
 
 import org.opendaylight.controller.md.sal.dom.api.DOMDataBroker;
 import org.opendaylight.controller.sal.core.api.Broker;
+import org.opendaylight.controller.sal.core.api.Broker.ConsumerSession;
 import org.opendaylight.controller.sal.core.api.BrokerService;
-import org.opendaylight.yangtools.yang.common.QName;
-import org.opendaylight.yangtools.yang.common.RpcResult;
-import org.opendaylight.yangtools.yang.data.api.CompositeNode;
-
-import java.util.concurrent.Future;
+import org.opendaylight.controller.sal.core.spi.ForwardingConsumerSession;
 
 /**
  * Created by wdec on 28/08/2014.
  */
-public class AuthzConsumerContextImpl implements Broker.ConsumerSession {
+public class AuthzConsumerContextImpl extends ForwardingConsumerSession {
 
   private final Broker.ConsumerSession realSession;
 
@@ -28,15 +25,9 @@ public class AuthzConsumerContextImpl implements Broker.ConsumerSession {
     this.realSession = realSession;
   }
 
-
   @Override
-  public Future<RpcResult<CompositeNode>> rpc(QName qName, CompositeNode compositeNode) {
-    return realSession.rpc(qName, compositeNode);
-  }
-
-  @Override
-  public boolean isClosed() {
-    return realSession.isClosed();
+  protected ConsumerSession delegate() {
+    return realSession;
   }
 
   @Override
@@ -53,8 +44,4 @@ public class AuthzConsumerContextImpl implements Broker.ConsumerSession {
     return t;
   }
 
-  @Override
-  public void close() {
-    realSession.close();
-  }
 }
