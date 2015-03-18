@@ -21,6 +21,16 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-authn-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-credential-store-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- test to validate features.xml -->
         <dependency>
             <groupId>org.opendaylight.yangtools</groupId>
