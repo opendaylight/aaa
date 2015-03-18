@@ -116,7 +116,12 @@
 
         <!--TODO: Add config file -->
 
+    </feature>
 
+    <feature name='odl-aaa-keystone-plugin' description='OpenDaylight :: AAA :: Keystone Plugin'
+             version='${project.version}'>
+        <feature version='${project.version}'>odl-aaa-authn</feature>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-keystone/${project.version}</bundle>
     </feature>
 
 	<feature name='odl-aaa-sssd-plugin' description='OpenDaylight :: AAA :: SSSD Federation Plugin'
