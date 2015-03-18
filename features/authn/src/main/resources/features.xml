@@ -61,11 +61,70 @@
 		<configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/${project.version}/cfg/config</configfile>
 	</feature>
 
+    <feature name='odl-aaa-authn-cluster' description='OpenDaylight :: AAA :: Authentication :: MD-SAL'
+             version='${project.version}'>
+        <!-- REST -->
+        <feature>war</feature>
+        <bundle>mvn:com.sun.jersey/jersey-servlet/1.17</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-core/1.17</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-server/1.17</bundle>
+
+        <!-- OSGi -->
+        <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/3.1.0</bundle>
+        <bundle>mvn:org.apache.felix/org.apache.felix.metatype/1.0.10</bundle>
+
+
+        <!-- OAuth -->
+        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.common/1.0.0</bundle>
+        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.authzserver/1.0.0</bundle>
+        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.resourceserver/1.0.0</bundle>
+        <bundle>mvn:commons-codec/commons-codec/1.8</bundle>
+
+        <!-- AuthN -->
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-api/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/${project.version}</bundle>
+        <!--TODO: Add bundles -->
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/${project.version}</bundle>
+
+        <!-- IDMLight -->
+        <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}</bundle>
+        <bundle>wrap:mvn:org.json/json/20131018</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-json/1.17</bundle>
+        <bundle>mvn:org.codehaus.jackson/jackson-core-asl/1.9.2</bundle>
+        <bundle>mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.2</bundle>
+        <bundle>mvn:org.codehaus.jackson/jackson-jaxrs/1.9.2</bundle>
+        <bundle>mvn:org.codehaus.jackson/jackson-xc/1.9.2</bundle>
+        <bundle>mvn:org.codehaus.jettison/jettison/1.1</bundle>
+        <bundle>wrap:mvn:org.xerial/sqlite-jdbc/3.7.2</bundle>
+
+        <!-- Federation -->
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-federation/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-idpmapping/${project.version}</bundle>
+        <bundle>mvn:org.glassfish/javax.json/1.0.4</bundle>
+
+        <!-- MD-SAL -->
+        <feature version='${yangtools.version}'>odl-yangtools-common</feature>
+        <feature version='${yangtools.version}'>odl-yangtools-binding</feature>
+        <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
+        <feature version='${config.version}'>odl-config-core</feature>
+
+        <!--TODO: Add config file -->
+
+
+    </feature>
+
 	<feature name='odl-aaa-sssd-plugin' description='OpenDaylight :: AAA :: SSSD Federation Plugin'
 		version='${project.version}'>
 		<feature version='${project.version}'>odl-aaa-authn</feature>
 		<bundle>mvn:org.opendaylight.aaa/aaa-authn-sssd/${project.version}</bundle>
 	</feature>
+
+    <feature name='odl-aaa-authn-sssd-cluster' description='OpenDaylight :: AAA :: SSSD Federation'
+             version='${project.version}'>
+        <feature version='${project.version}'>odl-aaa-authn-mdsal</feature>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-sssd/${project.version}</bundle>
+    </feature>
 
 	<feature name='odl-aaa-netconf-plugin' description='OpenDaylight :: AAA :: ODL NETCONF Plugin'
 		version='${project.version}'>
@@ -73,5 +132,12 @@
 		<feature version='${project.version}'>odl-aaa-authn</feature>
 		<bundle>mvn:org.opendaylight.aaa/aaa-authn-odl-plugin/${project.version}</bundle>
 	</feature>
+
+    <feature name='odl-aaa-authn-plugin-cluster' description='OpenDaylight :: AAA :: ODL NETCONF Plugin'
+             version='${project.version}'>
+        <feature version='${netconf.version}'>odl-netconf-api</feature>
+        <feature version='${project.version}'>odl-aaa-authn-mdsal</feature>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-odl-plugin/${project.version}</bundle>
+    </feature>
 
 </features>
