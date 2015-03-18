@@ -113,7 +113,12 @@
 
         <!--TODO: Add config file -->
 
+    </feature>
 
+    <feature name='odl-aaa-keystone-plugin' description='OpenDaylight :: AAA :: Keystone Plugin'
+             version='${project.version}'>
+        <feature version='${project.version}'>odl-aaa-authn</feature>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-keystone/${project.version}</bundle>
     </feature>
 
 	<feature name='odl-aaa-sssd-plugin' description='OpenDaylight :: AAA :: SSSD Federation Plugin'
@@ -138,7 +143,7 @@
     <feature name='odl-aaa-authn-plugin-cluster' description='OpenDaylight :: AAA :: ODL NETCONF Plugin'
              version='${project.version}'>
         <feature version='${netconf.version}'>odl-netconf-api</feature>
-        <feature version='${project.version}'>odl-aaa-authn-mdsal</feature>
+        <feature version='${project.version}'>odl-aaa-authn-cluster</feature>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-odl-plugin/${project.version}</bundle>
     </feature>
 
