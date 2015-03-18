@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Hewlett-Packard Development Company, L.P. and others.
+ * Copyright (c) 2014-2015 Hewlett-Packard Development Company, L.P. and others.
  * All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -24,6 +24,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.opendaylight.aaa.AuthenticationBuilder;
+import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.Authentication;
 import org.osgi.service.cm.ConfigurationException;
 
@@ -51,8 +52,8 @@ public class DefaultTokenStoreTest {
 
     @Test
     public void testCache() throws InterruptedException {
-        Authentication auth = new AuthenticationBuilder().setUser("foo")
-                .setUserId("1234").build();
+        Authentication auth = new AuthenticationBuilder(new ClaimBuilder().setUser("foo").setUserId("1234").build())
+            .build();
         dts.put(FOO_TOKEN, auth);
         assertEquals(auth, dts.get(FOO_TOKEN));
         dts.delete(FOO_TOKEN);

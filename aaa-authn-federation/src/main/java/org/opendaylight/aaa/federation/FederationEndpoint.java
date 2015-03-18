@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Hewlett-Packard Development Company, L.P. and others.
+ * Copyright (c) 2014-2015 Hewlett-Packard Development Company, L.P. and others.
  * All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -28,6 +28,7 @@ import org.apache.oltu.oauth2.as.response.OAuthASResponse;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.OAuthResponse;
 import org.opendaylight.aaa.AuthenticationBuilder;
+import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
@@ -93,8 +94,8 @@ public class FederationEndpoint extends HttpServlet {
         }
 
         // Create an unscoped ODL context from the external claim
-        Authentication auth = new AuthenticationBuilder(claim)
-                .setUserId(userId).setExpiration(tokenExpiration()).build();
+        Authentication auth = new AuthenticationBuilder(new ClaimBuilder(claim).setUserId(userId).build())
+            .setExpiration(tokenExpiration()).build();
 
         // Create OAuth response
         String token = oi.refreshToken();
@@ -107,7 +108,7 @@ public class FederationEndpoint extends HttpServlet {
                 // all the ones that this user has access to
                         claim.domain() != null ? claim.domain()
                                 : listToString(ServiceLocator.INSTANCE.is
-                                        .listDomains(userId)))
+                            .listDomains(userId)))
                 .buildJSONMessage();
         // Cache this token...
         ServiceLocator.INSTANCE.ts.put(token, auth);
