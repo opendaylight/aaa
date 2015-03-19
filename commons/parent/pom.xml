@@ -57,6 +57,8 @@
         <oltu.version>1.0.0</oltu.version>
         <google.guava.version>18.0</google.guava.version>
 
+        <config.authn.store.configfile>08-authn-config.xml</config.authn.store.configfile>
+
         <!-- Netconf plugin -->
         <netconf.version>0.3.0-SNAPSHOT</netconf.version>
 
