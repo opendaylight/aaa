@@ -4,12 +4,12 @@
   <parent>
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>aaa.project</artifactId>
-    <version>0.1.3-Helium-SR3</version>
+    <version>0.1.4-SNAPSHOT</version>
     <relativePath>../</relativePath>
   </parent>
 
   <artifactId>aaa-authn-api</artifactId>
-  <version>0.1.3-Helium-SR3</version>
+  <version>0.1.4-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
   <build>
