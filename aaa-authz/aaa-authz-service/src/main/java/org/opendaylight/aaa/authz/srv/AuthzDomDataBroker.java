@@ -8,10 +8,17 @@
 
 package org.opendaylight.aaa.authz.srv;
 
+import java.util.Map;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.TransactionChainListener;
-import org.opendaylight.controller.md.sal.dom.api.*;
+import org.opendaylight.controller.md.sal.dom.api.DOMDataBroker;
+import org.opendaylight.controller.md.sal.dom.api.DOMDataBrokerExtension;
+import org.opendaylight.controller.md.sal.dom.api.DOMDataChangeListener;
+import org.opendaylight.controller.md.sal.dom.api.DOMDataReadOnlyTransaction;
+import org.opendaylight.controller.md.sal.dom.api.DOMDataReadWriteTransaction;
+import org.opendaylight.controller.md.sal.dom.api.DOMDataWriteTransaction;
+import org.opendaylight.controller.md.sal.dom.api.DOMTransactionChain;
 import org.opendaylight.controller.sal.core.api.Broker;
 import org.opendaylight.controller.sal.core.api.BrokerService;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
@@ -57,6 +64,11 @@ public class AuthzDomDataBroker implements BrokerService, DOMDataBroker {
    // return domDataBroker.newReadOnlyTransaction(); //Return original
     return new AuthzReadOnlyTransaction(ro);
   }
+
+  @Override
+    public Map<Class<? extends DOMDataBrokerExtension>, DOMDataBrokerExtension> getSupportedExtensions() {
+        return domDataBroker.getSupportedExtensions();
+    }
 
   @Override
   public DOMDataReadWriteTransaction newReadWriteTransaction() {
