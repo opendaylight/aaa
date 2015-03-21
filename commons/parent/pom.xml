@@ -63,6 +63,9 @@
         <!-- IdmLight -->
         <sqlite.jdbc.version>3.7.2</sqlite.jdbc.version>
 
+        <!-- Keystone plugin -->
+        <httpclient.version>4.4</httpclient.version>
+
         <!-- Test -->
         <javax.inject.version>1</javax.inject.version>
         <servlet.tester.version>7.0.0.M2</servlet.tester.version>
