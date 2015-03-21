@@ -15,6 +15,7 @@
     <repository>mvn:org.opendaylight.yangtools/features-yangtools/${yangtools.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.aaa/features-aaa/${project.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-mdsal/${mdsal.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.controller/features-netconf/${netconf.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-restconf/${mdsal.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-config/${config.version}/xml/features</repository>
 
@@ -31,6 +32,7 @@
        <!--  <feature version='${mdsal.version}'>odl-mdsal-common</feature> -->
         <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
         <feature version='${config.version}'>odl-config-core</feature>
+        <feature version='${netconf.version}'>odl-netconf-all</feature>
         <feature version='${restconf.version}'>odl-restconf</feature>
         <bundle>mvn:org.opendaylight.aaa/aaa-authz-model/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authz-service/${project.version}</bundle>
