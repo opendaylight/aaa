@@ -90,10 +90,10 @@ public class IdpJson {
         return parser.getString();
       }
       case VALUE_TRUE: {
-        return new Boolean(true);
+        return Boolean.TRUE;
       }
       case VALUE_FALSE: {
-        return new Boolean(false);
+        return Boolean.FALSE;
       }
       default: {
         JsonLocation location = parser.getLocation();
