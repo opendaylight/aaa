@@ -81,19 +81,19 @@ public class IdpJson {
       }
       case VALUE_NUMBER: {
         if (parser.isIntegralNumber()) {
-          return new Long(parser.getLong());
+          return parser.getLong();
         } else {
-          return new Double(parser.getBigDecimal().doubleValue());
+          return parser.getBigDecimal().doubleValue();
         }
       }
       case VALUE_STRING: {
         return parser.getString();
       }
       case VALUE_TRUE: {
-        return new Boolean(true);
+        return Boolean.TRUE;
       }
       case VALUE_FALSE: {
-        return new Boolean(false);
+        return Boolean.FALSE;
       }
       default: {
         JsonLocation location = parser.getLocation();

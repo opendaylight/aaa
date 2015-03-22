@@ -476,8 +476,8 @@ public class RuleProcessor {
     for (int ruleNumber = 0; ruleNumber < this.rules.size(); ruleNumber++) {
       Map<String, Object> namespace = new HashMap<String, Object>();
       Map<String, Object> rule = (Map<String, Object>) this.rules.get(ruleNumber);
-      namespace.put(RULE_NUMBER, new Long(ruleNumber));
-      namespace.put(RULE_NAME, new String(""));
+      namespace.put(RULE_NUMBER, Long.valueOf(ruleNumber));
+      namespace.put(RULE_NAME, "");
       namespace.put(ASSERTION, deepCopy(assertion));
 
       result = processRule(namespace, rule);
@@ -517,7 +517,7 @@ public class RuleProcessor {
     }
     for (int blockNumber = 0; blockNumber < statementBlocks.size(); blockNumber++) {
       List<List<Object>> block = (List<List<Object>>) statementBlocks.get(blockNumber);
-      namespace.put(BLOCK_NUMBER, new Long(blockNumber));
+      namespace.put(BLOCK_NUMBER, Long.valueOf(blockNumber));
       namespace.put(BLOCK_NAME, "");
 
       result = processBlock(namespace, block);
@@ -543,7 +543,7 @@ public class RuleProcessor {
 
     for (int statementNumber = 0; statementNumber < block.size(); statementNumber++) {
       List<Object> statement = (List<Object>) block.get(statementNumber);
-      namespace.put(STATEMENT_NUMBER, new Long(statementNumber));
+      namespace.put(STATEMENT_NUMBER, Long.valueOf(statementNumber));
 
       try {
         result = processStatement(namespace, statement);
@@ -668,7 +668,7 @@ public class RuleProcessor {
         throw new IllegalStateException(String.format("unexpected token type: %s", parameter.type));
     }
 
-    variable.set(new Long(length));
+    variable.set(length);
     this.success = true;
 
     if (logger.isDebugEnabled()) {
