@@ -16,6 +16,24 @@
       "revId": "43b49e91cb6be9a14ece467e3396093d9e7e5bf7",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_43de0813",
+        "filename": "aaa-credential-store-api/src/main/yang/credential-model.yang",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2527
+      },
+      "writtenOn": "2015-03-23T16:18:38Z",
+      "side": 1,
+      "message": "Not in the AAA project, no. This model is only the base definition of a generic store, specific credential types are defined by the appropriate project (e.g. snmp, netconf, etc).",
+      "parentUuid": "5a93c517_d5541256",
+      "revId": "43b49e91cb6be9a14ece467e3396093d9e7e5bf7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
