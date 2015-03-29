@@ -14,7 +14,7 @@ import static org.opendaylight.aaa.HashCodeUtil.hash;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.opendaylight.aaa.api.Claim;
@@ -28,7 +28,7 @@ import org.opendaylight.aaa.api.Claim;
 public class ClaimBuilder {
     private String userId = "";
     private String user = "";
-    private Set<String> roles = new HashSet<>();
+    private Set<String> roles = new LinkedHashSet<>();
     private String clientId = "";
     private String domain = "";
 

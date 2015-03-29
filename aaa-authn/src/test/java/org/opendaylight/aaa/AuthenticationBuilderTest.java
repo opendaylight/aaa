@@ -13,14 +13,14 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import org.junit.Test;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.Claim;
 
 public class AuthenticationBuilderTest {
-    private Set<String> roles = new HashSet<>(Arrays.asList("role1", "role2"));
+    private Set<String> roles = new LinkedHashSet<>(Arrays.asList("role1", "role2"));
     private Claim validClaim = new ClaimBuilder().setDomain("aName").setUserId("1").setClientId("2222")
         .setUser("bob").addRole("foo").addRoles(roles).build();
 
@@ -69,7 +69,7 @@ public class AuthenticationBuilderTest {
     @Test
     public void testToString() {
         Authentication a1 = new AuthenticationBuilder(validClaim).setExpiration(1).build();
-        assertEquals("expiration:1,clientId:2222,userId:1,userName:bob,domain:aName,roles:[foo, role2, role1]",
+        assertEquals("expiration:1,clientId:2222,userId:1,userName:bob,domain:aName,roles:[foo, role1, role2]",
             a1.toString());
     }
 
