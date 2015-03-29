@@ -21,7 +21,7 @@ public interface ClaimAuth {
     /**
      * Transform a map of opaque in-bound claims into a {@link Claim} object. An
      * example of an opaque claim map entry is
-     * <code>"USER_NAME" -> "joe".</code>
+     * <code>"USER_NAME" -&gt; "joe".</code>
      * <p>
      * If there is no applicable claim information for the current
      * implementation, this method should return a <code>null</code>.

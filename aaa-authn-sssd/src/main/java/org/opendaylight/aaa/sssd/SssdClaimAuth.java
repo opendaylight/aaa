@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 /**
  * An SSSD {@link ClaimAuth} implementation.
  *
- * @author John Dennis <jdennis@redhat.com>
+ * @author John Dennis &lt;jdennis@redhat.com&gt;
  */
 public class SssdClaimAuth implements ClaimAuth {
     private static final Logger logger = LoggerFactory
@@ -93,12 +93,12 @@ public class SssdClaimAuth implements ClaimAuth {
      * <dl>
      *   <dt>ClientId</dt>
      *   <dd>A string.
-     *        @see org.opendaylight.aaa.api.Claim#clientID()
+     *        @see org.opendaylight.aaa.api.Claim#clientId()
      *   </dd>
      *
      *   <dt>UserId</dt>
      *   <dd> A string.
-     *        @see org.opendaylight.aaa.api.Claim#userID()
+     *        @see org.opendaylight.aaa.api.Claim#userId()
      *   </dd>
      *
      *   <dt>User</dt>
@@ -195,13 +195,14 @@ public class SssdClaimAuth implements ClaimAuth {
      *   <li>Double</li>
      *   <li>Boolean</li>
      *   <li>null</li>
-     * <ul>
+     * </ul>
+     *
+     * See also {@link ClaimAuth}.
      *
      * @param claim The Map containing assertion claims to be converted
      *              into a JSON assertion document.
      * @return A string formatted as a JSON object.
      * @throws InvalidValueException If value in the claim is unsupported.
-     * @see {@link ClaimAuth}
      */
 
     public String claimToJson(Map<String, Object> claim) {

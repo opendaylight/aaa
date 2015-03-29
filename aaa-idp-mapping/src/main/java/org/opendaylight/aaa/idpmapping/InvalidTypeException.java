@@ -12,7 +12,7 @@ package org.opendaylight.aaa.idpmapping;
  * Exception thrown when the type of a value is incorrect for a given
  * context.
  *
- * @author John Dennis <jdennis@redhat.com>
+ * @author John Dennis &lt;jdennis@redhat.com&gt;
  */
 
 public class InvalidTypeException extends RuntimeException {

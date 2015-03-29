@@ -41,7 +41,7 @@ enum ProcessResult {
  * Identity Provider (IdP) mapping those assertion values to local
  * values.
  *
- * @author John Dennis <jdennis@redhat.com>
+ * @author John Dennis &lt;jdennis@redhat.com&gt;
  */
 
 public class RuleProcessor {

@@ -11,7 +11,7 @@ package org.opendaylight.aaa.idpmapping;
 /**
  * Exception thrown when a mapping rule is improperly defined.
  *
- * @author John Dennis <jdennis@redhat.com>
+ * @author John Dennis &lt;jdennis@redhat.com&gt;
  */
 
 public class InvalidRuleException extends RuntimeException {

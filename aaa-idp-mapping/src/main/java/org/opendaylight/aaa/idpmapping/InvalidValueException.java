@@ -11,7 +11,7 @@ package org.opendaylight.aaa.idpmapping;
 /**
  * Exception thrown when a value cannot be used in a given context.
  *
- * @author John Dennis <jdennis@redhat.com>
+ * @author John Dennis &lt;jdennis@redhat.com&gt;
  */
 
 public class InvalidValueException extends RuntimeException {

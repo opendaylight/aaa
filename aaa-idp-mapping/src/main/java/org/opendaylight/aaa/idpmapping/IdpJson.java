@@ -35,7 +35,7 @@ import javax.json.stream.JsonParser.Event;
  * Converts between JSON and the internal data structures used in the
  * RuleProcessor.
  *
- * @author John Dennis <jdennis@redhat.com>
+ * @author John Dennis &lt;jdennis@redhat.com&gt;
  */
 
 public class IdpJson {

@@ -11,7 +11,7 @@ package org.opendaylight.aaa.idpmapping;
 /**
  * Exception thrown when a statement references an undefined value.
  *
- * @author John Dennis <jdennis@redhat.com>
+ * @author John Dennis &lt;jdennis@redhat.com&gt;
  */
 
 public class UndefinedValueException extends RuntimeException {
