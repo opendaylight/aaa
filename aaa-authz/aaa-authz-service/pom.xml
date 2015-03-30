@@ -21,17 +21,14 @@
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
             <artifactId>sal-binding-util</artifactId>
-            <version>${mdsal.version}</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
             <artifactId>sal-common-util</artifactId>
-            <version>${mdsal.version}</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.yangtools</groupId>
             <artifactId>yang-data-api</artifactId>
-            <version>${yangtools.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
@@ -40,17 +37,14 @@
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
             <artifactId>sal-binding-api</artifactId>
-            <version>${mdsal.version}</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
             <artifactId>config-api</artifactId>
-            <version>${config.version}</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
             <artifactId>sal-binding-config</artifactId>
-            <version>${mdsal.version}</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
@@ -65,12 +59,10 @@
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
             <artifactId>sal-core-api</artifactId>
-            <version>${mdsal.version}</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
             <artifactId>sal-core-spi</artifactId>
-            <version>${mdsal.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
