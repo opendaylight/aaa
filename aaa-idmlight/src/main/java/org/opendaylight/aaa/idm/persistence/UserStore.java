@@ -29,7 +29,7 @@ import org.opendaylight.aaa.idm.model.User;
 import org.opendaylight.aaa.idm.model.Users;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sqlite.JDBC;
+import org.h2.Driver;
 
 public class UserStore {
    private static Logger logger = LoggerFactory.getLogger(UserStore.class);
@@ -45,7 +45,7 @@ public class UserStore {
    protected Connection getDBConnect() throws StoreException {
       if ( dbConnection==null ) {
          try {
-            JDBC jdbc = new JDBC();
+            Driver jdbc = new org.h2.Driver();
 	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
             return dbConnection;
          }
@@ -57,7 +57,7 @@ public class UserStore {
          try {
             if ( dbConnection.isClosed()) {
                try {
-                  JDBC jdbc = new JDBC();
+                    Driver jdbc = new org.h2.Driver();
 		  dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
 		  return dbConnection;
                }
@@ -85,7 +85,8 @@ public class UserStore {
       }
       try {
          DatabaseMetaData dbm = conn.getMetaData();
-         ResultSet rs = dbm.getTables(null, null, "users", null);
+         String[] tableTypes = {"TABLE"};
+         ResultSet rs = dbm.getTables(null, null, "USERS", tableTypes);
          if (rs.next()) {
             debug("users Table already exists");
          }
@@ -95,7 +96,7 @@ public class UserStore {
             Statement stmt = null;
             stmt = conn.createStatement();
             String sql = "CREATE TABLE users " +
-                         "(userid    INTEGER PRIMARY KEY AUTOINCREMENT," +
+                         "(userid    INTEGER PRIMARY KEY AUTO_INCREMENT," +
                          "name       VARCHAR(128)      NOT NULL, " +
                          "email      VARCHAR(128)      NOT NULL, " +
                          "password   VARCHAR(128)      NOT NULL, " +
