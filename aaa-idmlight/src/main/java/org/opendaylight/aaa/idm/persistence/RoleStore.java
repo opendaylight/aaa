@@ -29,7 +29,7 @@ import org.opendaylight.aaa.idm.model.Role;
 import org.opendaylight.aaa.idm.model.Roles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sqlite.JDBC;
+import org.h2.Driver;
 
 public class RoleStore {
    private static Logger logger = LoggerFactory.getLogger(RoleStore.class);
@@ -43,7 +43,7 @@ public class RoleStore {
       if ( dbConnection==null ) {
          try {
 	    //Class.forName (IdmLightApplication.config.dbDriver).newInstance ();
-            JDBC jdbc = new JDBC();
+             Driver jdbc = new org.h2.Driver();
 	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
             return dbConnection;
          }
@@ -56,7 +56,7 @@ public class RoleStore {
             if ( dbConnection.isClosed()) {
                try {
 		  //Class.forName (IdmLightApplication.config.dbDriver).newInstance ();
-                  JDBC jdbc = new JDBC();
+            Driver jdbc = new org.h2.Driver();
 		  dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
 		  return dbConnection;
                }
@@ -84,7 +84,8 @@ public class RoleStore {
       }
       try {
          DatabaseMetaData dbm = conn.getMetaData();
-         ResultSet rs = dbm.getTables(null, null, "roles", null);
+         String[] tableTypes = {"TABLE"};
+         ResultSet rs = dbm.getTables(null, null, "ROLES", tableTypes);
          if (rs.next()) {
             debug("roles Table already exists");
          }
@@ -93,8 +94,8 @@ public class RoleStore {
             logger.info("roles Table does not exist, creating table");
             Statement stmt = null;
             stmt = conn.createStatement();
-            String sql = "CREATE TABLE roles " +
-                         "(roleid    INTEGER PRIMARY KEY AUTOINCREMENT," +
+            String sql = "CREATE TABLE ROLES " +
+                         "(roleid    INTEGER PRIMARY KEY AUTO_INCREMENT," +
                          "name        VARCHAR(128)      NOT NULL, " +
                          "description VARCHAR(128)      NOT NULL)";
            stmt.executeUpdate(sql);
