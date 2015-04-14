@@ -29,7 +29,7 @@ import org.opendaylight.aaa.idm.model.Domain;
 import org.opendaylight.aaa.idm.model.Domains;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sqlite.JDBC;
+import org.h2.Driver;
 
 public class DomainStore {
    private static Logger logger = LoggerFactory.getLogger(DomainStore.class);
@@ -43,8 +43,9 @@ public class DomainStore {
    protected Connection getDBConnect() throws StoreException {
       if ( dbConnection==null ) {
          try {
-            JDBC jdbc = new JDBC();
-	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
+        	debug("dbConnection null, initializing connection"); 
+            Driver jdbc = new org.h2.Driver();
+            dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
             return dbConnection;
          }
          catch (Exception e) {
@@ -55,7 +56,8 @@ public class DomainStore {
          try {
             if ( dbConnection.isClosed()) {
                try {
-                  JDBC jdbc = new JDBC();
+            	   debug("dbConnection is closed, initializing connection");
+                   Driver jdbc = new org.h2.Driver();
 		  dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
 		  return dbConnection;
                }
@@ -83,17 +85,18 @@ public class DomainStore {
       }
       try {
          DatabaseMetaData dbm = conn.getMetaData();
-         ResultSet rs = dbm.getTables(null, null, "domains", null);
+         String[] tableTypes = {"TABLE"};
+         ResultSet rs = dbm.getTables(null, null, "DOMAINS", tableTypes);//Caps required in get Tables
          if (rs.next()) {
-            debug("domains Table already exists");
+            debug("DOMAINS Table already exists.");
          }
          else
          {
-            logger.info("domains Table does not exist, creating table");
+            logger.info("in dbConnect, domains Table does not exist, creating table");
             Statement stmt = null;
             stmt = conn.createStatement();
-            String sql = "CREATE TABLE domains " +
-                         "(domainid    INTEGER PRIMARY KEY AUTOINCREMENT," +
+            String sql = "CREATE TABLE DOMAINS "  +
+                         "(domainid    INTEGER PRIMARY KEY AUTO_INCREMENT," +
                          "name        VARCHAR(128)      NOT NULL, " +
                          "description VARCHAR(128)      NOT NULL, " +
                          "enabled     INTEGER           NOT NULL)" ;
@@ -145,7 +148,7 @@ protected void finalize ()  {
       List<Domain> domainList = new ArrayList<Domain>();
       Connection conn = dbConnect();
       Statement stmt=null;
-      String query = "SELECT * FROM domains";
+      String query = "SELECT * FROM DOMAINS";
       try {
          stmt=conn.createStatement();
          ResultSet rs=stmt.executeQuery(query);
@@ -171,7 +174,7 @@ protected void finalize ()  {
       List<Domain> domainList = new ArrayList<Domain>();
       Connection conn = dbConnect();
       Statement stmt=null;
-      String query = "SELECT * FROM domains WHERE name=\"" + domainName + "\"";
+      String query = "SELECT * FROM DOMAINS WHERE name=\'" + domainName + "\'";
       debug("query string: " + query);
       try {
          stmt=conn.createStatement();
@@ -196,7 +199,7 @@ protected void finalize ()  {
    public Domain getDomain(long id) throws StoreException {
       Connection conn = dbConnect();
       Statement stmt=null;
-      String query = "SELECT * FROM domains WHERE domainid=" + id;
+      String query = "SELECT * FROM DOMAINS WHERE domainid=" + id;
       try {
          stmt=conn.createStatement();
          ResultSet rs=stmt.executeQuery(query);
@@ -224,7 +227,7 @@ protected void finalize ()  {
        int key=0;
        Connection conn = dbConnect();
        try {
-          String query = "insert into domains (name,description,enabled) values(?, ?, ?)";
+          String query = "insert into DOMAINS (name,description,enabled) values(?, ?, ?)";
           PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
           statement.setString(1,domain.getName());
           statement.setString(2,domain.getDescription());
@@ -268,7 +271,7 @@ protected void finalize ()  {
 
       Connection conn = dbConnect();
       try {
-         String query = "UPDATE domains SET name = ?, description = ?, enabled = ? WHERE domainid = ?";
+         String query = "UPDATE DOMAINS SET name = ?, description = ?, enabled = ? WHERE domainid = ?";
          PreparedStatement statement = conn.prepareStatement(query);
          statement.setString(1, savedDomain.getName());
          statement.setString(2, savedDomain.getDescription());
@@ -294,7 +297,7 @@ protected void finalize ()  {
 
       Connection conn = dbConnect();
       Statement stmt=null;
-      String query = "DELETE FROM domains WHERE domainid=" + domain.getDomainid();
+      String query = "DELETE FROM DOMAINS WHERE domainid=" + domain.getDomainid();
       try {
          stmt=conn.createStatement();
          int deleteCount = stmt.executeUpdate(query);
