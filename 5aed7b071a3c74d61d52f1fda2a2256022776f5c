@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_03c4ad90",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/persistence/DomainStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-04-15T14:26:01Z",
+      "side": 1,
+      "message": "And a whitespace here that needs to be removed.",
+      "revId": "5aed7b071a3c74d61d52f1fda2a2256022776f5c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_63f811e6",
+        "filename": "commons/parent/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-04-15T14:26:01Z",
+      "side": 1,
+      "message": "Yikes: Tab after space checkstyle error... Please correct coz the checkstyle police won\u0027t forgive...",
+      "revId": "5aed7b071a3c74d61d52f1fda2a2256022776f5c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
