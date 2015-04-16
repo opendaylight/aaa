@@ -72,6 +72,11 @@ module aaa-authn-mdsal-store-cfg {
               default 10;
             }
 
+            leaf password {
+            description "Encryption password for the Store";
+              type string;
+            }
+
             }
         }
 
