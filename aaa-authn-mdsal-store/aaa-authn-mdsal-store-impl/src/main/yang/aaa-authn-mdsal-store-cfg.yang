@@ -72,6 +72,11 @@ module aaa-authn-mdsal-store-cfg {
               default 10;
             }
 
+            leaf cryptoKey {
+            description "Encryption key for the Store";
+              type string;
+            }
+
             }
         }
 
