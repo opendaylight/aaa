@@ -92,7 +92,8 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-api/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/${project.version}</bundle>
-        <!--TODO: Add bundles -->
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-api/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-store-impl/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/${project.version}</bundle>
 
         <!-- IDMLight -->
@@ -117,7 +118,7 @@
         <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
         <feature version='${config.version}'>odl-config-core</feature>
 
-        <!--TODO: Add config file -->
+        <configfile finalname="${config.configfile.directory}/${config.authn.store.configfile}">mvn:org.opendaylight.aaa/aaa-authn-mdsal-config/${project.version}/xml/config</configfile>
 
 
     </feature>
