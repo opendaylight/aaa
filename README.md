@@ -6,6 +6,11 @@ This project is aimed at providing a flexible, pluggable framework with out-of-t
 * *Authorization*:  Means to authorize human or machine user access to resources including RPCs, notification subscriptions, and subsets of the datatree.
 * *Accounting*:  Means to record and access the records of human or machine user access to resources including RPCs, notifications, and subsets of the datatree
 
+## Caveats
+The following caveats are applicable to the current AAA implementation:
+ - The database (H2) used by ODL AAA Authentication store is not-cluster enabled. When deployed in a clustered environment each node needs to have its AAA
+ user file synchronised using out of band means.
+
 ## Quick Start
 
 ### Building
@@ -35,9 +40,9 @@ Install AAA repository from the Karaf shell:
 
 	repo-add mvn:org.opendaylight.aaa/features-aaa/0.1.0-SNAPSHOT/xml/features
 
-Install all AAA features:
+Install AAA AuthN features:
 
-	feature:install odl-aaa-all
+	feature:install odl-aaa-authn
 
 ### Protecting your REST/RestConf resources
 
@@ -77,6 +82,15 @@ Upon successful authentication, the controller returns an access token with a co
 The access token can then be used to access protected resources on the controller by passing it along in the standard HTTP Authorization header with the resource request.  Example:
 
     curl -s -H 'Authorization: Bearer d772d85e-34c7-3099-bea5-cfafd3c747cb' http://<controller>:<port>/restconf/operational/opendaylight-inventory:nodes
+
+The operational state of access tokens cached in the MD-SAL can also be obtained after enabling the restconf feature:
+
+    feature:install odl-aaa-all
+
+At the following URL
+
+    http://controller:8181/restconf/operational/aaa-authn-model:tokencache/
+
 
 ## Framework Overview
 
@@ -119,47 +133,18 @@ In this case, we use the IdP token directly as an access token to access protect
 Authorization is implemented via the aaa-authz modules, comprising of a yang based AuthZ policy schema, an MD-SAL AuthZ capable broker, an AuthZ
 service engine invoked by the broker and executing policies.
 
-NOTE: The Helium release features a trail of Authz functionality, in particular longest string matching is not implemented.
+NOTE: The Lithium release features a trail of Authz functionality, in particular longest string matching is not implemented.
 
 Initially the AuthZ functionality is only able to handle RestConf requests, and to do so the Restconf connector configuration must
  be explicitly modified as follows:
 
-    0. Compile as per the above instructions
-    
-    1. If you have already run ODL with Restconf or the mdsal-all feature package under karaf, then proceed as per 1b, otherwise skip to step 2.
- 
-      1a.  consider deleting the assembly/data directory in your karaf install. This will require the re-activation of features at karaf startup.
- 
-    2. Start karaf and install the odl-aaa-all feature as per the previous instructions
- 
+    0. Compile or obtain the ODL distribution
+    1. Start karaf and install the odl-aaa-authz feature
+
     Note: At this stage, with a default configuration, there is no MD-SAL data to test against. To test you can install the toaster service using feature:install odl-toaster
- 
- 
-To uninstall authz:
 
-    1. Unistall the feature via "feature:uninstall feature:odl-aaa-authz"
-    2. Delete the 09-rest-connector.xml configuration file in <your karaf distribution directory>/etc/opendaylight/karaf/.
-    3. Reinstall resctonf via the command "feature:install odl-resctonf"
- 
-Legacy instructions for activating Authz in non karaf based ODL runtimes:
-
-    0. Build aaa project and copy all generated aaa jars to the plugins directory of your odl target install
-    1. Locate and open in an editor the default 10-rest-connector.xml configuration file. Default location is at 'configuration/initial'
-    2. Change the <dom-broker> configuration element
-      FROM:
-                    <dom-broker>
-                         <type xmlns:dom="urn:opendaylight:params:xml:ns:yang:controller:md:sal:dom">dom:dom-broker-osgi-registry</type>
-                         <name>dom-broker</name>
-                     </dom-broker>
-      TO:
-                    <dom-broker>
-                         <type xmlns:dom="urn:opendaylight:params:xml:ns:yang:controller:md:sal:dom">dom:dom-broker-osgi-registry</type>
-                         <name>authz-connector-default</name>
-                     </dom-broker>
-    3. Restart ODL
-
-Default authorization are loaded from the configuration subsystem (TODO: Provide a default set)
-They are accessible and editable via the restconf interface at: 
+Default authorization policies are loaded from the configuration subsystem (TODO: Provide a default set)
+They are accessible and editable via the restconf interface at:
 
     http://<odl address>/restconf/configuration/authorization-schema:simple-authorization/
 
@@ -182,7 +167,7 @@ Some examples of resources are:
       Wildcarded RPC: /operations/example-ops:*
   
       Notification: /notifications/example-ops:startup
-  
+
 
 *More on MD-SAL authorization later...*
 
