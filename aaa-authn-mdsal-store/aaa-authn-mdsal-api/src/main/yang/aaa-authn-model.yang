@@ -1,6 +1,6 @@
 module aaa-authn-model {
-	yang-version 1;
-	namespace "urn:aaa:yang:authn:claims";
+  yang-version 1;
+  namespace "urn:aaa:yang:authn:claims";
   prefix "authn";
     organization "TBD";
 
@@ -46,7 +46,7 @@ module aaa-authn-model {
       }
     }
   }
-  
+
   container token_cache_times {
 
     list token_list {

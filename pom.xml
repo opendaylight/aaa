@@ -28,6 +28,7 @@
     <module>aaa-authn-keystone</module>
     <module>aaa-authn-basic</module>
     <module>aaa-idmlight</module>
+    <module>aaa-authn-mdsal-store</module>
     <module>aaa-authz</module>
     <module>aaa-authn-odl-plugin</module>
     <module>aaa-credential-store-api</module>
