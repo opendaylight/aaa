@@ -30,7 +30,7 @@ public class IdmLightConfig {
    public boolean load() {
       dbName = "idmlight.db";
       //TODO make configurable
-      dbPath = "jdbc:h2:/opt/h2/" + dbName;
+      dbPath = "jdbc:h2:" + dbName;
       dbDriver = "org.h2.Driver";
       dbUser = "foo";
       dbPwd = "bar";
