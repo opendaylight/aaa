@@ -1,0 +1,350 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_c931f40c",
+        "filename": "README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "remove these spaces",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_a9402857",
+        "filename": "README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "remove these spaces",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_29f9784d",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-api/src/main/yang/aaa-authn-model.yang",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "Please remove the space here.",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_c99574e5",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-config/src/main/resources/initial/08-authn-config.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "please remove this space",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_e99ab013",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/AuthNStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "align this at the same indentation as the rest",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_498964c9",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/AuthNStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "remove these spaces",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_09935cfb",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/AuthNStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "remove these spaces",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_299098eb",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/AuthNStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "remove these spaces",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_e9c150e5",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/AuthNStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "remove these spaces",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_09aa7c19",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/AuthNStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "remove these spaces",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_e96870f7",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/AuthNStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "remove these spaces",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_497724d5",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/AuthNStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "remove these spaces",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_697460cf",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/AuthNStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "remove these spaces",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_09811c8f",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/AuthNStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "remove these spaces",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_297e58af",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/AuthNStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "remove these spaces",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_89444c75",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/util/AuthNStoreUtil.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "remove these spaces",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_a949088d",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/util/AuthNStoreUtil.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "remove these spaces",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_495e4447",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/yang/aaa-authn-mdsal-store-cfg.yang",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "remove these spaces",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_09583c55",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/yang/aaa-authn-mdsal-store-cfg.yang",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "should be indented",
+      "range": {
+        "startLine": 70,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 13
+      },
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_9f81da4c",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-04-21T20:33:05Z",
+      "side": 1,
+      "message": "idnentation is off",
+      "revId": "f5687dd048a938b03738d274e89d9dee16488c09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
