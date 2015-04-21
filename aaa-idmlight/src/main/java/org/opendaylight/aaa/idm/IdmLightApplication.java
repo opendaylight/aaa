@@ -34,7 +34,7 @@ public class IdmLightApplication extends Application {
 
     public IdmLightApplication() {
         logger.info("starting idmlight .... ");
-        config = new IdmLightConfig();
+        config = IdmLightConfig.getInstance();
         if (!config.load()) {
             logger.error("unable to load idmlight config ");
         }
