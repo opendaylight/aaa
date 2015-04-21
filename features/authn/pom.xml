@@ -110,7 +110,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-	</dependency>
+        </dependency>
         <!-- SQLite Commented before removal 
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
