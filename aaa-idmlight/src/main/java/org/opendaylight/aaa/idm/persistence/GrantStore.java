@@ -150,17 +150,18 @@ protected void finalize ()  {
       Grants grants = new Grants();
       List<Grant> grantList = new ArrayList<Grant>();
       Connection conn = dbConnect();
-      Statement stmt=null;
-      String query = "SELECT * FROM grants WHERE domainid=" + did + " AND userid="+uid;
+      String query = "SELECT * FROM grants WHERE domainid= ? AND userid= ?";
       try {
-         stmt=conn.createStatement();
-         ResultSet rs=stmt.executeQuery(query);
+         PreparedStatement pstmt = conn.prepareStatement(query);
+         pstmt.setLong(1, did);
+         pstmt.setLong(2, uid);
+         ResultSet rs=pstmt.executeQuery();
          while (rs.next()) {
             Grant grant = rsToGrant(rs);
             grantList.add(grant);
          }
          rs.close();
-         stmt.close();
+         pstmt.close();
          dbClose();
       }
       catch (SQLException s) {
@@ -175,17 +176,17 @@ protected void finalize ()  {
       Grants grants = new Grants();
       List<Grant> grantList = new ArrayList<Grant>();
       Connection conn = dbConnect();
-      Statement stmt=null;
-      String query = "SELECT * FROM grants WHERE userid="+uid;
+      String query = "SELECT * FROM grants WHERE userid= ?";
       try {
-         stmt=conn.createStatement();
-         ResultSet rs=stmt.executeQuery(query);
+         PreparedStatement pstmt = conn.prepareStatement(query);
+         pstmt.setLong(1, uid);
+         ResultSet rs=pstmt.executeQuery();
          while (rs.next()) {
             Grant grant = rsToGrant(rs);
             grantList.add(grant);
          }
          rs.close();
-         stmt.close();
+         pstmt.close();
          dbClose();
       }
       catch (SQLException s) {
@@ -199,21 +200,22 @@ protected void finalize ()  {
 
    public Grant  getGrant(long id) throws StoreException {
       Connection conn = dbConnect();
-      Statement stmt=null;
-      String query = "SELECT * FROM grants WHERE grantid=" + id;
+
+      String query = "SELECT * FROM grants WHERE grantid= ?";
       try {
-         stmt=conn.createStatement();
-         ResultSet rs=stmt.executeQuery(query);
+         PreparedStatement pstmt = conn.prepareStatement(query);
+         pstmt.setLong(1, id);
+         ResultSet rs=pstmt.executeQuery();
          if (rs.next()) {
             Grant grant = rsToGrant(rs);
             rs.close();
-            stmt.close();
+            pstmt.close();
             dbClose();
             return grant;
          }
          else {
             rs.close();
-            stmt.close();
+            pstmt.close();
             dbClose();
             return null;
          }
@@ -226,21 +228,23 @@ protected void finalize ()  {
 
    public Grant getGrant(long did,long uid,long rid) throws StoreException {
       Connection conn = dbConnect();
-      Statement stmt=null;
-      String query = "SELECT * FROM grants WHERE domainid=" + did + " AND userid=" + uid + " AND roleid="+rid;
+      String query = "SELECT * FROM grants WHERE domainid= ? AND userid= ? AND roleid= ?";
       try {
-         stmt=conn.createStatement();
-         ResultSet rs=stmt.executeQuery(query);
+         PreparedStatement pstmt = conn.prepareStatement(query);
+         pstmt.setLong(1,did);
+         pstmt.setLong(2,uid);
+         pstmt.setLong(3,rid);
+         ResultSet rs=pstmt.executeQuery();
          if (rs.next()) {
             Grant grant = rsToGrant(rs);
             rs.close();
-            stmt.close();
+            pstmt.close();
             dbClose();
             return grant;
          }
          else {
             rs.close();
-            stmt.close();
+            pstmt.close();
             dbClose();
             return null;
          }
@@ -290,13 +294,13 @@ protected void finalize ()  {
       }
 
       Connection conn = dbConnect();
-      Statement stmt=null;
-      String query = "DELETE FROM grants WHERE grantid=" + grant.getGrantid();
+      String query = "DELETE FROM grants WHERE grantid= ?";
       try {
-         stmt=conn.createStatement();
-         int deleteCount = stmt.executeUpdate(query);
+         PreparedStatement pstmt = conn.prepareStatement(query);
+         pstmt.setInt(1, grant.getGrantid());
+         int deleteCount = pstmt.executeUpdate();
          debug("deleted " + deleteCount + " records");
-         stmt.close();
+         pstmt.close();
          dbClose();
          return savedGrant;
       }
