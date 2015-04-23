@@ -5,71 +5,77 @@
 	available under the terms of the Eclipse Public License v1.0 which accompanies
 	this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html -->
 <features name="odl-aaa-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
-	<repository>mvn:org.opendaylight.controller/features-netconf/${netconf.version}/xml/features</repository>
-	<repository>mvn:org.opendaylight.aaa/features-aaa-api/${project.version}/xml/features</repository>
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
+    <repository>mvn:org.opendaylight.controller/features-netconf/${netconf.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.aaa/features-aaa-api/${project.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.yangtools/features-yangtools/${yangtools.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-config/${config.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-mdsal/${mdsal.version}/xml/features</repository>
 
-	<feature name='odl-aaa-authn' description='OpenDaylight :: AAA :: Authentication'
-		version='${project.version}'>
-		<feature version='${project.version}'>odl-aaa-api</feature>
+    <feature name='odl-aaa-authn-no-cluster' description='OpenDaylight :: AAA :: Authentication - NO CLUSTER'
+             version='${project.version}'>
+        <feature version='${project.version}'>odl-aaa-api</feature>
 
-		<!-- REST -->
-		<feature>war</feature>
-		<bundle>mvn:com.sun.jersey/jersey-servlet/${jersey.version}</bundle>
-		<bundle>mvn:com.sun.jersey/jersey-core/${jersey.version}</bundle>
-		<bundle>mvn:com.sun.jersey/jersey-server/${jersey.version}</bundle>
+        <!-- REST -->
+        <feature>war</feature>
+        <bundle>mvn:com.sun.jersey/jersey-servlet/${jersey.version}</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-core/${jersey.version}</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-server/${jersey.version}</bundle>
 
-		<!-- OSGi -->
-		<bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/${felix.dependencymanager.version}</bundle>
-		<bundle>mvn:org.apache.felix/org.apache.felix.metatype/${osgi.metatype.version}</bundle>
+        <!-- OSGi -->
+        <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/${felix.dependencymanager.version}</bundle>
+        <bundle>mvn:org.apache.felix/org.apache.felix.metatype/${osgi.metatype.version}</bundle>
 
-		<!-- EhCache -->
-		<bundle>mvn:net.sf.ehcache/ehcache/${ehcache.version}</bundle>
-		<bundle>mvn:org.apache.geronimo.specs/geronimo-jta_1.1_spec/${jta.version}</bundle>
+        <!-- EhCache -->
+        <bundle>mvn:net.sf.ehcache/ehcache/${ehcache.version}</bundle>
+        <bundle>mvn:org.apache.geronimo.specs/geronimo-jta_1.1_spec/${jta.version}</bundle>
 
-		<!-- OAuth -->
-		<bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.common/${oltu.version}</bundle>
-		<bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.authzserver/${oltu.version}</bundle>
-		<bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.resourceserver/${oltu.version}</bundle>
-		<bundle>mvn:commons-codec/commons-codec/${commons.codec.version}</bundle>
-		<bundle>wrap:mvn:org.json/json/${org.json.version}</bundle>
+        <!-- OAuth -->
+        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.common/${oltu.version}</bundle>
+        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.authzserver/${oltu.version}</bundle>
+        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.resourceserver/${oltu.version}</bundle>
+        <bundle>mvn:commons-codec/commons-codec/${commons.codec.version}</bundle>
+        <bundle>wrap:mvn:org.json/json/${org.json.version}</bundle>
 
-		<!-- AuthN -->
-		<bundle>mvn:org.opendaylight.aaa/aaa-authn/${project.version}</bundle>
-		<bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/${project.version}</bundle>
-		<bundle>mvn:org.opendaylight.aaa/aaa-authn-store/${project.version}</bundle>
-		<bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/${project.version}</bundle>
+        <!-- AuthN -->
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-store/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/${project.version}</bundle>
         <bundle>mvn:com.google.guava/guava/${google.guava.version}</bundle>
 
 
         <!-- IDMLight -->
-		<bundle>mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}</bundle>
-		<bundle>mvn:com.fasterxml.jackson.core/jackson-core/${jackson.version}</bundle>
-		<bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/${jackson.version}</bundle>
-		<bundle>mvn:com.fasterxml.jackson.core/jackson-databind/${jackson.version}</bundle>
-		<bundle>mvn:com.fasterxml.jackson.datatype/jackson-datatype-json-org/${jackson.version}</bundle>
-		<bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/${jackson.version}</bundle>
-		<bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/${jackson.version}</bundle>
-		<bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/${jackson.version}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.core/jackson-core/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.datatype/jackson-datatype-json-org/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/${jackson.version}</bundle>
 
-	<!--	<bundle>wrap:mvn:org.xerial/sqlite-jdbc/${sqlite.jdbc.version}</bundle> -->
-                <bundle>wrap:mvn:com.h2database/h2/${h2.version}</bundle>
+        <!--	<bundle>wrap:mvn:org.xerial/sqlite-jdbc/${sqlite.jdbc.version}</bundle> -->
+        <bundle>wrap:mvn:com.h2database/h2/${h2.version}</bundle>
 
-		<!-- Federation -->
-		<bundle>mvn:org.opendaylight.aaa/aaa-authn-federation/${project.version}</bundle>
-		<bundle>mvn:org.opendaylight.aaa/aaa-authn-idpmapping/${project.version}</bundle>
-		<bundle>mvn:org.glassfish/javax.json/${glassfish.json.version}</bundle>
+        <!-- Federation -->
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-federation/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-idpmapping/${project.version}</bundle>
+        <bundle>mvn:org.glassfish/javax.json/${glassfish.json.version}</bundle>
 
-		<configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/${project.version}/cfg/config</configfile>
-		<configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/aaa-authn-store/${project.version}/cfg/config</configfile>
-		<configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/${project.version}/cfg/config</configfile>
-	</feature>
+        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">
+            mvn:org.opendaylight.aaa/aaa-authn/${project.version}/cfg/config
+        </configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">
+            mvn:org.opendaylight.aaa/aaa-authn-store/${project.version}/cfg/config
+        </configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">
+            mvn:org.opendaylight.aaa/aaa-authn-federation/${project.version}/cfg/config
+        </configfile>
+    </feature>
 
-    <feature name='odl-aaa-authn-cluster' description='OpenDaylight :: AAA :: Authentication :: MD-SAL'
+    <feature name='odl-aaa-authn' description='OpenDaylight :: AAA :: Authentication :: MD-SAL'
              version='${project.version}'>
         <!-- REST -->
         <feature>war</feature>
@@ -80,7 +86,6 @@
         <!-- OSGi -->
         <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/3.1.0</bundle>
         <bundle>mvn:org.apache.felix/org.apache.felix.metatype/1.0.10</bundle>
-
 
         <!-- OAuth -->
         <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.common/1.0.0</bundle>
@@ -118,13 +123,19 @@
         <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
         <feature version='${config.version}'>odl-config-core</feature>
 
-        <configfile finalname="${config.configfile.directory}/${config.authn.store.configfile}">mvn:org.opendaylight.aaa/aaa-authn-mdsal-config/${project.version}/xml/config</configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/${project.version}/cfg/config</configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/${project.version}/cfg/config</configfile>
+        <configfile finalname="${config.configfile.directory}/${config.authn.store.configfile}">
+            mvn:org.opendaylight.aaa/aaa-authn-mdsal-config/${project.version}/xml/config
+        </configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">
+            mvn:org.opendaylight.aaa/aaa-authn/${project.version}/cfg/config
+        </configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">
+            mvn:org.opendaylight.aaa/aaa-authn-federation/${project.version}/cfg/config
+        </configfile>
 
     </feature>
 
-    <feature name='odl-aaa-keystone-plugin' description='OpenDaylight :: AAA :: Keystone Plugin'
+    <feature name='odl-aaa-keystone-plugin' description='OpenDaylight :: AAA :: Keystone Plugin - NO CLUSTER'
              version='${project.version}'>
         <feature version='${project.version}'>odl-aaa-authn</feature>
         <bundle>mvn:org.apache.httpcomponents/httpclient-osgi/${httpclient.version}</bundle>
@@ -132,29 +143,29 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-keystone/${project.version}</bundle>
     </feature>
 
-	<feature name='odl-aaa-sssd-plugin' description='OpenDaylight :: AAA :: SSSD Federation Plugin'
-		version='${project.version}'>
-		<feature version='${project.version}'>odl-aaa-authn</feature>
-		<bundle>mvn:org.opendaylight.aaa/aaa-authn-sssd/${project.version}</bundle>
-	</feature>
-
-    <feature name='odl-aaa-authn-sssd-cluster' description='OpenDaylight :: AAA :: SSSD Federation'
+    <feature name='odl-aaa-sssd-plugin' description='OpenDaylight :: AAA :: SSSD Federation Plugin'
              version='${project.version}'>
-        <feature version='${project.version}'>odl-aaa-authn-cluster</feature>
+        <feature version='${project.version}'>odl-aaa-authn</feature>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sssd/${project.version}</bundle>
     </feature>
 
-	<feature name='odl-aaa-netconf-plugin' description='OpenDaylight :: AAA :: ODL NETCONF Plugin'
-		version='${project.version}'>
-		<feature version='${netconf.version}'>odl-netconf-api</feature>
-		<feature version='${project.version}'>odl-aaa-authn</feature>
-		<bundle>mvn:org.opendaylight.aaa/aaa-authn-odl-plugin/${project.version}</bundle>
-	</feature>
+    <feature name='odl-aaa-authn-sssd-no-cluster' description='OpenDaylight :: AAA :: SSSD Federation - NO CLUSTER'
+             version='${project.version}'>
+        <feature version='${project.version}'>odl-aaa-authn-no-cluster</feature>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-sssd/${project.version}</bundle>
+    </feature>
 
-    <feature name='odl-aaa-authn-plugin-cluster' description='OpenDaylight :: AAA :: ODL NETCONF Plugin'
+    <feature name='odl-aaa-netconf-plugin' description='OpenDaylight :: AAA :: ODL NETCONF Plugin'
              version='${project.version}'>
         <feature version='${netconf.version}'>odl-netconf-api</feature>
-        <feature version='${project.version}'>odl-aaa-authn-cluster</feature>
+        <feature version='${project.version}'>odl-aaa-authn</feature>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-odl-plugin/${project.version}</bundle>
+    </feature>
+
+    <feature name='odl-aaa-authn-plugin-no-cluster' description='OpenDaylight :: AAA :: ODL NETCONF Plugin - NO CLUSTER'
+             version='${project.version}'>
+        <feature version='${netconf.version}'>odl-netconf-api</feature>
+        <feature version='${project.version}'>odl-aaa-authn-no-cluster</feature>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-odl-plugin/${project.version}</bundle>
     </feature>
 
