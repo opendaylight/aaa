@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_4fdb9d1b",
+        "filename": "features/authn/src/main/resources/features.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2015-04-23T10:20:05Z",
+      "side": 1,
+      "message": "I do not see (type xml, classifier config) dependency for this in features/authn/pom.xml\nDistribution jobs may start failing SingleFeatureTest because of it.",
+      "range": {
+        "startLine": 118,
+        "startChar": 121,
+        "endLine": 118,
+        "endChar": 143
+      },
+      "revId": "755d1d861f0222b080f3053e2fafb3c475992f35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
