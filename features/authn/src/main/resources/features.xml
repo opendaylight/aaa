@@ -13,7 +13,7 @@
     <repository>mvn:org.opendaylight.controller/features-config/${config.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-mdsal/${mdsal.version}/xml/features</repository>
 
-	<feature name='odl-aaa-authn' description='OpenDaylight :: AAA :: Authentication'
+	<feature name='odl-aaa-authn-no-cluster' description='OpenDaylight :: AAA :: Authentication - NO CLUSTER'
 		version='${project.version}'>
 		<feature version='${project.version}'>odl-aaa-api</feature>
 
@@ -69,7 +69,7 @@
 		<configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/${project.version}/cfg/config</configfile>
 	</feature>
 
-    <feature name='odl-aaa-authn-cluster' description='OpenDaylight :: AAA :: Authentication :: MD-SAL'
+    <feature name='odl-aaa-authn' description='OpenDaylight :: AAA :: Authentication :: MD-SAL'
              version='${project.version}'>
         <!-- REST -->
         <feature>war</feature>
@@ -80,7 +80,6 @@
         <!-- OSGi -->
         <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/3.1.0</bundle>
         <bundle>mvn:org.apache.felix/org.apache.felix.metatype/1.0.10</bundle>
-
 
         <!-- OAuth -->
         <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.common/1.0.0</bundle>
@@ -124,7 +123,7 @@
 
     </feature>
 
-    <feature name='odl-aaa-keystone-plugin' description='OpenDaylight :: AAA :: Keystone Plugin'
+    <feature name='odl-aaa-keystone-plugin' description='OpenDaylight :: AAA :: Keystone Plugin - NO CLUSTER'
              version='${project.version}'>
         <feature version='${project.version}'>odl-aaa-authn</feature>
         <bundle>mvn:org.apache.httpcomponents/httpclient-osgi/${httpclient.version}</bundle>
@@ -138,9 +137,9 @@
 		<bundle>mvn:org.opendaylight.aaa/aaa-authn-sssd/${project.version}</bundle>
 	</feature>
 
-    <feature name='odl-aaa-authn-sssd-cluster' description='OpenDaylight :: AAA :: SSSD Federation'
+    <feature name='odl-aaa-authn-sssd-no-cluster' description='OpenDaylight :: AAA :: SSSD Federation - NO CLUSTER'
              version='${project.version}'>
-        <feature version='${project.version}'>odl-aaa-authn-cluster</feature>
+        <feature version='${project.version}'>odl-aaa-authn-no-cluster</feature>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sssd/${project.version}</bundle>
     </feature>
 
@@ -151,10 +150,10 @@
 		<bundle>mvn:org.opendaylight.aaa/aaa-authn-odl-plugin/${project.version}</bundle>
 	</feature>
 
-    <feature name='odl-aaa-authn-plugin-cluster' description='OpenDaylight :: AAA :: ODL NETCONF Plugin'
+    <feature name='odl-aaa-authn-plugin-no-cluster' description='OpenDaylight :: AAA :: ODL NETCONF Plugin - NO CLUSTER'
              version='${project.version}'>
         <feature version='${netconf.version}'>odl-netconf-api</feature>
-        <feature version='${project.version}'>odl-aaa-authn-cluster</feature>
+        <feature version='${project.version}'>odl-aaa-authn-no-cluster</feature>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-odl-plugin/${project.version}</bundle>
     </feature>
 
