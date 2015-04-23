@@ -22,11 +22,11 @@ module aaa-authn-mdsal-store-cfg {
     identity token-store-service{
            base config:service-type;
            config:java-class "org.opendaylight.aaa.api.TokenStore";
-       }
+    }
 
 
     // This is the definition of the service implementation as a module identity.
-   identity aaa-authn-mdsal-store {
+    identity aaa-authn-mdsal-store {
             base config:module-type;
             // Specifies the prefix for generated java classes.
             config:java-name-prefix AuthNStore;
@@ -40,39 +40,38 @@ module aaa-authn-mdsal-store-cfg {
             when "/config:modules/config:module/config:type = 'aaa-authn-mdsal-store'";
 
     //Defines reference to the Bundle context and MD-SAL data broker
-
             container dom-broker {
-                uses config:service-ref {
-                    refine type {
-                        mandatory true;
-                        config:required-identity dom:dom-broker-osgi-registry;
-                    }
-                }
-            }
+               uses config:service-ref {
+                   refine type {
+                       mandatory true;
+                       config:required-identity dom:dom-broker-osgi-registry;
+                   }
+               }
+           }
+           container data-broker {
+               uses config:service-ref {
+                   refine type {
+                       mandatory true;
+                       config:required-identity mdsal:binding-async-data-broker;
 
-            container data-broker {
-                uses config:service-ref {
-                    refine type {
-                        mandatory true;
-                        config:required-identity mdsal:binding-async-data-broker;
+                   }
+               }
+           }
 
-                    }
-                }
-            }
-
-            leaf timeToLive {
-            description "Time to live for tokens. 0 by default = never expire";
-              type uint64;
-              default 3600;
-            }
-            
-            leaf timeToWait {
-            description "Time to wait for future from data store. 10 by default = never expire";
-              type uint16;
-              default 10;
-            }
-
-            }
-        }
-
+           leaf timeToLive {
+             description "Time to live for tokens. When set to 0 = never expire";
+             type uint64;
+             default 360000;
+           }
+           leaf timeToWait {
+             description "Time to wait for future from data store. 10 by default = never expire";
+             type uint16;
+             default 10;
+           }
+           leaf password {
+             description "Encryption password for the Store";
+             type string;
+           }
+       }
+    }
 }
