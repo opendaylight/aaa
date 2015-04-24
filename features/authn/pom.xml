@@ -158,6 +158,13 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-authn-mdsal-config</artifactId>
+            <version>${project.version}</version>
+            <type>xml</type>
+            <classifier>config</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn</artifactId>
             <version>${project.version}</version>
             <type>cfg</type>
