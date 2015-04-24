@@ -44,7 +44,7 @@
         <version>${checkstyle.version}</version>
         <configuration>
           <!-- checkstyle is evil -->
-          <skip>true</skip>
+          <skip>false</skip>
         </configuration>
       </plugin>
     </plugins>
