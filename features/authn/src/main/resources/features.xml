@@ -64,15 +64,9 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-idpmapping/${project.version}</bundle>
         <bundle>mvn:org.glassfish/javax.json/${glassfish.json.version}</bundle>
 
-        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">
-            mvn:org.opendaylight.aaa/aaa-authn/${project.version}/cfg/config
-        </configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">
-            mvn:org.opendaylight.aaa/aaa-authn-store/${project.version}/cfg/config
-        </configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">
-            mvn:org.opendaylight.aaa/aaa-authn-federation/${project.version}/cfg/config
-        </configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/${project.version}/cfg/config</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/aaa-authn-store/${project.version}/cfg/config</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/${project.version}/cfg/config</configfile>
     </feature>
 
     <feature name='odl-aaa-authn' description='OpenDaylight :: AAA :: Authentication :: MD-SAL'
@@ -123,15 +117,9 @@
         <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
         <feature version='${config.version}'>odl-config-core</feature>
 
-        <configfile finalname="${config.configfile.directory}/${config.authn.store.configfile}">
-            mvn:org.opendaylight.aaa/aaa-authn-mdsal-config/${project.version}/xml/config
-        </configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">
-            mvn:org.opendaylight.aaa/aaa-authn/${project.version}/cfg/config
-        </configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">
-            mvn:org.opendaylight.aaa/aaa-authn-federation/${project.version}/cfg/config
-        </configfile>
+        <configfile finalname="${config.configfile.directory}/${config.authn.store.configfile}">mvn:org.opendaylight.aaa/aaa-authn-mdsal-config/${project.version}/xml/config</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/${project.version}/cfg/config</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/${project.version}/cfg/config</configfile>
 
     </feature>
 
@@ -162,7 +150,8 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-odl-plugin/${project.version}</bundle>
     </feature>
 
-    <feature name='odl-aaa-netconf-plugin-no-cluster' description='OpenDaylight :: AAA :: ODL NETCONF Plugin - NO CLUSTER'
+    <feature name='odl-aaa-netconf-plugin-no-cluster'
+             description='OpenDaylight :: AAA :: ODL NETCONF Plugin - NO CLUSTER'
              version='${project.version}'>
         <feature version='${netconf.version}'>odl-netconf-api</feature>
         <feature version='${project.version}'>odl-aaa-authn-no-cluster</feature>
