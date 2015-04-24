@@ -61,7 +61,6 @@
         <netconf.version>0.3.0-SNAPSHOT</netconf.version>
 
         <!-- IdmLight -->
-        <!-- <sqlite.jdbc.version>3.7.2</sqlite.jdbc.version> -->
         <h2.version>1.4.185</h2.version>
 
         <!-- Keystone plugin -->
@@ -159,11 +158,6 @@
                 <groupId>org.apache.oltu.oauth2</groupId>
                 <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
                 <version>${oltu.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.xerial</groupId>
-                <artifactId>sqlite-jdbc</artifactId>
-                <version>${sqlite.jdbc.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
