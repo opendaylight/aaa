@@ -99,6 +99,10 @@ grouping authorization-grp {
           type role-type;
           mandatory true;
         }
+
+        leaf authorization {
+         type authorization-response-type;
+        }
 //Username ideally shouldn't be in the AuthZ module; a username should always be mapped to a role.
 
 /*        leaf username {
