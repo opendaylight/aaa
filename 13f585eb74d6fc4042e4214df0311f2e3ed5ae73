@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_f1b9072f",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/persistence/DomainStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 3576
+      },
+      "writtenOn": "2015-05-04T23:12:57Z",
+      "side": 1,
+      "message": "Typically JDBC resources should be closed in finally blocks.  If some other exception occurred besides SQLException, after the connection was made, the resources will linger for an indeterminate length of time.  You could also use \"try-with-resources\" to avoid having to manually close them at all.",
+      "revId": "13f585eb74d6fc4042e4214df0311f2e3ed5ae73",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
