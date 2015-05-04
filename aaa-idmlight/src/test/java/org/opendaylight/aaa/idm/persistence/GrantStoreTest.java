@@ -12,6 +12,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Matchers.*;
 
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -53,18 +54,18 @@ public class GrantStoreTest {
         Mockito.when(dbmMock.getTables(null,null,"GRANTS",null)).thenReturn(rsUserMock);
         Mockito.when(rsUserMock.next()).thenReturn(true);
 
-        Statement stmtMock = mock(Statement.class);
-        Mockito.when(connectionMock.createStatement()).thenReturn(stmtMock);
+        PreparedStatement pstmtMock = mock(PreparedStatement.class);
+        Mockito.when(connectionMock.prepareStatement(anyString())).thenReturn(pstmtMock);
 
         ResultSet rsMock = getMockedResultSet();
-        Mockito.when(stmtMock.executeQuery(anyString())).thenReturn(rsMock);
+        Mockito.when(pstmtMock.executeQuery()).thenReturn(rsMock);
 
         //Run Test
         Grants grants = GrantStoreUnderTest.getGrants(did,uid);
 
         //Verify
         assertTrue(grants.getGrants().size() == 1);
-        verify(stmtMock).close();
+        verify(pstmtMock).close();
         }
 
     public ResultSet getMockedResultSet(){
