@@ -13,6 +13,11 @@ import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.authn.mdsal.store.AuthNStore;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 
 public class AuthNStoreModule extends org.opendaylight.yang.gen.v1.config.aaa.authn.mdsal.store.rev141031.AbstractAuthNStoreModule {
     private BundleContext bundleContext;
@@ -38,13 +43,14 @@ public class AuthNStoreModule extends org.opendaylight.yang.gen.v1.config.aaa.au
 
         authNStore.setTimeToLive(getTimeToLive());
 
-        //Register the MD-SAL Token store with OSGI
-        bundleContext.registerService(TokenStore.class.getName(), authNStore, null);
+      //Register the MD-SAL Token store with OSGI
+        final ServiceRegistration<?> serviceRegistration = bundleContext.registerService(TokenStore.class.getName(), authNStore, null);
 
         final class AutoCloseableStore implements AutoCloseable {
 
             @Override
             public void close() throws Exception {
+                serviceRegistration.unregister();
                 authNStore.close();
             }
         }
