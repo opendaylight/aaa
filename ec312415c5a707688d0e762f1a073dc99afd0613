@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_6a51b061",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/persistence/GrantStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-05-21T12:25:59Z",
+      "side": 1,
+      "message": "This is a possible issue of the original implementation, but if so we could also fix it.\n\nThe DB is defined wit integers as;\nString sql \u003d \"CREATE TABLE GRANTS \" +\n             \"(grantid    INTEGER PRIMARY KEY AUTO_INCREMENT,\" +\n             \"description VARCHAR(128)     NOT NULL, \" +\n             \"domainid     INTEGER         NOT NULL, \" +\n             \"userid     INTEGER           NOT NULL, \" +\n             \"roleid     INTEGER           NOT NULL)\" ;\n\nBut the operations executed on it, for the most part, feature long values, e.g.:\nsetLong.\n\nSeems like there could be a case for entry aliasing",
+      "revId": "ec312415c5a707688d0e762f1a073dc99afd0613",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
