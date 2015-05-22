@@ -122,8 +122,9 @@ public class RoleStore {
    }
 
    @Override
-protected void finalize ()  {
+protected void finalize () throws Throwable {
       dbClose();
+      super.finalize();
    }
 
    protected  Role rsToRole(ResultSet rs) throws SQLException {

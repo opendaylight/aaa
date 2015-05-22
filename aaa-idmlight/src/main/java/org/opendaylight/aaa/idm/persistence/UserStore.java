@@ -126,8 +126,9 @@ public class UserStore {
    }
 
    @Override
-protected void finalize ()  {
+protected void finalize () throws Throwable {
       dbClose();
+      super.finalize();
    }
 
    protected User rsToUser(ResultSet rs) throws SQLException {
