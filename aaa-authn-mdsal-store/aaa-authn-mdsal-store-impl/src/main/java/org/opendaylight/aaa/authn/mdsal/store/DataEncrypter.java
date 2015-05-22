@@ -39,8 +39,7 @@ public class DataEncrypter {
                 KeySpec spec = new PBEKeySpec(ckey.toCharArray(), iv, 32768, 128);
                 tmp = keyFactory.generateSecret(spec);
             } catch (Exception e) {
-                LOG.error("Couldn't initialize key factory");
-                e.printStackTrace();
+                LOG.error("Couldn't initialize key factory", e);
             }
             if (tmp != null) {
                 k = new SecretKeySpec(tmp.getEncoded(), "AES");
