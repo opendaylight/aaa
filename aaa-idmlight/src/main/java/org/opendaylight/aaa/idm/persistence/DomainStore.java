@@ -124,8 +124,9 @@ public class DomainStore {
    }
 
    @Override
-protected void finalize ()  {
+protected void finalize () throws Throwable {
       dbClose();
+      super.finalize();
    }
 
    protected Domain rsToDomain(ResultSet rs) throws SQLException {

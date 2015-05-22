@@ -126,8 +126,9 @@ public class GrantStore {
    }
 
    @Override
-protected void finalize ()  {
+protected void finalize () throws Throwable {
       dbClose();
+      super.finalize();
    }
 
    protected Grant rsToGrant(ResultSet rs) throws SQLException {
