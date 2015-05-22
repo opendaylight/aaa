@@ -68,8 +68,7 @@ public class DataEncrypter {
             cryptostring = DatatypeConverter.printBase64Binary(cryptobytes);
             return ENCRYPTED_TAG + cryptostring;
         } catch (Exception e) {
-            LOG.error("Couldn't encrypt token");
-            e.printStackTrace();
+            LOG.error("Couldn't encrypt token", e);
             return null;
         }
     }
@@ -96,8 +95,7 @@ public class DataEncrypter {
             return DatatypeConverter.printBase64Binary(clearbytes);
 
         } catch (Exception e) {
-            LOG.error("Couldn't decrypt token");
-            e.printStackTrace();
+            LOG.error("Couldn't decrypt token", e);
             return null;
         }
     }
