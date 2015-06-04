@@ -76,7 +76,7 @@ public final class CredentialServiceAuthProvider implements AuthProvider {
         try {
             claim = nullableCredService.authenticate(new PasswordCredentialsWrapper(username, password), DOMAIN);
         } catch (AuthenticationException e) {
-            logger.debug("Authentication failed for user '{}' : {}", username);
+            logger.debug("Authentication failed for user '{}' : {}", username, e);
             return false;
         }
 

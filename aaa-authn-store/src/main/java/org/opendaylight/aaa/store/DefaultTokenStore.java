@@ -152,7 +152,7 @@ public class DefaultTokenStore implements TokenStore, ManagedService {
             config.maxEntriesLocalHeap(maxMem);
             config.maxEntriesLocalDisk(maxDisk);
         } catch (Throwable t) {
-            throw new ConfigurationException(null, TOKEN_STORE_CONFIG_ERR);
+            throw new ConfigurationException(null, TOKEN_STORE_CONFIG_ERR, t);
         } finally {
             cacheLock.unlock();
         }
