@@ -73,19 +73,20 @@
              version='${project.version}'>
         <!-- REST -->
         <feature>war</feature>
-        <bundle>mvn:com.sun.jersey/jersey-servlet/1.17</bundle>
-        <bundle>mvn:com.sun.jersey/jersey-core/1.17</bundle>
-        <bundle>mvn:com.sun.jersey/jersey-server/1.17</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-servlet/${jersey.version}</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-core/${jersey.version}</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-server/${jersey.version}</bundle>
 
         <!-- OSGi -->
-        <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/3.1.0</bundle>
-        <bundle>mvn:org.apache.felix/org.apache.felix.metatype/1.0.10</bundle>
+        <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/${felix.dependencymanager.version}</bundle>
+        <bundle>mvn:org.apache.felix/org.apache.felix.metatype/${osgi.metatype.version}</bundle>
 
         <!-- OAuth -->
-        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.common/1.0.0</bundle>
-        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.authzserver/1.0.0</bundle>
-        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.resourceserver/1.0.0</bundle>
+        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.common/${oltu.version}</bundle>
+        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.authzserver/${oltu.version}</bundle>
+        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.resourceserver/${oltu.version}</bundle>
         <bundle>mvn:commons-codec/commons-codec/1.8</bundle>
+        <bundle>wrap:mvn:org.json/json/${org.json.version}</bundle>
 
         <!-- AuthN -->
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-api/${project.version}</bundle>
@@ -94,16 +95,17 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-api/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-store-impl/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/${project.version}</bundle>
+        <bundle>mvn:com.google.guava/guava/${guava.version}</bundle>
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}</bundle>
-        <bundle>wrap:mvn:org.json/json/20131018</bundle>
-        <bundle>mvn:com.sun.jersey/jersey-json/1.17</bundle>
-        <bundle>mvn:org.codehaus.jackson/jackson-core-asl/1.9.2</bundle>
-        <bundle>mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.2</bundle>
-        <bundle>mvn:org.codehaus.jackson/jackson-jaxrs/1.9.2</bundle>
-        <bundle>mvn:org.codehaus.jackson/jackson-xc/1.9.2</bundle>
-        <bundle>mvn:org.codehaus.jettison/jettison/1.1</bundle>
+        <bundle>mvn:com.fasterxml.jackson.core/jackson-core/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.datatype/jackson-datatype-json-org/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/${jackson.version}</bundle>
         <bundle>wrap:mvn:com.h2database/h2/${h2.version}</bundle>
 
         <!-- Federation -->
