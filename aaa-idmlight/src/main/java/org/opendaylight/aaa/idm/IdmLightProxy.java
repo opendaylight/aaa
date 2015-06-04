@@ -99,7 +99,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
            domain = domainList.get(0);
         }
         catch (StoreException se) {
-           throw new AuthenticationException("idm data store exception :" + se.toString());
+           throw new AuthenticationException("idm data store exception :" + se.toString() + se);
         }
 
         // check to see user exists and passes cred check
@@ -138,7 +138,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
            return claim.build();
         }
         catch (StoreException se) {
-           throw new AuthenticationException("idm data store exception :" + se.toString());
+           throw new AuthenticationException("idm data store exception :" + se.toString() + se);
         }
     }
 
@@ -155,7 +155,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
            return user.getUserid().toString();
         }
         catch (StoreException se) {
-           logger.warn("error getting user " + se.toString());
+           logger.warn("error getting user " , se.toString(), se);
            return null;
         }
     }
@@ -169,7 +169,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
            uid = Integer.parseInt(userId);
         }
         catch (NumberFormatException nfe) {
-           logger.warn("not a valid userid:" + userId);
+           logger.warn("not a valid userid:" ,userId, nfe);
            return domains;
         }
         try {
@@ -183,7 +183,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
            return domains;
         }
         catch (StoreException se) {
-           logger.warn("error getting domains " + se.toString());
+           logger.warn("error getting domains " , se.toString(), se);
            return domains;
         }
 
@@ -210,7 +210,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
               uid = Integer.parseInt(userId);
            }
            catch (NumberFormatException nfe) {
-              logger.warn("not a valid userid:" + userId);
+              logger.warn("not a valid userid:" ,userId, nfe);
               return roles;
            }
 
@@ -226,7 +226,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
            return roles;
         }
         catch (StoreException se) {
-           logger.warn("error getting roles " + se.toString());
+           logger.warn("error getting roles " , se.toString(), se);
            return roles;
         }
     }

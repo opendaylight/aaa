@@ -66,7 +66,7 @@ public class FederationConfiguration implements ManagedService {
                     configs.put(key, (String) props.get(key));
                 }
             } catch (Throwable t) {
-                throw new ConfigurationException(null, FEDERATION_CONFIG_ERR);
+                throw new ConfigurationException(null, FEDERATION_CONFIG_ERR, t);
             }
         }
     }

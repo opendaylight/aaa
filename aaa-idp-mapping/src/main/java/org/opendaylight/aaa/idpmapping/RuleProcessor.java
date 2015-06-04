@@ -283,7 +283,7 @@ public class RuleProcessor {
       mapping = map;
     } catch (java.lang.ClassCastException e) {
       throw new InvalidRuleException(String.format("%s rule defines 'mapping' but it is not a Map",
-          this.ruleId(namespace)));
+          this.ruleId(namespace), e));
     }
     if (mapping != null) {
       return mapping;
@@ -292,7 +292,7 @@ public class RuleProcessor {
       mappingName = (String) rule.get("mapping_name");
     } catch (java.lang.ClassCastException e) {
       throw new InvalidRuleException(String.format(
-          "%s rule defines 'mapping_name' but it is not a string", this.ruleId(namespace)));
+          "%s rule defines 'mapping_name' but it is not a string", this.ruleId(namespace), e));
     }
     if (mappingName == null) {
       throw new InvalidRuleException(String.format(
@@ -344,7 +344,7 @@ public class RuleProcessor {
     } catch (IndexOutOfBoundsException e) {
       throw new InvalidRuleException(String.format(
           "verb '%s' requires at least %d items but only %d are available.", verb, index + 1,
-          statement.size()));
+          statement.size(), e));
     }
 
     try {
@@ -384,7 +384,7 @@ public class RuleProcessor {
     } catch (IndexOutOfBoundsException e) {
       throw new InvalidRuleException(String.format(
           "verb '%s' requires at least %d items but only %d are available.", verb, index + 1,
-          statement.size()));
+          statement.size(), e));
     }
 
     try {
@@ -420,7 +420,7 @@ public class RuleProcessor {
     } catch (IndexOutOfBoundsException e) {
       throw new InvalidRuleException(String.format(
           "verb '%s' requires at least %d items but only %d are available.", verb, index + 1,
-          statement.size()));
+          statement.size(),e));
     }
 
     if (tokenTypes != null) {
@@ -446,7 +446,7 @@ public class RuleProcessor {
     } catch (IndexOutOfBoundsException e) {
       throw new InvalidRuleException(String.format(
           "verb '%s' requires at least %d items but only %d are available.", verb, index + 1,
-          statement.size()));
+          statement.size(), e));
     }
 
     try {
@@ -850,7 +850,7 @@ public class RuleProcessor {
             } catch (ClassCastException e) {
               throw new InvalidValueException(String.format(
                   "verb '%s' failed, array item (%s) is not a string, array=%s", verb, item,
-                  parameter.getObjectValue()));
+                  parameter.getObjectValue(), e));
             }
             newItem = oldItem.toLowerCase();
             newValue.add(newItem);
@@ -921,7 +921,7 @@ public class RuleProcessor {
             } catch (ClassCastException e) {
               throw new InvalidValueException(String.format(
                   "verb '%s' failed, array item (%s) is not a string, array=%s", verb, item,
-                  parameter.getObjectValue()));
+                  parameter.getObjectValue(), e));
             }
             newItem = oldItem.toUpperCase();
             newValue.add(newItem);
