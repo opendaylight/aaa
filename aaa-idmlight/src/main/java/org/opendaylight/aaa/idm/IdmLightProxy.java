@@ -164,9 +164,9 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
     public List<String> listDomains(String userId) {
         debug("list Domains for userId:" + userId);
         List<String> domains = new ArrayList<String>();
-        long uid=0;
+        int uid=0;
         try {
-           uid = Long.parseLong(userId);
+           uid = Integer.parseInt(userId);
         }
         catch (NumberFormatException nfe) {
            logger.warn("not a valid userid:" + userId);
@@ -202,12 +202,12 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
               debug("DomainName: " + domainName + " Not found!");
               return roles;
            }
-           long did = domainList.get(0).getDomainid();
+           int did = domainList.get(0).getDomainid();
 
            // validate userId
-           long uid=0;
+           int uid=0;
            try {
-              uid = Long.parseLong(userId);
+              uid = Integer.parseInt(userId);
            }
            catch (NumberFormatException nfe) {
               logger.warn("not a valid userid:" + userId);
