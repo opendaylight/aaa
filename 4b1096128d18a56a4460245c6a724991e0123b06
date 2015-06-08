@@ -1,0 +1,7 @@
+Code-Review+2: Wojciech Dec <wdec@cisco.com>
+Verified+1: jenkins-releng <jenkins-releng@opendaylight.org>
+Submitted-by: Wojciech Dec <wdec@cisco.com>
+Submitted-at: Mon, 08 Jun 2015 06:51:27 +0000
+Reviewed-on: https://git.opendaylight.org/gerrit/22051
+Project: aaa
+Branch: refs/heads/stable/lithium
