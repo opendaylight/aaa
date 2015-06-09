@@ -245,7 +245,7 @@ public class ClaimAuthFilter implements Filter {
         try {
             return new String(string.getBytes("ISO8859-1"), "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            logger.warn("Unable to UTF-8 decode: " + string);
+            logger.warn("Unable to UTF-8 decode: " , string , e);
             return string;
         }
     }

@@ -188,7 +188,7 @@ class Token {
                 String
                     .format(
                         "variable '%s' is an array indexed by '%s', however the index cannot be converted to an integer",
-                        this.name, index));
+                        this.name, index,e));
           }
         } else {
           throw new InvalidTypeException(
@@ -205,7 +205,7 @@ class Token {
               String
                   .format(
                       "variable '%s' is an array of size %d indexed by '%s', however the index is out of bounds",
-                      this.name, list.size(), idx));
+                      this.name, list.size(), idx, e));
         }
       } else if (base instanceof Map) {
         @SuppressWarnings("unchecked")
@@ -275,7 +275,7 @@ class Token {
                 String
                     .format(
                         "variable '%s' is an array indexed by '%s', however the index cannot be converted to an integer",
-                        this.name, index));
+                        this.name, index, e));
           }
         } else {
           throw new InvalidTypeException(
@@ -292,7 +292,7 @@ class Token {
               String
                   .format(
                       "variable '%s' is an array of size %d indexed by '%s', however the index is out of bounds",
-                      this.name, list.size(), idx));
+                      this.name, list.size(), idx, e));
         }
       } else if (base instanceof Map) {
         @SuppressWarnings("unchecked")
@@ -400,7 +400,4 @@ class Token {
   public Object getObjectValue() {
     return this.value;
   }
-
-
-
 }
