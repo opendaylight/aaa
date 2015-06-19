@@ -44,7 +44,11 @@ public class RoleStore {
          try {
              debug("dbConnection null, initializing connection");
              Driver jdbc = new org.h2.Driver();
-             dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
+             dbConnection = DriverManager.getConnection (
+                IdmLightApplication.config.dbPath,
+                IdmLightApplication.config.dbUser,
+                IdmLightApplication.config.dbPwd
+             );
              return dbConnection;
          }
          catch (Exception e) {
@@ -57,7 +61,11 @@ public class RoleStore {
                try {
                     debug("dbConnection is closed, initializing connection");
                     Driver jdbc = new org.h2.Driver();
-                    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
+                    dbConnection = DriverManager.getConnection (
+                        IdmLightApplication.config.dbPath,
+                        IdmLightApplication.config.dbUser,
+                        IdmLightApplication.config.dbPwd
+                    );
                     return dbConnection;
                }
                catch (Exception e) {
