@@ -18,7 +18,6 @@ import org.opendaylight.aaa.idm.model.Role;
 import org.opendaylight.aaa.idm.persistence.GrantStore;
 import org.opendaylight.aaa.idm.model.Grant;
 
-
 /**
  *
  * @author peter.mellquist@hp.com 
@@ -34,9 +33,9 @@ import org.opendaylight.aaa.idm.IdmLightApplication;
 
 public class StoreBuilder {
    private static Logger logger = LoggerFactory.getLogger(StoreBuilder.class);
-   private static DomainStore domainStore = new DomainStore();   
-   private static UserStore userStore = new UserStore(); 
-   private static RoleStore roleStore = new RoleStore(); 
+   private static DomainStore domainStore = new DomainStore();
+   private static UserStore userStore = new UserStore();
+   private static RoleStore roleStore = new RoleStore();
    private static GrantStore grantStore = new GrantStore();
    public static String DEFAULT_DOMAIN = "sdn";
    // IdmLight appends ".mv.db" to the end of a database file name
@@ -54,7 +53,6 @@ public class StoreBuilder {
       File f = new File(idmLightFileName);
       return f.exists();
    }
- 
 
    public void init() {
       logger.info("creating idmlight db");
@@ -69,8 +67,7 @@ public class StoreBuilder {
          domain.setName(DEFAULT_DOMAIN);
          domain.setDescription("default odl sdn domain");
          domain = domainStore.createDomain(domain);
-      }
-      catch (StoreException se) {
+      } catch (StoreException se) {
          logger.error("StoreException : " + se);
       }
       // create users
@@ -89,9 +86,8 @@ public class StoreBuilder {
          userUser.setDescription("user user");
          userUser.setEmail("");
          userUser.setPassword("user");
-         userUser = userStore.createUser(userUser); 
-      }
-      catch (StoreException se) {
+         userUser = userStore.createUser(userUser);
+      } catch (StoreException se) {
          logger.error("StoreException : " + se);
       }
 
@@ -103,8 +99,7 @@ public class StoreBuilder {
          userRole.setName("user");
          userRole.setDescription("a role for users");
          userRole = roleStore.createRole(userRole);
-      }
-       catch (StoreException se) {
+      } catch (StoreException se) {
          logger.error("StoreException : " + se);
       }
 
@@ -128,11 +123,9 @@ public class StoreBuilder {
          grant.setUserid(adminUser.getUserid());
          grant.setRoleid(adminRole.getRoleid());
          grant = grantStore.createGrant(grant);
-      }
-      catch (StoreException se) {
+      } catch (StoreException se) {
          logger.error("StoreException : " + se);
       }
 
    }
 }
-
