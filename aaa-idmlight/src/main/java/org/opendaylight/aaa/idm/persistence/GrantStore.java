@@ -16,7 +16,6 @@ package org.opendaylight.aaa.idm.persistence;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,11 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.opendaylight.aaa.idm.IdmLightApplication;
+import org.opendaylight.aaa.idm.config.IdmLightConfig;
 import org.opendaylight.aaa.idm.model.Grant;
 import org.opendaylight.aaa.idm.model.Grants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.h2.Driver;
 
 public class GrantStore {
    private static Logger logger = LoggerFactory.getLogger(GrantStore.class);
@@ -41,38 +40,8 @@ public class GrantStore {
    protected final static String SQL_ROLEID         = "roleid";
 
    protected Connection getDBConnect() throws StoreException {
-      if ( dbConnection==null ) {
-         try {
-	    //Class.forName (IdmLightApplication.config.dbDriver).newInstance ();
-              Driver jdbc = new org.h2.Driver();
-	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
-            return dbConnection;
-         }
-         catch (Exception e) {
-            throw new StoreException("Cannot connect to database server "+ e);
-         }
-      }
-      else {
-         try {
-            if ( dbConnection.isClosed()) {
-               try {
-		  //Class.forName (IdmLightApplication.config.dbDriver).newInstance ();
-                      Driver jdbc = new org.h2.Driver();
-		  dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
-		  return dbConnection;
-               }
-               catch (Exception e) {
-                  throw new StoreException("Cannot connect to database server "+ e);
-               }
-            }
-            else {
-               return dbConnection;
-            }
-         }
-	 catch (SQLException sqe) {
-            throw new StoreException("Cannot connect to database server "+ sqe);
-         }
-      }
+      dbConnection = IdmLightConfig.getInstance().getConnection(dbConnection);
+      return dbConnection;
    }
 
    protected Connection dbConnect() throws StoreException {
