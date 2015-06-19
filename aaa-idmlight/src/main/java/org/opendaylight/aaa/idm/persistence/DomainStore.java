@@ -16,7 +16,6 @@ package org.opendaylight.aaa.idm.persistence;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +28,6 @@ import org.opendaylight.aaa.idm.model.Domain;
 import org.opendaylight.aaa.idm.model.Domains;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.h2.Driver;
 
 public class DomainStore {
    private static Logger logger = LoggerFactory.getLogger(DomainStore.class);
@@ -41,38 +39,8 @@ public class DomainStore {
    protected final static String SQL_ENABLED        = "enabled";
 
    protected Connection getDBConnect() throws StoreException {
-      if ( dbConnection==null ) {
-         try {
-            debug("dbConnection null, initializing connection");
-            Driver jdbc = new org.h2.Driver();
-            dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
-            return dbConnection;
-         }
-         catch (Exception e) {
-            throw new StoreException("Cannot connect to database server "+ e);
-         }
-      }
-      else {
-         try {
-            if ( dbConnection.isClosed()) {
-               try {
-                   debug("dbConnection is closed, initializing connection");
-                   Driver jdbc = new org.h2.Driver();
-                   dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
-                   return dbConnection;
-               }
-               catch (Exception e) {
-                  throw new StoreException("Cannot connect to database server "+ e);
-               }
-            }
-            else {
-               return dbConnection;
-            }
-         }
-         catch (SQLException sqe) {
-            throw new StoreException("Cannot connect to database server "+ sqe);
-         }
-      }
+      dbConnection = IdmLightApplication.getConfig().getConnection(dbConnection);
+      return dbConnection;
    }
 
    protected Connection dbConnect() throws StoreException {
@@ -158,13 +126,12 @@ protected void finalize ()  {
          }
          rs.close();
          stmt.close();
+         dbClose();
       }
       catch (SQLException s) {
+         dbClose();
          throw new StoreException("SQL Exception : " + s);
       }
-      finally {
-         dbClose();
-        }
       domains.setDomains(domainList);
       return domains;
    }
@@ -174,24 +141,24 @@ protected void finalize ()  {
       Domains domains = new Domains();
       List<Domain> domainList = new ArrayList<Domain>();
       Connection conn = dbConnect();
+      Statement stmt=null;
+      String query = "SELECT * FROM DOMAINS WHERE name=\'" + domainName + "\'";
+      debug("query string: " + query);
       try {
-         PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM DOMAINS WHERE name = ? ");
-         pstmt.setString(1, domainName);
-         debug("query string: " + pstmt.toString());
-         ResultSet rs = pstmt.executeQuery();
+         stmt=conn.createStatement();
+         ResultSet rs=stmt.executeQuery(query);
          while (rs.next()) {
             Domain domain = rsToDomain(rs);
             domainList.add(domain);
          }
          rs.close();
-         pstmt.close();
+         stmt.close();
+         dbClose();
       }
       catch (SQLException s) {
+         dbClose();
          throw new StoreException("SQL Exception : " + s);
       }
-      finally {
-         dbClose();
-        }
       domains.setDomains(domainList);
       return domains;
    }
@@ -199,29 +166,29 @@ protected void finalize ()  {
 
    public Domain getDomain(long id) throws StoreException {
       Connection conn = dbConnect();
+      Statement stmt=null;
+      String query = "SELECT * FROM DOMAINS WHERE domainid=" + id;
       try {
-         PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM DOMAINS WHERE domainid = ? ");
-         pstmt.setLong(1, id);
-         debug("query string: " + pstmt.toString());
-         ResultSet rs = pstmt.executeQuery();
+         stmt=conn.createStatement();
+         ResultSet rs=stmt.executeQuery(query);
          if (rs.next()) {
             Domain domain = rsToDomain(rs);
             rs.close();
-            pstmt.close();
+            stmt.close();
+            dbClose();
             return domain;
          }
          else {
             rs.close();
-            pstmt.close();
+            stmt.close();
+            dbClose();
             return null;
          }
       }
       catch (SQLException s) {
+         dbClose();
          throw new StoreException("SQL Exception : " + s);
       }
-      finally {
-          dbClose();
-        }
    }
 
    public Domain createDomain(Domain domain) throws StoreException {
@@ -245,16 +212,13 @@ protected void finalize ()  {
              throw new StoreException("Creating domain failed, no generated key obtained.");
           }
           domain.setDomainid(key);
-          generatedKeys.close();
-          statement.close();
+          dbClose();
           return domain;
        }
        catch (SQLException s) {
+          dbClose();
           throw new StoreException("SQL Exception : " + s);
        }
-       finally {
-           dbClose();
-         }
    }
 
    public Domain putDomain(Domain domain) throws StoreException {
@@ -283,38 +247,37 @@ protected void finalize ()  {
          statement.setInt(4,savedDomain.getDomainid());
          statement.executeUpdate();
          statement.close();
+         dbClose();
       }
       catch (SQLException s) {
+         dbClose();
          throw new StoreException("SQL Exception : " + s);
       }
-      finally {
-          dbClose();
-        }
 
       return savedDomain;
    }
 
    public Domain deleteDomain(Domain domain) throws StoreException {
-      Domain deletedDomain = this.getDomain(domain.getDomainid());
-      if (deletedDomain==null) {
+      Domain savedDomain = this.getDomain(domain.getDomainid());
+      if (savedDomain==null) {
          return null;
       }
+
       Connection conn = dbConnect();
+      Statement stmt=null;
+      String query = "DELETE FROM DOMAINS WHERE domainid=" + domain.getDomainid();
       try {
-         String query = "DELETE FROM DOMAINS WHERE domainid = ?";
-         PreparedStatement statement = conn.prepareStatement(query);
-         statement.setLong(1, deletedDomain.getDomainid());
-         int deleteCount = statement.executeUpdate();
+         stmt=conn.createStatement();
+         int deleteCount = stmt.executeUpdate(query);
          debug("deleted " + deleteCount + " records");
-         statement.close();
-         return deletedDomain;
+         stmt.close();
+         dbClose();
+         return savedDomain;
       }
       catch (SQLException s) {
+         dbClose();
          throw new StoreException("SQL Exception : " + s);
       }
-      finally {
-          dbClose();
-        }
    }
 
    private static final void debug(String msg) {
@@ -323,3 +286,4 @@ protected void finalize ()  {
        }
    }
 }
+
