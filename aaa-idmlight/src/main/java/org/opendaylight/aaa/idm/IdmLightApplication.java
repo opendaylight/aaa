@@ -11,14 +11,16 @@ package org.opendaylight.aaa.idm;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.Application;
-import org.opendaylight.aaa.idm.rest.VersionHandler;
+
 import org.opendaylight.aaa.idm.rest.DomainHandler;
 import org.opendaylight.aaa.idm.rest.RoleHandler;
 import org.opendaylight.aaa.idm.rest.UserHandler;
+import org.opendaylight.aaa.idm.rest.VersionHandler;
 import org.opendaylight.aaa.idm.config.IdmLightConfig;
 import org.opendaylight.aaa.idm.persistence.StoreBuilder;
 
@@ -30,22 +32,28 @@ import org.opendaylight.aaa.idm.persistence.StoreBuilder;
  */
 public class IdmLightApplication extends Application {
     private static Logger logger = LoggerFactory.getLogger(IdmLightApplication.class);
-    public static IdmLightConfig config;
-
-    public IdmLightApplication() {
+    private IdmLightConfig config = null;
+    
+    private static IdmLightApplication INSTANCE = new IdmLightApplication();
+    
+    
+    public static IdmLightApplication getInstance() {
+       return INSTANCE;
+    }
+    
+    private IdmLightApplication() {
         logger.info("starting idmlight .... ");
-        config = new IdmLightConfig();
-        if (!config.load()) {
-            logger.error("unable to load idmlight config ");
-        }
-        else {
-            config.log();
-        }
         StoreBuilder storeBuilder = new StoreBuilder();
+        config = IdmLightConfig.getInstance();
         if (!storeBuilder.exists()) {
             storeBuilder.init();
         }
     }
+
+    public IdmLightConfig getConfig() {
+       return config;
+    }
+    
 
     @Override
     public Set<Class<?>> getClasses() {
