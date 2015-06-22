@@ -36,6 +36,14 @@ public class IdmLightApplication extends Application {
     private static Logger logger = LoggerFactory.getLogger(IdmLightApplication.class);
     private static IdmLightConfig config = new IdmLightConfig();
 
+    public IdmLightApplication() {
+       logger.error("initializing the data store");
+       StoreBuilder storeBuilder = new StoreBuilder();
+       if (!storeBuilder.exists(config.getDbName())) {
+         storeBuilder.init();
+       }
+    }
+
     public static IdmLightConfig getConfig() {
        return config;
     }
