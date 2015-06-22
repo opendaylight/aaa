@@ -16,6 +16,7 @@ package org.opendaylight.aaa.idm.persistence;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,6 +29,7 @@ import org.opendaylight.aaa.idm.model.User;
 import org.opendaylight.aaa.idm.model.Users;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.h2.Driver;
 
 public class UserStore {
    private static Logger logger = LoggerFactory.getLogger(UserStore.class);
@@ -41,8 +43,38 @@ public class UserStore {
    public final static int       MAX_FIELD_LEN      = 128;
 
    protected Connection getDBConnect() throws StoreException {
-      dbConnection = IdmLightApplication.getConnection(dbConnection);
-      return dbConnection;
+      if ( dbConnection==null ) {
+         try {
+            debug("dbConnection null, initializing connection");
+            Driver jdbc = new org.h2.Driver();
+            dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
+            return dbConnection;
+         }
+         catch (Exception e) {
+            throw new StoreException("Cannot connect to database server "+ e);
+         }
+      }
+      else {
+         try {
+            if ( dbConnection.isClosed()) {
+               try {
+                    debug("dbConnection is closed, initializing connection");
+                    Driver jdbc = new org.h2.Driver();
+                    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
+                    return dbConnection;
+               }
+               catch (Exception e) {
+                  throw new StoreException("Cannot connect to database server "+ e);
+               }
+            }
+            else {
+               return dbConnection;
+            }
+         }
+         catch (SQLException sqe) {
+            throw new StoreException("Cannot connect to database server "+ sqe);
+         }
+      }
    }
 
    protected Connection dbConnect() throws StoreException {

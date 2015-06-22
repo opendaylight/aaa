@@ -20,21 +20,23 @@ import org.slf4j.LoggerFactory;
 public class IdmLightConfig {
    private static Logger logger = LoggerFactory.getLogger(IdmLightConfig.class);
 
-   private String dbName;
-   private String dbPath;
-   private String dbDriver;
-   private String dbUser;
-   private String dbPwd;
-   private int dbValidTimeOut;
+   public static String dbName;
+   public String dbPath;
+   public String dbDriver;
+   public String dbUser;
+   public String dbPwd;
+   public int dbValidTimeOut;
 
-   public IdmLightConfig() {
+   public boolean load() {
       dbName = "idmlight.db";
-      // TODO make configurable
+      //TODO make configurable
       dbPath = "jdbc:h2:./" + dbName;
       dbDriver = "org.h2.Driver";
       dbUser = "foo";
       dbPwd = "bar";
       dbValidTimeOut = 3;
+
+      return true;
    }
 
    public void log() {
@@ -43,27 +45,4 @@ public class IdmLightConfig {
       logger.info("DB Valid Time Out       : " + dbValidTimeOut);
    }
 
-   public String getDbName() {
-      return this.dbName;
-   }
-
-   public String getDbPath() {
-      return this.dbPath;
-   }
-
-   public String getDbDriver() {
-      return this.dbDriver;
-   }
-
-   public String getDbUser() {
-      return this.dbUser;
-   }
-
-   public String getDbPwd() {
-      return this.dbPwd;
-   }
-
-   public int getDbValidTimeOut() {
-      return this.dbValidTimeOut;
-   }
 }

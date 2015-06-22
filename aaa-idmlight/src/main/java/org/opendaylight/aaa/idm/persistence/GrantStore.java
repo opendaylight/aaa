@@ -16,6 +16,7 @@ package org.opendaylight.aaa.idm.persistence;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,6 +29,7 @@ import org.opendaylight.aaa.idm.model.Grant;
 import org.opendaylight.aaa.idm.model.Grants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.h2.Driver;
 
 public class GrantStore {
    private static Logger logger = LoggerFactory.getLogger(GrantStore.class);
@@ -39,8 +41,38 @@ public class GrantStore {
    protected final static String SQL_ROLEID         = "roleid";
 
    protected Connection getDBConnect() throws StoreException {
-      dbConnection = IdmLightApplication.getConnection(dbConnection);
-      return dbConnection;
+      if ( dbConnection==null ) {
+         try {
+	    //Class.forName (IdmLightApplication.config.dbDriver).newInstance ();
+              Driver jdbc = new org.h2.Driver();
+	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
+            return dbConnection;
+         }
+         catch (Exception e) {
+            throw new StoreException("Cannot connect to database server "+ e);
+         }
+      }
+      else {
+         try {
+            if ( dbConnection.isClosed()) {
+               try {
+		  //Class.forName (IdmLightApplication.config.dbDriver).newInstance ();
+                      Driver jdbc = new org.h2.Driver();
+		  dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
+		  return dbConnection;
+               }
+               catch (Exception e) {
+                  throw new StoreException("Cannot connect to database server "+ e);
+               }
+            }
+            else {
+               return dbConnection;
+            }
+         }
+	 catch (SQLException sqe) {
+            throw new StoreException("Cannot connect to database server "+ sqe);
+         }
+      }
    }
 
    protected Connection dbConnect() throws StoreException {
@@ -94,9 +126,8 @@ public class GrantStore {
    }
 
    @Override
-protected void finalize () throws Throwable {
+protected void finalize () {
       dbClose();
-      super.finalize();
    }
 
    protected Grant rsToGrant(ResultSet rs) throws SQLException {

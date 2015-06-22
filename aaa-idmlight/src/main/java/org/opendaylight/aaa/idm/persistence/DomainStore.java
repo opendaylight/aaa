@@ -16,6 +16,7 @@ package org.opendaylight.aaa.idm.persistence;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,6 +29,7 @@ import org.opendaylight.aaa.idm.model.Domain;
 import org.opendaylight.aaa.idm.model.Domains;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.h2.Driver;
 
 public class DomainStore {
    private static Logger logger = LoggerFactory.getLogger(DomainStore.class);
@@ -39,8 +41,38 @@ public class DomainStore {
    protected final static String SQL_ENABLED        = "enabled";
 
    protected Connection getDBConnect() throws StoreException {
-      dbConnection = IdmLightApplication.getConnection(dbConnection);
-      return dbConnection;
+      if ( dbConnection==null ) {
+         try {
+            debug("dbConnection null, initializing connection");
+            Driver jdbc = new org.h2.Driver();
+            dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
+            return dbConnection;
+         }
+         catch (Exception e) {
+            throw new StoreException("Cannot connect to database server "+ e);
+         }
+      }
+      else {
+         try {
+            if ( dbConnection.isClosed()) {
+               try {
+                   debug("dbConnection is closed, initializing connection");
+                   Driver jdbc = new org.h2.Driver();
+                   dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
+                   return dbConnection;
+               }
+               catch (Exception e) {
+                  throw new StoreException("Cannot connect to database server "+ e);
+               }
+            }
+            else {
+               return dbConnection;
+            }
+         }
+         catch (SQLException sqe) {
+            throw new StoreException("Cannot connect to database server "+ sqe);
+         }
+      }
    }
 
    protected Connection dbConnect() throws StoreException {
@@ -92,9 +124,8 @@ public class DomainStore {
    }
 
    @Override
-   protected void finalize () throws Throwable  {
+protected void finalize ()  {
       dbClose();
-      super.finalize();
    }
 
    protected Domain rsToDomain(ResultSet rs) throws SQLException {
@@ -144,7 +175,7 @@ public class DomainStore {
       List<Domain> domainList = new ArrayList<Domain>();
       Connection conn = dbConnect();
       try {
-         PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM DOMAINS WHERE name = ?");
+         PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM DOMAINS WHERE name = ? ");
          pstmt.setString(1, domainName);
          debug("query string: " + pstmt.toString());
          ResultSet rs = pstmt.executeQuery();
