@@ -24,6 +24,7 @@ import org.opendaylight.aaa.idm.rest.RoleHandler;
 import org.opendaylight.aaa.idm.rest.UserHandler;
 import org.opendaylight.aaa.idm.rest.VersionHandler;
 import org.opendaylight.aaa.idm.config.IdmLightConfig;
+import org.opendaylight.aaa.idm.persistence.StoreBuilder;
 import org.opendaylight.aaa.idm.persistence.StoreException;
 
 /**
@@ -35,6 +36,14 @@ import org.opendaylight.aaa.idm.persistence.StoreException;
 public class IdmLightApplication extends Application {
     private static Logger logger = LoggerFactory.getLogger(IdmLightApplication.class);
     private static IdmLightConfig config = new IdmLightConfig();
+
+    public IdmLightApplication() {
+       logger.error("initializing the data store");
+       StoreBuilder storeBuilder = new StoreBuilder();
+       if (!storeBuilder.exists()) {
+         storeBuilder.init();
+       }
+    }
 
     public static IdmLightConfig getConfig() {
        return config;
