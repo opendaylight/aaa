@@ -3,10 +3,10 @@
   <parent>
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>aaa-authn-mdsal-store</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.2.0-Lithium</version>
   </parent>
   <artifactId>aaa-authn-mdsal-config</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.2.0-Lithium</version>
 
     <description>AuthN Token Store Service Configuration file </description>
     <packaging>jar</packaging>
