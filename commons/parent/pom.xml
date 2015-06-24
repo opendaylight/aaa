@@ -76,7 +76,7 @@
         <glassfish.json.version>1.0.4</glassfish.json.version>
         <jackson.version>1.9.2</jackson.version>
         <jettison.version>1.1</jettison.version>
-        <sqlite.jdbc.version>3.7.2</sqlite.jdbc.version>
+        <sqlite.jdbc.version>3.8.10.1</sqlite.jdbc.version>
 
         <!-- Test -->
         <exam.version>4.1.0</exam.version>
