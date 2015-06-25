@@ -28,7 +28,7 @@
                         </type>
                         <name>binding-data-broker</name>
                     </data-broker>
-                    <timeToLive>360000</timeToLive>
+                    <timeToLive>3600000</timeToLive>
                     <timeToWait>15</timeToWait>
                     <password>CHANGE_ME</password>
                 </module>
