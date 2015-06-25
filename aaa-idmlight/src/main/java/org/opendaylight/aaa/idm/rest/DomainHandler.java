@@ -81,9 +81,9 @@ public class DomainHandler {
    public Response getDomain(@PathParam("id") String id)  {
       logger.info("Get /domains/" + id);
       Domain domain = null;
-      long longId=0;
+      int domainId=0;
       try {
-         longId= Long.parseLong(id);
+         domainId= Integer.parseInt(id);
       }
       catch (NumberFormatException nfe) {
          IDMError idmerror = new IDMError();
@@ -91,7 +91,7 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         domain = domainStore.getDomain(longId);
+         domain = domainStore.getDomain(domainId);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -138,10 +138,10 @@ public class DomainHandler {
    @Consumes("application/json")
    @Produces("application/json")
    public Response putDomain(@Context UriInfo info,Domain domain,@PathParam("id") String id) {
-      long longId=0;
+      int domainId=0;
       logger.info("Put /domains/" + id);
        try {
-         longId= Long.parseLong(id);
+         domainId= Integer.parseInt(id);
       }
       catch (NumberFormatException nfe) {
          IDMError idmerror = new IDMError();
@@ -150,7 +150,7 @@ public class DomainHandler {
       }
 
       try {
-         domain.setDomainid((int)longId);
+         domain.setDomainid(domainId);
          domain = domainStore.putDomain(domain);
          if (domain==null) {
             IDMError idmerror = new IDMError();
@@ -172,10 +172,10 @@ public class DomainHandler {
    @DELETE
    @Path("/{id}")
    public Response deleteDomain(@Context UriInfo info,@PathParam("id") String id) {
-      long longId=0;
+      int domainId=0;
       logger.info("Delete /domains/" + id);
       try {
-         longId= Long.parseLong(id);
+         domainId= Integer.parseInt(id);
       }
       catch (NumberFormatException nfe) {
          IDMError idmerror = new IDMError();
@@ -185,7 +185,7 @@ public class DomainHandler {
 
       try {
          Domain domain = new Domain();
-         domain.setDomainid((int)longId);
+         domain.setDomainid(domainId);
          domain = domainStore.deleteDomain(domain);
          if (domain==null) {
             IDMError idmerror = new IDMError();
@@ -217,16 +217,16 @@ public class DomainHandler {
       Domain domain=null;
       User user=null;
       Role role=null;
-      long longDid=0;
-      long longUid=0;
-      long longRid=0;
+      int domainId=0;
+      int userId=0;
+      int roleId=0;
 
       if (grant.getDescription()==null)
          grant.setDescription("");
 
       // validate domain id
       try {
-         longDid= Long.parseLong(did);
+         domainId= Integer.parseInt(did);
       }
       catch (NumberFormatException nfe) {
          IDMError idmerror = new IDMError();
@@ -234,7 +234,7 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         domain = domainStore.getDomain(longDid);
+         domain = domainStore.getDomain(domainId);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -248,11 +248,11 @@ public class DomainHandler {
          idmerror.setMessage("Not found! domain id :" + did);
          return Response.status(404).entity(idmerror).build();
       }
-      grant.setDomainid((int)longDid);
+      grant.setDomainid(domainId);
 
       // validate user id
       try {
-         longUid= Long.parseLong(uid);
+         userId= Integer.parseInt(uid);
       }
       catch (NumberFormatException nfe) {
          IDMError idmerror = new IDMError();
@@ -260,7 +260,7 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         user = userStore.getUser(longUid);
+         user = userStore.getUser(userId);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -274,12 +274,12 @@ public class DomainHandler {
          idmerror.setMessage("Not found! User id :" + uid);
          return Response.status(404).entity(idmerror).build();
       }
-      grant.setUserid((int)longUid);
+      grant.setUserid(userId);
 
       // validate role id
       try {
-         longRid= grant.getRoleid();
-         logger.info("roleid = " + longRid);
+         roleId = grant.getRoleid();
+         logger.info("roleid = " + roleId);
       }
       catch (NumberFormatException nfe) {
          IDMError idmerror = new IDMError();
@@ -287,7 +287,7 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         role = roleStore.getRole(longRid);
+         role = roleStore.getRole(roleId);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -304,10 +304,10 @@ public class DomainHandler {
 
       // see if grant already exists for this 
       try {
-         Grant existingGrant = grantStore.getGrant(longDid,longUid,longRid);
+         Grant existingGrant = grantStore.getGrant(domainId, userId, roleId);
          if (existingGrant != null) {
             IDMError idmerror = new IDMError();
-            idmerror.setMessage("Grant already exists for did:"+longDid+" uid:"+longUid+" rid:"+longRid);
+            idmerror.setMessage("Grant already exists for did:"+domainId+" uid:"+userId+" rid:"+roleId);
             return Response.status(403).entity(idmerror).build();
          }
       }
@@ -346,14 +346,14 @@ public class DomainHandler {
                                  UserPwd userpwd) {
 
       logger.info("GET /domains/"+did+"/users");
-      long longDid=0;
-      Domain domain=null;
+      int domainId = 0;
+      Domain domain = null;
       Claim claim = new Claim();
       List<Role> roleList = new ArrayList<Role>();
 
       // validate domain id
       try {
-         longDid= Long.parseLong(did);
+         domainId= Integer.parseInt(did);
       }
       catch (NumberFormatException nfe) {
          IDMError idmerror = new IDMError();
@@ -361,7 +361,7 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         domain = domainStore.getDomain(longDid);
+         domain = domainStore.getDomain(domainId);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -407,11 +407,11 @@ public class DomainHandler {
             idmerror.setMessage("password does not match for username: "+username);
             return Response.status(401).entity(idmerror).build(); 
          }
-         claim.setDomainid((int)longDid);
+         claim.setDomainid(domainId);
          claim.setUsername(username);
          claim.setUserid(user.getUserid());
          try {
-            Grants grants = grantStore.getGrants(longDid,user.getUserid());
+            Grants grants = grantStore.getGrants(domainId,user.getUserid());
             List<Grant> grantsList = grants.getGrants();
             for (int i=0; i < grantsList.size(); i++) {
                Grant grant = grantsList.get(i);
@@ -446,8 +446,8 @@ public class DomainHandler {
                              @PathParam("did") String did,
                              @PathParam("uid") String uid) {
       logger.info("GET /domains/"+did+"/users/"+uid+"/roles");
-      long longDid=0;
-      long longUid=0;
+      int domainId = 0;
+      int userId = 0;
       Domain domain=null;
       User user=null;
       Roles roles = new Roles();
@@ -455,7 +455,7 @@ public class DomainHandler {
 
       // validate domain id
       try {
-         longDid= Long.parseLong(did);
+         domainId= Integer.parseInt(did);
       }
       catch (NumberFormatException nfe) {
          IDMError idmerror = new IDMError();
@@ -463,7 +463,7 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         domain = domainStore.getDomain(longDid);
+         domain = domainStore.getDomain(domainId);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -480,7 +480,7 @@ public class DomainHandler {
 
       // validate user id
       try {
-         longUid=Long.parseLong(uid);
+         userId = Integer.parseInt(uid);
       }
       catch (NumberFormatException nfe) {
          IDMError idmerror = new IDMError();
@@ -488,7 +488,7 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         user = userStore.getUser(longUid);
+         user = userStore.getUser(userId);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -504,7 +504,7 @@ public class DomainHandler {
       }
 
       try {
-         Grants grants = grantStore.getGrants(longDid,longUid);
+         Grants grants = grantStore.getGrants(domainId, userId);
          List<Grant> grantsList = grants.getGrants();
          for (int i=0; i < grantsList.size(); i++) {
             Grant grant = grantsList.get(i);
@@ -530,16 +530,16 @@ public class DomainHandler {
                                 @PathParam("did") String did,
                                 @PathParam("uid") String uid,
                                 @PathParam("rid") String rid) {
-      long longDid=0;
-      long longUid=0;
-      long longRid=0;
-      Domain domain=null;
-      User user=null;
-      Role role=null;
+      int domainId = 0;
+      int userId = 0;
+      int roleId = 0;
+      Domain domain = null;
+      User user = null;
+      Role role = null;
 
       // validate domain id
       try {
-         longDid= Long.parseLong(did);
+         domainId= Integer.parseInt(did);
       }
       catch (NumberFormatException nfe) {
          IDMError idmerror = new IDMError();
@@ -547,7 +547,7 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         domain = domainStore.getDomain(longDid);
+         domain = domainStore.getDomain(domainId);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -564,7 +564,7 @@ public class DomainHandler {
 
       // validate user id
       try {
-         longUid=Long.parseLong(uid);
+         userId = Integer.parseInt(uid);
       }
       catch (NumberFormatException nfe) {
          IDMError idmerror = new IDMError();
@@ -572,7 +572,7 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         user = userStore.getUser(longUid);
+         user = userStore.getUser(userId);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -589,7 +589,7 @@ public class DomainHandler {
 
       // validate role id
       try {
-         longRid=Long.parseLong(rid);
+         roleId = Integer.parseInt(rid);
       }
       catch (NumberFormatException nfe) {
          IDMError idmerror = new IDMError();
@@ -597,7 +597,7 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         role = roleStore.getRole(longRid);
+         role = roleStore.getRole(roleId);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -614,10 +614,10 @@ public class DomainHandler {
       
       // see if grant already exists 
       try {
-         Grant existingGrant = grantStore.getGrant(longDid,longUid,longRid);
+         Grant existingGrant = grantStore.getGrant(domainId,userId,roleId);
          if (existingGrant == null) {
             IDMError idmerror = new IDMError();
-            idmerror.setMessage("Grant does not exist for did:"+longDid+" uid:"+longUid+" rid:"+longRid);
+            idmerror.setMessage("Grant does not exist for did:"+domainId+" uid:"+userId+" rid:"+roleId);
             return Response.status(404).entity(idmerror).build();
          }
          existingGrant = grantStore.deleteGrant(existingGrant);

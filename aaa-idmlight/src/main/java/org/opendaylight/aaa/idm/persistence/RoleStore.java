@@ -42,9 +42,9 @@ public class RoleStore {
    protected Connection getDBConnect() throws StoreException {
       if ( dbConnection==null ) {
          try {
-	    //Class.forName (IdmLightApplication.config.dbDriver).newInstance ();
-            JDBC jdbc = new JDBC();
-	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
+	         debug("dbConnection null, initializing connection");
+            new JDBC();
+	         dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
             return dbConnection;
          }
          catch (Exception e) {
@@ -55,10 +55,9 @@ public class RoleStore {
          try {
             if ( dbConnection.isClosed()) {
                try {
-		  //Class.forName (IdmLightApplication.config.dbDriver).newInstance ();
-                  JDBC jdbc = new JDBC();
-		  dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
-		  return dbConnection;
+                  new JDBC();
+                  dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
+		            return dbConnection;
                }
                catch (Exception e) {
                   throw new StoreException("Cannot connect to database server "+ e);
@@ -67,7 +66,7 @@ public class RoleStore {
             else
                return dbConnection;
          }
-	 catch (SQLException sqe) {
+	      catch (SQLException sqe) {
             throw new StoreException("Cannot connect to database server "+ sqe);
          }
       }
@@ -153,11 +152,12 @@ protected void finalize ()  {
          }
          rs.close();
          stmt.close();
-         dbClose();
       }
       catch (SQLException s) {
-         dbClose();
          throw new StoreException("SQL Exception : " + s);
+      }
+      finally {
+         dbClose();
       }
       roles.setRoles(roleList);
       return roles;
@@ -165,28 +165,29 @@ protected void finalize ()  {
 
    public Role getRole(long id) throws StoreException {
       Connection conn = dbConnect();
-      Statement stmt=null;
-      String query = "SELECT * FROM roles WHERE roleid=" + id;
       try {
-         stmt=conn.createStatement();
-         ResultSet rs=stmt.executeQuery(query);
+         PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ROLES WHERE roleid = ? ");
+         pstmt.setLong(1, id);
+         debug("query string: " + pstmt.toString());
+         ResultSet rs = pstmt.executeQuery();
          if (rs.next()) {
             Role role = rsToRole(rs);
             rs.close();
-            stmt.close();
-            dbClose();
+            pstmt.close();
             return role;
          }
          else {
             rs.close();
-            stmt.close();
-            dbClose();
+            pstmt.close();
             return null;
          }
       }
       catch (SQLException s) {
          dbClose();
          throw new StoreException("SQL Exception : " + s);
+      }
+      finally {
+         dbClose();
       }
    }
 
@@ -207,12 +208,13 @@ protected void finalize ()  {
           else
              throw new StoreException("Creating role failed, no generated key obtained.");
           role.setRoleid(key);
-          dbClose();
           return role;
        }
        catch (SQLException s) {
-          dbClose();
           throw new StoreException("SQL Exception : " + s);
+       }
+       finally {
+          dbClose();
        }
    }
 
@@ -236,11 +238,12 @@ protected void finalize ()  {
          statement.setInt(3,savedRole.getRoleid());
          statement.executeUpdate();
          statement.close();
-         dbClose();
       }
       catch (SQLException s) {
-         dbClose();
          throw new StoreException("SQL Exception : " + s);
+      }
+      finally {
+         dbClose();
       }
 
       return savedRole;
@@ -252,19 +255,20 @@ protected void finalize ()  {
          return null;
 
       Connection conn = dbConnect();
-      Statement stmt=null;
-      String query = "DELETE FROM roles WHERE roleid=" + role.getRoleid();
       try {
-         stmt=conn.createStatement();
-         int deleteCount = stmt.executeUpdate(query);
+         String query = "DELETE FROM DOMAINS WHERE domainid = ?";
+         PreparedStatement statement = conn.prepareStatement(query);
+         statement.setLong(1, savedRole.getRoleid());
+         int deleteCount = statement.executeUpdate(query);
          debug("deleted " + deleteCount + " records");
-         stmt.close();
-         dbClose();
+         statement.close();
          return savedRole;
       }
       catch (SQLException s) {
-         dbClose();
          throw new StoreException("SQL Exception : " + s);
+      }
+      finally {
+         dbClose();
       }
    }
 

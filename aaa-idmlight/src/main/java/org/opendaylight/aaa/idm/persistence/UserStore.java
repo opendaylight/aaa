@@ -45,8 +45,9 @@ public class UserStore {
    protected Connection getDBConnect() throws StoreException {
       if ( dbConnection==null ) {
          try {
-            JDBC jdbc = new JDBC();
-	    dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
+            debug("dbConnection null, initializing connection");
+            new JDBC();
+            dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
             return dbConnection;
          }
          catch (Exception e) {
@@ -57,9 +58,10 @@ public class UserStore {
          try {
             if ( dbConnection.isClosed()) {
                try {
-                  JDBC jdbc = new JDBC();
-		  dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
-		  return dbConnection;
+                  debug("dbConnection is closed, initializing connection");
+                  new JDBC();
+                  dbConnection = DriverManager.getConnection (IdmLightApplication.config.dbPath);
+                  return dbConnection;
                }
                catch (Exception e) {
                   throw new StoreException("Cannot connect to database server "+ e);
@@ -68,7 +70,7 @@ public class UserStore {
             else
                return dbConnection;
          }
-	 catch (SQLException sqe) {
+         catch (SQLException sqe) {
             throw new StoreException("Cannot connect to database server "+ sqe);
          }
       }
@@ -160,36 +162,39 @@ protected void finalize ()  {
          }
          rs.close();
          stmt.close();
-         dbClose();
       }
       catch (SQLException s) {
-         dbClose();
          throw new StoreException("SQL Exception : " + s);
+      }
+      finally {
+         dbClose();
       }
       users.setUsers(userList);
       return users;
    }
 
    public Users getUsers(String username) throws StoreException {
+      debug("getUsers for:" + username);
       Users users = new Users();
       List<User> userList = new ArrayList<User>();
       Connection conn = dbConnect();
-      Statement stmt=null;
-      String query = "SELECT * FROM users WHERE name='" + username +"'";
       try {
-         stmt=conn.createStatement();
-         ResultSet rs=stmt.executeQuery(query);
+         PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM USERS WHERE name = ? ");
+         pstmt.setString(1, username);
+         debug("query string: " + pstmt.toString());
+         ResultSet rs = pstmt.executeQuery();
          while (rs.next()) {
             User user = rsToUser(rs);
             userList.add(user);
          }
          rs.close();
-         stmt.close();
-         dbClose();
+         pstmt.close();
       }
       catch (SQLException s) {
-         dbClose();
          throw new StoreException("SQL Exception : " + s);
+      }
+      finally {
+         dbClose();
       }
       users.setUsers(userList);
       return users;
@@ -198,28 +203,28 @@ protected void finalize ()  {
 
    public User getUser(long id) throws StoreException {
       Connection conn = dbConnect();
-      Statement stmt=null;
-      String query = "SELECT * FROM users WHERE userid=" + id;
       try {
-         stmt=conn.createStatement();
-         ResultSet rs=stmt.executeQuery(query);
+         PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM USERS WHERE userid = ? ");
+         pstmt.setLong(1, id);
+         debug("query string: " + pstmt.toString());
+         ResultSet rs = pstmt.executeQuery();
          if (rs.next()) {
             User user = rsToUser(rs);
             rs.close();
-            stmt.close();
-            dbClose();
+            pstmt.close();
             return user;
          }
          else {
             rs.close();
-            stmt.close();
-            dbClose();
+            pstmt.close();
             return null;
          }
       }
       catch (SQLException s) {
-         dbClose();
          throw new StoreException("SQL Exception : " + s);
+      }
+      finally {
+         dbClose();
       }
    }
 
@@ -243,12 +248,15 @@ protected void finalize ()  {
           else
              throw new StoreException("Creating user failed, no generated key obtained.");
           user.setUserid(key);
-          dbClose();
+          generatedKeys.close();
+          statement.close();
           return user;
        }
        catch (SQLException s) {
-          dbClose();
           throw new StoreException("SQL Exception : " + s);
+       }
+       finally {
+          dbClose();
        }
    }
 
@@ -281,11 +289,12 @@ protected void finalize ()  {
          statement.setInt(6,savedUser.getUserid());
          statement.executeUpdate();
          statement.close();
-         dbClose();
       }
       catch (SQLException s) {
-         dbClose();
          throw new StoreException("SQL Exception : " + s);
+      }
+      finally {
+         dbClose();
       }
 
       return savedUser;
@@ -297,19 +306,20 @@ protected void finalize ()  {
          return null;
 
       Connection conn = dbConnect();
-      Statement stmt=null;
-      String query = "DELETE FROM users WHERE userid=" + user.getUserid();
       try {
-         stmt=conn.createStatement();
-         int deleteCount = stmt.executeUpdate(query);
+         String query = "DELETE FROM DOMAINS WHERE domainid = ?";
+         PreparedStatement statement = conn.prepareStatement(query);
+         statement.setLong(1, savedUser.getUserid());
+         int deleteCount = statement.executeUpdate(query);
          debug("deleted " + deleteCount + " records");
-         stmt.close();
-         dbClose();
+         statement.close();
          return savedUser;
       }
       catch (SQLException s) {
-         dbClose();
          throw new StoreException("SQL Exception : " + s);
+      }
+      finally {
+         dbClose();
       }
    }
 

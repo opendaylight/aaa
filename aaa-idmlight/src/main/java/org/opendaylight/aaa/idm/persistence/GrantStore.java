@@ -145,108 +145,113 @@ protected void finalize ()  {
       return grant;
    }
 
-   public Grants getGrants(long did, long uid) throws StoreException {
+   public Grants getGrants(int did, int uid) throws StoreException {
       Grants grants = new Grants();
       List<Grant> grantList = new ArrayList<Grant>();
       Connection conn = dbConnect();
-      Statement stmt=null;
-      String query = "SELECT * FROM grants WHERE domainid=" + did + " AND userid="+uid;
       try {
-         stmt=conn.createStatement();
-         ResultSet rs=stmt.executeQuery(query);
+         PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM grants WHERE domainid = ? AND userid = ?");
+         pstmt.setInt(1, did);
+         pstmt.setInt(2, uid);
+         debug("query string: " + pstmt.toString());
+         ResultSet rs = pstmt.executeQuery();
          while (rs.next()) {
             Grant grant = rsToGrant(rs);
             grantList.add(grant);
          }
          rs.close();
-         stmt.close();
-         dbClose();
+         pstmt.close();
       }
       catch (SQLException s) {
-         dbClose();
          throw new StoreException("SQL Exception : " + s);
+      }
+      finally {
+         dbClose();
       }
       grants.setGrants(grantList);
       return grants;
    }
 
-   public Grants getGrants(long uid) throws StoreException {
+   public Grants getGrants(int uid) throws StoreException {
       Grants grants = new Grants();
       List<Grant> grantList = new ArrayList<Grant>();
       Connection conn = dbConnect();
-      Statement stmt=null;
-      String query = "SELECT * FROM grants WHERE userid="+uid;
       try {
-         stmt=conn.createStatement();
-         ResultSet rs=stmt.executeQuery(query);
+         PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM GRANTS WHERE userid = ? ");
+         pstmt.setInt(1, uid);
+         debug("query string: " + pstmt.toString());
+         ResultSet rs = pstmt.executeQuery();
          while (rs.next()) {
             Grant grant = rsToGrant(rs);
             grantList.add(grant);
          }
          rs.close();
-         stmt.close();
-         dbClose();
+         pstmt.close();
       }
       catch (SQLException s) {
-         dbClose();
          throw new StoreException("SQL Exception : " + s);
+      }
+      finally {
+         dbClose();
       }
       grants.setGrants(grantList);
       return grants;
    }
 
 
-   public Grant  getGrant(long id) throws StoreException {
+   public Grant  getGrant(int id) throws StoreException {
       Connection conn = dbConnect();
-      Statement stmt=null;
-      String query = "SELECT * FROM grants WHERE grantid=" + id;
       try {
-         stmt=conn.createStatement();
-         ResultSet rs=stmt.executeQuery(query);
+         PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM GRANTS WHERE grantid = ? ");
+         pstmt.setInt(1, id);
+         debug("query string: " + pstmt.toString());
+         ResultSet rs = pstmt.executeQuery();
          if (rs.next()) {
             Grant grant = rsToGrant(rs);
             rs.close();
-            stmt.close();
-            dbClose();
+            pstmt.close();
             return grant;
          }
          else {
             rs.close();
-            stmt.close();
-            dbClose();
+            pstmt.close();
             return null;
          }
       }
       catch (SQLException s) {
-         dbClose();
          throw new StoreException("SQL Exception : " + s);
+      }
+      finally {
+         dbClose();
       }
    }
 
-   public Grant getGrant(long did,long uid,long rid) throws StoreException {
+   public Grant getGrant(int did, int uid, int rid) throws StoreException {
       Connection conn = dbConnect();
-      Statement stmt=null;
-      String query = "SELECT * FROM grants WHERE domainid=" + did + " AND userid=" + uid + " AND roleid="+rid;
       try {
-         stmt=conn.createStatement();
-         ResultSet rs=stmt.executeQuery(query);
+         PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM GRANTS WHERE domainid = ? AND userid = ? AND roleid = ? ");
+         pstmt.setInt(1, did);
+         pstmt.setInt(1, uid);
+         pstmt.setInt(1, rid);
+         debug("query string: " + pstmt.toString());
+         ResultSet rs = pstmt.executeQuery();
          if (rs.next()) {
             Grant grant = rsToGrant(rs);
             rs.close();
-            stmt.close();
-            dbClose();
+            pstmt.close();
             return grant;
          }
          else {
             rs.close();
-            stmt.close();
-            dbClose();
+            pstmt.close();
             return null;
          }
       }
       catch (SQLException s) {
-         dbClose();
          throw new StoreException("SQL Exception : " + s);
+      }
+      finally {
+         dbClose();
       }
    }
 
@@ -270,12 +275,13 @@ protected void finalize ()  {
           else
              throw new StoreException("Creating grant failed, no generated key obtained.");
           grant.setGrantid(key);
-          dbClose();
           return grant;
        }
        catch (SQLException s) {
-          dbClose();
           throw new StoreException("SQL Exception : " + s);
+       }
+       finally {
+          dbClose();
        }
    }
 
@@ -285,19 +291,20 @@ protected void finalize ()  {
          return null;
 
       Connection conn = dbConnect();
-      Statement stmt=null;
-      String query = "DELETE FROM grants WHERE grantid=" + grant.getGrantid();
       try {
-         stmt=conn.createStatement();
-         int deleteCount = stmt.executeUpdate(query);
+         String query = "DELETE FROM GRANTS WHERE grantid = ?";
+         PreparedStatement statement = conn.prepareStatement(query);
+         statement.setInt(1, savedGrant.getGrantid());
+        int deleteCount = statement.executeUpdate(query);
          debug("deleted " + deleteCount + " records");
-         stmt.close();
-         dbClose();
+         statement.close();
          return savedGrant;
       }
       catch (SQLException s) {
-         dbClose();
          throw new StoreException("SQL Exception : " + s);
+      }
+      finally {
+         dbClose();
       }
    }
 
