@@ -10,7 +10,7 @@
 	<repository>mvn:org.opendaylight.yangtools/features-yangtools/${yangtools.version}/xml/features</repository>
 	<repository>mvn:org.opendaylight.controller/features-config/${config.version}/xml/features</repository>
 	<repository>mvn:org.opendaylight.controller/features-mdsal/${mdsal.version}/xml/features</repository>
-	<repository>mvn:org.opendaylight.controller/features-restconf/${mdsal.version}/xml/features</repository>
+	<repository>mvn:org.opendaylight.controller/features-restconf/${restconf.version}/xml/features</repository>
 	<repository>mvn:org.opendaylight.aaa/features-aaa-api/${project.version}/xml/features</repository>
 
 	<feature name='odl-aaa-authz' description='OpenDaylight :: AAA :: Authorization'
@@ -21,12 +21,12 @@
 		<feature version='${mdsal.version}'>odl-mdsal-broker</feature>
 		<feature version='${config.version}'>odl-config-core</feature>
 		<feature version='${restconf.version}'>odl-restconf</feature>
-		<bundle>mvn:org.opendaylight.aaa/aaa-authz-model/${project.version}</bundle>
-		<bundle>mvn:org.opendaylight.aaa/aaa-authz-service/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authz-model/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authz-service/{{VERSION}}</bundle>
 		<configfile
-			finalname="${config.configfile.directory}/${config.authz.service.configfile}">mvn:org.opendaylight.aaa/authz-service-config/${project.version}/xml/config</configfile>
+            finalname="${config.configfile.directory}/${config.authz.service.configfile}">mvn:org.opendaylight.aaa/authz-service-config/{{VERSION}}/xml/config</configfile>
 		<configfile
-			finalname="${config.configfile.directory}/${config.restconf.configfile}">mvn:org.opendaylight.aaa/authz-restconf-config/${project.version}/xml/config</configfile>
+            finalname="${config.configfile.directory}/${config.restconf.configfile}">mvn:org.opendaylight.aaa/authz-restconf-config/{{VERSION}}/xml/config</configfile>
 	</feature>
 
 </features>
