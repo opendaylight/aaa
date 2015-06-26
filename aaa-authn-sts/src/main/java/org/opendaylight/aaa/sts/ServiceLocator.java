@@ -11,6 +11,7 @@ package org.opendaylight.aaa.sts;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.ClientService;
 import org.opendaylight.aaa.api.CredentialAuth;
+import org.opendaylight.aaa.api.Credentials;
 import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.TokenAuth;
@@ -43,15 +44,22 @@ public enum ServiceLocator {
     protected void tokenAuthAdded(TokenAuth ta) {
         this.ta.add(ta);
     }
-
     protected void tokenAuthRemoved(TokenAuth ta) {
         this.ta.remove(ta);
     }
+
     protected void tokenStoreAdded(TokenStore ts) {
         this.ts = ts;
     }
-
     protected void tokenStoreRemoved(TokenStore ts) {
         this.ts = null;
     }
+
+    protected void authenticationServiceAdded(AuthenticationService as) {this.as = as;}
+    protected void authenticationServiceRemoved(AuthenticationService as) {this.as = null;}
+
+    protected void credentialAuthAdded(CredentialAuth<PasswordCredentials> da) {this.da = da;}
+    protected void credentialAuthAddedRemoved(CredentialAuth<PasswordCredentials> da) {this.da = null;}
+
+
 }

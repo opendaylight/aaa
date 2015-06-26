@@ -34,12 +34,13 @@ public class Activator extends DependencyActivatorBase {
         manager.add(createComponent()
                 .setImplementation(ServiceLocator.INSTANCE)
                 .add(createServiceDependency().setService(CredentialAuth.class)
-                  .setRequired(true))
+                    .setRequired(true)
+                    .setCallbacks("credentialAuthAdded", "credentialAuthRemoved"))
                 .add(createServiceDependency().setService(ClaimAuth.class)
-                        .setRequired(false)
-                        .setCallbacks("claimAuthAdded", "claimAuthRemoved"))
+                .setRequired(false)
+                .setCallbacks("claimAuthAdded", "claimAuthRemoved"))
                 .add(createServiceDependency().setService(TokenAuth.class)
-                        .setRequired(false)
+                    .setRequired(false)
                         .setCallbacks("tokenAuthAdded", "tokenAuthRemoved"))
                 .add(createServiceDependency().setService(TokenStore.class)
                         .setRequired(true)
@@ -47,10 +48,11 @@ public class Activator extends DependencyActivatorBase {
                 .add(createServiceDependency().setService(TokenStore.class)
                   .setRequired(true))
                 .add(createServiceDependency().setService(
-                        AuthenticationService.class).setRequired(true))
-                .add(createServiceDependency().setService(IdMService.class)
-                        .setRequired(true))
-                .add(createServiceDependency().setService(ClientService.class)
+                        AuthenticationService.class).setRequired(true)
+                        .setCallbacks("authenticationServiceAdded", "authenticationServiceRemoved"))
+            .add(createServiceDependency().setService(IdMService.class)
+                .setRequired(true))
+            .add(createServiceDependency().setService(ClientService.class)
                         .setRequired(true)));
     }
 
