@@ -17,10 +17,6 @@
     <maven>3.0</maven>
   </prerequisites>
 
-  <properties>
-    <nexusproxy>http://nexus.opendaylight.org/content</nexusproxy>
-  </properties>
-
   <modules>
     <module>aaa-authn-api</module>
     <module>aaa-authn</module>
@@ -49,16 +45,4 @@
     <url>https://wiki.opendaylight.org/view/AAA:Main</url>
   </scm>
 
-  <distributionManagement>
-    <!-- OpenDayLight Released artifact -->
-    <repository>
-      <id>opendaylight-release</id>
-      <url>${nexusproxy}/repositories/opendaylight.release/</url>
-    </repository>
-    <!-- OpenDayLight Snapshot artifact -->
-    <snapshotRepository>
-      <id>opendaylight-snapshot</id>
-      <url>${nexusproxy}/repositories/opendaylight.snapshot/</url>
-    </snapshotRepository>
-  </distributionManagement>
 </project>
