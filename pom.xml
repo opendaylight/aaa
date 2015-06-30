@@ -17,11 +17,8 @@
     <maven>3.0</maven>
   </prerequisites>
 
-  <properties>
-    <nexusproxy>http://nexus.opendaylight.org/content</nexusproxy>
-  </properties>
-
   <modules>
+    <module>artifacts</module>
     <module>aaa-authn-api</module>
     <module>aaa-authn</module>
     <module>aaa-idp-mapping</module>
@@ -36,7 +33,6 @@
     <module>aaa-authz</module>
     <module>aaa-authn-odl-plugin</module>
     <module>aaa-credential-store-api</module>
-    <module>artifacts</module>
     <module>features</module>
     <module>distribution-karaf</module>
     <module>parent</module>
@@ -48,17 +44,4 @@
     <tag>HEAD</tag>
     <url>https://wiki.opendaylight.org/view/AAA:Main</url>
   </scm>
-
-  <distributionManagement>
-    <!-- OpenDayLight Released artifact -->
-    <repository>
-      <id>opendaylight-release</id>
-      <url>${nexusproxy}/repositories/opendaylight.release/</url>
-    </repository>
-    <!-- OpenDayLight Snapshot artifact -->
-    <snapshotRepository>
-      <id>opendaylight-snapshot</id>
-      <url>${nexusproxy}/repositories/opendaylight.snapshot/</url>
-    </snapshotRepository>
-  </distributionManagement>
 </project>
