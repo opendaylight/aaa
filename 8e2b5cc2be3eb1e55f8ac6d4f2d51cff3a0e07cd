@@ -1,0 +1,8 @@
+Verified+1: jenkins-releng <jenkins-releng@opendaylight.org>
+Code-Review+1: Thanh Ha <thanh.ha@linuxfoundation.org>
+Code-Review+2: Wojciech Dec <wdec@cisco.com>
+Submitted-by: Wojciech Dec <wdec@cisco.com>
+Submitted-at: Tue, 30 Jun 2015 14:42:17 +0000
+Reviewed-on: https://git.opendaylight.org/gerrit/23597
+Project: aaa
+Branch: refs/heads/master
