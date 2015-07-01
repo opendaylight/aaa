@@ -37,9 +37,9 @@ public class StoreBuilder {
    private static RoleStore roleStore = new RoleStore(); 
    private static GrantStore grantStore = new GrantStore();
    public static String DEFAULT_DOMAIN = "sdn";
-  
+
    public boolean exists() {
-      File f = new File(IdmLightApplication.config.dbName);
+      File f = new File("idmlight.db.mv.db");
       return f.exists();
    }
  
