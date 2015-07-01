@@ -9,6 +9,7 @@
 package org.opendaylight.aaa.idm.persistence;
 
 import org.opendaylight.aaa.idm.persistence.DomainStore;
+import org.opendaylight.aaa.idm.config.IdmLightConfig;
 import org.opendaylight.aaa.idm.model.Domain;
 import org.opendaylight.aaa.idm.persistence.UserStore;
 import org.opendaylight.aaa.idm.model.User;
@@ -26,6 +27,7 @@ import org.opendaylight.aaa.idm.model.Grant;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.File;
 
 import org.opendaylight.aaa.idm.IdmLightApplication;
@@ -37,9 +39,19 @@ public class StoreBuilder {
    private static RoleStore roleStore = new RoleStore(); 
    private static GrantStore grantStore = new GrantStore();
    public static String DEFAULT_DOMAIN = "sdn";
-  
+   // IdmLight appends ".mv.db" to the end of a database file name
+   private static final String IDM_LIGHT_EXTENSION = ".mv.db";
+
+   private String getIdmLightFileName(final String databaseName) {
+      StringBuilder fileName = new StringBuilder();
+      fileName.append(databaseName);
+      fileName.append(IDM_LIGHT_EXTENSION);
+      return fileName.toString();
+   }
+
    public boolean exists() {
-      File f = new File(IdmLightApplication.config.dbName);
+      String idmLightFileName = this.getIdmLightFileName(IdmLightConfig.dbName);
+      File f = new File(idmLightFileName);
       return f.exists();
    }
  
