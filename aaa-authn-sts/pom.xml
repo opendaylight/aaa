@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.opendaylight.aaa</groupId>
@@ -61,7 +61,7 @@
             <artifactId>org.apache.felix.dependencymanager</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!-- Testing Dependencies -->     
+        <!-- Testing Dependencies -->
         <dependency>
             <groupId>com.sun.jersey.jersey-test-framework</groupId>
             <artifactId>jersey-test-framework-grizzly2</artifactId>
@@ -97,10 +97,10 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Import-Package>*,com.sun.jersey.spi.container.servlet</Import-Package>
                         <Web-ContextPath>/oauth2</Web-ContextPath>
                         <Bundle-Activator>org.opendaylight.aaa.sts.Activator</Bundle-Activator>
-                        <manifestLocation>${project.basedir}/META-INF</manifestLocation>
+                        <Import-Package>*,com.sun.jersey.spi.container.servlet</Import-Package>
+                        <Export-Package>org.opendaylight.aaa.sts.*</Export-Package>
                     </instructions>
                 </configuration>
             </plugin>
