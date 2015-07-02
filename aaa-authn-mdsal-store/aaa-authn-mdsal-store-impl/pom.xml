@@ -96,7 +96,8 @@
                 <configuration>
                     <instructions>
                         <!-- <Bundle-Activator>/Bundle-Activator> -->
-                        <Export-Package>org.opendaylight.yang.gen.v1.config.aaa.authn.mdsal.store.*
+                        <Export-Package>
+                            org.opendaylight.yang.gen.v1.config.aaa.authn.mdsal.store.*,org.opendaylight.aaa.authn.mdsal.store.*
                         </Export-Package>
                     </instructions>
                 </configuration>
@@ -126,7 +127,9 @@
                                     </additionalConfiguration>
                                 </generator>
                                 <generator>
-                                    <codeGeneratorClass>org.opendaylight.yangtools.maven.sal.api.gen.plugin.CodeGeneratorImpl</codeGeneratorClass>
+                                    <codeGeneratorClass>
+                                        org.opendaylight.yangtools.maven.sal.api.gen.plugin.CodeGeneratorImpl
+                                    </codeGeneratorClass>
                                     <outputBaseDir>${salGeneratorPath}</outputBaseDir>
                                 </generator>
                             </codeGenerators>
