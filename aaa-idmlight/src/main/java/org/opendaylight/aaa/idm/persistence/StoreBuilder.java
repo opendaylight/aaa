@@ -37,9 +37,19 @@ public class StoreBuilder {
    private static RoleStore roleStore = new RoleStore();
    private static GrantStore grantStore = new GrantStore();
    public static String DEFAULT_DOMAIN = "sdn";
+   // IdmLight appends ".mv.db" to the end of a database file name
+   private static final String IDM_LIGHT_EXTENSION = ".mv.db";
+
+   private String getIdmLightFileName(final String databaseName) {
+      StringBuilder fileName = new StringBuilder();
+      fileName.append(databaseName);
+      fileName.append(IDM_LIGHT_EXTENSION);
+      return fileName.toString();
+   }
 
    public boolean exists() {
-      File f = new File(IdmLightApplication.getConfig().getDbName());
+      String idmLightFileName = this.getIdmLightFileName(IdmLightApplication.getConfig().getDbName());
+      File f = new File(idmLightFileName);
       return f.exists();
    }
 
