@@ -50,7 +50,7 @@
             <groupId>org.apache.oltu.oauth2</groupId>
             <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
             <scope>provided</scope>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
@@ -97,10 +97,10 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Import-Package>*,com.sun.jersey.spi.container.servlet</Import-Package>
                         <Web-ContextPath>/oauth2/federation</Web-ContextPath>
                         <Web-Connectors>federationConn</Web-Connectors>
                         <Bundle-Activator>org.opendaylight.aaa.federation.Activator</Bundle-Activator>
+                        <Export-Package>org.opendaylight.aaa.basic</Export-Package>
                         <manifestLocation>${project.basedir}/META-INF</manifestLocation>
                     </instructions>
                 </configuration>
