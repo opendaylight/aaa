@@ -119,7 +119,7 @@
         <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
         <feature version='${config.version}'>odl-config-core</feature>
 
-        <configfile finalname="${config.configfile.directory}/${config.authn.store.configfile}">mvn:org.opendaylight.aaa/aaa-authn-mdsal-config/{{VERSION}}/xml/config</configfile>
+        <configfile finalname="etc/opendaylight/karaf/08-authn-config.xml">mvn:org.opendaylight.aaa/aaa-authn-mdsal-config/{{VERSION}}/xml/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}/cfg/config</configfile>
 
