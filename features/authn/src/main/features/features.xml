@@ -78,7 +78,6 @@
         <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
         <feature version='${config.version}'>odl-config-core</feature>
 
-
         <!-- OSGi -->
         <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.felix/org.apache.felix.metatype/{{VERSION}}</bundle>
