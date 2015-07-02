@@ -71,11 +71,13 @@
 
     <feature name='odl-aaa-authn' description='OpenDaylight :: AAA :: Authentication :: MD-SAL'
              version='${project.version}'>
-        <!-- REST -->
-        <feature>war</feature>
-        <bundle>mvn:com.sun.jersey/jersey-servlet/{{VERSION}}</bundle>
-        <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
-        <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
+
+        <!-- MD-SAL -->
+        <feature version='${yangtools.version}'>odl-yangtools-common</feature>
+        <feature version='${yangtools.version}'>odl-yangtools-binding</feature>
+        <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
+        <feature version='${config.version}'>odl-config-core</feature>
+
 
         <!-- OSGi -->
         <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/{{VERSION}}</bundle>
@@ -113,11 +115,11 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-idpmapping/{{VERSION}}</bundle>
         <bundle>mvn:org.glassfish/javax.json/1.0.4</bundle>
 
-        <!-- MD-SAL -->
-        <feature version='${yangtools.version}'>odl-yangtools-common</feature>
-        <feature version='${yangtools.version}'>odl-yangtools-binding</feature>
-        <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
-        <feature version='${config.version}'>odl-config-core</feature>
+        <!-- REST -->
+        <feature>war</feature>
+        <bundle>mvn:com.sun.jersey/jersey-servlet/{{VERSION}}</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
 
         <configfile finalname="etc/opendaylight/karaf/08-authn-config.xml">mvn:org.opendaylight.aaa/aaa-authn-mdsal-config/{{VERSION}}/xml/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
