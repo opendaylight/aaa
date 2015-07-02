@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.opendaylight.aaa</groupId>
@@ -117,14 +117,17 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Import-Package>javax.servlet.http,javax.ws.rs,javax.ws.rs.core,javax.xml.bind.annotation,org.apache.felix.dm,org.opendaylight.aaa,org.opendaylight.aaa.api,org.osgi.framework,org.slf4j,org.eclipse.jetty.servlets,com.sun.jersey.spi.container.servlet</Import-Package>
+                        <Import-Package>
+                            javax.servlet.http,javax.ws.rs,javax.ws.rs.core,javax.xml.bind.annotation,org.apache.felix.dm,org.opendaylight.aaa,org.opendaylight.aaa.api,org.osgi.framework,org.slf4j,org.eclipse.jetty.servlets,com.sun.jersey.spi.container.servlet
+                        </Import-Package>
+                        <Export-Package>org.opendaylight.aaa.idm.*, org.opendaylight.aaa.api.CredentialAuth
+                        </Export-Package>
                         <Private-Package>org.h2.*</Private-Package>
                         <Embed-Dependency>h2</Embed-Dependency>
                         <Web-ContextPath>/auth</Web-ContextPath>
                         <!--<Web-Connectors>adminConn</Web-Connectors> -->
                         <Bundle-Activator>org.opendaylight.aaa.idm.Activator</Bundle-Activator>
                     </instructions>
-                    <manifestLocation>${project.basedir}/META-INF</manifestLocation>
                 </configuration>
             </plugin>
         </plugins>
