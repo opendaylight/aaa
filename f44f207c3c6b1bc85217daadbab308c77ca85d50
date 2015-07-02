@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_de5ae082",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-07-02T14:28:46Z",
+      "side": 1,
+      "message": "should this have a leading \"/\"?",
+      "range": {
+        "startLine": 122,
+        "startChar": 29,
+        "endLine": 122,
+        "endChar": 31
+      },
+      "revId": "f44f207c3c6b1bc85217daadbab308c77ca85d50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
