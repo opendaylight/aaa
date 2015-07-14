@@ -29,6 +29,7 @@ import org.opendaylight.aaa.idm.model.User;
 import org.opendaylight.aaa.idm.model.Users;
 import org.opendaylight.aaa.idm.persistence.DomainStore;
 import org.opendaylight.aaa.idm.persistence.GrantStore;
+import org.opendaylight.aaa.idm.persistence.MD5Calculator;
 import org.opendaylight.aaa.idm.persistence.RoleStore;
 import org.opendaylight.aaa.idm.persistence.StoreException;
 import org.opendaylight.aaa.idm.persistence.UserStore;
@@ -111,7 +112,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
               throw new AuthenticationException("User :" + creds.username() + " does not exist");
            }
            user = userList.get(0);
-           if (!creds.password().equalsIgnoreCase(user.getPassword())) {
+           if (!MD5Calculator.getMD5(creds.password(),user.getSalt()).equals(user.getPassword())) {
               throw new AuthenticationException("UserName / Password not found");
            }
 

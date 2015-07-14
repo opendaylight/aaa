@@ -14,28 +14,26 @@ package org.opendaylight.aaa.idm.rest;
  *
  */
 
-import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
+import org.opendaylight.aaa.idm.IdmLightProxy;
+import org.opendaylight.aaa.idm.model.IDMError;
+import org.opendaylight.aaa.idm.model.User;
+import org.opendaylight.aaa.idm.model.Users;
+import org.opendaylight.aaa.idm.persistence.StoreException;
+import org.opendaylight.aaa.idm.persistence.UserStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.List;
-import java.util.ArrayList;
-import org.opendaylight.aaa.idm.model.Users;
-import org.opendaylight.aaa.idm.model.User;
-import org.opendaylight.aaa.idm.model.IDMError;
-import org.opendaylight.aaa.idm.persistence.UserStore;
-import org.opendaylight.aaa.idm.persistence.StoreException;
-import org.opendaylight.aaa.idm.IdmLightProxy;
 
 @Path("/v1/users")
 public class UserHandler {
@@ -88,6 +86,7 @@ public class UserHandler {
       }
       // obsfucate pwd
       user.setPassword("*********");
+      user.setSalt("*********");
       return Response.ok(user).build();
    }
 
