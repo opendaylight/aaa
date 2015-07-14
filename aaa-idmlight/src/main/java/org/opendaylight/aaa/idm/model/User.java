@@ -25,6 +25,7 @@ public class User {
    private Boolean enabled;
    private String email;
    private String password;
+   private String salt;
 
    public Integer getUserid() {
       return userid;
@@ -74,5 +75,12 @@ public class User {
       return password;
    }
 
+   public void setSalt(String s){
+       this.salt = s;
+   }
+
+   public String getSalt(){
+       return this.salt;
+   }
 }
 

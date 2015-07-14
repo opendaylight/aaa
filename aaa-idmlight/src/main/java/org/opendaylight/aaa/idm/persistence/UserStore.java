@@ -38,6 +38,7 @@ public class UserStore {
    protected final static String SQL_PASSWORD       = "password";
    protected final static String SQL_DESCR          = "description";
    protected final static String SQL_ENABLED        = "enabled";
+   protected final static String SQL_SALT           = "salt";
    public final static int       MAX_FIELD_LEN      = 128;
 
    protected Connection getDBConnect() throws StoreException {
@@ -71,6 +72,7 @@ public class UserStore {
                          "email      VARCHAR(128)      NOT NULL, " +
                          "password   VARCHAR(128)      NOT NULL, " +
                          "description VARCHAR(128)     NOT NULL, " +
+                         "salt        VARCHAR(15)      NOT NULL, " +
                          "enabled     INTEGER          NOT NULL)" ;
            stmt.executeUpdate(sql);
            stmt.close();
@@ -110,6 +112,7 @@ protected void finalize () throws Throwable {
          user.setPassword(rs.getString(SQL_PASSWORD));
          user.setDescription(rs.getString(SQL_DESCR));
          user.setEnabled(rs.getInt(SQL_ENABLED)==1?true:false);
+         user.setSalt(rs.getString(SQL_SALT));
       }
       catch (SQLException sqle) {
          logger.error( "SQL Exception : " + sqle);
@@ -203,13 +206,15 @@ protected void finalize () throws Throwable {
        int key=0;
        Connection conn = dbConnect();
        try {
-          String query = "insert into users (name,email,password,description,enabled) values(?,?,?,?,?)";
+          user.setSalt(SHA256Calculator.generateSALT());
+          String query = "insert into users (name,email,password,description,enabled,salt) values(?,?,?,?,?,?)";
           PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
           statement.setString(1,user.getName());
           statement.setString(2,user.getEmail());
-          statement.setString(3,user.getPassword());
+          statement.setString(3,SHA256Calculator.getSHA256(user.getPassword(),user.getSalt()));
           statement.setString(4,user.getDescription());
           statement.setInt(5,user.getEnabled()?1:0);
+          statement.setString(6, user.getSalt());
           int affectedRows = statement.executeUpdate();
           if (affectedRows == 0) {
              throw new StoreException("Creating user failed, no rows affected.");
@@ -254,7 +259,7 @@ protected void finalize () throws Throwable {
          savedUser.setEmail(user.getEmail());
       }
       if (user.getPassword()!=null) {
-         savedUser.setPassword(user.getPassword());
+         savedUser.setPassword(SHA256Calculator.getSHA256(user.getPassword(),user.getSalt()));
       }
 
       Connection conn = dbConnect();
