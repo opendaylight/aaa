@@ -18,6 +18,7 @@
   </prerequisites>
 
   <modules>
+    <!--module>tinyradius</module-->
     <module>aaa-authn-api</module>
     <module>aaa-authn</module>
     <module>aaa-idp-mapping</module>

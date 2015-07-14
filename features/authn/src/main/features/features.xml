@@ -55,6 +55,18 @@
         <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/{{VERSION}}</bundle>
+        <bundle>wrap:mvn:com.unboundid/unboundid-ldapsdk/2.3.8</bundle>
+        <configfile finalname="/etc/ldap.cfg">
+            mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}/cfg/config
+        </configfile>
+        <configfile finalname="/etc/radius.cfg">
+            mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}/cfg/config2
+        </configfile>
+        <configfile finalname="/etc/default_dictionary.txt">
+            mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}/cfg/config3
+        </configfile>
+        <bundle>wrap:mvn:org.tinyradius/tinyradius/1.0</bundle>
+        <bundle>wrap:mvn:commons-logging/commons-logging/1.1</bundle>
 
         <!--	<bundle>wrap:mvn:org.xerial/sqlite-jdbc/{{VERSION}}</bundle> -->
         <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
@@ -109,6 +121,18 @@
         <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/{{VERSION}}</bundle>
         <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
+        <bundle>wrap:mvn:com.unboundid/unboundid-ldapsdk/2.3.8</bundle>
+        <configfile finalname="/etc/ldap.cfg">
+            mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}/cfg/config
+        </configfile>
+        <configfile finalname="/etc/radius.cfg">
+            mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}/cfg/config2
+        </configfile>
+        <configfile finalname="/etc/default_dictionary.txt">
+            mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}/cfg/config3
+        </configfile>
+        <bundle>wrap:mvn:org.tinyradius/tinyradius/1.0</bundle>
+        <bundle>wrap:mvn:commons-logging/commons-logging/1.1</bundle>
 
         <!-- Federation -->
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}</bundle>

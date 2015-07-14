@@ -186,6 +186,44 @@
             <type>cfg</type>
             <classifier>config</classifier>
         </dependency>
+        <!-- Radius -->
+        <dependency>
+            <groupId>org.tinyradius</groupId>
+            <artifactId>tinyradius</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <!-- LDAP -->
+        <dependency>
+            <groupId>com.unboundid</groupId>
+            <artifactId>unboundid-ldapsdk</artifactId>
+            <version>2.3.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-idmlight</artifactId>
+            <version>${project.version}</version>
+            <type>cfg</type>
+            <classifier>config</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-idmlight</artifactId>
+            <version>${project.version}</version>
+            <type>cfg</type>
+            <classifier>config2</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-idmlight</artifactId>
+            <version>${project.version}</version>
+            <type>cfg</type>
+            <classifier>config3</classifier>
+        </dependency>
 
         <!-- AuthN MD-SAL Cache dependencies -->
 

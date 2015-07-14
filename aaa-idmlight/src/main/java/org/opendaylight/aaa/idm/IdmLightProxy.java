@@ -20,6 +20,8 @@ import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.PasswordCredentials;
+import org.opendaylight.aaa.idm.ldap.LDAPConfiguration;
+import org.opendaylight.aaa.idm.ldap.LDAPIntegration;
 import org.opendaylight.aaa.idm.model.Domain;
 import org.opendaylight.aaa.idm.model.Domains;
 import org.opendaylight.aaa.idm.model.Grant;
@@ -54,8 +56,55 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
         claimCache.put(DEFAULT_DOMAIN, new ConcurrentHashMap<PasswordCredentials, Claim>());
     }
 
+    public Claim createUserInStore(PasswordCredentials creds, String domain) throws Exception {
+        try {
+            User localUser = new User();
+            localUser.setName(creds.username());
+            String userID = getUserId(creds.username());
+            // Local User does not exist, create it with a default user role
+            if (localUser == null) {
+                JSUser jsuser = new JSUser();
+                jsuser.setName(creds.username());
+                String salt = MD5Calculator.generateSALT();
+                jsuser.setSALT(salt);
+                jsuser.setUserid(salt.hashCode());
+                jsuser.setPassword(MD5Calculator.getMD5(
+                        MD5Calculator.generateSALT(), salt));
+                jsuser.setRoleid(2);
+                jsuser.setExternalUser(true);
+                // getting random number for userId\
+                int n = 100000 + random.nextInt(900000);
+                jsuser.setUserid(n);
+                jsuser.write();
+                localUser = (User) jsuser.get();
+            }
+
+            Grant g = MFactory.newGrant();
+            g.setUserid(localUser.getUserid());
+            g = (Grant) g.get();
+
+            ClaimBuilder claim = new ClaimBuilder();
+
+            claim.setUserId(localUser.getUserid().toString());
+            claim.setUser(creds.username());
+            claim.setDomain(domain);
+            claim.addRole(g.getRoleid().toString());
+            return claim.build();
+        } catch (Exception err) {
+            throw new Exception("Unable to create a user with "
+                    + creds.username() + " in local Store.", err.getCause());
+        }
+    }
+
     @Override
     public Claim authenticate(PasswordCredentials creds, String domain) {
+        if(LDAPConfiguration.getInstance().isEnabled()){
+            try {
+                LDAPIntegration.authenticateSSL(creds, domain);
+            } catch (Exception e) {
+                logger.error("Failed to authenticate user "+creds.username()+" with LDAP server.",e);
+            }
+        }
         String domainName = (domain == null) ? DEFAULT_DOMAIN : domain;
         // FIXME: Add cache invalidation
         Map<PasswordCredentials, Claim> cache = claimCache.get(domainName);
