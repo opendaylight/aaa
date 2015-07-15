@@ -69,20 +69,37 @@ public class UserHandler {
    @Produces("application/json")
    public Response getUser(@PathParam("id") String id)  {
       logger.info("get /users/" + id);
+      if (id == null || id.equals("")) {
+          return new IDMError(400, "Please provide a user id or username", "").response();
+      }
+
       User user=null;
-      long longId=0;
-      try {
-         longId=Long.parseLong(id);
+
+      // ** hack, allow to get a user by name and not only by id
+      // If there is a better way to do it, please let me know...saichler@cisco.com
+      if (id.indexOf("=") == -1) {
+          long longId=0;
+          try {
+             longId=Long.parseLong(id);
+          }
+          catch (NumberFormatException nfe) {
+             return new IDMError(400,"invalid user id :" + id,"").response();
+          }
+          try {
+             user = userStore.getUser(longId);
+          }
+          catch(StoreException se) {
+             return new IDMError(500,"internal error getting user",se.message).response();
+          }
+      }else{
+          String username = id.substring(id.indexOf("=") + 1).trim();
+          try {
+            user = userStore.findUserByName(username);
+        } catch (StoreException e) {
+            return new IDMError(500,"internal error getting user",e.message).response();
+        }
       }
-      catch (NumberFormatException nfe) {
-         return new IDMError(400,"invalid user id :" + id,"").response();
-      }
-      try {
-         user = userStore.getUser(longId);
-      }
-      catch(StoreException se) {
-         return new IDMError(500,"internal error getting user",se.message).response();
-      }
+
       if (user==null) {
          return new IDMError(404,"user not found! id:" + id,"").response();
       }
