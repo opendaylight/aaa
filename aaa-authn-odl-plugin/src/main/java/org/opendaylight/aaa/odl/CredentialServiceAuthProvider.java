@@ -7,6 +7,7 @@
  */
 package org.opendaylight.aaa.odl;
 
+import java.util.Map;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.CredentialAuth;
@@ -21,17 +22,23 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * AuthProvider implementation delegating to AD-SAL UserManager instance.
+ * AuthProvider implementation delegating to AAA CredentialAuth&lt;PasswordCredentials&gt; instance.
  */
-public final class CredentialServiceAuthProvider implements AuthProvider {
+public final class CredentialServiceAuthProvider implements AuthProvider, AutoCloseable {
     private static final Logger logger = LoggerFactory.getLogger(CredentialServiceAuthProvider.class);
+
+    /**
+     * Singleton instance with delayed instantiation
+     */
+    public static volatile Map.Entry<BundleContext, CredentialServiceAuthProvider> INSTANCE;
 
     // TODO what domain should be used for this ? can we leave null ?
     public static final String DOMAIN = null;
 
     // FIXME CredentialAuth is generic and it causes warnings during compilation
     // Maybe there should be a PasswordCredentialAuth implements CredentialAuth<PasswordCredentials>
-    private CredentialAuth<PasswordCredentials> nullableCredService;
+    private volatile CredentialAuth<PasswordCredentials> nullableCredService;
+    private final ServiceTracker<CredentialAuth, CredentialAuth> listenerTracker;
 
     public CredentialServiceAuthProvider(final BundleContext bundleContext) {
 
@@ -57,12 +64,12 @@ public final class CredentialServiceAuthProvider implements AuthProvider {
                 }
             }
         };
-        final ServiceTracker<CredentialAuth, CredentialAuth> listenerTracker = new ServiceTracker<>(bundleContext, CredentialAuth.class, customizer);
+        listenerTracker = new ServiceTracker<>(bundleContext, CredentialAuth.class, customizer);
         listenerTracker.open();
     }
 
     /**
-     * Authenticate user. This implementation tracks IUserManager and delegates the decision to it. If the service is not
+     * Authenticate user. This implementation tracks CredentialAuth<PasswordCredentials> and delegates the decision to it. If the service is not
      * available, IllegalStateException is thrown.
      */
     @Override
@@ -82,6 +89,12 @@ public final class CredentialServiceAuthProvider implements AuthProvider {
 
         logger.debug("Authentication result for user '{}' : {}", username, claim.domain());
         return true;
+    }
+
+    @Override
+    public void close() throws Exception {
+        listenerTracker.close();
+        nullableCredService = null;
     }
 
     private static final class PasswordCredentialsWrapper implements PasswordCredentials {
