@@ -42,6 +42,7 @@ public class UserHandler {
    private static Logger logger = LoggerFactory.getLogger(UserHandler.class);
    private static UserStore userStore = new UserStore();
    protected final static String DEFAULT_PWD = "changeme";
+   public static final String REDACTED_PASSWORD = "**********";
 
    @GET
    @Produces("application/json")
@@ -57,7 +58,7 @@ public class UserHandler {
 
       // obsfucate pwd
       for (int z=0;z<users.getUsers().size();z++) {
-          users.getUsers().get(z).setPassword("**********");
+          users.getUsers().get(z).setPassword(REDACTED_PASSWORD);
       }
 
       return Response.ok(users).build();
@@ -87,7 +88,7 @@ public class UserHandler {
          return new IDMError(404,"user not found! id:" + id,"").response();
       }
       // obsfucate pwd
-      user.setPassword("*********");
+      user.setPassword(REDACTED_PASSWORD);
       return Response.ok(user).build();
    }
 
@@ -167,6 +168,7 @@ public class UserHandler {
             return new IDMError(404,"user id not found id :"+id,"").response();
          }
          IdmLightProxy.clearClaimCache();
+         user.setPassword(password);
          return Response.status(200).entity(user).build();
       }
       catch (StoreException se) {
