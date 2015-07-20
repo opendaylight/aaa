@@ -229,8 +229,8 @@ public class SssdClaimAuth implements ClaimAuth {
             } else if (value == null) {
                 generator.write(name, JsonValue.NULL);
             } else {
-                throw new InvalidValueException(String.format(
-                    "claim contains an unsupported value type "
+                logger.warn(String.format(
+                    "ignoring claim unsupported value type "
                     + "entry %s has type %s",
                     name, value.getClass().getSimpleName()));
             }
