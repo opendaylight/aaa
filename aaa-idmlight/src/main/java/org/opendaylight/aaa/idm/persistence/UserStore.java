@@ -67,7 +67,7 @@ public class UserStore {
             stmt = conn.createStatement();
             String sql = "CREATE TABLE users " +
                          "(userid    INTEGER PRIMARY KEY AUTO_INCREMENT," +
-                         "name       VARCHAR(128)      NOT NULL, " +
+                         "name       VARCHAR(128)      UNIQUE NOT NULL, " +
                          "email      VARCHAR(128)      NOT NULL, " +
                          "password   VARCHAR(128)      NOT NULL, " +
                          "description VARCHAR(128)     NOT NULL, " +
