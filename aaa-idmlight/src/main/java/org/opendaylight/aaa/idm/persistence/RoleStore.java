@@ -64,7 +64,7 @@ public class RoleStore {
             stmt = conn.createStatement();
             String sql = "CREATE TABLE ROLES " +
                          "(roleid    INTEGER PRIMARY KEY AUTO_INCREMENT," +
-                         "name        VARCHAR(128)      NOT NULL, " +
+                         "name        VARCHAR(128)      UNIQUE NOT NULL, " +
                          "description VARCHAR(128)      NOT NULL)";
            stmt.executeUpdate(sql);
            stmt.close();
