@@ -199,6 +199,41 @@ protected void finalize () throws Throwable {
        }
    }
 
+   /**
+    * extracts records related to a user with <code>username</code> within the scope of
+    * the domain represented by <code>domainId</code>
+    *
+    * @param username
+    * @param domainId
+    * @return
+    * @throws StoreException
+    */
+   public ResultSet getUserQualifications(String username, int domainId) throws StoreException {
+      Connection conn = dbConnect();
+      try {
+         // produces a table with tuples as follows:
+         // (userid,username,roleid,rolename,domainid,domainname,grantid)
+         String query =
+                 "SELECT * FROM "
+               + "    (SELECT userid, userqualifiedgrants.name AS username, "
+               + "     userqualifiedgrants.roleid, roles.name AS rolename, domainid, "
+               + "     domainname, grantid FROM roles JOIN "
+               + "         (SELECT domainid, domainname, grantid, roleid, users.userid, users.name FROM "
+               + "             (SELECT domains.domainid AS domainid, domains.name AS domainname,"
+               + "              grants.grantid AS grantid, grants.roleid AS roleid, grants.userid AS userid FROM "
+               + "              domains JOIN grants ON (domains.domainid=grants.domainid)) AS domainqualifiedgrants "
+               + "                  JOIN users ON (users.userid=domainqualifiedgrants.userid)) AS userqualifiedgrants "
+               + "                  WHERE (roles.roleid=userqualifiedgrants.roleid)) WHERE username=? AND domainid=?";
+         PreparedStatement statement = conn.prepareStatement(query);
+         statement.setString(1,username);
+         statement.setInt(2, domainId);
+         debug("query string: " + statement.toString());
+         return statement.executeQuery();
+      } catch (SQLException e) {
+         throw new StoreException("SQL Exception: " + e);
+      }
+   }
+
    public User createUser(User user) throws StoreException {
        int key=0;
        Connection conn = dbConnect();

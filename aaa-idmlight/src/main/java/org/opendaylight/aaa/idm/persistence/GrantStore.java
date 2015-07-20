@@ -24,8 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.opendaylight.aaa.idm.IdmLightApplication;
+import org.opendaylight.aaa.idm.model.Domain;
 import org.opendaylight.aaa.idm.model.Grant;
 import org.opendaylight.aaa.idm.model.Grants;
+import org.opendaylight.aaa.idm.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +39,9 @@ public class GrantStore {
    protected final static String SQL_TENANTID       = "domainid";
    protected final static String SQL_USERID         = "userid";
    protected final static String SQL_ROLEID         = "roleid";
+
+   private UserStore userStore = new UserStore();
+   private DomainStore domainStore = new DomainStore();
 
    protected Connection getDBConnect() throws StoreException {
       dbConnection = IdmLightApplication.getConnection(dbConnection);
@@ -201,8 +206,8 @@ protected void finalize () throws Throwable {
       try {
           PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM GRANTS WHERE domainid = ? AND userid = ? AND roleid = ? ");
           pstmt.setInt(1, did);
-          pstmt.setInt(1, uid);
-          pstmt.setInt(1, rid);
+          pstmt.setInt(2, uid);
+          pstmt.setInt(3, rid);
           debug("query string: " + pstmt.toString());
           ResultSet rs = pstmt.executeQuery();
          if (rs.next()) {
@@ -227,8 +232,33 @@ protected void finalize () throws Throwable {
 
 
    public Grant createGrant(Grant grant) throws StoreException {
+      Connection conn = dbConnect();
+
+      // check to make sure that a user with the same name doesn't already
+      // control the requested domain.
+      int requestingUserId = grant.getUserid();
+      User requestingUser = userStore.getUser(requestingUserId);
+      String requestingUserName = requestingUser.getName();
+      String domainName = domainStore.getDomain(grant.getDomainid()).getName();
+
+      ResultSet existingUsersMappedToRequestedGrantDomain =
+            userStore.getUserQualifications(requestingUserName, grant.getDomainid());
+      int existingUserId;
+      try {
+         while(existingUsersMappedToRequestedGrantDomain.next()) {
+            existingUserId = existingUsersMappedToRequestedGrantDomain.getInt("userid");
+            if (requestingUserId != existingUserId) {
+               String exceptionMessage =
+                     String.format("Another user with the same username \"%s\" is already registered for \"%s\"",
+                           requestingUserName, domainName);
+               throw new StoreException(exceptionMessage);
+            }
+         }
+      } catch (SQLException e) {
+         throw new StoreException("SQL Exception: " + e);
+      }
+
        int key=0;
-       Connection conn = dbConnect();
        try {
           String query = "insert into grants  (description,domainid,userid,roleid) values(?,?,?,?)";
           PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
