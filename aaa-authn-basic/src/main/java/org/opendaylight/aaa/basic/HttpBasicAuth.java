@@ -11,6 +11,8 @@ package org.opendaylight.aaa.basic;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.MultivaluedMap;
+
 import org.opendaylight.aaa.AuthenticationBuilder;
 import org.opendaylight.aaa.PasswordCredentialBuilder;
 import org.opendaylight.aaa.api.Authentication;
@@ -38,7 +40,7 @@ public class HttpBasicAuth implements TokenAuth {
     volatile CredentialAuth<PasswordCredentials> ca;
 
     @Override
-    public Authentication validate(Map<String, List<String>> headers)
+    public Authentication validate(Map<String, List<String>> headers, MultivaluedMap<String, String> queryParameters)
             throws AuthenticationException {
         if (headers.containsKey(AUTH_HEADER)) {
             final String authHeader = headers.get(AUTH_HEADER).get(0);
@@ -48,7 +50,11 @@ public class HttpBasicAuth implements TokenAuth {
                         .substring(BASIC_PREFIX.length()))).split(AUTH_SEP);
                 PasswordCredentials pc = new PasswordCredentialBuilder()
                         .setUserName(creds[0]).setPassword(creds[1]).build();
-                Claim claim = ca.authenticate(pc, null);
+                String domainParameter = null;
+                if (queryParameters != null) {
+                   domainParameter = queryParameters.getFirst("domainname");
+                }
+                Claim claim = ca.authenticate(pc, domainParameter);
                 return new AuthenticationBuilder(claim).build();
             }
         }

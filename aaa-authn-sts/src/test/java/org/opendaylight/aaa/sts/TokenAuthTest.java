@@ -87,7 +87,7 @@ public class TokenAuthTest extends JerseyTest {
         try {
             // Mock a laxed tokenauth...
             TokenAuth ta = mock(TokenAuth.class);
-            when(ta.validate(anyMap())).thenReturn(auth);
+            when(ta.validate(anyMap(),null)).thenReturn(auth);
             ServiceLocator.INSTANCE.ta.add(ta);
             testGet();
         } finally {

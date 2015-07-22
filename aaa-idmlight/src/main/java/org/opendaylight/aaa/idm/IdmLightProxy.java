@@ -128,6 +128,11 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
                Grants grants = grantStore.getGrants(domain.getDomainid(),
                      user.getUserid());
                List<Grant> grantList = grants.getGrants();
+               if (grantList.size() == 0) {
+                  String exceptionMessage = String.format("%s doesn't have any grants",
+                        user.getName());
+                  throw new AuthenticationException(exceptionMessage);
+               }
                for (int z = 0; z < grantList.size(); z++) {
                   Grant grant = grantList.get(z);
                   Role role = roleStore.getRole(grant.getRoleid());

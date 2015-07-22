@@ -58,7 +58,7 @@ public class HttpBasicAuthTest {
                 "Authorization",
                 Arrays.asList("Basic "
                         + new String(Base64.encode(data.getBytes("utf-8")))));
-        Claim claim = auth.validate(headers);
+        Claim claim = auth.validate(headers, null);
         assertNotNull(claim);
         assertEquals(USERNAME, claim.user());
         assertEquals("admin", claim.roles().iterator().next());
@@ -72,6 +72,6 @@ public class HttpBasicAuthTest {
                 "Authorization",
                 Arrays.asList("Basic "
                         + new String(Base64.encode(data.getBytes("utf-8")))));
-        auth.validate(headers);
+        auth.validate(headers,null);
     }
 }

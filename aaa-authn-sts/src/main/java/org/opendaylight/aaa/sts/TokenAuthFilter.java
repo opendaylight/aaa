@@ -68,7 +68,7 @@ public class TokenAuthFilter implements ContainerRequestFilter {
             // Go through and invoke other TokenAuth first...
             for (TokenAuth ta : ServiceLocator.INSTANCE.ta) {
                 try {
-                    Authentication auth = ta.validate(headers);
+                    Authentication auth = ta.validate(headers,request.getQueryParameters());
                     if (auth != null) {
                         ServiceLocator.INSTANCE.as.set(auth);
                         return request;

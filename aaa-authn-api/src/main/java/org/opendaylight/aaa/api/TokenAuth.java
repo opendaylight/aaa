@@ -11,6 +11,8 @@ package org.opendaylight.aaa.api;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.MultivaluedMap;
+
 /**
  * An interface for in-bound token authentication.
  *
@@ -20,11 +22,13 @@ public interface TokenAuth {
 
     /**
      * Validate the given token contained in the in-bound headers.
+     *
      * <p>
      * If there is no token signature in the given headers for this
      * implementation, this method should return a null. If there is an
      * applicable token signature, but the token validation fails, this method
      * should throw an {@link AuthenticationException}.
+     * </p>
      *
      * @param headers
      *            headers containing token to validate
@@ -32,7 +36,7 @@ public interface TokenAuth {
      * @throws AuthenticationException
      *             if authentication fails
      */
-    Authentication validate(Map<String, List<String>> headers)
+    Authentication validate(Map<String, List<String>> headers, MultivaluedMap<String, String> queryParams)
             throws AuthenticationException;
 
 }

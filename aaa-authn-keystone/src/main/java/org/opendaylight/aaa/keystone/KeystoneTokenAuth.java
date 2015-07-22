@@ -11,6 +11,8 @@ package org.opendaylight.aaa.keystone;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.MultivaluedMap;
+
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.slf4j.Logger;
@@ -28,7 +30,7 @@ public class KeystoneTokenAuth implements TokenAuth {
     static final String TOKEN = "X-Auth-Token";
 
     @Override
-    public Authentication validate(Map<String, List<String>> headers) {
+    public Authentication validate(Map<String, List<String>> headers, MultivaluedMap<String,String> queryParameters) {
         if (!headers.containsKey(TOKEN)) {
             return null;    // Not a Keystone token
         }
