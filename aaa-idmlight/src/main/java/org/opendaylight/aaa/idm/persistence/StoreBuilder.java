@@ -8,34 +8,24 @@
  */
 package org.opendaylight.aaa.idm.persistence;
 
-import org.opendaylight.aaa.idm.persistence.DomainStore;
-import org.opendaylight.aaa.idm.model.Domain;
-import org.opendaylight.aaa.idm.persistence.UserStore;
-import org.opendaylight.aaa.idm.model.User;
-import org.opendaylight.aaa.idm.persistence.RoleStore;
-import org.opendaylight.aaa.idm.model.Role;
-import org.opendaylight.aaa.idm.persistence.GrantStore;
-import org.opendaylight.aaa.idm.model.Grant;
+import java.io.File;
 
+import org.opendaylight.aaa.idm.IdmLightApplication;
+import org.opendaylight.aaa.idm.model.Domain;
+import org.opendaylight.aaa.idm.model.Grant;
+import org.opendaylight.aaa.idm.model.Role;
+import org.opendaylight.aaa.idm.model.User;
 /**
  *
  * @author peter.mellquist@hp.com 
  *
  */
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-
-import org.opendaylight.aaa.idm.IdmLightApplication;
-
 public class StoreBuilder {
    private static Logger logger = LoggerFactory.getLogger(StoreBuilder.class);
-   private static DomainStore domainStore = new DomainStore();
-   private static UserStore userStore = new UserStore();
-   private static RoleStore roleStore = new RoleStore();
-   private static GrantStore grantStore = new GrantStore();
+   private static JDBCObjectStore store = new JDBCObjectStore();
    public static String DEFAULT_DOMAIN = "sdn";
    // IdmLight appends ".mv.db" to the end of a database file name
    private static final String IDM_LIGHT_EXTENSION = ".mv.db";
@@ -65,7 +55,7 @@ public class StoreBuilder {
          domain.setEnabled(true);
          domain.setName(DEFAULT_DOMAIN);
          domain.setDescription("default odl sdn domain");
-         domain = domainStore.createDomain(domain);
+         domain = (Domain)store.createPOJO(domain);
       } catch (StoreException se) {
          logger.error("StoreException : " + se);
       }
@@ -77,7 +67,7 @@ public class StoreBuilder {
          adminUser.setDescription("admin user");
          adminUser.setEmail("");
          adminUser.setPassword("admin");
-         adminUser = userStore.createUser(adminUser);
+         adminUser = (User)store.createPOJO(adminUser);
 
          // user user
          userUser.setEnabled(true);
@@ -85,7 +75,7 @@ public class StoreBuilder {
          userUser.setDescription("user user");
          userUser.setEmail("");
          userUser.setPassword("user");
-         userUser = userStore.createUser(userUser);
+         userUser = (User)store.createPOJO(userUser);
       } catch (StoreException se) {
          logger.error("StoreException : " + se);
       }
@@ -94,10 +84,10 @@ public class StoreBuilder {
       try {
          adminRole.setName("admin");
          adminRole.setDescription("a role for admins");
-         adminRole = roleStore.createRole(adminRole);
+         adminRole = (Role)store.createPOJO(adminRole);
          userRole.setName("user");
          userRole.setDescription("a role for users");
-         userRole = roleStore.createRole(userRole);
+         userRole = (Role)store.createPOJO(userRole);
       } catch (StoreException se) {
          logger.error("StoreException : " + se);
       }
@@ -109,19 +99,19 @@ public class StoreBuilder {
          grant.setDomainid(domain.getDomainid());
          grant.setUserid(userUser.getUserid());
          grant.setRoleid(userRole.getRoleid());
-         grant = grantStore.createGrant(grant);
+         grant = (Grant)store.createPOJO(grant);
 
          grant.setDescription("admin with user role");
          grant.setDomainid(domain.getDomainid());
          grant.setUserid(adminUser.getUserid());
          grant.setRoleid(userRole.getRoleid());
-         grant = grantStore.createGrant(grant);
+         grant = (Grant)store.createPOJO(grant);
 
          grant.setDescription("admin with admin role");
          grant.setDomainid(domain.getDomainid());
          grant.setUserid(adminUser.getUserid());
          grant.setRoleid(adminRole.getRoleid());
-         grant = grantStore.createGrant(grant);
+         grant = (Grant)store.createPOJO(grant);
       } catch (StoreException se) {
          logger.error("StoreException : " + se);
       }

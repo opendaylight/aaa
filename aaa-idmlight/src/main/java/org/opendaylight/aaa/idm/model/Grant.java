@@ -17,6 +17,9 @@ package org.opendaylight.aaa.idm.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.opendaylight.aaa.idm.persistence.JDBCStoreHashValue;
+import org.opendaylight.aaa.idm.persistence.JDBCStoreKey;
+
 @XmlRootElement(name = "grant")
 public class Grant {
    private Integer grantid;
@@ -29,6 +32,7 @@ public class Grant {
       return grantid;
    }
 
+   @JDBCStoreHashValue
    public void setGrantid(Integer id) {
       this.grantid = id;
    }
@@ -37,6 +41,7 @@ public class Grant {
       return description;
    }
 
+   @JDBCStoreKey
    public void setDescription(String description) {
       this.description = description;
    }

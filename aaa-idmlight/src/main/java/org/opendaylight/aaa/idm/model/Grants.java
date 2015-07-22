@@ -14,14 +14,32 @@ package org.opendaylight.aaa.idm.model;
  *
  */
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlElement;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.opendaylight.aaa.idm.persistence.JDBCObjectStore;
+import org.opendaylight.aaa.idm.persistence.StoreException;
 
 @XmlRootElement(name = "grants")
 public class Grants {
    private List<Grant> grants = new ArrayList<Grant>();
+
+   public Grants(){
+       JDBCObjectStore store = null;
+       try {
+           store = new JDBCObjectStore();
+           List<Object> allgrants = store.getAllObjects(new Grant());
+           for(Object g:allgrants){
+               grants.add((Grant)g);
+           }
+       } catch (StoreException e) {
+           e.printStackTrace();
+       }finally {
+           if(store!=null) store.closeConnection();
+       }
+   }
 
    public void setGrants(List<Grant> grants) {
       this.grants = grants;

@@ -14,53 +14,42 @@ package org.opendaylight.aaa.idm.rest;
  *
  */
 
-import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
+import org.opendaylight.aaa.idm.IdmLightProxy;
+import org.opendaylight.aaa.idm.model.IDMError;
+import org.opendaylight.aaa.idm.model.User;
+import org.opendaylight.aaa.idm.model.Users;
+import org.opendaylight.aaa.idm.persistence.JDBCObjectStore;
+import org.opendaylight.aaa.idm.persistence.StoreException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.List;
-import java.util.ArrayList;
-import org.opendaylight.aaa.idm.model.Users;
-import org.opendaylight.aaa.idm.model.User;
-import org.opendaylight.aaa.idm.model.IDMError;
-import org.opendaylight.aaa.idm.persistence.UserStore;
-import org.opendaylight.aaa.idm.persistence.StoreException;
-import org.opendaylight.aaa.idm.IdmLightProxy;
 
 @Path("/v1/users")
 public class UserHandler {
    private static Logger logger = LoggerFactory.getLogger(UserHandler.class);
-   private static UserStore userStore = new UserStore();
+   private static JDBCObjectStore userStore = new JDBCObjectStore();
    protected final static String DEFAULT_PWD = "changeme";
-   public static final String REDACTED_PASSWORD = "**********";
 
    @GET
    @Produces("application/json")
    public Response getUsers() {
       logger.info("get all users");
-      Users users=null;
-      try {
-         users = userStore.getUsers();
-      }
-      catch (StoreException se) {
-         return new IDMError(500,"internal error getting users",se.message).response();
-      }
-
+      Users users = new Users();
       // obsfucate pwd
       for (int z=0;z<users.getUsers().size();z++) {
-          users.getUsers().get(z).setPassword(REDACTED_PASSWORD);
+          users.getUsers().get(z).setPassword("**********");
       }
-
       return Response.ok(users).build();
    }
 
@@ -70,16 +59,15 @@ public class UserHandler {
    @Produces("application/json")
    public Response getUser(@PathParam("id") String id)  {
       logger.info("get /users/" + id);
-      User user=null;
-      long longId=0;
+      User user=new User();
       try {
-         longId=Long.parseLong(id);
+         user.setUserid(Integer.parseInt(id));
       }
       catch (NumberFormatException nfe) {
          return new IDMError(400,"invalid user id :" + id,"").response();
       }
       try {
-         user = userStore.getUser(longId);
+         user = (User)userStore.getPOJO(user,false);
       }
       catch(StoreException se) {
          return new IDMError(500,"internal error getting user",se.message).response();
@@ -88,7 +76,7 @@ public class UserHandler {
          return new IDMError(404,"user not found! id:" + id,"").response();
       }
       // obsfucate pwd
-      user.setPassword(REDACTED_PASSWORD);
+      user.setPassword("*********");
       return Response.ok(user).build();
    }
 
@@ -107,36 +95,36 @@ public class UserHandler {
          if (user.getName()==null) {
             return new IDMError(400,"user name is required","").response();
          }
-         else if (user.getName().length()>UserStore.MAX_FIELD_LEN) {
-            return new IDMError(400,"user name max length is :" + UserStore.MAX_FIELD_LEN,"").response();
+         else if (user.getName().length()>128) {
+            return new IDMError(400,"user name max length is :" + 128,"").response();
          }
 
          // user description is optional
          if (user.getDescription()==null) {
             user.setDescription("");
          }
-         else if (user.getDescription().length()>UserStore.MAX_FIELD_LEN) {
-            return new IDMError(400,"user description max length is :" + UserStore.MAX_FIELD_LEN,"").response();
+         else if (user.getDescription().length()>128) {
+            return new IDMError(400,"user description max length is :" + 128,"").response();
          }
 
          // user email is optional
          if (user.getEmail()==null) {
             user.setEmail("");
          }
-         else if (user.getEmail().length()>UserStore.MAX_FIELD_LEN) {
-            return new IDMError(400,"user email max length is :" + UserStore.MAX_FIELD_LEN,"").response();
+         else if (user.getEmail().length()>128) {
+            return new IDMError(400,"user email max length is :" + 128,"").response();
          }
 
          // user password optional and will default if not provided
          if (user.getPassword()==null) {
             user.setPassword(DEFAULT_PWD);
          }
-         else if (user.getPassword().length()>UserStore.MAX_FIELD_LEN) {
-            return new IDMError(400,"user password max length is :" + UserStore.MAX_FIELD_LEN,"").response();
+         else if (user.getPassword().length()>128) {
+            return new IDMError(400,"user password max length is :" + 128,"").response();
          }
 
          // create user
-         user = userStore.createUser(user);
+         user = (User)userStore.createPOJO(user);
       }
       catch (StoreException se) {
          return new IDMError(500,"internal error creating user",se.message).response();
@@ -163,12 +151,11 @@ public class UserHandler {
 
       try {
          user.setUserid((int)longId);
-         user = userStore.putUser(user);
+         user = (User)userStore.updatePOJO(user);
          if (user==null) {
             return new IDMError(404,"user id not found id :"+id,"").response();
          }
          IdmLightProxy.clearClaimCache();
-         user.setPassword(REDACTED_PASSWORD);
          return Response.status(200).entity(user).build();
       }
       catch (StoreException se) {
@@ -191,7 +178,7 @@ public class UserHandler {
       try {
          User user = new User();
          user.setUserid((int)longId);
-         user = userStore.deleteUser(user);
+         user = (User)userStore.deletePOJO(user,false);
          if (user==null) {
             return new IDMError(404,"user id not found id :"+id,"").response();
          }

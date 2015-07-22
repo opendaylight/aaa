@@ -14,64 +14,46 @@ package org.opendaylight.aaa.idm.rest;
  *
  */
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
+import org.opendaylight.aaa.idm.IdmLightProxy;
+import org.opendaylight.aaa.idm.model.Claim;
+import org.opendaylight.aaa.idm.model.Domain;
+import org.opendaylight.aaa.idm.model.Domains;
+import org.opendaylight.aaa.idm.model.Grant;
+import org.opendaylight.aaa.idm.model.IDMError;
+import org.opendaylight.aaa.idm.model.Role;
+import org.opendaylight.aaa.idm.model.Roles;
+import org.opendaylight.aaa.idm.model.User;
+import org.opendaylight.aaa.idm.model.UserPwd;
+import org.opendaylight.aaa.idm.persistence.JDBCObjectStore;
+import org.opendaylight.aaa.idm.persistence.StoreException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.List;
-import java.util.ArrayList;
-import org.opendaylight.aaa.idm.model.Domains;
-import org.opendaylight.aaa.idm.model.Domain;
-import org.opendaylight.aaa.idm.model.Users;
-import org.opendaylight.aaa.idm.model.User;
-import org.opendaylight.aaa.idm.model.Roles;
-import org.opendaylight.aaa.idm.model.Role;
-import org.opendaylight.aaa.idm.model.Grants;
-import org.opendaylight.aaa.idm.model.Grant;
-import org.opendaylight.aaa.idm.model.UserPwd;
-import org.opendaylight.aaa.idm.model.Claim;
-import org.opendaylight.aaa.idm.model.IDMError;
-import org.opendaylight.aaa.idm.persistence.DomainStore;
-import org.opendaylight.aaa.idm.persistence.UserStore;
-import org.opendaylight.aaa.idm.persistence.RoleStore;
-import org.opendaylight.aaa.idm.persistence.GrantStore;
-import org.opendaylight.aaa.idm.persistence.UserStore;
-import org.opendaylight.aaa.idm.persistence.StoreException;
-import org.opendaylight.aaa.idm.IdmLightProxy;
 
 @Path("/v1/domains")
 public class DomainHandler {
    private static Logger logger = LoggerFactory.getLogger(DomainHandler.class);
-   private static DomainStore domainStore = new DomainStore();
-   private static UserStore userStore = new UserStore();
-   private static RoleStore roleStore = new RoleStore();
-   private static GrantStore grantStore = new GrantStore();
+   private static JDBCObjectStore store = new JDBCObjectStore();
 
    @GET
    @Produces("application/json")
    public Response getDomains() {
       logger.info("Get /domains");
-      Domains domains=null;
-      try {
-         domains = domainStore.getDomains();
-      }
-      catch (StoreException se) {
-         logger.error("StoreException : " + se);
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Internal error getting domains");
-         idmerror.setDetails(se.message);
-         return Response.status(500).entity(idmerror).build();
-      }
+      Domains domains=new Domains();
       return Response.ok(domains).build();
    }
 
@@ -80,7 +62,7 @@ public class DomainHandler {
    @Produces("application/json")
    public Response getDomain(@PathParam("id") String id)  {
       logger.info("Get /domains/" + id);
-      Domain domain = null;
+      Domain domain = new Domain();
       int domainId=0;
       try {
          domainId= Integer.parseInt(id);
@@ -91,7 +73,8 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         domain = domainStore.getDomain(domainId);
+          domain.setDomainid(domainId);
+         domain = (Domain)store.getPOJO(domain,false);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -124,7 +107,7 @@ public class DomainHandler {
          if (domain.getDescription()==null) {
             domain.setDescription("");
          }
-         domain = domainStore.createDomain(domain);
+         domain = (Domain)store.createPOJO(domain);
       }
       catch (StoreException se) {
          logger.error("StoreException : " + se);
@@ -154,7 +137,7 @@ public class DomainHandler {
 
       try {
          domain.setDomainid(domainId);
-         domain = domainStore.putDomain(domain);
+         domain = (Domain)store.updatePOJO(domain);
          if (domain==null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! Domain id :" + id);
@@ -189,7 +172,7 @@ public class DomainHandler {
       try {
          Domain domain = new Domain();
          domain.setDomainid(domainId);
-         domain = domainStore.deleteDomain(domain);
+         domain = (Domain)store.deletePOJO(domain,false);
          if (domain==null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! Domain id :" + id);
@@ -217,9 +200,9 @@ public class DomainHandler {
                                 @PathParam("uid") String uid,
                                 Grant grant) {
       logger.info("Post /domains/"+did+"/users/"+uid+"/roles");
-      Domain domain=null;
-      User user=null;
-      Role role=null;
+      Domain domain=new Domain();
+      User user=new User();
+      Role role=new Role();
       int domainId=0;
       int userId=0;
       int roleId=0;
@@ -238,7 +221,8 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         domain = domainStore.getDomain(domainId);
+          domain.setDomainid(domainId);
+         domain = (Domain)store.getPOJO(domain,false);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -264,7 +248,8 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         user = userStore.getUser(userId);
+          user.setUserid(userId);
+         user = (User)store.getPOJO(userId,false);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -291,7 +276,8 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         role = roleStore.getRole(roleId);
+         role.setRoleid(roleId);
+         role = (Role)store.getPOJO(role,false);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -308,7 +294,12 @@ public class DomainHandler {
 
       // see if grant already exists for this
       try {
-         Grant existingGrant = grantStore.getGrant(domainId,userId,roleId);
+         Grant existingGrant = new Grant();
+         existingGrant.setDomainid(domainId);
+         existingGrant.setUserid(userId);
+         existingGrant.setRoleid(roleId);
+
+         existingGrant = (Grant)store.getPOJO(existingGrant,false);
          if (existingGrant != null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Grant already exists for did:"+domainId+" uid:"+userId+" rid:"+roleId);
@@ -326,7 +317,7 @@ public class DomainHandler {
 
       // create grant
       try {
-         grant = grantStore.createGrant(grant);
+         grant = (Grant)store.createPOJO(grant);
       }
       catch (StoreException se) {
          logger.error("StoreException : " + se);
@@ -351,7 +342,7 @@ public class DomainHandler {
 
       logger.info("GET /domains/"+did+"/users");
       int domainId=0;
-      Domain domain=null;
+      Domain domain=new Domain();
       Claim claim = new Claim();
       List<Role> roleList = new ArrayList<Role>();
 
@@ -365,7 +356,8 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         domain = domainStore.getDomain(domainId);
+          domain.setDomainid(domainId);
+         domain = (Domain)store.getPOJO(domain,false);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -396,14 +388,15 @@ public class DomainHandler {
 
       // find userid for user
       try {
-         Users users = userStore.getUsers(username);
-         List<User> userList = users.getUsers();
-         if (userList.size()==0) {
+         User user = new User();
+         user.setName(username);
+         user = (User)store.getPOJO(user,true);
+         if (user==null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("did not find username: "+username);
             return Response.status(404).entity(idmerror).build();
          }
-         User user = userList.get(0);
+
          String userPwd = user.getPassword();
          String reqPwd = userpwd.getUserpwd();
          if (!userPwd.equals(reqPwd)) {
@@ -415,11 +408,15 @@ public class DomainHandler {
          claim.setUsername(username);
          claim.setUserid(user.getUserid());
          try {
-            Grants grants = grantStore.getGrants(domainId,user.getUserid());
-            List<Grant> grantsList = grants.getGrants();
-            for (int i=0; i < grantsList.size(); i++) {
-               Grant grant = grantsList.get(i);
-               Role role = roleStore.getRole(grant.getRoleid());
+             Grant grantCriteria = new Grant();
+             grantCriteria.setDomainid(domainId);
+             grantCriteria.setUserid(user.getUserid());             
+             List<Object> grants = store.getPOJOs(grantCriteria, false);
+            for (int i=0; i < grants.size(); i++) {
+               Grant grant = (Grant)grants.get(i);
+               Role role = new Role();
+               role.setRoleid(grant.getRoleid());
+               role = (Role)store.getPOJO(role,false);
                roleList.add(role);
             }
          }
@@ -452,8 +449,8 @@ public class DomainHandler {
       logger.info("GET /domains/"+did+"/users/"+uid+"/roles");
       int domainId=0;
       int userId=0;
-      Domain domain=null;
-      User user=null;
+      Domain domain=new Domain();
+      User user=new User();
       Roles roles = new Roles();
       List<Role> roleList = new ArrayList<Role>();
 
@@ -467,7 +464,8 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         domain = domainStore.getDomain(domainId);
+          domain.setDomainid(domainId);
+         domain = (Domain)store.getPOJO(domain,false);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -492,7 +490,8 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         user = userStore.getUser(userId);
+          user.setUserid(userId);
+         user = (User)store.getPOJO(user,false);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -508,11 +507,15 @@ public class DomainHandler {
       }
 
       try {
-         Grants grants = grantStore.getGrants(domainId,userId);
-         List<Grant> grantsList = grants.getGrants();
-         for (int i=0; i < grantsList.size(); i++) {
-            Grant grant = grantsList.get(i);
-            Role role = roleStore.getRole(grant.getRoleid());
+          Grant grantCriteria = new Grant();
+          grantCriteria.setDomainid(domainId);
+          grantCriteria.setUserid(userId);
+          List<Object> grants = store.getPOJOs(grantCriteria, false);
+         for (int i=0; i < grants.size(); i++) {
+            Grant grant = (Grant)grants.get(i);
+            Role role = new Role();
+            role.setRoleid(grant.getRoleid());
+            role = (Role)store.getPOJO(role,false);
             roleList.add(role);
          }
       }
@@ -537,9 +540,9 @@ public class DomainHandler {
       int domainId=0;
       int userId=0;
       int roleId=0;
-      Domain domain=null;
-      User user=null;
-      Role role=null;
+      Domain domain=new Domain();
+      User user=new User();
+      Role role=new Role();
 
       // validate domain id
       try {
@@ -551,7 +554,8 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         domain = domainStore.getDomain(domainId);
+          domain.setDomainid(domainId);
+         domain = (Domain)store.getPOJO(domain,false);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -576,7 +580,8 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         user = userStore.getUser(userId);
+          user.setUserid(userId);
+         user = (User)store.getPOJO(user,false);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -601,7 +606,8 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         role = roleStore.getRole(roleId);
+          role.setRoleid(roleId);
+         role = (Role)store.getPOJO(role,false);
       }
       catch(StoreException se) {
          logger.error("StoreException : " + se);
@@ -618,13 +624,18 @@ public class DomainHandler {
 
       // see if grant already exists
       try {
-         Grant existingGrant = grantStore.getGrant(domainId,userId,roleId);
+          Grant grantCriteria = new Grant();
+          grantCriteria.setDomainid(domainId);
+          grantCriteria.setUserid(userId);
+          grantCriteria.setRoleid(roleId);
+          
+         Grant existingGrant = (Grant)store.getPOJO(grantCriteria,false);
          if (existingGrant == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Grant does not exist for did:"+domainId+" uid:"+userId+" rid:"+roleId);
             return Response.status(404).entity(idmerror).build();
          }
-         existingGrant = grantStore.deleteGrant(existingGrant);
+         existingGrant = (Grant)store.deletePOJO(grantCriteria,false);
       }
       catch (StoreException se) {
          logger.error("StoreException : " + se);
