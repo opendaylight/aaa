@@ -14,14 +14,32 @@ package org.opendaylight.aaa.idm.model;
  *
  */
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlElement;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.opendaylight.aaa.idm.persistence.JDBCObjectStore;
+import org.opendaylight.aaa.idm.persistence.StoreException;
 
 @XmlRootElement(name = "domains")
 public class Domains {
    private List<Domain> domains = new ArrayList<Domain>();
+
+   public Domains(){
+       JDBCObjectStore store = null;
+       try {
+           store = new JDBCObjectStore();
+           List<Object> alldomains = store.getAllObjects(new Domain());
+           for(Object d:alldomains){
+               domains.add((Domain)d);
+           }
+       } catch (StoreException e) {
+           e.printStackTrace();
+       }finally {
+           if(store!=null) store.closeConnection();
+       }
+   }
 
    public void setDomains(List<Domain> domains) {
       this.domains = domains;

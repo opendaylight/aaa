@@ -17,6 +17,9 @@ package org.opendaylight.aaa.idm.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.opendaylight.aaa.idm.persistence.JDBCStoreHashValue;
+import org.opendaylight.aaa.idm.persistence.JDBCStoreKey;
+
 @XmlRootElement(name = "domain")
 public class Domain {
    private Integer domainid;
@@ -27,7 +30,7 @@ public class Domain {
    public Integer getDomainid() {
       return domainid;
    }
-
+   @JDBCStoreHashValue
    public void setDomainid(Integer id) {
       this.domainid = id;
    }
@@ -35,7 +38,7 @@ public class Domain {
    public String getName() {
       return name;
    }
-
+   @JDBCStoreKey
    public void setName(String name) {
       this.name = name;
    }  

@@ -14,14 +14,32 @@ package org.opendaylight.aaa.idm.model;
  *
  */
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlElement;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.opendaylight.aaa.idm.persistence.JDBCObjectStore;
+import org.opendaylight.aaa.idm.persistence.StoreException;
 
 @XmlRootElement(name = "roles")
 public class Roles {
    private List<Role> roles = new ArrayList<Role>();
+
+   public Roles(){
+       JDBCObjectStore store = null;
+       try {
+           store = new JDBCObjectStore();
+           List<Object> allroles = store.getAllObjects(new Role());
+           for(Object r:allroles){
+               roles.add((Role)r);
+           }
+       } catch (StoreException e) {
+           e.printStackTrace();
+       }finally {
+           if(store!=null) store.closeConnection();
+       }
+   }
 
    public void setRoles(List<Role> roles) {
       this.roles = roles;

@@ -14,45 +14,37 @@ package org.opendaylight.aaa.idm.rest;
  *
  */
 
-import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
+import org.opendaylight.aaa.idm.IdmLightProxy;
+import org.opendaylight.aaa.idm.model.IDMError;
+import org.opendaylight.aaa.idm.model.Role;
+import org.opendaylight.aaa.idm.model.Roles;
+import org.opendaylight.aaa.idm.persistence.JDBCObjectStore;
+import org.opendaylight.aaa.idm.persistence.StoreException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.List;
-import java.util.ArrayList;
-import org.opendaylight.aaa.idm.model.Roles;
-import org.opendaylight.aaa.idm.model.Role;
-import org.opendaylight.aaa.idm.model.IDMError;
-import org.opendaylight.aaa.idm.persistence.RoleStore;
-import org.opendaylight.aaa.idm.persistence.StoreException;
-import org.opendaylight.aaa.idm.IdmLightProxy;
 
 @Path("/v1/roles")
 public class RoleHandler {
    private static Logger logger = LoggerFactory.getLogger(RoleHandler.class);
-   private static RoleStore roleStore = new RoleStore();
+   private static JDBCObjectStore roleStore = new JDBCObjectStore();
 
    @GET
    @Produces("application/json")
    public Response getRoles() {
       logger.info("get /roles");
-      Roles roles=null;
-      try {
-         roles = roleStore.getRoles();
-      }
-      catch (StoreException se) {
-         return new IDMError(500,"internal error getting roles",se.message).response();
-      }
+      Roles roles = new Roles();
       return Response.ok(roles).build();
    }
 
@@ -61,7 +53,7 @@ public class RoleHandler {
    @Produces("application/json")
    public Response getRole(@PathParam("id") String id)  {
       logger.info("get /roles/" + id);
-      Role role=null;
+      Role role=new Role();
       long longId=0;
       try {
          longId=Long.parseLong(id);
@@ -71,7 +63,8 @@ public class RoleHandler {
       }
 
       try {
-         role = roleStore.getRole(longId);
+          role.setRoleid((int)longId);
+         role = (Role)roleStore.getPOJO(role,false);
       }
       catch(StoreException se) {
          return new IDMError(500,"internal error getting roles",se.message).response();
@@ -94,19 +87,19 @@ public class RoleHandler {
          if (role.getName()==null) {
             return new IDMError(404,"name must be defined on role create","").response();
          }
-         else if (role.getName().length()>RoleStore.MAX_FIELD_LEN) {
-            return new IDMError(400,"role name max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
+         else if (role.getName().length()>128) {
+            return new IDMError(400,"role name max length is :" + 128,"").response();
          }
 
          // description
          if (role.getDescription()==null) {
             role.setDescription("");
          }
-         else if (role.getDescription().length()>RoleStore.MAX_FIELD_LEN) {
-            return new IDMError(400,"role description max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
+         else if (role.getDescription().length()>128) {
+            return new IDMError(400,"role description max length is :" + 128,"").response();
          }
 
-         role = roleStore.createRole(role);
+         role = (Role)roleStore.createPOJO(role);
       }
       catch (StoreException se) {
          return new IDMError(500,"internal error creating role",se.message).response();
@@ -134,16 +127,16 @@ public class RoleHandler {
 
          // name
          // TODO: names should be unique
-         if ((role.getName()!=null) && (role.getName().length()>RoleStore.MAX_FIELD_LEN)) {
-            return new IDMError(400,"role name max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
+         if ((role.getName()!=null) && (role.getName().length()>128)) {
+            return new IDMError(400,"role name max length is :" + 128,"").response();
          }
 
          // description
-         if ((role.getDescription()!=null) && (role.getDescription().length()>RoleStore.MAX_FIELD_LEN)) {
-            return new IDMError(400,"role description max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
+         if ((role.getDescription()!=null) && (role.getDescription().length()>128)) {
+            return new IDMError(400,"role description max length is :" + 128,"").response();
          }
 
-         role = roleStore.putRole(role);
+         role = (Role)roleStore.updatePOJO(role);
          if (role==null) {
             return new IDMError(404,"role id not found :" + id,"").response();
          }
@@ -170,7 +163,7 @@ public class RoleHandler {
       try {
          Role role = new Role();
          role.setRoleid((int)longId);
-         role = roleStore.deleteRole(role);
+         role = (Role)roleStore.deletePOJO(role,false);
          if (role==null) {
             return new IDMError(404,"role id not found :" + id,"").response();
          }

@@ -15,15 +15,33 @@ package org.opendaylight.aaa.idm.model;
  */
 
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlElement;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.opendaylight.aaa.idm.persistence.JDBCObjectStore;
+import org.opendaylight.aaa.idm.persistence.StoreException;
 
 @XmlRootElement(name = "users")
 public class Users {
    private List<User> users = new ArrayList<User>();
-
+   
+   public Users(){
+       JDBCObjectStore store = null;
+       try {
+           store = new JDBCObjectStore();
+           List<Object> allusers = store.getAllObjects(new User());
+           for(Object u:allusers){
+               users.add((User)u);
+           }
+       } catch (StoreException e) {
+           e.printStackTrace();
+       }finally {
+           if(store!=null) store.closeConnection();
+       }
+   }
+   
    public void setUsers(List<User> users) {
       this.users = users;
    } 
