@@ -34,6 +34,24 @@
       "revId": "414966ec064b952c20e77b0cc17c800008d03bcd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_1daa70d4",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-07-23T18:22:35Z",
+      "side": 1,
+      "message": "Yes, but mangling the API isn\u0027t really a good solution.\nBetter option /user/names/{name}",
+      "parentUuid": "7a7fa997_82029b09",
+      "revId": "414966ec064b952c20e77b0cc17c800008d03bcd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
