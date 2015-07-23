@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_e2b7cf84",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/persistence/UserStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-07-23T15:20:57Z",
+      "side": 1,
+      "message": "Not clear how this relates this fix... Looks more like part of the get users by username patch...",
+      "revId": "87fc20ac22a99f32b3e6c88d03fa3589bf06ccd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
