@@ -36,12 +36,6 @@ import com.sun.jersey.spi.container.ContainerRequestFilter;
  *
  */
 public class TokenAuthFilter implements ContainerRequestFilter {
-    private static final WebApplicationException UNAUTHORIZED_EX = new UnauthorizedException();
-    private static final WebApplicationException UNAVAILABLE_EX = new WebApplicationException(
-            Response.status(Status.SERVICE_UNAVAILABLE)
-                    .type(MediaType.APPLICATION_JSON)
-                    .entity("{\"error\":\"Authentication service unavailable\"}")
-                    .build());
 
     private final String OPTIONS = "OPTIONS";
     private final String ACCESS_CONTROL_REQUEST_HEADERS = "Access-Control-Request-Headers";
@@ -60,7 +54,11 @@ public class TokenAuthFilter implements ContainerRequestFilter {
 
         // Are we up yet?
         if (ServiceLocator.INSTANCE.as == null) {
-            throw UNAVAILABLE_EX;
+            throw new WebApplicationException(
+                  Response.status(Status.SERVICE_UNAVAILABLE)
+                  .type(MediaType.APPLICATION_JSON)
+                  .entity("{\"error\":\"Authentication service unavailable\"}")
+                  .build());
         }
 
         // Are we doing authentication or not?
@@ -129,7 +127,7 @@ public class TokenAuthFilter implements ContainerRequestFilter {
     // Houston, we got a problem!
     private static final WebApplicationException unauthorized() {
         ServiceLocator.INSTANCE.as.clear();
-        return UNAUTHORIZED_EX;
+        return new UnauthorizedException();
     }
 
     // A custom 401 web exception that handles http basic response as well
