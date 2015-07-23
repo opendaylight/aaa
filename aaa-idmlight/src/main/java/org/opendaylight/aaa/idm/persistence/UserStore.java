@@ -304,6 +304,31 @@ protected void finalize () throws Throwable {
        }
    }
 
+   public User findUserByName(String name) throws StoreException{
+       Connection conn = dbConnect();
+       try{
+           String sql = "select * from users where name = ?";
+           PreparedStatement statement = conn.prepareStatement(sql);
+           statement.setString(1, name);
+           ResultSet rs = statement.executeQuery();
+           if(rs.next()){
+               User user = new User();
+               user.setDescription(rs.getString(SQL_DESCR));
+               user.setEmail(rs.getString(SQL_EMAIL));
+               user.setEnabled(rs.getInt(SQL_ENABLED)==1);
+               user.setName(rs.getString(SQL_NAME));
+               user.setPassword(rs.getString(SQL_PASSWORD));
+               user.setUserid(rs.getInt(SQL_ID));
+               return user;
+           }
+       }catch(SQLException err){
+           logger.error("Failed to fetch user by name",err);
+       }finally{
+           dbClose();
+       }
+       return null;
+   }
+
    private static final void debug(String msg) {
        if (logger.isDebugEnabled()) {
            logger.debug(msg);

@@ -22,6 +22,7 @@ import javax.ws.rs.core.Application;
 import org.opendaylight.aaa.idm.rest.DomainHandler;
 import org.opendaylight.aaa.idm.rest.RoleHandler;
 import org.opendaylight.aaa.idm.rest.UserHandler;
+import org.opendaylight.aaa.idm.rest.UserNameHandler;
 import org.opendaylight.aaa.idm.rest.VersionHandler;
 import org.opendaylight.aaa.idm.config.IdmLightConfig;
 import org.opendaylight.aaa.idm.persistence.StoreBuilder;
@@ -69,7 +70,8 @@ public class IdmLightApplication extends Application {
         return new HashSet<Class<?>>(Arrays.asList(VersionHandler.class,
                                                    DomainHandler.class,
                                                    RoleHandler.class,
-                                                   UserHandler.class));
+                                                   UserHandler.class,
+                                                   UserNameHandler.class));
     }
 
 }
