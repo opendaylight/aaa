@@ -16,6 +16,24 @@
       "revId": "87fc20ac22a99f32b3e6c88d03fa3589bf06ccd7",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_3d8acc1b",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/persistence/UserStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-07-23T20:18:12Z",
+      "side": 1,
+      "message": "correct, i will remove this",
+      "parentUuid": "7a7fa997_e2b7cf84",
+      "revId": "87fc20ac22a99f32b3e6c88d03fa3589bf06ccd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
