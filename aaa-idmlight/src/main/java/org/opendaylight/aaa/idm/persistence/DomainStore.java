@@ -65,7 +65,7 @@ public class DomainStore {
             stmt = conn.createStatement();
             String sql = "CREATE TABLE DOMAINS "  +
                          "(domainid    INTEGER PRIMARY KEY AUTO_INCREMENT," +
-                         "name        VARCHAR(128)      NOT NULL, " +
+                         "name        VARCHAR(128)      UNIQUE NOT NULL, " +
                          "description VARCHAR(128)      NOT NULL, " +
                          "enabled     INTEGER           NOT NULL)" ;
            stmt.executeUpdate(sql);
@@ -144,7 +144,7 @@ public class DomainStore {
       List<Domain> domainList = new ArrayList<Domain>();
       Connection conn = dbConnect();
       try {
-         PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM DOMAINS WHERE name = ?");
+         PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM DOMAINS WHERE name = ? ");
          pstmt.setString(1, domainName);
          debug("query string: " + pstmt.toString());
          ResultSet rs = pstmt.executeQuery();
