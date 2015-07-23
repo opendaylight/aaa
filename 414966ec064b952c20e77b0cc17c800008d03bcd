@@ -16,6 +16,24 @@
       "revId": "414966ec064b952c20e77b0cc17c800008d03bcd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_82029b09",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-07-23T17:09:04Z",
+      "side": 1,
+      "message": "The way it is implemented, a class represents the path and can have only one method per REST operation, hence I could not add another \"GET\" method to this class (or path)... to keep the old way + adding this functionality i had to \"hack\" it.",
+      "parentUuid": "7a7fa997_0211abab",
+      "revId": "414966ec064b952c20e77b0cc17c800008d03bcd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
