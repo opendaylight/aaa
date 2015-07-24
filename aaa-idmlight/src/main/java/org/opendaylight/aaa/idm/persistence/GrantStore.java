@@ -231,8 +231,8 @@ protected void finalize ()  {
       try {
          PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM GRANTS WHERE domainid = ? AND userid = ? AND roleid = ? ");
          pstmt.setInt(1, did);
-         pstmt.setInt(1, uid);
-         pstmt.setInt(1, rid);
+         pstmt.setInt(2, uid);
+         pstmt.setInt(3, rid);
          debug("query string: " + pstmt.toString());
          ResultSet rs = pstmt.executeQuery();
          if (rs.next()) {
