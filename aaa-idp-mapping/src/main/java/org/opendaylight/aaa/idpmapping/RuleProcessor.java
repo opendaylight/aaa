@@ -469,8 +469,7 @@ public class RuleProcessor {
     IdpJson json = new IdpJson();
     @SuppressWarnings("unchecked")
     Map<String, Object> assertion = (Map<String, Object>) json.loadJson(assertionJson);
-    System.out.println(assertionJson);
-    System.out.println(json.dumpJson(assertion));
+    logger.info("Assertion JSON: " + json.dumpJson(assertion));
     this.success = true;
 
     for (int ruleNumber = 0; ruleNumber < this.rules.size(); ruleNumber++) {
@@ -521,7 +520,6 @@ public class RuleProcessor {
       namespace.put(BLOCK_NAME, "");
 
       result = processBlock(namespace, block);
-      System.out.println();
       if (EnumSet.of(ProcessResult.RULE_SUCCESS, ProcessResult.RULE_FAIL).contains(result)) {
         break;
       } else if (result == ProcessResult.BLOCK_CONTINUE) {
