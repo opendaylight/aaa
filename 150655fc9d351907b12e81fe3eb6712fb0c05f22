@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_58ee218d",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/persistence/UserStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-07-29T17:58:00Z",
+      "side": 1,
+      "message": "This should be \"Users\".  The idea is that there can be several users with the same name.  Doing this just retrieves the first one returned to us from the query.",
+      "revId": "150655fc9d351907b12e81fe3eb6712fb0c05f22",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_f8fe0d38",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserNameHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-07-29T17:58:00Z",
+      "side": 1,
+      "message": "Please remove these spaces.",
+      "revId": "150655fc9d351907b12e81fe3eb6712fb0c05f22",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_d801d13a",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserNameHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-07-29T17:58:00Z",
+      "side": 1,
+      "message": "\"name\" is not unique enough for this.  Several users can have the same username so long as they don\u0027t have grants for the same domain.  The unique key *must* be the tuple (domainname,username) not just username.",
+      "revId": "150655fc9d351907b12e81fe3eb6712fb0c05f22",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_b8f8954a",
+        "filename": "aaa-idmlight/src/test/java/org/opendaylight/aaa/idm/persistence/TestGetUserByName.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-07-29T17:58:00Z",
+      "side": 1,
+      "message": "Please add a test case where there are two users with the same name.  Multi-tenancy is a real use case.",
+      "revId": "150655fc9d351907b12e81fe3eb6712fb0c05f22",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_98fb5947",
+        "filename": "aaa-idmlight/src/test/java/org/opendaylight/aaa/idm/persistence/TestGetUserByName.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-07-29T17:58:00Z",
+      "side": 1,
+      "message": "Please remove these spaces.",
+      "revId": "150655fc9d351907b12e81fe3eb6712fb0c05f22",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
