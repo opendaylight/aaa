@@ -9,7 +9,7 @@
     <parent>
         <artifactId>features-aggregator</artifactId>
         <groupId>org.opendaylight.aaa</groupId>
-        <version>0.1.4-Helium-SR4</version>
+        <version>0.1.5-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
@@ -82,12 +82,14 @@
         </dependency>
 
         <!-- test to validate features.xml -->
+        <!-- TEMPORARILY DISABLE TO BREAK CYCLIC DEPENDENCY
         <dependency>
             <groupId>org.opendaylight.yangtools</groupId>
             <artifactId>features-test</artifactId>
             <version>${yangtools.version}</version>
             <scope>test</scope>
         </dependency>
+        -->
         <!-- dependency for opendaylight-karaf-empty for use by testing -->
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
