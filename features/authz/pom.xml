@@ -9,7 +9,7 @@
     <parent>
         <artifactId>features-aggregator</artifactId>
         <groupId>org.opendaylight.aaa</groupId>
-        <version>0.1.4-SNAPSHOT</version>
+        <version>0.1.4-Helium-SR4</version>
         <relativePath>../</relativePath>
     </parent>
 
