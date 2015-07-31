@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_0974d9cd",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/persistence/UserStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-07-31T17:16:06Z",
+      "side": 1,
+      "message": "We need to switch to username being the key, e.g. a User object will have \"username\",\"password\",\"full name\" \u0026 etc, as it is in linux.",
+      "parentUuid": "5a7ca5a3_58ee218d",
+      "revId": "150655fc9d351907b12e81fe3eb6712fb0c05f22",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_f8fe0d38",
         "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserNameHandler.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-07-29T17:58:00Z",
       "side": 1,
       "message": "Please remove these spaces.",
+      "revId": "150655fc9d351907b12e81fe3eb6712fb0c05f22",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_a980458c",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserNameHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-07-31T17:16:06Z",
+      "side": 1,
+      "message": "will do.",
+      "parentUuid": "5a7ca5a3_f8fe0d38",
       "revId": "150655fc9d351907b12e81fe3eb6712fb0c05f22",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_694a2d85",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserNameHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-07-31T17:16:06Z",
+      "side": 1,
+      "message": "Please see other comment about name being the key and not the running integer number",
+      "parentUuid": "5a7ca5a3_d801d13a",
+      "revId": "150655fc9d351907b12e81fe3eb6712fb0c05f22",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_b8f8954a",
         "filename": "aaa-idmlight/src/test/java/org/opendaylight/aaa/idm/persistence/TestGetUserByName.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2015-07-29T17:58:00Z",
       "side": 1,
       "message": "Please add a test case where there are two users with the same name.  Multi-tenancy is a real use case.",
+      "revId": "150655fc9d351907b12e81fe3eb6712fb0c05f22",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_4949718a",
+        "filename": "aaa-idmlight/src/test/java/org/opendaylight/aaa/idm/persistence/TestGetUserByName.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-07-31T17:16:06Z",
+      "side": 1,
+      "message": "Need to switch to username as a key and not Integer.",
+      "parentUuid": "5a7ca5a3_b8f8954a",
       "revId": "150655fc9d351907b12e81fe3eb6712fb0c05f22",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
