@@ -1,16 +1,16 @@
 /*
- * Copyright (c) 2014 Hewlett-Packard Development Company, L.P. and others.
- * All rights reserved.
+ * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
- * terms of the Eclipse License v1.0 which accompanies this distribution,
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
+
 package org.opendaylight.aaa.idm.model;
 
 /**
  *
- * @author peter.mellquist@hp.com 
+ * @author peter.mellquist@hp.com
  *
  */
 
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @XmlRootElement(name = "Claim")
 public class Claim {
    private Integer domainid;
-   private Integer userid; 
+   private Integer userid;
    private String username;
    private List<Role> roles;
 
@@ -47,7 +47,7 @@ public class Claim {
 
    public void setUsername(String name) {
       this.username = name;
-   }  
+   }
 
    public List<Role> getRoles() {
       return roles;
