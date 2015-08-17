@@ -12,9 +12,9 @@ import org.opendaylight.controller.config.yang.config.aaa_authz.srv.Policies;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.urn.aaa.yang.authz.ds.rev140722.ActionType;
 import org.opendaylight.yang.gen.v1.urn.aaa.yang.authz.ds.rev140722.AuthorizationResponseType;
-
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.yangtools.yang.data.api.YangInstanceIdentifier;
+
 import java.util.List;
 
 /**
@@ -28,22 +28,62 @@ public class AuthzServiceImpl {
 
     private static final String WILDCARD_TOKEN = "*";
 
+    public static boolean isAuthorized(LogicalDatastoreType logicalDatastoreType,
+        YangInstanceIdentifier yangInstanceIdentifier,
+        ActionType actionType) {
+
+      AuthorizationResponseType authorizationResponseType =
+          AuthzServiceImpl.reqAuthorization(actionType,
+              logicalDatastoreType,
+              yangInstanceIdentifier);
+      return authorizationResponseType.equals(AuthorizationResponseType.Authorized);
+    }
+
+    public static boolean isAuthorized(ActionType actionType) {
+      AuthorizationResponseType authorizationResponseType =
+          AuthzServiceImpl.reqAuthorization(actionType);
+      return authorizationResponseType.equals(AuthorizationResponseType.Authorized);
+    }
+
     public static void setPolicies(List<Policies> policies){
 
         AuthzServiceImpl.listPolicies = policies;
     }
 
-    public static AuthorizationResponseType reqAuthorization(ActionType actionType, LogicalDatastoreType logicalDatastoreType, YangInstanceIdentifier yangInstanceIdentifier){
+    public static AuthorizationResponseType reqAuthorization(
+        ActionType actionType) {
 
-        AuthenticationService authenticationService = AuthzDomDataBroker.getInstance().getAuthService();
+      AuthenticationService authenticationService =
+          AuthzDomDataBroker.getInstance().getAuthService();
+      if(authenticationService != null && AuthzServiceImpl.listPolicies != null
+          && AuthzServiceImpl.listPolicies.size() > 0 ) {
+        Authentication authentication = authenticationService.get();
+        if( authentication != null && authentication.roles() != null &&
+            authentication.roles().size() > 0 ) {
+          return checkAuthorization(actionType, authentication);
+        }
+      }
+      return AuthorizationResponseType.NotAuthorized;
+    }
 
-        if(authenticationService!=null && AuthzServiceImpl.listPolicies!=null && AuthzServiceImpl.listPolicies.size()>0){
+    public static AuthorizationResponseType reqAuthorization(
+        ActionType actionType, LogicalDatastoreType logicalDatastoreType,
+        YangInstanceIdentifier yangInstanceIdentifier){
+
+        AuthenticationService authenticationService =
+            AuthzDomDataBroker.getInstance().getAuthService();
+
+        if(authenticationService != null
+            && AuthzServiceImpl.listPolicies != null
+            && AuthzServiceImpl.listPolicies.size() > 0) {
             //Authentication Service exists. Can do authorization checks
             Authentication authentication = authenticationService.get();
 
-            if(authentication!=null && authentication.roles()!=null && authentication.roles().size()>0){
+            if(authentication!=null && authentication.roles() != null
+                && authentication.roles().size() > 0) {
                 //Authentication claim object exists with atleast one role
-                return checkAuthorization(actionType, authentication,logicalDatastoreType,yangInstanceIdentifier);
+                return checkAuthorization(actionType, authentication,
+                    logicalDatastoreType, yangInstanceIdentifier);
             }
         }
 
@@ -51,12 +91,24 @@ public class AuthzServiceImpl {
     }
 
 
-    private static AuthorizationResponseType checkAuthorization(ActionType actionType, Authentication authentication,LogicalDatastoreType logicalDatastoreType, YangInstanceIdentifier yangInstanceIdentifier){
+    private static AuthorizationResponseType checkAuthorization(
+        ActionType actionType, Authentication authentication,
+        LogicalDatastoreType logicalDatastoreType,
+        YangInstanceIdentifier yangInstanceIdentifier){
 
         for(Policies policy : AuthzServiceImpl.listPolicies){
 
-            // Action type is compared as string, since its type is string in the config yang. Comparison is case insensitive
-            if(authentication.roles().contains(policy.getRole().getValue()) && (policy.getResource().getValue().equals(WILDCARD_TOKEN) || policy.getResource().getValue().equals(yangInstanceIdentifier.toString())) && (policy.getAction().toLowerCase().equals(ActionType.Any.name().toLowerCase()) || actionType.name().toLowerCase().equals(policy.getAction().toLowerCase()))){
+            // Action type is compared as string, since its type is string in
+            // the config yang. Comparison is case insensitive
+            if(authentication.roles().contains(policy.getRole().getValue())
+                && (policy.getResource().getValue().equals(WILDCARD_TOKEN)
+                    || policy.getResource().getValue().equals(
+                        yangInstanceIdentifier.toString()))
+                && (policy.getAction().toLowerCase().equals(
+                    ActionType.Any.name().toLowerCase())
+                    || actionType.name().toLowerCase().equals(
+                        policy.getAction().toLowerCase()))){
+
                return AuthorizationResponseType.Authorized;
             }
 
@@ -66,4 +118,16 @@ public class AuthzServiceImpl {
         return AuthorizationResponseType.NotAuthorized;
     }
 
+    private static AuthorizationResponseType checkAuthorization(
+        ActionType actionType, Authentication authentication) {
+
+        for(Policies policy : AuthzServiceImpl.listPolicies) {
+          if(authentication.roles().contains(policy.getRole().getValue())
+              && (policy.getAction().equalsIgnoreCase(ActionType.Any.name())
+                  || policy.getAction().equalsIgnoreCase(actionType.name()))) {
+            return AuthorizationResponseType.Authorized;
+          }
+        }
+        return AuthorizationResponseType.NotAuthorized;
+    }
 }
