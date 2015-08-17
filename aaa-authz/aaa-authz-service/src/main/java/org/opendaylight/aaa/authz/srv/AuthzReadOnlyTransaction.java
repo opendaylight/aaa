@@ -35,25 +35,28 @@ public class AuthzReadOnlyTransaction implements DOMDataReadOnlyTransaction {
   }
 
   @Override
-  public CheckedFuture<Optional<NormalizedNode<?, ?>>, ReadFailedException> read(LogicalDatastoreType logicalDatastoreType, YangInstanceIdentifier yangInstanceIdentifier) {
-      AuthorizationResponseType authorizationResponseType = AuthzServiceImpl.reqAuthorization(ActionType.Read,logicalDatastoreType,yangInstanceIdentifier);
+  public CheckedFuture<Optional<NormalizedNode<?,?>>,ReadFailedException> read(
+      LogicalDatastoreType logicalDatastoreType, YangInstanceIdentifier yangInstanceIdentifier) {
 
-      if(authorizationResponseType.equals(AuthorizationResponseType.Authorized)){
-          return ro.read(logicalDatastoreType, yangInstanceIdentifier);
-      }else{
-          return null;
-      }
+    if(AuthzServiceImpl.isAuthorized(logicalDatastoreType, yangInstanceIdentifier, ActionType.Read)) {
+      return ro.read(logicalDatastoreType, yangInstanceIdentifier);
+    }
+    return null;
   }
 
   @Override
   public CheckedFuture<Boolean, ReadFailedException> exists(LogicalDatastoreType logicalDatastoreType, YangInstanceIdentifier yangInstanceIdentifier) {
-    //TODO: Do AuthZ check here.
-    return ro.exists(logicalDatastoreType, yangInstanceIdentifier);
+    if(AuthzServiceImpl.isAuthorized(ActionType.Exists)) {
+      return ro.exists(logicalDatastoreType, yangInstanceIdentifier);
+    }
+    return null;
   }
 
   @Override
   public Object getIdentifier() {
-    //TODO: Do AuthZ check here.
-    return ro.getIdentifier();
+    if(AuthzServiceImpl.isAuthorized(ActionType.GetIdentifier)) {
+      return ro.getIdentifier();
+    }
+    return null;
   }
 }
