@@ -19,19 +19,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "user")
 public class User {
-   private Integer userid;
+   private String userid;
    private String name;
    private String description;
    private Boolean enabled;
    private String email;
    private String password;
    private String salt;
+   private String domainid;
 
-   public Integer getUserid() {
+   public String getUserid() {
       return userid;
    }
 
-   public void setUserid(Integer id) {
+   public void setUserid(String id) {
       this.userid = id;
    }
 
@@ -81,6 +82,14 @@ public class User {
 
    public String getSalt(){
        return this.salt;
+   }
+
+   public String getDomainID(){
+       return domainid;
+   }
+
+   public void setDomainID(String _domainid){
+       this.domainid = _domainid;
    }
 }
 

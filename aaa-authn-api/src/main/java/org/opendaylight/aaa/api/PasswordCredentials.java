@@ -14,4 +14,5 @@ package org.opendaylight.aaa.api;
 public interface PasswordCredentials extends Credentials {
     String username();
     String password();
+    String domain();
 }

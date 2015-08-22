@@ -47,8 +47,8 @@ public class HttpBasicAuth implements TokenAuth {
                 String[] creds = new String(Base64.base64Decode(authHeader
                         .substring(BASIC_PREFIX.length()))).split(AUTH_SEP);
                 PasswordCredentials pc = new PasswordCredentialBuilder()
-                        .setUserName(creds[0]).setPassword(creds[1]).build();
-                Claim claim = ca.authenticate(pc, null);
+                        .setUserName(creds[0]).setPassword(creds[1]).setDomain(creds[2]).build();
+                Claim claim = ca.authenticate(pc);
                 return new AuthenticationBuilder(claim).build();
             }
         }
