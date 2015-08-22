@@ -14,40 +14,40 @@ package org.opendaylight.aaa.idm.rest;
  *
  */
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
+import org.opendaylight.aaa.idm.IdmLightProxy;
+import org.opendaylight.aaa.idm.model.Claim;
+import org.opendaylight.aaa.idm.model.Domain;
+import org.opendaylight.aaa.idm.model.Domains;
+import org.opendaylight.aaa.idm.model.Grant;
+import org.opendaylight.aaa.idm.model.Grants;
+import org.opendaylight.aaa.idm.model.IDMError;
+import org.opendaylight.aaa.idm.model.Role;
+import org.opendaylight.aaa.idm.model.Roles;
+import org.opendaylight.aaa.idm.model.User;
+import org.opendaylight.aaa.idm.model.UserPwd;
+import org.opendaylight.aaa.idm.model.Users;
+import org.opendaylight.aaa.idm.persistence.DomainStore;
+import org.opendaylight.aaa.idm.persistence.GrantStore;
+import org.opendaylight.aaa.idm.persistence.RoleStore;
+import org.opendaylight.aaa.idm.persistence.StoreException;
+import org.opendaylight.aaa.idm.persistence.UserStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.List;
-import java.util.ArrayList;
-import org.opendaylight.aaa.idm.model.Domains;
-import org.opendaylight.aaa.idm.model.Domain;
-import org.opendaylight.aaa.idm.model.Users;
-import org.opendaylight.aaa.idm.model.User;
-import org.opendaylight.aaa.idm.model.Roles;
-import org.opendaylight.aaa.idm.model.Role;
-import org.opendaylight.aaa.idm.model.Grants;
-import org.opendaylight.aaa.idm.model.Grant;
-import org.opendaylight.aaa.idm.model.UserPwd;
-import org.opendaylight.aaa.idm.model.Claim;
-import org.opendaylight.aaa.idm.model.IDMError;
-import org.opendaylight.aaa.idm.persistence.DomainStore;
-import org.opendaylight.aaa.idm.persistence.UserStore;
-import org.opendaylight.aaa.idm.persistence.RoleStore;
-import org.opendaylight.aaa.idm.persistence.GrantStore;
-import org.opendaylight.aaa.idm.persistence.UserStore;
-import org.opendaylight.aaa.idm.persistence.StoreException;
-import org.opendaylight.aaa.idm.IdmLightProxy;
 
 @Path("/v1/domains")
 public class DomainHandler {
@@ -78,18 +78,9 @@ public class DomainHandler {
    @GET
    @Path("/{id}")
    @Produces("application/json")
-   public Response getDomain(@PathParam("id") String id)  {
-      logger.info("Get /domains/" + id);
+   public Response getDomain(@PathParam("id") String domainId)  {
+      logger.info("Get /domains/" + domainId);
       Domain domain = null;
-      int domainId=0;
-      try {
-         domainId= Integer.parseInt(id);
-      }
-      catch (NumberFormatException nfe) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Invalid Domain id :" + id);
-         return Response.status(404).entity(idmerror).build();
-      }
       try {
          domain = domainStore.getDomain(domainId);
       }
@@ -103,7 +94,7 @@ public class DomainHandler {
 
       if (domain==null) {
          IDMError idmerror = new IDMError();
-         idmerror.setMessage("Not found! domain id :" + id);
+         idmerror.setMessage("Not found! domain id :" + domainId);
          return Response.status(404).entity(idmerror).build();
       }
       return Response.ok(domain).build();
@@ -140,24 +131,14 @@ public class DomainHandler {
    @Path("/{id}")
    @Consumes("application/json")
    @Produces("application/json")
-   public Response putDomain(@Context UriInfo info,Domain domain,@PathParam("id") String id) {
-      int domainId=0;
-      logger.info("Put /domains/" + id);
-       try {
-         domainId = Integer.parseInt(id);
-      }
-      catch (NumberFormatException nfe) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Invalid Domain id :" + id);
-         return Response.status(404).entity(idmerror).build();
-      }
-
+   public Response putDomain(@Context UriInfo info,Domain domain,@PathParam("id") String domainId) {
+      logger.info("Put /domains/" + domainId);
       try {
          domain.setDomainid(domainId);
          domain = domainStore.putDomain(domain);
          if (domain==null) {
             IDMError idmerror = new IDMError();
-            idmerror.setMessage("Not found! Domain id :" + id);
+            idmerror.setMessage("Not found! Domain id :" + domainId);
             return Response.status(404).entity(idmerror).build();
          }
          IdmLightProxy.clearClaimCache();
@@ -174,17 +155,8 @@ public class DomainHandler {
 
    @DELETE
    @Path("/{id}")
-   public Response deleteDomain(@Context UriInfo info,@PathParam("id") String id) {
-      int domainId=0;
-      logger.info("Delete /domains/" + id);
-      try {
-         domainId= Integer.parseInt(id);
-      }
-      catch (NumberFormatException nfe) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Invalid Domain id :" + id);
-         return Response.status(404).entity(idmerror).build();
-      }
+   public Response deleteDomain(@Context UriInfo info,@PathParam("id") String domainId) {
+      logger.info("Delete /domains/" + domainId);
 
       try {
          Domain domain = new Domain();
@@ -192,7 +164,7 @@ public class DomainHandler {
          domain = domainStore.deleteDomain(domain);
          if (domain==null) {
             IDMError idmerror = new IDMError();
-            idmerror.setMessage("Not found! Domain id :" + id);
+            idmerror.setMessage("Not found! Domain id :" + domainId);
             return Response.status(404).entity(idmerror).build();
          }
       }
@@ -213,30 +185,16 @@ public class DomainHandler {
    @Consumes("application/json")
    @Produces("application/json")
    public Response createGrant( @Context UriInfo info,
-                                @PathParam("did") String did,
-                                @PathParam("uid") String uid,
+                                @PathParam("did") String domainId,
+                                @PathParam("uid") String userId,
                                 Grant grant) {
-      logger.info("Post /domains/"+did+"/users/"+uid+"/roles");
+      logger.info("Post /domains/"+domainId+"/users/"+userId+"/roles");
       Domain domain=null;
       User user=null;
       Role role=null;
-      int domainId=0;
-      int userId=0;
-      int roleId=0;
-
-      if (grant.getDescription()==null) {
-         grant.setDescription("");
-      }
+      String roleId=null;
 
       // validate domain id
-      try {
-         domainId=Integer.parseInt(did);
-      }
-      catch (NumberFormatException nfe) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Invalid Domain id :" + did);
-         return Response.status(404).entity(idmerror).build();
-      }
       try {
          domain = domainStore.getDomain(domainId);
       }
@@ -249,20 +207,11 @@ public class DomainHandler {
       }
       if (domain==null) {
          IDMError idmerror = new IDMError();
-         idmerror.setMessage("Not found! domain id :" + did);
+         idmerror.setMessage("Not found! domain id :" + domainId);
          return Response.status(404).entity(idmerror).build();
       }
       grant.setDomainid(domainId);
 
-      // validate user id
-      try {
-         userId= Integer.parseInt(uid);
-      }
-      catch (NumberFormatException nfe) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Invalid User id :" + uid);
-         return Response.status(404).entity(idmerror).build();
-      }
       try {
          user = userStore.getUser(userId);
       }
@@ -275,7 +224,7 @@ public class DomainHandler {
       }
       if (user==null) {
          IDMError idmerror = new IDMError();
-         idmerror.setMessage("Not found! User id :" + uid);
+         idmerror.setMessage("Not found! User id :" + userId);
          return Response.status(404).entity(idmerror).build();
       }
       grant.setUserid(userId);
@@ -346,24 +295,14 @@ public class DomainHandler {
    @Consumes("application/json")
    @Produces("application/json")
    public Response validateUser( @Context UriInfo info,
-                                 @PathParam("did") String did,
+                                 @PathParam("did") String domainId,
                                  UserPwd userpwd) {
 
-      logger.info("GET /domains/"+did+"/users");
-      int domainId=0;
+      logger.info("GET /domains/"+domainId+"/users");
       Domain domain=null;
       Claim claim = new Claim();
       List<Role> roleList = new ArrayList<Role>();
 
-      // validate domain id
-      try {
-         domainId= Integer.parseInt(did);
-      }
-      catch (NumberFormatException nfe) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Invalid Domain id :" + did);
-         return Response.status(404).entity(idmerror).build();
-      }
       try {
          domain = domainStore.getDomain(domainId);
       }
@@ -376,7 +315,7 @@ public class DomainHandler {
       }
       if (domain==null) {
          IDMError idmerror = new IDMError();
-         idmerror.setMessage("Not found! Domain id :" + did);
+         idmerror.setMessage("Not found! Domain id :" + domainId);
          return Response.status(404).entity(idmerror).build();
       }
 
@@ -447,25 +386,14 @@ public class DomainHandler {
    @Path("/{did}/users/{uid}/roles")
    @Produces("application/json")
    public Response getRoles( @Context UriInfo info,
-                             @PathParam("did") String did,
-                             @PathParam("uid") String uid) {
-      logger.info("GET /domains/"+did+"/users/"+uid+"/roles");
-      int domainId=0;
-      int userId=0;
+                             @PathParam("did") String domainId,
+                             @PathParam("uid") String userId) {
+      logger.info("GET /domains/"+domainId+"/users/"+userId+"/roles");
       Domain domain=null;
       User user=null;
       Roles roles = new Roles();
       List<Role> roleList = new ArrayList<Role>();
 
-      // validate domain id
-      try {
-         domainId= Integer.parseInt(did);
-      }
-      catch (NumberFormatException nfe) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Invalid Domain id :" + did);
-         return Response.status(404).entity(idmerror).build();
-      }
       try {
          domain = domainStore.getDomain(domainId);
       }
@@ -478,19 +406,10 @@ public class DomainHandler {
       }
       if (domain==null) {
          IDMError idmerror = new IDMError();
-         idmerror.setMessage("Not found! Domain id :" + did);
+         idmerror.setMessage("Not found! Domain id :" + domainId);
          return Response.status(404).entity(idmerror).build();
       }
 
-      // validate user id
-      try {
-         userId=Integer.parseInt(uid);
-      }
-      catch (NumberFormatException nfe) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Invalid User id :" + uid);
-         return Response.status(404).entity(idmerror).build();
-      }
       try {
          user = userStore.getUser(userId);
       }
@@ -503,7 +422,7 @@ public class DomainHandler {
       }
       if (user==null) {
          IDMError idmerror = new IDMError();
-         idmerror.setMessage("Not found! User id :" + uid);
+         idmerror.setMessage("Not found! User id :" + userId);
          return Response.status(404).entity(idmerror).build();
       }
 
@@ -531,25 +450,13 @@ public class DomainHandler {
    @DELETE
    @Path("/{did}/users/{uid}/roles/{rid}")
    public Response deleteGrant( @Context UriInfo info,
-                                @PathParam("did") String did,
-                                @PathParam("uid") String uid,
-                                @PathParam("rid") String rid) {
-      int domainId=0;
-      int userId=0;
-      int roleId=0;
+                                @PathParam("did") String domainId,
+                                @PathParam("uid") String userId,
+                                @PathParam("rid") String roleId) {
       Domain domain=null;
       User user=null;
       Role role=null;
 
-      // validate domain id
-      try {
-         domainId= Integer.parseInt(did);
-      }
-      catch (NumberFormatException nfe) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Invalid Domain id :" + did);
-         return Response.status(404).entity(idmerror).build();
-      }
       try {
          domain = domainStore.getDomain(domainId);
       }
@@ -562,19 +469,10 @@ public class DomainHandler {
       }
       if (domain==null) {
          IDMError idmerror = new IDMError();
-         idmerror.setMessage("Not found! Domain id :" + did);
+         idmerror.setMessage("Not found! Domain id :" + domainId);
          return Response.status(404).entity(idmerror).build();
       }
 
-      // validate user id
-      try {
-         userId = Integer.parseInt(uid);
-      }
-      catch (NumberFormatException nfe) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Invalid User id :" + uid);
-         return Response.status(404).entity(idmerror).build();
-      }
       try {
          user = userStore.getUser(userId);
       }
@@ -587,19 +485,10 @@ public class DomainHandler {
       }
       if (user==null) {
          IDMError idmerror = new IDMError();
-         idmerror.setMessage("Not found! User id :" + uid);
+         idmerror.setMessage("Not found! User id :" + userId);
          return Response.status(404).entity(idmerror).build();
       }
 
-      // validate role id
-      try {
-         roleId = Integer.parseInt(rid);
-      }
-      catch (NumberFormatException nfe) {
-         IDMError idmerror = new IDMError();
-         idmerror.setMessage("Invalid Role id :" + rid);
-         return Response.status(404).entity(idmerror).build();
-      }
       try {
          role = roleStore.getRole(roleId);
       }
@@ -612,7 +501,7 @@ public class DomainHandler {
       }
       if (role==null) {
          IDMError idmerror = new IDMError();
-         idmerror.setMessage("Not found! Role id :" + rid);
+         idmerror.setMessage("Not found! Role id :" + roleId);
          return Response.status(404).entity(idmerror).build();
       }
 

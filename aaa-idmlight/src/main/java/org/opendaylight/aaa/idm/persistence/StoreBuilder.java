@@ -8,27 +8,20 @@
 
 package org.opendaylight.aaa.idm.persistence;
 
-import org.opendaylight.aaa.idm.persistence.DomainStore;
-import org.opendaylight.aaa.idm.model.Domain;
-import org.opendaylight.aaa.idm.persistence.UserStore;
-import org.opendaylight.aaa.idm.model.User;
-import org.opendaylight.aaa.idm.persistence.RoleStore;
-import org.opendaylight.aaa.idm.model.Role;
-import org.opendaylight.aaa.idm.persistence.GrantStore;
-import org.opendaylight.aaa.idm.model.Grant;
+import java.io.File;
 
+import org.opendaylight.aaa.idm.IdmLightApplication;
+import org.opendaylight.aaa.idm.model.Domain;
+import org.opendaylight.aaa.idm.model.Grant;
+import org.opendaylight.aaa.idm.model.Role;
+import org.opendaylight.aaa.idm.model.User;
 /**
  *
  * @author peter.mellquist@hp.com
  *
  */
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-
-import org.opendaylight.aaa.idm.IdmLightApplication;
 
 public class StoreBuilder {
    private static Logger logger = LoggerFactory.getLogger(StoreBuilder.class);
@@ -74,6 +67,7 @@ public class StoreBuilder {
          // admin user
          adminUser.setEnabled(true);
          adminUser.setName("admin");
+         adminUser.setDomainID(domain.getDomainid());
          adminUser.setDescription("admin user");
          adminUser.setEmail("");
          adminUser.setPassword("admin");
@@ -82,6 +76,7 @@ public class StoreBuilder {
          // user user
          userUser.setEnabled(true);
          userUser.setName("user");
+         userUser.setDomainID(domain.getDomainid());
          userUser.setDescription("user user");
          userUser.setEmail("");
          userUser.setPassword("user");
@@ -93,9 +88,11 @@ public class StoreBuilder {
       // create Roles
       try {
          adminRole.setName("admin");
+         adminRole.setDomainID(domain.getDomainid());
          adminRole.setDescription("a role for admins");
          adminRole = roleStore.createRole(adminRole);
          userRole.setName("user");
+         userRole.setDomainID(domain.getDomainid());
          userRole.setDescription("a role for users");
          userRole = roleStore.createRole(userRole);
       } catch (StoreException se) {
@@ -105,19 +102,16 @@ public class StoreBuilder {
       // create grants
       Grant grant = new Grant();
       try {
-         grant.setDescription("user with user role");
          grant.setDomainid(domain.getDomainid());
          grant.setUserid(userUser.getUserid());
          grant.setRoleid(userRole.getRoleid());
          grant = grantStore.createGrant(grant);
 
-         grant.setDescription("admin with user role");
          grant.setDomainid(domain.getDomainid());
          grant.setUserid(adminUser.getUserid());
          grant.setRoleid(userRole.getRoleid());
          grant = grantStore.createGrant(grant);
 
-         grant.setDescription("admin with admin role");
          grant.setDomainid(domain.getDomainid());
          grant.setUserid(adminUser.getUserid());
          grant.setRoleid(adminRole.getRoleid());

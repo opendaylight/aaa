@@ -30,8 +30,8 @@ import org.opendaylight.aaa.idm.model.User;
 import org.opendaylight.aaa.idm.model.Users;
 import org.opendaylight.aaa.idm.persistence.DomainStore;
 import org.opendaylight.aaa.idm.persistence.GrantStore;
-import org.opendaylight.aaa.idm.persistence.SHA256Calculator;
 import org.opendaylight.aaa.idm.persistence.RoleStore;
+import org.opendaylight.aaa.idm.persistence.SHA256Calculator;
 import org.opendaylight.aaa.idm.persistence.StoreException;
 import org.opendaylight.aaa.idm.persistence.UserStore;
 import org.slf4j.Logger;
@@ -204,20 +204,10 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,
               debug("DomainName: " + domainName + " Not found!");
               return roles;
            }
-           int did = domainList.get(0).getDomainid();
-
-           // validate userId
-           int uid=0;
-           try {
-              uid = Integer.parseInt(userId);
-           }
-           catch (NumberFormatException nfe) {
-              logger.warn("not a valid userid:" ,userId, nfe);
-              return roles;
-           }
+           String did = domainList.get(0).getDomainid();
 
            // find all grants for uid and did
-           Grants grants = grantStore.getGrants(did,uid);
+           Grants grants = grantStore.getGrants(did,userId);
            List<Grant> grantList = grants.getGrants();
            for (int z=0;z<grantList.size();z++) {
               Grant grant = grantList.get(z);

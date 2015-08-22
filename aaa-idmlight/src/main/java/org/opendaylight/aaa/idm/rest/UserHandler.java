@@ -69,15 +69,8 @@ public class UserHandler {
    public Response getUser(@PathParam("id") String id)  {
       logger.info("get /users/" + id);
       User user=null;
-      long longId=0;
       try {
-         longId=Long.parseLong(id);
-      }
-      catch (NumberFormatException nfe) {
-         return new IDMError(400,"invalid user id :" + id,"").response();
-      }
-      try {
-         user = userStore.getUser(longId);
+         user = userStore.getUser(id);
       }
       catch(StoreException se) {
          return new IDMError(500,"internal error getting user",se.message).response();
@@ -151,17 +144,10 @@ public class UserHandler {
    @Consumes("application/json")
    @Produces("application/json")
    public Response putUser(@Context UriInfo info,User user,@PathParam("id") String id) {
-      long longId=0;
       logger.info("put /users/" + id);
-       try {
-         longId= Long.parseLong(id);
-      }
-      catch (NumberFormatException nfe) {
-         return new IDMError(400,"invalid user id:"+id,"").response();
-      }
 
       try {
-         user.setUserid((int)longId);
+         user.setUserid(id);
          user = userStore.putUser(user);
          if (user==null) {
             return new IDMError(404,"user id not found id :"+id,"").response();
@@ -178,18 +164,11 @@ public class UserHandler {
    @DELETE
    @Path("/{id}")
    public Response deleteUser(@Context UriInfo info,@PathParam("id") String id) {
-      long longId=0;
       logger.info("delete /users/" + id);
-       try {
-         longId= Long.parseLong(id);
-      }
-      catch (NumberFormatException nfe) {
-         return new IDMError(400,"invalid user id:"+id,"").response();
-      }
 
       try {
          User user = new User();
-         user.setUserid((int)longId);
+         user.setUserid(id);
          user = userStore.deleteUser(user);
          if (user==null) {
             return new IDMError(404,"user id not found id :"+id,"").response();
@@ -201,6 +180,4 @@ public class UserHandler {
       IdmLightProxy.clearClaimCache();
       return Response.status(204).build();
    }
-
-
 }

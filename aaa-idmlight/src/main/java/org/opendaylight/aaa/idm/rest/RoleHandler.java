@@ -14,28 +14,26 @@ package org.opendaylight.aaa.idm.rest;
  *
  */
 
-import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.util.List;
-import java.util.ArrayList;
-import org.opendaylight.aaa.idm.model.Roles;
-import org.opendaylight.aaa.idm.model.Role;
+
+import org.opendaylight.aaa.idm.IdmLightProxy;
 import org.opendaylight.aaa.idm.model.IDMError;
+import org.opendaylight.aaa.idm.model.Role;
+import org.opendaylight.aaa.idm.model.Roles;
 import org.opendaylight.aaa.idm.persistence.RoleStore;
 import org.opendaylight.aaa.idm.persistence.StoreException;
-import org.opendaylight.aaa.idm.IdmLightProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path("/v1/roles")
 public class RoleHandler {
@@ -62,16 +60,9 @@ public class RoleHandler {
    public Response getRole(@PathParam("id") String id)  {
       logger.info("get /roles/" + id);
       Role role=null;
-      long longId=0;
-      try {
-         longId=Long.parseLong(id);
-      }
-      catch (NumberFormatException nfe) {
-         return new IDMError(404,"invalid role id :" + id,"").response();
-      }
 
       try {
-         role = roleStore.getRole(longId);
+         role = roleStore.getRole(id);
       }
       catch(StoreException se) {
          return new IDMError(500,"internal error getting roles",se.message).response();
@@ -120,17 +111,10 @@ public class RoleHandler {
    @Consumes("application/json")
    @Produces("application/json")
    public Response putRole(@Context UriInfo info,Role role,@PathParam("id") String id) {
-      long longId=0;
       logger.info("put /roles/" + id);
-       try {
-         longId= Long.parseLong(id);
-      }
-      catch (NumberFormatException nfe) {
-         return new IDMError(404,"invalid role id :" + id,"").response();
-      }
 
       try {
-         role.setRoleid((int)longId);
+         role.setRoleid(id);
 
          // name
          // TODO: names should be unique
@@ -158,18 +142,11 @@ public class RoleHandler {
    @DELETE
    @Path("/{id}")
    public Response deleteRole(@Context UriInfo info,@PathParam("id") String id) {
-      long longId=0;
       logger.info("Delete /roles/" + id);
-       try {
-         longId= Long.parseLong(id);
-      }
-      catch (NumberFormatException nfe) {
-         return new IDMError(404,"invalid role id :" + id,"").response();
-      }
 
       try {
          Role role = new Role();
-         role.setRoleid((int)longId);
+         role.setRoleid(id);
          role = roleStore.deleteRole(role);
          if (role==null) {
             return new IDMError(404,"role id not found :" + id,"").response();

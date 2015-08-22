@@ -14,30 +14,30 @@ package org.opendaylight.aaa.idm.model;
  *
  */
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
-import java.util.ArrayList;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "Claim")
 public class Claim {
-   private Integer domainid;
-   private Integer userid;
+   private String domainid;
+   private String userid;
    private String username;
    private List<Role> roles;
 
-   public Integer getDomainid() {
+   public String getDomainid() {
       return domainid;
    }
 
-   public void setDomainid(Integer id) {
+   public void setDomainid(String id) {
       this.domainid = id;
    }
 
-   public Integer getUserid() {
+   public String getUserid() {
       return userid;
    }
 
-   public void setUserid(Integer id) {
+   public void setUserid(String id) {
       this.userid = id;
    }
 
@@ -58,4 +58,3 @@ public class Claim {
    }
 
 }
-
