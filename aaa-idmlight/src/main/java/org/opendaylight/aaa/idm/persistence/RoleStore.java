@@ -29,10 +29,13 @@ import org.opendaylight.aaa.idm.model.Roles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Preconditions;
+
 public class RoleStore {
    private static Logger logger = LoggerFactory.getLogger(RoleStore.class);
    protected Connection  dbConnection = null;
    protected final static String SQL_ID             = "roleid";
+   protected final static String SQL_DOMAIN_ID      = "domainid";
    protected final static String SQL_NAME           = "name";
    protected final static String SQL_DESCR          = "description";
    public final static int       MAX_FIELD_LEN      = 128;
@@ -41,6 +44,13 @@ public class RoleStore {
       dbConnection = IdmLightApplication.getConnection(dbConnection);
       return dbConnection;
    }
+
+   protected void dbClean() throws StoreException, SQLException{
+	   Connection c = dbConnect();
+	   String sql = "delete from ROLES where true";
+	   c.createStatement().execute(sql);
+	   c.close();
+   }   
 
    protected Connection dbConnect() throws StoreException {
       Connection conn;
@@ -63,8 +73,9 @@ public class RoleStore {
             Statement stmt = null;
             stmt = conn.createStatement();
             String sql = "CREATE TABLE ROLES " +
-                         "(roleid    INTEGER PRIMARY KEY AUTO_INCREMENT," +
-                         "name        VARCHAR(128)      UNIQUE NOT NULL, " +
+                         "(roleid     VARCHAR(128)   PRIMARY KEY," +
+                         "name        VARCHAR(128)   NOT NULL, " +
+                         "domainid    VARCHAR(128)   NOT NULL, " +
                          "description VARCHAR(128)      NOT NULL)";
            stmt.executeUpdate(sql);
            stmt.close();
@@ -98,7 +109,8 @@ protected void finalize () throws Throwable {
    protected  Role rsToRole(ResultSet rs) throws SQLException {
       Role role = new Role();
       try {
-         role.setRoleid(rs.getInt(SQL_ID));
+         role.setRoleid(rs.getString(SQL_ID));
+         role.setDomainID(rs.getString(SQL_DOMAIN_ID));
          role.setName(rs.getString(SQL_NAME));
          role.setDescription(rs.getString(SQL_DESCR));
       }
@@ -135,11 +147,11 @@ protected void finalize () throws Throwable {
       return roles;
    }
 
-   public Role getRole(long id) throws StoreException {
+   public Role getRole(String id) throws StoreException {
       Connection conn = dbConnect();
       try {
          PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ROLES WHERE roleid = ? ");
-         pstmt.setLong(1, id);
+         pstmt.setString(1, id);
          debug("query string: " + pstmt.toString());
          ResultSet rs = pstmt.executeQuery();
          if (rs.next()) {
@@ -163,25 +175,22 @@ protected void finalize () throws Throwable {
    }
 
    public Role createRole(Role role) throws StoreException {
-       int key=0;
+	   Preconditions.checkNotNull(role);
+	   Preconditions.checkNotNull(role.getName());
+	   Preconditions.checkNotNull(role.getDomainID());
        Connection conn = dbConnect();
        try {
-          String query = "insert into roles (name,description) values(?,?)";
-          PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-          statement.setString(1,role.getName());
-          statement.setString(2,role.getDescription());
+          String query = "insert into roles (roleid,domainid,name,description) values(?,?,?,?)";
+          PreparedStatement statement = conn.prepareStatement(query);
+          role.setRoleid(role.getName()+"@"+role.getDomainID());
+          statement.setString(1, role.getRoleid());
+          statement.setString(2, role.getDomainID());
+          statement.setString(3,role.getName());
+          statement.setString(4,role.getDescription());
           int affectedRows = statement.executeUpdate();
           if (affectedRows == 0) {
              throw new StoreException("Creating role failed, no rows affected.");
           }
-          ResultSet generatedKeys = statement.getGeneratedKeys();
-          if (generatedKeys.next()) {
-             key = generatedKeys.getInt(1);
-          }
-          else {
-             throw new StoreException("Creating role failed, no generated key obtained.");
-          }
-          role.setRoleid(key);
           return role;
        }
        catch (SQLException s) {
@@ -208,11 +217,10 @@ protected void finalize () throws Throwable {
 
       Connection conn = dbConnect();
       try {
-         String query = "UPDATE roles SET name = ?, description = ? WHERE roleid = ?";
+         String query = "UPDATE roles SET description = ? WHERE roleid = ?";
          PreparedStatement statement = conn.prepareStatement(query);
-         statement.setString(1, savedRole.getName());
-         statement.setString(2, savedRole.getDescription());
-         statement.setInt(3,savedRole.getRoleid());
+         statement.setString(1, savedRole.getDescription());
+         statement.setString(2,savedRole.getRoleid());
          statement.executeUpdate();
          statement.close();
       }
@@ -236,7 +244,7 @@ protected void finalize () throws Throwable {
       try {
          String query = "DELETE FROM DOMAINS WHERE domainid = ?";
          PreparedStatement statement = conn.prepareStatement(query);
-         statement.setLong(1, savedRole.getRoleid());
+         statement.setString(1, savedRole.getRoleid());
          int deleteCount = statement.executeUpdate(query);
          debug("deleted " + deleteCount + " records");
          statement.close();

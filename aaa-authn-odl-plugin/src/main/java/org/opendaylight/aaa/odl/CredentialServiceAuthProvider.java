@@ -8,6 +8,7 @@
 package org.opendaylight.aaa.odl;
 
 import java.util.Map;
+
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.CredentialAuth;
@@ -81,7 +82,7 @@ public final class CredentialServiceAuthProvider implements AuthProvider, AutoCl
 
         Claim claim;
         try {
-            claim = nullableCredService.authenticate(new PasswordCredentialsWrapper(username, password), DOMAIN);
+            claim = nullableCredService.authenticate(new PasswordCredentialsWrapper(username, password, DOMAIN));
         } catch (AuthenticationException e) {
             logger.debug("Authentication failed for user '{}' : {}", username, e);
             return false;
@@ -100,10 +101,12 @@ public final class CredentialServiceAuthProvider implements AuthProvider, AutoCl
     private static final class PasswordCredentialsWrapper implements PasswordCredentials {
         private final String username;
         private final String password;
-
-        public PasswordCredentialsWrapper(final String username, final String password) {
+        private final String domain;
+        
+        public PasswordCredentialsWrapper(final String username, final String password, final String _domain) {
             this.username = username;
             this.password = password;
+            this.domain = _domain;
         }
 
         @Override
@@ -115,5 +118,11 @@ public final class CredentialServiceAuthProvider implements AuthProvider, AutoCl
         public String password() {
             return password;
         }
+
+		@Override
+		public String domain() {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 }
