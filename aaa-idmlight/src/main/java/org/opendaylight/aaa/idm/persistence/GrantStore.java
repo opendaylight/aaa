@@ -33,7 +33,6 @@ public class GrantStore {
    private static Logger logger = LoggerFactory.getLogger(GrantStore.class);
    protected Connection  dbConnection = null;
    protected final static String SQL_ID             = "grantid";
-   protected final static String SQL_DESCR          = "description";
    protected final static String SQL_TENANTID       = "domainid";
    protected final static String SQL_USERID         = "userid";
    protected final static String SQL_ROLEID         = "roleid";
@@ -41,6 +40,13 @@ public class GrantStore {
    protected Connection getDBConnect() throws StoreException {
       dbConnection = IdmLightApplication.getConnection(dbConnection);
       return dbConnection;
+   }
+
+   protected void dbClean() throws StoreException, SQLException{
+      Connection c = dbConnect();
+      String sql = "delete from GRANTS where true";
+      c.createStatement().execute(sql);
+      c.close();
    }
 
    protected Connection dbConnect() throws StoreException {
@@ -63,11 +69,10 @@ public class GrantStore {
             Statement stmt = null;
             stmt = conn.createStatement();
             String sql = "CREATE TABLE GRANTS " +
-                         "(grantid    INTEGER PRIMARY KEY AUTO_INCREMENT," +
-                         "description VARCHAR(128)     NOT NULL, " +
-                         "domainid     INTEGER         NOT NULL, " +
-                         "userid     INTEGER           NOT NULL, " +
-                         "roleid     INTEGER           NOT NULL)" ;
+                         "(grantid    VARCHAR(128) PRIMARY KEY," +
+                         "domainid    VARCHAR(128)         NOT NULL, " +
+                         "userid      VARCHAR(128)         NOT NULL, " +
+                         "roleid      VARCHAR(128)         NOT NULL)" ;
            stmt.executeUpdate(sql);
            stmt.close();
          }
@@ -102,11 +107,10 @@ protected void finalize () throws Throwable {
    protected Grant rsToGrant(ResultSet rs) throws SQLException {
       Grant grant = new Grant();
       try {
-         grant.setGrantid(rs.getInt(SQL_ID));
-         grant.setDescription(rs.getString(SQL_DESCR));
-         grant.setDomainid(rs.getInt(SQL_TENANTID));
-         grant.setUserid(rs.getInt(SQL_USERID));
-         grant.setRoleid(rs.getInt(SQL_ROLEID));
+         grant.setGrantid(rs.getString(SQL_ID));
+         grant.setDomainid(rs.getString(SQL_TENANTID));
+         grant.setUserid(rs.getString(SQL_USERID));
+         grant.setRoleid(rs.getString(SQL_ROLEID));
       }
       catch (SQLException sqle) {
          logger.error( "SQL Exception : " + sqle);
@@ -115,14 +119,14 @@ protected void finalize () throws Throwable {
       return grant;
    }
 
-   public Grants getGrants(int did, int uid) throws StoreException {
+   public Grants getGrants(String did, String uid) throws StoreException {
       Grants grants = new Grants();
       List<Grant> grantList = new ArrayList<Grant>();
       Connection conn = dbConnect();
       try {
          PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM grants WHERE domainid = ? AND userid = ?");
-         pstmt.setInt(1, did);
-         pstmt.setInt(2, uid);
+         pstmt.setString(1, did);
+         pstmt.setString(2, uid);
          debug("query string: " + pstmt.toString());
          ResultSet rs = pstmt.executeQuery();
          while (rs.next()) {
@@ -169,11 +173,11 @@ protected void finalize () throws Throwable {
    }
 
 
-   public Grant  getGrant(int id) throws StoreException {
+   public Grant  getGrant(String id) throws StoreException {
       Connection conn = dbConnect();
       try {
           PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM GRANTS WHERE grantid = ? ");
-          pstmt.setInt(1, id);
+          pstmt.setString(1, id);
           debug("query string: " + pstmt.toString());
           ResultSet rs = pstmt.executeQuery();
          if (rs.next()) {
@@ -196,13 +200,13 @@ protected void finalize () throws Throwable {
         }
    }
 
-   public Grant getGrant(int did,int uid,int rid) throws StoreException {
+   public Grant getGrant(String did,String uid,String rid) throws StoreException {
       Connection conn = dbConnect();
       try {
           PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM GRANTS WHERE domainid = ? AND userid = ? AND roleid = ? ");
-          pstmt.setInt(1, did);
-          pstmt.setInt(2, uid);
-          pstmt.setInt(3, rid);
+          pstmt.setString(1, did);
+          pstmt.setString(2, uid);
+          pstmt.setString(3, rid);
           debug("query string: " + pstmt.toString());
           ResultSet rs = pstmt.executeQuery();
          if (rs.next()) {
@@ -227,27 +231,18 @@ protected void finalize () throws Throwable {
 
 
    public Grant createGrant(Grant grant) throws StoreException {
-       int key=0;
        Connection conn = dbConnect();
        try {
-          String query = "insert into grants  (description,domainid,userid,roleid) values(?,?,?,?)";
-          PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-          statement.setString(1,grant.getDescription());
-          statement.setInt(2,grant.getDomainid());
-          statement.setInt(3,grant.getUserid());
-          statement.setInt(4,grant.getRoleid());
+          String query = "insert into grants  (grantid,domainid,userid,roleid) values(?,?,?,?)";
+          PreparedStatement statement = conn.prepareStatement(query);
+          statement.setString(1,grant.getUserid()+"@"+grant.getDomainid()+"@"+grant.getRoleid());
+          statement.setString(2,grant.getDomainid());
+          statement.setString(3,grant.getUserid());
+          statement.setString(4,grant.getRoleid());
           int affectedRows = statement.executeUpdate();
           if (affectedRows == 0) {
              throw new StoreException("Creating grant failed, no rows affected.");
           }
-          ResultSet generatedKeys = statement.getGeneratedKeys();
-          if (generatedKeys.next()) {
-             key = generatedKeys.getInt(1);
-          }
-          else {
-             throw new StoreException("Creating grant failed, no generated key obtained.");
-          }
-          grant.setGrantid(key);
           return grant;
        }
        catch (SQLException s) {
@@ -268,7 +263,7 @@ protected void finalize () throws Throwable {
       try {
           String query = "DELETE FROM GRANTS WHERE grantid = ?";
           PreparedStatement statement = conn.prepareStatement(query);
-          statement.setInt(1, savedGrant.getGrantid());
+          statement.setString(1, savedGrant.getGrantid());
          int deleteCount = statement.executeUpdate(query);
          debug("deleted " + deleteCount + " records");
          statement.close();
