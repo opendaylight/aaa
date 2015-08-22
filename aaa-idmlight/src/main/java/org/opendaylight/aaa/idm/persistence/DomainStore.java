@@ -29,6 +29,8 @@ import org.opendaylight.aaa.idm.model.Domains;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Preconditions;
+
 public class DomainStore {
    private static Logger logger = LoggerFactory.getLogger(DomainStore.class);
 
@@ -42,6 +44,13 @@ public class DomainStore {
       dbConnection = IdmLightApplication.getConnection(dbConnection);
       return dbConnection;
    }
+
+   protected void dbClean() throws StoreException, SQLException{
+	   Connection c = dbConnect();
+	   String sql = "delete from DOMAINS where true";
+	   c.createStatement().execute(sql);
+	   c.close();
+   }   
 
    protected Connection dbConnect() throws StoreException {
       Connection conn;
@@ -64,9 +73,9 @@ public class DomainStore {
             Statement stmt = null;
             stmt = conn.createStatement();
             String sql = "CREATE TABLE DOMAINS "  +
-                         "(domainid    INTEGER PRIMARY KEY AUTO_INCREMENT," +
+                         "(domainid   VARCHAR(128)      PRIMARY KEY," +
                          "name        VARCHAR(128)      UNIQUE NOT NULL, " +
-                         "description VARCHAR(128)      NOT NULL, " +
+                         "description VARCHAR(128)      , " +
                          "enabled     INTEGER           NOT NULL)" ;
            stmt.executeUpdate(sql);
            stmt.close();
@@ -100,7 +109,7 @@ public class DomainStore {
    protected Domain rsToDomain(ResultSet rs) throws SQLException {
       Domain domain = new Domain();
       try {
-         domain.setDomainid(rs.getInt(SQL_ID));
+         domain.setDomainid(rs.getString(SQL_ID));
          domain.setName(rs.getString(SQL_NAME));
          domain.setDescription(rs.getString(SQL_DESCR));
          domain.setEnabled(rs.getInt(SQL_ENABLED)==1?true:false);
@@ -166,11 +175,11 @@ public class DomainStore {
    }
 
 
-   public Domain getDomain(long id) throws StoreException {
+   public Domain getDomain(String id) throws StoreException {
       Connection conn = dbConnect();
       try {
          PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM DOMAINS WHERE domainid = ? ");
-         pstmt.setLong(1, id);
+         pstmt.setString(1, id);
          debug("query string: " + pstmt.toString());
          ResultSet rs = pstmt.executeQuery();
          if (rs.next()) {
@@ -194,28 +203,22 @@ public class DomainStore {
    }
 
    public Domain createDomain(Domain domain) throws StoreException {
-       int key=0;
+	   Preconditions.checkNotNull(domain);
+	   Preconditions.checkNotNull(domain.getName());
+	   Preconditions.checkNotNull(domain.getEnabled());
        Connection conn = dbConnect();
        try {
-          String query = "insert into DOMAINS (name,description,enabled) values(?, ?, ?)";
-          PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+          String query = "insert into DOMAINS (domainid,name,description,enabled) values(?, ?, ?, ?)";
+          PreparedStatement statement = conn.prepareStatement(query);
           statement.setString(1,domain.getName());
-          statement.setString(2,domain.getDescription());
-          statement.setInt(3,domain.getEnabled()?1:0);
+          statement.setString(2,domain.getName());
+          statement.setString(3,domain.getDescription());
+          statement.setInt(4,domain.getEnabled()?1:0);
           int affectedRows = statement.executeUpdate();
           if (affectedRows == 0) {
              throw new StoreException("Creating domain failed, no rows affected.");
           }
-          ResultSet generatedKeys = statement.getGeneratedKeys();
-          if (generatedKeys.next()) {
-             key = generatedKeys.getInt(1);
-          }
-          else {
-             throw new StoreException("Creating domain failed, no generated key obtained.");
-          }
-          domain.setDomainid(key);
-          generatedKeys.close();
-          statement.close();
+          domain.setDomainid(domain.getName());
           return domain;
        }
        catch (SQLException s) {
@@ -223,7 +226,7 @@ public class DomainStore {
        }
        finally {
            dbClose();
-         }
+       }
    }
 
    public Domain putDomain(Domain domain) throws StoreException {
@@ -244,12 +247,11 @@ public class DomainStore {
 
       Connection conn = dbConnect();
       try {
-         String query = "UPDATE DOMAINS SET name = ?, description = ?, enabled = ? WHERE domainid = ?";
+         String query = "UPDATE DOMAINS SET description = ?, enabled = ? WHERE domainid = ?";
          PreparedStatement statement = conn.prepareStatement(query);
-         statement.setString(1, savedDomain.getName());
-         statement.setString(2, savedDomain.getDescription());
-         statement.setInt(3, savedDomain.getEnabled()?1:0);
-         statement.setInt(4,savedDomain.getDomainid());
+         statement.setString(1, savedDomain.getDescription());
+         statement.setInt(2, savedDomain.getEnabled()?1:0);
+         statement.setString(3,savedDomain.getDomainid());
          statement.executeUpdate();
          statement.close();
       }
@@ -272,7 +274,7 @@ public class DomainStore {
       try {
          String query = "DELETE FROM DOMAINS WHERE domainid = ?";
          PreparedStatement statement = conn.prepareStatement(query);
-         statement.setLong(1, deletedDomain.getDomainid());
+         statement.setString(1, deletedDomain.getDomainid());
          int deleteCount = statement.executeUpdate();
          debug("deleted " + deleteCount + " records");
          statement.close();
