@@ -52,7 +52,6 @@
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>features-aaa-api</artifactId>
             <classifier>features</classifier>
-            <version>${project.version}</version>
             <type>xml</type>
             <scope>runtime</scope>
         </dependency>
@@ -68,7 +67,6 @@
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>features-aaa-authz</artifactId>
             <classifier>features</classifier>
-            <version>${project.version}</version>
             <type>xml</type>
             <scope>runtime</scope>
         </dependency>
@@ -190,7 +188,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.6</version>
                 <executions>
                     <execution>
                         <id>copy</id>
