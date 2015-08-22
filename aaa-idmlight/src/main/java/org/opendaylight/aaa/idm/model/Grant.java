@@ -19,51 +19,41 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "grant")
 public class Grant {
-   private Integer grantid;
-   private String description;
-   private Integer domainid;
-   private Integer userid;
-   private Integer roleid;
+   private String grantid;
+   private String domainid;
+   private String userid;
+   private String roleid;
 
-   public Integer getGrantid() {
-      return grantid;
+   public String getGrantid(){
+       return this.grantid;
    }
 
-   public void setGrantid(Integer id) {
-      this.grantid = id;
+   public void setGrantid(String id){
+       this.grantid = id;
    }
 
-   public String getDescription() {
-      return description;
-   }
-
-   public void setDescription(String description) {
-      this.description = description;
-   }
-
-   public Integer getDomainid() {
+   public String getDomainid() {
       return domainid;
    }
 
-   public void setDomainid(Integer id) {
+   public void setDomainid(String id) {
       this.domainid = id;
    }
 
-   public Integer getUserid() {
+   public String getUserid() {
       return userid;
    }
 
-   public void setUserid(Integer id) {
+   public void setUserid(String id) {
       this.userid = id;
    }
 
-   public Integer getRoleid() {
+   public String getRoleid() {
       return roleid;
    }
 
-   public void setRoleid(Integer id) {
+   public void setRoleid(String id) {
       this.roleid = id;
    }
-
 }
 
