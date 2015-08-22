@@ -32,6 +32,7 @@ import com.sun.jersey.core.util.Base64;
 public class HttpBasicAuthTest {
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "admin";
+    private static final String DOMAIN = "sdn";
     private HttpBasicAuth auth;
 
     @SuppressWarnings("unchecked")
@@ -41,18 +42,16 @@ public class HttpBasicAuthTest {
         auth.ca = mock(CredentialAuth.class);
         when(
                 auth.ca.authenticate(new PasswordCredentialBuilder()
-                        .setUserName(USERNAME).setPassword(PASSWORD).build(),
-                        null)).thenReturn(
+                        .setUserName(USERNAME).setPassword(PASSWORD).setDomain(DOMAIN).build())).thenReturn(
                 new ClaimBuilder().setUser("admin").addRole("admin").setUserId("123").build());
         when(
                 auth.ca.authenticate(new PasswordCredentialBuilder()
-                        .setUserName(USERNAME).setPassword("bozo").build(),
-                        null)).thenThrow(new AuthenticationException("barf"));
+                        .setUserName(USERNAME).setPassword("bozo").setDomain(DOMAIN).build())).thenThrow(new AuthenticationException("barf"));
     }
 
     @Test
     public void testValidateOk() throws UnsupportedEncodingException {
-        String data = USERNAME + ":" + PASSWORD;
+        String data = USERNAME + ":" + PASSWORD + ":" + DOMAIN;
         Map<String, List<String>> headers = new HashMap<>();
         headers.put(
                 "Authorization",
@@ -66,7 +65,7 @@ public class HttpBasicAuthTest {
 
     @Test(expected = AuthenticationException.class)
     public void testValidateBadPassword() throws UnsupportedEncodingException {
-        String data = USERNAME + ":bozo";
+        String data = USERNAME + ":bozo:" + DOMAIN;
         Map<String, List<String>> headers = new HashMap<>();
         headers.put(
                 "Authorization",
