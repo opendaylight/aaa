@@ -152,13 +152,11 @@ public class ClaimBuilder {
 
         @Override
         public String toString() {
-            StringBuilder sb = new StringBuilder();
-            sb.append("clientId:").append(clientId).append(",");
-            sb.append("userId:").append(userId).append(",");
-            sb.append("userName:").append(user).append(",");
-            sb.append("domain:").append(domain).append(",");
-            sb.append("roles:").append(roles);
-            return sb.toString();
+            return "clientId:" + clientId + ","
+                 + "userId:" + userId + ","
+                 + "userName:" + user + ","
+                 + "domain:" + domain + ","
+                 + "roles:" + roles;
         }
     }
 }
