@@ -19,16 +19,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "domain")
 public class Domain {
-   private Integer domainid;
+   private String domainid;
    private String name;
    private String description;
    private Boolean enabled;
 
-   public Integer getDomainid() {
+   public String getDomainid() {
       return domainid;
    }
 
-   public void setDomainid(Integer id) {
+   public void setDomainid(String id) {
       this.domainid = id;
    }
 
@@ -55,6 +55,4 @@ public class Domain {
    public void setEnabled(Boolean enabled) {
       this.enabled = enabled;
    }
-
 }
-

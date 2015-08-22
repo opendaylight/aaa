@@ -18,16 +18,6 @@ import java.util.List;
  */
 public interface IdMService {
     /**
-     * Retrieve the userId, given the userName, or null if no user by that name
-     * exists.
-     *
-     * @param userName
-     *            user name
-     * @return user id or null if no user by that name exists
-     */
-    String getUserId(String userName);
-
-    /**
      * List all domains that the given user has at least one role on.
      *
      * @param userId
