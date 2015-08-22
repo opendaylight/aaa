@@ -94,8 +94,6 @@ public class FederationEndpointTest {
     public void testFederation() throws Exception {
         when(ServiceLocator.INSTANCE.ca.get(0).transform(anyMap())).thenReturn(
                 claim);
-        when(ServiceLocator.INSTANCE.is.getUserId(anyString())).thenReturn(
-                "1234");
         when(ServiceLocator.INSTANCE.is.listDomains(anyString())).thenReturn(
                 Arrays.asList("pepsi", "coke"));
 

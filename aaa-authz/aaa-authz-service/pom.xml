@@ -13,10 +13,8 @@
         <relativePath>../../parent</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>aaa-authz-service</artifactId>
     <packaging>bundle</packaging>
-
     <dependencies>
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
