@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_3341d45a",
+        "filename": "commons/federation/README",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-08-25T08:40:19Z",
+      "side": 1,
+      "message": "configured? deployed?",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 28
+      },
+      "revId": "44e347847673064807e3787556e794eba1528180",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_731e6c72",
+        "filename": "commons/federation/README",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-08-25T08:40:19Z",
+      "side": 1,
+      "message": "I know it\u0027s asking much, but a simple box \"deployer view\" diagram would be of help showing the instances used, and perhaps pin pointing the Apache front end, SSSD, IPA, ODL",
+      "range": {
+        "startLine": 4,
+        "startChar": 7,
+        "endLine": 4,
+        "endChar": 15
+      },
+      "revId": "44e347847673064807e3787556e794eba1528180",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_b32c04ad",
+        "filename": "commons/federation/README",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-08-25T08:40:19Z",
+      "side": 1,
+      "message": "Think that it would be good to add that the requirement for SSSD here is to run a CentOS/RHEL distro, unless things have changes",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "44e347847673064807e3787556e794eba1528180",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
