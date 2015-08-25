@@ -41,10 +41,7 @@ public class StoreBuilder {
    private static final String IDM_LIGHT_EXTENSION = ".mv.db";
 
    private String getIdmLightFileName(final String databaseName) {
-      StringBuilder fileName = new StringBuilder();
-      fileName.append(databaseName);
-      fileName.append(IDM_LIGHT_EXTENSION);
-      return fileName.toString();
+      return databaseName + IDM_LIGHT_EXTENSION;
    }
 
    public boolean exists() {
