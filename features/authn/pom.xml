@@ -228,7 +228,7 @@
 
         <!-- odl-aaa-authn-plugin -->
         <dependency>
-            <groupId>org.opendaylight.controller</groupId>
+            <groupId>org.opendaylight.netconf</groupId>
             <artifactId>features-netconf</artifactId>
             <classifier>features</classifier>
             <type>xml</type>
