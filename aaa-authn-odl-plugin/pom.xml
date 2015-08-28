@@ -22,7 +22,7 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.opendaylight.controller</groupId>
+            <groupId>org.opendaylight.netconf</groupId>
             <artifactId>netconf-auth</artifactId>
         </dependency>
         <dependency>

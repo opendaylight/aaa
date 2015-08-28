@@ -10,7 +10,7 @@
 	<repository>mvn:org.opendaylight.yangtools/features-yangtools/${yangtools.version}/xml/features</repository>
 	<repository>mvn:org.opendaylight.controller/features-config/${config.version}/xml/features</repository>
 	<repository>mvn:org.opendaylight.controller/features-mdsal/${mdsal.version}/xml/features</repository>
-	<repository>mvn:org.opendaylight.controller/features-restconf/${restconf.version}/xml/features</repository>
+	<repository>mvn:org.opendaylight.netconf/features-restconf/${restconf.version}/xml/features</repository>
 	<repository>mvn:org.opendaylight.aaa/features-aaa-api/${project.version}/xml/features</repository>
 
 	<feature name='odl-aaa-authz' description='OpenDaylight :: AAA :: Authorization'

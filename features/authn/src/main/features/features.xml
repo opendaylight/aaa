@@ -7,7 +7,7 @@
 <features name="odl-aaa-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
-    <repository>mvn:org.opendaylight.controller/features-netconf/${netconf.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.netconf/features-netconf/${netconf.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.aaa/features-aaa-api/${project.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.yangtools/features-yangtools/${yangtools.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-config/${config.version}/xml/features</repository>
@@ -149,7 +149,8 @@
 
     <feature name='odl-aaa-netconf-plugin' description='OpenDaylight :: AAA :: ODL NETCONF Plugin'
              version='${project.version}'>
-        <feature version='${netconf.version}'>odl-netconf-api</feature>
+        <feature version='${config.version}'>odl-config-api</feature>
+        <bundle>mvn:org.opendaylight.netconf/netconf-auth/${netconf.version}</bundle>
         <feature version='${project.version}'>odl-aaa-authn</feature>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-odl-plugin/{{VERSION}}</bundle>
     </feature>
@@ -157,7 +158,8 @@
     <feature name='odl-aaa-netconf-plugin-no-cluster'
              description='OpenDaylight :: AAA :: ODL NETCONF Plugin - NO CLUSTER'
              version='${project.version}'>
-        <feature version='${netconf.version}'>odl-netconf-api</feature>
+        <feature version='${config.version}'>odl-config-api</feature>
+        <bundle>mvn:org.opendaylight.netconf/netconf-auth/${netconf.version}</bundle>
         <feature version='${project.version}'>odl-aaa-authn-no-cluster</feature>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-odl-plugin/{{VERSION}}</bundle>
     </feature>
