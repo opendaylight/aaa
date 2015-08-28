@@ -21,7 +21,7 @@
     <properties>
         <config.version>0.4.0-SNAPSHOT</config.version>
         <mdsal.version>1.3.0-SNAPSHOT</mdsal.version>
-        <netconf.version>0.4.0-SNAPSHOT</netconf.version>
+        <netconf.version>1.0.0-SNAPSHOT</netconf.version>
         <yangtools.version>0.8.0-SNAPSHOT</yangtools.version>
     </properties>
 
@@ -228,7 +228,7 @@
 
         <!-- odl-aaa-authn-plugin -->
         <dependency>
-            <groupId>org.opendaylight.controller</groupId>
+            <groupId>org.opendaylight.netconf</groupId>
             <artifactId>features-netconf</artifactId>
             <classifier>features</classifier>
             <type>xml</type>
@@ -247,6 +247,24 @@
             <artifactId>aaa-authn-keystone</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>show dependecy tree</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>tree</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
     <scm>
         <connection>scm:git:ssh://git.opendaylight.org:29418/aaa.git</connection>
         <developerConnection>scm:git:ssh://git.opendaylight.org:29418/aaa.git</developerConnection>
