@@ -1,0 +1,344 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_65ff7468",
+        "filename": "aaa-authn-basic/src/test/java/org/opendaylight/aaa/basic/HttpBasicAuthTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "Please remove this dead space.",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_8502d06d",
+        "filename": "aaa-authn-federation/src/main/java/org/opendaylight/aaa/federation/FederationEndpoint.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "Please remove this dead space.",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_c52f68f5",
+        "filename": "aaa-authn-odl-plugin/src/main/java/org/opendaylight/aaa/odl/CredentialServiceAuthProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "Please use the convention utilized by the other two local variables (i.e., no underscore).",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_25f97c80",
+        "filename": "aaa-authn-odl-plugin/src/main/java/org/opendaylight/aaa/odl/CredentialServiceAuthProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "Please remove tabs from this file.",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_25409ca4",
+        "filename": "aaa-authn/src/main/java/org/opendaylight/aaa/PasswordCredentialBuilder.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "Please use convention (no underscore).",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_453b5838",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/IdmLightProxy.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "Please remove tabs.",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_054560b2",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/model/Role.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "Please do not use underscores per the convention of the rest of the code.",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_a5134cb7",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/model/User.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "Please do not use underscores.",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_c51688a7",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/persistence/DomainStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "Please remove tabs.",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_650d3490",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/persistence/DomainStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "Please remove white space.",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_851090a9",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/persistence/DomainStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "This is technically an API change.  I\u0027d say its okay since we are allowing null now, instead of the other way around (disallowing null) so it should hold alright for upgrades.  Wojciech, what are your thoughts?",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_25273c14",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/persistence/GrantStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "Please remove the tabs from this file.",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_45227802",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/persistence/GrantStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "Please remove this dead whitespace.",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_e52064f9",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/persistence/RoleStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "remove tabs",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_051c80c0",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/persistence/RoleStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "get rid of white space",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_a57a6cef",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/persistence/StoreBuilder.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "get rid of tabs in file",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_c57d28e9",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/persistence/UserStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "add spacing here",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_c564484b",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/RoleHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "confusing message",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_655bf487",
+        "filename": "aaa-idmlight/src/test/java/org/opendaylight/aaa/idm/persistence/IDMTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "remove tabs",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_855e5075",
+        "filename": "aaa-idmlight/src/test/java/org/opendaylight/aaa/idm/persistence/PasswordHashTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T16:24:25Z",
+      "side": 1,
+      "message": "remove tabs",
+      "revId": "212c055d2aa1f7bd335ea56b5ef26aaf0eb22810",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
