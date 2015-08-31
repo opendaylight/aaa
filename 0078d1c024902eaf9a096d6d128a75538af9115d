@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_4536f8e8",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/ServiceLocator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-08-31T12:49:58Z",
+      "side": 1,
+      "message": "Please follow the convention above by separating the body of the method onto separate lines instead of using just one line.",
+      "revId": "0078d1c024902eaf9a096d6d128a75538af9115d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
