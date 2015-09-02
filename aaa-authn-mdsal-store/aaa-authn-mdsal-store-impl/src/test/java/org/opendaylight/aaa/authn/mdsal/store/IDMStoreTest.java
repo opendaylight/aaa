@@ -1,0 +1,161 @@
+package org.opendaylight.aaa.authn.mdsal.store;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.aaa.Domain;
+import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.aaa.Grant;
+import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.aaa.Role;
+import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.aaa.User;
+public class IDMStoreTest {
+
+    @Test
+    public void testWriteDomain () throws Exception{
+        IDMStoreTestUtil util = new IDMStoreTestUtil();
+        IDMStore testedObject = new IDMStore(util.dataBroker);
+        util.addMokitoFordomain();
+        Domain domain = testedObject.writeDomain(util.domain);
+        Assert.assertNotNull(domain);
+        Assert.assertEquals(domain.getDomainid(), util.domain.getName());
+    }
+
+    @Test
+    public void testReadDomain () throws Exception{
+        IDMStoreTestUtil util = new IDMStoreTestUtil();
+        IDMStore testedObject = new IDMStore(util.dataBroker);
+        util.addMokitoFordomain();
+        Domain domain = testedObject.readDomain(util.domain.getDomainid());
+        Assert.assertNotNull(domain);
+        Assert.assertEquals(domain, util.domain);
+    }
+
+    @Test
+    public void testDeleteDomain () throws Exception{
+        IDMStoreTestUtil util = new IDMStoreTestUtil();
+        IDMStore testedObject = new IDMStore(util.dataBroker);
+        util.addMokitoFordomain();
+        Domain domain = testedObject.deleteDomain(util.domain.getDomainid());
+        Assert.assertEquals(domain, util.domain);
+    }
+
+    @Test
+    public void testUpdateDomain () throws Exception{
+        IDMStoreTestUtil util = new IDMStoreTestUtil();
+        IDMStore testedObject = new IDMStore(util.dataBroker);
+        util.addMokitoFordomain();
+        Domain domain = testedObject.updateDomain(util.domain);
+        Assert.assertEquals(domain, util.domain);
+    }
+
+    @Test
+    public void testWriteRole () throws Exception{
+        IDMStoreTestUtil util = new IDMStoreTestUtil();
+        IDMStore testedObject = new IDMStore(util.dataBroker);
+        util.addMokitoForrole();
+        util.addMokitoFordomain();
+        Role role = testedObject.writeRole(util.role);
+        Assert.assertNotNull(role);
+        Assert.assertEquals(role.getRoleid(), util.role.getName()+"@"+role.getDomainid());
+    }
+
+    @Test
+    public void testReadRole () throws Exception{
+        IDMStoreTestUtil util = new IDMStoreTestUtil();
+        IDMStore testedObject = new IDMStore(util.dataBroker);
+        util.addMokitoForrole();
+        Role role = testedObject.readRole(util.role.getRoleid());
+        Assert.assertNotNull(role);
+        Assert.assertEquals(role, util.role);
+    }
+
+    @Test
+    public void testDeleteRole () throws Exception{
+        IDMStoreTestUtil util = new IDMStoreTestUtil();
+        IDMStore testedObject = new IDMStore(util.dataBroker);
+        util.addMokitoForrole();
+        Role role = testedObject.deleteRole(util.role.getRoleid());
+        Assert.assertNotNull(role);
+        Assert.assertEquals(role, util.role);
+    }
+
+    @Test
+    public void testUpdateRole () throws Exception{
+        IDMStoreTestUtil util = new IDMStoreTestUtil();
+        IDMStore testedObject = new IDMStore(util.dataBroker);
+        util.addMokitoForrole();
+        Role role = testedObject.updateRole(util.role);
+        Assert.assertNotNull(role);
+        Assert.assertEquals(role, util.role);
+    }
+
+    @Test
+    public void testWriteUser () throws Exception{
+        IDMStoreTestUtil util = new IDMStoreTestUtil();
+        IDMStore testedObject = new IDMStore(util.dataBroker);
+        util.addMokitoForuser();
+        User user = testedObject.writeUser(util.user);
+        Assert.assertNotNull(user);
+        Assert.assertEquals(user.getUserid(), util.user.getName()+"@"+util.user.getDomainid());
+    }
+
+    @Test
+    public void testReadUser () throws Exception{
+        IDMStoreTestUtil util = new IDMStoreTestUtil();
+        IDMStore testedObject = new IDMStore(util.dataBroker);
+        util.addMokitoForuser();
+        User user = testedObject.readUser(util.user.getUserid());
+        Assert.assertNotNull(user);
+        Assert.assertEquals(user, util.user);
+    }
+
+    @Test
+    public void testDeleteUser () throws Exception{
+        IDMStoreTestUtil util = new IDMStoreTestUtil();
+        IDMStore testedObject = new IDMStore(util.dataBroker);
+        util.addMokitoForuser();
+        User user = testedObject.deleteUser(util.user.getUserid());
+        Assert.assertNotNull(user);
+        Assert.assertEquals(user, util.user);
+    }
+
+    @Test
+    public void testUpdateUser () throws Exception{
+        IDMStoreTestUtil util = new IDMStoreTestUtil();
+        IDMStore testedObject = new IDMStore(util.dataBroker);
+        util.addMokitoForuser();
+        User user = testedObject.updateUser(util.user);
+        Assert.assertNotNull(user);
+        Assert.assertEquals(user, util.user);
+    }
+
+    @Test
+    public void testWriteGrant () throws Exception{
+        IDMStoreTestUtil util = new IDMStoreTestUtil();
+        IDMStore testedObject = new IDMStore(util.dataBroker);
+        util.addMokitoFordomain();
+        util.addMokitoForrole();
+        util.addMokitoForuser();
+        util.addMokitoForgrant();
+        Grant grant = testedObject.writeGrant(util.grant);
+        Assert.assertNotNull(grant);
+    }
+
+    @Test
+    public void testReadGrant () throws Exception{
+        IDMStoreTestUtil util = new IDMStoreTestUtil();
+        IDMStore testedObject = new IDMStore(util.dataBroker);
+        util.addMokitoForgrant();
+        Grant grant = testedObject.readGrant(util.grant.getGrantid());
+        Assert.assertNotNull(grant);
+        Assert.assertEquals(grant, util.grant);
+    }
+
+    @Test
+    public void testDeleteGrant () throws Exception{
+        IDMStoreTestUtil util = new IDMStoreTestUtil();
+        IDMStore testedObject = new IDMStore(util.dataBroker);
+        util.addMokitoForgrant();
+        Grant grant = testedObject.deleteGrant(util.grant.getGrantid());
+        Assert.assertNotNull(grant);
+        Assert.assertEquals(grant, util.grant);
+    }
+}
