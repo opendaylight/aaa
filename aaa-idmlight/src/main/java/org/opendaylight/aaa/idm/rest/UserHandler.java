@@ -98,7 +98,7 @@ public class UserHandler {
       logger.info("post /users");
       try {
          // enabled by default
-         if (user.getEnabled()==null) {
+         if (user.isEnabled()==null) {
             user.setEnabled(true);
          }
 

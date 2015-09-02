@@ -115,7 +115,7 @@ public class DomainHandler {
    public Response createDomain(@Context UriInfo info,Domain domain) {
       logger.info("Post /domains");
       try {
-         if (domain.getEnabled()==null) {
+         if (domain.isEnabled()==null) {
             domain.setEnabled(false);
          }
          if (domain.getName()==null) {
