@@ -14,6 +14,6 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-api/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-credential-store-api/{{VERSION}}</bundle>
         <feature version='${yangtools.version}'>odl-yangtools-common</feature>
-        <feature version='${yangtools.version}'>odl-yangtools-binding</feature>
+        <feature version='${yangtools.version}'>odl-mdsal-binding-base</feature>
 	</feature>
 </features>

@@ -73,7 +73,7 @@
 
         <!-- MD-SAL -->
         <feature version='${yangtools.version}'>odl-yangtools-common</feature>
-        <feature version='${yangtools.version}'>odl-yangtools-binding</feature>
+        <feature version='${yangtools.version}'>odl-mdsal-binding-base</feature>
         <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
         <feature version='${config.version}'>odl-config-core</feature>
 
