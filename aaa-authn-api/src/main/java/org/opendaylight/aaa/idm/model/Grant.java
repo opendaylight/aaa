@@ -65,5 +65,33 @@ public class Grant {
       this.roleid = id;
    }
 
+   @Override
+   public int hashCode() {
+       return this.getUserid().hashCode();
+   }
+
+   @Override
+   public boolean equals(Object obj) {
+       Grant other = (Grant)obj;
+       if(other==null)
+           return false;
+       if(compareValues(getDomainid(), other.getDomainid()) &&
+          compareValues(getRoleid(), other.getRoleid()) &&
+          compareValues(getUserid(), other.getUserid()))
+              return true;
+       return false;
+   }
+
+   private boolean compareValues(Object a,Object b){
+       if(a==null && b!=null)
+           return false;
+       if(a!=null && b==null)
+           return false;
+       if(a==null && b==null)
+           return true;
+       if(a.equals(b))
+           return true;
+       return false;
+   }
 }
 
