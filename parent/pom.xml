@@ -57,9 +57,6 @@
 
         <config.authn.store.configfile>08-authn-config.xml</config.authn.store.configfile>
 
-        <!-- Netconf plugin -->
-        <netconf.version>0.4.0-SNAPSHOT</netconf.version>
-
         <!-- IdmLight -->
         <h2.version>1.4.185</h2.version>
 
@@ -98,15 +95,15 @@
             </dependency>
             <dependency>
                 <groupId>org.opendaylight.controller</groupId>
-                <artifactId>netconf-artifacts</artifactId>
-                <version>${netconf.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.opendaylight.controller</groupId>
                 <artifactId>config-artifacts</artifactId>
                 <version>${config.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.opendaylight.netconf</groupId>
+                <artifactId>restconf-artifacts</artifactId>
+                <version>${restconf.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

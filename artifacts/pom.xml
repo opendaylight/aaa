@@ -77,11 +77,6 @@
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-authn-odl-plugin</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-authn-sssd</artifactId>
                 <version>${project.version}</version>
             </dependency>
