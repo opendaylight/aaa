@@ -213,7 +213,7 @@ protected void finalize () throws Throwable {
           statement.setString(2,user.getEmail());
           statement.setString(3,SHA256Calculator.getSHA256(user.getPassword(),user.getSalt()));
           statement.setString(4,user.getDescription());
-          statement.setInt(5,user.getEnabled()?1:0);
+          statement.setInt(5,user.isEnabled()?1:0);
           statement.setString(6, user.getSalt());
           int affectedRows = statement.executeUpdate();
           if (affectedRows == 0) {
@@ -252,8 +252,8 @@ protected void finalize () throws Throwable {
       if (user.getName()!=null) {
          savedUser.setName(user.getName());
       }
-      if (user.getEnabled()!=null) {
-         savedUser.setEnabled(user.getEnabled());
+      if (user.isEnabled()!=null) {
+         savedUser.setEnabled(user.isEnabled());
       }
       if (user.getEmail()!=null) {
          savedUser.setEmail(user.getEmail());
@@ -270,7 +270,7 @@ protected void finalize () throws Throwable {
          statement.setString(2, savedUser.getEmail());
          statement.setString(3, savedUser.getPassword());
          statement.setString(4, savedUser.getDescription());
-         statement.setInt(5, savedUser.getEnabled()?1:0);
+         statement.setInt(5, savedUser.isEnabled()?1:0);
          statement.setInt(6,savedUser.getUserid());
          statement.executeUpdate();
          statement.close();

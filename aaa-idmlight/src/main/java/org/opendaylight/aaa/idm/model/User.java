@@ -51,7 +51,7 @@ public class User {
       this.description = description;
    }
 
-   public Boolean getEnabled() {
+   public Boolean isEnabled() {
       return enabled;
    }
 
@@ -81,6 +81,39 @@ public class User {
 
    public String getSalt(){
        return this.salt;
+   }
+
+   @Override
+   public int hashCode() {
+       return this.name.hashCode();
+   }
+
+   @Override
+   public boolean equals(Object obj) {
+       User other = (User)obj;
+       if(other==null)
+           return false;
+       if(compareValues(getName(), other.getName()) &&
+          compareValues(getEmail(), other.getEmail()) &&
+          compareValues(isEnabled(), other.isEnabled()) &&
+          compareValues(getPassword(), other.getPassword()) &&
+          compareValues(getSalt(), other.getSalt()) &&
+          compareValues(getUserid(), other.getUserid()) &&
+          compareValues(getDescription(), other.getDescription()))
+              return true;
+       return false;
+   }
+
+   private boolean compareValues(Object a,Object b){
+       if(a==null && b!=null)
+           return false;
+       if(a!=null && b==null)
+           return false;
+       if(a==null && b==null)
+           return true;
+       if(a.equals(b))
+           return true;
+       return false;
    }
 }
 
