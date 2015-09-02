@@ -24,7 +24,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.opendaylight.aaa.idm.model.Users;
+import org.opendaylight.aaa.api.model.Users;
 
 public class UserStoreTest {
 

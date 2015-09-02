@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.idm.model;
+package org.opendaylight.aaa.api.model;
 
 /**
  *
@@ -14,32 +14,12 @@ package org.opendaylight.aaa.idm.model;
  *
  */
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "Claim")
-public class Claim {
-   private String domainid;
-   private String userid;
+@XmlRootElement(name = "userpwd")
+public class UserPwd {
    private String username;
-   private List<Role> roles;
-
-   public String getDomainid() {
-      return domainid;
-   }
-
-   public void setDomainid(String id) {
-      this.domainid = id;
-   }
-
-   public String getUserid() {
-      return userid;
-   }
-
-   public void setUserid(String id) {
-      this.userid = id;
-   }
+   private String userpwd;
 
    public String getUsername() {
       return username;
@@ -49,12 +29,13 @@ public class Claim {
       this.username = name;
    }
 
-   public List<Role> getRoles() {
-      return roles;
+   public String getUserpwd() {
+      return userpwd;
    }
 
-   public void setRoles(List<Role> roles) {
-      this.roles = roles;
+   public void setUserpwd(String pwd) {
+      this.userpwd = pwd;
    }
 
 }
+

@@ -26,11 +26,13 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.opendaylight.aaa.api.IDMStoreException;
+import org.opendaylight.aaa.api.IIDMStore;
+import org.opendaylight.aaa.api.model.IDMError;
+import org.opendaylight.aaa.api.model.User;
+import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-import org.opendaylight.aaa.idm.model.IDMError;
-import org.opendaylight.aaa.idm.model.User;
-import org.opendaylight.aaa.idm.model.Users;
-import org.opendaylight.aaa.idm.persistence.StoreException;
+import org.opendaylight.aaa.idm.persistence.H2Store;
 import org.opendaylight.aaa.idm.persistence.UserStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +40,8 @@ import org.slf4j.LoggerFactory;
 @Path("/v1/users")
 public class UserHandler {
    private static Logger logger = LoggerFactory.getLogger(UserHandler.class);
-   private static UserStore userStore = new UserStore();
+   //private static UserStore userStore = new UserStore();
+   private static IIDMStore store = new H2Store();
    protected final static String DEFAULT_PWD = "changeme";
    public static final String REDACTED_PASSWORD = "**********";
 
@@ -48,10 +51,10 @@ public class UserHandler {
       logger.info("get all users");
       Users users=null;
       try {
-         users = userStore.getUsers();
+         users = store.getUsers();
       }
-      catch (StoreException se) {
-         return new IDMError(500,"internal error getting users",se.message).response();
+      catch (IDMStoreException se) {
+         return new IDMError(500,"internal error getting users",se.getMessage()).response();
       }
 
       // obsfucate pwd
@@ -70,10 +73,10 @@ public class UserHandler {
       logger.info("get /users/" + id);
       User user=null;
       try {
-         user = userStore.getUser(id);
+         user = store.readUser(id);
       }
-      catch(StoreException se) {
-         return new IDMError(500,"internal error getting user",se.message).response();
+      catch(IDMStoreException se) {
+         return new IDMError(500,"internal error getting user",se.getMessage()).response();
       }
       if (user==null) {
          return new IDMError(404,"user not found! id:" + id,"").response();
@@ -91,7 +94,7 @@ public class UserHandler {
       logger.info("post /users");
       try {
          // enabled by default
-         if (user.getEnabled()==null) {
+         if (user.isEnabled()==null) {
             user.setEnabled(true);
          }
 
@@ -104,10 +107,10 @@ public class UserHandler {
          }
 
          // domain id/name is required
-         if (user.getDomainID()==null) {
+         if (user.getDomainid()==null) {
             return new IDMError(400,"user domain is required","").response();
          }
-         else if (user.getDomainID().length()>UserStore.MAX_FIELD_LEN) {
+         else if (user.getDomainid().length()>UserStore.MAX_FIELD_LEN) {
             return new IDMError(400,"user domain max length is :" + UserStore.MAX_FIELD_LEN,"").response();
          }
 
@@ -136,11 +139,11 @@ public class UserHandler {
          }
 
          // create user
-         User createdUser = userStore.createUser(user);
+         User createdUser = store.writeUser(user);
          user.setUserid(createdUser.getUserid());
       }
-      catch (StoreException se) {
-         return new IDMError(500,"internal error creating user",se.message).response();
+      catch (IDMStoreException se) {
+         return new IDMError(500,"internal error creating user",se.getMessage()).response();
       }
 
       // created!
@@ -157,7 +160,7 @@ public class UserHandler {
 
       try {
          user.setUserid(id);
-         user = userStore.putUser(user);
+         user = store.updateUser(user);
          if (user==null) {
             return new IDMError(404,"user id not found id :"+id,"").response();
          }
@@ -165,8 +168,8 @@ public class UserHandler {
          user.setPassword(REDACTED_PASSWORD);
          return Response.status(200).entity(user).build();
       }
-      catch (StoreException se) {
-         return new IDMError(500,"internal error putting user",se.message).response();
+      catch (IDMStoreException se) {
+         return new IDMError(500,"internal error putting user",se.getMessage()).response();
       }
    }
 
@@ -176,15 +179,13 @@ public class UserHandler {
       logger.info("delete /users/" + id);
 
       try {
-         User user = new User();
-         user.setUserid(id);
-         user = userStore.deleteUser(user);
+         User user = store.deleteUser(id);
          if (user==null) {
             return new IDMError(404,"user id not found id :"+id,"").response();
          }
       }
-      catch (StoreException se) {
-         return new IDMError(500,"internal error deleting user",se.message).response();
+      catch (IDMStoreException se) {
+         return new IDMError(500,"internal error deleting user",se.getMessage()).response();
       }
       IdmLightProxy.clearClaimCache();
       return Response.status(204).build();

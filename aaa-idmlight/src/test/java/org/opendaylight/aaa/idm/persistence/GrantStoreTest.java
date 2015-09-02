@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.opendaylight.aaa.idm.model.Grants;
+import org.opendaylight.aaa.api.model.Grants;
 
 public class GrantStoreTest {
 

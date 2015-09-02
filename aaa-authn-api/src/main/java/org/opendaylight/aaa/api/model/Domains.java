@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.idm.model;
+package org.opendaylight.aaa.api.model;
 
 /**
  *
@@ -19,16 +19,16 @@ import javax.xml.bind.annotation.XmlElement;
 import java.util.List;
 import java.util.ArrayList;
 
-@XmlRootElement(name = "roles")
-public class Roles {
-   private List<Role> roles = new ArrayList<Role>();
+@XmlRootElement(name = "domains")
+public class Domains {
+   private List<Domain> domains = new ArrayList<Domain>();
 
-   public void setRoles(List<Role> roles) {
-      this.roles = roles;
+   public void setDomains(List<Domain> domains) {
+      this.domains = domains;
    }
 
-   public List<Role> getRoles() {
-      return roles;
+   public List<Domain> getDomains() {
+      return domains;
    }
 
 }
