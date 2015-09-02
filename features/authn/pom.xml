@@ -172,6 +172,10 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-h2-store</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn-federation</artifactId>
         </dependency>
         <dependency>

@@ -11,6 +11,20 @@
 		<repository>mvn:org.opendaylight.mdsal/features-mdsal/{{VERSION}}/xml/features</repository>
     <feature name='odl-aaa-api' description='OpenDaylight :: AAA :: APIs'
 		version='${project.version}'>
+
+        <!-- REST -->
+        <feature>war</feature>
+        <!--bundle>mvn:com.sun.jersey/jersey-servlet/{{VERSION}}</bundle-->
+        <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
+
+        <!-- OAuth -->
+        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.common/{{VERSION}}</bundle>
+        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.authzserver/{{VERSION}}</bundle>
+        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.resourceserver/{{VERSION}}</bundle>
+        <bundle>mvn:commons-codec/commons-codec/{{VERSION}}</bundle>
+        <bundle>wrap:mvn:org.json/json/{{VERSION}}</bundle>
+
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-api/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-credential-store-api/{{VERSION}}</bundle>
         <feature version='${yangtools.version}'>odl-yangtools-common</feature>

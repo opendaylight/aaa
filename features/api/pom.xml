@@ -19,6 +19,8 @@
     <packaging>jar</packaging>
 
     <properties>
+        <config.version>0.4.0-SNAPSHOT</config.version>
+        <mdsal.version>1.3.0-SNAPSHOT</mdsal.version>
         <yangtools.version>0.8.0-SNAPSHOT</yangtools.version>
         <mdsal.version>2.0.0-SNAPSHOT</mdsal.version>
     </properties>
@@ -33,7 +35,13 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-
+            <dependency>
+                <groupId>org.opendaylight.aaa</groupId>
+                <artifactId>aaa-parent</artifactId>
+                <version>${project.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
             <!-- YANG tools -->
             <dependency>
                 <groupId>org.opendaylight.yangtools</groupId>
@@ -45,7 +53,14 @@
         </dependencies>
     </dependencyManagement>
 
-    <dependencies>
+    <dependencies>                
+        <dependency>
+            <groupId>org.opendaylight.mdsal</groupId>
+            <artifactId>features-mdsal</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+            <classifier>features</classifier>
+            <type>xml</type>
+        </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn-api</artifactId>
@@ -60,15 +75,52 @@
             <classifier>features</classifier>
             <type>xml</type>
         </dependency>
+        <!-- odl-aaa-authn -->
+        <!--dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-servlet</artifactId>
+        </dependency-->
         <dependency>
-            <groupId>org.opendaylight.mdsal</groupId>
-            <artifactId>features-mdsal</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>features</classifier>
-            <type>xml</type>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-server</artifactId>
+        </dependency>
+        <!--dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+        </dependency-->
+        <dependency>
+            <groupId>org.apache.oltu.oauth2</groupId>
+            <artifactId>org.apache.oltu.oauth2.common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.oltu.oauth2</groupId>
+            <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.oltu.oauth2</groupId>
+            <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.json</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
     </dependencies>
-
     <scm>
         <connection>scm:git:ssh://git.opendaylight.org:29418/aaa.git</connection>
         <developerConnection>scm:git:ssh://git.opendaylight.org:29418/aaa.git</developerConnection>
