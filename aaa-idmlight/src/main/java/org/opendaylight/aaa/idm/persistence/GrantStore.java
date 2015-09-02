@@ -23,9 +23,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.opendaylight.aaa.api.IDMStoreUtil;
+import org.opendaylight.aaa.api.model.Grant;
+import org.opendaylight.aaa.api.model.Grants;
 import org.opendaylight.aaa.idm.IdmLightApplication;
-import org.opendaylight.aaa.idm.model.Grant;
-import org.opendaylight.aaa.idm.model.Grants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +37,9 @@ public class GrantStore {
    protected final static String SQL_TENANTID       = "domainid";
    protected final static String SQL_USERID         = "userid";
    protected final static String SQL_ROLEID         = "roleid";
+
+   protected GrantStore(){
+   }
 
    protected Connection getDBConnect() throws StoreException {
       dbConnection = IdmLightApplication.getConnection(dbConnection);
@@ -119,7 +123,7 @@ protected void finalize () throws Throwable {
       return grant;
    }
 
-   public Grants getGrants(String did, String uid) throws StoreException {
+   protected Grants getGrants(String did, String uid) throws StoreException {
       Grants grants = new Grants();
       List<Grant> grantList = new ArrayList<Grant>();
       Connection conn = dbConnect();
@@ -146,13 +150,13 @@ protected void finalize () throws Throwable {
       return grants;
    }
 
-   public Grants getGrants(int uid) throws StoreException {
+   protected Grants getGrants(String userid) throws StoreException {
       Grants grants = new Grants();
       List<Grant> grantList = new ArrayList<Grant>();
       Connection conn = dbConnect();
       try {
          PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM GRANTS WHERE userid = ? ");
-         pstmt.setInt(1, uid);
+         pstmt.setString(1, userid);
          debug("query string: " + pstmt.toString());
          ResultSet rs = pstmt.executeQuery();
          while (rs.next()) {
@@ -173,7 +177,7 @@ protected void finalize () throws Throwable {
    }
 
 
-   public Grant  getGrant(String id) throws StoreException {
+   protected Grant  getGrant(String id) throws StoreException {
       Connection conn = dbConnect();
       try {
           PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM GRANTS WHERE grantid = ? ");
@@ -200,7 +204,7 @@ protected void finalize () throws Throwable {
         }
    }
 
-   public Grant getGrant(String did,String uid,String rid) throws StoreException {
+   protected Grant getGrant(String did,String uid,String rid) throws StoreException {
       Connection conn = dbConnect();
       try {
           PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM GRANTS WHERE domainid = ? AND userid = ? AND roleid = ? ");
@@ -229,13 +233,12 @@ protected void finalize () throws Throwable {
         }
    }
 
-
-   public Grant createGrant(Grant grant) throws StoreException {
+   protected Grant createGrant(Grant grant) throws StoreException {
        Connection conn = dbConnect();
        try {
           String query = "insert into grants  (grantid,domainid,userid,roleid) values(?,?,?,?)";
           PreparedStatement statement = conn.prepareStatement(query);
-          statement.setString(1,grant.getUserid()+"@"+grant.getDomainid()+"@"+grant.getRoleid());
+          statement.setString(1,IDMStoreUtil.createGrantid(grant.getUserid(),grant.getDomainid(),grant.getRoleid()));
           statement.setString(2,grant.getDomainid());
           statement.setString(3,grant.getUserid());
           statement.setString(4,grant.getRoleid());
@@ -243,6 +246,7 @@ protected void finalize () throws Throwable {
           if (affectedRows == 0) {
              throw new StoreException("Creating grant failed, no rows affected.");
           }
+          grant.setGrantid(IDMStoreUtil.createGrantid(grant.getUserid(),grant.getDomainid(),grant.getRoleid()));
           return grant;
        }
        catch (SQLException s) {
@@ -253,20 +257,20 @@ protected void finalize () throws Throwable {
          }
    }
 
-   public Grant deleteGrant(Grant grant) throws StoreException {
-      Grant savedGrant = this.getGrant(grant.getGrantid());
+   protected Grant deleteGrant(String grantid) throws StoreException {
+      Grant savedGrant = this.getGrant(grantid);
       if (savedGrant==null) {
          return null;
       }
 
       Connection conn = dbConnect();
       try {
-          String query = "DELETE FROM GRANTS WHERE grantid = ?";
-          PreparedStatement statement = conn.prepareStatement(query);
-          statement.setString(1, savedGrant.getGrantid());
-         int deleteCount = statement.executeUpdate(query);
+          String query = "DELETE FROM GRANTS WHERE grantid = '"+grantid+"'";
+          Statement st = conn.createStatement();//PreparedStatement statement = conn.prepareStatement(query);
+          //statement.setString(1, savedGrant.getGrantid());
+         int deleteCount = st.executeUpdate(query);
          debug("deleted " + deleteCount + " records");
-         statement.close();
+         st.close();
          return savedGrant;
       }
       catch (SQLException s) {

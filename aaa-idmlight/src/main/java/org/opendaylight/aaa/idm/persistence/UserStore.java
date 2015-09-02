@@ -23,9 +23,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.opendaylight.aaa.api.IDMStoreUtil;
+import org.opendaylight.aaa.api.SHA256Calculator;
+import org.opendaylight.aaa.api.model.User;
+import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.idm.IdmLightApplication;
-import org.opendaylight.aaa.idm.model.User;
-import org.opendaylight.aaa.idm.model.Users;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +45,9 @@ public class UserStore {
    protected final static String SQL_ENABLED        = "enabled";
    protected final static String SQL_SALT           = "salt";
    public final static int       MAX_FIELD_LEN      = 128;
+
+   protected UserStore(){
+   }
 
    protected Connection getDBConnect() throws StoreException {
       dbConnection = IdmLightApplication.getConnection(dbConnection);
@@ -118,7 +123,7 @@ protected void finalize () throws Throwable {
       User user = new User();
       try {
          user.setUserid(rs.getString(SQL_ID));
-         user.setDomainID(rs.getString(SQL_DOMAIN_ID));
+         user.setDomainid(rs.getString(SQL_DOMAIN_ID));
          user.setName(rs.getString(SQL_NAME));
          user.setEmail(rs.getString(SQL_EMAIL));
          user.setPassword(rs.getString(SQL_PASSWORD));
@@ -133,7 +138,7 @@ protected void finalize () throws Throwable {
       return user;
    }
 
-   public Users getUsers() throws StoreException {
+   protected Users getUsers() throws StoreException {
       Users users = new Users();
       List<User> userList = new ArrayList<User>();
       Connection conn = dbConnect();
@@ -159,7 +164,7 @@ protected void finalize () throws Throwable {
       return users;
    }
 
-   public Users getUsers(String username,String domain) throws StoreException {
+   protected Users getUsers(String username,String domain) throws StoreException {
       debug("getUsers for:" + username + " in domain "+domain);
 
       Users users = new Users();
@@ -167,7 +172,7 @@ protected void finalize () throws Throwable {
       Connection conn = dbConnect();
       try {
           PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM USERS WHERE userid = ? ");
-          pstmt.setString(1, username+"@"+domain);
+          pstmt.setString(1, IDMStoreUtil.createUserid(username,domain));
           debug("query string: " + pstmt.toString());
           ResultSet rs = pstmt.executeQuery();
           while (rs.next()) {
@@ -188,7 +193,7 @@ protected void finalize () throws Throwable {
    }
 
 
-   public User getUser(String id) throws StoreException {
+   protected User getUser(String id) throws StoreException {
       Connection conn = dbConnect();
       try {
          PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM USERS WHERE userid = ? ");
@@ -215,24 +220,24 @@ protected void finalize () throws Throwable {
        }
    }
 
-   public User createUser(User user) throws StoreException {
+   protected User createUser(User user) throws StoreException {
        Preconditions.checkNotNull(user);
        Preconditions.checkNotNull(user.getName());
-       Preconditions.checkNotNull(user.getDomainID());
+       Preconditions.checkNotNull(user.getDomainid());
 
        Connection conn = dbConnect();
        try {
           user.setSalt(SHA256Calculator.generateSALT());
           String query = "insert into users (userid,domainid,name,email,password,description,enabled,salt) values(?,?,?,?,?,?,?,?)";
           PreparedStatement statement = conn.prepareStatement(query);
-          user.setUserid(user.getName()+"@"+user.getDomainID());          
+          user.setUserid(IDMStoreUtil.createUserid(user.getName(),user.getDomainid()));
           statement.setString(1,user.getUserid());
-          statement.setString(2,user.getDomainID());
+          statement.setString(2,user.getDomainid());
           statement.setString(3,user.getName());
           statement.setString(4,user.getEmail());
           statement.setString(5,SHA256Calculator.getSHA256(user.getPassword(),user.getSalt()));
           statement.setString(6,user.getDescription());
-          statement.setInt(7,user.getEnabled()?1:0);
+          statement.setInt(7,user.isEnabled()?1:0);
           statement.setString(8, user.getSalt());
           int affectedRows = statement.executeUpdate();
           if (affectedRows == 0) {
@@ -248,7 +253,7 @@ protected void finalize () throws Throwable {
         }
    }
 
-   public User putUser(User user) throws StoreException {
+   protected User putUser(User user) throws StoreException {
 
       User savedUser = this.getUser(user.getUserid());
       if (savedUser==null) {
@@ -261,8 +266,8 @@ protected void finalize () throws Throwable {
       if (user.getName()!=null) {
          savedUser.setName(user.getName());
       }
-      if (user.getEnabled()!=null) {
-         savedUser.setEnabled(user.getEnabled());
+      if (user.isEnabled()!=null) {
+         savedUser.setEnabled(user.isEnabled());
       }
       if (user.getEmail()!=null) {
          savedUser.setEmail(user.getEmail());
@@ -278,7 +283,7 @@ protected void finalize () throws Throwable {
          statement.setString(1, savedUser.getEmail());
          statement.setString(2, savedUser.getPassword());
          statement.setString(3, savedUser.getDescription());
-         statement.setInt(4, savedUser.getEnabled()?1:0);
+         statement.setInt(4, savedUser.isEnabled()?1:0);
          statement.setString(5,savedUser.getUserid());
          statement.executeUpdate();
          statement.close();
@@ -293,8 +298,8 @@ protected void finalize () throws Throwable {
       return savedUser;
    }
 
-   public User deleteUser(User user) throws StoreException {
-      User savedUser = this.getUser(user.getUserid());
+   protected User deleteUser(String userid) throws StoreException {
+      User savedUser = this.getUser(userid);
       if (savedUser==null) {
          return null;
       }

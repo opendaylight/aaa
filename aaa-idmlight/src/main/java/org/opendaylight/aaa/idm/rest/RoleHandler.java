@@ -26,19 +26,22 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.opendaylight.aaa.api.IDMStoreException;
+import org.opendaylight.aaa.api.IIDMStore;
+import org.opendaylight.aaa.api.model.IDMError;
+import org.opendaylight.aaa.api.model.Role;
+import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-import org.opendaylight.aaa.idm.model.IDMError;
-import org.opendaylight.aaa.idm.model.Role;
-import org.opendaylight.aaa.idm.model.Roles;
+import org.opendaylight.aaa.idm.persistence.H2Store;
 import org.opendaylight.aaa.idm.persistence.RoleStore;
-import org.opendaylight.aaa.idm.persistence.StoreException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Path("/v1/roles")
 public class RoleHandler {
    private static Logger logger = LoggerFactory.getLogger(RoleHandler.class);
-   private static RoleStore roleStore = new RoleStore();
+   //private static RoleStore roleStore = new RoleStore();
+   private static IIDMStore store = new H2Store();
 
    @GET
    @Produces("application/json")
@@ -46,10 +49,10 @@ public class RoleHandler {
       logger.info("get /roles");
       Roles roles=null;
       try {
-         roles = roleStore.getRoles();
+         roles = store.getRoles();
       }
-      catch (StoreException se) {
-         return new IDMError(500,"internal error getting roles",se.message).response();
+      catch (IDMStoreException se) {
+         return new IDMError(500,"internal error getting roles",se.getMessage()).response();
       }
       return Response.ok(roles).build();
    }
@@ -62,10 +65,10 @@ public class RoleHandler {
       Role role=null;
 
       try {
-         role = roleStore.getRole(id);
+         role = store.readRole(id);
       }
-      catch(StoreException se) {
-         return new IDMError(500,"internal error getting roles",se.message).response();
+      catch(IDMStoreException se) {
+         return new IDMError(500,"internal error getting roles",se.getMessage()).response();
       }
 
       if (role==null) {
@@ -90,10 +93,10 @@ public class RoleHandler {
          }
 
          // domain
-         if (role.getDomainID()==null) {
+         if (role.getDomainid()==null) {
             return new IDMError(404,"The role's domain must be defined on role when creating a role.","").response();
          }
-         else if (role.getDomainID().length()>RoleStore.MAX_FIELD_LEN) {
+         else if (role.getDomainid().length()>RoleStore.MAX_FIELD_LEN) {
             return new IDMError(400,"role domain max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
          }
 
@@ -105,10 +108,10 @@ public class RoleHandler {
             return new IDMError(400,"role description max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
          }
 
-         role = roleStore.createRole(role);
+         role = store.writeRole(role);
       }
-      catch (StoreException se) {
-         return new IDMError(500,"internal error creating role",se.message).response();
+      catch (IDMStoreException se) {
+         return new IDMError(500,"internal error creating role",se.getMessage()).response();
       }
 
       return Response.status(201).entity(role).build();
@@ -135,15 +138,15 @@ public class RoleHandler {
             return new IDMError(400,"role description max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
          }
 
-         role = roleStore.putRole(role);
+         role = store.updateRole(role);
          if (role==null) {
             return new IDMError(404,"role id not found :" + id,"").response();
          }
          IdmLightProxy.clearClaimCache();
          return Response.status(200).entity(role).build();
       }
-      catch (StoreException se) {
-         return new IDMError(500,"internal error putting role",se.message).response();
+      catch (IDMStoreException se) {
+         return new IDMError(500,"internal error putting role",se.getMessage()).response();
       }
    }
 
@@ -153,15 +156,13 @@ public class RoleHandler {
       logger.info("Delete /roles/" + id);
 
       try {
-         Role role = new Role();
-         role.setRoleid(id);
-         role = roleStore.deleteRole(role);
+         Role role = store.deleteRole(id);
          if (role==null) {
             return new IDMError(404,"role id not found :" + id,"").response();
          }
       }
-      catch (StoreException se) {
-         return new IDMError(500,"internal error deleting role",se.message).response();
+      catch (IDMStoreException se) {
+         return new IDMError(500,"internal error deleting role",se.getMessage()).response();
       }
       IdmLightProxy.clearClaimCache();
       return Response.status(204).build();

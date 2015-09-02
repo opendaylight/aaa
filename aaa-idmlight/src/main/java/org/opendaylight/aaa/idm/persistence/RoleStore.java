@@ -23,9 +23,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.opendaylight.aaa.api.IDMStoreUtil;
+import org.opendaylight.aaa.api.model.Role;
+import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.idm.IdmLightApplication;
-import org.opendaylight.aaa.idm.model.Role;
-import org.opendaylight.aaa.idm.model.Roles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +40,9 @@ public class RoleStore {
    protected final static String SQL_NAME           = "name";
    protected final static String SQL_DESCR          = "description";
    public final static int       MAX_FIELD_LEN      = 128;
+
+   protected RoleStore (){
+   }
 
    protected Connection getDBConnect() throws StoreException {
       dbConnection = IdmLightApplication.getConnection(dbConnection);
@@ -110,7 +114,7 @@ protected void finalize () throws Throwable {
       Role role = new Role();
       try {
          role.setRoleid(rs.getString(SQL_ID));
-         role.setDomainID(rs.getString(SQL_DOMAIN_ID));
+         role.setDomainid(rs.getString(SQL_DOMAIN_ID));
          role.setName(rs.getString(SQL_NAME));
          role.setDescription(rs.getString(SQL_DESCR));
       }
@@ -121,7 +125,7 @@ protected void finalize () throws Throwable {
       return role;
    }
 
-   public Roles getRoles() throws StoreException {
+   protected Roles getRoles() throws StoreException {
       Roles roles = new Roles();
       List<Role> roleList = new ArrayList<Role>();
       Connection conn = dbConnect();
@@ -147,7 +151,7 @@ protected void finalize () throws Throwable {
       return roles;
    }
 
-   public Role getRole(String id) throws StoreException {
+   protected Role getRole(String id) throws StoreException {
       Connection conn = dbConnect();
       try {
          PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ROLES WHERE roleid = ? ");
@@ -174,17 +178,17 @@ protected void finalize () throws Throwable {
        }
    }
 
-   public Role createRole(Role role) throws StoreException {
+   protected Role createRole(Role role) throws StoreException {
 	   Preconditions.checkNotNull(role);
 	   Preconditions.checkNotNull(role.getName());
-	   Preconditions.checkNotNull(role.getDomainID());
+	   Preconditions.checkNotNull(role.getDomainid());
        Connection conn = dbConnect();
        try {
           String query = "insert into roles (roleid,domainid,name,description) values(?,?,?,?)";
           PreparedStatement statement = conn.prepareStatement(query);
-          role.setRoleid(role.getName()+"@"+role.getDomainID());
+          role.setRoleid(IDMStoreUtil.createRoleid(role.getName(),role.getDomainid()));
           statement.setString(1, role.getRoleid());
-          statement.setString(2, role.getDomainID());
+          statement.setString(2, role.getDomainid());
           statement.setString(3,role.getName());
           statement.setString(4,role.getDescription());
           int affectedRows = statement.executeUpdate();
@@ -201,7 +205,7 @@ protected void finalize () throws Throwable {
         }
    }
 
-   public Role putRole(Role role) throws StoreException {
+   protected Role putRole(Role role) throws StoreException {
 
       Role savedRole = this.getRole(role.getRoleid());
       if (savedRole==null) {
@@ -234,8 +238,8 @@ protected void finalize () throws Throwable {
       return savedRole;
    }
 
-   public Role deleteRole(Role role) throws StoreException {
-      Role savedRole = this.getRole(role.getRoleid());
+   protected Role deleteRole(String roleid) throws StoreException {
+      Role savedRole = this.getRole(roleid);
       if (savedRole==null) {
          return null;
       }

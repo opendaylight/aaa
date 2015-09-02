@@ -29,33 +29,32 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.opendaylight.aaa.api.IDMStoreException;
+import org.opendaylight.aaa.api.IIDMStore;
+import org.opendaylight.aaa.api.model.Claim;
+import org.opendaylight.aaa.api.model.Domain;
+import org.opendaylight.aaa.api.model.Domains;
+import org.opendaylight.aaa.api.model.Grant;
+import org.opendaylight.aaa.api.model.Grants;
+import org.opendaylight.aaa.api.model.IDMError;
+import org.opendaylight.aaa.api.model.Role;
+import org.opendaylight.aaa.api.model.Roles;
+import org.opendaylight.aaa.api.model.User;
+import org.opendaylight.aaa.api.model.UserPwd;
+import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-import org.opendaylight.aaa.idm.model.Claim;
-import org.opendaylight.aaa.idm.model.Domain;
-import org.opendaylight.aaa.idm.model.Domains;
-import org.opendaylight.aaa.idm.model.Grant;
-import org.opendaylight.aaa.idm.model.Grants;
-import org.opendaylight.aaa.idm.model.IDMError;
-import org.opendaylight.aaa.idm.model.Role;
-import org.opendaylight.aaa.idm.model.Roles;
-import org.opendaylight.aaa.idm.model.User;
-import org.opendaylight.aaa.idm.model.UserPwd;
-import org.opendaylight.aaa.idm.model.Users;
-import org.opendaylight.aaa.idm.persistence.DomainStore;
-import org.opendaylight.aaa.idm.persistence.GrantStore;
-import org.opendaylight.aaa.idm.persistence.RoleStore;
-import org.opendaylight.aaa.idm.persistence.StoreException;
-import org.opendaylight.aaa.idm.persistence.UserStore;
+import org.opendaylight.aaa.idm.persistence.H2Store;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Path("/v1/domains")
 public class DomainHandler {
    private static Logger logger = LoggerFactory.getLogger(DomainHandler.class);
-   private static DomainStore domainStore = new DomainStore();
-   private static UserStore userStore = new UserStore();
-   private static RoleStore roleStore = new RoleStore();
-   private static GrantStore grantStore = new GrantStore();
+   //private static DomainStore domainStore = new DomainStore();
+   //private static UserStore userStore = new UserStore();
+   //private static RoleStore roleStore = new RoleStore();
+   //private static GrantStore grantStore = new GrantStore();
+   private static IIDMStore store = new H2Store();
 
    @GET
    @Produces("application/json")
@@ -63,13 +62,13 @@ public class DomainHandler {
       logger.info("Get /domains");
       Domains domains=null;
       try {
-         domains = domainStore.getDomains();
+         domains = store.getDomains();
       }
-      catch (StoreException se) {
+      catch (IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error getting domains");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
       return Response.ok(domains).build();
@@ -82,13 +81,13 @@ public class DomainHandler {
       logger.info("Get /domains/" + domainId);
       Domain domain = null;
       try {
-         domain = domainStore.getDomain(domainId);
+         domain = store.readDomain(domainId);
       }
-      catch(StoreException se) {
+      catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error getting domain");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
 
@@ -106,7 +105,7 @@ public class DomainHandler {
    public Response createDomain(@Context UriInfo info,Domain domain) {
       logger.info("Post /domains");
       try {
-         if (domain.getEnabled()==null) {
+         if (domain.isEnabled()==null) {
             domain.setEnabled(false);
          }
          if (domain.getName()==null) {
@@ -115,13 +114,13 @@ public class DomainHandler {
          if (domain.getDescription()==null) {
             domain.setDescription("");
          }
-         domain = domainStore.createDomain(domain);
+         domain = store.writeDomain(domain);
       }
-      catch (StoreException se) {
+      catch (IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error creating domain");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
       return Response.status(201).entity(domain).build();
@@ -135,7 +134,7 @@ public class DomainHandler {
       logger.info("Put /domains/" + domainId);
       try {
          domain.setDomainid(domainId);
-         domain = domainStore.putDomain(domain);
+         domain = store.updateDomain(domain);
          if (domain==null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! Domain id :" + domainId);
@@ -144,11 +143,11 @@ public class DomainHandler {
          IdmLightProxy.clearClaimCache();
          return Response.status(200).entity(domain).build();
       }
-      catch (StoreException se) {
+      catch (IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error putting domain");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
    }
@@ -159,20 +158,18 @@ public class DomainHandler {
       logger.info("Delete /domains/" + domainId);
 
       try {
-         Domain domain = new Domain();
-         domain.setDomainid(domainId);
-         domain = domainStore.deleteDomain(domain);
+         Domain domain = store.deleteDomain(domainId);
          if (domain==null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! Domain id :" + domainId);
             return Response.status(404).entity(idmerror).build();
          }
       }
-      catch (StoreException se) {
+      catch (IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error deleting Domain");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
       IdmLightProxy.clearClaimCache();
@@ -196,13 +193,13 @@ public class DomainHandler {
 
       // validate domain id
       try {
-         domain = domainStore.getDomain(domainId);
+         domain = store.readDomain(domainId);
       }
-      catch(StoreException se) {
+      catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error getting domain");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
       if (domain==null) {
@@ -213,13 +210,13 @@ public class DomainHandler {
       grant.setDomainid(domainId);
 
       try {
-         user = userStore.getUser(userId);
+         user = store.readUser(userId);
       }
-      catch(StoreException se) {
+      catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error getting user");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
       if (user==null) {
@@ -240,13 +237,13 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         role = roleStore.getRole(roleId);
+         role = store.readRole(roleId);
       }
-      catch(StoreException se) {
+      catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error getting role");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
       if (role==null) {
@@ -257,31 +254,31 @@ public class DomainHandler {
 
       // see if grant already exists for this
       try {
-         Grant existingGrant = grantStore.getGrant(domainId,userId,roleId);
+         Grant existingGrant = store.readGrant(domainId,userId,roleId);
          if (existingGrant != null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Grant already exists for did:"+domainId+" uid:"+userId+" rid:"+roleId);
             return Response.status(403).entity(idmerror).build();
          }
       }
-      catch (StoreException se) {
+      catch (IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error creating grant");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
 
 
       // create grant
       try {
-         grant = grantStore.createGrant(grant);
+         grant = store.writeGrant(grant);
       }
-      catch (StoreException se) {
+      catch (IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error creating grant");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
 
@@ -304,13 +301,13 @@ public class DomainHandler {
       List<Role> roleList = new ArrayList<Role>();
 
       try {
-         domain = domainStore.getDomain(domainId);
+         domain = store.readDomain(domainId);
       }
-      catch(StoreException se) {
+      catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error getting domain");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
       if (domain==null) {
@@ -335,7 +332,7 @@ public class DomainHandler {
 
       // find userid for user
       try {
-         Users users = userStore.getUsers(username,domainId);
+         Users users = store.getUsers(username,domainId);
          List<User> userList = users.getUsers();
          if (userList.size()==0) {
             IDMError idmerror = new IDMError();
@@ -354,28 +351,28 @@ public class DomainHandler {
          claim.setUsername(username);
          claim.setUserid(user.getUserid());
          try {
-            Grants grants = grantStore.getGrants(domainId,user.getUserid());
+            Grants grants = store.getGrants(domainId,user.getUserid());
             List<Grant> grantsList = grants.getGrants();
             for (int i=0; i < grantsList.size(); i++) {
                Grant grant = grantsList.get(i);
-               Role role = roleStore.getRole(grant.getRoleid());
+               Role role = store.readRole(grant.getRoleid());
                roleList.add(role);
             }
          }
-         catch (StoreException se) {
+         catch (IDMStoreException se) {
             logger.error("StoreException : " + se);
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting Roles");
-            idmerror.setDetails(se.message);
+            idmerror.setDetails(se.getMessage());
             return Response.status(500).entity(idmerror).build();
          }
          claim.setRoles(roleList);
       }
-      catch(StoreException se) {
+      catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error getting user");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
 
@@ -395,13 +392,13 @@ public class DomainHandler {
       List<Role> roleList = new ArrayList<Role>();
 
       try {
-         domain = domainStore.getDomain(domainId);
+         domain = store.readDomain(domainId);
       }
-      catch(StoreException se) {
+      catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error getting domain");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
       if (domain==null) {
@@ -411,13 +408,13 @@ public class DomainHandler {
       }
 
       try {
-         user = userStore.getUser(userId);
+         user = store.readUser(userId);
       }
-      catch(StoreException se) {
+      catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error getting user");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
       if (user==null) {
@@ -427,19 +424,19 @@ public class DomainHandler {
       }
 
       try {
-         Grants grants = grantStore.getGrants(domainId,userId);
+         Grants grants = store.getGrants(domainId,userId);
          List<Grant> grantsList = grants.getGrants();
          for (int i=0; i < grantsList.size(); i++) {
             Grant grant = grantsList.get(i);
-            Role role = roleStore.getRole(grant.getRoleid());
+            Role role = store.readRole(grant.getRoleid());
             roleList.add(role);
          }
       }
-      catch (StoreException se) {
+      catch (IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error getting Roles");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
 
@@ -458,13 +455,13 @@ public class DomainHandler {
       Role role=null;
 
       try {
-         domain = domainStore.getDomain(domainId);
+         domain = store.readDomain(domainId);
       }
-      catch(StoreException se) {
+      catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error getting domain");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
       if (domain==null) {
@@ -474,13 +471,13 @@ public class DomainHandler {
       }
 
       try {
-         user = userStore.getUser(userId);
+         user = store.readUser(userId);
       }
-      catch(StoreException se) {
+      catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error getting user");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
       if (user==null) {
@@ -490,13 +487,13 @@ public class DomainHandler {
       }
 
       try {
-         role = roleStore.getRole(roleId);
+         role = store.readRole(roleId);
       }
-      catch(StoreException se) {
+      catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error getting Role");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
       if (role==null) {
@@ -507,19 +504,19 @@ public class DomainHandler {
 
       // see if grant already exists
       try {
-         Grant existingGrant = grantStore.getGrant(domainId,userId,roleId);
+         Grant existingGrant = store.readGrant(domainId,userId,roleId);
          if (existingGrant == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Grant does not exist for did:"+domainId+" uid:"+userId+" rid:"+roleId);
             return Response.status(404).entity(idmerror).build();
          }
-         existingGrant = grantStore.deleteGrant(existingGrant);
+         existingGrant = store.deleteGrant(existingGrant.getDomainid());
       }
-      catch (StoreException se) {
+      catch (IDMStoreException se) {
          logger.error("StoreException : " + se);
          IDMError idmerror = new IDMError();
          idmerror.setMessage("Internal error creating grant");
-         idmerror.setDetails(se.message);
+         idmerror.setDetails(se.getMessage());
          return Response.status(500).entity(idmerror).build();
       }
       IdmLightProxy.clearClaimCache();
