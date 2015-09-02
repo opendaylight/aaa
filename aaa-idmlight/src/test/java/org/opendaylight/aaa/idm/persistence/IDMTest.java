@@ -8,10 +8,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.opendaylight.aaa.idm.model.Domain;
-import org.opendaylight.aaa.idm.model.Grant;
-import org.opendaylight.aaa.idm.model.Role;
-import org.opendaylight.aaa.idm.model.User;
+import org.opendaylight.aaa.api.SHA256Calculator;
+import org.opendaylight.aaa.api.model.Domain;
+import org.opendaylight.aaa.api.model.Grant;
+import org.opendaylight.aaa.api.model.Role;
+import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.idm.rest.UserHandler;
 
 public class IDMTest {
@@ -104,8 +105,8 @@ public class IDMTest {
 
         user = new User();
         user.setName("test");
-        user.setDomainID(d.getDomainid());
-        user = us.getUser(user.getName()+"@"+user.getDomainID());
+        user.setDomainid(d.getDomainid());
+        user = us.getUser(user.getName()+"@"+user.getDomainid());
 
         Assert.assertEquals("Test@Test.com", user.getEmail());
     }
@@ -117,15 +118,15 @@ public class IDMTest {
         User user = new User();
         user.setName("Hello");
         user.setPassword("Hello");
-        user.setDomainID(d.getDomainid());
+        user.setDomainid(d.getDomainid());
         UserHandler h = new UserHandler();
         h.createUser(null, user);
 
         User u = new User();
         u.setName("Hello");
-        u.setDomainID(d.getDomainid());
+        u.setDomainid(d.getDomainid());
         UserStore us = new UserStore();
-        u = us.getUser(u.getName()+"@"+u.getDomainID());
+        u = us.getUser(u.getName()+"@"+u.getDomainid());
 
         Assert.assertEquals(true, u != null);
     }
@@ -137,7 +138,7 @@ public class IDMTest {
         User user = new User();
         user.setName("Hello");
         user.setPassword("Hello");
-        user.setDomainID(d.getDomainid());
+        user.setDomainid(d.getDomainid());
         UserHandler h = new UserHandler();
         h.createUser(null, user);
 
@@ -149,8 +150,8 @@ public class IDMTest {
 
         User u = new User();
         u.setName("Hello");
-        u.setDomainID(d.getDomainid());
-        u = us.getUser(u.getName()+"@"+u.getDomainID());
+        u.setDomainid(d.getDomainid());
+        u = us.getUser(u.getName()+"@"+u.getDomainid());
 
         Assert.assertEquals("Hello@Hello.com", u.getEmail());
 
@@ -167,7 +168,7 @@ public class IDMTest {
         User user = new User();
         user.setName("Hello");
         user.setPassword("Hello");
-        user.setDomainID(d.getDomainid());
+        user.setDomainid(d.getDomainid());
 
         UserHandler h = new UserHandler();
         h.createUser(null, user);
@@ -199,9 +200,9 @@ public class IDMTest {
 
         User u = new User();
         u.setName("Hello");
-        u.setDomainID(d.getDomainid());
+        u.setDomainid(d.getDomainid());
         UserStore us = new UserStore();
-        u = us.getUser(u.getName()+"@"+u.getDomainID());
+        u = us.getUser(u.getName()+"@"+u.getDomainid());
 
         Assert.assertEquals("Hello@Hello.com", u.getEmail());
 

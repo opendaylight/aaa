@@ -26,10 +26,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.opendaylight.aaa.api.model.IDMError;
+import org.opendaylight.aaa.api.model.Role;
+import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-import org.opendaylight.aaa.idm.model.IDMError;
-import org.opendaylight.aaa.idm.model.Role;
-import org.opendaylight.aaa.idm.model.Roles;
 import org.opendaylight.aaa.idm.persistence.RoleStore;
 import org.opendaylight.aaa.idm.persistence.StoreException;
 import org.slf4j.Logger;
@@ -90,10 +90,10 @@ public class RoleHandler {
          }
 
          // domain
-         if (role.getDomainID()==null) {
+         if (role.getDomainid()==null) {
             return new IDMError(404,"The role's domain must be defined on role when creating a role.","").response();
          }
-         else if (role.getDomainID().length()>RoleStore.MAX_FIELD_LEN) {
+         else if (role.getDomainid().length()>RoleStore.MAX_FIELD_LEN) {
             return new IDMError(400,"role domain max length is :" + RoleStore.MAX_FIELD_LEN,"").response();
          }
 

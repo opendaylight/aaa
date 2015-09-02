@@ -23,9 +23,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.opendaylight.aaa.api.model.Grant;
+import org.opendaylight.aaa.api.model.Grants;
 import org.opendaylight.aaa.idm.IdmLightApplication;
-import org.opendaylight.aaa.idm.model.Grant;
-import org.opendaylight.aaa.idm.model.Grants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

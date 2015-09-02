@@ -29,18 +29,18 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.opendaylight.aaa.api.model.Claim;
+import org.opendaylight.aaa.api.model.Domain;
+import org.opendaylight.aaa.api.model.Domains;
+import org.opendaylight.aaa.api.model.Grant;
+import org.opendaylight.aaa.api.model.Grants;
+import org.opendaylight.aaa.api.model.IDMError;
+import org.opendaylight.aaa.api.model.Role;
+import org.opendaylight.aaa.api.model.Roles;
+import org.opendaylight.aaa.api.model.User;
+import org.opendaylight.aaa.api.model.UserPwd;
+import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-import org.opendaylight.aaa.idm.model.Claim;
-import org.opendaylight.aaa.idm.model.Domain;
-import org.opendaylight.aaa.idm.model.Domains;
-import org.opendaylight.aaa.idm.model.Grant;
-import org.opendaylight.aaa.idm.model.Grants;
-import org.opendaylight.aaa.idm.model.IDMError;
-import org.opendaylight.aaa.idm.model.Role;
-import org.opendaylight.aaa.idm.model.Roles;
-import org.opendaylight.aaa.idm.model.User;
-import org.opendaylight.aaa.idm.model.UserPwd;
-import org.opendaylight.aaa.idm.model.Users;
 import org.opendaylight.aaa.idm.persistence.DomainStore;
 import org.opendaylight.aaa.idm.persistence.GrantStore;
 import org.opendaylight.aaa.idm.persistence.RoleStore;
@@ -106,7 +106,7 @@ public class DomainHandler {
    public Response createDomain(@Context UriInfo info,Domain domain) {
       logger.info("Post /domains");
       try {
-         if (domain.getEnabled()==null) {
+         if (domain.isEnabled()==null) {
             domain.setEnabled(false);
          }
          if (domain.getName()==null) {

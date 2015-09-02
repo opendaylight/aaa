@@ -23,9 +23,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.opendaylight.aaa.api.model.Role;
+import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.idm.IdmLightApplication;
-import org.opendaylight.aaa.idm.model.Role;
-import org.opendaylight.aaa.idm.model.Roles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -110,7 +110,7 @@ protected void finalize () throws Throwable {
       Role role = new Role();
       try {
          role.setRoleid(rs.getString(SQL_ID));
-         role.setDomainID(rs.getString(SQL_DOMAIN_ID));
+         role.setDomainid(rs.getString(SQL_DOMAIN_ID));
          role.setName(rs.getString(SQL_NAME));
          role.setDescription(rs.getString(SQL_DESCR));
       }
@@ -177,14 +177,14 @@ protected void finalize () throws Throwable {
    public Role createRole(Role role) throws StoreException {
 	   Preconditions.checkNotNull(role);
 	   Preconditions.checkNotNull(role.getName());
-	   Preconditions.checkNotNull(role.getDomainID());
+	   Preconditions.checkNotNull(role.getDomainid());
        Connection conn = dbConnect();
        try {
           String query = "insert into roles (roleid,domainid,name,description) values(?,?,?,?)";
           PreparedStatement statement = conn.prepareStatement(query);
-          role.setRoleid(role.getName()+"@"+role.getDomainID());
+          role.setRoleid(role.getName()+"@"+role.getDomainid());
           statement.setString(1, role.getRoleid());
-          statement.setString(2, role.getDomainID());
+          statement.setString(2, role.getDomainid());
           statement.setString(3,role.getName());
           statement.setString(4,role.getDescription());
           int affectedRows = statement.executeUpdate();

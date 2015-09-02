@@ -26,10 +26,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.opendaylight.aaa.api.model.IDMError;
+import org.opendaylight.aaa.api.model.User;
+import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-import org.opendaylight.aaa.idm.model.IDMError;
-import org.opendaylight.aaa.idm.model.User;
-import org.opendaylight.aaa.idm.model.Users;
 import org.opendaylight.aaa.idm.persistence.StoreException;
 import org.opendaylight.aaa.idm.persistence.UserStore;
 import org.slf4j.Logger;
@@ -91,7 +91,7 @@ public class UserHandler {
       logger.info("post /users");
       try {
          // enabled by default
-         if (user.getEnabled()==null) {
+         if (user.isEnabled()==null) {
             user.setEnabled(true);
          }
 
@@ -104,10 +104,10 @@ public class UserHandler {
          }
 
          // domain id/name is required
-         if (user.getDomainID()==null) {
+         if (user.getDomainid()==null) {
             return new IDMError(400,"user domain is required","").response();
          }
-         else if (user.getDomainID().length()>UserStore.MAX_FIELD_LEN) {
+         else if (user.getDomainid().length()>UserStore.MAX_FIELD_LEN) {
             return new IDMError(400,"user domain max length is :" + UserStore.MAX_FIELD_LEN,"").response();
          }
 

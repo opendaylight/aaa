@@ -23,9 +23,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.opendaylight.aaa.api.model.Domain;
+import org.opendaylight.aaa.api.model.Domains;
 import org.opendaylight.aaa.idm.IdmLightApplication;
-import org.opendaylight.aaa.idm.model.Domain;
-import org.opendaylight.aaa.idm.model.Domains;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -205,7 +205,7 @@ public class DomainStore {
    public Domain createDomain(Domain domain) throws StoreException {
        Preconditions.checkNotNull(domain);
        Preconditions.checkNotNull(domain.getName());
-       Preconditions.checkNotNull(domain.getEnabled());
+       Preconditions.checkNotNull(domain.isEnabled());
        Connection conn = dbConnect();
        try {
           String query = "insert into DOMAINS (domainid,name,description,enabled) values(?, ?, ?, ?)";
@@ -213,7 +213,7 @@ public class DomainStore {
           statement.setString(1,domain.getName());
           statement.setString(2,domain.getName());
           statement.setString(3,domain.getDescription());
-          statement.setInt(4,domain.getEnabled()?1:0);
+          statement.setInt(4,domain.isEnabled()?1:0);
           int affectedRows = statement.executeUpdate();
           if (affectedRows == 0) {
              throw new StoreException("Creating domain failed, no rows affected.");
@@ -241,8 +241,8 @@ public class DomainStore {
       if (domain.getName()!=null) {
          savedDomain.setName(domain.getName());
       }
-      if (domain.getEnabled()!=null) {
-         savedDomain.setEnabled(domain.getEnabled());
+      if (domain.isEnabled()!=null) {
+         savedDomain.setEnabled(domain.isEnabled());
       }
 
       Connection conn = dbConnect();
@@ -250,7 +250,7 @@ public class DomainStore {
          String query = "UPDATE DOMAINS SET description = ?, enabled = ? WHERE domainid = ?";
          PreparedStatement statement = conn.prepareStatement(query);
          statement.setString(1, savedDomain.getDescription());
-         statement.setInt(2, savedDomain.getEnabled()?1:0);
+         statement.setInt(2, savedDomain.isEnabled()?1:0);
          statement.setString(3,savedDomain.getDomainid());
          statement.executeUpdate();
          statement.close();
