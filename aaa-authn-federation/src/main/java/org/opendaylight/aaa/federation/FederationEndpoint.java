@@ -32,6 +32,7 @@ import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
+import org.opendaylight.aaa.api.IDMStoreUtil;
 
 
 /**
@@ -93,7 +94,7 @@ public class FederationEndpoint extends HttpServlet {
             throw new AuthenticationException(UNAUTHORIZED);
         }
 
-        String userId = userName+"@"+domain;
+        String userId = IDMStoreUtil.createUserid(userName,domain);
 
         // Create an unscoped ODL context from the external claim
         Authentication auth = new AuthenticationBuilder(new ClaimBuilder(claim).setUserId(userId).build())

@@ -8,24 +8,19 @@
 
 package org.opendaylight.aaa.idm;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.ws.rs.core.Application;
 
+import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.idm.rest.DomainHandler;
 import org.opendaylight.aaa.idm.rest.RoleHandler;
 import org.opendaylight.aaa.idm.rest.UserHandler;
 import org.opendaylight.aaa.idm.rest.VersionHandler;
-import org.opendaylight.aaa.idm.config.IdmLightConfig;
-import org.opendaylight.aaa.idm.persistence.StoreBuilder;
-import org.opendaylight.aaa.idm.persistence.StoreException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A JAX-RS application for IdmLight.
@@ -35,33 +30,13 @@ import org.opendaylight.aaa.idm.persistence.StoreException;
  */
 public class IdmLightApplication extends Application {
     private static Logger logger = LoggerFactory.getLogger(IdmLightApplication.class);
-    private static IdmLightConfig config = new IdmLightConfig();
 
     public IdmLightApplication() {
-       StoreBuilder storeBuilder = new StoreBuilder();
-       if (!storeBuilder.exists()) {
-         storeBuilder.init();
-       }
-    }
-
-    public static IdmLightConfig getConfig() {
-       return config;
-    }
-
-    public static Connection getConnection(Connection existingConnection)
-          throws StoreException {
-       Connection connection = existingConnection;
-       try {
-          if (existingConnection == null || existingConnection.isClosed()) {
-             new org.h2.Driver();
-             connection = DriverManager.getConnection(config.getDbPath(),
-                   config.getDbUser(), config.getDbPwd());
-          }
-       } catch (Exception e) {
-          throw new StoreException("Cannot connect to database server " + e);
-       }
-
-       return connection;
+        try {
+            StoreBuilder.init();
+        } catch (IDMStoreException e) {
+            logger.error("Failed to populate the store with default values",e);
+        }
     }
 
     @Override
@@ -71,5 +46,4 @@ public class IdmLightApplication extends Application {
                                                    RoleHandler.class,
                                                    UserHandler.class));
     }
-
 }

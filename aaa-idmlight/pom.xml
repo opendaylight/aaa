@@ -83,11 +83,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- JDBC -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
         <!-- Testing Dependencies -->
         <dependency>
             <groupId>com.sun.jersey.jersey-test-framework</groupId>
@@ -117,9 +112,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Import-Package>javax.servlet.http,javax.ws.rs,javax.ws.rs.core,javax.xml.bind.annotation,org.apache.felix.dm,org.opendaylight.aaa,org.opendaylight.aaa.api,org.osgi.framework,org.slf4j,org.eclipse.jetty.servlets,com.sun.jersey.spi.container.servlet,com.google.*</Import-Package>
-                        <Private-Package>org.h2.*</Private-Package>
-                        <Embed-Dependency>h2</Embed-Dependency>
+                        <Import-Package>,org.opendaylight.aaa.*,org.opendaylight.aaa.api.*,javax.servlet.http,javax.ws.rs,javax.ws.rs.core,javax.xml.bind.annotation,org.apache.felix.dm.*,org.osgi.framework,org.slf4j,org.eclipse.jetty.servlets,com.sun.jersey.spi.container.servlet,com.google.*</Import-Package>
                         <Web-ContextPath>/auth</Web-ContextPath>
                         <!--<Web-Connectors>adminConn</Web-Connectors> -->
                         <Bundle-Activator>org.opendaylight.aaa.idm.Activator</Bundle-Activator>
