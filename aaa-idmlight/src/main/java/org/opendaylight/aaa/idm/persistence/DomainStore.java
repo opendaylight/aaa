@@ -201,7 +201,7 @@ public class DomainStore {
           PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
           statement.setString(1,domain.getName());
           statement.setString(2,domain.getDescription());
-          statement.setInt(3,domain.getEnabled()?1:0);
+          statement.setInt(3,domain.isEnabled()?1:0);
           int affectedRows = statement.executeUpdate();
           if (affectedRows == 0) {
              throw new StoreException("Creating domain failed, no rows affected.");
@@ -238,8 +238,8 @@ public class DomainStore {
       if (domain.getName()!=null) {
          savedDomain.setName(domain.getName());
       }
-      if (domain.getEnabled()!=null) {
-         savedDomain.setEnabled(domain.getEnabled());
+      if (domain.isEnabled()!=null) {
+         savedDomain.setEnabled(domain.isEnabled());
       }
 
       Connection conn = dbConnect();
@@ -248,7 +248,7 @@ public class DomainStore {
          PreparedStatement statement = conn.prepareStatement(query);
          statement.setString(1, savedDomain.getName());
          statement.setString(2, savedDomain.getDescription());
-         statement.setInt(3, savedDomain.getEnabled()?1:0);
+         statement.setInt(3, savedDomain.isEnabled()?1:0);
          statement.setInt(4,savedDomain.getDomainid());
          statement.executeUpdate();
          statement.close();

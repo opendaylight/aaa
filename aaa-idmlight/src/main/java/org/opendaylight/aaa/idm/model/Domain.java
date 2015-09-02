@@ -17,8 +17,10 @@ package org.opendaylight.aaa.idm.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.aaa.DomainBuilder;
+
 @XmlRootElement(name = "domain")
-public class Domain {
+public class Domain extends IDMObject{
    private Integer domainid;
    private String name;
    private String description;
@@ -48,13 +50,59 @@ public class Domain {
       this.description = description;
    }
 
-   public Boolean getEnabled() {
+   public Boolean isEnabled() {
       return enabled;
    }
 
    public void setEnabled(Boolean enabled) {
       this.enabled = enabled;
+   }    
+
+   @Override
+   public int hashCode() {
+       return this.name.hashCode();
    }
 
+   @Override
+   public boolean equals(Object obj) {
+       Domain other = (Domain)obj;
+       if(other==null)
+           return false;
+       if(compareValues(getName(), other.getName()) && 
+          compareValues(getDomainid(), other.getDomainid()) &&
+          compareValues(getDescription(), other.getDescription()))
+              return true;
+       return false;
+   }
+
+   private boolean compareValues(Object a,Object b){
+       if(a==null && b!=null)
+           return false;
+       if(a!=null && b==null)
+           return false;
+       if(a==null && b==null)
+           return true;
+       if(a.equals(b))
+           return true;
+       return false;
+   }
+   
+   public org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.aaa.Domain toMDSAL(){
+       try{
+           return (org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.aaa.Domain)toMDSALObject(this, DomainBuilder.class);
+       }catch(Exception err){
+           err.printStackTrace();
+           return null;
+       }
+   }
+
+   public static Domain toObject(org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.aaa.Domain d){
+       try{
+           return (Domain)fromMDSALObject(d, Domain.class);
+       }catch(Exception err){
+           err.printStackTrace();
+           return null;
+       }
+   }
 }
 
