@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.idm.model;
+package org.opendaylight.aaa.api.model;
 
 /**
  *
@@ -46,13 +46,41 @@ public class Role {
    public void setDescription(String description) {
       this.description = description;
    }
+   @Override
+   public int hashCode() {
+       return this.name.hashCode();
+   }
 
-   public void setDomainID(String domainid){
+   @Override
+   public boolean equals(Object obj) {
+       Role other = (Role)obj;
+       if(other==null)
+           return false;
+       if(compareValues(getName(), other.getName()) && 
+          compareValues(getRoleid(), other.getRoleid()) &&
+          compareValues(getDescription(), other.getDescription()))
+              return true;
+       return false;
+   }
+
+   public void setDomainid(String domainid){
        this.domainid = domainid;
    }
 
-   public String getDomainID(){
+   public String getDomainid(){
        return this.domainid;
+   }
+
+   private boolean compareValues(Object a,Object b){
+       if(a==null && b!=null)
+           return false;
+       if(a!=null && b==null)
+           return false;
+       if(a==null && b==null)
+           return true;
+       if(a.equals(b))
+           return true;
+       return false;
    }
 }
 

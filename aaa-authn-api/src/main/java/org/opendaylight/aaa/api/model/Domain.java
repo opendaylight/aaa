@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.idm.model;
+package org.opendaylight.aaa.api.model;
 
 /**
  *
@@ -48,11 +48,40 @@ public class Domain {
       this.description = description;
    }
 
-   public Boolean getEnabled() {
+   public Boolean isEnabled() {
       return enabled;
    }
 
    public void setEnabled(Boolean enabled) {
       this.enabled = enabled;
+   }    
+
+   @Override
+   public int hashCode() {
+       return this.name.hashCode();
+   }
+
+   @Override
+   public boolean equals(Object obj) {
+       Domain other = (Domain)obj;
+       if(other==null)
+           return false;
+       if(compareValues(getName(), other.getName()) && 
+          compareValues(getDomainid(), other.getDomainid()) &&
+          compareValues(getDescription(), other.getDescription()))
+              return true;
+       return false;
+   }
+
+   private boolean compareValues(Object a,Object b){
+       if(a==null && b!=null)
+           return false;
+       if(a!=null && b==null)
+           return false;
+       if(a==null && b==null)
+           return true;
+       if(a.equals(b))
+           return true;
+       return false;
    }
 }
