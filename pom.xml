@@ -27,6 +27,7 @@
     <module>aaa-authn-sssd</module>
     <module>aaa-authn-keystone</module>
     <module>aaa-authn-basic</module>
+    <module>aaa-h2-store</module>
     <module>aaa-idmlight</module>
     <module>aaa-authn-mdsal-store</module>
     <module>aaa-authz</module>
