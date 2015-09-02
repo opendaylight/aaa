@@ -45,6 +45,33 @@ public class Role {
    public void setDescription(String description) {
       this.description = description;
    }
+   @Override
+   public int hashCode() {
+       return this.name.hashCode();
+   }
 
+   @Override
+   public boolean equals(Object obj) {
+       Role other = (Role)obj;
+       if(other==null)
+           return false;
+       if(compareValues(getName(), other.getName()) && 
+          compareValues(getRoleid(), other.getRoleid()) &&
+          compareValues(getDescription(), other.getDescription()))
+              return true;
+       return false;
+   }
+
+   private boolean compareValues(Object a,Object b){
+       if(a==null && b!=null)
+           return false;
+       if(a!=null && b==null)
+           return false;
+       if(a==null && b==null)
+           return true;
+       if(a.equals(b))
+           return true;
+       return false;
+   }
 }
 
