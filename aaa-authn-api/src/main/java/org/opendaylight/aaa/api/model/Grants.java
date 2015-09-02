@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.idm.model;
+package org.opendaylight.aaa.api.model;
 
 /**
  *
@@ -15,26 +15,20 @@ package org.opendaylight.aaa.idm.model;
  */
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
+import java.util.List;
+import java.util.ArrayList;
 
-@XmlRootElement(name = "userpwd")
-public class UserPwd {
-   private String username;
-   private String userpwd;
+@XmlRootElement(name = "grants")
+public class Grants {
+   private List<Grant> grants = new ArrayList<Grant>();
 
-   public String getUsername() {
-      return username;
+   public void setGrants(List<Grant> grants) {
+      this.grants = grants;
    }
 
-   public void setUsername(String name) {
-      this.username = name;
-   }
-
-   public String getUserpwd() {
-      return userpwd;
-   }
-
-   public void setUserpwd(String pwd) {
-      this.userpwd = pwd;
+   public List<Grant> getGrants() {
+      return grants;
    }
 
 }

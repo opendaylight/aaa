@@ -23,7 +23,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.opendaylight.aaa.idm.model.Domains;
+import org.opendaylight.aaa.api.model.Domains;
 
 public class DomainStoreTest {
 

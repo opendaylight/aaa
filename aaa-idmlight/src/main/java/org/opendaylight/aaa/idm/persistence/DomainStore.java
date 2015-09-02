@@ -23,9 +23,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.opendaylight.aaa.api.model.Domain;
+import org.opendaylight.aaa.api.model.Domains;
 import org.opendaylight.aaa.idm.IdmLightApplication;
-import org.opendaylight.aaa.idm.model.Domain;
-import org.opendaylight.aaa.idm.model.Domains;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +39,10 @@ public class DomainStore {
    protected final static String SQL_NAME           = "name";
    protected final static String SQL_DESCR          = "description";
    protected final static String SQL_ENABLED        = "enabled";
-
+   
+   protected DomainStore(){
+   }
+   
    protected Connection getDBConnect() throws StoreException {
       dbConnection = IdmLightApplication.getConnection(dbConnection);
       return dbConnection;
@@ -121,7 +124,7 @@ public class DomainStore {
       return domain;
    }
 
-   public Domains getDomains() throws StoreException {
+   protected Domains getDomains() throws StoreException {
       Domains domains = new Domains();
       List<Domain> domainList = new ArrayList<Domain>();
       Connection conn = dbConnect();
@@ -147,7 +150,7 @@ public class DomainStore {
       return domains;
    }
 
-   public Domains getDomains(String domainName) throws StoreException {
+   protected Domains getDomains(String domainName) throws StoreException {
       debug("getDomains for:" + domainName);
       Domains domains = new Domains();
       List<Domain> domainList = new ArrayList<Domain>();
@@ -175,7 +178,7 @@ public class DomainStore {
    }
 
 
-   public Domain getDomain(String id) throws StoreException {
+   protected Domain getDomain(String id) throws StoreException {
       Connection conn = dbConnect();
       try {
          PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM DOMAINS WHERE domainid = ? ");
@@ -202,10 +205,10 @@ public class DomainStore {
         }
    }
 
-   public Domain createDomain(Domain domain) throws StoreException {
+   protected Domain createDomain(Domain domain) throws StoreException {
        Preconditions.checkNotNull(domain);
        Preconditions.checkNotNull(domain.getName());
-       Preconditions.checkNotNull(domain.getEnabled());
+       Preconditions.checkNotNull(domain.isEnabled());
        Connection conn = dbConnect();
        try {
           String query = "insert into DOMAINS (domainid,name,description,enabled) values(?, ?, ?, ?)";
@@ -213,7 +216,7 @@ public class DomainStore {
           statement.setString(1,domain.getName());
           statement.setString(2,domain.getName());
           statement.setString(3,domain.getDescription());
-          statement.setInt(4,domain.getEnabled()?1:0);
+          statement.setInt(4,domain.isEnabled()?1:0);
           int affectedRows = statement.executeUpdate();
           if (affectedRows == 0) {
              throw new StoreException("Creating domain failed, no rows affected.");
@@ -229,7 +232,7 @@ public class DomainStore {
        }
    }
 
-   public Domain putDomain(Domain domain) throws StoreException {
+   protected Domain putDomain(Domain domain) throws StoreException {
       Domain savedDomain = this.getDomain(domain.getDomainid());
       if (savedDomain==null) {
          return null;
@@ -241,8 +244,8 @@ public class DomainStore {
       if (domain.getName()!=null) {
          savedDomain.setName(domain.getName());
       }
-      if (domain.getEnabled()!=null) {
-         savedDomain.setEnabled(domain.getEnabled());
+      if (domain.isEnabled()!=null) {
+         savedDomain.setEnabled(domain.isEnabled());
       }
 
       Connection conn = dbConnect();
@@ -250,7 +253,7 @@ public class DomainStore {
          String query = "UPDATE DOMAINS SET description = ?, enabled = ? WHERE domainid = ?";
          PreparedStatement statement = conn.prepareStatement(query);
          statement.setString(1, savedDomain.getDescription());
-         statement.setInt(2, savedDomain.getEnabled()?1:0);
+         statement.setInt(2, savedDomain.isEnabled()?1:0);
          statement.setString(3,savedDomain.getDomainid());
          statement.executeUpdate();
          statement.close();
@@ -265,8 +268,8 @@ public class DomainStore {
       return savedDomain;
    }
 
-   public Domain deleteDomain(Domain domain) throws StoreException {
-      Domain deletedDomain = this.getDomain(domain.getDomainid());
+   protected Domain deleteDomain(String domainid) throws StoreException {
+      Domain deletedDomain = this.getDomain(domainid);
       if (deletedDomain==null) {
          return null;
       }
