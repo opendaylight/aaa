@@ -11,6 +11,7 @@
   <artifactId>features-aggregator</artifactId>
   <packaging>pom</packaging>
   <modules>
+    <module>shiro</module>
     <module>api</module>
     <module>authn</module>
     <module>authz</module>
