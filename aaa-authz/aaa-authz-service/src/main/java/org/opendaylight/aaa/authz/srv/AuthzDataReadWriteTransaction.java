@@ -28,110 +28,110 @@ import org.opendaylight.yangtools.yang.data.api.schema.NormalizedNode;
  */
 public class AuthzDataReadWriteTransaction implements DOMDataReadWriteTransaction {
 
-  private final DOMDataReadWriteTransaction domDataReadWriteTransaction;
+    private final DOMDataReadWriteTransaction domDataReadWriteTransaction;
 
-  public AuthzDataReadWriteTransaction(DOMDataReadWriteTransaction domDataReadWriteTransaction) {
-    this.domDataReadWriteTransaction = domDataReadWriteTransaction;
-  }
-
-  @Override
-  public boolean cancel() {
-    if(AuthzServiceImpl.isAuthorized(ActionType.Cancel)) {
-      return domDataReadWriteTransaction.cancel();
+    public AuthzDataReadWriteTransaction(DOMDataReadWriteTransaction domDataReadWriteTransaction) {
+        this.domDataReadWriteTransaction = domDataReadWriteTransaction;
     }
-    return false;
-  }
 
-  @Override
-  public void delete(LogicalDatastoreType logicalDatastoreType,
-      YangInstanceIdentifier yangInstanceIdentifier) {
-
-    if(AuthzServiceImpl.isAuthorized(logicalDatastoreType,
-        yangInstanceIdentifier, ActionType.Delete)) {
-      domDataReadWriteTransaction.delete(logicalDatastoreType,
-        yangInstanceIdentifier);
+    @Override
+    public boolean cancel() {
+        if (AuthzServiceImpl.isAuthorized(ActionType.Cancel)) {
+            return domDataReadWriteTransaction.cancel();
+        }
+        return false;
     }
-  }
 
-  @Override
-  public CheckedFuture<Void, TransactionCommitFailedException> submit() {
-    if(AuthzServiceImpl.isAuthorized(ActionType.Submit)) {
-      return domDataReadWriteTransaction.submit();
+    @Override
+    public void delete(LogicalDatastoreType logicalDatastoreType,
+                       YangInstanceIdentifier yangInstanceIdentifier) {
+
+        if (AuthzServiceImpl.isAuthorized(logicalDatastoreType,
+            yangInstanceIdentifier, ActionType.Delete)) {
+            domDataReadWriteTransaction.delete(logicalDatastoreType,
+                yangInstanceIdentifier);
+        }
     }
-    TransactionCommitFailedException e =
-        new TransactionCommitFailedException("Unauthorized User");
-    return Futures.immediateFailedCheckedFuture(e);
-  }
 
-  @Deprecated
-  @Override
-  public ListenableFuture<RpcResult<TransactionStatus>> commit() {
-    if(AuthzServiceImpl.isAuthorized(ActionType.Commit)) {
-      return domDataReadWriteTransaction.commit();
+    @Override
+    public CheckedFuture<Void, TransactionCommitFailedException> submit() {
+        if (AuthzServiceImpl.isAuthorized(ActionType.Submit)) {
+            return domDataReadWriteTransaction.submit();
+        }
+        TransactionCommitFailedException e =
+            new TransactionCommitFailedException("Unauthorized User");
+        return Futures.immediateFailedCheckedFuture(e);
     }
-    TransactionCommitFailedException e =
-        new TransactionCommitFailedException("Unauthorized User");
-    return Futures.immediateFailedCheckedFuture(e);
-  }
 
-  @Override
-  public CheckedFuture<Optional<NormalizedNode<?,?>>,ReadFailedException> read(
-      LogicalDatastoreType logicalDatastoreType,
-      YangInstanceIdentifier yangInstanceIdentifier) {
-
-    if(AuthzServiceImpl.isAuthorized(logicalDatastoreType,
-        yangInstanceIdentifier, ActionType.Read)) {
-      return domDataReadWriteTransaction.read(logicalDatastoreType,
-          yangInstanceIdentifier);
+    @Deprecated
+    @Override
+    public ListenableFuture<RpcResult<TransactionStatus>> commit() {
+        if (AuthzServiceImpl.isAuthorized(ActionType.Commit)) {
+            return domDataReadWriteTransaction.commit();
+        }
+        TransactionCommitFailedException e =
+            new TransactionCommitFailedException("Unauthorized User");
+        return Futures.immediateFailedCheckedFuture(e);
     }
-    ReadFailedException e = new ReadFailedException("Authorization Failed");
-    return Futures.immediateFailedCheckedFuture(e);
-  }
 
-  @Override
-  public CheckedFuture<Boolean, ReadFailedException> exists(
-      LogicalDatastoreType logicalDatastoreType,
-      YangInstanceIdentifier yangInstanceIdentifier) {
+    @Override
+    public CheckedFuture<Optional<NormalizedNode<?, ?>>, ReadFailedException> read(
+        LogicalDatastoreType logicalDatastoreType,
+        YangInstanceIdentifier yangInstanceIdentifier) {
 
-    if(AuthzServiceImpl.isAuthorized(logicalDatastoreType,
-        yangInstanceIdentifier, ActionType.Exists)) {
-      return domDataReadWriteTransaction.exists(logicalDatastoreType,
-          yangInstanceIdentifier);
+        if (AuthzServiceImpl.isAuthorized(logicalDatastoreType,
+            yangInstanceIdentifier, ActionType.Read)) {
+            return domDataReadWriteTransaction.read(logicalDatastoreType,
+                yangInstanceIdentifier);
+        }
+        ReadFailedException e = new ReadFailedException("Authorization Failed");
+        return Futures.immediateFailedCheckedFuture(e);
     }
-    ReadFailedException e = new ReadFailedException("Authorization Failed");
-    return Futures.immediateFailedCheckedFuture(e);
-  }
 
-  @Override
-  public void put(LogicalDatastoreType logicalDatastoreType,
-      YangInstanceIdentifier yangInstanceIdentifier,
-      NormalizedNode<?, ?> normalizedNode) {
+    @Override
+    public CheckedFuture<Boolean, ReadFailedException> exists(
+        LogicalDatastoreType logicalDatastoreType,
+        YangInstanceIdentifier yangInstanceIdentifier) {
 
-    if(AuthzServiceImpl.isAuthorized(logicalDatastoreType,
-        yangInstanceIdentifier,
-        ActionType.Put)) {
-      domDataReadWriteTransaction.put(logicalDatastoreType,
-        yangInstanceIdentifier, normalizedNode);
+        if (AuthzServiceImpl.isAuthorized(logicalDatastoreType,
+            yangInstanceIdentifier, ActionType.Exists)) {
+            return domDataReadWriteTransaction.exists(logicalDatastoreType,
+                yangInstanceIdentifier);
+        }
+        ReadFailedException e = new ReadFailedException("Authorization Failed");
+        return Futures.immediateFailedCheckedFuture(e);
     }
-  }
 
-  @Override
-  public void merge(LogicalDatastoreType logicalDatastoreType,
-      YangInstanceIdentifier yangInstanceIdentifier,
-      NormalizedNode<?, ?> normalizedNode) {
+    @Override
+    public void put(LogicalDatastoreType logicalDatastoreType,
+                    YangInstanceIdentifier yangInstanceIdentifier,
+                    NormalizedNode<?, ?> normalizedNode) {
 
-    if(AuthzServiceImpl.isAuthorized(logicalDatastoreType,
-        yangInstanceIdentifier, ActionType.Merge)) {
-      domDataReadWriteTransaction.merge(logicalDatastoreType,
-          yangInstanceIdentifier, normalizedNode);
+        if (AuthzServiceImpl.isAuthorized(logicalDatastoreType,
+            yangInstanceIdentifier,
+            ActionType.Put)) {
+            domDataReadWriteTransaction.put(logicalDatastoreType,
+                yangInstanceIdentifier, normalizedNode);
+        }
     }
-  }
 
-  @Override
-  public Object getIdentifier() {
-    if(AuthzServiceImpl.isAuthorized(ActionType.GetIdentifier)) {
-      return domDataReadWriteTransaction.getIdentifier();
+    @Override
+    public void merge(LogicalDatastoreType logicalDatastoreType,
+                      YangInstanceIdentifier yangInstanceIdentifier,
+                      NormalizedNode<?, ?> normalizedNode) {
+
+        if (AuthzServiceImpl.isAuthorized(logicalDatastoreType,
+            yangInstanceIdentifier, ActionType.Merge)) {
+            domDataReadWriteTransaction.merge(logicalDatastoreType,
+                yangInstanceIdentifier, normalizedNode);
+        }
     }
-    return null;
-  }
+
+    @Override
+    public Object getIdentifier() {
+        if (AuthzServiceImpl.isAuthorized(ActionType.GetIdentifier)) {
+            return domDataReadWriteTransaction.getIdentifier();
+        }
+        return null;
+    }
 }

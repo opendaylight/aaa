@@ -26,46 +26,47 @@ import org.opendaylight.yang.gen.v1.urn.aaa.yang.authz.ds.rev140722.Authorizatio
 
 public class AuthzReadOnlyTransaction implements DOMDataReadOnlyTransaction {
 
-  private final DOMDataReadOnlyTransaction ro;
-  public AuthzReadOnlyTransaction(DOMDataReadOnlyTransaction ro) {
-    this.ro = ro;
-  }
+    private final DOMDataReadOnlyTransaction ro;
 
-  @Override
-  public void close() {
-    ro.close();
-  }
-
-  @Override
-  public CheckedFuture<Optional<NormalizedNode<?,?>>,ReadFailedException> read(
-      LogicalDatastoreType logicalDatastoreType,
-      YangInstanceIdentifier yangInstanceIdentifier) {
-
-    if(AuthzServiceImpl.isAuthorized(logicalDatastoreType,
-        yangInstanceIdentifier, ActionType.Read)) {
-      return ro.read(logicalDatastoreType, yangInstanceIdentifier);
+    public AuthzReadOnlyTransaction(DOMDataReadOnlyTransaction ro) {
+        this.ro = ro;
     }
-    ReadFailedException e = new ReadFailedException("Authorization Failed");
-    return Futures.immediateFailedCheckedFuture(e);
-  }
 
-  @Override
-  public CheckedFuture<Boolean, ReadFailedException> exists(
-      LogicalDatastoreType logicalDatastoreType,
-      YangInstanceIdentifier yangInstanceIdentifier) {
-
-    if(AuthzServiceImpl.isAuthorized(ActionType.Exists)) {
-      return ro.exists(logicalDatastoreType, yangInstanceIdentifier);
+    @Override
+    public void close() {
+        ro.close();
     }
-    ReadFailedException e = new ReadFailedException("Authorization Failed");
-    return Futures.immediateFailedCheckedFuture(e);
-  }
 
-  @Override
-  public Object getIdentifier() {
-    if(AuthzServiceImpl.isAuthorized(ActionType.GetIdentifier)) {
-      return ro.getIdentifier();
+    @Override
+    public CheckedFuture<Optional<NormalizedNode<?, ?>>, ReadFailedException> read(
+        LogicalDatastoreType logicalDatastoreType,
+        YangInstanceIdentifier yangInstanceIdentifier) {
+
+        if (AuthzServiceImpl.isAuthorized(logicalDatastoreType,
+            yangInstanceIdentifier, ActionType.Read)) {
+            return ro.read(logicalDatastoreType, yangInstanceIdentifier);
+        }
+        ReadFailedException e = new ReadFailedException("Authorization Failed");
+        return Futures.immediateFailedCheckedFuture(e);
     }
-    return null;
-  }
+
+    @Override
+    public CheckedFuture<Boolean, ReadFailedException> exists(
+        LogicalDatastoreType logicalDatastoreType,
+        YangInstanceIdentifier yangInstanceIdentifier) {
+
+        if (AuthzServiceImpl.isAuthorized(ActionType.Exists)) {
+            return ro.exists(logicalDatastoreType, yangInstanceIdentifier);
+        }
+        ReadFailedException e = new ReadFailedException("Authorization Failed");
+        return Futures.immediateFailedCheckedFuture(e);
+    }
+
+    @Override
+    public Object getIdentifier() {
+        if (AuthzServiceImpl.isAuthorized(ActionType.GetIdentifier)) {
+            return ro.getIdentifier();
+        }
+        return null;
+    }
 }
