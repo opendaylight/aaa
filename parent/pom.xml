@@ -35,6 +35,7 @@
 
         <!-- Local project version, needed for import -->
         <aaa.version>0.3.0-SNAPSHOT</aaa.version>
+        <parent-path>${basedir}</parent-path>
 
         <!-- AuthZ -->
         <yangtools.version>0.8.0-SNAPSHOT</yangtools.version>
@@ -280,7 +281,29 @@
                 <configuration>
                     <!-- checkstyle is evil -->
                     <skip>false</skip>
+                    <failOnViolation>false</failOnViolation>
+                    <configLocation>checkstyle-logging.xml</configLocation>
+                    <consoleOutput>true</consoleOutput>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <sourceDirectory>${project.basedir}</sourceDirectory>
+                    <includes>**\/*.java,**\/*.xml,**\/*.ini,**\/*.sh,**\/*.bat,**\/*.yang</includes>
+                    <excludes>**\/target\/,**\/bin\/,**\/target-ide\/,**\/src/main/yang-gen-config\/,**\/src/main/yang-gen-sal\/</excludes>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <phase>process-sources</phase>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.opendaylight.yangtools</groupId>
+                        <artifactId>checkstyle-logging</artifactId>
+                        <version>${yangtools.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
