@@ -9,25 +9,28 @@
 package org.opendaylight.aaa.idm.model;
 
 /**
+ *
  * @author peter.mellquist@hp.com
+ *
  */
 
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlElement;
 import java.util.List;
+import java.util.ArrayList;
 
 @XmlRootElement(name = "users")
 public class Users {
-    private List<User> users = new ArrayList<User>();
+   private List<User> users = new ArrayList<User>();
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
+   public void setUsers(List<User> users) {
+      this.users = users;
+   }
 
-    public List<User> getUsers() {
-        return users;
-    }
+   public List<User> getUsers() {
+      return users;
+   }
 
 }
 
