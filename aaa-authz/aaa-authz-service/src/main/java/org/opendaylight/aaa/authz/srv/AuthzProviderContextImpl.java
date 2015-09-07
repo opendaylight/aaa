@@ -19,29 +19,28 @@ import org.opendaylight.controller.sal.core.spi.ForwardingProviderSession;
  */
 public class AuthzProviderContextImpl extends ForwardingProviderSession {
 
-  private final Broker.ProviderSession realSession;
+    private final Broker.ProviderSession realSession;
 
-  public AuthzProviderContextImpl(Broker.ProviderSession providerSession, AuthzBrokerImpl authzBroker) {
-    this.realSession = providerSession;
-  }
-
-  @Override
-  protected ProviderSession delegate() {
-    // TODO Auto-generated method stub
-    return realSession;
-  }
-
-  @Override
-  public <T extends BrokerService> T getService(Class<T> tClass) {
-    T t;
-    //Check for class and return Authz broker only for DOMBroker
-    if (tClass == DOMDataBroker.class) {
-      t = (T) AuthzDomDataBroker.getInstance();
+    public AuthzProviderContextImpl(Broker.ProviderSession providerSession, AuthzBrokerImpl authzBroker) {
+        this.realSession = providerSession;
     }
-   else {
-      t = realSession.getService(tClass);
+
+    @Override
+    protected ProviderSession delegate() {
+        // TODO Auto-generated method stub
+        return realSession;
     }
-   // AuthzDomDataBroker.getInstance().setDomDataBroker((DOMDataBroker)t);
-    return t;
-  }
+
+    @Override
+    public <T extends BrokerService> T getService(Class<T> tClass) {
+        T t;
+        //Check for class and return Authz broker only for DOMBroker
+        if (tClass == DOMDataBroker.class) {
+            t = (T) AuthzDomDataBroker.getInstance();
+        } else {
+            t = realSession.getService(tClass);
+        }
+        // AuthzDomDataBroker.getInstance().setDomDataBroker((DOMDataBroker)t);
+        return t;
+    }
 }

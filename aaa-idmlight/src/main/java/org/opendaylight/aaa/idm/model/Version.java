@@ -9,9 +9,7 @@
 package org.opendaylight.aaa.idm.model;
 
 /**
- *
  * @author peter.mellquist@hp.com
- *
  */
 
 import javax.xml.bind.annotation.XmlRootElement;
