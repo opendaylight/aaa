@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_1d5b6588",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-api/src/main/yang/aaa-authn-model.yang",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-09-08T04:48:11Z",
+      "side": 1,
+      "message": "should be \"authentication\"",
+      "range": {
+        "startLine": 76,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 15
+      },
+      "revId": "0e85569205f4fd954854ca0fbf5e2c2f058d0d88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_dd540d56",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-api/src/main/yang/aaa-authn-model.yang",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-09-08T04:48:11Z",
+      "side": 1,
+      "message": "let\u0027s have all the containers and list names not capitalized",
+      "range": {
+        "startLine": 77,
+        "startChar": 10,
+        "endLine": 77,
+        "endChar": 16
+      },
+      "revId": "0e85569205f4fd954854ca0fbf5e2c2f058d0d88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_fd4f89bc",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-09-08T04:48:11Z",
+      "side": 1,
+      "message": "For all of the public methods here, could we have these defined as an interface, which this module implements?",
+      "range": {
+        "startLine": 281,
+        "startChar": 1,
+        "endLine": 296,
+        "endChar": 45
+      },
+      "revId": "0e85569205f4fd954854ca0fbf5e2c2f058d0d88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_9d4e95c0",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/test/java/org/opendaylight/aaa/authn/mdsal/store/DataBrokerReadMocker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-09-08T04:48:11Z",
+      "side": 1,
+      "message": "Why do we need this?\ni.e. it seems to be an anti-pattern to have such custom Readtransaction mocks",
+      "range": {
+        "startLine": 11,
+        "startChar": 13,
+        "endLine": 11,
+        "endChar": 34
+      },
+      "revId": "0e85569205f4fd954854ca0fbf5e2c2f058d0d88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_7dcb791e",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/test/java/org/opendaylight/aaa/authn/mdsal/store/IDMStoreTestUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-09-08T04:48:11Z",
+      "side": 1,
+      "message": "I\u0027m not a big fan of catching exceptions in test code. Would be better to simply throw it up, but again this seems to be an artefact of the ReadMocker here.",
+      "range": {
+        "startLine": 166,
+        "startChar": 15,
+        "endLine": 166,
+        "endChar": 24
+      },
+      "revId": "0e85569205f4fd954854ca0fbf5e2c2f058d0d88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_1de92580",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/model/Domain.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-09-08T04:48:11Z",
+      "side": 1,
+      "message": "I\u0027m not too comfortable with this conversion idea.\nI.e. it would seem more natural to have the JAXB annotated objects \"clean\", and have the service layer do any conversion.",
+      "range": {
+        "startLine": 23,
+        "startChar": 28,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "0e85569205f4fd954854ca0fbf5e2c2f058d0d88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
