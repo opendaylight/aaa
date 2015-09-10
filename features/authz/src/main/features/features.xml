@@ -25,9 +25,9 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authz-model/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authz-service/{{VERSION}}</bundle>
 		<configfile
-            finalname="${config.configfile.directory}/${config.authz.service.configfile}">mvn:org.opendaylight.aaa/authz-service-config/{{VERSION}}/xml/config</configfile>
-		<configfile
-            finalname="${config.configfile.directory}/${config.restconf.configfile}">mvn:org.opendaylight.aaa/authz-restconf-config/{{VERSION}}/xml/config</configfile>
-	</feature>
+            finalname="/etc/opendaylight/karaf/08-authz-config.xml">mvn:org.opendaylight.aaa/authz-service-config/{{VERSION}}/xml/config</configfile>
+	    <configfile
+            finalname="/etc/opendaylight/karaf/09-rest-connector.xml">mvn:org.opendaylight.aaa/authz-restconf-config/{{VERSION}}/xml/config</configfile>
+        </feature>
 
 </features>
