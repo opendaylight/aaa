@@ -8,27 +8,20 @@
 
 package org.opendaylight.aaa.idm.persistence;
 
-import org.opendaylight.aaa.idm.persistence.DomainStore;
-import org.opendaylight.aaa.idm.model.Domain;
-import org.opendaylight.aaa.idm.persistence.UserStore;
-import org.opendaylight.aaa.idm.model.User;
-import org.opendaylight.aaa.idm.persistence.RoleStore;
-import org.opendaylight.aaa.idm.model.Role;
-import org.opendaylight.aaa.idm.persistence.GrantStore;
-import org.opendaylight.aaa.idm.model.Grant;
+import java.io.File;
 
+import org.opendaylight.aaa.idm.IdmLightApplication;
+import org.opendaylight.aaa.idm.model.Domain;
+import org.opendaylight.aaa.idm.model.Grant;
+import org.opendaylight.aaa.idm.model.Role;
+import org.opendaylight.aaa.idm.model.User;
 /**
  *
  * @author peter.mellquist@hp.com
  *
  */
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-
-import org.opendaylight.aaa.idm.IdmLightApplication;
 
 public class StoreBuilder {
    private static Logger logger = LoggerFactory.getLogger(StoreBuilder.class);
@@ -48,6 +41,45 @@ public class StoreBuilder {
       String idmLightFileName = this.getIdmLightFileName(IdmLightApplication.getConfig().getDbName());
       File f = new File(idmLightFileName);
       return f.exists();
+   }
+
+   public static Domain createDomain(String domainName,boolean enable) throws StoreException{
+      DomainStore ds = new DomainStore();
+      Domain d = new Domain();
+      d.setName(domainName);
+      d.setEnabled(enable);
+      return ds.createDomain(d);
+   }
+
+   public static User createUser(String name, String password, String domain, String description,String email,boolean enabled,String SALT) throws StoreException{
+      UserStore us = new UserStore();
+      User u = new User();
+      u.setName(name);
+      u.setDomainID(domain);
+      u.setDescription(description);
+      u.setEmail(email);
+      u.setEnabled(enabled);
+      u.setPassword(password);
+      u.setSalt(SALT);
+      return us.createUser(u);
+   }
+
+   public static Role createRole(String name, String domain, String description) throws StoreException{
+      RoleStore rs = new RoleStore();
+      Role r = new Role();
+      r.setDescription(description);
+      r.setName(name);
+      r.setDomainID(domain);
+      return rs.createRole(r);
+   }
+
+   public static Grant createGrant(String domain,String user,String role) throws StoreException{
+      GrantStore gs = new GrantStore();
+      Grant g = new Grant();
+      g.setDomainid(domain);
+      g.setRoleid(role);
+      g.setUserid(user);
+      return gs.createGrant(g);
    }
 
    public void init() {
@@ -71,6 +103,7 @@ public class StoreBuilder {
          // admin user
          adminUser.setEnabled(true);
          adminUser.setName("admin");
+         adminUser.setDomainID(domain.getDomainid());
          adminUser.setDescription("admin user");
          adminUser.setEmail("");
          adminUser.setPassword("admin");
@@ -79,6 +112,7 @@ public class StoreBuilder {
          // user user
          userUser.setEnabled(true);
          userUser.setName("user");
+         userUser.setDomainID(domain.getDomainid());
          userUser.setDescription("user user");
          userUser.setEmail("");
          userUser.setPassword("user");
@@ -90,9 +124,11 @@ public class StoreBuilder {
       // create Roles
       try {
          adminRole.setName("admin");
+         adminRole.setDomainID(domain.getDomainid());
          adminRole.setDescription("a role for admins");
          adminRole = roleStore.createRole(adminRole);
          userRole.setName("user");
+         userRole.setDomainID(domain.getDomainid());
          userRole.setDescription("a role for users");
          userRole = roleStore.createRole(userRole);
       } catch (StoreException se) {
@@ -102,19 +138,16 @@ public class StoreBuilder {
       // create grants
       Grant grant = new Grant();
       try {
-         grant.setDescription("user with user role");
          grant.setDomainid(domain.getDomainid());
          grant.setUserid(userUser.getUserid());
          grant.setRoleid(userRole.getRoleid());
          grant = grantStore.createGrant(grant);
 
-         grant.setDescription("admin with user role");
          grant.setDomainid(domain.getDomainid());
          grant.setUserid(adminUser.getUserid());
          grant.setRoleid(userRole.getRoleid());
          grant = grantStore.createGrant(grant);
 
-         grant.setDescription("admin with admin role");
          grant.setDomainid(domain.getDomainid());
          grant.setUserid(adminUser.getUserid());
          grant.setRoleid(adminRole.getRoleid());
