@@ -9,52 +9,53 @@
 package org.opendaylight.aaa.idm.model;
 
 /**
- *
  * @author peter.mellquist@hp.com
- *
  */
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.ws.rs.core.Response;
 
 @XmlRootElement(name = "idmerror")
-public class IDMError{
-   private static Logger logger = LoggerFactory.getLogger(IDMError.class);
+public class IDMError {
+    private static Logger logger = LoggerFactory.getLogger(IDMError.class);
 
-   private String message;
-   private String details;
-   private int code=500;
+    private String message;
+    private String details;
+    private int code = 500;
 
-   public IDMError() {
-   };
+    public IDMError() {
+    }
 
-   public IDMError(int statusCode, String msg, String msgDetails) {
-      code=statusCode;
-      message=msg;
-      details=msgDetails;
-   }
+    ;
 
-   public String getMessage() {
-      return message;
-   }
+    public IDMError(int statusCode, String msg, String msgDetails) {
+        code = statusCode;
+        message = msg;
+        details = msgDetails;
+    }
 
-   public void setMessage(String msg) {
-      this.message=msg;
-   }
+    public String getMessage() {
+        return message;
+    }
 
-   public String getDetails() {
-      return details;
-   }
+    public void setMessage(String msg) {
+        this.message = msg;
+    }
 
-   public void setDetails(String details) {
-      this.details=details;
-   }
+    public String getDetails() {
+        return details;
+    }
 
-   public Response response() {
-      logger.error("error: " + this.message + " details: " + this.details + " status: " + code);
-      return Response.status(this.code).entity(this).build();
-   }
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public Response response() {
+        logger.error("error: " + this.message + " details: " + this.details + " status: " + code);
+        return Response.status(this.code).entity(this).build();
+    }
 
 }

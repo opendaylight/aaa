@@ -9,33 +9,31 @@
 package org.opendaylight.aaa.idm.model;
 
 /**
- *
  * @author peter.mellquist@hp.com
- *
  */
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "userpwd")
 public class UserPwd {
-   private String username;
-   private String userpwd;
+    private String username;
+    private String userpwd;
 
-   public String getUsername() {
-      return username;
-   }
+    public String getUsername() {
+        return username;
+    }
 
-   public void setUsername(String name) {
-      this.username = name;
-   }
+    public void setUsername(String name) {
+        this.username = name;
+    }
 
-   public String getUserpwd() {
-      return userpwd;
-   }
+    public String getUserpwd() {
+        return userpwd;
+    }
 
-   public void setUserpwd(String pwd) {
-      this.userpwd = pwd;
-   }
+    public void setUserpwd(String pwd) {
+        this.userpwd = pwd;
+    }
 
 }
 
