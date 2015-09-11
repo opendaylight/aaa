@@ -50,7 +50,7 @@ public class PasswordHashTest {
         StoreBuilder b = new StoreBuilder();
         b.init();
         IdmLightProxy proxy = new IdmLightProxy();
-        proxy.authenticate(new Creds());
+        proxy.authenticate(new Creds(), "sdn");
     }
 
     private static class Creds implements PasswordCredentials {
@@ -61,10 +61,6 @@ public class PasswordHashTest {
         @Override
         public String password() {
             return "admin";
-        }
-        @Override
-        public String domain() {
-            return "sdn";
         }
     }
 }

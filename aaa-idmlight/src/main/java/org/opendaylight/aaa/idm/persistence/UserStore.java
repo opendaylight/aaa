@@ -29,13 +29,10 @@ import org.opendaylight.aaa.idm.model.Users;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Preconditions;
-
 public class UserStore {
    private static Logger logger = LoggerFactory.getLogger(UserStore.class);
    protected Connection  dbConnection = null;
    protected final static String SQL_ID             = "userid";
-   protected final static String SQL_DOMAIN_ID      = "domainid";
    protected final static String SQL_NAME           = "name";
    protected final static String SQL_EMAIL          = "email";
    protected final static String SQL_PASSWORD       = "password";
@@ -47,13 +44,6 @@ public class UserStore {
    protected Connection getDBConnect() throws StoreException {
       dbConnection = IdmLightApplication.getConnection(dbConnection);
       return dbConnection;
-   }
-
-   protected void dbClean() throws StoreException, SQLException{
-      Connection c = dbConnect();
-      String sql = "delete from users where true";
-      c.createStatement().execute(sql);
-      c.close();
    }
 
    protected Connection dbConnect() throws StoreException {
@@ -77,9 +67,8 @@ public class UserStore {
             Statement stmt = null;
             stmt = conn.createStatement();
             String sql = "CREATE TABLE users " +
-                         "(userid    VARCHAR(128) PRIMARY KEY," +
+                         "(userid    INTEGER PRIMARY KEY AUTO_INCREMENT," +
                          "name       VARCHAR(128)      NOT NULL, " +
-                         "domainid   VARCHAR(128)      NOT NULL, " +
                          "email      VARCHAR(128)      NOT NULL, " +
                          "password   VARCHAR(128)      NOT NULL, " +
                          "description VARCHAR(128)     NOT NULL, " +
@@ -117,8 +106,7 @@ protected void finalize () throws Throwable {
    protected User rsToUser(ResultSet rs) throws SQLException {
       User user = new User();
       try {
-         user.setUserid(rs.getString(SQL_ID));
-         user.setDomainID(rs.getString(SQL_DOMAIN_ID));
+         user.setUserid(rs.getInt(SQL_ID));
          user.setName(rs.getString(SQL_NAME));
          user.setEmail(rs.getString(SQL_EMAIL));
          user.setPassword(rs.getString(SQL_PASSWORD));
@@ -150,8 +138,8 @@ protected void finalize () throws Throwable {
          stmt.close();
       }
       catch (SQLException s) {
-         throw new StoreException("SQL Exception");
-      }
+    	  throw new StoreException("SQL Exception");
+   	  }
       finally {
          dbClose();
       }
@@ -159,15 +147,14 @@ protected void finalize () throws Throwable {
       return users;
    }
 
-   public Users getUsers(String username,String domain) throws StoreException {
-      debug("getUsers for:" + username + " in domain "+domain);
-
+   public Users getUsers(String username) throws StoreException {
+      debug("getUsers for:" + username);
       Users users = new Users();
       List<User> userList = new ArrayList<User>();
       Connection conn = dbConnect();
       try {
-          PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM USERS WHERE userid = ? ");
-          pstmt.setString(1, username+"@"+domain);
+          PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM USERS WHERE name = ? ");
+          pstmt.setString(1, username);
           debug("query string: " + pstmt.toString());
           ResultSet rs = pstmt.executeQuery();
           while (rs.next()) {
@@ -188,11 +175,11 @@ protected void finalize () throws Throwable {
    }
 
 
-   public User getUser(String id) throws StoreException {
+   public User getUser(long id) throws StoreException {
       Connection conn = dbConnect();
       try {
          PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM USERS WHERE userid = ? ");
-         pstmt.setString(1, id);
+         pstmt.setLong(1, id);
          debug("query string: " + pstmt.toString());
          ResultSet rs = pstmt.executeQuery();
          if (rs.next()) {
@@ -216,28 +203,32 @@ protected void finalize () throws Throwable {
    }
 
    public User createUser(User user) throws StoreException {
-       Preconditions.checkNotNull(user);
-       Preconditions.checkNotNull(user.getName());
-       Preconditions.checkNotNull(user.getDomainID());
-
+       int key=0;
        Connection conn = dbConnect();
        try {
           user.setSalt(SHA256Calculator.generateSALT());
-          String query = "insert into users (userid,domainid,name,email,password,description,enabled,salt) values(?,?,?,?,?,?,?,?)";
-          PreparedStatement statement = conn.prepareStatement(query);
-          user.setUserid(user.getName()+"@"+user.getDomainID());          
-          statement.setString(1,user.getUserid());
-          statement.setString(2,user.getDomainID());
-          statement.setString(3,user.getName());
-          statement.setString(4,user.getEmail());
-          statement.setString(5,SHA256Calculator.getSHA256(user.getPassword(),user.getSalt()));
-          statement.setString(6,user.getDescription());
-          statement.setInt(7,user.getEnabled()?1:0);
-          statement.setString(8, user.getSalt());
+          String query = "insert into users (name,email,password,description,enabled,salt) values(?,?,?,?,?,?)";
+          PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+          statement.setString(1,user.getName());
+          statement.setString(2,user.getEmail());
+          statement.setString(3,SHA256Calculator.getSHA256(user.getPassword(),user.getSalt()));
+          statement.setString(4,user.getDescription());
+          statement.setInt(5,user.getEnabled()?1:0);
+          statement.setString(6, user.getSalt());
           int affectedRows = statement.executeUpdate();
           if (affectedRows == 0) {
              throw new StoreException("Creating user failed, no rows affected.");
           }
+          ResultSet generatedKeys = statement.getGeneratedKeys();
+          if (generatedKeys.next()) {
+             key = generatedKeys.getInt(1);
+          }
+          else {
+             throw new StoreException("Creating user failed, no generated key obtained.");
+          }
+          user.setUserid(key);
+          generatedKeys.close();
+          statement.close();
           return user;
        }
        catch (SQLException s) {
@@ -273,13 +264,14 @@ protected void finalize () throws Throwable {
 
       Connection conn = dbConnect();
       try {
-         String query = "UPDATE users SET email = ?, password = ?, description = ?, enabled = ? WHERE userid = ?";
+         String query = "UPDATE users SET name = ?, email = ?, password = ?, description = ?, enabled = ? WHERE userid = ?";
          PreparedStatement statement = conn.prepareStatement(query);
-         statement.setString(1, savedUser.getEmail());
-         statement.setString(2, savedUser.getPassword());
-         statement.setString(3, savedUser.getDescription());
-         statement.setInt(4, savedUser.getEnabled()?1:0);
-         statement.setString(5,savedUser.getUserid());
+         statement.setString(1, savedUser.getName());
+         statement.setString(2, savedUser.getEmail());
+         statement.setString(3, savedUser.getPassword());
+         statement.setString(4, savedUser.getDescription());
+         statement.setInt(5, savedUser.getEnabled()?1:0);
+         statement.setInt(6,savedUser.getUserid());
          statement.executeUpdate();
          statement.close();
       }
@@ -303,7 +295,7 @@ protected void finalize () throws Throwable {
       try {
          String query = "DELETE FROM DOMAINS WHERE domainid = ?";
          PreparedStatement statement = conn.prepareStatement(query);
-         statement.setString(1, savedUser.getUserid());
+         statement.setLong(1, savedUser.getUserid());
          int deleteCount = statement.executeUpdate(query);
          debug("deleted " + deleteCount + " records");
          statement.close();

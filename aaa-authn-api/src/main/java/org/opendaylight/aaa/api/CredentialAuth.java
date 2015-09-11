@@ -23,5 +23,5 @@ public interface CredentialAuth<T extends Credentials> {
      * @throws AuthenticationException if failed authentication
      * @return authenticated claim
      */
-    Claim authenticate(T cred) throws AuthenticationException;
+    Claim authenticate(T cred, String domain) throws AuthenticationException;
 }

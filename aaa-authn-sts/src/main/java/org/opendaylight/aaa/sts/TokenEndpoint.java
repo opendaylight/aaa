@@ -140,13 +140,12 @@ public class TokenEndpoint extends HttpServlet {
         // Credential request...
         if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(
                 GrantType.PASSWORD.toString())) {
-            String domain = oauthRequest.getScopes().iterator().next();
             PasswordCredentials pc = new PasswordCredentialBuilder()
                     .setUserName(oauthRequest.getUsername())
-                    .setPassword(oauthRequest.getPassword())
-                    .setDomain(domain).build();
+                    .setPassword(oauthRequest.getPassword()).build();
             if (!oauthRequest.getScopes().isEmpty()) {
-                claim = ServiceLocator.INSTANCE.da.authenticate(pc);
+                String domain = oauthRequest.getScopes().iterator().next();
+                claim = ServiceLocator.INSTANCE.da.authenticate(pc, domain);
             }
         } else if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(
                 GrantType.REFRESH_TOKEN.toString())) {

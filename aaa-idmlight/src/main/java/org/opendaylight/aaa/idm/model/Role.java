@@ -18,16 +18,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "role")
 public class Role {
-   private String roleid;
+   private Integer roleid;
    private String name;
    private String description;
-   private String domainid;
 
-   public String getRoleid() {
+   public Integer getRoleid() {
       return roleid;
    }
 
-   public void setRoleid(String id) {
+   public void setRoleid(Integer id) {
       this.roleid = id;
    }
 
@@ -47,12 +46,5 @@ public class Role {
       this.description = description;
    }
 
-   public void setDomainID(String domainid){
-       this.domainid = domainid;
-   }
-
-   public String getDomainID(){
-       return this.domainid;
-   }
 }
 

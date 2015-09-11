@@ -31,11 +31,6 @@ public class PasswordCredentialBuilder {
         return this;
     }
 
-    public PasswordCredentialBuilder setDomain(String domain) {
-        pc.domain = domain;
-        return this;
-    }
-
     public PasswordCredentials build() {
         return pc;
     }
@@ -45,7 +40,6 @@ public class PasswordCredentialBuilder {
         private int hashCode = 0;
         private String username;
         private String password;
-        private String domain;
 
         @Override
         public String username() {
@@ -58,11 +52,6 @@ public class PasswordCredentialBuilder {
         }
 
         @Override
-		public String domain() {
-			return domain;
-		}
-
-		@Override
         public boolean equals(Object o) {
             if (this == o) {
                 return true;

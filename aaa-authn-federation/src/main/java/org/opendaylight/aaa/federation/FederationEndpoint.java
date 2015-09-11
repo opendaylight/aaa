@@ -87,13 +87,11 @@ public class FederationEndpoint extends HttpServlet {
             throw new AuthenticationException(UNAUTHORIZED);
         }
 
-        String domain = claim.domain();
-        // Need to have at least a domain!
-        if (domain == null) {
+        // Need to have a corresponding user id in ODL
+        String userId = ServiceLocator.INSTANCE.is.getUserId(userName);
+        if (userId == null) {
             throw new AuthenticationException(UNAUTHORIZED);
         }
-
-        String userId = userName+"@"+domain;
 
         // Create an unscoped ODL context from the external claim
         Authentication auth = new AuthenticationBuilder(new ClaimBuilder(claim).setUserId(userId).build())

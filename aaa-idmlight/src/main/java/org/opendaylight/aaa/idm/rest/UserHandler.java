@@ -69,8 +69,15 @@ public class UserHandler {
    public Response getUser(@PathParam("id") String id)  {
       logger.info("get /users/" + id);
       User user=null;
+      long longId=0;
       try {
-         user = userStore.getUser(id);
+         longId=Long.parseLong(id);
+      }
+      catch (NumberFormatException nfe) {
+         return new IDMError(400,"invalid user id :" + id,"").response();
+      }
+      try {
+         user = userStore.getUser(longId);
       }
       catch(StoreException se) {
          return new IDMError(500,"internal error getting user",se.message).response();
@@ -103,14 +110,6 @@ public class UserHandler {
             return new IDMError(400,"user name max length is :" + UserStore.MAX_FIELD_LEN,"").response();
          }
 
-         // domain id/name is required
-         if (user.getDomainID()==null) {
-            return new IDMError(400,"user domain is required","").response();
-         }
-         else if (user.getDomainID().length()>UserStore.MAX_FIELD_LEN) {
-            return new IDMError(400,"user domain max length is :" + UserStore.MAX_FIELD_LEN,"").response();
-         }
-
          // user description is optional
          if (user.getDescription()==null) {
             user.setDescription("");
@@ -136,8 +135,7 @@ public class UserHandler {
          }
 
          // create user
-         User createdUser = userStore.createUser(user);
-         user.setUserid(createdUser.getUserid());
+         user = userStore.createUser(user);
       }
       catch (StoreException se) {
          return new IDMError(500,"internal error creating user",se.message).response();
@@ -153,10 +151,17 @@ public class UserHandler {
    @Consumes("application/json")
    @Produces("application/json")
    public Response putUser(@Context UriInfo info,User user,@PathParam("id") String id) {
+      long longId=0;
       logger.info("put /users/" + id);
+       try {
+         longId= Long.parseLong(id);
+      }
+      catch (NumberFormatException nfe) {
+         return new IDMError(400,"invalid user id:"+id,"").response();
+      }
 
       try {
-         user.setUserid(id);
+         user.setUserid((int)longId);
          user = userStore.putUser(user);
          if (user==null) {
             return new IDMError(404,"user id not found id :"+id,"").response();
@@ -173,11 +178,18 @@ public class UserHandler {
    @DELETE
    @Path("/{id}")
    public Response deleteUser(@Context UriInfo info,@PathParam("id") String id) {
+      long longId=0;
       logger.info("delete /users/" + id);
+       try {
+         longId= Long.parseLong(id);
+      }
+      catch (NumberFormatException nfe) {
+         return new IDMError(400,"invalid user id:"+id,"").response();
+      }
 
       try {
          User user = new User();
-         user.setUserid(id);
+         user.setUserid((int)longId);
          user = userStore.deleteUser(user);
          if (user==null) {
             return new IDMError(404,"user id not found id :"+id,"").response();
@@ -189,4 +201,6 @@ public class UserHandler {
       IdmLightProxy.clearClaimCache();
       return Response.status(204).build();
    }
+
+
 }
