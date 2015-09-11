@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>aaa-authn-sts</artifactId>
+    <version>0.3.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <dependencies>

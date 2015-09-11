@@ -99,7 +99,7 @@ public class TokenEndpointTest {
     public void testCreateTokenWithPassword() throws Exception {
         when(
                 ServiceLocator.INSTANCE.da.authenticate(
-                        any(PasswordCredentials.class)))
+                        any(PasswordCredentials.class), anyString()))
                 .thenReturn(claim);
 
         HttpTester req = new HttpTester();

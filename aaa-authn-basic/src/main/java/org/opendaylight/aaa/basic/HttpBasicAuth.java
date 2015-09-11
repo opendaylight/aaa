@@ -46,16 +46,9 @@ public class HttpBasicAuth implements TokenAuth {
                 // HTTP Basic Auth
                 String[] creds = new String(Base64.base64Decode(authHeader
                         .substring(BASIC_PREFIX.length()))).split(AUTH_SEP);
-                // If no domain was supplied then use the default one, which is "sdn".
-                if(creds!=null && creds.length==2){
-                    String temp[] = new String[3];
-                    System.arraycopy(creds, 0, temp, 0, creds.length);
-                    temp[2] = "sdn";
-                    creds = temp;
-                }
                 PasswordCredentials pc = new PasswordCredentialBuilder()
-                        .setUserName(creds[0]).setPassword(creds[1]).setDomain(creds[2]).build();
-                Claim claim = ca.authenticate(pc);
+                        .setUserName(creds[0]).setPassword(creds[1]).build();
+                Claim claim = ca.authenticate(pc, null);
                 return new AuthenticationBuilder(claim).build();
             }
         }
