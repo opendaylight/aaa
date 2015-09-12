@@ -69,7 +69,7 @@ public class SHA256Calculator {
     public static String removeSpecialCharacters(String str) {
         StringBuilder buff = new StringBuilder();
         for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) != '\'' && str.charAt(i) != 0) {
+            if (str.charAt(i) != '\'' && str.charAt(i)!=0) {
                 buff.append(str.charAt(i));
             }
         }
