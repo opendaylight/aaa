@@ -19,20 +19,21 @@ import org.osgi.framework.BundleContext;
  * this bundle into OSGi.
  *
  * @author liemmn
+ *
  */
 public class Activator extends DependencyActivatorBase {
 
     @Override
     public void init(BundleContext context, DependencyManager manager)
-        throws Exception {
+            throws Exception {
         manager.add(createComponent().setInterface(
-            new String[]{CredentialAuth.class.getName(),
-                IdMService.class.getName()}, null).setImplementation(
-            IdmLightProxy.class));
+                new String[] { CredentialAuth.class.getName(),
+                        IdMService.class.getName() }, null).setImplementation(
+                IdmLightProxy.class));
     }
 
     @Override
     public void destroy(BundleContext context, DependencyManager manager)
-        throws Exception {
+            throws Exception {
     }
 }

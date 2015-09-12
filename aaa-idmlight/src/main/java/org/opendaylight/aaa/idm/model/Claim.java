@@ -9,50 +9,52 @@
 package org.opendaylight.aaa.idm.model;
 
 /**
+ *
  * @author peter.mellquist@hp.com
+ *
  */
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "Claim")
 public class Claim {
-    private Integer domainid;
-    private Integer userid;
-    private String username;
-    private List<Role> roles;
+   private String domainid;
+   private String userid;
+   private String username;
+   private List<Role> roles;
 
-    public Integer getDomainid() {
-        return domainid;
-    }
+   public String getDomainid() {
+      return domainid;
+   }
 
-    public void setDomainid(Integer id) {
-        this.domainid = id;
-    }
+   public void setDomainid(String id) {
+      this.domainid = id;
+   }
 
-    public Integer getUserid() {
-        return userid;
-    }
+   public String getUserid() {
+      return userid;
+   }
 
-    public void setUserid(Integer id) {
-        this.userid = id;
-    }
+   public void setUserid(String id) {
+      this.userid = id;
+   }
 
-    public String getUsername() {
-        return username;
-    }
+   public String getUsername() {
+      return username;
+   }
 
-    public void setUsername(String name) {
-        this.username = name;
-    }
+   public void setUsername(String name) {
+      this.username = name;
+   }
 
-    public List<Role> getRoles() {
-        return roles;
-    }
+   public List<Role> getRoles() {
+      return roles;
+   }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
+   public void setRoles(List<Role> roles) {
+      this.roles = roles;
+   }
 
 }
-

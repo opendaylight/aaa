@@ -9,7 +9,9 @@
 package org.opendaylight.aaa.idm.model;
 
 /**
+ *
  * @author peter.mellquist@hp.com
+ *
  */
 
 
@@ -17,51 +19,41 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "grant")
 public class Grant {
-    private Integer grantid;
-    private String description;
-    private Integer domainid;
-    private Integer userid;
-    private Integer roleid;
+   private String grantid;
+   private String domainid;
+   private String userid;
+   private String roleid;
 
-    public Integer getGrantid() {
-        return grantid;
-    }
+   public String getGrantid(){
+       return this.grantid;
+   }
 
-    public void setGrantid(Integer id) {
-        this.grantid = id;
-    }
+   public void setGrantid(String id){
+       this.grantid = id;
+   }
 
-    public String getDescription() {
-        return description;
-    }
+   public String getDomainid() {
+      return domainid;
+   }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+   public void setDomainid(String id) {
+      this.domainid = id;
+   }
 
-    public Integer getDomainid() {
-        return domainid;
-    }
+   public String getUserid() {
+      return userid;
+   }
 
-    public void setDomainid(Integer id) {
-        this.domainid = id;
-    }
+   public void setUserid(String id) {
+      this.userid = id;
+   }
 
-    public Integer getUserid() {
-        return userid;
-    }
+   public String getRoleid() {
+      return roleid;
+   }
 
-    public void setUserid(Integer id) {
-        this.userid = id;
-    }
-
-    public Integer getRoleid() {
-        return roleid;
-    }
-
-    public void setRoleid(Integer id) {
-        this.roleid = id;
-    }
-
+   public void setRoleid(String id) {
+      this.roleid = id;
+   }
 }
 
