@@ -36,6 +36,7 @@
     <module>distribution-karaf</module>
     <module>parent</module>
     <module>aaa-shiro</module>
+    <module>aaa-shiro-act</module>
   </modules>
 
   <scm>
