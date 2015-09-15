@@ -6,24 +6,27 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro;
+package org.opendaylight.aaa.shiroact;
 
 import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
+import org.opendaylight.aaa.shiro.ServiceProxy;
 import org.osgi.framework.BundleContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This scaffolding allows the use of AAA Filters without AuthN or AuthZ
- * enabled.  This is done to support workflows such as those included in
- * the <code>odl-restconf-noauth</code> feature.
+ * Responsible for activating the aaa-shiro-act bundle.  This bundle is
+ * primarily responsible for enabling AuthN and AuthZ.  If this bundle
+ * is not installed, then AuthN and AuthZ will not take effect.
  *
- * This class is also responsible for offering contextual <code>DEBUG</code>
- * level clues concerning the activation of the <code>aaa-shiro</code> bundle.
- * To enable these debug messages, issue the following command in the karaf
- * shell:
- * <code>log:set debug org.opendaylight.aaa.shiro.Activator</code>
+ * To ensure that the AAA is enabled for your feature, make sure to include
+ * the <code>odl-aaa-shiro</code> feature in your feature definition.
+ *
+ * Offers contextual <code>DEBUG</code> level clues concerning the activation
+ * of the <code>aaa-shiro-act</code> bundle. To enable the enhanced debugging
+ * issue the following line in the karaf shell:
+ * <code>log:set debug org.opendaylight.aaa.shiroact.Activator</code>
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
@@ -34,14 +37,15 @@ public class Activator extends DependencyActivatorBase {
   @Override
   public void destroy(BundleContext bc, DependencyManager dm)
       throws Exception {
-    final String DEBUG_MESSAGE = "Destroying the aaa-shiro bundle";
+    final String DEBUG_MESSAGE = "Destroying the aaa-shiro-act bundle";
     LOG.debug(DEBUG_MESSAGE);
   }
 
   @Override
   public void init(BundleContext bc, DependencyManager dm) throws Exception {
-    final String DEBUG_MESSAGE = "Initializing the aaa-shiro bundle";
+    final String DEBUG_MESSAGE = "Initializing the aaa-shiro-act bundle";
     LOG.debug(DEBUG_MESSAGE);
+    ServiceProxy.getInstance().setEnabled(true);
   }
 
 }
