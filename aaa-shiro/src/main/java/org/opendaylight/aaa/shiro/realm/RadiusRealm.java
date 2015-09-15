@@ -17,22 +17,21 @@ import org.apache.shiro.subject.PrincipalCollection;
 /**
  * Implementation of a Radius AuthorizingRealm.
  *
- *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 public class RadiusRealm extends AuthorizingRealm {
 
-  @Override
-  protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
-    // TODO use JRadius to extract Authorization Info
-    return null;
-  }
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
+        // TODO use JRadius to extract Authorization Info
+        return null;
+    }
 
-  @Override
-  protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken arg0)
-      throws AuthenticationException {
-    // TODO use JRadius to extract Authentication Info
-    return null;
-  }
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(
+            AuthenticationToken arg0) throws AuthenticationException {
+        // TODO use JRadius to extract Authentication Info
+        return null;
+    }
 
 }
