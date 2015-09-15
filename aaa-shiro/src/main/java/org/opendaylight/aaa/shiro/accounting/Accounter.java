@@ -11,28 +11,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Accounter is a common place to output AAA messages.  Use this class through
+ * Accounter is a common place to output AAA messages. Use this class through
  * invoking <code>Logger.output("message")</code>.
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 public class Accounter {
 
-  private static Logger LOG = LoggerFactory.getLogger(Accounter.class);
+    private static Logger LOG = LoggerFactory.getLogger(Accounter.class);
 
-  /*
-   * Essentially makes Accounter a singleton, avoiding the verbosity
-   * of <code>Accounter.getInstance().output("message")</code>.
-   */
-  private Accounter() {
-  }
+    /*
+     * Essentially makes Accounter a singleton, avoiding the verbosity of
+     * <code>Accounter.getInstance().output("message")</code>.
+     */
+    private Accounter() {
+    }
 
-  /**
-   * Account for a particular <code>message</code>
-   *
-   * @param message
-   */
-  public static void output(final String message) {
-    LOG.debug(message);
-  }
+    /**
+     * Account for a particular <code>message</code>
+     *
+     * @param message
+     */
+    public static void output(final String message) {
+        LOG.debug(message);
+    }
 }

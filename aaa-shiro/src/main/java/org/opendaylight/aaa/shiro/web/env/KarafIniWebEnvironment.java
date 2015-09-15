@@ -25,60 +25,65 @@ import org.slf4j.LoggerFactory;
  */
 public class KarafIniWebEnvironment extends IniWebEnvironment {
 
-  private static Logger LOG = LoggerFactory.getLogger(KarafIniWebEnvironment.class);
-  public static final String DEFAULT_SHIRO_INI_FILE = "etc/shiro.ini";
-  public static final String SHIRO_FILE_PREFIX = "file:/";
+    private static Logger LOG = LoggerFactory
+            .getLogger(KarafIniWebEnvironment.class);
+    public static final String DEFAULT_SHIRO_INI_FILE = "etc/shiro.ini";
+    public static final String SHIRO_FILE_PREFIX = "file:/";
 
-  public KarafIniWebEnvironment() {
-  }
-
-  @Override
-  public void init() {
-    // Initialize the Shiro environment from etc/shiro.ini then delegate to the
-    // parent class
-    Ini ini;
-    try {
-      ini = createDefaultShiroIni();
-      setIni(ini);
-    } catch (FileNotFoundException e) {
-      final String ERROR_MESSAGE = "Could not find etc/shiro.ini";
-      LOG.error(ERROR_MESSAGE, e);
+    public KarafIniWebEnvironment() {
     }
-    super.init();
-  }
 
-  /**
-   *
-   * @return Ini associated with <code>$KARAF_HOME/etc/shiro.ini</code>
-   * @throws FileNotFoundException
-   */
-  static Ini createDefaultShiroIni() throws FileNotFoundException {
-    return createShiroIni(DEFAULT_SHIRO_INI_FILE);
-  }
+    @Override
+    public void init() {
+        // Initialize the Shiro environment from etc/shiro.ini then delegate to
+        // the
+        // parent class
+        Ini ini;
+        try {
+            ini = createDefaultShiroIni();
+            setIni(ini);
+        } catch (FileNotFoundException e) {
+            final String ERROR_MESSAGE = "Could not find etc/shiro.ini";
+            LOG.error(ERROR_MESSAGE, e);
+        }
+        super.init();
+    }
 
-  /**
-   *
-   * @param path the file path, which is either absolute or relative to
-   * <code>$KARAF_HOME</code>
-   * @return Ini loaded from <code>path</code>
-   */
-  static Ini createShiroIni(final String path) throws FileNotFoundException {
-    File f = new File(path);
-    Ini ini = new Ini();
-    final String fileBasedIniPath = createFileBasedIniPath(f.getAbsolutePath());
-    ini.loadFromPath(fileBasedIniPath);
-    return ini;
-  }
+    /**
+     *
+     * @return Ini associated with <code>$KARAF_HOME/etc/shiro.ini</code>
+     * @throws FileNotFoundException
+     */
+    static Ini createDefaultShiroIni() throws FileNotFoundException {
+        return createShiroIni(DEFAULT_SHIRO_INI_FILE);
+    }
 
-  /**
-   *
-   * @param path the file path, which is either absolute or relative to
-   * <code>$KARAF_HOME</code>
-   * @return <code>file:/$KARAF_HOME/etc/shiro.ini</code>
-   */
-  static String createFileBasedIniPath(final String path) {
-    String fileBasedIniPath = SHIRO_FILE_PREFIX + path;
-    LOG.debug(fileBasedIniPath);
-    return fileBasedIniPath;
-  }
+    /**
+     *
+     * @param path
+     *            the file path, which is either absolute or relative to
+     *            <code>$KARAF_HOME</code>
+     * @return Ini loaded from <code>path</code>
+     */
+    static Ini createShiroIni(final String path) throws FileNotFoundException {
+        File f = new File(path);
+        Ini ini = new Ini();
+        final String fileBasedIniPath = createFileBasedIniPath(f
+                .getAbsolutePath());
+        ini.loadFromPath(fileBasedIniPath);
+        return ini;
+    }
+
+    /**
+     *
+     * @param path
+     *            the file path, which is either absolute or relative to
+     *            <code>$KARAF_HOME</code>
+     * @return <code>file:/$KARAF_HOME/etc/shiro.ini</code>
+     */
+    static String createFileBasedIniPath(final String path) {
+        String fileBasedIniPath = SHIRO_FILE_PREFIX + path;
+        LOG.debug(fileBasedIniPath);
+        return fileBasedIniPath;
+    }
 }
