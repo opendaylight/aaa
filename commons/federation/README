@@ -1,0 +1,271 @@
+README
+===============================================================================
+Federated AAA is deployed using several config files.  This file explains a
+simple scenario utilizing two servers:
+a) ipa.example.com
+   - Runs the IPA Server Software
+b) odl.example.com
+   - Runs the IPA Client Software
+   - Runs an Apache proxy frontend (AuthN through mod_lookup_identity.so)
+   - Runs ODL
+
+This setup for this scenario is illustrated in Figure 1 below:
+
+      -----------------------
+     | odl.example.com       |
+     | (Fedora 20 Linux)     |
+     |                       |
+     |  -------------------  |
+     | | ODL Jetty Server  | |
+     | | (Port 8181 & 8383)| |
+     |  -------------------  |
+     |   ^              .    |
+     |   .   (Apache    .    |  SSSD Requests/Responses
+     |   .    Reverse   .    |           /
+     |   .     Proxy)   .    |          /
+     |   .              v    |         /
+     |  -------------------  |        |          ------------------
+     | | Apache            |<|..................| ipa.example.com  |
+     | | (Port 80)         |.|.................>| (FreeIPA         |
+     |  -------------------  |                  |   Kerberos And   |
+     | ______________________|                  |     LDAP)        |
+                                                 ------------------
+Figure 1: Shows the setup for a simple Federated AAA use case utilizing
+FreeIPA as an identity provider.
+
+
+These instructions were written for Fedora 20, since SSSD is unique to RHEL based
+distributions.  SSSD is NOT a requirement for Federation though;  you can use
+any supported linux flavor.  At this time, SSSD is the only Filter available
+with regards to capturing IdP attributes that can be used in making advanced mapping
+decisions (such as IdP group membership information).
+
+
+
+1) Install FreeIPA Server on ipa.example.com.  This is achieved through running:
+# yum install freeipa-server bind bind-dyndb-ldap
+# ipa-server-intall
+
+
+
+2) Add a FreeIPA user called testuser:
+$ kinit admin@EXAMPLE.COM
+$ ipa group-add odl_users --desc "ODL Users"
+$ ipa group-add odl_admin --desc "ODL Admin"
+$ ipa user-add testuser --first Test --last USER --email test.user@example.com
+$ ipa group-add-member odl_users --user testuser
+$ ipa group-add-member odl_admin --user testuser
+
+
+
+3) Install FreeIPA Client on odl.example.com.  This is achieved through running:
+# yum install freeipa-client
+# ipa-client-install
+
+
+
+4) Set up Client keytab for HTTP access on odl.example.com:
+# ipa-getkeytab -p HTTP/odl.brcd-sssd-tb.com@BRCD-SSSD-TB.COM \
+    -s freeipa.brcd-sssd-tb.com -k /etc/krb5.keytab
+# chmod 644 /etc/krb5.keytab
+NOTE: The second command allows Apache to read the keytab.  There are more
+secure methods to support such access through SELINUX, but they are outside
+the scope of this tutorial.
+
+
+
+5) Install Apache on odl.example.com.  This is achieved through running:
+# yum install httpd
+
+
+
+6) Create an Apache application to broker federation between ODL and FreeIPA.
+Create the following file on odl.example.com:
+
+[root@odl /]# cat /etc/httpd/conf.d/my_app.conf
+<Location "/*">
+  AuthType Kerberos
+  AuthName "Kerberos Login"
+  KrbMethodNegotiate On
+  KrbMethodK5Passwd on
+  KrbAuthRealms EXAMPLE.COM
+  Krb5KeyTab /etc/krb5.keytab
+  require valid-user
+</Location>
+
+
+<LocationMatch "/*">
+
+ RequestHeader set X-SSSD-REMOTE_USER expr=%{REMOTE_USER}
+ RequestHeader set X-SSSD-AUTH_TYPE expr=%{AUTH_TYPE}
+ RequestHeader set X-SSSD-REMOTE_HOST expr=%{REMOTE_HOST}
+ RequestHeader set X-SSSD-REMOTE_ADDR expr=%{REMOTE_ADDR}
+ LookupUserAttr mail REMOTE_USER_EMAIL
+ RequestHeader set X-SSSD-REMOTE_USER_EMAIL %{REMOTE_USER_EMAIL}e
+ LookupUserAttr givenname REMOTE_USER_FIRSTNAME
+ RequestHeader set X-SSSD-REMOTE_USER_FIRSTNAME %{REMOTE_USER_FIRSTNAME}e
+ LookupUserAttr sn REMOTE_USER_LASTNAME
+ RequestHeader set X-SSSD-REMOTE_USER_LASTNAME %{REMOTE_USER_LASTNAME}e
+ LookupUserGroups REMOTE_USER_GROUPS ":"
+ RequestHeader set X-SSSD-REMOTE_USER_GROUPS %{REMOTE_USER_GROUPS}e
+</LocationMatch>
+
+ProxyPass / http://localhost:8383/
+ProxyPassReverse / http://localhost:8383/
+
+
+
+7) Install the ODL distribution in the /opt folder on odl.example.com.
+
+
+
+8) Add a federation connector to the jetty server hosting ODL on
+odl.example.com:
+
+[user@odl distribution]$ cat etc/jetty.xml
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//
+DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+
+<Configure class="org.eclipse.jetty.server.Server">
+
+    <!-- =========================================================== -->
+    <!-- Set connectors -->
+    <!-- =========================================================== -->
+    <!-- One of each type! -->
+    <!-- =========================================================== -->
+
+    <!-- Use this connector for many frequently idle connections and for
+        threadless continuations. -->
+    <Call name="addConnector">
+        <Arg>
+            <New class="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                <Set name="host">
+                    <Property name="jetty.host" />
+                </Set>
+                <Set name="port">
+                    <Property name="jetty.port" default="8181" />
+                </Set>
+                <Set name="maxIdleTime">300000</Set>
+                <Set name="Acceptors">2</Set>
+                <Set name="statsOn">false</Set>
+                <Set name="confidentialPort">8443</Set>
+                <Set name="lowResourcesConnections">20000</Set>
+                <Set name="lowResourcesMaxIdleTime">5000</Set>
+            </New>
+        </Arg>
+    </Call>
+    <!-- Trusted Authentication Federation proxy connection -->
+    <Call name="addConnector">
+     <Arg>
+         <New class="org.eclipse.jetty.server.nio.SelectChannelConnector">
+           <Set name="host">127.0.0.1</Set>
+     <Set name="port">8383</Set>
+     <Set name="maxIdleTime">300000</Set>
+     <Set name="Acceptors">2</Set>
+     <Set name="statsOn">false</Set>
+     <Set name="confidentialPort">8445</Set>
+     <Set name="name">federationConn</Set>
+     <Set name="lowResourcesConnections">20000</Set>
+     <Set name="lowResourcesMaxIdleTime">5000</Set>
+    </New>
+   </Arg>
+ </Call>
+    <!-- =========================================================== -->
+    <!-- Configure Authentication Realms -->
+    <!-- Realms may be configured for the entire server here, or -->
+    <!-- they can be configured for a specific web app in a context -->
+    <!-- configuration (see $(jetty.home)/contexts/test.xml for an -->
+    <!-- example). -->
+    <!-- =========================================================== -->
+    <Call name="addBean">
+        <Arg>
+            <New class="org.eclipse.jetty.plus.jaas.JAASLoginService">
+                <Set name="name">karaf</Set>
+                <Set name="loginModuleName">karaf</Set>
+                <Set name="roleClassNames">
+                    <Array type="java.lang.String">
+                        <Item>org.apache.karaf.jaas.boot.principal.RolePrincipal
+                        </Item>
+                    </Array>
+                </Set>
+            </New>
+        </Arg>
+    </Call>
+    <Call name="addBean">
+        <Arg>
+            <New class="org.eclipse.jetty.plus.jaas.JAASLoginService">
+                <Set name="name">default</Set>
+                <Set name="loginModuleName">karaf</Set>
+                <Set name="roleClassNames">
+                    <Array type="java.lang.String">
+                        <Item>org.apache.karaf.jaas.boot.principal.RolePrincipal
+                        </Item>
+                    </Array>
+                </Set>
+            </New>
+        </Arg>
+    </Call>
+</Configure>
+
+
+
+9) Add the idp_mapping rules file on odl.example.com
+
+[user@odl distribution]$ cat etc/idp_mapping_rules.json
+[
+   {
+      "mapping":{
+         "ClientId":"1",
+         "UserId":"1",
+         "User":"admin",
+         "Domain":"BRCD-SSSD-TB.COM",
+         "roles":"$roles"
+      },
+      "statement_blocks":[
+         [
+            [
+               "set",
+               "$groups",
+               [
+
+               ]
+            ],
+            [
+               "set",
+               "$roles",
+               [
+                  "admin",
+                  "user"
+               ]
+            ]
+         ]
+      ]
+   }
+]
+
+NOTE:  This is a very basic mapping example in which all federated users are
+mapped into the default "admin" account.
+
+
+
+10) Start ODL and install the following features on odl.example.com:
+# bin/karaf
+karaf> feature:install odl-aaa-authn-sssd-no-cluster odl-restconf
+
+
+
+11) Get a refresh_token on odl.example.com through Apache proxy port (80 forwarded to 8383):
+[user@odl distribution]$ kinit testuser
+[user@odl distribution]$ curl -s --negotiate -u : -X POST http://odl.example.com/oauth2/federation/
+
+
+
+12) Obtain an access_token on odl.example.com through normal port (8181):
+[user@odl distribution]$ curl -s -d 'grant_type=refresh_token&refresh_token=<PUT RESULT FROM ABOVE STEP HERE>&scope=sdn' http://odl.example.com:8181/oauth2/token
+
+
+
+13) Use the access_token to make authenticated rest calls from odl.example.com through normal port (8181):
+[user@odl distribution]$ curl -s -H 'Authorization: Bearer <PUT RESULT FROM ABOVE STEP HERE>' http://odl.brcd-sssd-tb.com:8181/restconf/streams/
+

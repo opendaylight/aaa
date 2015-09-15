@@ -1,0 +1,30 @@
+[
+   {
+      "mapping":{
+         "ClientId":"1",
+         "UserId":"1",
+         "User":"admin",
+         "Domain":"BRCD-SSSD-TB.COM",
+         "roles":"$roles"
+      },
+      "statement_blocks":[
+         [
+            [
+               "set",
+               "$groups",
+               [
+
+               ]
+            ],
+            [
+               "set",
+               "$roles",
+               [
+                  "admin",
+                  "user"
+               ]
+            ]
+         ]
+      ]
+   }
+]
