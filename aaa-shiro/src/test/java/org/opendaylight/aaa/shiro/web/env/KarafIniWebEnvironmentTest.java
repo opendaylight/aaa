@@ -24,58 +24,55 @@ import org.junit.Test;
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 public class KarafIniWebEnvironmentTest {
-  private static File iniFile;
+    private static File iniFile;
 
-  @BeforeClass
-  public static void setup() throws IOException {
-    iniFile = createShiroIniFile();
-    assertTrue(iniFile.exists());
-  }
+    @BeforeClass
+    public static void setup() throws IOException {
+        iniFile = createShiroIniFile();
+        assertTrue(iniFile.exists());
+    }
 
-  @AfterClass
-  public static void teardown() {
-    iniFile.delete();
-  }
+    @AfterClass
+    public static void teardown() {
+        iniFile.delete();
+    }
 
-  private static String createFakeShiroIniContents() {
-    return "[users]\n"
-        + "admin=admin, ROLE_ADMIN \n"
-        + "[roles]\n"
-        + "ROLE_ADMIN = *\n"
-        + "[urls]\n"
-        + "/** = authcBasic";
-  }
+    private static String createFakeShiroIniContents() {
+        return "[users]\n" + "admin=admin, ROLE_ADMIN \n" + "[roles]\n"
+                + "ROLE_ADMIN = *\n" + "[urls]\n" + "/** = authcBasic";
+    }
 
-  private static File createShiroIniFile() throws IOException {
-    File shiroIni = File.createTempFile("shiro", "ini");
-    FileWriter writer = new FileWriter(shiroIni);
-    writer.write(createFakeShiroIniContents());
-    writer.flush();
-    writer.close();
-    return shiroIni;
-  }
+    private static File createShiroIniFile() throws IOException {
+        File shiroIni = File.createTempFile("shiro", "ini");
+        FileWriter writer = new FileWriter(shiroIni);
+        writer.write(createFakeShiroIniContents());
+        writer.flush();
+        writer.close();
+        return shiroIni;
+    }
 
-  @Test
-  public void testCreateShiroIni() throws IOException {
-    Ini ini = KarafIniWebEnvironment.createShiroIni(iniFile.getAbsolutePath());
-    assertNotNull(ini);
-    assertNotNull(ini.getSection("users"));
-    assertNotNull(ini.getSection("roles"));
-    assertNotNull(ini.getSection("urls"));
-    Section usersSection = ini.getSection("users");
-    assertTrue(usersSection.containsKey("admin"));
-    assertTrue(usersSection.get("admin").contains("admin"));
-    assertTrue(usersSection.get("admin").contains("ROLE_ADMIN"));
-  }
+    @Test
+    public void testCreateShiroIni() throws IOException {
+        Ini ini = KarafIniWebEnvironment.createShiroIni(iniFile
+                .getAbsolutePath());
+        assertNotNull(ini);
+        assertNotNull(ini.getSection("users"));
+        assertNotNull(ini.getSection("roles"));
+        assertNotNull(ini.getSection("urls"));
+        Section usersSection = ini.getSection("users");
+        assertTrue(usersSection.containsKey("admin"));
+        assertTrue(usersSection.get("admin").contains("admin"));
+        assertTrue(usersSection.get("admin").contains("ROLE_ADMIN"));
+    }
 
-  @Test
-  public void testCreateFileBasedIniPath() {
-    String testPath = "/shiro.ini";
-    String expectedFileBasedIniPath =
-        KarafIniWebEnvironment.SHIRO_FILE_PREFIX + testPath;
-    String actualFileBasedIniPath =
-        KarafIniWebEnvironment.createFileBasedIniPath(testPath);
-    assertEquals(expectedFileBasedIniPath, actualFileBasedIniPath);
-  }
+    @Test
+    public void testCreateFileBasedIniPath() {
+        String testPath = "/shiro.ini";
+        String expectedFileBasedIniPath = KarafIniWebEnvironment.SHIRO_FILE_PREFIX
+                + testPath;
+        String actualFileBasedIniPath = KarafIniWebEnvironment
+                .createFileBasedIniPath(testPath);
+        assertEquals(expectedFileBasedIniPath, actualFileBasedIniPath);
+    }
 
 }

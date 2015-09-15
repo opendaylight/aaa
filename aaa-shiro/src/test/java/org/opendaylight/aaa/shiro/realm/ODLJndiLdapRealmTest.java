@@ -8,8 +8,8 @@
 
 package org.opendaylight.aaa.shiro.realm;
 
-import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -37,211 +37,212 @@ import org.junit.Test;
  */
 public class ODLJndiLdapRealmTest {
 
-  /**
-   * throw-away anonymous test class
-   */
-  class TestNamingEnumeration implements NamingEnumeration<SearchResult> {
-
     /**
-     * state variable
+     * throw-away anonymous test class
      */
-    boolean first = true;
+    class TestNamingEnumeration implements NamingEnumeration<SearchResult> {
+
+        /**
+         * state variable
+         */
+        boolean first = true;
+
+        /**
+         * returned the first time <code>next()</code> or
+         * <code>nextElement()</code> is called.
+         */
+        SearchResult searchResult = new SearchResult("testuser", null,
+                new BasicAttributes("memberOf", "engineering"));
+
+        /**
+         * returns true the first time, then false for subsequent calls
+         */
+        @Override
+        public boolean hasMoreElements() {
+            return first;
+        }
+
+        /**
+         * returns <code>searchResult</code> then null for subsequent calls
+         */
+        @Override
+        public SearchResult nextElement() {
+            if (first) {
+                first = false;
+                return searchResult;
+            }
+            return null;
+        }
+
+        /**
+         * does nothing because close() doesn't require any special behavior
+         */
+        @Override
+        public void close() throws NamingException {
+        }
+
+        /**
+         * returns true the first time, then false for subsequent calls
+         */
+        @Override
+        public boolean hasMore() throws NamingException {
+            return first;
+        }
+
+        /**
+         * returns <code>searchResult</code> then null for subsequent calls
+         */
+        @Override
+        public SearchResult next() throws NamingException {
+            if (first) {
+                first = false;
+                return searchResult;
+            }
+            return null;
+        }
+    };
 
     /**
-     * returned the first time <code>next()</code> or
-     * <code>nextElement()</code> is called.
+     * throw away test class
+     *
+     * @author ryan
      */
-    SearchResult searchResult = new SearchResult("testuser",
-        null, new BasicAttributes("memberOf", "engineering"));
-
-    /**
-     * returns true the first time, then false for subsequent calls
-     */
-    @Override
-    public boolean hasMoreElements() {
-      return first;
-    }
-
-    /**
-     * returns <code>searchResult</code> then null for subsequent calls
-     */
-    @Override
-    public SearchResult nextElement() {
-      if(first) {
-        first = false;
-        return searchResult;
-      }
-      return null;
-    }
-
-    /**
-     * does nothing because close() doesn't require any special
-     * behavior
-     */
-    @Override
-    public void close() throws NamingException {
-    }
-
-    /**
-     * returns true the first time, then false for subsequent calls
-     */
-    @Override
-    public boolean hasMore() throws NamingException {
-      return first;
-    }
-
-    /**
-     * returns <code>searchResult</code> then null for subsequent calls
-     */
-    @Override
-    public SearchResult next() throws NamingException {
-      if(first) {
-        first = false;
-        return searchResult;
-      }
-      return null;
-    }
-  };
-
-  /**
-   * throw away test class
-   *
-   * @author ryan
-   */
-  class TestPrincipalCollection implements PrincipalCollection {
-    /**
+    class TestPrincipalCollection implements PrincipalCollection {
+        /**
      *
      */
-    private static final long serialVersionUID = -1236759619455574475L;
+        private static final long serialVersionUID = -1236759619455574475L;
 
-    Vector<String> collection =
-        new Vector<String>();
+        Vector<String> collection = new Vector<String>();
 
-    public TestPrincipalCollection(String element) {
-      collection.add(element);
+        public TestPrincipalCollection(String element) {
+            collection.add(element);
+        }
+
+        @Override
+        public Iterator<String> iterator() {
+            return collection.iterator();
+        }
+
+        @Override
+        public List<String> asList() {
+            return collection;
+        }
+
+        @Override
+        public Set<String> asSet() {
+            HashSet<String> set = new HashSet<String>();
+            set.addAll(collection);
+            return set;
+        }
+
+        @Override
+        public <T> Collection<T> byType(Class<T> arg0) {
+            return null;
+        }
+
+        @Override
+        public Collection<String> fromRealm(String arg0) {
+            return collection;
+        }
+
+        @Override
+        public Object getPrimaryPrincipal() {
+            return collection.firstElement();
+        }
+
+        @Override
+        public Set<String> getRealmNames() {
+            return null;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return collection.isEmpty();
+        }
+
+        @Override
+        public <T> T oneByType(Class<T> arg0) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+    };
+
+    @Test
+    public void testGetUsernameAuthenticationToken() {
+        AuthenticationToken authenticationToken = null;
+        assertNull(ODLJndiLdapRealm.getUsername(authenticationToken));
+        AuthenticationToken validAuthenticationToken = new UsernamePasswordToken(
+                "test", "testpassword");
+        assertEquals("test",
+                ODLJndiLdapRealm.getUsername(validAuthenticationToken));
     }
 
-    @Override
-    public Iterator<String> iterator() {
-      return collection.iterator();
+    @Test
+    public void testGetUsernamePrincipalCollection() {
+        PrincipalCollection pc = null;
+        assertNull(new ODLJndiLdapRealm().getUsername(pc));
+        TestPrincipalCollection tpc = new TestPrincipalCollection("testuser");
+        String username = new ODLJndiLdapRealm().getUsername(tpc);
+        assertEquals("testuser", username);
     }
 
-    @Override
-    public List<String> asList() {
-      return collection;
+    @Test
+    public void testQueryForAuthorizationInfoPrincipalCollectionLdapContextFactory()
+            throws NamingException {
+        LdapContext ldapContext = mock(LdapContext.class);
+        // emulates an ldap search and returns the mocked up test class
+        when(
+                ldapContext.search((String) any(), (String) any(),
+                        (Object[]) any(), (SearchControls) any())).thenReturn(
+                new TestNamingEnumeration());
+        LdapContextFactory ldapContextFactory = mock(LdapContextFactory.class);
+        when(ldapContextFactory.getSystemLdapContext()).thenReturn(ldapContext);
+        AuthorizationInfo authorizationInfo = new ODLJndiLdapRealm()
+                .queryForAuthorizationInfo(new TestPrincipalCollection(
+                        "testuser"), ldapContextFactory);
+        assertNotNull(authorizationInfo);
+        assertFalse(authorizationInfo.getRoles().isEmpty());
+        assertTrue(authorizationInfo.getRoles().contains("engineering"));
     }
 
-    @Override
-    public Set<String> asSet() {
-      HashSet<String> set = new HashSet<String>();
-      set.addAll(collection);
-      return set;
+    @Test
+    public void testBuildAuthorizationInfo() {
+        assertNull(ODLJndiLdapRealm.buildAuthorizationInfo(null));
+        Set<String> roleNames = new HashSet<String>();
+        roleNames.add("engineering");
+        AuthorizationInfo authorizationInfo = ODLJndiLdapRealm
+                .buildAuthorizationInfo(roleNames);
+        assertNotNull(authorizationInfo);
+        assertFalse(authorizationInfo.getRoles().isEmpty());
+        assertTrue(authorizationInfo.getRoles().contains("engineering"));
     }
 
-    @Override
-    public <T> Collection<T> byType(Class<T> arg0) {
-      return null;
+    @Test
+    public void testGetRoleNamesForUser() throws NamingException {
+        ODLJndiLdapRealm ldapRealm = new ODLJndiLdapRealm();
+        LdapContext ldapContext = mock(LdapContext.class);
+
+        // emulates an ldap search and returns the mocked up test class
+        when(
+                ldapContext.search((String) any(), (String) any(),
+                        (Object[]) any(), (SearchControls) any())).thenReturn(
+                new TestNamingEnumeration());
+
+        // extracts the roles for "testuser" and ensures engineering is returned
+        Set<String> roles = ldapRealm.getRoleNamesForUser("testuser",
+                ldapContext);
+        assertFalse(roles.isEmpty());
+        assertTrue(roles.iterator().next().equals("engineering"));
     }
 
-    @Override
-    public Collection<String> fromRealm(String arg0) {
-      return collection;
+    @Test
+    public void testCreateSearchControls() {
+        SearchControls searchControls = ODLJndiLdapRealm.createSearchControls();
+        assertNotNull(searchControls);
+        int expectedSearchScope = SearchControls.SUBTREE_SCOPE;
+        int actualSearchScope = searchControls.getSearchScope();
+        assertEquals(expectedSearchScope, actualSearchScope);
     }
-
-    @Override
-    public Object getPrimaryPrincipal() {
-      return collection.firstElement();
-    }
-
-    @Override
-    public Set<String> getRealmNames() {
-      return null;
-    }
-
-    @Override
-    public boolean isEmpty() {
-      return collection.isEmpty();
-    }
-
-    @Override
-    public <T> T oneByType(Class<T> arg0) {
-      // TODO Auto-generated method stub
-      return null;
-    }
-  };
-
-  @Test
-  public void testGetUsernameAuthenticationToken() {
-    AuthenticationToken authenticationToken = null;
-    assertNull(ODLJndiLdapRealm.getUsername(authenticationToken));
-    AuthenticationToken validAuthenticationToken =
-        new UsernamePasswordToken("test", "testpassword");
-    assertEquals("test",
-        ODLJndiLdapRealm.getUsername(validAuthenticationToken));
-  }
-
-  @Test
-  public void testGetUsernamePrincipalCollection() {
-    PrincipalCollection pc = null;
-    assertNull(new ODLJndiLdapRealm().getUsername(pc));
-    TestPrincipalCollection tpc = new TestPrincipalCollection("testuser");
-    String username = new ODLJndiLdapRealm().getUsername(tpc);
-    assertEquals("testuser", username);
-  }
-
-  @Test
-  public void testQueryForAuthorizationInfoPrincipalCollectionLdapContextFactory() throws NamingException {
-    LdapContext ldapContext = mock(LdapContext.class);
-    // emulates an ldap search and returns the mocked up test class
-    when(ldapContext.search((String) any(),
-        (String) any(), (Object[]) any(),
-        (SearchControls) any()))
-        .thenReturn(new TestNamingEnumeration());
-    LdapContextFactory ldapContextFactory = mock(LdapContextFactory.class);
-    when(ldapContextFactory.getSystemLdapContext()).thenReturn(ldapContext);
-    AuthorizationInfo authorizationInfo = new ODLJndiLdapRealm().queryForAuthorizationInfo(new TestPrincipalCollection("testuser"), ldapContextFactory);
-    assertNotNull(authorizationInfo);
-    assertFalse(authorizationInfo.getRoles().isEmpty());
-    assertTrue(authorizationInfo.getRoles().contains("engineering"));
-  }
-
-  @Test
-  public void testBuildAuthorizationInfo() {
-    assertNull(ODLJndiLdapRealm.buildAuthorizationInfo(null));
-    Set<String> roleNames = new HashSet<String>();
-    roleNames.add("engineering");
-    AuthorizationInfo authorizationInfo =
-        ODLJndiLdapRealm.buildAuthorizationInfo(roleNames);
-    assertNotNull(authorizationInfo);
-    assertFalse(authorizationInfo.getRoles().isEmpty());
-    assertTrue(authorizationInfo.getRoles().contains("engineering"));
-  }
-
-  @Test
-  public void testGetRoleNamesForUser() throws NamingException {
-    ODLJndiLdapRealm ldapRealm = new ODLJndiLdapRealm();
-    LdapContext ldapContext = mock(LdapContext.class);
-
-    // emulates an ldap search and returns the mocked up test class
-    when(ldapContext.search((String) any(),
-        (String) any(), (Object[]) any(),
-        (SearchControls) any()))
-        .thenReturn(new TestNamingEnumeration());
-
-    // extracts the roles for "testuser" and ensures engineering is returned
-    Set<String> roles =
-        ldapRealm.getRoleNamesForUser("testuser", ldapContext);
-    assertFalse(roles.isEmpty());
-    assertTrue(roles.iterator().next().equals("engineering"));
-  }
-
-  @Test
-  public void testCreateSearchControls() {
-    SearchControls searchControls = ODLJndiLdapRealm.createSearchControls();
-    assertNotNull(searchControls);
-    int expectedSearchScope = SearchControls.SUBTREE_SCOPE;
-    int actualSearchScope = searchControls.getSearchScope();
-    assertEquals(expectedSearchScope, actualSearchScope);
-  }
 
 }
