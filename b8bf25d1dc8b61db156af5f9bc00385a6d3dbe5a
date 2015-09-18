@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "3a79b1b5_edea540e",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T11:34:05Z",
+      "side": 1,
+      "message": "I understand that... this wasn\u0027t referring to the constructor.  I meant this as a generic class comment that gives a 2-3 sentence description of what is actually going on here.  Reflection code is not always easy to read and something small could help people come up to speed much quicker with waht is going on here.  Also, reflection code is not traceable through normal IDE (i.e., you can\u0027t open declaration, jump to definition, etc.)",
+      "parentUuid": "3a79b1b5_ef324c0f",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a79b1b5_0f9a2814",
         "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
         "patchSetId": 13
