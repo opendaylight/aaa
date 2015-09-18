@@ -1,0 +1,509 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_6f039c42",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/model/Domain.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "Please change to use default String equality.",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_8ffe3837",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/model/Grant.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "please change to use default string equality.",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_2ffda43a",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/model/Role.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "Please change to use string equality.",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_4ff82049",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/model/User.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "Please use String equality.",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_ef96ccef",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-api/src/main/yang/aaa-authn-model.yang",
+        "patchSetId": 13
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "some \"description\" tags would be helpful here.",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_6f787cc4",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "Inheritance is a bit hardcore for this codec.  Please add some documentation surrounding assumptions around get/set and supplied constructors.",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_0f9a2814",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "constants should be capitalized",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_afa0d443",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "Should this be final?",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_cfa3d04d",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "Should these be final too?",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 4
+      },
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_6f8abcc0",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "should be final",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_8f85d8ae",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "final",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_2f94c4e0",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "Should be a class constant.",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_0fc1c8e3",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "should be a class constant.",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_afb77485",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "final",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_8facf836",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "Needs error checking in the case that the keyClass doesn\u0027t have the expected constructor.",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_cfbaf06d",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "final",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_6fb15c8e",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "constant",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_4f8fc0cc",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "should be a class constant.  This also assumes the class has no \"get\" or \"set\" method.  I am fine without an error check, but we should at least document it somehow.",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_efbd6c69",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "should be a class constant",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_2fab641e",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "final",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_4fa6e054",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "final",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_ef648c23",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 79
+      },
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_0f68e8f3",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "constant.",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_af6e94ff",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "constant",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_cf7190e1",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "are we waiting on this TODO before we merge?",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_8f7398e6",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMObject2MDSAL.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "spacing between functions/methods",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_2f828494",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/test/java/org/opendaylight/aaa/authn/mdsal/store/DataBrokerReadMocker.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "spelling mistake",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_4f7d80b0",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/test/java/org/opendaylight/aaa/authn/mdsal/store/IDMStoreTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "should we have a testUpdateGrant()?",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_ef4b2c85",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/DomainHandler.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T03:47:48Z",
+      "side": 1,
+      "message": "update message",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
