@@ -848,6 +848,24 @@
     },
     {
       "key": {
+        "uuid": "3a79b1b5_0d879062",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T11:28:29Z",
+      "side": 1,
+      "message": "I am saying the log message should be a constant.  At the very least it should be pulled out so that the concatenation occurs before the log.info... I believe this technically violates checkstyle as is.",
+      "parentUuid": "3a79b1b5_b20a771f",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a79b1b5_cf7190e1",
         "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
         "patchSetId": 13
@@ -1017,6 +1035,24 @@
       "side": 1,
       "message": "did get that, what message to update?",
       "parentUuid": "3a79b1b5_ef4b2c85",
+      "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_ad7d3c70",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/DomainHandler.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-09-18T11:28:29Z",
+      "side": 1,
+      "message": "This is no longer a StoreException but an IDMStoreException.  IDMStoreException does not inherity from StoreException, so I feel uncomfortable referring to it as one in the log.  Not an \"is-a\" relationship.",
+      "parentUuid": "3a79b1b5_5219a377",
       "revId": "b8bf25d1dc8b61db156af5f9bc00385a6d3dbe5a",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
