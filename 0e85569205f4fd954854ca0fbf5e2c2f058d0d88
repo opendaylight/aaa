@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "3a79b1b5_a8a0ca43",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/test/java/org/opendaylight/aaa/authn/mdsal/store/DataBrokerReadMocker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-09-19T15:41:17Z",
+      "side": 1,
+      "message": "Actually, you can setup the mock to return different types/values based on the sequence of calls to the same method.\neg when ( ....).thenReturn(value1, value2, ...). Etc.\n\nI\u0027m not too thrilled about this test class, since if we ever get problems in it it appears it will be a pain to fix.",
+      "parentUuid": "3a79b1b5_95bbc9e4",
+      "range": {
+        "startLine": 11,
+        "startChar": 13,
+        "endLine": 11,
+        "endChar": 34
+      },
+      "revId": "0e85569205f4fd954854ca0fbf5e2c2f058d0d88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a79b1b5_7dcb791e",
         "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/test/java/org/opendaylight/aaa/authn/mdsal/store/IDMStoreTestUtil.java",
         "patchSetId": 6
