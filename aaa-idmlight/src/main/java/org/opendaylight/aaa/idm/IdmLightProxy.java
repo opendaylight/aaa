@@ -60,14 +60,14 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,IdMSer
     @Override
     public Claim authenticate(PasswordCredentials creds) {
         Preconditions.checkNotNull(creds);
-        Preconditions.checkNotNull(creds.domain());
         Preconditions.checkNotNull(creds.username());
         Preconditions.checkNotNull(creds.password());
+        String domain = creds.domain() == null  ? DEFAULT_DOMAIN : creds.domain();
         // FIXME: Add cache invalidation
-        Map<PasswordCredentials, Claim> cache = claimCache.get(creds.domain());
+        Map<PasswordCredentials, Claim> cache = claimCache.get(domain);
         if (cache == null) {
             cache = new ConcurrentHashMap<PasswordCredentials, Claim>();
-            claimCache.put(creds.domain(), cache);
+            claimCache.put(domain, cache);
         }
         Claim claim = cache.get(creds);
         if (claim == null) {
@@ -93,14 +93,15 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,IdMSer
     private static Claim dbAuthenticate(PasswordCredentials creds) {
         Domain domain=null;
         User user=null;
+        String credsDomain = creds.domain() == null ? DEFAULT_DOMAIN : creds.domain();
         // check to see domain exists
         // TODO: ensure domain names are unique change to 'getDomain'
         debug("get domain");
         try {
-           Domains domains = domainStore.getDomains(creds.domain());
+           Domains domains = domainStore.getDomains(credsDomain);
            List<Domain> domainList = domains.getDomains();
            if (domainList.size()==0) {
-              throw new AuthenticationException("Domain :" + creds.domain() + " does not exist");
+              throw new AuthenticationException("Domain :" + credsDomain + " does not exist");
            }
            domain = domainList.get(0);
         }
@@ -111,10 +112,10 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,IdMSer
         // check to see user exists and passes cred check
         try {
            debug("check user / pwd");
-           Users users = userStore.getUsers(creds.username(),creds.domain());
+           Users users = userStore.getUsers(creds.username(),credsDomain);
            List<User> userList = users.getUsers();
            if (userList.size()==0) {
-              throw new AuthenticationException("User :" + creds.username() + " does not exist in domain "+creds.domain());
+              throw new AuthenticationException("User :" + creds.username() + " does not exist in domain "+credsDomain);
            }
            user = userList.get(0);
            if (!SHA256Calculator.getSHA256(creds.password(),user.getSalt()).equals(user.getPassword())) {
@@ -137,7 +138,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,IdMSer
            ClaimBuilder claim = new ClaimBuilder();
            claim.setUserId(user.getUserid().toString());
            claim.setUser(creds.username());
-           claim.setDomain(creds.domain());
+           claim.setDomain(credsDomain);
            for (int z=0;z<roles.size();z++) {
               claim.addRole(roles.get(z));
            }
