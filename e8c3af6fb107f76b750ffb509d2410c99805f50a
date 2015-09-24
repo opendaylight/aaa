@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_e67d03b3",
+        "filename": "aaa-shiro-act/src/main/java/org/opendaylight/aaa/shiroact/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-09-24T13:32:18Z",
+      "side": 1,
+      "message": "Well, so config subsys provides at least the following:\n- It actually exposes the config data through Netconf\n- Able to push config changes made while system is running (though this is unlikely to be useful here)\n- Dependency resolution; it\u0027s meant to wire-up all of the services one depends on deterministically and in order, ie service will not be started until all dependent services have also been started in the order specified\n\nThere\u0027s a short writeup on: http://sdntutorials.com/why-config-subsystem-over-osgi-activator/",
+      "parentUuid": "1a76adc5_d2f8c54b",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 22
+      },
+      "revId": "e8c3af6fb107f76b750ffb509d2410c99805f50a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_f28861c8",
         "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/Activator.java",
         "patchSetId": 6
