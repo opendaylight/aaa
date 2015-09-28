@@ -22,17 +22,17 @@ import org.apache.shiro.subject.PrincipalCollection;
  */
 public class TACACSRealm extends AuthorizingRealm {
 
-  @Override
-  protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
-    // TODO Extract AuthorizationInfo using JNetLib
-    return null;
-  }
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
+        // TODO Extract AuthorizationInfo using JNetLib
+        return null;
+    }
 
-  @Override
-  protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken arg0)
-      throws AuthenticationException {
-    // TODO Extract AuthenticationInfo using JNetLib
-    return null;
-  }
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(
+            AuthenticationToken arg0) throws AuthenticationException {
+        // TODO Extract AuthenticationInfo using JNetLib
+        return null;
+    }
 
 }
