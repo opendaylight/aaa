@@ -8,9 +8,11 @@
 
 package org.opendaylight.aaa.shiro.tokenauthrealm.auth;
 
-import java.util.Base64;
 import java.util.List;
 import java.util.Map;
+import org.glassfish.jersey.internal.util.Base64;
+import org.opendaylight.aaa.AuthenticationBuilder;
+import org.opendaylight.aaa.PasswordCredentialBuilder;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
@@ -76,7 +78,11 @@ public class HttpBasicAuth implements TokenAuth {
     }
 
     private static String[] extractCredentialArray(final String authHeader) {
+<<<<<<< HEAD:aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/tokenauthrealm/auth/HttpBasicAuth.java
         return new String(Base64.getDecoder().decode(authHeader.substring(BASIC_PREFIX.length())))
+=======
+        return new String(Base64.decode(authHeader.substring(BASIC_PREFIX.length()).getBytes()))
+>>>>>>> 58dab63... DO NOT MERGE: WIP: Bug5760 AAA Jersey and JAX-RS upgrades:aaa-authn-basic/src/main/java/org/opendaylight/aaa/basic/HttpBasicAuth.java
                 .split(AUTH_SEP);
     }
 
