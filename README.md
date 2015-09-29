@@ -50,7 +50,7 @@ Add the AAA `TokeAuthFilter` filter to your REST resource (RESTconf example):
 
     <servlet>
         <servlet-name>JAXRSRestconf</servlet-name>
-        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+        <servlet-class>org.glassfish.jersey.core.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
             <param-value>org.opendaylight.controller.sal.rest.impl.RestconfApplication</param-value>
@@ -58,7 +58,7 @@ Add the AAA `TokeAuthFilter` filter to your REST resource (RESTconf example):
         
         <!-- Token Auth Filter -->
         <init-param>
-            <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
+            <param-name>org.glassfish.jersey.core.spi.container.ContainerRequestFilters</param-name>
             <param-value>
                 org.opendaylight.aaa.sts.TokenAuthFilter
             </param-value>
