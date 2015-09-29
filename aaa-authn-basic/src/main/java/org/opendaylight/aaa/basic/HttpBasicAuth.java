@@ -11,6 +11,7 @@ package org.opendaylight.aaa.basic;
 import java.util.List;
 import java.util.Map;
 
+import org.glassfish.jersey.internal.util.Base64;
 import org.opendaylight.aaa.AuthenticationBuilder;
 import org.opendaylight.aaa.PasswordCredentialBuilder;
 import org.opendaylight.aaa.api.Authentication;
@@ -19,8 +20,6 @@ import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.TokenAuth;
-
-import com.sun.jersey.core.util.Base64;
 
 /**
  * An HTTP Basic authenticator.  Note that this is provided as a Hydrogen
@@ -44,8 +43,8 @@ public class HttpBasicAuth implements TokenAuth {
             final String authHeader = headers.get(AUTH_HEADER).get(0);
             if (authHeader != null && authHeader.startsWith(BASIC_PREFIX)) {
                 // HTTP Basic Auth
-                String[] creds = new String(Base64.base64Decode(authHeader
-                        .substring(BASIC_PREFIX.length()))).split(AUTH_SEP);
+                String[] creds = new String(Base64.decode(authHeader
+                        .substring(BASIC_PREFIX.length()).getBytes())).split(AUTH_SEP);
                 // If no domain was supplied then use the default one, which is "sdn".
                 if(creds!=null && creds.length==2){
                     String temp[] = new String[3];

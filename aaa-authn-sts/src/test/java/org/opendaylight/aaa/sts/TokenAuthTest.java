@@ -9,12 +9,22 @@
 package org.opendaylight.aaa.sts;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Matchers.anyMap;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
+
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.servlet.ServletContainer;
+import org.glassfish.jersey.test.DeploymentContext;
+import org.glassfish.jersey.test.JerseyTest;
+import org.glassfish.jersey.test.ServletDeploymentContext;
+import org.glassfish.jersey.test.grizzly.GrizzlyWebTestContainerFactory;
+import org.glassfish.jersey.test.spi.TestContainerFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.opendaylight.aaa.AuthenticationBuilder;
@@ -23,18 +33,8 @@ import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
-import org.opendaylight.aaa.sts.TokenAuthFilter.UnauthorizedException;
-
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.UniformInterfaceException;
-import com.sun.jersey.test.framework.JerseyTest;
-import com.sun.jersey.test.framework.WebAppDescriptor;
 
 public class TokenAuthTest extends JerseyTest {
-
-    private static final String RS_PACKAGES = "org.opendaylight.aaa.sts";
-    private static final String JERSEY_FILTERS = "com.sun.jersey.spi.container.ContainerRequestFilters";
-    private static final String AUTH_FILTERS = TokenAuthFilter.class.getName();
 
     private static Authentication auth = new AuthenticationBuilder(new ClaimBuilder()
             .setUserId("1234").setUser("Bob").addRole("admin").addRole("user")
@@ -44,9 +44,31 @@ public class TokenAuthTest extends JerseyTest {
     private static final String GOOD_TOKEN = "9b01b7cf-8a49-346d-8c47-6a61193e2b60";
     private static final String BAD_TOKEN = "9b01b7cf-8a49-346d-8c47-6a611badbeef";
 
-    public TokenAuthTest() throws Exception {
-        super(new WebAppDescriptor.Builder(RS_PACKAGES).initParam(
-                JERSEY_FILTERS, AUTH_FILTERS).build());
+    public TokenAuthTest() {
+    }
+
+    @Path("/test")
+    public static class JerseySpringResource {
+        @GET
+        @Path("/ok")
+        public Response getOk()
+        {
+            return Response.ok().build();
+        }
+    }
+
+    @Override
+    protected DeploymentContext configureDeployment() {
+        ResourceConfig resourceConfig = new ResourceConfig();
+        resourceConfig.register(JerseySpringResource.class);
+        resourceConfig.register(TokenAuthFilter.class);
+        return ServletDeploymentContext.forServlet(
+                new ServletContainer(resourceConfig)).build();
+    }
+
+    @Override
+    protected TestContainerFactory getTestContainerFactory() {
+        return new GrizzlyWebTestContainerFactory();
     }
 
     @BeforeClass
@@ -59,26 +81,13 @@ public class TokenAuthTest extends JerseyTest {
                 Boolean.TRUE);
     }
 
-    @Test()
-    public void testGetUnauthorized() {
-        try {
-            resource().path("test").get(String.class);
-            fail("Shoulda failed with 401!");
-        } catch (UniformInterfaceException e) {
-            ClientResponse resp = e.getResponse();
-            assertEquals(401, resp.getStatus());
-            assertTrue(resp.getHeaders()
-                    .get(UnauthorizedException.WWW_AUTHENTICATE)
-                    .contains(UnauthorizedException.OPENDAYLIGHT));
-        }
-    }
-
     @Test
-    public void testGet() {
-        String resp = resource().path("test")
-                .header("Authorization", "Bearer " + GOOD_TOKEN)
-                .get(String.class);
-        assertEquals("ok", resp);
+    public void testGetUnauthorized() {
+        Response resp = target("test/ok")
+                .request()
+                .get();
+        assertNotNull(resp);
+        assertEquals(401, resp.getStatus());
     }
 
     @SuppressWarnings("unchecked")
@@ -89,7 +98,11 @@ public class TokenAuthTest extends JerseyTest {
             TokenAuth ta = mock(TokenAuth.class);
             when(ta.validate(anyMap())).thenReturn(auth);
             ServiceLocator.INSTANCE.ta.add(ta);
-            testGet();
+            Response resp = target("test/ok")
+                    .request()
+                    .header("Authorization", "Bearer " + GOOD_TOKEN)
+                    .get();
+            assertEquals(Response.Status.Family.SUCCESSFUL, resp.getStatusInfo().getFamily());
         } finally {
             ServiceLocator.INSTANCE.ta.clear();
         }
