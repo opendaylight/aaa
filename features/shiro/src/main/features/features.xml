@@ -17,7 +17,7 @@
         <!-- Apache Shiro & Dependencies -->
         <bundle>mvn:org.apache.shiro/shiro-core/1.2.3</bundle>
         <bundle>mvn:org.apache.shiro/shiro-web/1.2.3</bundle>
-        <bundle>wrap:mvn:javax.servlet/servlet-api/2.5</bundle>
+        <bundle>wrap:mvn:javax.servlet/javax.servlet-api/${javax.servlet.api.version}</bundle>
 
         <!-- AAA bundles relating to stand-alone shiro feature -->
         <configfile finalname="/etc/shiro.ini">mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}/cfg/configuration</configfile>
