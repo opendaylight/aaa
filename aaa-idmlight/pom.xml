@@ -27,14 +27,18 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sun.jersey</groupId>
+            <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-server</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
+            <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.moxy</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.felix</groupId>
@@ -90,8 +94,8 @@
         </dependency>
         <!-- Testing Dependencies -->
         <dependency>
-            <groupId>com.sun.jersey.jersey-test-framework</groupId>
-            <artifactId>jersey-test-framework-grizzly2</artifactId>
+            <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+            <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -117,7 +121,18 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Import-Package>javax.servlet.http,javax.ws.rs,javax.ws.rs.core,javax.xml.bind.annotation,org.apache.felix.dm,org.opendaylight.aaa,org.opendaylight.aaa.api,org.osgi.framework,org.slf4j,org.eclipse.jetty.servlets,com.sun.jersey.spi.container.servlet,com.google.*</Import-Package>
+                        <Import-Package>
+                            javax.servlet.http,
+                            javax.ws.rs,
+                            javax.ws.rs.core,
+                            javax.xml.bind.annotation,
+                            org.apache.felix.dm,
+                            org.opendaylight.aaa,
+                            org.opendaylight.aaa.api,
+                            org.osgi.framework,
+                            org.slf4j,
+                            org.eclipse.jetty.servlets
+                        </Import-Package>
                         <Private-Package>org.h2.*</Private-Package>
                         <Embed-Dependency>h2</Embed-Dependency>
                         <Web-ContextPath>/auth</Web-ContextPath>
