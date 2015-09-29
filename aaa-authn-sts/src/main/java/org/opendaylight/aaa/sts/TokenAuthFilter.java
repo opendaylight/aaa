@@ -8,11 +8,14 @@
 
 package org.opendaylight.aaa.sts;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -26,14 +29,11 @@ import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.TokenAuth;
 
-import com.sun.jersey.spi.container.ContainerRequest;
-import com.sun.jersey.spi.container.ContainerRequestFilter;
-
 /**
  * A token-based authentication filter for resource providers.
  *
  * @author liemmn
- *
+ * @see javax.ws.rs.ContainerRequestFilter
  */
 public class TokenAuthFilter implements ContainerRequestFilter {
 
@@ -44,55 +44,6 @@ public class TokenAuthFilter implements ContainerRequestFilter {
     @Context
     private HttpServletRequest httpRequest;
 
-    @Override
-    public ContainerRequest filter(ContainerRequest request) {
-
-        // Do the CORS check first
-       if(checkCORSOptionRequest(request)) {
-           return request;
-       }
-
-        // Are we up yet?
-        if (ServiceLocator.getInstance().getAuthenticationService() == null) {
-            throw new WebApplicationException(
-                  Response.status(Status.SERVICE_UNAVAILABLE)
-                  .type(MediaType.APPLICATION_JSON)
-                  .entity("{\"error\":\"Authentication service unavailable\"}")
-                  .build());
-        }
-
-        // Are we doing authentication or not?
-        if (ServiceLocator.getInstance().getAuthenticationService().isAuthEnabled()) {
-            Map<String, List<String>> headers = request.getRequestHeaders();
-
-            // Go through and invoke other TokenAuth first...
-            List<TokenAuth> tokenAuthCollection =
-                    ServiceLocator.getInstance().getTokenAuthCollection();
-            for (TokenAuth ta : tokenAuthCollection) {
-                try {
-                    Authentication auth = ta.validate(headers);
-                    if (auth != null) {
-                        ServiceLocator.getInstance().getAuthenticationService().set(auth);
-                        return request;
-                    }
-                } catch (AuthenticationException ae) {
-                    throw unauthorized();
-                }
-            }
-
-            // OK, last chance to validate token...
-            try {
-                OAuthAccessResourceRequest or = new OAuthAccessResourceRequest(
-                        httpRequest, ParameterStyle.HEADER);
-                validate(or.getAccessToken());
-            } catch (OAuthSystemException | OAuthProblemException e) {
-                throw unauthorized();
-            }
-        }
-
-        return request;
-    }
-
     /**
      * CORS access control : when browser sends cross-origin request, it first sends the OPTIONS method
      * with a list of access control request headers, which has a list of custom headers and access control method
@@ -101,16 +52,10 @@ public class TokenAuthFilter implements ContainerRequestFilter {
      * We should not do any authorization against such request.
      * for more details : https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS
      */
-
-    private boolean checkCORSOptionRequest(ContainerRequest request) {
+    private boolean checkCORSOptionRequest(ContainerRequestContext request) {
         if(OPTIONS.equals(request.getMethod())) {
-            List<String> headerList = request.getRequestHeader(ACCESS_CONTROL_REQUEST_HEADERS);
-            if(headerList != null && !headerList.isEmpty()) {
-                String header = headerList.get(0);
-                if (header != null && header.toLowerCase().contains(AUTHORIZATION)) {
-                    return true;
-                }
-            }
+            String headerString = request.getHeaderString(ACCESS_CONTROL_REQUEST_HEADERS);
+            return headerString.toLowerCase().contains(AUTHORIZATION);
         }
         return false;
     }
@@ -144,5 +89,49 @@ public class TokenAuthFilter implements ContainerRequestFilter {
         public UnauthorizedException() {
             super(response);
         }
+    }
+
+	@Override
+	public void filter(ContainerRequestContext request) throws IOException {
+		// Do the CORS check first
+	    if(checkCORSOptionRequest(request)) {
+	           return;
+	    }
+	    // Are we up yet?
+	    if (ServiceLocator.INSTANCE.as == null) {
+            throw new WebApplicationException(
+                    Response.status(Status.SERVICE_UNAVAILABLE)
+                            .type(MediaType.APPLICATION_JSON)
+                            .entity("{\"error\":\"Authentication service unavailable\"}")
+                            .build());
+	    }
+
+        // Are we doing authentication or not?
+        if (ServiceLocator.INSTANCE.as.isAuthEnabled()) {
+            Map<String, List<String>> headers = request.getHeaders();
+            // Go through and invoke other TokenAuth first...
+	        for (TokenAuth ta : ServiceLocator.INSTANCE.ta) {
+	            try {
+	                Authentication auth = ta.validate(headers);
+	                if (auth != null) {
+	                    ServiceLocator.INSTANCE.as.set(auth);
+	                    return;
+	                }
+	            } catch (AuthenticationException ae) {
+	                request.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity("User cannot access the resource.").build());
+	            }
+	        }
+
+	        // OK, last chance to validate token...
+	        try {
+	            OAuthAccessResourceRequest or = new OAuthAccessResourceRequest(
+	                    httpRequest, ParameterStyle.HEADER);
+	            validate(or.getAccessToken());
+                return;
+	        } catch (OAuthSystemException | OAuthProblemException e) {
+	            request.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity("User cannot access the resource.").build());
+	        }
+            request.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity("User cannot access the resource.").build());
+	    }
     }
 }
