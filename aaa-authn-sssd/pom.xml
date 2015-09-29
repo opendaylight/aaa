@@ -33,7 +33,7 @@
       <artifactId>slf4j-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.sun.jersey</groupId>
+      <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-server</artifactId>
       <scope>provided</scope>
     </dependency>
@@ -54,8 +54,8 @@
     </dependency>
     <!-- Testing Dependencies -->
     <dependency>
-      <groupId>com.sun.jersey.jersey-test-framework</groupId>
-      <artifactId>jersey-test-framework-grizzly2</artifactId>
+      <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+      <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

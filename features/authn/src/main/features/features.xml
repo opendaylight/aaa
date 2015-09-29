@@ -25,9 +25,10 @@
 
         <!-- REST -->
         <feature>war</feature>
-        <bundle>mvn:com.sun.jersey/jersey-servlet/{{VERSION}}</bundle>
-        <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
-        <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
+        <bundle>mvn:org.glassfish.jersey.bundles.repackaged/jersey-guava/{{VERSION}}</bundle>
+        <bundle>mvn:com.eclipsesource.jaxrs/jersey-all/{{VERSION}}</bundle>
+        <bundle>mvn:javax.servlet/javax.servlet-api/{{VERSION}}</bundle>
+        <bundle>mvn:org.glassfish.jersey.containers/jersey-container-servlet/{{VERSION}}</bundle>
 
         <!-- OSGi -->
         <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/{{VERSION}}</bundle>
@@ -100,9 +101,10 @@
 
         <!-- REST -->
         <feature>war</feature>
-        <bundle>mvn:com.sun.jersey/jersey-servlet/{{VERSION}}</bundle>
-        <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
-        <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
+        <bundle>mvn:org.glassfish.jersey.bundles.repackaged/jersey-guava/{{VERSION}}</bundle>
+        <bundle>mvn:com.eclipsesource.jaxrs/jersey-all/{{VERSION}}</bundle>
+        <bundle>mvn:javax.servlet/javax.servlet-api/{{VERSION}}</bundle>
+        <bundle>mvn:org.glassfish.jersey.containers/jersey-container-servlet/{{VERSION}}</bundle>
 
         <!-- OSGi -->
         <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/{{VERSION}}</bundle>
@@ -172,10 +174,16 @@
         <feature version='${controller.mdsal.version}'>odl-mdsal-broker</feature>
         <feature version='${config.version}'>odl-config-core</feature>
 
-
         <!-- OSGi -->
         <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.felix/org.apache.felix.metatype/{{VERSION}}</bundle>
+
+        <!-- REST -->
+        <feature>war</feature>
+        <bundle>mvn:org.glassfish.jersey.bundles.repackaged/jersey-guava/{{VERSION}}</bundle>
+        <bundle>mvn:com.eclipsesource.jaxrs/jersey-all/{{VERSION}}</bundle>
+        <bundle>mvn:javax.servlet/javax.servlet-api/{{VERSION}}</bundle>
+        <bundle>mvn:org.glassfish.jersey.containers/jersey-container-servlet/{{VERSION}}</bundle>
 
         <!-- OAuth -->
         <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.common/{{VERSION}}</bundle>
@@ -212,13 +220,7 @@
         <!-- Federation -->
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-idpmapping/{{VERSION}}</bundle>
-        <bundle>mvn:org.glassfish/javax.json/1.0.4</bundle>
-
-        <!-- REST -->
-        <feature>war</feature>
-        <bundle>mvn:com.sun.jersey/jersey-servlet/{{VERSION}}</bundle>
-        <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
-        <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
+        <bundle>mvn:org.glassfish/javax.json/{{VERSION}}</bundle>
 
         <configfile finalname="etc/opendaylight/karaf/08-authn-config.xml">mvn:org.opendaylight.aaa/aaa-authn-mdsal-config/{{VERSION}}/xml/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>

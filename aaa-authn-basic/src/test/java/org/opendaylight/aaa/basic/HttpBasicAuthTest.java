@@ -13,12 +13,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.sun.jersey.core.util.Base64;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.glassfish.jersey.internal.util.Base64;
 import org.junit.Before;
 import org.junit.Test;
 import org.opendaylight.aaa.ClaimBuilder;

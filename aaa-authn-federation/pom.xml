@@ -26,7 +26,7 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sun.jersey</groupId>
+            <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-server</artifactId>
             <scope>provided</scope>
         </dependency>
@@ -62,8 +62,8 @@
         </dependency>
         <!-- Testing Dependencies -->
         <dependency>
-            <groupId>com.sun.jersey.jersey-test-framework</groupId>
-            <artifactId>jersey-test-framework-grizzly2</artifactId>
+            <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+            <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -96,7 +96,6 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Import-Package>*,com.sun.jersey.spi.container.servlet</Import-Package>
                         <Web-ContextPath>/oauth2/federation</Web-ContextPath>
                         <Web-Connectors>federationConn</Web-Connectors>
                         <Bundle-Activator>org.opendaylight.aaa.federation.Activator</Bundle-Activator>

@@ -33,6 +33,11 @@
         <bundle>wrap:mvn:org.json/json/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.commons-beanutils/{{VERSION}}</bundle>
 
+        <!-- Apache Shiro & Dependencies -->
+        <bundle>mvn:org.apache.shiro/shiro-core/{{VERSION}}</bundle>
+        <bundle>mvn:org.apache.shiro/shiro-web/{{VERSION}}</bundle>
+        <bundle>wrap:mvn:javax.servlet/javax.servlet-api/{{VERSION}}</bundle>
+
         <bundle>mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}</bundle>
 
         <!-- AAA configuration file -->
