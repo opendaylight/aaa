@@ -51,11 +51,11 @@ public class TokenAuthTest extends JerseyTest {
 
     @BeforeClass
     public static void init() {
-        ServiceLocator.INSTANCE.as = mock(AuthenticationService.class);
-        ServiceLocator.INSTANCE.ts = mock(TokenStore.class);
-        when(ServiceLocator.INSTANCE.ts.get(GOOD_TOKEN)).thenReturn(auth);
-        when(ServiceLocator.INSTANCE.ts.get(BAD_TOKEN)).thenReturn(null);
-        when(ServiceLocator.INSTANCE.as.isAuthEnabled()).thenReturn(
+        ServiceLocator.getInstance().setAuthenticationService(mock(AuthenticationService.class));
+        ServiceLocator.getInstance().setTokenStore(mock(TokenStore.class));
+        when(ServiceLocator.getInstance().getTokenStore().get(GOOD_TOKEN)).thenReturn(auth);
+        when(ServiceLocator.getInstance().getTokenStore().get(BAD_TOKEN)).thenReturn(null);
+        when(ServiceLocator.getInstance().getAuthenticationService().isAuthEnabled()).thenReturn(
                 Boolean.TRUE);
     }
 
@@ -88,10 +88,10 @@ public class TokenAuthTest extends JerseyTest {
             // Mock a laxed tokenauth...
             TokenAuth ta = mock(TokenAuth.class);
             when(ta.validate(anyMap())).thenReturn(auth);
-            ServiceLocator.INSTANCE.ta.add(ta);
+            ServiceLocator.getInstance().getTokenAuthCollection().add(ta);
             testGet();
         } finally {
-            ServiceLocator.INSTANCE.ta.clear();
+            ServiceLocator.getInstance().getTokenAuthCollection().clear();
         }
     }
 

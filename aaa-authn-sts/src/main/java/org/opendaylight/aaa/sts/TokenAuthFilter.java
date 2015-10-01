@@ -53,7 +53,7 @@ public class TokenAuthFilter implements ContainerRequestFilter {
        }
 
         // Are we up yet?
-        if (ServiceLocator.INSTANCE.as == null) {
+        if (ServiceLocator.getInstance().getAuthenticationService() == null) {
             throw new WebApplicationException(
                   Response.status(Status.SERVICE_UNAVAILABLE)
                   .type(MediaType.APPLICATION_JSON)
@@ -62,15 +62,15 @@ public class TokenAuthFilter implements ContainerRequestFilter {
         }
 
         // Are we doing authentication or not?
-        if (ServiceLocator.INSTANCE.as.isAuthEnabled()) {
+        if (ServiceLocator.getInstance().getAuthenticationService().isAuthEnabled()) {
             Map<String, List<String>> headers = request.getRequestHeaders();
 
             // Go through and invoke other TokenAuth first...
-            for (TokenAuth ta : ServiceLocator.INSTANCE.ta) {
+            for (TokenAuth ta : ServiceLocator.getInstance().getTokenAuthCollection()) {
                 try {
                     Authentication auth = ta.validate(headers);
                     if (auth != null) {
-                        ServiceLocator.INSTANCE.as.set(auth);
+                        ServiceLocator.getInstance().getAuthenticationService().set(auth);
                         return request;
                     }
                 } catch (AuthenticationException ae) {
@@ -115,18 +115,18 @@ public class TokenAuthFilter implements ContainerRequestFilter {
 
     // Validate an ODL token...
     private Authentication validate(final String token) {
-        Authentication auth = ServiceLocator.INSTANCE.ts.get(token);
+        Authentication auth = ServiceLocator.getInstance().getTokenStore().get(token);
         if (auth == null) {
             throw unauthorized();
         } else {
-            ServiceLocator.INSTANCE.as.set(auth);
+            ServiceLocator.getInstance().getAuthenticationService().set(auth);
         }
         return auth;
     }
 
     // Houston, we got a problem!
     private static final WebApplicationException unauthorized() {
-        ServiceLocator.INSTANCE.as.clear();
+        ServiceLocator.getInstance().getAuthenticationService().clear();
         return new UnauthorizedException();
     }
 
