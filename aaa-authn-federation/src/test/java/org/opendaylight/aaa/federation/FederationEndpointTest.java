@@ -68,13 +68,13 @@ public class FederationEndpointTest {
     @Before
     public void setup() {
         mockServiceLocator();
-        when(ServiceLocator.INSTANCE.ts.tokenExpiration()).thenReturn(
+        when(ServiceLocator.getInstance().getTokenStore().tokenExpiration()).thenReturn(
                 TOKEN_TIMEOUT_SECS);
     }
 
     @After
     public void teardown() {
-        ServiceLocator.INSTANCE.ca.clear();
+        ServiceLocator.getInstance().getClaimAuthCollection().clear();
     }
 
     @Test
@@ -92,9 +92,9 @@ public class FederationEndpointTest {
     @Test
     @SuppressWarnings("unchecked")
     public void testFederation() throws Exception {
-        when(ServiceLocator.INSTANCE.ca.get(0).transform(anyMap())).thenReturn(
+        when(ServiceLocator.getInstance().getClaimAuthCollection().get(0).transform(anyMap())).thenReturn(
                 claim);
-        when(ServiceLocator.INSTANCE.is.listDomains(anyString())).thenReturn(
+        when(ServiceLocator.getInstance().getIdmService().listDomains(anyString())).thenReturn(
                 Arrays.asList("pepsi", "coke"));
 
         // Configure secure port (of zero)
@@ -115,8 +115,8 @@ public class FederationEndpointTest {
     }
 
     private static void mockServiceLocator() {
-        ServiceLocator.INSTANCE.is = mock(IdMService.class);
-        ServiceLocator.INSTANCE.ts = mock(TokenStore.class);
-        ServiceLocator.INSTANCE.ca.add(mock(ClaimAuth.class));
+        ServiceLocator.getInstance().setIdmService(mock(IdMService.class));
+        ServiceLocator.getInstance().setTokenStore(mock(TokenStore.class));
+        ServiceLocator.getInstance().getClaimAuthCollection().add(mock(ClaimAuth.class));
     }
 }
