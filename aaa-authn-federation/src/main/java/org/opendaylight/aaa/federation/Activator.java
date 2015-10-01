@@ -35,7 +35,7 @@ public class Activator extends DependencyActivatorBase {
     public void init(BundleContext context, DependencyManager manager)
             throws Exception {
         manager.add(createComponent()
-                .setImplementation(ServiceLocator.INSTANCE)
+                .setImplementation(ServiceLocator.getInstance())
                 .add(createServiceDependency().setService(TokenStore.class)
                         .setRequired(true))
                 .add(createServiceDependency().setService(IdMService.class)

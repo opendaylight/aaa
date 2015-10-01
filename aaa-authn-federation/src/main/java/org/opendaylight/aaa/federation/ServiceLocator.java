@@ -8,8 +8,8 @@
 
 package org.opendaylight.aaa.federation;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
 import org.opendaylight.aaa.api.ClaimAuth;
 import org.opendaylight.aaa.api.IdMService;
@@ -21,20 +21,53 @@ import org.opendaylight.aaa.api.TokenStore;
  * @author liemmn
  *
  */
-public enum ServiceLocator {
-    INSTANCE;
+public class ServiceLocator {
 
-    volatile List<ClaimAuth> ca = new LinkedList<>();
+    private static final ServiceLocator instance = new ServiceLocator();
 
-    volatile TokenStore ts;
+    protected volatile List<ClaimAuth> claimAuthCollection = new Vector<>();
 
-    volatile IdMService is;
+    protected volatile TokenStore tokenStore;
+
+    protected volatile IdMService idmService;
+
+    private ServiceLocator() {
+    }
+
+    public static ServiceLocator getInstance() {
+        return instance;
+    }
 
     protected void claimAuthAdded(ClaimAuth ca) {
-        this.ca.add(ca);
+        this.claimAuthCollection.add(ca);
     }
 
     protected void claimAuthRemoved(ClaimAuth ca) {
-        this.ca.remove(ca);
+        this.claimAuthCollection.remove(ca);
+    }
+
+    public synchronized List<ClaimAuth> getClaimAuthCollection() {
+        return claimAuthCollection;
+    }
+
+    public synchronized void setClaimAuthCollection(
+            List<ClaimAuth> claimAuthCollection) {
+        this.claimAuthCollection = claimAuthCollection;
+    }
+
+    public synchronized TokenStore getTokenStore() {
+        return tokenStore;
+    }
+
+    public synchronized void setTokenStore(TokenStore tokenStore) {
+        this.tokenStore = tokenStore;
+    }
+
+    public synchronized IdMService getIdmService() {
+        return idmService;
+    }
+
+    public synchronized void setIdmService(IdMService idmService) {
+        this.idmService = idmService;
     }
 }

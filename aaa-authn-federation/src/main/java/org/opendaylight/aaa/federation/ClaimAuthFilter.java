@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -94,7 +95,8 @@ public class ClaimAuthFilter implements Filter {
         }
 
         // Let's do some transformation!
-        for (ClaimAuth ca : ServiceLocator.INSTANCE.ca) {
+        List<ClaimAuth> claimAuthCollection = ServiceLocator.getInstance().getClaimAuthCollection();
+        for (ClaimAuth ca : claimAuthCollection) {
             Claim claim = ca.transform(claims((HttpServletRequest) req));
             if (claim != null) {
                 req.setAttribute(AUTH_CLAIM, claim);
