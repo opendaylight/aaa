@@ -72,13 +72,13 @@ public class TokenEndpointTest {
     @Before
     public void setup() {
         mockServiceLocator();
-        when(ServiceLocator.INSTANCE.ts.tokenExpiration()).thenReturn(
+        when(ServiceLocator.getInstance().getTokenStore().tokenExpiration()).thenReturn(
                 TOKEN_TIMEOUT_SECS);
     }
 
     @After
     public void teardown() {
-        ServiceLocator.INSTANCE.ta.clear();
+        ServiceLocator.getInstance().getTokenAuthCollection().clear();
     }
 
     @Test
@@ -98,7 +98,7 @@ public class TokenEndpointTest {
     @Test
     public void testCreateTokenWithPassword() throws Exception {
         when(
-                ServiceLocator.INSTANCE.da.authenticate(
+                ServiceLocator.getInstance().getCredentialAuth().authenticate(
                         any(PasswordCredentials.class)))
                 .thenReturn(claim);
 
@@ -118,9 +118,9 @@ public class TokenEndpointTest {
 
     @Test
     public void testCreateTokenWithRefreshToken() throws Exception {
-        when(ServiceLocator.INSTANCE.ts.get(anyString())).thenReturn(
+        when(ServiceLocator.getInstance().getTokenStore().get(anyString())).thenReturn(
                 new AuthenticationBuilder(claim).build());
-        when(ServiceLocator.INSTANCE.is.listRoles(anyString(), anyString()))
+        when(ServiceLocator.getInstance().getIdmService().listRoles(anyString(), anyString()))
                 .thenReturn(Arrays.asList("admin", "user"));
 
         HttpTester req = new HttpTester();
@@ -139,7 +139,7 @@ public class TokenEndpointTest {
 
     @Test
     public void testDeleteToken() throws Exception {
-        when(ServiceLocator.INSTANCE.ts.delete("token_to_be_deleted"))
+        when(ServiceLocator.getInstance().getTokenStore().delete("token_to_be_deleted"))
                 .thenReturn(true);
 
         HttpTester req = new HttpTester();
@@ -156,11 +156,11 @@ public class TokenEndpointTest {
 
     @SuppressWarnings("unchecked")
     private static void mockServiceLocator() {
-        ServiceLocator.INSTANCE.cs = mock(ClientService.class);
-        ServiceLocator.INSTANCE.is = mock(IdMService.class);
-        ServiceLocator.INSTANCE.as = mock(AuthenticationService.class);
-        ServiceLocator.INSTANCE.ts = mock(TokenStore.class);
-        ServiceLocator.INSTANCE.da = mock(CredentialAuth.class);
-        ServiceLocator.INSTANCE.ta.add(mock(TokenAuth.class));
+        ServiceLocator.getInstance().setClientService(mock(ClientService.class));
+        ServiceLocator.getInstance().setIdmService(mock(IdMService.class));
+        ServiceLocator.getInstance().setAuthenticationService(mock(AuthenticationService.class));
+        ServiceLocator.getInstance().setTokenStore(mock(TokenStore.class));
+        ServiceLocator.getInstance().setCredentialAuth(mock(CredentialAuth.class));
+        ServiceLocator.getInstance().getTokenAuthCollection().add(mock(TokenAuth.class));
     }
 }
