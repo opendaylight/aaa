@@ -94,11 +94,11 @@ public class TokenEndpoint extends HttpServlet {
     throws IOException, OAuthSystemException {
         String token = req.getReader().readLine();
         if (token != null) {
-            Authentication authn = ServiceLocator.INSTANCE.ts.get(token.trim());
+            Authentication authn = ServiceLocator.getInstance().getTokenStore().get(token.trim());
             if (authn == null) {
                 throw new AuthenticationException(UNAUTHORIZED);
             } else {
-                ServiceLocator.INSTANCE.as.set(authn);
+                ServiceLocator.getInstance().getAuthenticationService().set(authn);
                 resp.setStatus(SC_OK);
             }
         } else {
@@ -111,7 +111,7 @@ public class TokenEndpoint extends HttpServlet {
             HttpServletResponse resp) throws IOException {
         String token = req.getReader().readLine();
         if (token != null) {
-            if (ServiceLocator.INSTANCE.ts.delete(token.trim())) {
+            if (ServiceLocator.getInstance().getTokenStore().delete(token.trim())) {
                 resp.setStatus(SC_NO_CONTENT);
             }
             else {
@@ -133,7 +133,7 @@ public class TokenEndpoint extends HttpServlet {
         // Any client credentials?
         clientId = oauthRequest.getClientId();
         if (clientId != null) {
-            ServiceLocator.INSTANCE.cs.validate(clientId,
+            ServiceLocator.getInstance().getClientService().validate(clientId,
                     oauthRequest.getClientSecret());
         }
 
@@ -146,7 +146,7 @@ public class TokenEndpoint extends HttpServlet {
                     .setPassword(oauthRequest.getPassword())
                     .setDomain(domain).build();
             if (!oauthRequest.getScopes().isEmpty()) {
-                claim = ServiceLocator.INSTANCE.da.authenticate(pc);
+                claim = ServiceLocator.getInstance().getCredentialAuth().authenticate(pc);
             }
         } else if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(
                 GrantType.REFRESH_TOKEN.toString())) {
@@ -155,9 +155,9 @@ public class TokenEndpoint extends HttpServlet {
             if (!oauthRequest.getScopes().isEmpty()) {
                 String domain = oauthRequest.getScopes().iterator().next();
                 // Authenticate...
-                Authentication auth = ServiceLocator.INSTANCE.ts.get(token);
+                Authentication auth = ServiceLocator.getInstance().getTokenStore().get(token);
                 if (auth != null && domain != null) {
-                    List<String> roles = ServiceLocator.INSTANCE.is.listRoles(
+                    List<String> roles = ServiceLocator.getInstance().getIdmService().listRoles(
                             auth.userId(), domain);
                     if (!roles.isEmpty()) {
                         ClaimBuilder cb = new ClaimBuilder(auth);
@@ -193,7 +193,7 @@ public class TokenEndpoint extends HttpServlet {
         // Cache this token...
         Authentication auth = new AuthenticationBuilder(new ClaimBuilder(claim)
                 .setClientId(clientId).build()).setExpiration(tokenExpiration()).build();
-        ServiceLocator.INSTANCE.ts.put(token, auth);
+        ServiceLocator.getInstance().getTokenStore().put(token, auth);
 
         OAuthResponse r = OAuthASResponse.tokenResponse(SC_CREATED)
                 .setAccessToken(token)
@@ -205,7 +205,7 @@ public class TokenEndpoint extends HttpServlet {
 
     // Token expiration
     private long tokenExpiration() {
-        return ServiceLocator.INSTANCE.ts.tokenExpiration();
+        return ServiceLocator.getInstance().getTokenStore().tokenExpiration();
     }
 
     // Emit an error OAuthResponse with the given HTTP code
