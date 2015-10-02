@@ -76,7 +76,7 @@ public class DataEncrypter {
             return eToken;
         }
 
-        if (eToken == null) {
+        if (eToken == null || eToken.length() == 0) {
             return null;
         }
 
@@ -90,7 +90,7 @@ public class DataEncrypter {
 
             byte[] cryptobytes = DatatypeConverter.parseBase64Binary(eToken.substring(ENCRYPTED_TAG.length()));
             byte[] clearbytes = c.doFinal(cryptobytes);
-            return DatatypeConverter.printBase64Binary(clearbytes);
+            return new String(clearbytes);
 
         } catch (Exception e) {
             LOG.error("Couldn't decrypt token", e);
