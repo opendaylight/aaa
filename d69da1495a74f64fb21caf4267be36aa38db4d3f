@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_803c1b31",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/ServiceLocator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-10-02T08:41:35Z",
+      "side": 1,
+      "message": "I\u0027m not too sure about the need for these changes; the previous code implements the enum singleton pattern (p18 of the same book).\nThe dependency injection mechanism is in effect the only consumer, and is I think single theaded.",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 27
+      },
+      "revId": "d69da1495a74f64fb21caf4267be36aa38db4d3f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
