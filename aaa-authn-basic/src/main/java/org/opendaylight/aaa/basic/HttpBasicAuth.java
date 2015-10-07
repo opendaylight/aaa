@@ -19,6 +19,8 @@ import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.TokenAuth;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.jersey.core.util.Base64;
 
@@ -27,36 +29,98 @@ import com.sun.jersey.core.util.Base64;
  * backward compatible authenticator, but usage of this authenticator or
  * HTTP Basic Authentication is highly discouraged due to its vulnerability.
  *
+ * To obtain a token using the HttpBasicAuth Strategy, add a header to your
+ * HTTP request in the form:
+ * <code>Authorization: Basic BASE_64_ENCODED_CREDENTIALS</code>
+ *
+ * Where <code>BASE_64_ENCODED_CREDENTIALS</code> is the base 64 encoded value
+ * of the user's credentials in the following form:
+ * <code>user:password</code>
+ *
+ * For example, assuming the user is "admin" and the password is "admin":
+ * <code>Authorization: Basic YWRtaW46YWRtaW4=</code>
+ *
  * @author liemmn
  *
  */
 public class HttpBasicAuth implements TokenAuth {
+
     private static final String AUTH_HEADER = "Authorization";
+
     private static final String AUTH_SEP = ":";
+
     private static final String BASIC_PREFIX = "Basic ";
 
-    volatile CredentialAuth<PasswordCredentials> ca;
+    // TODO relocate this constant
+    public static final String DEFAULT_DOMAIN = "sdn";
+
+    /**
+     * username and password
+     */
+    private static final int NUM_HEADER_CREDS = 2;
+
+    /**
+     * username, password and domain
+     */
+    private static final int NUM_TOKEN_CREDS = 3;
+
+    private static final Logger LOG = LoggerFactory.getLogger(HttpBasicAuth.class);
+
+    volatile CredentialAuth<PasswordCredentials> credentialAuth;
+
+    private static boolean checkAuthHeaderFormat(final String authHeader) {
+       return (authHeader != null && authHeader.startsWith(BASIC_PREFIX));
+    }
+
+    private static String extractAuthHeader(final Map<String, List<String>> headers) {
+        return headers.get(AUTH_HEADER).get(0);
+    }
+
+    private static String [] extractCredentialArray(final String authHeader) {
+        return new String(Base64.base64Decode(authHeader
+                .substring(BASIC_PREFIX.length()))).split(AUTH_SEP);
+    }
+
+    private static boolean verifyCredentialArray(final String [] creds) {
+        return (creds!=null && creds.length==NUM_HEADER_CREDS);
+    }
+
+    private static String [] addDomainToCredentialArray(final String [] creds) {
+        String newCredentialArray[] = new String[3];
+        System.arraycopy(creds, 0, newCredentialArray, 0, creds.length);
+        newCredentialArray[2] = DEFAULT_DOMAIN;
+        return newCredentialArray;
+    }
+
+    private static Authentication generateAuthentication(CredentialAuth<PasswordCredentials> credentialAuth, final String [] creds) throws ArrayIndexOutOfBoundsException{
+        final PasswordCredentials pc = new PasswordCredentialBuilder()
+        .setUserName(creds[0]).setPassword(creds[1]).setDomain(creds[2]).build();
+        final Claim claim = credentialAuth.authenticate(pc);
+        return new AuthenticationBuilder(claim).build();
+    }
 
     @Override
-    public Authentication validate(Map<String, List<String>> headers)
+    public Authentication validate(final Map<String, List<String>> headers)
             throws AuthenticationException {
         if (headers.containsKey(AUTH_HEADER)) {
-            final String authHeader = headers.get(AUTH_HEADER).get(0);
-            if (authHeader != null && authHeader.startsWith(BASIC_PREFIX)) {
+            final String authHeader = extractAuthHeader(headers);
+            if (checkAuthHeaderFormat(authHeader)) {
                 // HTTP Basic Auth
-                String[] creds = new String(Base64.base64Decode(authHeader
-                        .substring(BASIC_PREFIX.length()))).split(AUTH_SEP);
+                String[] creds = extractCredentialArray(authHeader);
                 // If no domain was supplied then use the default one, which is "sdn".
-                if(creds!=null && creds.length==2){
-                    String temp[] = new String[3];
-                    System.arraycopy(creds, 0, temp, 0, creds.length);
-                    temp[2] = "sdn";
-                    creds = temp;
+                if(verifyCredentialArray(creds)){
+                    creds = addDomainToCredentialArray(creds);
                 }
-                PasswordCredentials pc = new PasswordCredentialBuilder()
-                        .setUserName(creds[0]).setPassword(creds[1]).setDomain(creds[2]).build();
-                Claim claim = ca.authenticate(pc);
-                return new AuthenticationBuilder(claim).build();
+                // Assumes correct formatting in form Base64("user:password").
+                // Throws an exception if an unknown format is used.
+                try {
+                    return generateAuthentication(this.credentialAuth, creds);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    final String message = "Login Attempt in Bad Format."
+                            + " Please provide user:password in Base64 format.";
+                    LOG.info(message);
+                    throw new AuthenticationException(message);
+                }
             }
         }
         return null;
