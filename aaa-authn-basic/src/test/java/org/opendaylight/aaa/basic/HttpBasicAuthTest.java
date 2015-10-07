@@ -38,8 +38,9 @@ public class HttpBasicAuthTest {
     @Before
     public void setup() {
         auth = new HttpBasicAuth();
-        auth.ca = mock(CredentialAuth.class);
+        auth.credentialAuth = mock(CredentialAuth.class);
         when(
+<<<<<<< HEAD
                 auth.ca.authenticate(new PasswordCredentialBuilder()
                         .setUserName(USERNAME).setPassword(PASSWORD).build(),
                         null)).thenReturn(
@@ -48,6 +49,14 @@ public class HttpBasicAuthTest {
                 auth.ca.authenticate(new PasswordCredentialBuilder()
                         .setUserName(USERNAME).setPassword("bozo").build(),
                         null)).thenThrow(new AuthenticationException("barf"));
+=======
+                auth.credentialAuth.authenticate(new PasswordCredentialBuilder()
+                        .setUserName(USERNAME).setPassword(PASSWORD).setDomain(DOMAIN).build())).thenReturn(
+                new ClaimBuilder().setUser("admin").addRole("admin").setUserId("123").build());
+        when(
+                auth.credentialAuth.authenticate(new PasswordCredentialBuilder()
+                        .setUserName(USERNAME).setPassword("bozo").setDomain(DOMAIN).build())).thenThrow(new AuthenticationException("barf"));
+>>>>>>> c5dc5ce... Bug4430 Unclear error message when Basic Authentication has a bad header format
     }
 
     @Test
@@ -67,6 +76,30 @@ public class HttpBasicAuthTest {
     @Test(expected = AuthenticationException.class)
     public void testValidateBadPassword() throws UnsupportedEncodingException {
         String data = USERNAME + ":bozo";
+        Map<String, List<String>> headers = new HashMap<>();
+        headers.put(
+                "Authorization",
+                Arrays.asList("Basic "
+                        + new String(Base64.encode(data.getBytes("utf-8")))));
+        auth.validate(headers);
+    }
+
+    @Test(expected = AuthenticationException.class)
+    public void testBadHeaderFormatNoPassword() throws UnsupportedEncodingException {
+        // just provide the username
+        String data = USERNAME;
+        Map<String, List<String>> headers = new HashMap<>();
+        headers.put(
+                "Authorization",
+                Arrays.asList("Basic "
+                        + new String(Base64.encode(data.getBytes("utf-8")))));
+        auth.validate(headers);
+    }
+
+    @Test(expected = AuthenticationException.class)
+    public void testBadHeaderFormat() throws UnsupportedEncodingException {
+        // provide username:
+        String data = USERNAME + "$" + PASSWORD;
         Map<String, List<String>> headers = new HashMap<>();
         headers.put(
                 "Authorization",
