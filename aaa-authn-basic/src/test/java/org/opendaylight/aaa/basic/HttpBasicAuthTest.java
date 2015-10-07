@@ -38,14 +38,14 @@ public class HttpBasicAuthTest {
     @Before
     public void setup() {
         auth = new HttpBasicAuth();
-        auth.ca = mock(CredentialAuth.class);
+        auth.credentialAuth = mock(CredentialAuth.class);
         when(
-                auth.ca.authenticate(new PasswordCredentialBuilder()
+                auth.credentialAuth.authenticate(new PasswordCredentialBuilder()
                         .setUserName(USERNAME).setPassword(PASSWORD).build(),
                         null)).thenReturn(
                 new ClaimBuilder().setUser("admin").addRole("admin").setUserId("123").build());
         when(
-                auth.ca.authenticate(new PasswordCredentialBuilder()
+                auth.credentialAuth.authenticate(new PasswordCredentialBuilder()
                         .setUserName(USERNAME).setPassword("bozo").build(),
                         null)).thenThrow(new AuthenticationException("barf"));
     }
@@ -67,6 +67,30 @@ public class HttpBasicAuthTest {
     @Test(expected = AuthenticationException.class)
     public void testValidateBadPassword() throws UnsupportedEncodingException {
         String data = USERNAME + ":bozo";
+        Map<String, List<String>> headers = new HashMap<>();
+        headers.put(
+                "Authorization",
+                Arrays.asList("Basic "
+                        + new String(Base64.encode(data.getBytes("utf-8")))));
+        auth.validate(headers);
+    }
+
+    @Test(expected = AuthenticationException.class)
+    public void testBadHeaderFormatNoPassword() throws UnsupportedEncodingException {
+        // just provide the username
+        String data = USERNAME;
+        Map<String, List<String>> headers = new HashMap<>();
+        headers.put(
+                "Authorization",
+                Arrays.asList("Basic "
+                        + new String(Base64.encode(data.getBytes("utf-8")))));
+        auth.validate(headers);
+    }
+
+    @Test(expected = AuthenticationException.class)
+    public void testBadHeaderFormat() throws UnsupportedEncodingException {
+        // provide username:
+        String data = USERNAME + "$" + PASSWORD;
         Map<String, List<String>> headers = new HashMap<>();
         headers.put(
                 "Authorization",
