@@ -33,6 +33,9 @@ import java.util.Set;
 public class AuthNStoreUtil {
 
     public static InstanceIdentifier<Claims> createInstIdentifierForTokencache(String token) {
+        if (token == null || token.length() == 0)
+            return null;
+
         InstanceIdentifier<Claims> claims_iid = InstanceIdentifier.builder(Tokencache.class)
             .child(Claims.class, new ClaimsKey(token))
             .build();
@@ -40,6 +43,9 @@ public class AuthNStoreUtil {
     }
 
     public static InstanceIdentifier<UserTokens> createInstIdentifierUserTokens(String userId, String token) {
+        if (userId == null || userId.length() == 0 || token == null || token.length() == 0)
+            return null;
+
         InstanceIdentifier<UserTokens> userTokens_iid =
             InstanceIdentifier.builder(TokenCacheTimes.class)
                 .child(TokenList.class, new TokenListKey(userId))
@@ -49,6 +55,9 @@ public class AuthNStoreUtil {
     }
 
     public static Claims createClaimsRecord(String token, Authentication auth) {
+        if (auth == null || token == null || token.length() == 0)
+            return null;
+
         ClaimsKey claimsKey = new ClaimsKey(token);//
         ClaimsBuilder claimsBuilder = new ClaimsBuilder();
         claimsBuilder.setClientId(auth.clientId());
@@ -64,6 +73,9 @@ public class AuthNStoreUtil {
     }
 
     public static UserTokens createUserTokens(String token, Long expiration) {
+        if (expiration == null || token == null || token.length() == 0)
+            return null;
+
         UserTokensBuilder userTokensBuilder = new UserTokensBuilder();
         userTokensBuilder.setTokenid(token);
         BigInteger timestamp = BigInteger.valueOf(System.currentTimeMillis());
@@ -74,6 +86,9 @@ public class AuthNStoreUtil {
     }
 
     public static TokenList createTokenList(UserTokens tokens, String userId) {
+        if (tokens == null || userId == null || userId.length() == 0)
+            return null;
+
         TokenListBuilder tokenListBuilder = new TokenListBuilder();
         tokenListBuilder.setUserId(userId);
         tokenListBuilder.setKey(new TokenListKey(userId));
@@ -84,6 +99,9 @@ public class AuthNStoreUtil {
     }
 
     public static Authentication convertClaimToAuthentication(final Claims claims, Long expiration) {
+        if (claims == null)
+            return null;
+
         Claim claim = new Claim() {
             @Override
             public String clientId() {
