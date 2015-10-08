@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_cb9302a2",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/DataEncrypter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-10-08T15:24:29Z",
+      "side": 1,
+      "message": "Why is this correction needed? The bytes are still Base64 encoded...",
+      "range": {
+        "startLine": 93,
+        "startChar": 23,
+        "endLine": 93,
+        "endChar": 29
+      },
+      "revId": "15145b2c289639f0be0e742356e9061f3478a676",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
