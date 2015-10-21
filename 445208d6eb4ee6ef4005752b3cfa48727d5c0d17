@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad0f9df_69ca3ba3",
+        "filename": "aaa-idp-mapping/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-10-21T13:59:40Z",
+      "side": 1,
+      "message": "Please use proper formatting.",
+      "revId": "445208d6eb4ee6ef4005752b3cfa48727d5c0d17",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_a9d02354",
+        "filename": "aaa-idp-mapping/src/test/java/org/opendaylight/aaa/idpmapping/TokenTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-10-21T13:59:40Z",
+      "side": 1,
+      "message": "Please stay consistent with no space.",
+      "revId": "445208d6eb4ee6ef4005752b3cfa48727d5c0d17",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_c9d56744",
+        "filename": "aaa-idp-mapping/src/test/java/org/opendaylight/aaa/idpmapping/TokenTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-10-21T13:59:40Z",
+      "side": 1,
+      "message": "Please stay consistent with no space.",
+      "revId": "445208d6eb4ee6ef4005752b3cfa48727d5c0d17",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
