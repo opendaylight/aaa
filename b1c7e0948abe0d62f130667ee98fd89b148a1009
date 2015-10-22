@@ -16,6 +16,24 @@
       "revId": "b1c7e0948abe0d62f130667ee98fd89b148a1009",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_9ac79f12",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/TokenAuthFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-10-22T15:55:17Z",
+      "side": 1,
+      "message": "I changed the base class so the other filter method signature was wrong;  I just hit \"add unimplemented methods\" in eclipse to fix the setup.  By default it puts it at the bottom of the file.",
+      "parentUuid": "fad0f9df_1a540f53",
+      "revId": "b1c7e0948abe0d62f130667ee98fd89b148a1009",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
