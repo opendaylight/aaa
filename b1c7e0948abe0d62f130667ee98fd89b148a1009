@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad0f9df_1a540f53",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/TokenAuthFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 4540
+      },
+      "writtenOn": "2015-10-22T15:49:08Z",
+      "side": 1,
+      "message": "From a review standpoint it\u0027s a shame this got moved down in the class since lots of the code hasn\u0027t actually changed.",
+      "revId": "b1c7e0948abe0d62f130667ee98fd89b148a1009",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
