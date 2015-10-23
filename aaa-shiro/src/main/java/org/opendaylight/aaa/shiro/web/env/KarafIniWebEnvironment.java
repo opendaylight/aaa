@@ -10,11 +10,22 @@ package org.opendaylight.aaa.shiro.web.env;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Vector;
 
 import org.apache.shiro.config.Ini;
+import org.apache.shiro.config.Ini.Section;
 import org.apache.shiro.web.env.IniWebEnvironment;
+import org.opendaylight.aaa.shiro.accounting.Accounter;
+import org.opendaylight.aaa.shiro.authorization.DefaultRBACRules;
+import org.opendaylight.aaa.shiro.authorization.RBACRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Sets;
 
 /**
  * Identical to <code>IniWebEnvironment</code> except the Ini is loaded from
@@ -36,17 +47,51 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
     @Override
     public void init() {
         // Initialize the Shiro environment from etc/shiro.ini then delegate to
-        // the
-        // parent class
+        // the parent class
         Ini ini;
         try {
             ini = createDefaultShiroIni();
+            appendCustomIniRules(ini);
             setIni(ini);
         } catch (FileNotFoundException e) {
             final String ERROR_MESSAGE = "Could not find etc/shiro.ini";
             LOG.error(ERROR_MESSAGE, e);
         }
         super.init();
+    }
+
+    /**
+     * A hook for installing custom default RBAC rules for security purposes.
+     *
+     * @param ini
+     */
+    private void appendCustomIniRules(final Ini ini) {
+        final String INSTALL_MESSAGE = "Installing the RBAC rule: %s";
+        Section urlSection = getOrCreateUrlSection(ini);
+        Collection<RBACRule> rbacRules = DefaultRBACRules.getInstance().getRBACRules();
+        for (RBACRule rbacRule : rbacRules ) {
+            urlSection.put(rbacRule.getUrlPattern(), rbacRule.getRolesInShiroFormat());
+            Accounter.output(String.format(INSTALL_MESSAGE, rbacRule));
+        }
+    }
+
+    /**
+     * Extracts the url section of the Ini file, or creates one if it doesn't
+     * already exist
+     *
+     * @param ini
+     * @return
+     */
+    private Section getOrCreateUrlSection(final Ini ini) {
+        final String URL_SECTION_TITLE = "urls";
+        Section urlSection = ini.getSection(URL_SECTION_TITLE);
+        if(urlSection == null) {
+            LOG.debug("shiro.ini does not contain a [urls] section; creating one");
+            urlSection = ini.addSection(URL_SECTION_TITLE);
+        } else {
+            LOG.debug("shiro.ini contains a [urls] section; appending rules to existing");
+        }
+        return urlSection;
     }
 
     /**
