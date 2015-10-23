@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad0f9df_ea4ff690",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-10-23T18:20:04Z",
+      "side": 1,
+      "message": "I do not think that this change is necessary.  DatatypeConverter.printBase64Binary returns the String version of the clearbytes representation (according to API).  Why was this changed?",
+      "revId": "98ee18ccd8d899dafe4ef6a60ef27ca91897713d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_0a583a55",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/test/java/org/opendaylight/aaa/authn/mdsal/store/DataEncrypterTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-10-23T18:20:04Z",
+      "side": 1,
+      "message": "Please get rid of the extra space at the end of this line.",
+      "revId": "98ee18ccd8d899dafe4ef6a60ef27ca91897713d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
