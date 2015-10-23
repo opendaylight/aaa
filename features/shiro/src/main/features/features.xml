@@ -14,6 +14,9 @@
         <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.felix/org.apache.felix.metatype/{{VERSION}}</bundle>
 
+        <!-- Guava -->
+        <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
+
         <!-- Apache Shiro & Dependencies -->
         <bundle>mvn:org.apache.shiro/shiro-core/1.2.3</bundle>
         <bundle>mvn:org.apache.shiro/shiro-web/1.2.3</bundle>
