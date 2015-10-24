@@ -38,10 +38,22 @@ public class ServiceLocator {
         return instance;
     }
 
+    /**
+     * Called through reflection from the federation Activator
+     *
+     * @see org.opendaylight.aaa.federation.ServiceLocator
+     * @param ca
+     */
     protected void claimAuthAdded(ClaimAuth ca) {
         this.claimAuthCollection.add(ca);
     }
 
+    /**
+     * Called through reflection from the federation Activator
+     *
+     * @see org.opendaylight.aaa.federation.Activator
+     * @param ca
+     */
     protected void claimAuthRemoved(ClaimAuth ca) {
         this.claimAuthCollection.remove(ca);
     }

@@ -48,10 +48,22 @@ public class ServiceLocator {
         return instance;
     }
 
+    /**
+     * Called through reflection by the sts activator.
+     *
+     * @see org.opendaylight.aaa.sts.Activator
+     * @param ta
+     */
     protected void tokenAuthAdded(TokenAuth ta) {
         this.tokenAuthCollection.add(ta);
     }
 
+    /**
+     * Called through reflection by the sts activator.
+     *
+     * @see org.opendaylight.aaa.sts.Activator
+     * @param ta
+     */
     protected void tokenAuthRemoved(TokenAuth ta) {
         this.tokenAuthCollection.remove(ta);
     }
