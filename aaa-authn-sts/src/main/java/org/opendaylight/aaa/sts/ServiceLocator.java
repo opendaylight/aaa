@@ -92,16 +92,16 @@ public class ServiceLocator {
       this.credentialAuth = null;
     }
 
-    public synchronized List<TokenAuth> getTokenAuthCollection() {
+    public List<TokenAuth> getTokenAuthCollection() {
         return tokenAuthCollection;
     }
 
-    public synchronized void setTokenAuthCollection(
+    public void setTokenAuthCollection(
             List<TokenAuth> tokenAuthCollection) {
         this.tokenAuthCollection = tokenAuthCollection;
     }
 
-    public synchronized CredentialAuth<PasswordCredentials> getCredentialAuth() {
+    public CredentialAuth<PasswordCredentials> getCredentialAuth() {
         return credentialAuth;
     }
 
@@ -110,36 +110,36 @@ public class ServiceLocator {
         this.credentialAuth = credentialAuth;
     }
 
-    public synchronized TokenStore getTokenStore() {
+    public TokenStore getTokenStore() {
         return tokenStore;
     }
 
-    public synchronized void setTokenStore(TokenStore tokenStore) {
+    public void setTokenStore(TokenStore tokenStore) {
         this.tokenStore = tokenStore;
     }
 
-    public synchronized AuthenticationService getAuthenticationService() {
+    public AuthenticationService getAuthenticationService() {
         return authenticationService;
     }
 
-    public synchronized void setAuthenticationService(
+    public void setAuthenticationService(
             AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
 
-    public synchronized IdMService getIdmService() {
+    public IdMService getIdmService() {
         return idmService;
     }
 
-    public synchronized void setIdmService(IdMService idmService) {
+    public void setIdmService(IdMService idmService) {
         this.idmService = idmService;
     }
 
-    public synchronized ClientService getClientService() {
+    public ClientService getClientService() {
         return clientService;
     }
 
-    public synchronized void setClientService(ClientService clientService) {
+    public void setClientService(ClientService clientService) {
         this.clientService = clientService;
     }
 }
