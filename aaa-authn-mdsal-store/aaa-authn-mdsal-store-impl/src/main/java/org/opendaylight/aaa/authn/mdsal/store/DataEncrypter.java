@@ -76,7 +76,7 @@ public class DataEncrypter {
             return eToken;
         }
 
-        if (eToken == null) {
+        if (eToken == null || eToken.length() == 0) {
             return null;
         }
 
