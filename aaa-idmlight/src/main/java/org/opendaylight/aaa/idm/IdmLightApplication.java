@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.Application;
 
-import org.eclipse.persistence.jaxb.rs.MOXyJsonProvider;
 import org.opendaylight.aaa.idm.rest.DomainHandler;
 import org.opendaylight.aaa.idm.rest.RoleHandler;
 import org.opendaylight.aaa.idm.rest.UserHandler;
@@ -67,8 +66,7 @@ public class IdmLightApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-        return new HashSet<Class<?>>(Arrays.asList(MOXyJsonProvider.class,
-                                                   VersionHandler.class,
+        return new HashSet<Class<?>>(Arrays.asList(VersionHandler.class,
                                                    DomainHandler.class,
                                                    RoleHandler.class,
                                                    UserHandler.class));

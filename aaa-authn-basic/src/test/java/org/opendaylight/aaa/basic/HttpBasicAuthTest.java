@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.glassfish.jersey.internal.util.Base64;
 import org.junit.Before;
 import org.junit.Test;
 import org.opendaylight.aaa.ClaimBuilder;
@@ -27,6 +26,8 @@ import org.opendaylight.aaa.PasswordCredentialBuilder;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.CredentialAuth;
+
+import com.sun.jersey.core.util.Base64;
 
 public class HttpBasicAuthTest {
     private static final String USERNAME = "admin";
