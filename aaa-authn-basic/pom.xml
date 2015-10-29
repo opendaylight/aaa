@@ -27,13 +27,9 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
+            <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-server</artifactId>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-common</artifactId>
         </dependency>
         <dependency>
             <groupId>org.osgi</groupId>
