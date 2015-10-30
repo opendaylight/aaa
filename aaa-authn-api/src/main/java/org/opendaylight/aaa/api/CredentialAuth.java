@@ -19,7 +19,6 @@ public interface CredentialAuth<T extends Credentials> {
      * Authenticate a claim with the given credentials and domain scope.
      *
      * @param cred credentials
-     * @param domain domain name, or null if not known
      * @throws AuthenticationException if failed authentication
      * @return authenticated claim
      */
