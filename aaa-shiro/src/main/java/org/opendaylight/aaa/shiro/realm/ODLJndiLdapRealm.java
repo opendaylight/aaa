@@ -40,9 +40,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  * @see <code>org.apache.shiro.realm.ldap.JndiLdapRealm</code>
- * @link {https
- *      ://shiro.apache.org/static/1.2.3/apidocs/org/apache/shiro/realm/ldap/
- *      JndiLdapRealm.html}
+ * @see <a href="https://shiro.apache.org/static/1.2.3/apidocs/org/apache/shiro/realm/ldap/JndiLdapRealm.html">Shiro documentation</a>
  */
 public class ODLJndiLdapRealm extends JndiLdapRealm {
     private static final Logger LOG = LoggerFactory

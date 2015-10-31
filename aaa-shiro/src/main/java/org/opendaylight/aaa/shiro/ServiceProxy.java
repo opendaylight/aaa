@@ -21,9 +21,7 @@ import org.slf4j.LoggerFactory;
  * the <code>getInstance()</code> function.
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
- * @link
- *       https://github.com/opendaylight/netconf/blob/master/opendaylight/restconf
- *       /sal-rest-connector/src/main/resources/WEB-INF/web.xml
+ * @see <a href="https://github.com/opendaylight/netconf/blob/master/opendaylight/restconf/sal-rest-connector/src/main/resources/WEB-INF/web.xml">resconf web,xml</a>
  * @see <code>org.opendaylight.aaa.shiro.Activator</code>
  * @see <code>org.opendaylight.aaa.shiro.filters.AAAFilter</code>
  */
