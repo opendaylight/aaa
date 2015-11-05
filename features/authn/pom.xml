@@ -186,6 +186,10 @@
             <type>cfg</type>
             <classifier>config</classifier>
         </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-h2-store</artifactId>
+        </dependency>
 
         <!-- AuthN MD-SAL Cache dependencies -->
 
