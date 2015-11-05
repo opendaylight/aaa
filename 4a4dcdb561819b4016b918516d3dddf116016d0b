@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bada0100_01026d3e",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IDMStoreException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-05T18:20:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_01410d39",
+      "revId": "4a4dcdb561819b4016b918516d3dddf116016d0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_81741d9d",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IDMStoreException.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-11-05T15:30:37Z",
       "side": 1,
       "message": "I think the serial version should be captured.",
+      "revId": "4a4dcdb561819b4016b918516d3dddf116016d0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_c1fb0546",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IDMStoreException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-05T18:20:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_81741d9d",
       "revId": "4a4dcdb561819b4016b918516d3dddf116016d0b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_e1f8894b",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IDMStoreException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-05T18:20:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_213e91b9",
+      "range": {
+        "startLine": 6,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "4a4dcdb561819b4016b918516d3dddf116016d0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_a1792195",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IDMStoreUtil.java",
         "patchSetId": 1
@@ -70,6 +130,24 @@
       "writtenOn": "2015-11-05T15:30:37Z",
       "side": 1,
       "message": "utility class: should be final and have a private constructor, which throws OperationNotSupportedException\n\nI am not sure this should be in API, as it seems to specify a specific mapping of things. Maybe Javadocs would clarify the intent.",
+      "revId": "4a4dcdb561819b4016b918516d3dddf116016d0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_e11c09c4",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IDMStoreUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-05T18:20:13Z",
+      "side": 1,
+      "message": "Will add the private constructor.\nWill add java doc to explain why this is in API.",
+      "parentUuid": "bada0100_a1792195",
       "revId": "4a4dcdb561819b4016b918516d3dddf116016d0b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "bada0100_618819e8",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IIDMStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-05T18:20:13Z",
+      "side": 1,
+      "message": "Sorry, copy \u0026 paste from another class in idm-light, will remove the \"static final\".",
+      "parentUuid": "bada0100_416e35cb",
+      "revId": "4a4dcdb561819b4016b918516d3dddf116016d0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_617339b2",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IIDMStore.java",
         "patchSetId": 1
@@ -104,6 +200,24 @@
       "writtenOn": "2015-11-05T15:30:37Z",
       "side": 1,
       "message": "this looks like an implementation detail. Note that primitive type constants of this sort are expanded at compile-type, hence if the value changes here, it will result in silent ABI breakage.",
+      "revId": "4a4dcdb561819b4016b918516d3dddf116016d0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_c176a506",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IIDMStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-05T18:20:13Z",
+      "side": 1,
+      "message": "Copied from the HP implementation for the H2, will move it to the H2 project.",
+      "parentUuid": "bada0100_617339b2",
       "revId": "4a4dcdb561819b4016b918516d3dddf116016d0b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
