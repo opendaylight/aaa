@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2015 Cisco Systems, Inc. and others.  All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ */
 package org.opendaylight.aaa.api;
 
 import org.opendaylight.aaa.api.model.Domain;
@@ -8,10 +15,11 @@ import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
-
+/*
+ * @Author - Sharon Aicler (saichler@cisco.com)
+ */
 public interface IIDMStore {
-    public static final String DEFAULT_DOMAIN = "sdn";
-    public static final int MAX_FIELD_LEN = 256;
+    public String DEFAULT_DOMAIN = "sdn";
     //Domain methods
     public Domain writeDomain(Domain domain) throws IDMStoreException;
     public Domain readDomain(String domainid) throws IDMStoreException;

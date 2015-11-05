@@ -31,6 +31,10 @@ import org.opendaylight.yangtools.yang.binding.DataObject;
  */
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+/**
+ * @author Sharon Aicler - saichler@cisco.com
+ *
+ */
 public abstract class IDMObject2MDSAL {
     private static final Logger LOGGER = LoggerFactory.getLogger(IDMObject2MDSAL.class);
     //this is a Map mapping between the class type of the IDM Model object to a structure containing the corresponding setters and getter methods
