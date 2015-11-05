@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_01410d39",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IDMStoreException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-11-05T15:30:37Z",
+      "side": 1,
+      "message": "misses a copyright header",
+      "revId": "4a4dcdb561819b4016b918516d3dddf116016d0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_81741d9d",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IDMStoreException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-11-05T15:30:37Z",
+      "side": 1,
+      "message": "I think the serial version should be captured.",
+      "revId": "4a4dcdb561819b4016b918516d3dddf116016d0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_213e91b9",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IDMStoreException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-11-05T15:30:37Z",
+      "side": 1,
+      "message": "misses constructor needed for exception chaining",
+      "range": {
+        "startLine": 6,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "4a4dcdb561819b4016b918516d3dddf116016d0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_a1792195",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IDMStoreUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-11-05T15:30:37Z",
+      "side": 1,
+      "message": "utility class: should be final and have a private constructor, which throws OperationNotSupportedException\n\nI am not sure this should be in API, as it seems to specify a specific mapping of things. Maybe Javadocs would clarify the intent.",
+      "revId": "4a4dcdb561819b4016b918516d3dddf116016d0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_416e35cb",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IIDMStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-11-05T15:30:37Z",
+      "side": 1,
+      "message": "\u0027public static final\u0027 is implied for interface non-method members. Being explicit about it causes sonar warnings.",
+      "revId": "4a4dcdb561819b4016b918516d3dddf116016d0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_617339b2",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IIDMStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-11-05T15:30:37Z",
+      "side": 1,
+      "message": "this looks like an implementation detail. Note that primitive type constants of this sort are expanded at compile-type, hence if the value changes here, it will result in silent ABI breakage.",
+      "revId": "4a4dcdb561819b4016b918516d3dddf116016d0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
