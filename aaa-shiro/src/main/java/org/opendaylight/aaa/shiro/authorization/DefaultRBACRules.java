@@ -30,7 +30,7 @@ import com.google.common.collect.Sets;
  */
 public class DefaultRBACRules {
 
-    private static final DefaultRBACRules instance = new DefaultRBACRules();
+    private static DefaultRBACRules instance;
 
     /**
      * a collection of the default security rules
@@ -56,6 +56,9 @@ public class DefaultRBACRules {
      * @return the container instance for the default RBAC Rules
      */
     public static final DefaultRBACRules getInstance() {
+        if (null == instance) {
+            instance = new DefaultRBACRules();
+        }
         return instance;
     }
 
