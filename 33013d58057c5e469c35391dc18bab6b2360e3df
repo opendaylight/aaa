@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_4d04397e",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IDMStoreException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-06T20:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_e12ba992",
+      "revId": "33013d58057c5e469c35391dc18bab6b2360e3df",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_a1360102",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IDMStoreException.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-11-05T18:25:51Z",
       "side": 1,
       "message": "Are we going to define the serial version here or just get rid of the suppress annotation?",
+      "revId": "33013d58057c5e469c35391dc18bab6b2360e3df",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_cdf7c98b",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IDMStoreException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-06T20:51:33Z",
+      "side": 1,
+      "message": "The class is not being serialized, but added serialize version.",
+      "parentUuid": "bada0100_a1360102",
       "revId": "33013d58057c5e469c35391dc18bab6b2360e3df",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_edf40589",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IDMStoreUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-06T20:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_413b95eb",
+      "revId": "33013d58057c5e469c35391dc18bab6b2360e3df",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_81189d85",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IDMStoreUtil.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2015-11-05T18:25:51Z",
       "side": 1,
       "message": "lower case \"a\" for author annotation.",
+      "revId": "33013d58057c5e469c35391dc18bab6b2360e3df",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_8df1c197",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IDMStoreUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-06T20:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_81189d85",
       "revId": "33013d58057c5e469c35391dc18bab6b2360e3df",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_2d3a0d37",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IIDMStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-06T20:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_61401957",
+      "revId": "33013d58057c5e469c35391dc18bab6b2360e3df",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_a11da175",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IIDMStore.java",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2015-11-05T18:25:51Z",
       "side": 1,
       "message": "lower case \"a\" for author annotation",
+      "revId": "33013d58057c5e469c35391dc18bab6b2360e3df",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_cd3ee929",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IIDMStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-06T20:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_a11da175",
       "revId": "33013d58057c5e469c35391dc18bab6b2360e3df",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_ed3ba536",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/DataEncrypter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-06T20:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_01258dc1",
+      "revId": "33013d58057c5e469c35391dc18bab6b2360e3df",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_6117b952",
         "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/DataEncrypter.java",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2015-11-05T18:25:51Z",
       "side": 1,
       "message": "lower case \"a\" for author annotation",
+      "revId": "33013d58057c5e469c35391dc18bab6b2360e3df",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_8d48e1cd",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/DataEncrypter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-06T20:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_6117b952",
       "revId": "33013d58057c5e469c35391dc18bab6b2360e3df",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
