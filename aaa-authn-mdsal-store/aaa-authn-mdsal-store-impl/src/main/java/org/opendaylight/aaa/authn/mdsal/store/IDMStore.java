@@ -142,8 +142,13 @@ public class IDMStore implements IIDMStore{
     public Grants getGrants(String domainid, String userid) throws IDMStoreException {
         Grants grants = new Grants();
         List<org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.Grant> mdSalGrants = mdsalStore.getAllGrants();
+        String currentGrantUserId, currentGrantDomainId;
         for(org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.Grant g:mdSalGrants){
-            grants.getGrants().add(IDMObject2MDSAL.toIDMGrant(g));
+            currentGrantUserId = g.getUserid();
+            currentGrantDomainId = g.getDomainid();
+            if (currentGrantUserId.equals(userid) && currentGrantDomainId.equals(domainid)) {
+                grants.getGrants().add(IDMObject2MDSAL.toIDMGrant(g));
+            }
         }
         return grants;
     }
