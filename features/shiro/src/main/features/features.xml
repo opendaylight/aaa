@@ -7,6 +7,8 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
 
+    <repository>mvn:org.opendaylight.aaa/features-aaa/{{VERSION}}/xml/features</repository>
+
     <!-- odl-aaa-shiro feature which combines all aspects of AAA into one feature -->
     <feature name='odl-aaa-shiro' description='OpenDaylight :: AAA :: Shiro'
              version='0.3.0-SNAPSHOT'>
@@ -17,13 +19,22 @@
         <!-- Guava -->
         <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
 
+        <feature version='0.3.0-SNAPSHOT'>odl-aaa-authn</feature>
+
         <!-- Apache Shiro & Dependencies -->
         <bundle>mvn:org.apache.shiro/shiro-core/1.2.3</bundle>
         <bundle>mvn:org.apache.shiro/shiro-web/1.2.3</bundle>
         <bundle>wrap:mvn:javax.servlet/servlet-api/2.5</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-servlet/{{VERSION}}</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
 
         <!-- AAA bundles relating to stand-alone shiro feature -->
         <configfile finalname="/etc/shiro.ini">mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}/cfg/configuration</configfile>
+        <!--<bundle>mvn:org.opendaylight.aaa/aaa-authn-api/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/{{VERSION}}</bundle>
+        -->
         <bundle>mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-shiro-act/{{VERSION}}</bundle>
     </feature>

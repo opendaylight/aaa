@@ -48,7 +48,7 @@ public class DefaultRBACRules {
      * private for singleton pattern
      */
     private DefaultRBACRules() {
-        rbacRules.add(PROTECT_AAA_MDSAL);
+        //rbacRules.add(PROTECT_AAA_MDSAL);
     }
 
     /**

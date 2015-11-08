@@ -45,11 +45,11 @@ import com.sun.jersey.core.util.Base64;
  */
 public class HttpBasicAuth implements TokenAuth {
 
-    private static final String AUTH_HEADER = "Authorization";
+    public static final String AUTH_HEADER = "Authorization";
 
-    private static final String AUTH_SEP = ":";
+    public static final String AUTH_SEP = ":";
 
-    private static final String BASIC_PREFIX = "Basic ";
+    public static final String BASIC_PREFIX = "Basic ";
 
     // TODO relocate this constant
     public static final String DEFAULT_DOMAIN = "sdn";

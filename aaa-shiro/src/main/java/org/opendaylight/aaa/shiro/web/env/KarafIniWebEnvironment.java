@@ -51,7 +51,7 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
         Ini ini;
         try {
             ini = createDefaultShiroIni();
-            appendCustomIniRules(ini);
+            //appendCustomIniRules(ini);
             setIni(ini);
         } catch (FileNotFoundException e) {
             final String ERROR_MESSAGE = "Could not find etc/shiro.ini";
