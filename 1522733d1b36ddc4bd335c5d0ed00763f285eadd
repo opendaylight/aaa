@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_ba638bb0",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-18T21:07:41Z",
+      "side": 1,
+      "message": "This should be capital as it is a constant.",
+      "revId": "1522733d1b36ddc4bd335c5d0ed00763f285eadd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_bad86b54",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-18T21:07:41Z",
+      "side": 1,
+      "message": "This should be surrounded by:\nif(HARDWIRE_SERVICES)\nThus, no threads are spawned if the implementer decides to set HARDWIRE_SERVICES\u003dfalse.",
+      "revId": "1522733d1b36ddc4bd335c5d0ed00763f285eadd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_5a5857fa",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-18T21:07:41Z",
+      "side": 1,
+      "message": "We don\u0027t need to initialize either of these variables.",
+      "revId": "1522733d1b36ddc4bd335c5d0ed00763f285eadd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_5addb741",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-18T21:07:41Z",
+      "side": 1,
+      "message": "I\u0027d prefer moving this from the constructor and attaching it in the same line as the instantiation in the init() method.  This reads better as one should not automatically expect a Thread to start itself.",
+      "revId": "1522733d1b36ddc4bd335c5d0ed00763f285eadd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_1a72df7c",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-18T21:07:41Z",
+      "side": 1,
+      "message": "Please explicitly catch InterruptedException and log an appropriate error message, then throw the same unchecked RuntimeException so the stack trace is maintained.  If we are running into these Exceptions, it is far more likely that we would want to restart rather than gracefully ignore and try again.",
+      "revId": "1522733d1b36ddc4bd335c5d0ed00763f285eadd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_3a6f9b94",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-18T21:07:41Z",
+      "side": 1,
+      "message": "This is an explicit retry mechanism.  This means that most of the time, we expect that the service class has not been loaded.  Thus, this should be INFO or TRACE level, so that the log isn\u0027t full of expected failed attempts.",
+      "revId": "1522733d1b36ddc4bd335c5d0ed00763f285eadd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_da6be783",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-18T21:07:41Z",
+      "side": 1,
+      "message": "I believe this should read \"Hardwiring\"",
+      "revId": "1522733d1b36ddc4bd335c5d0ed00763f285eadd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_5a0ff7e1",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-18T21:07:41Z",
+      "side": 1,
+      "message": "use setIdmService() instead.  We will need to restrict access to ServiceLocator instance variables in a separate patch.",
+      "revId": "1522733d1b36ddc4bd335c5d0ed00763f285eadd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_3af6bbd8",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-18T21:07:41Z",
+      "side": 1,
+      "message": "use \"setCredentialAuth()\"",
+      "revId": "1522733d1b36ddc4bd335c5d0ed00763f285eadd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_9a2c8f4c",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-18T21:07:41Z",
+      "side": 1,
+      "message": "use \"addAuthenticationService()\"",
+      "revId": "1522733d1b36ddc4bd335c5d0ed00763f285eadd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_7ae2f304",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-18T21:07:41Z",
+      "side": 1,
+      "message": "use setter method in ServiceLocator.",
+      "revId": "1522733d1b36ddc4bd335c5d0ed00763f285eadd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_de7e74e4",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-18T21:07:41Z",
+      "side": 1,
+      "message": "Use settter method in ServiceLocator.",
+      "revId": "1522733d1b36ddc4bd335c5d0ed00763f285eadd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
