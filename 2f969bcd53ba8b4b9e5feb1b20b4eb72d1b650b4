@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_d9176350",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-23T17:34:45Z",
+      "side": 1,
+      "message": "This should be volatile just in case we want to have multiple threads access this in the future.",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_b912a760",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-23T17:34:45Z",
+      "side": 1,
+      "message": "I would prefer to make this volatile in case we decide to have multiple threads accessing ServiceWriteTaskEntry class in the future.",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_9909eb33",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-23T17:34:45Z",
+      "side": 1,
+      "message": "Should have a \"final\" modifier.",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_b982a7fe",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-23T17:34:45Z",
+      "side": 1,
+      "message": "Should be a class constant;  how did you determine 10 was a good value here?  That gives only 20 seconds for the service to come up.  For reference; I have seen aaa take nearly 45 seconds on a slow VM in the past.",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_3906b721",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-23T17:34:45Z",
+      "side": 1,
+      "message": "Should have the \"final\" modifier.",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_5903730f",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-23T17:34:45Z",
+      "side": 1,
+      "message": "Should have the \"final\" modifier.",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_d987630e",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-23T17:34:45Z",
+      "side": 1,
+      "message": "\"2000\" should be a constant.  How did you determine this was an appropriate value?",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_a4103a4f",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-23T17:34:45Z",
+      "side": 1,
+      "message": "This should be consistent with other log messages and use \".getSimpleName()\".",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_8413be5b",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-23T17:34:45Z",
+      "side": 1,
+      "message": "This should be consistent with the rest of the log entries, and use \".getSimpleName()\"",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
