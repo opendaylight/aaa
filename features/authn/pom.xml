@@ -187,6 +187,16 @@
             <classifier>config</classifier>
         </dependency>
 
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-cert</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-cli</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- AuthN MD-SAL Cache dependencies -->
 
         <dependency>
