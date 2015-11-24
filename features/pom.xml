@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>aaa-parent</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
+    <version>0.4.0-SNAPSHOT</version>
     <relativePath>../parent</relativePath>
   </parent>
   <groupId>org.opendaylight.aaa</groupId>
@@ -15,5 +15,7 @@
     <module>api</module>
     <module>authn</module>
     <module>authz</module>
+    <module>aaa-cert</module>
+    <module>aaa-cli</module>
   </modules>
 </project>
