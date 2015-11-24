@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (c) 2015 Inocybe Technology All rights reserved.
+
+This program and the accompanying materials are made available under the
+terms of the Eclipse Public License v1.0 which accompanies this distribution,
+and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
+-->
+<features name="odl-aaa-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
+
+    <repository>mvn:org.opendaylight.mdsal/features-mdsal/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.aaa/features-aaa/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin-li/{{VERSION}}/xml/features</repository>
+
+    <feature name='odl-aaa-cert' description='OpenDaylight :: AAA :: aaa opendaylight certificate Plugin'
+             version='${project.version}'>
+        <feature version='${controller.mdsal.version}'>odl-mdsal-broker</feature>
+        <feature version="${openflowplugin.version}">odl-openflowplugin-southbound-li</feature>
+
+        <bundle>wrap:mvn:org.apache.maven.shared/maven-shared-utils/{{VERSION}}</bundle>
+        <bundle>wrap:mvn:org.codehaus.plexus/plexus-container-default/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-cert/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-cert-config.xml">mvn:org.opendaylight.aaa/aaa-cert/{{VERSION}}/xml/config</configfile>
+    </feature>
+
+</features>
