@@ -38,6 +38,8 @@
     <module>aaa-shiro</module>
     <module>aaa-shiro-act</module>
     <module>aaa-h2-store</module>
+    <module>aaa-cert</module>
+    <module>aaa-cli</module>
   </modules>
 
   <scm>
