@@ -31,7 +31,6 @@ import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
-import org.opendaylight.aaa.idm.IdmLightApplication;
 import org.opendaylight.aaa.idm.IdmLightProxy;
 import org.opendaylight.aaa.idm.ServiceLocator;
 import org.slf4j.Logger;
@@ -100,40 +99,40 @@ public class UserHandler {
          if (user.getName()==null) {
             return new IDMError(400,"user name is required","").response();
          }
-         else if (user.getName().length()> IdmLightApplication.MAX_FIELD_LEN) {
-            return new IDMError(400,"user name max length is :" + IdmLightApplication.MAX_FIELD_LEN,"").response();
+         else if (user.getName().length()>IIDMStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"user name max length is :" + IIDMStore.MAX_FIELD_LEN,"").response();
          }
 
          // domain id/name is required
          if (user.getDomainid()==null) {
             return new IDMError(400,"user domain is required","").response();
          }
-         else if (user.getDomainid().length()>IdmLightApplication.MAX_FIELD_LEN) {
-            return new IDMError(400,"user domain max length is :" + IdmLightApplication.MAX_FIELD_LEN,"").response();
+         else if (user.getDomainid().length()>IIDMStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"user domain max length is :" + IIDMStore.MAX_FIELD_LEN,"").response();
          }
 
          // user description is optional
          if (user.getDescription()==null) {
             user.setDescription("");
          }
-         else if (user.getDescription().length()>IdmLightApplication.MAX_FIELD_LEN) {
-            return new IDMError(400,"user description max length is :" + IdmLightApplication.MAX_FIELD_LEN,"").response();
+         else if (user.getDescription().length()>IIDMStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"user description max length is :" + IIDMStore.MAX_FIELD_LEN,"").response();
          }
 
          // user email is optional
          if (user.getEmail()==null) {
             user.setEmail("");
          }
-         else if (user.getEmail().length()>IdmLightApplication.MAX_FIELD_LEN) {
-            return new IDMError(400,"user email max length is :" + IdmLightApplication.MAX_FIELD_LEN,"").response();
+         else if (user.getEmail().length()>IIDMStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"user email max length is :" + IIDMStore.MAX_FIELD_LEN,"").response();
          }
 
          // user password optional and will default if not provided
          if (user.getPassword()==null) {
             user.setPassword(DEFAULT_PWD);
          }
-         else if (user.getPassword().length()>IdmLightApplication.MAX_FIELD_LEN) {
-            return new IDMError(400,"user password max length is :" + IdmLightApplication.MAX_FIELD_LEN,"").response();
+         else if (user.getPassword().length()>IIDMStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"user password max length is :" + IIDMStore.MAX_FIELD_LEN,"").response();
          }
 
          // create user

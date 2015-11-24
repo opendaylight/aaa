@@ -31,7 +31,6 @@ import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
-import org.opendaylight.aaa.idm.IdmLightApplication;
 import org.opendaylight.aaa.idm.IdmLightProxy;
 import org.opendaylight.aaa.idm.ServiceLocator;
 import org.slf4j.Logger;
@@ -86,24 +85,24 @@ public class RoleHandler {
          if (role.getName()==null) {
             return new IDMError(404,"name must be defined on role create","").response();
          }
-         else if (role.getName().length()> IdmLightApplication.MAX_FIELD_LEN) {
-            return new IDMError(400,"role name max length is :" + IdmLightApplication.MAX_FIELD_LEN,"").response();
+         else if (role.getName().length()>IIDMStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"role name max length is :" + IIDMStore.MAX_FIELD_LEN,"").response();
          }
 
          // domain
          if (role.getDomainid()==null) {
             return new IDMError(404,"The role's domain must be defined on role when creating a role.","").response();
          }
-         else if (role.getDomainid().length()>IdmLightApplication.MAX_FIELD_LEN) {
-            return new IDMError(400,"role domain max length is :" + IdmLightApplication.MAX_FIELD_LEN,"").response();
+         else if (role.getDomainid().length()>IIDMStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"role domain max length is :" + IIDMStore.MAX_FIELD_LEN,"").response();
          }
 
          // description
          if (role.getDescription()==null) {
             role.setDescription("");
          }
-         else if (role.getDescription().length()>IdmLightApplication.MAX_FIELD_LEN) {
-            return new IDMError(400,"role description max length is :" + IdmLightApplication.MAX_FIELD_LEN,"").response();
+         else if (role.getDescription().length()>IIDMStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"role description max length is :" + IIDMStore.MAX_FIELD_LEN,"").response();
          }
 
          role = ServiceLocator.INSTANCE.getStore().writeRole(role);
@@ -127,13 +126,13 @@ public class RoleHandler {
 
          // name
          // TODO: names should be unique
-         if ((role.getName()!=null) && (role.getName().length()>IdmLightApplication.MAX_FIELD_LEN)) {
-            return new IDMError(400,"role name max length is :" + IdmLightApplication.MAX_FIELD_LEN,"").response();
+         if ((role.getName()!=null) && (role.getName().length()>IIDMStore.MAX_FIELD_LEN)) {
+            return new IDMError(400,"role name max length is :" + IIDMStore.MAX_FIELD_LEN,"").response();
          }
 
          // description
-         if ((role.getDescription()!=null) && (role.getDescription().length()>IdmLightApplication.MAX_FIELD_LEN)) {
-            return new IDMError(400,"role description max length is :" + IdmLightApplication.MAX_FIELD_LEN,"").response();
+         if ((role.getDescription()!=null) && (role.getDescription().length()>IIDMStore.MAX_FIELD_LEN)) {
+            return new IDMError(400,"role description max length is :" + IIDMStore.MAX_FIELD_LEN,"").response();
          }
 
          role = ServiceLocator.INSTANCE.getStore().updateRole(role);
