@@ -26,20 +26,19 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import org.opendaylight.aaa.api.IDMStoreException;
-import org.opendaylight.aaa.api.IIDMStore;
-import org.opendaylight.aaa.api.model.IDMError;
-import org.opendaylight.aaa.api.model.User;
-import org.opendaylight.aaa.api.model.Users;
-import org.opendaylight.aaa.idm.IdmLightApplication;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-import org.opendaylight.aaa.idm.ServiceLocator;
+import org.opendaylight.aaa.idm.model.IDMError;
+import org.opendaylight.aaa.idm.model.User;
+import org.opendaylight.aaa.idm.model.Users;
+import org.opendaylight.aaa.idm.persistence.StoreException;
+import org.opendaylight.aaa.idm.persistence.UserStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Path("/v1/users")
 public class UserHandler {
    private static Logger logger = LoggerFactory.getLogger(UserHandler.class);
+   private static UserStore userStore = new UserStore();
    protected final static String DEFAULT_PWD = "changeme";
    public static final String REDACTED_PASSWORD = "**********";
 
@@ -49,10 +48,10 @@ public class UserHandler {
       logger.info("get all users");
       Users users=null;
       try {
-         users = ServiceLocator.INSTANCE.getStore().getUsers();
+         users = userStore.getUsers();
       }
-      catch (IDMStoreException se) {
-         return new IDMError(500,"internal error getting users",se.getMessage()).response();
+      catch (StoreException se) {
+         return new IDMError(500,"internal error getting users",se.message).response();
       }
 
       // obsfucate pwd
@@ -71,10 +70,10 @@ public class UserHandler {
       logger.info("get /users/" + id);
       User user=null;
       try {
-         user = ServiceLocator.INSTANCE.getStore().readUser(id);
+         user = userStore.getUser(id);
       }
-      catch(IDMStoreException se) {
-         return new IDMError(500,"internal error getting user",se.getMessage()).response();
+      catch(StoreException se) {
+         return new IDMError(500,"internal error getting user",se.message).response();
       }
       if (user==null) {
          return new IDMError(404,"user not found! id:" + id,"").response();
@@ -92,7 +91,7 @@ public class UserHandler {
       logger.info("post /users");
       try {
          // enabled by default
-         if (user.isEnabled()==null) {
+         if (user.getEnabled()==null) {
             user.setEnabled(true);
          }
 
@@ -100,48 +99,48 @@ public class UserHandler {
          if (user.getName()==null) {
             return new IDMError(400,"user name is required","").response();
          }
-         else if (user.getName().length()> IdmLightApplication.MAX_FIELD_LEN) {
-            return new IDMError(400,"user name max length is :" + IdmLightApplication.MAX_FIELD_LEN,"").response();
+         else if (user.getName().length()>UserStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"user name max length is :" + UserStore.MAX_FIELD_LEN,"").response();
          }
 
          // domain id/name is required
-         if (user.getDomainid()==null) {
+         if (user.getDomainID()==null) {
             return new IDMError(400,"user domain is required","").response();
          }
-         else if (user.getDomainid().length()>IdmLightApplication.MAX_FIELD_LEN) {
-            return new IDMError(400,"user domain max length is :" + IdmLightApplication.MAX_FIELD_LEN,"").response();
+         else if (user.getDomainID().length()>UserStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"user domain max length is :" + UserStore.MAX_FIELD_LEN,"").response();
          }
 
          // user description is optional
          if (user.getDescription()==null) {
             user.setDescription("");
          }
-         else if (user.getDescription().length()>IdmLightApplication.MAX_FIELD_LEN) {
-            return new IDMError(400,"user description max length is :" + IdmLightApplication.MAX_FIELD_LEN,"").response();
+         else if (user.getDescription().length()>UserStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"user description max length is :" + UserStore.MAX_FIELD_LEN,"").response();
          }
 
          // user email is optional
          if (user.getEmail()==null) {
             user.setEmail("");
          }
-         else if (user.getEmail().length()>IdmLightApplication.MAX_FIELD_LEN) {
-            return new IDMError(400,"user email max length is :" + IdmLightApplication.MAX_FIELD_LEN,"").response();
+         else if (user.getEmail().length()>UserStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"user email max length is :" + UserStore.MAX_FIELD_LEN,"").response();
          }
 
          // user password optional and will default if not provided
          if (user.getPassword()==null) {
             user.setPassword(DEFAULT_PWD);
          }
-         else if (user.getPassword().length()>IdmLightApplication.MAX_FIELD_LEN) {
-            return new IDMError(400,"user password max length is :" + IdmLightApplication.MAX_FIELD_LEN,"").response();
+         else if (user.getPassword().length()>UserStore.MAX_FIELD_LEN) {
+            return new IDMError(400,"user password max length is :" + UserStore.MAX_FIELD_LEN,"").response();
          }
 
          // create user
-         User createdUser = ServiceLocator.INSTANCE.getStore().writeUser(user);
+         User createdUser = userStore.createUser(user);
          user.setUserid(createdUser.getUserid());
       }
-      catch (IDMStoreException se) {
-         return new IDMError(500,"internal error creating user",se.getMessage()).response();
+      catch (StoreException se) {
+         return new IDMError(500,"internal error creating user",se.message).response();
       }
 
       // created!
@@ -158,7 +157,7 @@ public class UserHandler {
 
       try {
          user.setUserid(id);
-         user = ServiceLocator.INSTANCE.getStore().updateUser(user);
+         user = userStore.putUser(user);
          if (user==null) {
             return new IDMError(404,"user id not found id :"+id,"").response();
          }
@@ -166,8 +165,8 @@ public class UserHandler {
          user.setPassword(REDACTED_PASSWORD);
          return Response.status(200).entity(user).build();
       }
-      catch (IDMStoreException se) {
-         return new IDMError(500,"internal error putting user",se.getMessage()).response();
+      catch (StoreException se) {
+         return new IDMError(500,"internal error putting user",se.message).response();
       }
    }
 
@@ -177,13 +176,15 @@ public class UserHandler {
       logger.info("delete /users/" + id);
 
       try {
-         User user = ServiceLocator.INSTANCE.getStore().deleteUser(id);
+         User user = new User();
+         user.setUserid(id);
+         user = userStore.deleteUser(user);
          if (user==null) {
             return new IDMError(404,"user id not found id :"+id,"").response();
          }
       }
-      catch (IDMStoreException se) {
-         return new IDMError(500,"internal error deleting user",se.getMessage()).response();
+      catch (StoreException se) {
+         return new IDMError(500,"internal error deleting user",se.message).response();
       }
       IdmLightProxy.clearClaimCache();
       return Response.status(204).build();
