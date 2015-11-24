@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  */
 public class IdmLightApplication extends Application {
     private static Logger logger = LoggerFactory.getLogger(IdmLightApplication.class);
-    public static final int MAX_FIELD_LEN = 256;
+
     public IdmLightApplication() {
         try {
             StoreBuilder.init();

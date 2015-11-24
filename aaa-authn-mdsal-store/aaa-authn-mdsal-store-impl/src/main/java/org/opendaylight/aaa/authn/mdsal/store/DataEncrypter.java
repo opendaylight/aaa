@@ -19,9 +19,7 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.spec.KeySpec;
-/**
- * @author - Sharon Aicler (saichler@cisco.com)
- **/
+
 public class DataEncrypter {
 
     final protected SecretKey k;
