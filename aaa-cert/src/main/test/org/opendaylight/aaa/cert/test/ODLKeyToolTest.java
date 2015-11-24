@@ -1,0 +1,86 @@
+/*
+ * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ */
+
+package org.opendaylight.aaa.cert.test;
+
+import static org.junit.Assert.*;
+
+import java.security.Security;
+
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.opendaylight.aaa.cert.impl.KeyStoreUtilis;
+import org.opendaylight.aaa.cert.impl.ODLKeyTool;
+
+public class ODLKeyToolTest {
+
+    private static ODLKeyTool odlKeyTool;
+    private static String testPath = "target/test/";
+    private String keyStore = "fooTest.jks";
+    private String trustKeyStore = "footrust.jks";
+    private String passwd = "Password";
+    private String alias = "FooTest";
+    private String certFile = "cert.pem";
+
+    static {
+            Security.addProvider(new BouncyCastleProvider());
+        }
+
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
+        KeyStoreUtilis.keyStorePath = testPath;
+        odlKeyTool = new ODLKeyTool(testPath);
+    }
+
+    @Test
+    public void testCreateKeyStoreWithSelfSignCert() {
+        String dName = "CN=ODL, OU=Dev, O=LinuxFoundation, L=QC Montreal, C=CA";
+        assertTrue(odlKeyTool.createKeyStoreWithSelfSignCert(keyStore, passwd, dName, alias,
+                KeyStoreUtilis.defaultValidity));
+    }
+
+    @Test
+    public void testGetCertificate() {
+        String cert = odlKeyTool.getCertificate(keyStore, passwd, alias, false);
+        assertTrue(cert != null && cert.length() > 0);
+        cert = odlKeyTool.getCertificate(keyStore, passwd, alias, true);
+        assertTrue(cert.contains(KeyStoreUtilis.BEGIN_CERTIFICATE));
+    }
+
+    @Test
+    public void testGenerateCertificateReq() {
+        String certReq = odlKeyTool.generateCertificateReq(keyStore, passwd, alias,
+                KeyStoreUtilis.defaultSignAlg, false);
+        assertTrue(certReq != null && certReq.length() > 0);
+        certReq = odlKeyTool.generateCertificateReq(keyStore, passwd, alias,
+                KeyStoreUtilis.defaultSignAlg, true);
+        assertTrue(certReq.contains(KeyStoreUtilis.BEGIN_CERTIFICATE_REQUEST));
+    }
+
+    @Test
+    public void testCreateKeyStoreImportCert() {
+        assertTrue(odlKeyTool.createKeyStoreImportCert(trustKeyStore, passwd, null, alias));
+        String cert = odlKeyTool.getCertificate(keyStore, passwd, alias, false);
+        KeyStoreUtilis.saveCert(certFile, cert);
+        assertTrue(odlKeyTool.createKeyStoreImportCert(trustKeyStore, passwd, certFile, alias));
+    }
+
+    @Test
+    public void testAddCertificate() {
+        String cert = KeyStoreUtilis.readFile(certFile);
+        assertTrue(odlKeyTool.addCertificate(trustKeyStore, passwd, cert, alias));
+    }
+
+    @Test
+    public void testGetKeyStore() {
+        assertNotNull(odlKeyTool.getKeyStore(keyStore, passwd));
+        assertNotNull(odlKeyTool.getKeyStore(trustKeyStore, passwd));
+    }
+
+}
