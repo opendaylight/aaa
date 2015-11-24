@@ -1,0 +1,95 @@
+/*
+Copyright (c) 2015 Inocybe Technology All rights reserved.
+
+This program and the accompanying materials are made available under the
+terms of the Eclipse Public License v1.0 which accompanies this distribution,
+and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
+*/
+
+module aaa-cert-rpc {
+    yang-version 1;
+    namespace "urn:opendaylight:yang:aaa:cert:rpc";
+    prefix aaa-cert-rpc;
+
+    description
+        "Rpc calls definition for aaa certificate";
+
+    contact
+        "melserngawy@inocybe.com";
+
+    revision "2015-12-15" {
+        description
+            "Initial revision.";
+    }
+
+    grouping node-certificate {
+        leaf alias {
+            description "ovs node certificate alias";
+            type string;
+        }
+        leaf certificate {
+            description "ovs node certificate";
+            type string;
+        }
+    }
+
+    rpc getODLCertificate {
+        description
+            "Get the ctl.jks keystore certificate";
+        output {
+           leaf odl-cert{
+               type string;
+           }
+        }
+    }
+
+    rpc getODLCertificateReq {
+        description
+            "generate a certificate request from the ctl.jks keystore to be signed by a CA";
+        output {
+           leaf odl-cert-req{
+               type string;
+           }
+        }
+    }
+
+    rpc setODLCertifcate {
+        description
+            "The certifcate should be generated based on
+            a certifcate request generated from the ctl.jks
+            keystore otherwise the certifcated will not be added to ctl keystore";
+        input {
+           leaf odl-cert{
+               type string;
+           }
+        }
+    }
+
+    rpc setNodeCertifcate {
+        description
+            "Certifcate of the ovs node that will communicate with opendaylight through TLS connection";
+        input {
+           leaf node-alias {
+               type string;
+           }
+           leaf node-cert{
+               type string;
+           }
+        }
+    }
+
+    rpc getNodeCertifcate {
+        description
+            "Get the ovs node certificate based on node alias";
+        input {
+           leaf node-alias {
+               type string;
+           }
+        }
+        output {
+            leaf node-cert{
+                type string;
+            }
+        }
+    }
+}
