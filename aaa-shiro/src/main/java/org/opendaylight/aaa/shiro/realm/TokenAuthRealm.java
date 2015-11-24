@@ -190,36 +190,64 @@ public class TokenAuthRealm extends AuthorizingRealm {
             throw new AuthenticationException(AUTHENTICATION_SERVICE_UNAVAILABLE_MESSAGE);
         }
 
-        if (ServiceLocator.getInstance().getAuthenticationService().isAuthEnabled()) {
-            Map<String, List<String>> headers = formHeaders(username,password);
-
-            // iterate over <code>TokenAuth</code> implementations and attempt to
-            // authentication with each one
-            final List<TokenAuth> tokenAuthCollection =
-                    ServiceLocator.getInstance().getTokenAuthCollection();
-            for (TokenAuth ta : tokenAuthCollection) {
-                try {
-                    LOG.debug("Authentication attempt using " + ta.getClass().getName());
-                    Authentication auth = ta.validate(headers);
-                    if (auth != null) {
-                        LOG.debug("Authentication attempt successful");
-                        ServiceLocator.getInstance().getAuthenticationService().set(auth);
-                        this.cachedAuthenticationToken = auth;
-                        return new SimpleAuthenticationInfo(
-                                username, password.toCharArray(), getName());
+        // if the password is empty, this is an OAuth2 request, not a Basic HTTP Auth request
+        if (!password.isEmpty()) {
+            if (ServiceLocator.getInstance().getAuthenticationService().isAuthEnabled()) {
+                Map<String, List<String>> headers = formHeaders(username,password);
+                // iterate over <code>TokenAuth</code> implementations and attempt to
+                // authentication with each one
+                final List<TokenAuth> tokenAuthCollection =
+                        ServiceLocator.getInstance().getTokenAuthCollection();
+                for (TokenAuth ta : tokenAuthCollection) {
+                    try {
+                        LOG.debug("Authentication attempt using " + ta.getClass().getName());
+                        Authentication auth = ta.validate(headers);
+                        if (auth != null) {
+                            LOG.debug("Authentication attempt successful");
+                            ServiceLocator.getInstance().getAuthenticationService().set(auth);
+                            this.cachedAuthenticationToken = auth;
+                            return new SimpleAuthenticationInfo(
+                                    username, password.toCharArray(), getName());
+                        }
+                    } catch (AuthenticationException ae) {
+                        LOG.debug("Authentication attempt unsuccessful");
+                        // invalidate cached token
+                        cachedAuthenticationToken = null;
+                        throw new AuthenticationException(UNABLE_TO_AUTHENTICATE, ae);
                     }
-                } catch (AuthenticationException ae) {
-                    LOG.debug("Authentication attempt unsuccessful");
-                    // invalidate cached token
-                    cachedAuthenticationToken = null;
-                    throw new AuthenticationException(UNABLE_TO_AUTHENTICATE, ae);
                 }
             }
         }
+
+        // extract the authentication token and attempt validation of the token
+        final String token = extractUsername(authenticationToken);
+        final Authentication auth;
+        try {
+            auth = validate(token);
+            if (null != auth) {
+                cachedAuthenticationToken = auth;
+                return new SimpleAuthenticationInfo(auth.user(),
+                        "", getName());
+            }
+        } catch(AuthenticationException e) {
+            cachedAuthenticationToken = null;
+            LOG.info("Unknown OAuth2 Token Access Request", e);
+        }
+
         LOG.debug("Authentication failed: exhausted TokenAuth resources");
         // invalidate cached token
         cachedAuthenticationToken = null;
         return null;
+    }
+
+    private Authentication validate(final String token) {
+        Authentication auth = ServiceLocator.getInstance().getTokenStore().get(token);
+        if (auth == null) {
+            throw new AuthenticationException("Could not validate the token " + token);
+        } else {
+            ServiceLocator.getInstance().getAuthenticationService().set(auth);
+        }
+        return auth;
     }
 
     /**
