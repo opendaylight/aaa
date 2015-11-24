@@ -1,0 +1,36 @@
+
+Module aaa-cert{
+    yang-version 1;
+    namespace "urn:opendaylight:params:xml:ns:yang:aaa:cert";
+    prefix "aaaCert";
+
+    import config { prefix config; revision-date 2013-04-05; }
+    import opendaylight-md-sal-binding { prefix md-sal-binding; revision-date 2013-10-28;}
+
+    description
+        "Service definition for aaa certificate";
+
+    revision "2015-11-26" {
+        description
+            "Initial revision.";
+    }
+
+    identity aaaCert {
+        base config:module-type;
+        config:java-name-prefix aaaCert;
+    }
+
+    augment "/config:modules/config:module/config:configuration" {
+        case unimgr {
+            when "/config:modules/config:module/config:type = 'aaaCert'";
+            container broker {
+                uses config:service-ref {
+                    refine type {
+                        mandatory true;
+                        config:required-identity md-sal-binding:binding-broker-osgi-registry;
+                    }
+                }
+            }
+        }
+    }
+}
