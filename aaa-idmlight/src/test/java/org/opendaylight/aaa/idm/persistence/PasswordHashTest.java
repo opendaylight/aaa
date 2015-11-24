@@ -8,25 +8,13 @@
 
 package org.opendaylight.aaa.idm.persistence;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.File;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
-import org.opendaylight.aaa.api.IDMStoreException;
-import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.PasswordCredentials;
-import org.opendaylight.aaa.api.SHA256Calculator;
-import org.opendaylight.aaa.api.model.Domain;
-import org.opendaylight.aaa.api.model.Grant;
-import org.opendaylight.aaa.api.model.Grants;
-import org.opendaylight.aaa.api.model.Role;
-import org.opendaylight.aaa.api.model.User;
-import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-import org.opendaylight.aaa.idm.ServiceLocator;
 
 /*
  * @Author - Sharon Aicler (saichler@cisco.com)
@@ -35,48 +23,32 @@ public class PasswordHashTest {
 
     @Before
     public void before(){
-        IIDMStore store = Mockito.mock(IIDMStore.class);
-        ServiceLocator.INSTANCE.setStore(store);
-        Domain domain = new Domain();
-        domain.setName("sdn");
-        domain.setDomainid("sdn");
-        try {
-            Mockito.when(store.readDomain("sdn")).thenReturn(domain);
-            Creds c = new Creds();
-            Users users = new Users();
-            User user = new User();
-            user.setName("admin");
-            user.setUserid(c.username());
-            user.setDomainid("sdn");
-            user.setSalt("ABCD");
-            user.setPassword(SHA256Calculator.getSHA256(c.password(),user.getSalt()));
-            List<User> lu = new LinkedList<>();
-            lu.add(user);
-            users.setUsers(lu);
+        File f = new File("idmlight.db.mv.db");
+        if(f.exists()){
+            f.delete();
+        }
+        f = new File("idmlight.db.trace.db");
+        if(f.exists()){
+            f.delete();
+        }
+    }
 
-            Grants grants = new Grants();
-            Grant grant = new Grant();
-            List<Grant> g = new ArrayList<>();
-            g.add(grant);
-            grant.setDomainid("sdn");
-            grant.setRoleid("admin");
-            grant.setUserid("admin");
-            grants.setGrants(g);
-            Role role = new Role();
-            role.setRoleid("admin");
-            role.setName("admin");
-            Mockito.when(store.readRole("admin")).thenReturn(role);
-            Mockito.when(store.getUsers(c.username(), c.domain())).thenReturn(users);
-            Mockito.when(store.getGrants(c.domain(), c.username())).thenReturn(grants);
-            
-        } catch (IDMStoreException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+    @After
+    public void after(){
+        File f = new File("idmlight.db.mv.db");
+        if(f.exists()){
+            f.delete();
+        }
+        f = new File("idmlight.db.trace.db");
+        if(f.exists()){
+            f.delete();
         }
     }
 
     @Test
     public void testPasswordHash(){
+        StoreBuilder b = new StoreBuilder();
+        b.init();
         IdmLightProxy proxy = new IdmLightProxy();
         proxy.authenticate(new Creds());
     }

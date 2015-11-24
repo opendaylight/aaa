@@ -16,10 +16,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authn-api</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.opendaylight.mdsal</groupId>
             <artifactId>yang-binding</artifactId>
         </dependency>
