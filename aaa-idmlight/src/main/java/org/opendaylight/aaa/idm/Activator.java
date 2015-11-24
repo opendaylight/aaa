@@ -11,7 +11,6 @@ package org.opendaylight.aaa.idm;
 import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
 import org.opendaylight.aaa.api.CredentialAuth;
-import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.IdMService;
 import org.osgi.framework.BundleContext;
 
@@ -31,9 +30,6 @@ public class Activator extends DependencyActivatorBase {
                 new String[] { CredentialAuth.class.getName(),
                         IdMService.class.getName() }, null).setImplementation(
                 IdmLightProxy.class));
-        manager.add(createComponent()
-                .setImplementation(ServiceLocator.INSTANCE)
-                .add(createServiceDependency().setService(IIDMStore.class).setRequired(true)));
     }
 
     @Override
