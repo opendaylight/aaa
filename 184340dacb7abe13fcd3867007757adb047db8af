@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_a0dd7f44",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/filters/ODLHttpAuthenticationFilter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-11-25T15:36:41Z",
+      "side": 1,
+      "message": "Minor thing but any particular reason this is put into a var? Also, to follow standard style, only static final constants should be capitalized.",
+      "revId": "184340dacb7abe13fcd3867007757adb047db8af",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_00c0134f",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/filters/ODLHttpAuthenticationFilter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-11-25T15:36:41Z",
+      "side": 1,
+      "message": "Not a big deal but authzHeader.toLowerCase() could be put into a local var to avoid doing it twice. Also could BEARER_SCHEME be defined in lower case to avoid lower casing each time?",
+      "revId": "184340dacb7abe13fcd3867007757adb047db8af",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_80cba371",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/TokenAuthRealm.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-11-25T15:36:41Z",
+      "side": 1,
+      "message": "Could password be null? Would be safest to use Strings.isEmptyOrNull either way.",
+      "revId": "184340dacb7abe13fcd3867007757adb047db8af",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_40c5ab59",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/TokenAuthRealm.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-11-25T15:36:41Z",
+      "side": 1,
+      "message": "\"auth !\u003d null\" reads more naturally, also on line 245 the operands are reversed so would be good to be consistent either way.",
+      "revId": "184340dacb7abe13fcd3867007757adb047db8af",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
