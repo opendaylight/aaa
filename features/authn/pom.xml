@@ -186,6 +186,10 @@
             <type>cfg</type>
             <classifier>config</classifier>
         </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-h2-store</artifactId>
+        </dependency>
 
         <!-- AuthN MD-SAL Cache dependencies -->
 
@@ -200,18 +204,6 @@
         <dependency>
             <groupId>org.opendaylight.yangtools</groupId>
             <artifactId>features-yangtools</artifactId>
-            <classifier>features</classifier>
-            <type>xml</type>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>features-mdsal</artifactId>
-            <classifier>features</classifier>
-            <type>xml</type>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>features-mdsal</artifactId>
             <classifier>features</classifier>
             <type>xml</type>
         </dependency>
