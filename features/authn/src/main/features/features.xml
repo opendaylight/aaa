@@ -17,6 +17,12 @@
              version='${project.version}'>
         <feature version='${project.version}'>odl-aaa-api</feature>
 
+        <!-- MD-SAL -->
+        <feature version='${yangtools.version}'>odl-yangtools-common</feature>
+        <feature version='${mdsal.version}'>odl-mdsal-binding-base</feature>
+        <feature version='${controller.mdsal.version}'>odl-mdsal-broker</feature>
+        <feature version='${config.version}'>odl-config-core</feature>
+
         <!-- REST -->
         <feature>war</feature>
         <bundle>mvn:com.sun.jersey/jersey-servlet/{{VERSION}}</bundle>
@@ -45,9 +51,13 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
         <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
 
+        <!--H2 Store -->
+        <bundle>mvn:org.osgi/org.osgi.enterprise/4.2.0</bundle>
+        <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-h2-store-config.xml">mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}/xml/config</configfile>
 
         <!-- IDMLight -->
-        <bundle>mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-core/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/{{VERSION}}</bundle>
@@ -56,9 +66,6 @@
         <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/{{VERSION}}</bundle>
-
-        <!--	<bundle>wrap:mvn:org.xerial/sqlite-jdbc/{{VERSION}}</bundle> -->
-        <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
 
         <!-- Federation -->
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}</bundle>
@@ -70,9 +77,15 @@
         <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}/cfg/config</configfile>
     </feature>
 
-    <feature name='odl-aaa-authn' description='OpenDaylight :: AAA :: Authentication - NO CLUSTER Temp'
+    <feature name='odl-aaa-authn' description='OpenDaylight :: AAA :: Authentication - NO CLUSTER'
              version='${project.version}'>
         <feature version='${project.version}'>odl-aaa-api</feature>
+
+        <!-- MD-SAL -->
+        <feature version='${yangtools.version}'>odl-yangtools-common</feature>
+        <feature version='${mdsal.version}'>odl-mdsal-binding-base</feature>
+        <feature version='${controller.mdsal.version}'>odl-mdsal-broker</feature>
+        <feature version='${config.version}'>odl-config-core</feature>
 
         <!-- REST -->
         <feature>war</feature>
@@ -102,9 +115,13 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
         <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
 
+        <!--H2 Store -->
+        <bundle>mvn:org.osgi/org.osgi.enterprise/4.2.0</bundle>
+        <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-h2-store-config.xml">mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}/xml/config</configfile>
 
         <!-- IDMLight -->
-        <bundle>mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-core/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/{{VERSION}}</bundle>
@@ -113,9 +130,6 @@
         <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/{{VERSION}}</bundle>
-
-        <!--	<bundle>wrap:mvn:org.xerial/sqlite-jdbc/{{VERSION}}</bundle> -->
-        <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
 
         <!-- Federation -->
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}</bundle>
@@ -204,5 +218,4 @@
         <feature version='${project.version}'>odl-aaa-authn-no-cluster</feature>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sssd/{{VERSION}}</bundle>
     </feature>
-
 </features>
