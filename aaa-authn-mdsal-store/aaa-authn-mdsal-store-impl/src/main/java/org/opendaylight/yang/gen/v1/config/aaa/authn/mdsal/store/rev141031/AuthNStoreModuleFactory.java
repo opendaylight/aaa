@@ -35,7 +35,7 @@ public class AuthNStoreModuleFactory extends org.opendaylight.yang.gen.v1.config
     public AuthNStoreModule instantiateModule(String instanceName,
                                               DependencyResolver dependencyResolver, AuthNStoreModule oldModule,
                                               AutoCloseable oldInstance, BundleContext bundleContext) {
-        AuthNStoreModule module = super.instantiateModule(instanceName, dependencyResolver, oldModule,
+       AuthNStoreModule module = super.instantiateModule(instanceName, dependencyResolver, oldModule,
             oldInstance, bundleContext);
         module.setBundleContext(bundleContext);
         return module;

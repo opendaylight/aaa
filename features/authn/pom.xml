@@ -191,6 +191,13 @@
             <artifactId>aaa-h2-store</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.enterprise</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
         <!-- AuthN MD-SAL Cache dependencies -->
 
         <dependency>
