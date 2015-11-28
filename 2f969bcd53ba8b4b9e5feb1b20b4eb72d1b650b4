@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_df952389",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-28T15:37:31Z",
+      "side": 1,
+      "message": "a final is by definition a volatile, java won\u0027t allow \"private final volatile\" def.",
+      "parentUuid": "7aade967_d9176350",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_b912a760",
         "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-11-23T17:34:45Z",
       "side": 1,
       "message": "I would prefer to make this volatile in case we decide to have multiple threads accessing ServiceWriteTaskEntry class in the future.",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_3f81d74a",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-28T15:37:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_b912a760",
       "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_ff925f9e",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-28T15:37:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_9909eb33",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_b982a7fe",
         "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2015-11-23T17:34:45Z",
       "side": 1,
       "message": "Should be a class constant;  how did you determine 10 was a good value here?  That gives only 20 seconds for the service to come up.  For reference; I have seen aaa take nearly 45 seconds on a slow VM in the past.",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_9f8fab75",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-28T15:37:31Z",
+      "side": 1,
+      "message": "Changed to constant and set to 60 (e.g. 120 seconds).",
+      "parentUuid": "7aade967_b982a7fe",
       "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_bf8ce780",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-28T15:37:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_3906b721",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_5903730f",
         "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2015-11-23T17:34:45Z",
       "side": 1,
       "message": "Should have the \"final\" modifier.",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_5fe93319",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-28T15:37:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_5903730f",
       "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_7fee6f24",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-28T15:37:31Z",
+      "side": 1,
+      "message": "Switch to constant, 2 seconds seems reasonable for a retry check.",
+      "parentUuid": "7aade967_d987630e",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_a4103a4f",
         "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
         "patchSetId": 2
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_1ff3bb0b",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-28T15:37:31Z",
+      "side": 1,
+      "message": "It is using \"getSimpleName()\"...",
+      "parentUuid": "7aade967_a4103a4f",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_8413be5b",
         "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
         "patchSetId": 2
@@ -149,6 +293,24 @@
       "writtenOn": "2015-11-23T17:34:45Z",
       "side": 1,
       "message": "This should be consistent with the rest of the log entries, and use \".getSimpleName()\"",
+      "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_3ff8f7e4",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-11-28T15:37:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_8413be5b",
       "revId": "2f969bcd53ba8b4b9e5feb1b20b4eb72d1b650b4",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
