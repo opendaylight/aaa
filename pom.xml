@@ -41,6 +41,7 @@
     <module>aaa-cert</module>
     <module>aaa-cli</module>
     <module>aaa-filterchain</module>
+    <module>aaa-cassandra-store</module>
   </modules>
 
   <scm>

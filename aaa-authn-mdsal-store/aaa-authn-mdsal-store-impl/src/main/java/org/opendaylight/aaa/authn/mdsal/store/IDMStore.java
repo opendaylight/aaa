@@ -179,4 +179,9 @@ public class IDMStore implements IIDMStore {
     public Grant readGrant(String domainid, String userid, String roleid) throws IDMStoreException {
         return readGrant(IDMStoreUtil.createGrantid(userid, domainid, roleid));
     }
+
+    @Override
+    public boolean isMainNodeInCluster() {
+        return true;
+    }
 }
