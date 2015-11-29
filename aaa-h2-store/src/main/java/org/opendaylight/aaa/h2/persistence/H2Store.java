@@ -10,7 +10,6 @@ package org.opendaylight.aaa.h2.persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.IIDMStore;
@@ -312,5 +311,10 @@ public class H2Store implements IIDMStore {
         g.setRoleid(role);
         g.setUserid(user);
         return gs.createGrant(g);
+    }
+
+    @Override
+    public boolean isMainNodeInCluster() {
+        return true;
     }
 }
