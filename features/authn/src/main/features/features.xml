@@ -218,4 +218,26 @@
         <feature version='${project.version}'>odl-aaa-authn-no-cluster</feature>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sssd/{{VERSION}}</bundle>
     </feature>
+
+    <feature name='odl-aaa-cassandra-cluster' description='OpenDaylight :: AAA :: Authentication - Cassandra' version='${project.version}'>
+        <feature version='${project.version}'>odl-aaa-api</feature>
+
+        <!-- MD-SAL -->
+        <feature version='${yangtools.version}'>odl-yangtools-common</feature>
+        <feature version='${mdsal.version}'>odl-mdsal-binding-base</feature>
+        <feature version='${controller.mdsal.version}'>odl-mdsal-broker</feature>
+        <feature version='${config.version}'>odl-config-core</feature>
+
+        <!--Cassandra Store -->
+        <bundle>mvn:io.netty/netty-transport/4.0.27.Final</bundle>
+        <bundle>mvn:io.netty/netty-codec/4.0.27.Final</bundle>
+        <bundle>mvn:io.netty/netty-common/4.0.27.Final</bundle>
+        <bundle>mvn:io.netty/netty-buffer/4.0.27.Final</bundle>
+        <bundle>mvn:io.netty/netty-handler/4.0.27.Final</bundle>
+        <bundle>mvn:com.codahale.metrics/metrics-core/3.0.2</bundle>
+        <bundle>mvn:com.datastax.cassandra/cassandra-driver-core/2.1.9</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-cassandra-store/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-cassandra-store-config.xml">mvn:org.opendaylight.aaa/aaa-cassandra-store/{{VERSION}}/xml/config</configfile>
+
+    </feature>
 </features>
