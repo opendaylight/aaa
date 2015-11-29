@@ -237,4 +237,82 @@
         <feature version='${project.version}'>odl-aaa-authn-no-cluster</feature>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sssd/{{VERSION}}</bundle>
     </feature>
+
+    <feature name='odl-aaa-authn-cassandra-cluster' description='OpenDaylight :: AAA :: Authentication - Cassandra'
+             version='${project.version}'>
+        <feature version='${project.version}'>odl-aaa-api</feature>
+
+        <!-- MD-SAL -->
+        <feature version='${yangtools.version}'>odl-yangtools-common</feature>
+        <feature version='${mdsal.version}'>odl-mdsal-binding-base</feature>
+        <feature version='${controller.mdsal.version}'>odl-mdsal-broker</feature>
+        <feature version='${config.version}'>odl-config-core</feature>
+
+        <!-- REST -->
+        <feature>war</feature>
+        <bundle>mvn:com.sun.jersey/jersey-servlet/{{VERSION}}</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
+
+        <!-- OSGi -->
+        <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/{{VERSION}}</bundle>
+        <bundle>mvn:org.apache.felix/org.apache.felix.metatype/{{VERSION}}</bundle>
+
+        <!-- OAuth -->
+        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.common/{{VERSION}}</bundle>
+        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.authzserver/{{VERSION}}</bundle>
+        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.resourceserver/{{VERSION}}</bundle>
+        <bundle>mvn:commons-codec/commons-codec/{{VERSION}}</bundle>
+        <bundle>wrap:mvn:org.json/json/{{VERSION}}</bundle>
+
+        <!-- commons-lang -->
+        <bundle>wrap:mvn:org.apache.commons/commons-lang3/{{VERSION}}</bundle>
+
+        <!-- AuthN -->
+        <bundle>mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}</bundle>
+        <bundle>mvn:org.apache.shiro/shiro-core/{{VERSION}}</bundle>
+        <bundle>mvn:org.apache.shiro/shiro-web/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
+        <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
+
+        <!--Cassandra Store -->
+        <bundle>mvn:io.netty/netty-transport/4.0.27.Final</bundle>
+        <bundle>mvn:io.netty/netty-codec/4.0.27.Final</bundle>
+        <bundle>mvn:io.netty/netty-common/4.0.27.Final</bundle>
+        <bundle>mvn:io.netty/netty-buffer/4.0.27.Final</bundle>
+        <bundle>mvn:io.netty/netty-handler/4.0.27.Final</bundle>
+        <bundle>mvn:com.codahale.metrics/metrics-core/3.0.2</bundle>
+        <bundle>mvn:com.datastax.cassandra/cassandra-driver-core/2.1.9</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-cassandra-store/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-cassandra-store-config.xml">mvn:org.opendaylight.aaa/aaa-cassandra-store/{{VERSION}}/xml/config</configfile>
+        <configfile finalname="etc/aaacassandra.cfg">mvn:org.opendaylight.aaa/aaa-cassandra-store/{{VERSION}}/cfg/config-1</configfile>
+
+        <!-- IDMLight -->
+        <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-idmlight-config.xml">mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}/xml/config</configfile>
+        <configfile finalname="etc/idmtool">mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}/py/config</configfile>
+
+        <bundle>mvn:com.fasterxml.jackson.core/jackson-core/{{VERSION}}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/{{VERSION}}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/{{VERSION}}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.datatype/jackson-datatype-json-org/{{VERSION}}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/{{VERSION}}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/{{VERSION}}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/{{VERSION}}</bundle>
+
+        <!-- Federation -->
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-idpmapping/{{VERSION}}</bundle>
+        <bundle>mvn:org.glassfish/javax.json/{{VERSION}}</bundle>
+
+        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/aaa-authn-store/{{VERSION}}/cfg/config</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}/cfg/config</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
+    </feature>
+
 </features>
+
