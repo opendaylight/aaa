@@ -69,4 +69,6 @@ public interface IIDMStore {
     public Grants getGrants(String userid) throws IDMStoreException;
 
     public Grant readGrant(String domainid, String userid, String roleid) throws IDMStoreException;
+
+    public boolean isMainNodeInCluster();
 }

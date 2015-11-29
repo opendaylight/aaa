@@ -60,6 +60,10 @@
         <javax.inject.version>1</javax.inject.version>
         <servlet.tester.version>7.0.0.M2</servlet.tester.version>
         <features.test.version>1.6.2-SNAPSHOT</features.test.version>
+        <!-- Cassandra -->
+        <metrics-core.version>3.0.2</metrics-core.version>
+        <cassandra.version>2.1.9</cassandra.version>
+        <cassandra-netty.version>4.0.27.Final</cassandra-netty.version>
     </properties>
 
     <dependencyManagement>
