@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>aaa-h2-store</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <dependencies>
