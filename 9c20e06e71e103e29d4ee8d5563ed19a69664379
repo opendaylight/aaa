@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_ee24eec7",
+        "filename": "aaa-h2-store/src/main/yang/aaa-h2-store.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-30T12:24:53Z",
+      "side": 1,
+      "message": "Please fix indentation here.",
+      "revId": "9c20e06e71e103e29d4ee8d5563ed19a69664379",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_4e40a256",
+        "filename": "aaa-h2-store/src/main/yang/aaa-h2-store.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-11-30T12:24:53Z",
+      "side": 1,
+      "message": "Please fix the indentation here.",
+      "revId": "9c20e06e71e103e29d4ee8d5563ed19a69664379",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
