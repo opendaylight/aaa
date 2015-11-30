@@ -86,9 +86,9 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,IdMSer
         // TODO: ensure domain names are unique change to 'getDomain'
         debug("get domain");
         try {
-            domain = ServiceLocator.INSTANCE.getStore().readDomain(creds.domain());
+            domain = ServiceLocator.INSTANCE.getStore().readDomain(credsDomain);
             if(domain==null){
-                throw new AuthenticationException("Domain :" + creds.domain() + " does not exist");
+                throw new AuthenticationException("Domain :" + credsDomain + " does not exist");
             }
         } catch (IDMStoreException e) {
             throw new AuthenticationException("Error while fetching domain",e);
@@ -97,7 +97,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,IdMSer
         // check to see user exists and passes cred check
         try {
            debug("check user / pwd");
-           Users users = ServiceLocator.INSTANCE.getStore().getUsers(creds.username(),creds.domain());
+           Users users = ServiceLocator.INSTANCE.getStore().getUsers(creds.username(), credsDomain);
            List<User> userList = users.getUsers();
            if (userList.size()==0) {
               throw new AuthenticationException("User :" + creds.username() + " does not exist in domain "+credsDomain);
