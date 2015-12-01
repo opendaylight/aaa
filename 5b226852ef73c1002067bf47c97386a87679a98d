@@ -134,6 +134,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_56dd9441",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/KeyStoreUtilis.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-12-01T20:18:07Z",
+      "side": 1,
+      "message": "My bad, here is an example to create a PKCS12 file:\nhttps://github.com/sniggel/bouncy-castle-example/blob/master/src/main/java/org/sniggel/examples/Main3.java#L253\nShould be kinda easy to convert it to .jks",
+      "parentUuid": "5aaae553_361d7810",
+      "range": {
+        "startLine": 13,
+        "startChar": 39,
+        "endLine": 13,
+        "endChar": 46
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_d392f6f5",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/KeyStoreUtilis.java",
         "patchSetId": 11
