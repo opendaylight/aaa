@@ -1,0 +1,596 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_93955ee6",
+        "filename": "aaa-cert/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "I don\u0027t think you need that",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 17
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_b39ada12",
+        "filename": "aaa-cert/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "I don\u0027t think you need that",
+      "range": {
+        "startLine": 88,
+        "startChar": 1,
+        "endLine": 124,
+        "endChar": 10
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_73a46257",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/CtlKeyStore.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "please use variables to hold those string.\n\nLikewise with those above",
+      "range": {
+        "startLine": 31,
+        "startChar": 30,
+        "endLine": 31,
+        "endChar": 42
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_539fe603",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/CtlKeyStore.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "please log the thrown expection",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 24
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_d392f6f5",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/KeyStoreUtilis.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "typo: Storage",
+      "range": {
+        "startLine": 15,
+        "startChar": 50,
+        "endLine": 15,
+        "endChar": 57
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_3386eaba",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/KeyStoreUtilis.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "please add a private constructor to make sure this class is not instantiated as I understand it shouldn\u0027t",
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_f38ff2ca",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/KeyTool.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "could be useful to log the error here",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 62,
+        "endChar": 9
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_536da603",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/abstractKeyToolCommand.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "why do you need to implements JavaToolRequest?",
+      "range": {
+        "startLine": 17,
+        "startChar": 56,
+        "endLine": 17,
+        "endChar": 71
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_93631e1a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/abstractKeyToolCommand.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "Please conform with Java guideline by making this a capital letter",
+      "range": {
+        "startLine": 17,
+        "startChar": 22,
+        "endLine": 17,
+        "endChar": 23
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_93bc7e6e",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/abstractKeyToolCommand.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "please add curly brakets and log exception",
+      "range": {
+        "startLine": 26,
+        "startChar": 16,
+        "endLine": 27,
+        "endChar": 73
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_b3c17ae6",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "please import the class",
+      "range": {
+        "startLine": 20,
+        "startChar": 40,
+        "endLine": 20,
+        "endChar": 63
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_53b6068c",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "please remove whitespace",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 8
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_73bb0273",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 8
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_13b08e8a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 8
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_d3a99625",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "why this interface should extends this?",
+      "range": {
+        "startLine": 11,
+        "startChar": 34,
+        "endLine": 11,
+        "endChar": 65
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_33ad8a32",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "please remove redundant public modifier",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 10
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_f3a61253",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/command/CreateKeyStore.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "please don\u0027t use hardcoded numbers/string",
+      "range": {
+        "startLine": 19,
+        "startChar": 63,
+        "endLine": 19,
+        "endChar": 66
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_737222e7",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/command/CreateSelfSignCert.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 18,
+        "startChar": 64,
+        "endLine": 18,
+        "endChar": 66
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_13772ed6",
+        "filename": "aaa-cert/src/main/yang/aaa-cert.yang",
+        "patchSetId": 11
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "remove whitespaces",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 4
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_3374aace",
+        "filename": "aaa-cli/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "this is useless",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 10
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_b3365a02",
+        "filename": "artifacts/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "you should also add the config dependency for this piece",
+      "range": {
+        "startLine": 186,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 25
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_934a3e82",
+        "filename": "features/aaa-cert/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "you also need to add the config as a dependency",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 17
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_f37db2b2",
+        "filename": "features/aaa-cert/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "you don\u0027t need that",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 17
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_9331de0d",
+        "filename": "features/aaa-cert/src/main/features/features.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "you need to add the config file here",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 14
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_f354d222",
+        "filename": "features/aaa-cli/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "not sure why this is needed",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 17
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_135e4e46",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-01T18:32:14Z",
+      "side": 1,
+      "message": "you need to add the config file: see line 122 for an example",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 14
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
