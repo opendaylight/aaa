@@ -111,6 +111,29 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_361d7810",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/KeyStoreUtilis.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-12-01T20:16:15Z",
+      "side": 1,
+      "message": "You know, you don\u0027t have to use the keytool binary to do this. This java API should give you all you need:\nhttp://docs.oracle.com/javase/6/docs/api/java/security/KeyStore.html#load%28java.io.InputStream,%20char%5B%5D%29\nI would recommend using bouncy castle to do this kind of stuff, but the difficult part is converting PKCS10(https://github.com/sniggel/bouncy-castle-example/blob/master/src/main/java/org/sniggel/examples/Main3.java#L123) to .jks files.\n\nHere is the PDF that contains a lot of useful examples:\nhttps://github.com/sniggel/bouncy-castle-example/blob/master/src/main/resources/cwguide-070313.pdf",
+      "range": {
+        "startLine": 13,
+        "startChar": 39,
+        "endLine": 13,
+        "endChar": 46
+      },
+      "revId": "5b226852ef73c1002067bf47c97386a87679a98d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_d392f6f5",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/KeyStoreUtilis.java",
         "patchSetId": 11
