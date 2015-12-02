@@ -27,6 +27,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-authn</artifactId>
+                <version>1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>aaa-authn</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
