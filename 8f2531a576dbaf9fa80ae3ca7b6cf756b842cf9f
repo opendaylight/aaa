@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_22cbee73",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-02T20:07:25Z",
+      "side": 1,
+      "message": "Sharon, can you remind me why we don\u0027t install aaa-h2-store here?  odl-restconf installs odl-aaa-authn by default, which should use the h2 implementation.",
+      "revId": "8f2531a576dbaf9fa80ae3ca7b6cf756b842cf9f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
