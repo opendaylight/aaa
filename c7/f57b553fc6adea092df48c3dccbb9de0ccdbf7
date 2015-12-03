@@ -1,0 +1,7 @@
+Verified+1: jenkins-releng <jenkins-releng@opendaylight.org>
+Code-Review+2: Thanh Ha <thanh.ha@linuxfoundation.org>
+Submitted-by: Thanh Ha <thanh.ha@linuxfoundation.org>
+Submitted-at: Thu, 03 Dec 2015 22:31:27 +0000
+Reviewed-on: https://git.opendaylight.org/gerrit/30585
+Project: aaa
+Branch: refs/heads/stable/lithium
