@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_29f189cd",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/StoreBuilder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2015-12-04T17:14:24Z",
+      "side": 1,
+      "message": "this is wrong now, right?\n\nhttps://git.opendaylight.org/gerrit/#/c/30728/",
+      "range": {
+        "startLine": 48,
+        "startChar": 77,
+        "endLine": 48,
+        "endChar": 79
+      },
+      "revId": "0f25e8c273c6297e4e88f8e2f335e08d0194c029",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
