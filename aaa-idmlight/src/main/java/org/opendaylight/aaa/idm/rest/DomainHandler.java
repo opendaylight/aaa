@@ -16,7 +16,6 @@ package org.opendaylight.aaa.idm.rest;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -28,7 +27,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.model.Claim;
 import org.opendaylight.aaa.api.model.Domain;
@@ -42,7 +40,7 @@ import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.UserPwd;
 import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-import org.opendaylight.aaa.idm.ServiceLocator;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +54,7 @@ public class DomainHandler {
       logger.info("Get /domains");
       Domains domains=null;
       try {
-         domains = ServiceLocator.INSTANCE.getStore().getDomains();
+         domains = AAAIDMLightModule.getStore().getDomains();
       }
       catch (IDMStoreException se) {
          logger.error("StoreException : " + se);
@@ -75,7 +73,7 @@ public class DomainHandler {
       logger.info("Get /domains/" + domainId);
       Domain domain = null;
       try {
-         domain = ServiceLocator.INSTANCE.getStore().readDomain(domainId);
+         domain = AAAIDMLightModule.getStore().readDomain(domainId);
       }
       catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
@@ -108,7 +106,7 @@ public class DomainHandler {
          if (domain.getDescription()==null) {
             domain.setDescription("");
          }
-         domain = ServiceLocator.INSTANCE.getStore().writeDomain(domain);
+         domain = AAAIDMLightModule.getStore().writeDomain(domain);
       }
       catch (IDMStoreException se) {
          logger.error("StoreException : " + se);
@@ -128,7 +126,7 @@ public class DomainHandler {
       logger.info("Put /domains/" + domainId);
       try {
          domain.setDomainid(domainId);
-         domain = ServiceLocator.INSTANCE.getStore().updateDomain(domain);
+         domain = AAAIDMLightModule.getStore().updateDomain(domain);
          if (domain==null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! Domain id :" + domainId);
@@ -152,7 +150,7 @@ public class DomainHandler {
       logger.info("Delete /domains/" + domainId);
 
       try {
-         Domain domain = ServiceLocator.INSTANCE.getStore().deleteDomain(domainId);
+         Domain domain = AAAIDMLightModule.getStore().deleteDomain(domainId);
          if (domain==null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! Domain id :" + domainId);
@@ -187,7 +185,7 @@ public class DomainHandler {
 
       // validate domain id
       try {
-         domain = ServiceLocator.INSTANCE.getStore().readDomain(domainId);
+         domain = AAAIDMLightModule.getStore().readDomain(domainId);
       }
       catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
@@ -204,7 +202,7 @@ public class DomainHandler {
       grant.setDomainid(domainId);
 
       try {
-         user = ServiceLocator.INSTANCE.getStore().readUser(userId);
+         user = AAAIDMLightModule.getStore().readUser(userId);
       }
       catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
@@ -231,7 +229,7 @@ public class DomainHandler {
          return Response.status(404).entity(idmerror).build();
       }
       try {
-         role = ServiceLocator.INSTANCE.getStore().readRole(roleId);
+         role = AAAIDMLightModule.getStore().readRole(roleId);
       }
       catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
@@ -248,7 +246,7 @@ public class DomainHandler {
 
       // see if grant already exists for this
       try {
-         Grant existingGrant = ServiceLocator.INSTANCE.getStore().readGrant(domainId,userId,roleId);
+         Grant existingGrant = AAAIDMLightModule.getStore().readGrant(domainId,userId,roleId);
          if (existingGrant != null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Grant already exists for did:"+domainId+" uid:"+userId+" rid:"+roleId);
@@ -266,7 +264,7 @@ public class DomainHandler {
 
       // create grant
       try {
-         grant = ServiceLocator.INSTANCE.getStore().writeGrant(grant);
+         grant = AAAIDMLightModule.getStore().writeGrant(grant);
       }
       catch (IDMStoreException se) {
          logger.error("StoreException : " + se);
@@ -295,7 +293,7 @@ public class DomainHandler {
       List<Role> roleList = new ArrayList<Role>();
 
       try {
-         domain = ServiceLocator.INSTANCE.getStore().readDomain(domainId);
+         domain = AAAIDMLightModule.getStore().readDomain(domainId);
       }
       catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
@@ -326,7 +324,7 @@ public class DomainHandler {
 
       // find userid for user
       try {
-         Users users = ServiceLocator.INSTANCE.getStore().getUsers(username,domainId);
+         Users users = AAAIDMLightModule.getStore().getUsers(username,domainId);
          List<User> userList = users.getUsers();
          if (userList.size()==0) {
             IDMError idmerror = new IDMError();
@@ -345,11 +343,11 @@ public class DomainHandler {
          claim.setUsername(username);
          claim.setUserid(user.getUserid());
          try {
-            Grants grants = ServiceLocator.INSTANCE.getStore().getGrants(domainId,user.getUserid());
+            Grants grants = AAAIDMLightModule.getStore().getGrants(domainId,user.getUserid());
             List<Grant> grantsList = grants.getGrants();
             for (int i=0; i < grantsList.size(); i++) {
                Grant grant = grantsList.get(i);
-               Role role = ServiceLocator.INSTANCE.getStore().readRole(grant.getRoleid());
+               Role role = AAAIDMLightModule.getStore().readRole(grant.getRoleid());
                roleList.add(role);
             }
          }
@@ -386,7 +384,7 @@ public class DomainHandler {
       List<Role> roleList = new ArrayList<Role>();
 
       try {
-         domain = ServiceLocator.INSTANCE.getStore().readDomain(domainId);
+         domain = AAAIDMLightModule.getStore().readDomain(domainId);
       }
       catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
@@ -402,7 +400,7 @@ public class DomainHandler {
       }
 
       try {
-         user = ServiceLocator.INSTANCE.getStore().readUser(userId);
+         user = AAAIDMLightModule.getStore().readUser(userId);
       }
       catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
@@ -418,11 +416,11 @@ public class DomainHandler {
       }
 
       try {
-         Grants grants = ServiceLocator.INSTANCE.getStore().getGrants(domainId,userId);
+         Grants grants = AAAIDMLightModule.getStore().getGrants(domainId,userId);
          List<Grant> grantsList = grants.getGrants();
          for (int i=0; i < grantsList.size(); i++) {
             Grant grant = grantsList.get(i);
-            Role role = ServiceLocator.INSTANCE.getStore().readRole(grant.getRoleid());
+            Role role = AAAIDMLightModule.getStore().readRole(grant.getRoleid());
             roleList.add(role);
          }
       }
@@ -449,7 +447,7 @@ public class DomainHandler {
       Role role=null;
 
       try {
-         domain = ServiceLocator.INSTANCE.getStore().readDomain(domainId);
+         domain = AAAIDMLightModule.getStore().readDomain(domainId);
       }
       catch(IDMStoreException se) {
          logger.error("Error deleting Grant  : " + se);
@@ -465,7 +463,7 @@ public class DomainHandler {
       }
 
       try {
-         user = ServiceLocator.INSTANCE.getStore().readUser(userId);
+         user = AAAIDMLightModule.getStore().readUser(userId);
       }
       catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
@@ -481,7 +479,7 @@ public class DomainHandler {
       }
 
       try {
-         role = ServiceLocator.INSTANCE.getStore().readRole(roleId);
+         role = AAAIDMLightModule.getStore().readRole(roleId);
       }
       catch(IDMStoreException se) {
          logger.error("StoreException : " + se);
@@ -498,13 +496,13 @@ public class DomainHandler {
 
       // see if grant already exists
       try {
-         Grant existingGrant = ServiceLocator.INSTANCE.getStore().readGrant(domainId,userId,roleId);
+         Grant existingGrant = AAAIDMLightModule.getStore().readGrant(domainId,userId,roleId);
          if (existingGrant == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Grant does not exist for did:"+domainId+" uid:"+userId+" rid:"+roleId);
             return Response.status(404).entity(idmerror).build();
          }
-         existingGrant = ServiceLocator.INSTANCE.getStore().deleteGrant(existingGrant.getDomainid());
+         existingGrant = AAAIDMLightModule.getStore().deleteGrant(existingGrant.getDomainid());
       }
       catch (IDMStoreException se) {
          logger.error("StoreException : " + se);
