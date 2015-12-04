@@ -59,6 +59,7 @@
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-idmlight-config.xml">mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}/xml/config</configfile>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-core/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/{{VERSION}}</bundle>
@@ -123,6 +124,7 @@
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-idmlight-config.xml">mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}/xml/config</configfile>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-core/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/{{VERSION}}</bundle>
@@ -173,6 +175,7 @@
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-idmlight-config.xml">mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}/xml/config</configfile>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-core/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/{{VERSION}}</bundle>
