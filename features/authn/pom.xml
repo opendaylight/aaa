@@ -144,6 +144,10 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-cluster-util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn-sts</artifactId>
         </dependency>
         <dependency>
