@@ -33,7 +33,7 @@ public class StoreBuilder {
             try{Thread.sleep(5000);}catch(Exception err){logger.error("Interrupted",err);}
             logger.info("No store service is available yet, waiting up until 30 seconds, waited for "+waitingTime+" seconds..");
             waitingTime+=5;
-            if(waitingTime>=30)
+            if(waitingTime>=600)
                 break;
         }
         if(ServiceLocator.INSTANCE.getStore()==null){
