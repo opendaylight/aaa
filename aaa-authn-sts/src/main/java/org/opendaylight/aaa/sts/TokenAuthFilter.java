@@ -32,9 +32,12 @@ import com.sun.jersey.spi.container.ContainerRequestFilter;
 /**
  * A token-based authentication filter for resource providers.
  *
+ * Deprecated: Use <code>AAAFilter</code> instead.
+ *
  * @author liemmn
  *
  */
+@Deprecated
 public class TokenAuthFilter implements ContainerRequestFilter {
 
     private final String OPTIONS = "OPTIONS";
