@@ -45,7 +45,7 @@ public class StoreBuilder {
         int waitingTime = 5;
         while(ServiceLocator.INSTANCE.getStore()==null){
             try{Thread.sleep(STOREBUILDER_POLL_INTERVAL);}catch(Exception err){logger.error("Interrupted",err);}
-            logger.info("No store service is available yet, waiting up until 30 seconds, waited for "+waitingTime+" seconds..");
+            logger.info("No store service is available yet, waiting up to 10 minutes, waited for "+waitingTime+" seconds..");
             waitingTime+=5;
             if(waitingTime>=STOREBUILDER_INIT_TIMEOUT)
                 break;
