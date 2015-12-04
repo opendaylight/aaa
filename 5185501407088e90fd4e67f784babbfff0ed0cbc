@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_4c69738a",
+        "filename": "features/aaa-cert/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2015-12-04T22:09:46Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "5aaae553_6c4b0f2c",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 17
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_4c52d3de",
         "filename": "features/aaa-cert/pom.xml",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2015-12-04T21:53:45Z",
       "side": 1,
       "message": "do you need that? You\u0027re not using them",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 17
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_2c6c379c",
+        "filename": "features/aaa-cert/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2015-12-04T22:09:46Z",
+      "side": 1,
+      "message": "the maven-aether-provider used to solve the version cast error exception.\nthe reset are required as it aaa-cert depndancy. the build will fail if remove them",
+      "parentUuid": "5aaae553_4c52d3de",
       "range": {
         "startLine": 76,
         "startChar": 0,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_0c0b7bd7",
+        "filename": "features/aaa-cert/src/main/features/features.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2015-12-04T22:09:46Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "5aaae553_cc46c323",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 91
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_ec5e1fe9",
         "filename": "features/aaa-cert/src/main/features/features.xml",
         "patchSetId": 13
@@ -105,6 +177,30 @@
       "writtenOn": "2015-12-04T21:53:45Z",
       "side": 1,
       "message": "you need to add dependencies for those bundle",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 83
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_ac0fc7e0",
+        "filename": "features/aaa-cert/src/main/features/features.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2015-12-04T22:09:46Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "5aaae553_ec5e1fe9",
       "range": {
         "startLine": 20,
         "startChar": 0,
@@ -163,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_cc1483f7",
+        "filename": "features/aaa-cli/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2015-12-04T22:09:46Z",
+      "side": 1,
+      "message": "I use these dependencies",
+      "parentUuid": "5aaae553_0c3dbb8f",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 17
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_ac41070d",
         "filename": "features/aaa-cli/pom.xml",
         "patchSetId": 13
@@ -186,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_6cf9cfc7",
+        "filename": "features/aaa-cli/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2015-12-04T22:09:46Z",
+      "side": 1,
+      "message": "ok will remove it and define feature-aaa-cert",
+      "parentUuid": "5aaae553_ac41070d",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 17
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_cccfa3af",
         "filename": "features/aaa-cli/src/main/features/features.xml",
         "patchSetId": 13
@@ -197,6 +341,30 @@
       "writtenOn": "2015-12-04T21:53:45Z",
       "side": 1,
       "message": "you need the feature-aaa-cert repository",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 91
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_0c329ba7",
+        "filename": "features/aaa-cli/src/main/features/features.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2015-12-04T22:09:46Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "5aaae553_cccfa3af",
       "range": {
         "startLine": 13,
         "startChar": 4,
@@ -255,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_ec2cdf4c",
+        "filename": "features/aaa-cli/src/main/features/features.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2015-12-04T22:09:46Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "5aaae553_4ce4133b",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 14
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_8cc1ab82",
         "filename": "features/authn/pom.xml",
         "patchSetId": 13
@@ -278,6 +470,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_ac26e766",
+        "filename": "features/authn/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2015-12-04T22:09:46Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "5aaae553_8cc1ab82",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 23
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_2cbe7700",
         "filename": "features/authn/src/main/features/features.xml",
         "patchSetId": 13
@@ -289,6 +505,30 @@
       "writtenOn": "2015-12-04T21:53:45Z",
       "side": 1,
       "message": "remove this",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 16
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_cc2b232f",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2015-12-04T22:09:46Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "5aaae553_2cbe7700",
       "range": {
         "startLine": 216,
         "startChar": 0,
