@@ -8,11 +8,12 @@
 
 package org.opendaylight.aaa.idm;
 
+import com.google.common.base.Preconditions;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
@@ -28,10 +29,9 @@ import org.opendaylight.aaa.api.model.Grants;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Preconditions;
 
 /**
  * An OSGi proxy for the IdmLight server.
@@ -86,7 +86,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,IdMSer
         // TODO: ensure domain names are unique change to 'getDomain'
         debug("get domain");
         try {
-            domain = ServiceLocator.INSTANCE.getStore().readDomain(credsDomain);
+            domain = AAAIDMLightModule.getStore().readDomain(credsDomain);
             if(domain==null){
                 throw new AuthenticationException("Domain :" + credsDomain + " does not exist");
             }
@@ -97,7 +97,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,IdMSer
         // check to see user exists and passes cred check
         try {
            debug("check user / pwd");
-           Users users = ServiceLocator.INSTANCE.getStore().getUsers(creds.username(), credsDomain);
+           Users users = AAAIDMLightModule.getStore().getUsers(creds.username(), credsDomain);
            List<User> userList = users.getUsers();
            if (userList.size()==0) {
               throw new AuthenticationException("User :" + creds.username() + " does not exist in domain "+credsDomain);
@@ -110,11 +110,11 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,IdMSer
            // get all grants & roles for this domain and user
            debug("get grants");
            List<String> roles = new ArrayList<String>();
-           Grants grants = ServiceLocator.INSTANCE.getStore().getGrants(domain.getDomainid(),user.getUserid());
+           Grants grants = AAAIDMLightModule.getStore().getGrants(domain.getDomainid(),user.getUserid());
            List<Grant> grantList = grants.getGrants();
            for (int z=0;z<grantList.size();z++) {
               Grant grant = grantList.get(z);
-              Role role = ServiceLocator.INSTANCE.getStore().readRole(grant.getRoleid());
+              Role role = AAAIDMLightModule.getStore().readRole(grant.getRoleid());
               roles.add(role.getName());
            }
 
@@ -139,11 +139,11 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,IdMSer
         debug("list Domains for userId:" + userId);
         List<String> domains = new ArrayList<String>();
         try {
-           Grants grants = ServiceLocator.INSTANCE.getStore().getGrants(userId);
+           Grants grants = AAAIDMLightModule.getStore().getGrants(userId);
            List<Grant> grantList = grants.getGrants();
            for (int z=0;z<grantList.size();z++) {
               Grant grant = grantList.get(z);
-              Domain domain = ServiceLocator.INSTANCE.getStore().readDomain(grant.getDomainid());
+              Domain domain = AAAIDMLightModule.getStore().readDomain(grant.getDomainid());
               domains.add(domain.getName());
            }
            return domains;
@@ -164,7 +164,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,IdMSer
            // find domain name for specied domain name
             String did = null;
             try {
-                Domain domain = ServiceLocator.INSTANCE.getStore().readDomain(domainName);
+                Domain domain = AAAIDMLightModule.getStore().readDomain(domainName);
                 if(domain==null){
                     debug("DomainName: " + domainName + " Not found!");
                     return roles;
@@ -175,11 +175,11 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,IdMSer
             }
 
            // find all grants for uid and did
-           Grants grants = ServiceLocator.INSTANCE.getStore().getGrants(did,userId);
+           Grants grants = AAAIDMLightModule.getStore().getGrants(did,userId);
            List<Grant> grantList = grants.getGrants();
            for (int z=0;z<grantList.size();z++) {
               Grant grant = grantList.get(z);
-              Role role = ServiceLocator.INSTANCE.getStore().readRole(grant.getRoleid());
+              Role role = AAAIDMLightModule.getStore().readRole(grant.getRoleid());
               roles.add(role.getName());
            }
 

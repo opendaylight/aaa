@@ -11,7 +11,6 @@ package org.opendaylight.aaa.idm.persistence;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -26,7 +25,7 @@ import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-import org.opendaylight.aaa.idm.ServiceLocator;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule;
 
 /*
  * @Author - Sharon Aicler (saichler@cisco.com)
@@ -36,7 +35,7 @@ public class PasswordHashTest {
     @Before
     public void before(){
         IIDMStore store = Mockito.mock(IIDMStore.class);
-        ServiceLocator.INSTANCE.setStore(store);
+        AAAIDMLightModule.setStore(store);
         Domain domain = new Domain();
         domain.setName("sdn");
         domain.setDomainid("sdn");
