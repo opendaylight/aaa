@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_6c4b0f2c",
+        "filename": "features/aaa-cert/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T21:53:45Z",
+      "side": 1,
+      "message": "remove, you don\u0027t use it",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 17
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_4c52d3de",
+        "filename": "features/aaa-cert/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T21:53:45Z",
+      "side": 1,
+      "message": "do you need that? You\u0027re not using them",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 17
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_2c5517c6",
+        "filename": "features/aaa-cert/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T21:53:45Z",
+      "side": 1,
+      "message": "you don\u0027t seem to use that: remove",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 17
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_cc46c323",
+        "filename": "features/aaa-cert/src/main/features/features.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T21:53:45Z",
+      "side": 1,
+      "message": "this is not used: remove",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 91
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_ec5e1fe9",
+        "filename": "features/aaa-cert/src/main/features/features.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T21:53:45Z",
+      "side": 1,
+      "message": "you need to add dependencies for those bundle",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 83
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_6cc46f92",
+        "filename": "features/aaa-cli/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T21:53:45Z",
+      "side": 1,
+      "message": "you need feature-aaa-cert dependency",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 17
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_0c3dbb8f",
+        "filename": "features/aaa-cli/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T21:53:45Z",
+      "side": 1,
+      "message": "you don\u0027t seem to use those, are you planing on adding them to the feature? else remove",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 17
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_ac41070d",
+        "filename": "features/aaa-cli/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T21:53:45Z",
+      "side": 1,
+      "message": "I don\u0027t see the purpose of this based on the defined feature",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 17
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_cccfa3af",
+        "filename": "features/aaa-cli/src/main/features/features.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T21:53:45Z",
+      "side": 1,
+      "message": "you need the feature-aaa-cert repository",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 91
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_8c48cb2e",
+        "filename": "features/aaa-cli/src/main/features/features.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T21:53:45Z",
+      "side": 1,
+      "message": "you don\u0027t use it: remove",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 95
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_4ce4133b",
+        "filename": "features/aaa-cli/src/main/features/features.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T21:53:45Z",
+      "side": 1,
+      "message": "remove this, you shouldn\u0027t duplicate the feature defined in feature-aaa-cert",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 14
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_8cc1ab82",
+        "filename": "features/authn/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T21:53:45Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 23
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_2cbe7700",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T21:53:45Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 16
+      },
+      "revId": "5185501407088e90fd4e67f784babbfff0ed0cbc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
