@@ -1,0 +1,28 @@
+module aaa-h2-store {
+  yang-version 1;
+  namespace "config:aaa:authn:store:cluster";
+  prefix "aaa-store-cluster";
+    organization "OpenDayLight";
+
+    import config { prefix config; revision-date 2013-04-05; }
+    import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
+
+    contact "saichler@gmail.com";
+
+    revision 2015-12-04 {
+        description
+            "Initial revision.";
+    }
+
+    identity aaa-store-cluster {
+        base config:module-type;
+        config:java-name-prefix AAAStoreCluster;
+    }
+
+    augment "/config:modules/config:module/config:configuration" {
+        case aaa-store-cluster {
+            when "/config:modules/config:module/config:type = 'aaa-store-cluster'";
+        }
+    }
+
+}
