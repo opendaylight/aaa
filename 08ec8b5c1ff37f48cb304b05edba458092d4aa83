@@ -1,0 +1,1319 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_d03c1f96",
+        "filename": "aaa-util/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Should this inherit from aaa-parent?  Also the version should be implicit and copied from there IMO.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_4282aa01",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Missing license header.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_027cb21f",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Please add a space before this line and make this a javadoc comment by using /** */ (double star on the first line).",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c2753a33",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Use method documentation comment /** */",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_e272b648",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "This is currently a magic string;  please make it a constant.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_a294be37",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Within the GenerateKey class, please make a \"getKey()\" function and utilize that instead of accessing the property directly.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_22a0ce8f",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Please pull this out onto a separate line.  I know it is unlikely that the primitive type conversion fails, but if so it is nice to have it on a separate line so the stack trace is easy to read.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_82b662db",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "This should really be in a finally block.  In the case that the file read fails for some reason, we still want to close the FileInputStream.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c2ac5a8f",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "These should be using LOG.error()",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_e2a9567c",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Please use LOG.error().  If you leave it like this then output goes to karaf.out and not everyone checks that.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_a2bb5ec3",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Please create a setter method in the GenerateKey class for this, instead of just relying on the property being visible.  It aggregates a clear path for setting GenerateKey\u0027s static key.  Also please make \"AES\" a constant.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_42b06add",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Please make this argument final.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_62b566cc",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Please make this argument final.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c2c3fa36",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Please use .getKey() instead.",
+      "range": {
+        "startLine": 73,
+        "startChar": 23,
+        "endLine": 73,
+        "endChar": 27
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_a2e27ed3",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "This comment is not really needed.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_42e70ae5",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Please put a space after \"if\".",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_e2d716ec",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Please make this a constant.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c2da1a17",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Please Log errors instead of printing the stack trace.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_a2091e97",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Please use a getter.",
+      "range": {
+        "startLine": 97,
+        "startChar": 70,
+        "endLine": 97,
+        "endChar": 76
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_8204227f",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Use a getter please.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_42fe2a6d",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_62032674",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_02f8327b",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_22f52e83",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c2f1ba96",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Log exceptions.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_e2ee36b4",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_822bc2ea",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "getter instead of member access.",
+      "range": {
+        "startLine": 127,
+        "startChar": 24,
+        "endLine": 127,
+        "endChar": 27
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_a2303e57",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 130,
+        "endChar": 14
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_4235ca44",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Please use curly braces on single line conditionals.  You do in other parts of your code and it would be nice to keep it consistent.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_623a4638",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Use the constant created for the above method.",
+      "range": {
+        "startLine": 140,
+        "startChar": 36,
+        "endLine": 140,
+        "endChar": 56
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_023fd226",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Log.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_223c4e2f",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Log.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_e245d6b3",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "g\\etter",
+      "range": {
+        "startLine": 150,
+        "startChar": 70,
+        "endLine": 150,
+        "endChar": 76
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c248dace",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "getter",
+      "range": {
+        "startLine": 150,
+        "startChar": 52,
+        "endLine": 150,
+        "endChar": 57
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_8212e2b2",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "log",
+      "range": {
+        "startLine": 152,
+        "startChar": 12,
+        "endLine": 152,
+        "endChar": 13
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_a217dea2",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "log",
+      "range": {
+        "startLine": 155,
+        "startChar": 12,
+        "endLine": 155,
+        "endChar": 32
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_420cea94",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_6211e6ab",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_2223ee06",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c21f7ab6",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_827982fe",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "put this in a finally block.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_a27efee2",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "log exception",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_42838acc",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Use /** */",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_628806e8",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_026d9232",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c2769a06",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "pull this out onto a separate line please.",
+      "range": {
+        "startLine": 177,
+        "startChar": 35,
+        "endLine": 177,
+        "endChar": 51
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_226a0e1b",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_e2739613",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_8260a236",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "put this in finally block.",
+      "range": {
+        "startLine": 180,
+        "startChar": 12,
+        "endLine": 180,
+        "endChar": 23
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_a2659e46",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Please log the Exception.  Can we get any more specific than \"Exception\" for this?  A lot of analysis tools complain about catching Exception.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_625fa673",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c24d3ac6",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Use curly braces.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_e24ab6ab",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_82c74212",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "curly braces",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_a2ccbe36",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_42d14acc",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_d0ee5f22",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "String concatenation is easier to read and compiles to the same thing.",
+      "range": {
+        "startLine": 211,
+        "startChar": 20,
+        "endLine": 216,
+        "endChar": 53
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_70f3eb0a",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "put in a finally block",
+      "range": {
+        "startLine": 226,
+        "startChar": 16,
+        "endLine": 226,
+        "endChar": 28
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_90f8e7e6",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "surround in braces",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_50da6f79",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "String concatenation reads better and compiles to the same thing...",
+      "range": {
+        "startLine": 252,
+        "startChar": 12,
+        "endLine": 256,
+        "endChar": 45
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_6287a610",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Is there any reason this is all capital?  I prefer \"Tag\" if it makes sense.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_10e4f739",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/DataEncrypter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "not sure I understand the names of these?  Can you please give these appropriate names or at least comment what they are?",
+      "range": {
+        "startLine": 265,
+        "startChar": 7,
+        "endLine": 267,
+        "endChar": 28
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_70ca0ba3",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/GenerateKey.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Missing license header.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_d0d5ff43",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/GenerateKey.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "/** */ comment instead.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_b0d08354",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/GenerateKey.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Just making sure this is supposed to be bashrck and not bashrc?",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_02a3529f",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/GenerateKey.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Please use Operating System agnostic filenames through Java\u0027s \"File\" utility.  For example, File.SEPARATOR.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_90cf87b0",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/GenerateKey.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "Should we be deriving iv in this manner?  I know we have similar code for OAuth2 code but I am not sure this is how we should seed iv.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_b03723b0",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/GenerateKey.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "magic number; make a constant.",
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_30c49391",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/GenerateKey.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "fix spacing.",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_50c10f7f",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/GenerateKey.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "fix spacing.",
+      "range": {
+        "startLine": 35,
+        "startChar": 14,
+        "endLine": 35,
+        "endChar": 29
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_10bb970f",
+        "filename": "aaa-util/src/main/java/org/opendaylight/aaa/util/GenerateKey.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-04T01:21:53Z",
+      "side": 1,
+      "message": "fix spacing.",
+      "range": {
+        "startLine": 38,
+        "startChar": 18,
+        "endLine": 38,
+        "endChar": 35
+      },
+      "revId": "08ec8b5c1ff37f48cb304b05edba458092d4aa83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
