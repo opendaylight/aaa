@@ -11,7 +11,7 @@
 
     <!-- odl-aaa-shiro feature which combines all aspects of AAA into one feature -->
     <feature name='odl-aaa-shiro' description='OpenDaylight :: AAA :: Shiro'
-             version='0.3.0-SNAPSHOT'>
+             version='0.4.0-SNAPSHOT'>
         <!-- OSGI -->
         <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.felix/org.apache.felix.metatype/{{VERSION}}</bundle>
@@ -19,7 +19,7 @@
         <!-- Guava -->
         <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
 
-        <feature version='0.3.0-SNAPSHOT'>odl-aaa-authn</feature>
+        <feature version='0.4.0-SNAPSHOT'>odl-aaa-authn</feature>
 
         <!-- Apache Shiro & Dependencies -->
         <bundle>mvn:org.apache.shiro/shiro-core/1.2.3</bundle>
