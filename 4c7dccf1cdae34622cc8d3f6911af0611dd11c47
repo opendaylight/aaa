@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_0c995b6e",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/yang/gen/v1/config/aaa/authn/idmlight/rev151204/AAAIDMLightModule.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-08T15:51:19Z",
+      "side": 1,
+      "message": "h2 is the backing store;  h2 implementation is still not under config subsystem: src/main/java/org/opendaylight/aaa/h2/Activator.java.  There is a chance that the store won\u0027t get injected by the previous Activator, resulting in no implementation of IIDMStore.  I believe we may want to put all bundles under config subsystem;  this hybrid state is messy.",
+      "parentUuid": "1aa4ed85_e964f1e6",
+      "range": {
+        "startLine": 58,
+        "startChar": 18,
+        "endLine": 58,
+        "endChar": 37
+      },
+      "revId": "4c7dccf1cdae34622cc8d3f6911af0611dd11c47",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_69a001f5",
         "filename": "aaa-idmlight/src/main/yang/aaa-idmlight.yang",
         "patchSetId": 5
