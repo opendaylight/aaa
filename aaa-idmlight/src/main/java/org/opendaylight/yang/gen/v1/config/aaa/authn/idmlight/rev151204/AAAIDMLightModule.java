@@ -57,6 +57,11 @@ public class AAAIDMLightModule extends org.opendaylight.yang.gen.v1.config.aaa.a
 
     private class StoreServiceLocator extends Thread {
         private int retryCount = 0;
+
+        public StoreServiceLocator() {
+            setDaemon(true);
+        }
+
         public void run(){
             while(store==null) {
                 retryCount++;
