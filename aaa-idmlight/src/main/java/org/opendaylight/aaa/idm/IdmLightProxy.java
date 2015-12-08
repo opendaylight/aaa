@@ -51,6 +51,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,IdMSer
         Preconditions.checkNotNull(creds.username());
         Preconditions.checkNotNull(creds.password());
         String domain = creds.domain() == null  ? IIDMStore.DEFAULT_DOMAIN : creds.domain();
+        domain = domain.trim();
         // FIXME: Add cache invalidation
         Map<PasswordCredentials, Claim> cache = claimCache.get(domain);
         if (cache == null) {
