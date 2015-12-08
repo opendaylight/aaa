@@ -42,21 +42,6 @@ public class StoreBuilder {
 
     public static void init() throws IDMStoreException {
         logger.info("creating idmlight schema in store");
-        int waitingTime = 5;
-
-        while(AAAIDMLightModule.getStore()==null){
-            try{Thread.sleep(STOREBUILDER_POLL_INTERVAL);}catch(Exception err){logger.error("Interrupted",err);}
-            logger.info("No store service is available yet, waiting up to 10 minutes, waited for "+waitingTime+" seconds..");
-            waitingTime+=5;
-            if(waitingTime>=STOREBUILDER_INIT_TIMEOUT)
-                break;
-        }
-        if(AAAIDMLightModule.getStore()==null){
-            logger.info("Store is not available, aborting initialization");
-            return;
-        }else{
-            logger.info("Store service was found");
-        }
 
         IIDMStore store = AAAIDMLightModule.getStore();
 
