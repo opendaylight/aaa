@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_e964f1e6",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/yang/gen/v1/config/aaa/authn/idmlight/rev151204/AAAIDMLightModule.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-12-08T08:53:55Z",
+      "side": 1,
+      "message": "Why is this needed?\nie I haven\u0027t seen other services, which also require service location, resort to this certainly not with the config sub-system",
+      "range": {
+        "startLine": 58,
+        "startChar": 18,
+        "endLine": 58,
+        "endChar": 37
+      },
+      "revId": "4c7dccf1cdae34622cc8d3f6911af0611dd11c47",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_69a001f5",
+        "filename": "aaa-idmlight/src/main/yang/aaa-idmlight.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 2106
+      },
+      "writtenOn": "2015-12-08T08:53:55Z",
+      "side": 1,
+      "message": "Why not a service-type?\nThis appears to just start the idmlight provider, but not use the config subsystem to register it as a service.",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 32
+      },
+      "revId": "4c7dccf1cdae34622cc8d3f6911af0611dd11c47",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
