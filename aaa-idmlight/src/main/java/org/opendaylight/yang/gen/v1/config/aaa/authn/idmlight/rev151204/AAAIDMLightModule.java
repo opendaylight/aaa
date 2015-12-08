@@ -1,10 +1,12 @@
 package org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204;
 
 import org.opendaylight.aaa.api.CredentialAuth;
+import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.idm.IdmLightProxy;
+import org.opendaylight.aaa.idm.StoreBuilder;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
@@ -39,6 +41,7 @@ public class AAAIDMLightModule extends org.opendaylight.yang.gen.v1.config.aaa.a
         final ServiceRegistration<?> clientAuthService = bundleContext.registerService(CredentialAuth.class.getName(), proxy, null);
 
         final StoreServiceLocator locator = new StoreServiceLocator();
+        locator.setDaemon(true);
         locator.start();
 
         LOGGER.info("AAA IDM Light Module Initialized");
@@ -70,6 +73,11 @@ public class AAAIDMLightModule extends org.opendaylight.yang.gen.v1.config.aaa.a
                 if (serviceReference != null) {
                     store = bundleContext.getService(serviceReference);
                     LOGGER.info("Store service was found!");
+                    try {
+                        StoreBuilder.init();
+                    } catch (IDMStoreException e) {
+                        LOGGER.error("Failed to initialize data in store",e);
+                    }
                     break;
                 }
                 try {
