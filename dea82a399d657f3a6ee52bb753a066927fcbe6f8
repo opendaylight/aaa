@@ -22,6 +22,30 @@
       "revId": "dea82a399d657f3a6ee52bb753a066927fcbe6f8",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_b78f30cc",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/TokenEndpoint.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-08T19:29:10Z",
+      "side": 1,
+      "message": "I think so...",
+      "parentUuid": "1aa4ed85_b7ee50b3",
+      "range": {
+        "startLine": 147,
+        "startChar": 14,
+        "endLine": 147,
+        "endChar": 86
+      },
+      "revId": "dea82a399d657f3a6ee52bb753a066927fcbe6f8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
