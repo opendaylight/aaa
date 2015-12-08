@@ -141,6 +141,15 @@ public class TokenEndpoint extends HttpServlet {
         if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(
                 GrantType.PASSWORD.toString())) {
             String domain = oauthRequest.getScopes().iterator().next();
+
+            //Workaround for bug 4742 -  domain contains garbage characters when authenticating
+            //I do not know what this has started to happen but the domain has extra
+            //garbage characters -30,-128,-117, putting this workaround to remove them
+            if(domain!=null && domain.length()+2==domain.getBytes().length){
+                domain = domain.substring(0,domain.length()-1);
+            }
+            //End workaround bug 4742
+
             PasswordCredentials pc = new PasswordCredentialBuilder()
                     .setUserName(oauthRequest.getUsername())
                     .setPassword(oauthRequest.getPassword())
