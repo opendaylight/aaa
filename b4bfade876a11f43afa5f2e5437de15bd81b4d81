@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_97c31438",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/yang/gen/v1/config/aaa/authn/idmlight/rev151204/AAAIDMLightModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-08T18:42:28Z",
+      "side": 1,
+      "message": "This should be in the StoreServiceLocator class constructor in case we ever decide to pull this out and put it in API.  The Thread should default to daemon.",
+      "revId": "b4bfade876a11f43afa5f2e5437de15bd81b4d81",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
