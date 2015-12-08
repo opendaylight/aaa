@@ -44,23 +44,29 @@ public class StoreBuilder {
         logger.info("creating idmlight schema in store");
         int waitingTime = 5;
 
-        while(AAAIDMLightModule.getStore()==null){
-            try{Thread.sleep(STOREBUILDER_POLL_INTERVAL);}catch(Exception err){logger.error("Interrupted",err);}
+        while (AAAIDMLightModule.getStore()==null) {
+            // TODO Convert h2 store to use configuration subsystem to avoid busy wait for the store
+            try{
+                Thread.sleep(STOREBUILDER_POLL_INTERVAL);
+            } catch(Exception err) {
+                logger.error("Interrupted",err);
+            }
             logger.info("No store service is available yet, waiting up to 10 minutes, waited for "+waitingTime+" seconds..");
             waitingTime+=5;
-            if(waitingTime>=STOREBUILDER_INIT_TIMEOUT)
+            if(waitingTime>=STOREBUILDER_INIT_TIMEOUT) {
                 break;
+            }
         }
-        if(AAAIDMLightModule.getStore()==null){
+        if (AAAIDMLightModule.getStore()==null) {
             logger.info("Store is not available, aborting initialization");
             return;
-        }else{
+        } else {
             logger.info("Store service was found");
         }
 
         IIDMStore store = AAAIDMLightModule.getStore();
 
-        //Check if default domain exist, if it exist then do not create default data in the store
+        //Check if default domain exists, if it exist then do not create default data in the store
         Domain defaultDomain = store.readDomain(IIDMStore.DEFAULT_DOMAIN);
         if(defaultDomain!=null){
             logger.info("Found default domain in Store, skipping insertion of default data");
