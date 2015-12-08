@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_ac736714",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/StoreBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-08T16:31:06Z",
+      "side": 1,
+      "message": "H2 is already on config sub system... I think this code is useless now that the IDMLight is on config subsystem... let me check that...",
+      "range": {
+        "startLine": 47,
+        "startChar": 33,
+        "endLine": 47,
+        "endChar": 41
+      },
+      "revId": "4f7f929cea32a262a3e7511582c1052565eb411f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
