@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_0202723e",
+        "filename": "aaa-cassandra-store/.gitignore",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-08T16:24:29Z",
+      "side": 1,
+      "message": "Why is this here twice?",
+      "revId": "91e39fa4b7e40e28e2d4cc0f7e22629e4dbe5ef1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_22ff6e36",
+        "filename": "aaa-cassandra-store/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-08T16:24:29Z",
+      "side": 1,
+      "message": "Please omit version as it is derived from the parent pom.",
+      "revId": "91e39fa4b7e40e28e2d4cc0f7e22629e4dbe5ef1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
