@@ -39,6 +39,7 @@ public class AAAIDMLightModule extends org.opendaylight.yang.gen.v1.config.aaa.a
         final ServiceRegistration<?> clientAuthService = bundleContext.registerService(CredentialAuth.class.getName(), proxy, null);
 
         final StoreServiceLocator locator = new StoreServiceLocator();
+        locator.setDaemon(true);
         locator.start();
 
         LOGGER.info("AAA IDM Light Module Initialized");
