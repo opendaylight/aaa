@@ -115,7 +115,9 @@ public class Activator extends DependencyActivatorBase {
         }
 
         public void start(){
-            new Thread(this,"STS Service Wiring Task").start();
+            Thread activationThread = new Thread(this,"STS Service Wiring Task");
+            activationThread.setDaemon(true);
+            activationThread.start();
         }
 
         public void run(){
