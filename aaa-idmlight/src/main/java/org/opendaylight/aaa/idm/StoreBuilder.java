@@ -24,30 +24,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class StoreBuilder {
-
-    /*
-     * Wait time between polling for backing data store.
-     */
-    private static final int STOREBUILDER_POLL_INTERVAL = 5000;
-
-    /*
-     * StoreBuilder has to wait for an injected DataStore befor attempting creation.
-     * Due to bundles loading at different times, this is not always deterministic.
-     * If you see the following in karaf.log, consider increasing this constant.
-     * "org.opendaylight.aaa.idmlight - 0.3.0.SNAPSHOT | Store is not available, aborting initialization"
-     */
-    private static final int STOREBUILDER_INIT_TIMEOUT = 600;
-
     private static Logger logger = LoggerFactory.getLogger(StoreBuilder.class);
 
     public static void init() throws IDMStoreException {
         logger.info("creating idmlight schema in store");
         int waitingTime = 5;
         while(ServiceLocator.INSTANCE.getStore()==null){
-            try{Thread.sleep(STOREBUILDER_POLL_INTERVAL);}catch(Exception err){logger.error("Interrupted",err);}
+            try{Thread.sleep(5000);}catch(Exception err){logger.error("Interrupted",err);}
             logger.info("No store service is available yet, waiting up until 30 seconds, waited for "+waitingTime+" seconds..");
             waitingTime+=5;
-            if(waitingTime>=STOREBUILDER_INIT_TIMEOUT)
+            if(waitingTime>=30)
                 break;
         }
         if(ServiceLocator.INSTANCE.getStore()==null){
