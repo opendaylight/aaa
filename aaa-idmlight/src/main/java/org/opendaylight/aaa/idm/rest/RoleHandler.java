@@ -27,13 +27,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.opendaylight.aaa.api.IDMStoreException;
-import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.idm.IdmLightApplication;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-import org.opendaylight.aaa.idm.ServiceLocator;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +46,7 @@ public class RoleHandler {
       logger.info("get /roles");
       Roles roles=null;
       try {
-         roles = ServiceLocator.INSTANCE.getStore().getRoles();
+         roles = AAAIDMLightModule.getStore().getRoles();
       }
       catch (IDMStoreException se) {
          return new IDMError(500,"internal error getting roles",se.getMessage()).response();
@@ -63,7 +62,7 @@ public class RoleHandler {
       Role role=null;
 
       try {
-         role = ServiceLocator.INSTANCE.getStore().readRole(id);
+         role = AAAIDMLightModule.getStore().readRole(id);
       }
       catch(IDMStoreException se) {
          return new IDMError(500,"internal error getting roles",se.getMessage()).response();
@@ -106,7 +105,7 @@ public class RoleHandler {
             return new IDMError(400,"role description max length is :" + IdmLightApplication.MAX_FIELD_LEN,"").response();
          }
 
-         role = ServiceLocator.INSTANCE.getStore().writeRole(role);
+         role = AAAIDMLightModule.getStore().writeRole(role);
       }
       catch (IDMStoreException se) {
          return new IDMError(500,"internal error creating role",se.getMessage()).response();
@@ -136,7 +135,7 @@ public class RoleHandler {
             return new IDMError(400,"role description max length is :" + IdmLightApplication.MAX_FIELD_LEN,"").response();
          }
 
-         role = ServiceLocator.INSTANCE.getStore().updateRole(role);
+         role = AAAIDMLightModule.getStore().updateRole(role);
          if (role==null) {
             return new IDMError(404,"role id not found :" + id,"").response();
          }
@@ -154,7 +153,7 @@ public class RoleHandler {
       logger.info("Delete /roles/" + id);
 
       try {
-         Role role = ServiceLocator.INSTANCE.getStore().deleteRole(id);
+         Role role = AAAIDMLightModule.getStore().deleteRole(id);
          if (role==null) {
             return new IDMError(404,"role id not found :" + id,"").response();
          }

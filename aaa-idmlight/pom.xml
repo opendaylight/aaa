@@ -13,6 +13,25 @@
     <packaging>bundle</packaging>
 
     <dependencies>
+        <!--Yang Binding -->
+        <dependency>
+            <groupId>org.opendaylight.controller</groupId>
+            <artifactId>config-api</artifactId>
+            <version>${config.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.controller</groupId>
+            <artifactId>sal-binding-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.controller</groupId>
+            <artifactId>sal-binding-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.controller</groupId>
+            <artifactId>sal-common-util</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn-api</artifactId>
@@ -82,11 +101,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- JDBC -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
         <!-- Testing Dependencies -->
         <dependency>
             <groupId>com.sun.jersey.jersey-test-framework</groupId>
@@ -109,6 +123,70 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.opendaylight.yangtools</groupId>
+                <artifactId>yang-maven-plugin</artifactId>
+                <version>${yangtools.version}</version>
+                <executions>
+                    <execution>
+                        <id>config</id>
+                        <goals>
+                            <goal>generate-sources</goal>
+                        </goals>
+                        <configuration>
+                            <codeGenerators>
+                                <generator>
+                                    <codeGeneratorClass>org.opendaylight.controller.config.yangjmxgenerator.plugin.JMXGenerator</codeGeneratorClass>
+                                    <outputBaseDir>${jmxGeneratorPath}</outputBaseDir>
+                                    <additionalConfiguration>
+                                        <namespaceToPackage1>urn:opendaylight:params:xml:ns:yang:controller==org.opendaylight.controller.config.yang</namespaceToPackage1>
+                                    </additionalConfiguration>
+                                </generator>
+                                <generator>
+                                    <codeGeneratorClass>org.opendaylight.yangtools.maven.sal.api.gen.plugin.CodeGeneratorImpl</codeGeneratorClass>
+                                    <outputBaseDir>${salGeneratorPath}</outputBaseDir>
+                                </generator>
+                            </codeGenerators>
+                            <inspectDependencies>true</inspectDependencies>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.opendaylight.mdsal</groupId>
+                        <artifactId>maven-sal-api-gen-plugin</artifactId>
+                        <version>${yangtools.version}</version>
+                        <type>jar</type>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.opendaylight.controller</groupId>
+                        <artifactId>yang-jmx-generator-plugin</artifactId>
+                        <version>${config.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>${project.build.directory}/classes/initial/08-aaa-idmlight-config.xml</file>
+                                    <type>xml</type>
+                                    <classifier>config</classifier>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <!-- override default version so we don't use bnd 2.3.0 when embedding sqlite -->
@@ -116,10 +194,10 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Import-Package>javax.servlet.http,javax.ws.rs,javax.ws.rs.core,javax.xml.bind.annotation,org.apache.felix.dm,org.opendaylight.aaa,org.opendaylight.aaa.api.*,org.osgi.framework,org.slf4j,org.eclipse.jetty.servlets,com.sun.jersey.spi.container.servlet,com.google.*</Import-Package>
+                        <Import-Package>javax.servlet.http,javax.ws.rs,javax.ws.rs.core,javax.xml.bind.annotation,org.apache.felix.dm,org.opendaylight.aaa,org.opendaylight.aaa.api.*,org.osgi.framework,org.slf4j,org.eclipse.jetty.servlets,com.sun.jersey.spi.container.servlet,com.google.*,org.opendaylight.*</Import-Package>
                         <Web-ContextPath>/auth</Web-ContextPath>
                         <!--<Web-Connectors>adminConn</Web-Connectors> -->
-                        <Bundle-Activator>org.opendaylight.aaa.idm.Activator</Bundle-Activator>
+                        <!--Bundle-Activator>org.opendaylight.aaa.idm.Activator</Bundle-Activator-->
                     </instructions>
                     <manifestLocation>${project.basedir}/META-INF</manifestLocation>
                 </configuration>

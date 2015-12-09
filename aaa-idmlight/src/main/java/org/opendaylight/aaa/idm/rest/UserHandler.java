@@ -25,15 +25,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
 import org.opendaylight.aaa.api.IDMStoreException;
-import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.idm.IdmLightApplication;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-import org.opendaylight.aaa.idm.ServiceLocator;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +47,7 @@ public class UserHandler {
       logger.info("get all users");
       Users users=null;
       try {
-         users = ServiceLocator.INSTANCE.getStore().getUsers();
+         users = AAAIDMLightModule.getStore().getUsers();
       }
       catch (IDMStoreException se) {
          return new IDMError(500,"internal error getting users",se.getMessage()).response();
@@ -71,7 +69,7 @@ public class UserHandler {
       logger.info("get /users/" + id);
       User user=null;
       try {
-         user = ServiceLocator.INSTANCE.getStore().readUser(id);
+         user = AAAIDMLightModule.getStore().readUser(id);
       }
       catch(IDMStoreException se) {
          return new IDMError(500,"internal error getting user",se.getMessage()).response();
@@ -137,7 +135,7 @@ public class UserHandler {
          }
 
          // create user
-         User createdUser = ServiceLocator.INSTANCE.getStore().writeUser(user);
+         User createdUser = AAAIDMLightModule.getStore().writeUser(user);
          user.setUserid(createdUser.getUserid());
       }
       catch (IDMStoreException se) {
@@ -158,7 +156,7 @@ public class UserHandler {
 
       try {
          user.setUserid(id);
-         user = ServiceLocator.INSTANCE.getStore().updateUser(user);
+         user = AAAIDMLightModule.getStore().updateUser(user);
          if (user==null) {
             return new IDMError(404,"user id not found id :"+id,"").response();
          }
@@ -177,7 +175,7 @@ public class UserHandler {
       logger.info("delete /users/" + id);
 
       try {
-         User user = ServiceLocator.INSTANCE.getStore().deleteUser(id);
+         User user = AAAIDMLightModule.getStore().deleteUser(id);
          if (user==null) {
             return new IDMError(404,"user id not found id :"+id,"").response();
          }
