@@ -663,6 +663,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_f892759e",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAObjectSerializer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-09T02:49:41Z",
+      "side": 1,
+      "message": "I wouldn\u0027t say it\u0027s extremely slow. It can have performance impact for complicated objects but yours are simple. The CDS uses java serialization and it\u0027s performant. At what rate do you expect to be serializing users/roles etc - I would think pretty low. Also it provides versioning and backwards/forwards compatibility (if used right). \n\nAnother option is to use Externalizable (more lightweight). Either way, I don\u0027t see a need to invent your own serialization framework.",
+      "parentUuid": "1aa4ed85_5d185b84",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_bd9b8f71",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/serializers/DomainSerializer.java",
         "patchSetId": 6
