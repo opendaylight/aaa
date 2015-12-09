@@ -14,7 +14,6 @@ import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.User;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,9 +26,8 @@ public class StoreBuilder {
 
     private static Logger logger = LoggerFactory.getLogger(StoreBuilder.class);
 
-    public static void init() throws IDMStoreException {
+    public static void init(IIDMStore store) throws IDMStoreException {
         logger.info("creating idmlight schema in store");
-        IIDMStore store = AAAIDMLightModule.getStore();
 
         //Check if default domain exist, if it exist then do not create default data in the store
         Domain defaultDomain = store.readDomain(IIDMStore.DEFAULT_DOMAIN);
