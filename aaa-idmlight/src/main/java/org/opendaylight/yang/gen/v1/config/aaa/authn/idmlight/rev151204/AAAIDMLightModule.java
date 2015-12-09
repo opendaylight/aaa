@@ -4,12 +4,13 @@ import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.IdMService;
-import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.idm.IdmLightProxy;
 import org.opendaylight.aaa.idm.StoreBuilder;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +18,6 @@ public class AAAIDMLightModule extends org.opendaylight.yang.gen.v1.config.aaa.a
 
     public static final Logger LOGGER = LoggerFactory.getLogger(AAAIDMLightModule.class);
     private BundleContext bundleContext = null;
-    private static final int WAITING_TIME = 5;
-    private static final int NUMBER_OF_RETRYS = 60;
     private static volatile IIDMStore store = null;
 
     public AAAIDMLightModule(org.opendaylight.controller.config.api.ModuleIdentifier identifier, org.opendaylight.controller.config.api.DependencyResolver dependencyResolver) {
@@ -40,9 +39,31 @@ public class AAAIDMLightModule extends org.opendaylight.yang.gen.v1.config.aaa.a
         final ServiceRegistration<?> idmService = bundleContext.registerService(IdMService.class.getName(), proxy, null);
         final ServiceRegistration<?> clientAuthService = bundleContext.registerService(CredentialAuth.class.getName(), proxy, null);
 
-        final StoreServiceLocator locator = new StoreServiceLocator();
-        locator.setDaemon(true);
-        locator.start();
+        final ServiceTracker<IIDMStore, IIDMStore> storeServiceTracker = new ServiceTracker<>(bundleContext, IIDMStore.class,
+                new ServiceTrackerCustomizer<IIDMStore, IIDMStore>() {
+                    @Override
+                    public IIDMStore addingService(ServiceReference<IIDMStore> reference) {
+                        store = reference.getBundle().getBundleContext().getService(reference);
+                        LOGGER.info("IIDMStore service {} was found", store.getClass());
+                        try {
+                            StoreBuilder.init(store);
+                        } catch (IDMStoreException e) {
+                            LOGGER.error("Failed to initialize data in store", e);
+                        }
+
+                        return store;
+                    }
+
+                    @Override
+                    public void modifiedService(ServiceReference<IIDMStore> reference, IIDMStore service) {
+                    }
+
+                    @Override
+                    public void removedService(ServiceReference<IIDMStore> reference, IIDMStore service) {
+                    }
+                });
+
+        storeServiceTracker.open();
 
         LOGGER.info("AAA IDM Light Module Initialized");
         return new AutoCloseable() {
@@ -50,49 +71,13 @@ public class AAAIDMLightModule extends org.opendaylight.yang.gen.v1.config.aaa.a
             public void close() throws Exception {
                 idmService.unregister();
                 clientAuthService.unregister();
+                storeServiceTracker.close();
             }
         };
     }
 
     public void setBundleContext(BundleContext b){
         this.bundleContext = b;
-    }
-
-    private class StoreServiceLocator extends Thread {
-        private int retryCount = 0;
-
-        public StoreServiceLocator() {
-            setDaemon(true);
-        }
-
-        public void run(){
-            while(store==null) {
-                retryCount++;
-                LOGGER.info("Trying to wire the IIDMStore service, Attempt # {}",retryCount);
-                final ServiceReference<IIDMStore> serviceReference = bundleContext.getServiceReference(IIDMStore.class);
-                if (serviceReference != null) {
-                    store = bundleContext.getService(serviceReference);
-                    LOGGER.info("Store service was found!");
-                    try {
-                        StoreBuilder.init();
-                    } catch (IDMStoreException e) {
-                        LOGGER.error("Failed to initialize data in store",e);
-                    }
-                    break;
-                }
-                try {
-                    Thread.sleep(WAITING_TIME);
-                } catch (InterruptedException e) {
-                    LOGGER.error("Failed to sleep",e);
-                    break;
-                }
-                if(retryCount>=NUMBER_OF_RETRYS){
-                    LOGGER.error("Failed to wire the store service.");
-                    break;
-                }
-            }
-
-        }
     }
 
     public static final IIDMStore getStore(){
