@@ -388,6 +388,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_2f41a40b",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-12-09T12:25:11Z",
+      "side": 1,
+      "message": "synchronized() is a classic mutex, which is always faster than a read-write lock. Read-write lock is only appropriate when there significantly more readers than writers -- in this particular instance there are no readers at all.",
+      "parentUuid": "1aa4ed85_1db6638b",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_9df013cb",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
         "patchSetId": 6
