@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_fd1ca715",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAByteArrayWrapper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-12-09T00:41:41Z",
+      "side": 1,
+      "message": "this looks like a home-grown java.nio.ByteBuffer (or io.netty.buffer.ByteBuf). Since this package seems to be dealing with network, I suspect it should be the latter.",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_bd162ff0",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-12-09T00:41:41Z",
+      "side": 1,
+      "message": "Only write-taken. This lock should be eliminated completely,\nthe MessageDiest should initialized once. Access to it should be made synchronized on the \u0027md\u0027 object. Since it is not leaking, outside this class the only locking conflicts would be with the actual implementation, which is completely fine.",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_9df013cb",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-12-09T00:41:41Z",
+      "side": 1,
+      "message": "should be final and properly initialized via constructors",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_5dba9be2",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-12-09T00:41:41Z",
+      "side": 1,
+      "message": "inline into static initializer block, which eliminates the need for null check or locking, since static initializers are run when the class is loaded (so it is impossible to call static methods from outside).",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_7dbf57d1",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-12-09T00:41:41Z",
+      "side": 1,
+      "message": "This is a critical error as this class is unable to operate correctly, change this to:\n\nthrow new ExceptionInInitializerError(e);",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_fde34703",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-12-09T00:41:41Z",
+      "side": 1,
+      "message": "Java 9 compatibility: do not use _ in identifiers. You can name arguments the same as field names and use:\n\nthis.md5Long1 \u003d md5Long1;",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_7da677c3",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-12-09T00:41:41Z",
+      "side": 1,
+      "message": "Use Guava\u0027s Longs.fromByteArray() here",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_1dabc38a",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-12-09T00:41:41Z",
+      "side": 1,
+      "message": "Longs.fromByteArray(Arrays.copyOfRange(by, 8. 16))",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_3db0fff3",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-12-09T00:41:41Z",
+      "side": 1,
+      "message": "java.util.Objects.hash(md5Long1, md5Long2) is a better function, as it uses all bits.",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_fdf587cb",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAObjectEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-12-09T00:41:41Z",
+      "side": 1,
+      "message": "exposing public arrays is a security risk, as they can be affected via System.arrayCopy(). This constants look like implementation details, so should be made private (or package-private).",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_ddf8cbc6",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAObjectEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-12-09T00:41:41Z",
+      "side": 1,
+      "message": "is this perhaps a cache? Can we use LoadingCache for that, please?\n\nIt also lookss like a candidate for \u0027final.\n\nIf it is not a cache, classToId and itToClass should be combined into a BiMap.",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_9d0253b3",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAObjectEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-12-09T00:41:41Z",
+      "side": 1,
+      "message": "magic constant: please create a constant field to hold \u00271024\u0027",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_3d2b1f32",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAObjectEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-12-09T00:41:41Z",
+      "side": 1,
+      "message": "where does \u00276\u0027 come from? NULL.length?",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_dd944b46",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAObjectSerializer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-12-09T00:41:41Z",
+      "side": 1,
+      "message": "This is the same as com.google.common.base.Converter\u003cT, AAAByteArrayWrapper\u003e",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_bd9b8f71",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/serializers/DomainSerializer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2015-12-09T00:41:41Z",
+      "side": 1,
+      "message": "this class should never be instantiated, as it has seem to be thread-safe. This class should be turned into a constant field instead.",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
