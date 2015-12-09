@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_9d9253f5",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAByteArrayWrapper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T02:35:16Z",
+      "side": 1,
+      "message": "It might be, however considering this is a small implementation that is working exactly as \nI expect it to work I prefer to keep it as is as I have following ideas that will make it hard for me to use other utilities.",
+      "parentUuid": "1aa4ed85_fd1ca715",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_7df3d773",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
         "patchSetId": 6
@@ -172,6 +190,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_1db6638b",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T02:35:16Z",
+      "side": 1,
+      "message": "Are you suggestion to move to synchronized instead of locking? Isn\u0027t synchronized slower?",
+      "parentUuid": "1aa4ed85_bd162ff0",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_9df013cb",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
         "patchSetId": 6
@@ -183,6 +219,24 @@
       "writtenOn": "2015-12-09T00:41:41Z",
       "side": 1,
       "message": "should be final and properly initialized via constructors",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_7d4f5793",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T02:35:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_9df013cb",
       "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -206,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_fdaca737",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T02:35:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_5dba9be2",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_7dbf57d1",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
         "patchSetId": 6
@@ -217,6 +289,24 @@
       "writtenOn": "2015-12-09T00:41:41Z",
       "side": 1,
       "message": "This is a critical error as this class is unable to operate correctly, change this to:\n\nthrow new ExceptionInInitializerError(e);",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_3d723fe6",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T02:35:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_7dbf57d1",
       "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -240,6 +330,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_dd768bd8",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T02:35:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_fde34703",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_7da677c3",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
         "patchSetId": 6
@@ -251,6 +359,24 @@
       "writtenOn": "2015-12-09T00:41:41Z",
       "side": 1,
       "message": "Use Guava\u0027s Longs.fromByteArray() here",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_fd7347e5",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T02:35:16Z",
+      "side": 1,
+      "message": "why? this has proven to work fast and i don\u0027t need to consider and test what is the most signification byte, e.g. direction.",
+      "parentUuid": "1aa4ed85_7da677c3",
       "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -274,6 +400,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_9d80138d",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T02:35:16Z",
+      "side": 1,
+      "message": "same reply. It is working as expected with no issues.",
+      "parentUuid": "1aa4ed85_1dabc38a",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_3db0fff3",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
         "patchSetId": 6
@@ -285,6 +429,24 @@
       "writtenOn": "2015-12-09T00:41:41Z",
       "side": 1,
       "message": "java.util.Objects.hash(md5Long1, md5Long2) is a better function, as it uses all bits.",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_5d4a9b84",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T02:35:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_3db0fff3",
       "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -308,6 +470,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_1d442373",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAObjectEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T02:35:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_fdf587cb",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_ddf8cbc6",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAObjectEncoder.java",
         "patchSetId": 6
@@ -319,6 +499,24 @@
       "writtenOn": "2015-12-09T00:41:41Z",
       "side": 1,
       "message": "is this perhaps a cache? Can we use LoadingCache for that, please?\n\nIt also lookss like a candidate for \u0027final.\n\nIf it is not a cache, classToId and itToClass should be combined into a BiMap.",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_1d3bc3ec",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAObjectEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T02:35:16Z",
+      "side": 1,
+      "message": "I would not call it a cache, it is a set of maps to enable the encoder to determinate which serializer to use for each object. it should be populated once when the module loads.",
+      "parentUuid": "1aa4ed85_ddf8cbc6",
       "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -342,6 +540,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_3d40ff55",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAObjectEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T02:35:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_9d0253b3",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_3d2b1f32",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAObjectEncoder.java",
         "patchSetId": 6
@@ -353,6 +569,24 @@
       "writtenOn": "2015-12-09T00:41:41Z",
       "side": 1,
       "message": "where does \u00276\u0027 come from? NULL.length?",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_dd244bc8",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAObjectEncoder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T02:35:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_3d2b1f32",
       "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -376,6 +610,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_9d2ed3a4",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAObjectSerializer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T02:35:16Z",
+      "side": 1,
+      "message": "I\u0027ll look into that.",
+      "parentUuid": "1aa4ed85_dd944b46",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_bd54ef21",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAObjectSerializer.java",
         "patchSetId": 6
@@ -393,6 +645,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_5d185b84",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAObjectSerializer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T02:35:16Z",
+      "side": 1,
+      "message": "Unfortunately Java serialization is extremely slow and google protobuf require hard coding, creating messages and compiling, which cannot be done in runtime, a feature i am planning in the future.",
+      "parentUuid": "1aa4ed85_bd54ef21",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_bd9b8f71",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/serializers/DomainSerializer.java",
         "patchSetId": 6
@@ -404,6 +674,24 @@
       "writtenOn": "2015-12-09T00:41:41Z",
       "side": 1,
       "message": "this class should never be instantiated, as it has seem to be thread-safe. This class should be turned into a constant field instead.",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_d8121958",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/serializers/DomainSerializer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T02:35:16Z",
+      "side": 1,
+      "message": "In the future I would like to create those @ runtime, hence I would prefer to keep it as is.",
+      "parentUuid": "1aa4ed85_bd9b8f71",
       "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
