@@ -19,6 +19,142 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_7df3d773",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-09T02:12:00Z",
+      "side": 1,
+      "message": "This should be volatile.",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_bd8f0fcc",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-09T02:12:00Z",
+      "side": 1,
+      "message": "Access to the \"connections\" map isn\u0027t synchronized elsewhere in this class. However, to make things easier, it seems that adding a connection would be infrequent so you could make \"connections\" an immutable map. When adding a connection, make a copy of  \"connections\", modify the copy and set \"connections\" to the copy. Synchronize on \"this\" or a separate lock object.",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_1d9f4305",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-09T02:12:00Z",
+      "side": 1,
+      "message": "It looks like start should be called outside the synchronized block.",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_bde14f9c",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-09T02:12:00Z",
+      "side": 1,
+      "message": "Does this need to busy wait? At the very least, it doesn\u0027t need to sleep block for 1 sec, 50 ms should suffice. If interrupted it should return.",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_5dbcdb6c",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-09T02:12:00Z",
+      "side": 1,
+      "message": "Line too long.",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_7dc197e3",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-09T02:12:00Z",
+      "side": 1,
+      "message": "Break here?",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_3dbb1f74",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-09T02:12:00Z",
+      "side": 1,
+      "message": "datagramSocket is already closed in shutdown.",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_1de8a37b",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-09T02:12:00Z",
+      "side": 1,
+      "message": "What is this used for? Shouldn\u0027t it be incremented somewhere?",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_bd162ff0",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAMD5Identifier.java",
         "patchSetId": 6
@@ -234,6 +370,23 @@
       "writtenOn": "2015-12-09T00:41:41Z",
       "side": 1,
       "message": "This is the same as com.google.common.base.Converter\u003cT, AAAByteArrayWrapper\u003e",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_bd54ef21",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAObjectSerializer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-09T02:12:00Z",
+      "side": 1,
+      "message": "This also looks like a mechanism to serialize objects over the wire. If so, why not use Java serialization or google\u0027s protobuf - no need to re-invent the wheel.",
       "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
