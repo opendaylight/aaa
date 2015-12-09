@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_d840d937",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T03:03:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_7df3d773",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_bd8f0fcc",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
         "patchSetId": 6
@@ -65,6 +83,24 @@
       "writtenOn": "2015-12-09T02:12:00Z",
       "side": 1,
       "message": "Access to the \"connections\" map isn\u0027t synchronized elsewhere in this class. However, to make things easier, it seems that adding a connection would be infrequent so you could make \"connections\" an immutable map. When adding a connection, make a copy of  \"connections\", modify the copy and set \"connections\" to the copy. Synchronize on \"this\" or a separate lock object.",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_984a6154",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T03:03:19Z",
+      "side": 1,
+      "message": "Note that the connection can be instantiate from two different threads, hence the synchronization. Also during connection adding there is an iteration over the connections to determinate old ones should be removed.",
+      "parentUuid": "1aa4ed85_bd8f0fcc",
       "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_986101d6",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T03:03:19Z",
+      "side": 1,
+      "message": "I can take it out, but why do you think that? (e.g. why does it matter?)",
+      "parentUuid": "1aa4ed85_1d9f4305",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_bde14f9c",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
         "patchSetId": 6
@@ -99,6 +153,24 @@
       "writtenOn": "2015-12-09T02:12:00Z",
       "side": 1,
       "message": "Does this need to busy wait? At the very least, it doesn\u0027t need to sleep block for 1 sec, 50 ms should suffice. If interrupted it should return.",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_5882a953",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T03:03:19Z",
+      "side": 1,
+      "message": "This is a dirty implementation, I plan to do it properly via wait/notify in the future.",
+      "parentUuid": "1aa4ed85_bde14f9c",
       "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -122,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_78876562",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T03:03:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_5dbcdb6c",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_7dc197e3",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
         "patchSetId": 6
@@ -133,6 +223,24 @@
       "writtenOn": "2015-12-09T02:12:00Z",
       "side": 1,
       "message": "Break here?",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_187c3172",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T03:03:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_7dc197e3",
       "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -156,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_d8953989",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T03:03:19Z",
+      "side": 1,
+      "message": "This is a demon thread, I was not sure if the shutdown was actually called when i reached this point so i add another close.",
+      "parentUuid": "1aa4ed85_3dbb1f74",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_1de8a37b",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
         "patchSetId": 6
@@ -167,6 +293,24 @@
       "writtenOn": "2015-12-09T02:12:00Z",
       "side": 1,
       "message": "What is this used for? Shouldn\u0027t it be incremented somewhere?",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_b88cfd80",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T03:03:19Z",
+      "side": 1,
+      "message": "Yep, a minor bug.\nIt is used to determinate if the error log should be info or error. Between two hosts there are two connections (to avoid race condition when the hosts are opening connection to each other). when one fails, the log should be info, otherwise error.",
+      "parentUuid": "1aa4ed85_1de8a37b",
       "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -675,6 +819,24 @@
       "side": 1,
       "message": "I wouldn\u0027t say it\u0027s extremely slow. It can have performance impact for complicated objects but yours are simple. The CDS uses java serialization and it\u0027s performant. At what rate do you expect to be serializing users/roles etc - I would think pretty low. Also it provides versioning and backwards/forwards compatibility (if used right). \n\nAnother option is to use Externalizable (more lightweight). Either way, I don\u0027t see a need to invent your own serialization framework.",
       "parentUuid": "1aa4ed85_5d185b84",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_98e6e143",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAObjectSerializer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-09T03:03:19Z",
+      "side": 1,
+      "message": "Well, this patch is half backed. I am missing a journal... when i will implement the journal, it is there where i will get hit by java serializatin issues. In java serialization, the amount of bytes to write on a single object will be around 200-250 (or more) bytes per entry, depending on the class package and name \u0026 etc. Using this method, the same object bytes will be around 40-50 and that will be performance impact. The real traffic will probably be over the tokens.",
+      "parentUuid": "1aa4ed85_f892759e",
       "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
