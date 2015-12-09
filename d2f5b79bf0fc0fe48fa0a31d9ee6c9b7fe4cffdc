@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_783c4594",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-09T03:23:49Z",
+      "side": 1,
+      "message": "I know why you\u0027re synchronizing but you need to synchronize and protect \"connections\" every where it\u0027s accessed. which you\u0027re not. Since \"connections\" won;t change that often, I\u0027m suggesting to simplify the code and make it immutable so reads don\u0027t need to be synchronized. Essentially copy-on-write",
+      "parentUuid": "1aa4ed85_984a6154",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_1d9f4305",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
         "patchSetId": 6
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "I can take it out, but why do you think that? (e.g. why does it matter?)",
       "parentUuid": "1aa4ed85_1d9f4305",
+      "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_3846cd24",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/clustering/AAAClusterNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-09T03:23:49Z",
+      "side": 1,
+      "message": "You should keep synchronized blocks as small as possible and avoid potentially expensive operations to reduce contention and long blocked threads. Since you\u0027re synchronizing to protect access to \"connections\", the call to start doesn\u0027t need to be in the synchronized block. It really doesn\u0027t matter much here - it\u0027s just good practice.",
+      "parentUuid": "1aa4ed85_986101d6",
       "revId": "d2f5b79bf0fc0fe48fa0a31d9ee6c9b7fe4cffdc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
