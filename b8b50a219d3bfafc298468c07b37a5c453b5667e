@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_69b9cfe8",
+        "filename": "aaa-authn-federation/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-11T16:55:03Z",
+      "side": 1,
+      "message": "Not sure this will work with Jersey 1.X.  Jersey 1.X needs servlet-api \u003c\u003d 2.5 I believe?",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 30
+      },
+      "revId": "b8b50a219d3bfafc298468c07b37a5c453b5667e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_09ce1b84",
+        "filename": "aaa-authn-keystone/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-11T16:55:03Z",
+      "side": 1,
+      "message": "Same as last file...",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 30
+      },
+      "revId": "b8b50a219d3bfafc298468c07b37a5c453b5667e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
