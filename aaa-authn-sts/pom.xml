@@ -96,7 +96,11 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Import-Package>*,com.sun.jersey.spi.container.servlet</Import-Package>
+                        <Import-Package>
+                            *,
+                            com.sun.jersey.spi.container.servlet,
+                            org.osgi.util.tracker
+                        </Import-Package>
                         <Web-ContextPath>/oauth2</Web-ContextPath>
                         <Bundle-Activator>org.opendaylight.aaa.sts.Activator</Bundle-Activator>
                         <manifestLocation>${project.basedir}/META-INF</manifestLocation>
