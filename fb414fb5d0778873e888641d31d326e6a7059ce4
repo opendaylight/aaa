@@ -69,6 +69,24 @@
       "revId": "fb414fb5d0778873e888641d31d326e6a7059ce4",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_3296d795",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-14T23:57:29Z",
+      "side": 1,
+      "message": "I mean:\n\nclass AAAServiceTrackerCustomizer\u003cS\u003e implements ServiceTrackerCustomizer\u003cS,S\u003e",
+      "parentUuid": "1aa4ed85_326817ba",
+      "revId": "fb414fb5d0778873e888641d31d326e6a7059ce4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
