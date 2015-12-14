@@ -8,6 +8,9 @@
 
 package org.opendaylight.aaa.sts;
 
+import java.util.List;
+import java.util.concurrent.Callable;
+
 import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
 import org.opendaylight.aaa.api.AuthenticationService;
@@ -19,169 +22,166 @@ import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import com.google.common.collect.Lists;
 
 /**
  * An activator for the secure token server to inject in a
  * {@link CredentialAuth} implementation.
  *
  * @author liemmn
- *
+ * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 public class Activator extends DependencyActivatorBase {
-    public static final Logger LOGGER = LoggerFactory.getLogger(Activator.class);
-    public static final int WIRE_SERVICE_RETRY_COUNT = 60;
-    public static final int RETRY_CHECK_INTERVAL = 2000;
 
+    public static final Logger LOGGER = LoggerFactory.getLogger(Activator.class);
+
+    // Info level messages surrounding AAA STS activation
+    private static final String STS_ACTIVATOR_INITIALIZED = "STS Activator initialized; ServiceTracker may still be processing";
+    private static final String STS_ACTIVATOR_INITIALIZING = "STS Activator initializing";
+
+    // Definition of several methods called in the ServiceLocator through Reflection
+    private static final String AUTHENTICATION_SERVICE_REMOVED = "authenticationServiceRemoved";
+    private static final String AUTHENTICATION_SERVICE_ADDED = "authenticationServiceAdded";
+    private static final String TOKEN_STORE_REMOVED = "tokenStoreRemoved";
+    private static final String TOKEN_STORE_ADDED = "tokenStoreAdded";
+    private static final String TOKEN_AUTH_REMOVED = "tokenAuthRemoved";
+    private static final String TOKEN_AUTH_ADDED = "tokenAuthAdded";
+    private static final String CLAIM_AUTH_REMOVED = "claimAuthRemoved";
+    private static final String CLAIM_AUTH_ADDED = "claimAuthAdded";
+    private static final String CREDENTIAL_AUTH_REMOVED = "credentialAuthRemoved";
+    private static final String CREDENTIAL_AUTH_ADDED = "credentialAuthAdded";
+
+    static ServiceTracker<AuthenticationService, AuthenticationService> authenticationService;
+    static ServiceTracker<IdMService, IdMService> idmService;
+    static ServiceTracker<TokenAuth, TokenAuth> tokenAuthService;
+    static ServiceTracker<TokenStore, TokenStore> tokenStoreService;
+    static ServiceTracker<ClientService, ClientService> clientService;
     @Override
     public void init(BundleContext context, DependencyManager manager)
             throws Exception {
+
+        LOGGER.info(STS_ACTIVATOR_INITIALIZING);
         manager.add(createComponent()
                 .setImplementation(ServiceLocator.getInstance())
                 .add(createServiceDependency().setService(CredentialAuth.class)
                     .setRequired(true)
-                    .setCallbacks("credentialAuthAdded", "credentialAuthRemoved"))
+                    .setCallbacks(CREDENTIAL_AUTH_ADDED, CREDENTIAL_AUTH_REMOVED))
                 .add(createServiceDependency().setService(ClaimAuth.class)
                 .setRequired(false)
-                .setCallbacks("claimAuthAdded", "claimAuthRemoved"))
+                .setCallbacks(CLAIM_AUTH_ADDED, CLAIM_AUTH_REMOVED))
                 .add(createServiceDependency().setService(TokenAuth.class)
                     .setRequired(false)
-                        .setCallbacks("tokenAuthAdded", "tokenAuthRemoved"))
+                        .setCallbacks(TOKEN_AUTH_ADDED, TOKEN_AUTH_REMOVED))
                 .add(createServiceDependency().setService(TokenStore.class)
                         .setRequired(true)
-                        .setCallbacks("tokenStoreAdded", "tokenStoreRemoved"))
+                        .setCallbacks(TOKEN_STORE_ADDED, TOKEN_STORE_REMOVED))
                 .add(createServiceDependency().setService(TokenStore.class)
                   .setRequired(true))
                 .add(createServiceDependency().setService(
                         AuthenticationService.class).setRequired(true)
-                        .setCallbacks("authenticationServiceAdded", "authenticationServiceRemoved"))
+                        .setCallbacks(AUTHENTICATION_SERVICE_ADDED, AUTHENTICATION_SERVICE_REMOVED))
             .add(createServiceDependency().setService(IdMService.class)
                 .setRequired(true))
             .add(createServiceDependency().setService(ClientService.class)
                         .setRequired(true)));
 
-        ServiceWireTask wireTask = new ServiceWireTask(context);
-        wireTask.addServiceMonitor(AuthenticationService.class);
-        wireTask.addServiceMonitor(IdMService.class);
-        wireTask.addServiceMonitor(TokenAuth.class);
-        wireTask.addServiceMonitor(TokenStore.class);
-        wireTask.addServiceMonitor(ClientService.class);
-        wireTask.start();
+        // Async ServiceTrackers to track and load AAA STS bundles
+        // TODO Put under config subsystem so this is not needed
+        authenticationService = new ServiceTracker<>(context, AuthenticationService.class,
+                new AAAServiceTrackerCustomizer<AuthenticationService, AuthenticationService>(new Callable() {
+                    @Override
+                    public Object call() {
+                        AuthenticationService as = (AuthenticationService)authenticationService.getService();
+                        ServiceLocator.getInstance().setAuthenticationService(as);
+                        return as;
+                    }
+                }));
+        authenticationService.open();
+        idmService = new ServiceTracker<>(context, IdMService.class,
+                new AAAServiceTrackerCustomizer<IdMService, IdMService>(new Callable() {
+                    @Override
+                    public Object call() throws Exception {
+                        IdMService is = (IdMService)idmService.getService();
+                        ServiceLocator.getInstance().setIdmService(is);
+                        return is;
+                    }
+                }));
+        idmService.open();
+        tokenAuthService = new ServiceTracker<>(context, TokenAuth.class,
+                new AAAServiceTrackerCustomizer<TokenAuth, TokenAuth>(new Callable() {
+                    @Override
+                    public Object call() throws Exception {
+                        List<TokenAuth> tokenAuthCollection = (List<TokenAuth>) Lists.newArrayList(tokenAuthService.getService());
+                        ServiceLocator.getInstance().setTokenAuthCollection(tokenAuthCollection);
+                        return tokenAuthCollection;
+                    }
+                }));
+        tokenAuthService.open();
+        tokenStoreService = new ServiceTracker<>(context, TokenStore.class,
+                new AAAServiceTrackerCustomizer<TokenStore, TokenStore>(new Callable() {
+                    @Override
+                    public Object call() throws Exception {
+                        TokenStore ts = (TokenStore)tokenStoreService.getService();
+                        ServiceLocator.getInstance().setTokenStore(ts);
+                        return ts;
+                    }
+                }));
+        tokenStoreService.open();
+        clientService = new ServiceTracker<>(context, ClientService.class,
+                new AAAServiceTrackerCustomizer<ClientService, ClientService>(new Callable() {
+                    @Override
+                    public Object call() throws Exception {
+                        ClientService cs = (ClientService)clientService.getService();
+                        ServiceLocator.getInstance().setClientService(cs);
+                        return cs;
+                    }
+                }));
+        LOGGER.info(STS_ACTIVATOR_INITIALIZED);
+    }
+
+    /**
+     * Wrapper for AAA generic service loading.
+     *
+     * @author Ryan Goulding (ryandgoulding@gmail.com)
+     *
+     * @param <R> should be identical type to S
+     * @param <S> should be identical type to R
+     */
+    class AAAServiceTrackerCustomizer<S> implements ServiceTrackerCustomizer<S,S> {
+        private static final String SERVICE_WAS_FOUND_MSG = "{} service was found";
+        private Callable<?> callable;
+        public AAAServiceTrackerCustomizer(Callable<?> callable) {
+            this.callable = callable;
+        }
+        @SuppressWarnings("unchecked")
+        @Override
+        public S addingService(ServiceReference<S> reference) {
+            S service = reference.getBundle().getBundleContext().getService(reference);
+            LOGGER.info(SERVICE_WAS_FOUND_MSG, service.getClass());
+            try {
+                callable.call();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return service;
+        }
+
+        @Override
+        public void modifiedService(ServiceReference<S> reference, S service) {
+        }
+
+        @Override
+        public void removedService(ServiceReference<S> reference, S service) {
+        }
     }
 
     @Override
     public void destroy(BundleContext context, DependencyManager manager)
             throws Exception {
     }
-
-    private class ServiceWriteTaskEntry {
-        private final  Class<?> serviceClass;
-        private volatile int retryCount = 0;
-        public ServiceWriteTaskEntry(final Class<?> serviceClass){
-            this.serviceClass = serviceClass;
-        }
-        public boolean shouldRetry(){
-            retryCount++;
-            if(retryCount>=WIRE_SERVICE_RETRY_COUNT)
-                return false;
-            return true;
-        }
-
-        public int getRetryCount(){
-            return this.retryCount;
-        }
-
-        public Class<?> getServiceClass(){
-            return this.serviceClass;
-        }
-    }
-
-    private class ServiceWireTask implements Runnable {
-        private final BundleContext context;
-        private final List<ServiceWriteTaskEntry> entries = new LinkedList<ServiceWriteTaskEntry>();
-
-        public ServiceWireTask(final BundleContext _context){
-            this.context = _context;
-        }
-
-        public final void addServiceMonitor(final Class<?> serviceClass){
-            ServiceWriteTaskEntry entry = new ServiceWriteTaskEntry(serviceClass);
-            this.entries.add(entry);
-        }
-
-        public void start(){
-            Thread activationThread = new Thread(this,"STS Service Wiring Task");
-            activationThread.setDaemon(true);
-            activationThread.start();
-        }
-
-        public void run(){
-            ServiceReference<?> ref = null;
-            while(!this.entries.isEmpty()){
-                try {
-                    //Wait 2 seconds between retries, each entry has 10 tries before we give up
-                    Thread.sleep(RETRY_CHECK_INTERVAL);
-                } catch (InterruptedException e) {
-                    LOGGER.error("Interrupted",e);
-                    //kill the thread.
-                    return;
-                }
-                //Using iterator so i could remove an entry while iterating
-                for(Iterator<ServiceWriteTaskEntry> iter=this.entries.iterator();iter.hasNext();){
-                    ServiceWriteTaskEntry entry = iter.next();
-                    if(entry.shouldRetry()) {
-                        ref = context.getServiceReference(entry.getServiceClass());
-                        if(ref==null){
-                            LOGGER.info("Could not locate service of type {}, attempt {} out of {}. ",entry.getServiceClass().getSimpleName(),entry.getRetryCount(),WIRE_SERVICE_RETRY_COUNT);
-                        }else {
-                            LOGGER.info("Wiring Service {}",entry.getServiceClass().getSimpleName());
-                            Object service = context.getService(ref);
-                            if(service instanceof IdMService){
-                                if(ServiceLocator.getInstance().getIdmService()==null) {
-                                    ServiceLocator.getInstance().setIdmService((IdMService) service);
-                                }
-                                if(ServiceLocator.getInstance().getCredentialAuth()==null) {
-                                    ServiceLocator.getInstance().setCredentialAuth((CredentialAuth)service);
-                                }
-                            }else
-                            if(service instanceof AuthenticationService){
-                                if(ServiceLocator.getInstance().getAuthenticationService()==null) {
-                                    ServiceLocator.getInstance().setAuthenticationService((AuthenticationService) service);
-                                }
-                            }else
-                            if(service instanceof TokenAuth){
-                                if(ServiceLocator.getInstance().getTokenAuthCollection().isEmpty()) {
-                                    ServiceLocator.getInstance().tokenAuthAdded((TokenAuth) service);
-                                }
-                            }else
-                            if(service instanceof TokenStore){
-                                if(ServiceLocator.getInstance().getTokenStore()==null) {
-                                    ServiceLocator.getInstance().setTokenStore((TokenStore) service);
-                                }
-                            }else
-                            if(service instanceof ClientService){
-                                if(ServiceLocator.getInstance().getClientService()==null) {
-                                    ServiceLocator.getInstance().setClientService((ClientService) service);
-                                }
-                            }
-                            //we found the service, the entry can be removed.
-                            iter.remove();
-                        }
-
-                    }else{
-                        LOGGER.error("Could not locate service of type {}, giving up after 10 tries. ",entry.getServiceClass().getSimpleName());
-                        //We are giving up on this service
-                        iter.remove();
-                    }
-                }
-            }
-            LOGGER.info("STS Wiring Service finished.");
-        }
-    }
-
 }
