@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_92730bb1",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-14T23:30:52Z",
+      "side": 1,
+      "message": "Ah okay I messed this up a bit;  I am supposed to make a call to ServiceLocator and set these appropriately.  I will fix this in an updated patch.  They are used, I just refactored too much out...",
+      "parentUuid": "1aa4ed85_57cb4572",
+      "revId": "fb414fb5d0778873e888641d31d326e6a7059ce4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_17c5cd5a",
         "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-12-14T21:29:52Z",
       "side": 1,
       "message": "Since R and S are the same you can eliminate R.",
+      "revId": "fb414fb5d0778873e888641d31d326e6a7059ce4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_326817ba",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-14T23:30:52Z",
+      "side": 1,
+      "message": "You mean \"\u003cS,S\u003e\"?",
+      "parentUuid": "1aa4ed85_17c5cd5a",
       "revId": "fb414fb5d0778873e888641d31d326e6a7059ce4",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
