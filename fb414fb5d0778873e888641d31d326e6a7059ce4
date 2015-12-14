@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_57cb4572",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-14T21:29:52Z",
+      "side": 1,
+      "message": "The services don\u0027t appear to be used. What is the reason for importing them at all?",
+      "revId": "fb414fb5d0778873e888641d31d326e6a7059ce4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_17c5cd5a",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-14T21:29:52Z",
+      "side": 1,
+      "message": "Since R and S are the same you can eliminate R.",
+      "revId": "fb414fb5d0778873e888641d31d326e6a7059ce4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
