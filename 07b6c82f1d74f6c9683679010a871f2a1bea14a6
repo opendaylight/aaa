@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_48d884ef",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-15T13:14:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_08c12c2e",
+      "revId": "07b6c82f1d74f6c9683679010a871f2a1bea14a6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_68fea06d",
         "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2015-12-15T12:43:32Z",
       "side": 1,
       "message": "\u0027services\u0027 can be final (Eclipse/IntelliJ can be configured to do this automatically - I recommend that).\n\nAlso I assumed you used Vector for synchronization however it doesn\u0027t need synchronization since it\u0027s built all at once. Also, the destroyMethod uses the iterator which isn\u0027t thread-safe, even though in this case it doesn\u0027t matter. This really should be an immutable list (using guava\u0027s ImmutableListBuilder).",
+      "revId": "07b6c82f1d74f6c9683679010a871f2a1bea14a6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_e8e4d0ad",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-15T13:14:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_68fea06d",
       "revId": "07b6c82f1d74f6c9683679010a871f2a1bea14a6",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
