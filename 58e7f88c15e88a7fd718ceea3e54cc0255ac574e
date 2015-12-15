@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_088dac7b",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-15T11:48:24Z",
+      "side": 1,
+      "message": "I was between the two;  you are right com.google.common.base.Function is much cleaner.",
+      "parentUuid": "1aa4ed85_d2f3c371",
+      "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_3289f7ca",
         "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
         "patchSetId": 7
@@ -47,6 +65,24 @@
       "writtenOn": "2015-12-15T02:43:42Z",
       "side": 1,
       "message": "Please add newlines appropriately in between logical code blocks for more clarity.",
+      "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_a8e9f81b",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-15T11:48:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_3289f7ca",
       "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_88cf5cb0",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-15T11:48:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_92ed4b8e",
+      "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_1274fbfb",
         "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
         "patchSetId": 7
@@ -81,6 +135,24 @@
       "writtenOn": "2015-12-15T02:43:42Z",
       "side": 1,
       "message": "Tabs?",
+      "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_28c42891",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-15T11:48:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_1274fbfb",
       "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_48c1647f",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-15T11:48:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_725a0f85",
+      "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_52511361",
         "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
         "patchSetId": 7
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_e854d0cb",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-15T11:48:24Z",
+      "side": 1,
+      "message": "Then all messages emitted by a class are in one place.  It is really just stylistic though;  I guess its better not to keep Strings hanging around, especially if they are only used once (or a few times).",
+      "parentUuid": "1aa4ed85_52511361",
+      "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_92a46b58",
         "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
         "patchSetId": 7
@@ -132,6 +240,24 @@
       "writtenOn": "2015-12-15T02:43:42Z",
       "side": 1,
       "message": "You should close the service trackers here. You could store them in a List to make it easier.",
+      "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_08528cdd",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-15T11:48:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_92a46b58",
       "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
