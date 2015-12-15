@@ -33,14 +33,14 @@ import com.google.common.base.Preconditions;
 
 public class RoleStore {
    private static Logger logger = LoggerFactory.getLogger(RoleStore.class);
-   protected Connection  dbConnection = null;
-   protected final static String SQL_ID             = "roleid";
-   protected final static String SQL_DOMAIN_ID      = "domainid";
-   protected final static String SQL_NAME           = "name";
-   protected final static String SQL_DESCR          = "description";
-   public final static int       MAX_FIELD_LEN      = 128;
+   protected Connection dbConnection = null;
+   protected final static String SQL_ID = "roleid";
+   protected final static String SQL_DOMAIN_ID = "domainid";
+   protected final static String SQL_NAME = "name";
+   protected final static String SQL_DESCR = "description";
+   public final static int MAX_FIELD_LEN = 128;
 
-   protected RoleStore (){
+   protected RoleStore() {
    }
 
    protected Connection getDBConnect() throws StoreException {
@@ -48,7 +48,7 @@ public class RoleStore {
       return dbConnection;
    }
 
-   protected void dbClean() throws StoreException, SQLException{
+   protected void dbClean() throws StoreException, SQLException {
       Connection c = dbConnect();
       String sql = "delete from ROLES where true";
       c.createStatement().execute(sql);
@@ -56,70 +56,74 @@ public class RoleStore {
    }
 
    protected Connection dbConnect() throws StoreException {
-      Connection conn;
+
+      final Connection conn = getDBConnect();
+      Statement stmt = null;
       try {
-         conn = getDBConnect();
-      }
-      catch (StoreException se) {
-         throw se;
-      }
-      try {
-         DatabaseMetaData dbm = conn.getMetaData();
-         String[] tableTypes = {"TABLE"};
-         ResultSet rs = dbm.getTables(null, null, "ROLES", tableTypes);
-         if (rs.next()) {
-            debug("roles Table already exists");
+         final DatabaseMetaData dbm = conn.getMetaData();
+         final String[] tableTypes = { "TABLE" };
+
+         // Adds a synchronization barrier to ensure only one thread is creating the
+         // table.  The synchronization covers the check for table existence, as well
+         // as table creation, forcing atomicity in the application layer.
+         synchronized (this) {
+            final ResultSet rs = dbm.getTables(null, null, "ROLES",
+                  tableTypes);
+            if (rs.next()) {
+               debug("The ROLES table already exists;  RoleStore will utilize the existing tables");
+            } else {
+               logger.info("The ROLES table does not exist; creating the table");
+               stmt = conn.createStatement();
+               final String sql = "CREATE TABLE ROLES "
+                     + "(roleid     VARCHAR(128)   PRIMARY KEY,"
+                     + "name        VARCHAR(128)   NOT NULL, "
+                     + "domainid    VARCHAR(128)   NOT NULL, "
+                     + "description VARCHAR(128)   NOT NULL)";
+               stmt.executeUpdate(sql);
+            }
          }
-         else
-         {
-            logger.info("roles Table does not exist, creating table");
-            Statement stmt = null;
-            stmt = conn.createStatement();
-            String sql = "CREATE TABLE ROLES " +
-                         "(roleid     VARCHAR(128)   PRIMARY KEY," +
-                         "name        VARCHAR(128)   NOT NULL, " +
-                         "domainid    VARCHAR(128)   NOT NULL, " +
-                         "description VARCHAR(128)      NOT NULL)";
-           stmt.executeUpdate(sql);
-           stmt.close();
+      } catch (SQLException e) {
+         logger.error("SQLException", e);
+         throw new StoreException(e);
+      } finally {
+         if (stmt != null) {
+            try {
+               stmt.close();
+            } catch (SQLException e) {
+               logger.error("Unable to close the open statement", e);
+               throw new StoreException(e);
+            }
          }
-      }
-      catch (SQLException sqe) {
-         throw new StoreException("Cannot connect to database server "+ sqe);
       }
       return conn;
    }
 
-
    protected void dbClose() {
-      if (dbConnection != null)
-      {
+      if (dbConnection != null) {
          try {
-            dbConnection.close ();
-          }
-          catch (Exception e) {
+            dbConnection.close();
+         } catch (Exception e) {
             logger.error("Cannot close Database Connection " + e);
-          }
-       }
+         }
+      }
    }
 
    @Override
-protected void finalize () throws Throwable {
+   protected void finalize() throws Throwable {
       dbClose();
       super.finalize();
    }
 
-   protected  Role rsToRole(ResultSet rs) throws SQLException {
+   protected Role rsToRole(ResultSet rs) throws SQLException {
       Role role = new Role();
       try {
          role.setRoleid(rs.getString(SQL_ID));
          role.setDomainid(rs.getString(SQL_DOMAIN_ID));
          role.setName(rs.getString(SQL_NAME));
          role.setDescription(rs.getString(SQL_DESCR));
-      }
-      catch (SQLException sqle) {
-         logger.error( "SQL Exception : " + sqle);
-            throw sqle;
+      } catch (SQLException sqle) {
+         logger.error("SQL Exception : " + sqle);
+         throw sqle;
       }
       return role;
    }
@@ -128,24 +132,22 @@ protected void finalize () throws Throwable {
       Roles roles = new Roles();
       List<Role> roleList = new ArrayList<Role>();
       Connection conn = dbConnect();
-      Statement stmt=null;
+      Statement stmt = null;
       String query = "SELECT * FROM roles";
       try {
-         stmt=conn.createStatement();
-         ResultSet rs=stmt.executeQuery(query);
+         stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(query);
          while (rs.next()) {
             Role role = rsToRole(rs);
             roleList.add(role);
          }
          rs.close();
          stmt.close();
-      }
-      catch (SQLException s) {
+      } catch (SQLException s) {
          throw new StoreException("SQL Exception : " + s);
-      }
-      finally {
+      } finally {
          dbClose();
-       }
+      }
       roles.setRoles(roleList);
       return roles;
    }
@@ -153,7 +155,8 @@ protected void finalize () throws Throwable {
    protected Role getRole(String id) throws StoreException {
       Connection conn = dbConnect();
       try {
-         PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ROLES WHERE roleid = ? ");
+         PreparedStatement pstmt = conn
+               .prepareStatement("SELECT * FROM ROLES WHERE roleid = ? ");
          pstmt.setString(1, id);
          debug("query string: " + pstmt.toString());
          ResultSet rs = pstmt.executeQuery();
@@ -162,59 +165,56 @@ protected void finalize () throws Throwable {
             rs.close();
             pstmt.close();
             return role;
-         }
-         else {
+         } else {
             rs.close();
             pstmt.close();
             return null;
          }
-      }
-      catch (SQLException s) {
+      } catch (SQLException s) {
          throw new StoreException("SQL Exception : " + s);
-      }
-      finally {
+      } finally {
          dbClose();
-       }
+      }
    }
 
    protected Role createRole(Role role) throws StoreException {
-	   Preconditions.checkNotNull(role);
-	   Preconditions.checkNotNull(role.getName());
-	   Preconditions.checkNotNull(role.getDomainid());
-       Connection conn = dbConnect();
-       try {
-          String query = "insert into roles (roleid,domainid,name,description) values(?,?,?,?)";
-          PreparedStatement statement = conn.prepareStatement(query);
-          role.setRoleid(IDMStoreUtil.createRoleid(role.getName(),role.getDomainid()));
-          statement.setString(1, role.getRoleid());
-          statement.setString(2, role.getDomainid());
-          statement.setString(3,role.getName());
-          statement.setString(4,role.getDescription());
-          int affectedRows = statement.executeUpdate();
-          if (affectedRows == 0) {
-             throw new StoreException("Creating role failed, no rows affected.");
-          }
-          return role;
-       }
-       catch (SQLException s) {
-          throw new StoreException("SQL Exception : " + s);
-       }
-       finally {
-          dbClose();
-        }
+      Preconditions.checkNotNull(role);
+      Preconditions.checkNotNull(role.getName());
+      Preconditions.checkNotNull(role.getDomainid());
+      Connection conn = dbConnect();
+      try {
+         String query = "insert into roles (roleid,domainid,name,description) values(?,?,?,?)";
+         PreparedStatement statement = conn.prepareStatement(query);
+         role.setRoleid(IDMStoreUtil.createRoleid(role.getName(),
+               role.getDomainid()));
+         statement.setString(1, role.getRoleid());
+         statement.setString(2, role.getDomainid());
+         statement.setString(3, role.getName());
+         statement.setString(4, role.getDescription());
+         int affectedRows = statement.executeUpdate();
+         if (affectedRows == 0) {
+            throw new StoreException(
+                  "Creating role failed, no rows affected.");
+         }
+         return role;
+      } catch (SQLException s) {
+         throw new StoreException("SQL Exception : " + s);
+      } finally {
+         dbClose();
+      }
    }
 
    protected Role putRole(Role role) throws StoreException {
 
       Role savedRole = this.getRole(role.getRoleid());
-      if (savedRole==null) {
+      if (savedRole == null) {
          return null;
       }
 
-      if (role.getDescription()!=null) {
+      if (role.getDescription() != null) {
          savedRole.setDescription(role.getDescription());
       }
-      if (role.getName()!=null) {
+      if (role.getName() != null) {
          savedRole.setName(role.getName());
       }
 
@@ -223,23 +223,21 @@ protected void finalize () throws Throwable {
          String query = "UPDATE roles SET description = ? WHERE roleid = ?";
          PreparedStatement statement = conn.prepareStatement(query);
          statement.setString(1, savedRole.getDescription());
-         statement.setString(2,savedRole.getRoleid());
+         statement.setString(2, savedRole.getRoleid());
          statement.executeUpdate();
          statement.close();
-      }
-      catch (SQLException s) {
+      } catch (SQLException s) {
          throw new StoreException("SQL Exception : " + s);
-      }
-      finally {
+      } finally {
          dbClose();
-       }
+      }
 
       return savedRole;
    }
 
    protected Role deleteRole(String roleid) throws StoreException {
       Role savedRole = this.getRole(roleid);
-      if (savedRole==null) {
+      if (savedRole == null) {
          return null;
       }
 
@@ -252,19 +250,16 @@ protected void finalize () throws Throwable {
          debug("deleted " + deleteCount + " records");
          statement.close();
          return savedRole;
-      }
-      catch (SQLException s) {
+      } catch (SQLException s) {
          throw new StoreException("SQL Exception : " + s);
+      } finally {
+         dbClose();
       }
-      finally {
-          dbClose();
-       }
    }
 
    private static final void debug(String msg) {
-       if (logger.isDebugEnabled()) {
-           logger.debug(msg);
-       }
+      if (logger.isDebugEnabled()) {
+         logger.debug(msg);
+      }
    }
 }
-
