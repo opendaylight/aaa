@@ -229,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_48cba472",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-15T12:23:50Z",
+      "side": 1,
+      "message": "It\u0027s not wrong. All the ODL code I\u0027ve seen inlines the log messages. Log messages generally aren\u0027t reusable, in fact one could argue they shouldn\u0027t be b/c they help to identify the line that emitted it. I prefer to see the message inlined in the code b/c 1) log messages actually are a form of documentation (like a comment) and can help to understand code when reading it 2) easier to ensure format args match the braces.",
+      "parentUuid": "1aa4ed85_e854d0cb",
+      "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_92a46b58",
         "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
         "patchSetId": 7
