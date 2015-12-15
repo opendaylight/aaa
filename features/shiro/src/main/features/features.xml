@@ -27,7 +27,7 @@
         <bundle>wrap:mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.common/{{VERSION}}</bundle>
         <bundle>wrap:mvn:org.json/json/{{VERSION}}</bundle>
         <bundle>wrap:mvn:javax.ws.rs/javax.ws.rs-api/{{VERSION}}</bundle>
-        <bundle>wrap:mvn:javax.servlet/servlet-api/{{VERSION}}</bundle>
+        <bundle>wrap:mvn:javax.servlet/javax.servlet-api/{{VERSION}}</bundle>
         <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
         <bundle>mvn:com.sun.jersey/jersey-servlet/{{VERSION}}</bundle>
         <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
