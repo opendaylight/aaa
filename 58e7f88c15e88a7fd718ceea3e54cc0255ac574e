@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_f276ff05",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-15T02:43:42Z",
+      "side": 1,
+      "message": "These shouldn\u0027t be static. Also make them private.",
+      "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_d2f3c371",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-15T02:43:42Z",
+      "side": 1,
+      "message": "I think it would be cleaner and clearer to pass the service instance to the callback. So instead of Callable, use com.google.common.base.Function:\n\n  AAAServiceTrackerCustomizer(Function\u003cS, Void\u003e callback) {\n      this. callback \u003d callback;\n  }\n\n  new AAAServiceTrackerCustomizer\u003c\u003e(\n                           new Function\u003cAuthenticationService, Void\u003e() {\n      @Override\n      public Void apply(AuthenticationService service) {\n          ServiceLocator.getInstance().setAuthenticationService(service);\n          return null;\n      }\n  }",
+      "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_3289f7ca",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-15T02:43:42Z",
+      "side": 1,
+      "message": "Please add newlines appropriately in between logical code blocks for more clarity.",
+      "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_92ed4b8e",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-15T02:43:42Z",
+      "side": 1,
+      "message": "This should be a private static class.",
+      "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_1274fbfb",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-15T02:43:42Z",
+      "side": 1,
+      "message": "Tabs?",
+      "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_725a0f85",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-15T02:43:42Z",
+      "side": 1,
+      "message": "Please add newline.",
+      "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_52511361",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-15T02:43:42Z",
+      "side": 1,
+      "message": "What is the reason for making these log format strings constants? It\u0027s OK, just not a pattern I\u0027ve seen used.",
+      "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_92a46b58",
+        "filename": "aaa-authn-sts/src/main/java/org/opendaylight/aaa/sts/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-15T02:43:42Z",
+      "side": 1,
+      "message": "You should close the service trackers here. You could store them in a List to make it easier.",
+      "revId": "58e7f88c15e88a7fd718ceea3e54cc0255ac574e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
