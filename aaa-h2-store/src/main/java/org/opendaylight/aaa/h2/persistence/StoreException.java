@@ -11,18 +11,22 @@ package org.opendaylight.aaa.h2.persistence;
 /**
  *
  * @author peter.mellquist@hp.com
- *
+ * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.sql.SQLException;
 
-public class StoreException  extends Exception{
-   private static Logger logger = LoggerFactory.getLogger(StoreException.class);
+public class StoreException  extends Exception {
 
-   public String message=null;
+   /**
+    *
+    */
+   private static final long serialVersionUID = -8114091846065524742L;
 
    public StoreException(String msg) {
-      logger.error(msg);
-      message = new String(msg);
+      super(msg);
+   }
+
+   public StoreException(SQLException e) {
+      super(e);
    }
 }
