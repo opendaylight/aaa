@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_87ac2aef",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-15T17:21:30Z",
+      "side": 1,
+      "message": "Hi Ryan,\nI am guessing this might happen if the user is trying to login before the StoreBuilder.init is finished. I would prefer to refactor out the table creation to a single method that is called when the H2 module is created but before the service is registered so we will remove the race condition.",
+      "range": {
+        "startLine": 67,
+        "startChar": 15,
+        "endLine": 67,
+        "endChar": 20
+      },
+      "revId": "b5ea9fa03c3828f55988cb9807e0e8839c22ddf0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
