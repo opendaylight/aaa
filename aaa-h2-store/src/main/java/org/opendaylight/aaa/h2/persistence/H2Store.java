@@ -15,8 +15,13 @@ import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.h2.config.IdmLightConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class H2Store implements IIDMStore{
+
+    private static Logger LOG = LoggerFactory.getLogger(H2Store.class);
+
     private static IdmLightConfig config = new IdmLightConfig();
     private DomainStore domainStore = new DomainStore();
     private UserStore userStore = new UserStore();
@@ -50,7 +55,8 @@ public class H2Store implements IIDMStore{
         try {
             return domainStore.createDomain(domain);
         } catch (StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while writing domain", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -59,7 +65,8 @@ public class H2Store implements IIDMStore{
         try {
             return domainStore.getDomain(domainid);
         } catch (StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while reading domain", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -68,7 +75,8 @@ public class H2Store implements IIDMStore{
         try {
             return domainStore.deleteDomain(domainid);
         } catch (StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while deleting domain", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -77,7 +85,8 @@ public class H2Store implements IIDMStore{
         try {
             return domainStore.putDomain(domain);
         } catch (StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while updating domain", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -86,7 +95,8 @@ public class H2Store implements IIDMStore{
         try {
             return domainStore.getDomains();
         } catch (StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while reading domains", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -95,7 +105,8 @@ public class H2Store implements IIDMStore{
         try{
             return roleStore.createRole(role);
         }catch(StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while writing role", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -104,7 +115,8 @@ public class H2Store implements IIDMStore{
         try{
             return roleStore.getRole(roleid);
         }catch(StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while reading role", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -113,7 +125,8 @@ public class H2Store implements IIDMStore{
         try{
             return roleStore.deleteRole(roleid);
         }catch(StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while deleting role", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -122,7 +135,8 @@ public class H2Store implements IIDMStore{
         try{
             return roleStore.putRole(role);
         }catch(StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while updating role", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -131,7 +145,8 @@ public class H2Store implements IIDMStore{
         try {
             return roleStore.getRoles();
         } catch (StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while getting roles", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -140,7 +155,8 @@ public class H2Store implements IIDMStore{
         try {
             return userStore.createUser(user);
         } catch (StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while writing user", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -149,7 +165,8 @@ public class H2Store implements IIDMStore{
         try {
             return userStore.getUser(userid);
         } catch (StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while reading user", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -158,7 +175,8 @@ public class H2Store implements IIDMStore{
         try {
             return userStore.deleteUser(userid);
         } catch (StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while deleting user", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -167,7 +185,8 @@ public class H2Store implements IIDMStore{
         try {
             return userStore.putUser(user);
         } catch (StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while updating user", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -176,7 +195,8 @@ public class H2Store implements IIDMStore{
         try {
             return userStore.getUsers(username, domain);
         } catch (StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while reading users", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -185,7 +205,8 @@ public class H2Store implements IIDMStore{
         try {
             return userStore.getUsers();
         } catch (StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while reading users", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -194,7 +215,8 @@ public class H2Store implements IIDMStore{
         try {
             return grantStore.createGrant(grant);
         } catch (StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while writing grant", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -203,7 +225,8 @@ public class H2Store implements IIDMStore{
         try {
             return grantStore.getGrant(grantid);
         } catch (StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while reading grant", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -212,7 +235,8 @@ public class H2Store implements IIDMStore{
         try {
             return grantStore.deleteGrant(grantid);
         } catch (StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while deleting grant", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -221,7 +245,8 @@ public class H2Store implements IIDMStore{
         try {
             return grantStore.getGrants(domainid, userid);
         } catch (StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while getting grants", e);
+            throw new IDMStoreException(e);
         }
     }
 
@@ -230,7 +255,8 @@ public class H2Store implements IIDMStore{
         try {
             return grantStore.getGrants(userid);
         } catch (StoreException e) {
-            throw new IDMStoreException(e.getMessage());
+            LOG.error("StoreException encountered while getting grants", e);
+            throw new IDMStoreException(e);
         }
     }
 
