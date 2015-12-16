@@ -15,7 +15,6 @@ package org.opendaylight.aaa.h2.persistence;
  */
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,8 +32,28 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Preconditions;
 
 public class UserStore {
+
    private static Logger logger = LoggerFactory.getLogger(UserStore.class);
-   protected Connection  dbConnection = null;
+
+   /**
+    * the name of the backing table in H2 database
+    */
+   public static final String USERS_TABLE           = "USERS";
+
+   /**
+    * the sql to create the users table
+    */
+   public static final String CREATE_USERS_TABLE_SQL =
+           "CREATE TABLE users " +
+           "(userid    VARCHAR(128) PRIMARY KEY," +
+           "name       VARCHAR(128)      NOT NULL, " +
+           "domainid   VARCHAR(128)      NOT NULL, " +
+           "email      VARCHAR(128)      NOT NULL, " +
+           "password   VARCHAR(128)      NOT NULL, " +
+           "description VARCHAR(128)     NOT NULL, " +
+           "salt        VARCHAR(15)      NOT NULL, " +
+           "enabled     INTEGER          NOT NULL)";
+
    protected final static String SQL_ID             = "userid";
    protected final static String SQL_DOMAIN_ID      = "domainid";
    protected final static String SQL_NAME           = "name";
@@ -45,76 +64,37 @@ public class UserStore {
    protected final static String SQL_SALT           = "salt";
    public final static int       MAX_FIELD_LEN      = 128;
 
-   protected UserStore(){
-   }
+   protected Connection dbConnection = null;
 
-   protected Connection getDBConnect() throws StoreException {
-      dbConnection = H2Store.getConnection(dbConnection);
-      return dbConnection;
+   public UserStore(){
+       reinitDb();
    }
 
    protected void dbClean() throws StoreException, SQLException{
-      Connection c = dbConnect();
       String sql = "delete from users where true";
-      c.createStatement().execute(sql);
-      c.close();
+      dbConnection.createStatement().execute(sql);
    }
 
-   protected Connection dbConnect() throws StoreException {
-      Connection conn;
-      try {
-         conn = getDBConnect();
-      }
-      catch (StoreException se) {
-         throw se;
-      }
-      try {
-         DatabaseMetaData dbm = conn.getMetaData();
-         String[] tableTypes = {"TABLE"};
-         ResultSet rs = dbm.getTables(null, null, "USERS", tableTypes);
-         if (rs.next()) {
-            debug("users Table already exists");
-         }
-         else
-         {
-            logger.info("users Table does not exist, creating table");
-            Statement stmt = null;
-            stmt = conn.createStatement();
-            String sql = "CREATE TABLE users " +
-                         "(userid    VARCHAR(128) PRIMARY KEY," +
-                         "name       VARCHAR(128)      NOT NULL, " +
-                         "domainid   VARCHAR(128)      NOT NULL, " +
-                         "email      VARCHAR(128)      NOT NULL, " +
-                         "password   VARCHAR(128)      NOT NULL, " +
-                         "description VARCHAR(128)     NOT NULL, " +
-                         "salt        VARCHAR(15)      NOT NULL, " +
-                         "enabled     INTEGER          NOT NULL)" ;
-           stmt.executeUpdate(sql);
-           stmt.close();
-         }
-      }
-      catch (SQLException sqe) {
-         throw new StoreException("Cannot connect to database server "+ sqe);
-      }
-      return conn;
-   }
-
-
-   protected void dbClose() {
+   protected void reinitDb() {
       if (dbConnection != null)
       {
          try {
-            dbConnection.close ();
+            dbConnection.close();
           }
           catch (Exception e) {
             logger.error("Cannot close Database Connection " + e);
           }
        }
+       try {
+            dbConnection = H2Store.getConnection(dbConnection);
+        } catch (StoreException e) {
+            logger.error("Failed to connect to the database", e);
+        }
    }
 
    @Override
-protected void finalize () throws Throwable {
-      dbClose();
+   protected void finalize () throws Throwable {
+      reinitDb();
       super.finalize();
    }
 
@@ -140,11 +120,10 @@ protected void finalize () throws Throwable {
    protected Users getUsers() throws StoreException {
       Users users = new Users();
       List<User> userList = new ArrayList<User>();
-      Connection conn = dbConnect();
       Statement stmt=null;
       String query = "SELECT * FROM users";
       try {
-         stmt=conn.createStatement();
+         stmt=dbConnection.createStatement();
          ResultSet rs=stmt.executeQuery(query);
          while (rs.next()) {
             User user = rsToUser(rs);
@@ -157,7 +136,7 @@ protected void finalize () throws Throwable {
          throw new StoreException("SQL Exception");
       }
       finally {
-         dbClose();
+         reinitDb();
       }
       users.setUsers(userList);
       return users;
@@ -168,9 +147,8 @@ protected void finalize () throws Throwable {
 
       Users users = new Users();
       List<User> userList = new ArrayList<User>();
-      Connection conn = dbConnect();
       try {
-          PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM USERS WHERE userid = ? ");
+          PreparedStatement pstmt = dbConnection.prepareStatement("SELECT * FROM USERS WHERE userid = ? ");
           pstmt.setString(1, IDMStoreUtil.createUserid(username,domain));
           debug("query string: " + pstmt.toString());
           ResultSet rs = pstmt.executeQuery();
@@ -185,7 +163,7 @@ protected void finalize () throws Throwable {
          throw new StoreException("SQL Exception : " + s);
       }
       finally {
-          dbClose();
+          reinitDb();
        }
       users.setUsers(userList);
       return users;
@@ -193,9 +171,8 @@ protected void finalize () throws Throwable {
 
 
    protected User getUser(String id) throws StoreException {
-      Connection conn = dbConnect();
       try {
-         PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM USERS WHERE userid = ? ");
+         PreparedStatement pstmt = dbConnection.prepareStatement("SELECT * FROM USERS WHERE userid = ? ");
          pstmt.setString(1, id);
          debug("query string: " + pstmt.toString());
          ResultSet rs = pstmt.executeQuery();
@@ -215,7 +192,7 @@ protected void finalize () throws Throwable {
          throw new StoreException("SQL Exception : " + s);
       }
       finally {
-          dbClose();
+          reinitDb();
        }
    }
 
@@ -224,11 +201,10 @@ protected void finalize () throws Throwable {
        Preconditions.checkNotNull(user.getName());
        Preconditions.checkNotNull(user.getDomainid());
 
-       Connection conn = dbConnect();
        try {
           user.setSalt(SHA256Calculator.generateSALT());
           String query = "insert into users (userid,domainid,name,email,password,description,enabled,salt) values(?,?,?,?,?,?,?,?)";
-          PreparedStatement statement = conn.prepareStatement(query);
+          PreparedStatement statement = dbConnection.prepareStatement(query);
           user.setUserid(IDMStoreUtil.createUserid(user.getName(),user.getDomainid()));
           statement.setString(1,user.getUserid());
           statement.setString(2,user.getDomainid());
@@ -248,7 +224,7 @@ protected void finalize () throws Throwable {
           throw new StoreException("SQL Exception : " + s);
        }
        finally {
-          dbClose();
+          reinitDb();
         }
    }
 
@@ -275,10 +251,9 @@ protected void finalize () throws Throwable {
          savedUser.setPassword(SHA256Calculator.getSHA256(user.getPassword(),user.getSalt()));
       }
 
-      Connection conn = dbConnect();
       try {
          String query = "UPDATE users SET email = ?, password = ?, description = ?, enabled = ? WHERE userid = ?";
-         PreparedStatement statement = conn.prepareStatement(query);
+         PreparedStatement statement = dbConnection.prepareStatement(query);
          statement.setString(1, savedUser.getEmail());
          statement.setString(2, savedUser.getPassword());
          statement.setString(3, savedUser.getDescription());
@@ -288,10 +263,10 @@ protected void finalize () throws Throwable {
          statement.close();
       }
       catch (SQLException s) {
-         throw new StoreException("SQL Exception : " + s);
+         throw new StoreException(s);
       }
       finally {
-         dbClose();
+         reinitDb();
        }
 
       return savedUser;
@@ -303,10 +278,9 @@ protected void finalize () throws Throwable {
          return null;
       }
 
-      Connection conn = dbConnect();
       try {
          String query = "DELETE FROM DOMAINS WHERE domainid = ?";
-         PreparedStatement statement = conn.prepareStatement(query);
+         PreparedStatement statement = dbConnection.prepareStatement(query);
          statement.setString(1, savedUser.getUserid());
          int deleteCount = statement.executeUpdate(query);
          debug("deleted " + deleteCount + " records");
@@ -317,7 +291,7 @@ protected void finalize () throws Throwable {
          throw new StoreException("SQL Exception : " + s);
       }
       finally {
-         dbClose();
+         reinitDb();
        }
    }
 

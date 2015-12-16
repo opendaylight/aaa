@@ -13,16 +13,15 @@ package org.opendaylight.aaa.h2.persistence;
  * @author peter.mellquist@hp.com
  *
  */
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.sql.SQLException;
 
 public class StoreException  extends Exception{
-   private static Logger logger = LoggerFactory.getLogger(StoreException.class);
-
-   public String message=null;
 
    public StoreException(String msg) {
-      logger.error(msg);
-      message = new String(msg);
+      super(msg);
    }
+
+    public StoreException(SQLException s) {
+        super(s);
+    }
 }
