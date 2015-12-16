@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_dc874d0e",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-16T23:54:32Z",
+      "side": 1,
+      "message": "This isn\u0027t part of my fix... this was existing code.  Many of your comments are about things that Peter M. from HP wrote 1.5 years ago... should they also be addressed in this patch?",
+      "parentUuid": "1aa4ed85_d65deeea",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_36c80274",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
         "patchSetId": 10
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_1c95e532",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-16T23:54:32Z",
+      "side": 1,
+      "message": "That is a much bigger change than is required to fix this bug.  That said, I agree that is a better architectural decision.",
+      "parentUuid": "1aa4ed85_7cddf96f",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_d6872e0e",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
         "patchSetId": 10
@@ -64,6 +100,24 @@
       "writtenOn": "2015-12-16T18:06:31Z",
       "side": 1,
       "message": "Since StoreException is caught here, dbConnection could be null when accessed in the methods below. Based on the usages below, it seems reInitDb should be called prior to the use of dbConnection instead of in a finally block. Then StoreException can be propagated from here. In the finally blocks below, close the connection and set to null so it is re-created on the next call.",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_9ca0f591",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-16T23:54:32Z",
+      "side": 1,
+      "message": "Yeah, I will revisit this mechanism in the next patch.",
+      "parentUuid": "1aa4ed85_d6872e0e",
       "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -104,6 +158,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_1cbc05bb",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-16T23:54:32Z",
+      "side": 1,
+      "message": "Yes, I didn\u0027t actually remember there was a finalize method.  I didn\u0027t put it in there, it is from code committed a long time ago.  This change was made by renaming the reinitDb function (refactor in eclipse).",
+      "parentUuid": "1aa4ed85_160b86d7",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_1cd64550",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
         "patchSetId": 10
@@ -138,6 +210,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_9cc79545",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-16T23:54:32Z",
+      "side": 1,
+      "message": "This was not part of my change, agian.  This is existing code.  You can tell what I added is a bit brighter green;  which is just formatting.  I don\u0027t know if this should be addressed in a separate change.",
+      "parentUuid": "1aa4ed85_f62caa4c",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_360322ba",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
         "patchSetId": 10
@@ -155,6 +245,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_3cc4613f",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-16T23:54:32Z",
+      "side": 1,
+      "message": "This is not my change.  This is existing code.",
+      "parentUuid": "1aa4ed85_360322ba",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_76f99ac7",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
         "patchSetId": 10
@@ -166,6 +274,24 @@
       "writtenOn": "2015-12-16T18:06:31Z",
       "side": 1,
       "message": "The downside to wrapping debug logging in this manner is that you lose the actual line # if you enable line # output in the appender. You don\u0027t need to check logger.isDebugEnabled() anyway if you use format args and avoid expensive args.",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_5cc11d2d",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-16T23:54:32Z",
+      "side": 1,
+      "message": "I don\u0027t use this, it is existing code.  We can deprecate it.  I understand a lot of the code in these classes isn\u0027t the best.",
+      "parentUuid": "1aa4ed85_76f99ac7",
       "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -234,6 +360,24 @@
       "writtenOn": "2015-12-16T23:30:26Z",
       "side": 1,
       "message": "Seems that all the added code is miss placed and should be inside the H2Store and exposed with a single method call \"createTables\" by the H2Store that should be invoked just after instantiating the H2Store.",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_bce7f1e3",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/yang/gen/v1/config/aaa/authn/h2/store/rev151128/AAAH2StoreModule.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-16T23:54:32Z",
+      "side": 1,
+      "message": "We can move it;  no problem with that.",
+      "parentUuid": "1aa4ed85_5cb6fd3e",
       "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
