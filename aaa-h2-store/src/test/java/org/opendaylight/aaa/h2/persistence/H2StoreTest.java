@@ -1,6 +1,7 @@
 package org.opendaylight.aaa.h2.persistence;
 
 import java.io.File;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.junit.AfterClass;
@@ -14,8 +15,12 @@ import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.User;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.h2.store.rev151128.AAAH2StoreModule;
 
 public class H2StoreTest {
+
+    private Connection connection = null;
+
     @BeforeClass
     public static void start() {
         File f = new File("idmlight.db.mv.db");
@@ -42,6 +47,8 @@ public class H2StoreTest {
 
     @Before
     public void before() throws StoreException, SQLException{
+        connection = H2Store.getConnection(connection);
+        AAAH2StoreModule.init(connection);
         UserStore us = new UserStore();
         us.dbClean();
         DomainStore ds = new DomainStore();
