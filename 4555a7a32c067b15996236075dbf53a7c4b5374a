@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_d65deeea",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-16T18:06:31Z",
+      "side": 1,
+      "message": "Minor thing but the recommended modifier ordering is static final.",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_36c80274",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-16T18:06:31Z",
+      "side": 1,
+      "message": "Is this class a singleton and/or can it be accessed by multiple threads? If so this should be volatile and/or there needs to be synchronization in the methods below that access it.",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_d6872e0e",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-16T18:06:31Z",
+      "side": 1,
+      "message": "Since StoreException is caught here, dbConnection could be null when accessed in the methods below. Based on the usages below, it seems reInitDb should be called prior to the use of dbConnection instead of in a finally block. Then StoreException can be propagated from here. In the finally blocks below, close the connection and set to null so it is re-created on the next call.",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_160b86d7",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-16T18:06:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this close the connection?",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_f62caa4c",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-16T18:06:31Z",
+      "side": 1,
+      "message": "Use logger.debug with format arg.",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_360322ba",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-16T18:06:31Z",
+      "side": 1,
+      "message": "It\u0027s better to do: logger.debug(\"deleted {} records\", deleteCount);",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_76f99ac7",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-16T18:06:31Z",
+      "side": 1,
+      "message": "The downside to wrapping debug logging in this manner is that you lose the actual line # if you enable line # output in the appender. You don\u0027t need to check logger.isDebugEnabled() anyway if you use format args and avoid expensive args.",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_96a0d691",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/GrantStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-16T18:06:31Z",
+      "side": 1,
+      "message": "Same as comments in DomainStore.",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_36ad6289",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/RoleStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-16T18:06:31Z",
+      "side": 1,
+      "message": "Same as comments in DomainStore.",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_56aa5e71",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/UserStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-16T18:06:31Z",
+      "side": 1,
+      "message": "Same as comments in DomainStore.",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
