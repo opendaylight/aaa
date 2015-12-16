@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_7cddf96f",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-16T23:30:26Z",
+      "side": 1,
+      "message": "If we want to do it properly, this member should not exist... each method should receive as a parameter a connection that is taken from the pool and return to the pool post execute.",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_d6872e0e",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
         "patchSetId": 10
@@ -53,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_fcd00955",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-16T23:30:26Z",
+      "side": 1,
+      "message": "this method should not be here but in the connection pool.",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_160b86d7",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
         "patchSetId": 10
@@ -64,6 +98,23 @@
       "writtenOn": "2015-12-16T18:06:31Z",
       "side": 1,
       "message": "Shouldn\u0027t this close the connection?",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_1cd64550",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-16T23:30:26Z",
+      "side": 1,
+      "message": "method should not exist as this class methods should be static.",
       "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -166,6 +217,23 @@
       "writtenOn": "2015-12-16T18:06:31Z",
       "side": 1,
       "message": "Same as comments in DomainStore.",
+      "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_5cb6fd3e",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/yang/gen/v1/config/aaa/authn/h2/store/rev151128/AAAH2StoreModule.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2015-12-16T23:30:26Z",
+      "side": 1,
+      "message": "Seems that all the added code is miss placed and should be inside the H2Store and exposed with a single method call \"createTables\" by the H2Store that should be invoked just after instantiating the H2Store.",
       "revId": "4555a7a32c067b15996236075dbf53a7c4b5374a",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
