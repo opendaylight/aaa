@@ -37,12 +37,21 @@ import org.slf4j.LoggerFactory;
  * An OSGi proxy for the IdmLight server.
  *
  */
-public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,IdMService {
+public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMService {
 
-    private static Logger logger = LoggerFactory.getLogger(IdmLightProxy.class);
+    private static final Logger LOG = LoggerFactory.getLogger(IdmLightProxy.class);
+
+    /**
+     * claimCache is responsible for storing the active claims per domain.  The
+     * outer map is keyed by domain, and the inner map is keyed by
+     * <code>PasswordCredentials</code>.
+     */
     private static Map<String, Map<PasswordCredentials, Claim>> claimCache = new ConcurrentHashMap<>();
+
+    // adds a store for the default "sdn" domain
     static {
-        claimCache.put(IIDMStore.DEFAULT_DOMAIN, new ConcurrentHashMap<PasswordCredentials, Claim>());
+        claimCache.put(IIDMStore.DEFAULT_DOMAIN,
+                new ConcurrentHashMap<PasswordCredentials, Claim>());
     }
 
     @Override
@@ -50,7 +59,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,IdMSer
         Preconditions.checkNotNull(creds);
         Preconditions.checkNotNull(creds.username());
         Preconditions.checkNotNull(creds.password());
-        String domain = creds.domain() == null  ? IIDMStore.DEFAULT_DOMAIN : creds.domain();
+        String domain = creds.domain() == null ? IIDMStore.DEFAULT_DOMAIN : creds.domain();
         // FIXME: Add cache invalidation
         Map<PasswordCredentials, Claim> cache = claimCache.get(domain);
         if (cache == null) {
@@ -72,101 +81,106 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,IdMSer
         return claim;
     }
 
+    /**
+     * Clears the cache of any active claims.
+     */
     public static synchronized void clearClaimCache() {
+        LOG.info("Clearing the claim cache");
         for (Map<PasswordCredentials, Claim> cache : claimCache.values()) {
             cache.clear();
         }
     }
 
     private static Claim dbAuthenticate(PasswordCredentials creds) {
-        Domain domain=null;
-        User user=null;
+        Domain domain = null;
+        User user = null;
         String credsDomain = creds.domain() == null ? IIDMStore.DEFAULT_DOMAIN : creds.domain();
         // check to see domain exists
         // TODO: ensure domain names are unique change to 'getDomain'
-        debug("get domain");
+        LOG.debug("get domain");
         try {
             domain = AAAIDMLightModule.getStore().readDomain(credsDomain);
-            if(domain==null){
+            if (domain == null) {
                 throw new AuthenticationException("Domain :" + credsDomain + " does not exist");
             }
         } catch (IDMStoreException e) {
-            throw new AuthenticationException("Error while fetching domain",e);
+            throw new AuthenticationException("Error while fetching domain", e);
         }
 
         // check to see user exists and passes cred check
         try {
-           debug("check user / pwd");
-           Users users = AAAIDMLightModule.getStore().getUsers(creds.username(), credsDomain);
-           List<User> userList = users.getUsers();
-           if (userList.size()==0) {
-              throw new AuthenticationException("User :" + creds.username() + " does not exist in domain "+credsDomain);
-           }
-           user = userList.get(0);
-           if (!SHA256Calculator.getSHA256(creds.password(),user.getSalt()).equals(user.getPassword())) {
-              throw new AuthenticationException("UserName / Password not found");
-           }
+            LOG.debug("check user / pwd");
+            Users users = AAAIDMLightModule.getStore().getUsers(creds.username(), credsDomain);
+            List<User> userList = users.getUsers();
+            if (userList.size() == 0) {
+                throw new AuthenticationException("User :" + creds.username()
+                        + " does not exist in domain " + credsDomain);
+            }
+            user = userList.get(0);
+            if (!SHA256Calculator.getSHA256(creds.password(), user.getSalt()).equals(
+                    user.getPassword())) {
+                throw new AuthenticationException("UserName / Password not found");
+            }
 
-           // get all grants & roles for this domain and user
-           debug("get grants");
-           List<String> roles = new ArrayList<String>();
-           Grants grants = AAAIDMLightModule.getStore().getGrants(domain.getDomainid(),user.getUserid());
-           List<Grant> grantList = grants.getGrants();
-           for (int z=0;z<grantList.size();z++) {
-              Grant grant = grantList.get(z);
-              Role role = AAAIDMLightModule.getStore().readRole(grant.getRoleid());
-              roles.add(role.getName());
-           }
+            // get all grants & roles for this domain and user
+            LOG.debug("get grants");
+            List<String> roles = new ArrayList<String>();
+            Grants grants = AAAIDMLightModule.getStore().getGrants(domain.getDomainid(),
+                    user.getUserid());
+            List<Grant> grantList = grants.getGrants();
+            for (int z = 0; z < grantList.size(); z++) {
+                Grant grant = grantList.get(z);
+                Role role = AAAIDMLightModule.getStore().readRole(grant.getRoleid());
+                roles.add(role.getName());
+            }
 
-           // build up the claim
-           debug("build a claim");
-           ClaimBuilder claim = new ClaimBuilder();
-           claim.setUserId(user.getUserid().toString());
-           claim.setUser(creds.username());
-           claim.setDomain(credsDomain);
-           for (int z=0;z<roles.size();z++) {
-              claim.addRole(roles.get(z));
-           }
-           return claim.build();
-        }
-        catch (IDMStoreException se) {
-           throw new AuthenticationException("idm data store exception :" + se.toString() + se);
+            // build up the claim
+            LOG.debug("build a claim");
+            ClaimBuilder claim = new ClaimBuilder();
+            claim.setUserId(user.getUserid().toString());
+            claim.setUser(creds.username());
+            claim.setDomain(credsDomain);
+            for (int z = 0; z < roles.size(); z++) {
+                claim.addRole(roles.get(z));
+            }
+            return claim.build();
+        } catch (IDMStoreException se) {
+            throw new AuthenticationException("idm data store exception :" + se.toString() + se);
         }
     }
 
     @Override
     public List<String> listDomains(String userId) {
-        debug("list Domains for userId:" + userId);
+        LOG.debug("list Domains for userId: {}", userId);
         List<String> domains = new ArrayList<String>();
         try {
-           Grants grants = AAAIDMLightModule.getStore().getGrants(userId);
-           List<Grant> grantList = grants.getGrants();
-           for (int z=0;z<grantList.size();z++) {
-              Grant grant = grantList.get(z);
-              Domain domain = AAAIDMLightModule.getStore().readDomain(grant.getDomainid());
-              domains.add(domain.getName());
-           }
-           return domains;
-        }
-        catch (IDMStoreException se) {
-           logger.warn("error getting domains " , se.toString(), se);
-           return domains;
+            Grants grants = AAAIDMLightModule.getStore().getGrants(userId);
+            List<Grant> grantList = grants.getGrants();
+            for (int z = 0; z < grantList.size(); z++) {
+                Grant grant = grantList.get(z);
+                Domain domain = AAAIDMLightModule.getStore().readDomain(grant.getDomainid());
+                domains.add(domain.getName());
+            }
+            return domains;
+        } catch (IDMStoreException se) {
+            LOG.warn("error getting domains ", se.toString(), se);
+            return domains;
         }
 
     }
 
     @Override
     public List<String> listRoles(String userId, String domainName) {
-        debug("listRoles");
+        LOG.debug("listRoles");
         List<String> roles = new ArrayList<String>();
 
         try {
-           // find domain name for specied domain name
+            // find domain name for specied domain name
             String did = null;
             try {
                 Domain domain = AAAIDMLightModule.getStore().readDomain(domainName);
-                if(domain==null){
-                    debug("DomainName: " + domainName + " Not found!");
+                if (domain == null) {
+                    LOG.debug("DomainName: {}", domainName + " Not found!");
                     return roles;
                 }
                 did = domain.getDomainid();
@@ -174,27 +188,19 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>,IdMSer
                 return roles;
             }
 
-           // find all grants for uid and did
-           Grants grants = AAAIDMLightModule.getStore().getGrants(did,userId);
-           List<Grant> grantList = grants.getGrants();
-           for (int z=0;z<grantList.size();z++) {
-              Grant grant = grantList.get(z);
-              Role role = AAAIDMLightModule.getStore().readRole(grant.getRoleid());
-              roles.add(role.getName());
-           }
+            // find all grants for uid and did
+            Grants grants = AAAIDMLightModule.getStore().getGrants(did, userId);
+            List<Grant> grantList = grants.getGrants();
+            for (int z = 0; z < grantList.size(); z++) {
+                Grant grant = grantList.get(z);
+                Role role = AAAIDMLightModule.getStore().readRole(grant.getRoleid());
+                roles.add(role.getName());
+            }
 
-           return roles;
-        }
-        catch (IDMStoreException se) {
-           logger.warn("error getting roles " , se.toString(), se);
-           return roles;
-        }
-    }
-
-    private static final void debug(String msg) {
-        if (logger.isDebugEnabled()) {
-            logger.debug(msg);
+            return roles;
+        } catch (IDMStoreException se) {
+            LOG.warn("error getting roles ", se.toString(), se);
+            return roles;
         }
     }
 }
-
