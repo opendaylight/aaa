@@ -7,6 +7,7 @@
  */
 
 package org.opendaylight.aaa.h2.persistence;
+
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -29,8 +30,7 @@ public class GrantStoreTest {
     Connection connectionMock = mock(Connection.class);
     private final GrantStore grantStoreUnderTest = new GrantStore();
     private String did = "5";
-    private String uid= "5";
-
+    private String uid = "5";
 
     @Before
     public void setup() {
@@ -39,12 +39,12 @@ public class GrantStoreTest {
 
     @Test
     public void getGrantsTest() throws Exception {
-        //Setup Mock Behavior
+        // Setup Mock Behavior
         Mockito.when(connectionMock.isClosed()).thenReturn(false);
         DatabaseMetaData dbmMock = mock(DatabaseMetaData.class);
         Mockito.when(connectionMock.getMetaData()).thenReturn(dbmMock);
         ResultSet rsUserMock = mock(ResultSet.class);
-        Mockito.when(dbmMock.getTables(null,null,"GRANTS",null)).thenReturn(rsUserMock);
+        Mockito.when(dbmMock.getTables(null, null, "GRANTS", null)).thenReturn(rsUserMock);
         Mockito.when(rsUserMock.next()).thenReturn(true);
 
         PreparedStatement pstmtMock = mock(PreparedStatement.class);
@@ -53,13 +53,13 @@ public class GrantStoreTest {
         ResultSet rsMock = getMockedResultSet();
         Mockito.when(pstmtMock.executeQuery()).thenReturn(rsMock);
 
-        //Run Test
-        Grants grants = grantStoreUnderTest.getGrants(did,uid);
+        // Run Test
+        Grants grants = grantStoreUnderTest.getGrants(did, uid);
 
-        //Verify
+        // Verify
         assertTrue(grants.getGrants().size() == 1);
         verify(pstmtMock).close();
-        }
+    }
 
     public ResultSet getMockedResultSet() throws SQLException {
         ResultSet rsMock = mock(ResultSet.class);
@@ -71,8 +71,6 @@ public class GrantStoreTest {
 
         return rsMock;
 
-        }
+    }
 
 }
-
-

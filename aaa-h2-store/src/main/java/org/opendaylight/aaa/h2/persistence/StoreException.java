@@ -16,13 +16,18 @@ package org.opendaylight.aaa.h2.persistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class StoreException  extends Exception{
-   private static Logger logger = LoggerFactory.getLogger(StoreException.class);
+public class StoreException extends Exception {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1403628228591780351L;
 
-   public String message=null;
+    private static final Logger LOG = LoggerFactory.getLogger(StoreException.class);
 
-   public StoreException(String msg) {
-      logger.error(msg);
-      message = new String(msg);
-   }
+    public String message = null;
+
+    public StoreException(String msg) {
+        LOG.error(msg);
+        message = new String(msg);
+    }
 }

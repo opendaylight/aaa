@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2015 Cisco Systems and others.  All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ */
+
 package org.opendaylight.aaa.h2.persistence;
 
 import java.sql.Connection;
@@ -18,9 +26,9 @@ import org.opendaylight.aaa.h2.config.IdmLightConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class H2Store implements IIDMStore{
+public class H2Store implements IIDMStore {
 
-    private static Logger LOG = LoggerFactory.getLogger(H2Store.class);
+    private static final Logger LOG = LoggerFactory.getLogger(H2Store.class);
 
     private static IdmLightConfig config = new IdmLightConfig();
     private DomainStore domainStore = new DomainStore();
@@ -36,17 +44,17 @@ public class H2Store implements IIDMStore{
         try {
             if (existingConnection == null || existingConnection.isClosed()) {
                 new org.h2.Driver();
-                connection = DriverManager.getConnection(config.getDbPath(),
-                        config.getDbUser(), config.getDbPwd());
+                connection = DriverManager.getConnection(config.getDbPath(), config.getDbUser(),
+                        config.getDbPwd());
             }
         } catch (Exception e) {
-            throw new StoreException("Cannot connect to database server " + e);
+            throw new StoreException("Cannot connect to database server" + e);
         }
 
         return connection;
     }
 
-    public static IdmLightConfig getConfig(){
+    public static IdmLightConfig getConfig() {
         return config;
     }
 
@@ -102,9 +110,9 @@ public class H2Store implements IIDMStore{
 
     @Override
     public Role writeRole(Role role) throws IDMStoreException {
-        try{
+        try {
             return roleStore.createRole(role);
-        }catch(StoreException e) {
+        } catch (StoreException e) {
             LOG.error("StoreException encountered while writing role", e);
             throw new IDMStoreException(e);
         }
@@ -112,9 +120,9 @@ public class H2Store implements IIDMStore{
 
     @Override
     public Role readRole(String roleid) throws IDMStoreException {
-        try{
+        try {
             return roleStore.getRole(roleid);
-        }catch(StoreException e) {
+        } catch (StoreException e) {
             LOG.error("StoreException encountered while reading role", e);
             throw new IDMStoreException(e);
         }
@@ -122,9 +130,9 @@ public class H2Store implements IIDMStore{
 
     @Override
     public Role deleteRole(String roleid) throws IDMStoreException {
-        try{
+        try {
             return roleStore.deleteRole(roleid);
-        }catch(StoreException e) {
+        } catch (StoreException e) {
             LOG.error("StoreException encountered while deleting role", e);
             throw new IDMStoreException(e);
         }
@@ -132,9 +140,9 @@ public class H2Store implements IIDMStore{
 
     @Override
     public Role updateRole(Role role) throws IDMStoreException {
-        try{
+        try {
             return roleStore.putRole(role);
-        }catch(StoreException e) {
+        } catch (StoreException e) {
             LOG.error("StoreException encountered while updating role", e);
             throw new IDMStoreException(e);
         }
@@ -265,7 +273,7 @@ public class H2Store implements IIDMStore{
         return readGrant(IDMStoreUtil.createGrantid(userid, domainid, roleid));
     }
 
-    public static Domain createDomain(String domainName,boolean enable) throws StoreException{
+    public static Domain createDomain(String domainName, boolean enable) throws StoreException {
         DomainStore ds = new DomainStore();
         Domain d = new Domain();
         d.setName(domainName);
@@ -273,7 +281,8 @@ public class H2Store implements IIDMStore{
         return ds.createDomain(d);
     }
 
-    public static User createUser(String name, String password, String domain, String description,String email,boolean enabled,String SALT) throws StoreException{
+    public static User createUser(String name, String password, String domain, String description,
+            String email, boolean enabled, String SALT) throws StoreException {
         UserStore us = new UserStore();
         User u = new User();
         u.setName(name);
@@ -284,23 +293,24 @@ public class H2Store implements IIDMStore{
         u.setPassword(password);
         u.setSalt(SALT);
         return us.createUser(u);
-     }
+    }
 
-     public static Role createRole(String name, String domain, String description) throws StoreException{
+    public static Role createRole(String name, String domain, String description)
+            throws StoreException {
         RoleStore rs = new RoleStore();
         Role r = new Role();
         r.setDescription(description);
         r.setName(name);
         r.setDomainid(domain);
         return rs.createRole(r);
-     }
+    }
 
-     public static Grant createGrant(String domain,String user,String role) throws StoreException{
+    public static Grant createGrant(String domain, String user, String role) throws StoreException {
         GrantStore gs = new GrantStore();
         Grant g = new Grant();
         g.setDomainid(domain);
         g.setRoleid(role);
         g.setUserid(user);
         return gs.createGrant(g);
-     }
+    }
 }
