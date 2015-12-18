@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_597a8589",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-18T16:36:39Z",
+      "side": 1,
+      "message": "Do you mean make them private?  There is no need for the increased scope at this point and I can\u0027t really think of a good reason that will change.  Thus, I will decrease the scope to increase encapsulation.",
+      "parentUuid": "1aa4ed85_1ff2b29a",
+      "revId": "26f4b4f2ff91fd3cac47dc23a5bf5b3768a2b425",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_3fef6eb2",
         "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2015-12-18T02:17:28Z",
       "side": 1,
       "message": "Perhaps we should call this method redactUserPassword for more clarity?",
+      "revId": "26f4b4f2ff91fd3cac47dc23a5bf5b3768a2b425",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_f96ed1c8",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-18T16:36:39Z",
+      "side": 1,
+      "message": "\"redactUserPasswordAndSalt\" or \"redactUserPasswordInfo\" would better describe this I believe.  Regardless, I will give it a better name and we can argue about it later :).",
+      "parentUuid": "1aa4ed85_3fef6eb2",
       "revId": "26f4b4f2ff91fd3cac47dc23a5bf5b3768a2b425",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_19740d98",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-18T16:36:39Z",
+      "side": 1,
+      "message": "Ah yes you are correct;  I fell into a pattern where the other conditionals didn\u0027t need an else since if the original condition was true, it would return and exit the method. An \"else\" is appropriate here; thanks for the good eye!",
+      "parentUuid": "1aa4ed85_ffe236d4",
+      "revId": "26f4b4f2ff91fd3cac47dc23a5bf5b3768a2b425",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_1fdb921c",
         "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2015-12-18T02:17:28Z",
       "side": 1,
       "message": "\"deleting\" should be verbal as a format arg. \n\nAlso this method could also log the message to error instead of doing it the call sites above (also some log to error while others don\u0027t - should be consistent either way).",
+      "revId": "26f4b4f2ff91fd3cac47dc23a5bf5b3768a2b425",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_d96515e2",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-18T16:36:39Z",
+      "side": 1,
+      "message": "It appears I wasn\u0027t careful here... I will change this. Thanks.",
+      "parentUuid": "1aa4ed85_1fdb921c",
       "revId": "26f4b4f2ff91fd3cac47dc23a5bf5b3768a2b425",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_7962e1d9",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-18T16:36:39Z",
+      "side": 1,
+      "message": "Good catch.",
+      "parentUuid": "1aa4ed85_9ffea26a",
+      "revId": "26f4b4f2ff91fd3cac47dc23a5bf5b3768a2b425",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_5ff82a7c",
         "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2015-12-18T02:17:28Z",
       "side": 1,
       "message": "Same as above re: {}",
+      "revId": "26f4b4f2ff91fd3cac47dc23a5bf5b3768a2b425",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_995f9d0e",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-18T16:36:39Z",
+      "side": 1,
+      "message": "I\u0027ll fix in the next patch.  Thanks for the careful eye, Tom.  I greatly appreciate it.  Next time, I won\u0027t give you such crap to look at :)",
+      "parentUuid": "1aa4ed85_5ff82a7c",
       "revId": "26f4b4f2ff91fd3cac47dc23a5bf5b3768a2b425",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
