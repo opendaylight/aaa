@@ -14,21 +14,35 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
-import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.idm.rest.DomainHandler;
 import org.opendaylight.aaa.idm.rest.RoleHandler;
 import org.opendaylight.aaa.idm.rest.UserHandler;
 import org.opendaylight.aaa.idm.rest.VersionHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * A JAX-RS application for IdmLight.
+ * A JAX-RS application for IdmLight.  The REST endpoints delivered by this
+ * application are in the form:
+ * <code>http://{HOST}:{PORT}/auth/v1/</code>
+ *
+ * For example, the users REST endpoint is:
+ * <code>http://{HOST}:{PORT}/auth/v1/users</code>
+ *
+ * This application is responsible for interaction with the backing h2
+ * database store.
  *
  * @author liemmn
- *
+ * @author Ryan Goulding (ryandgoulding@gmail.com)
+ * @see <code>org.opendaylight.aaa.idm.rest.DomainHandler</code>
+ * @see <code>org.opendaylight.aaa.idm.rest.UserHandler</code>
+ * @see <code>org.opendaylight.aaa.idm.rest.RoleHandler</code>
  */
 public class IdmLightApplication extends Application {
+
+    //TODO create a bug to address the fact that the implementation assumes 128
+    // as the max length, even though this claims 256.
+    /**
+     * The maximum field length for identity fields.
+     */
     public static final int MAX_FIELD_LEN = 256;
     public IdmLightApplication() {
     }
