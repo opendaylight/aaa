@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class AAAIDMLightModule extends org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AbstractAAAIDMLightModule {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(AAAIDMLightModule.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AAAIDMLightModule.class);
     private BundleContext bundleContext = null;
     private static volatile IIDMStore store = null;
 
@@ -44,11 +44,11 @@ public class AAAIDMLightModule extends org.opendaylight.yang.gen.v1.config.aaa.a
                     @Override
                     public IIDMStore addingService(ServiceReference<IIDMStore> reference) {
                         store = reference.getBundle().getBundleContext().getService(reference);
-                        LOGGER.info("IIDMStore service {} was found", store.getClass());
+                        LOG.info("IIDMStore service {} was found", store.getClass());
                         try {
                             StoreBuilder.init(store);
                         } catch (IDMStoreException e) {
-                            LOGGER.error("Failed to initialize data in store", e);
+                            LOG.error("Failed to initialize data in store", e);
                         }
 
                         return store;
@@ -65,7 +65,7 @@ public class AAAIDMLightModule extends org.opendaylight.yang.gen.v1.config.aaa.a
 
         storeServiceTracker.open();
 
-        LOGGER.info("AAA IDM Light Module Initialized");
+        LOG.info("AAA IDM Light Module Initialized");
         return new AutoCloseable() {
             @Override
             public void close() throws Exception {
