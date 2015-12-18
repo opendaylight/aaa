@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_1ff2b29a",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-18T02:17:28Z",
+      "side": 1,
+      "message": "Do these need to be protected?",
+      "revId": "26f4b4f2ff91fd3cac47dc23a5bf5b3768a2b425",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_3fef6eb2",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-18T02:17:28Z",
+      "side": 1,
+      "message": "Perhaps we should call this method redactUserPassword for more clarity?",
+      "revId": "26f4b4f2ff91fd3cac47dc23a5bf5b3768a2b425",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_ffe236d4",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-18T02:17:28Z",
+      "side": 1,
+      "message": "This should be an else?",
+      "revId": "26f4b4f2ff91fd3cac47dc23a5bf5b3768a2b425",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_1fdb921c",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-18T02:17:28Z",
+      "side": 1,
+      "message": "\"deleting\" should be verbal as a format arg. \n\nAlso this method could also log the message to error instead of doing it the call sites above (also some log to error while others don\u0027t - should be consistent either way).",
+      "revId": "26f4b4f2ff91fd3cac47dc23a5bf5b3768a2b425",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_9ffea26a",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-18T02:17:28Z",
+      "side": 1,
+      "message": "String.format doesn\u0027t use \u0027{}\u0027 as placeholder, it uses printf style, i.e. %s",
+      "revId": "26f4b4f2ff91fd3cac47dc23a5bf5b3768a2b425",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_5ff82a7c",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2015-12-18T02:17:28Z",
+      "side": 1,
+      "message": "Same as above re: {}",
+      "revId": "26f4b4f2ff91fd3cac47dc23a5bf5b3768a2b425",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
