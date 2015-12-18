@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_7ce72f41",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/KeyTool.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2015-12-18T22:45:44Z",
+      "side": 1,
+      "message": "This is alarming from a security perspective.",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 44
+      },
+      "revId": "307eec0b61f0b88785738f74a7bdf9649d8c0a10",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
