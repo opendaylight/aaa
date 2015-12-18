@@ -33,7 +33,7 @@ if [ $STATUS -eq $PASSCODE ]; then
    ((PASSCOUNT++))
    echo "[PASS] Status=" $STATUS
 else
-   cat result.json | python -mjson.tool 
+   cat result.json | python -mjson.tool
    echo "[FAIL] Status=" $STATUS
    ((FAILCOUNT++))
 fi
@@ -81,7 +81,7 @@ echo
 
 #
 # DOMAIN TESTS
-# 
+#
 
 NAME="get all domains"
 URL="http://$TARGET/v1/domains"

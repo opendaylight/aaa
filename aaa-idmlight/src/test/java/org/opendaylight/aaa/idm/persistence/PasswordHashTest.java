@@ -11,6 +11,7 @@ package org.opendaylight.aaa.idm.persistence;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -33,45 +34,40 @@ import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLi
 public class PasswordHashTest {
 
     @Before
-    public void before(){
+    public void before() throws IDMStoreException{
         IIDMStore store = Mockito.mock(IIDMStore.class);
         AAAIDMLightModule.setStore(store);
         Domain domain = new Domain();
         domain.setName("sdn");
         domain.setDomainid("sdn");
-        try {
-            Mockito.when(store.readDomain("sdn")).thenReturn(domain);
-            Creds c = new Creds();
-            Users users = new Users();
-            User user = new User();
-            user.setName("admin");
-            user.setUserid(c.username());
-            user.setDomainid("sdn");
-            user.setSalt("ABCD");
-            user.setPassword(SHA256Calculator.getSHA256(c.password(),user.getSalt()));
-            List<User> lu = new LinkedList<>();
-            lu.add(user);
-            users.setUsers(lu);
 
-            Grants grants = new Grants();
-            Grant grant = new Grant();
-            List<Grant> g = new ArrayList<>();
-            g.add(grant);
-            grant.setDomainid("sdn");
-            grant.setRoleid("admin");
-            grant.setUserid("admin");
-            grants.setGrants(g);
-            Role role = new Role();
-            role.setRoleid("admin");
-            role.setName("admin");
-            Mockito.when(store.readRole("admin")).thenReturn(role);
-            Mockito.when(store.getUsers(c.username(), c.domain())).thenReturn(users);
-            Mockito.when(store.getGrants(c.domain(), c.username())).thenReturn(grants);
-            
-        } catch (IDMStoreException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        Mockito.when(store.readDomain("sdn")).thenReturn(domain);
+        Creds c = new Creds();
+        Users users = new Users();
+        User user = new User();
+        user.setName("admin");
+        user.setUserid(c.username());
+        user.setDomainid("sdn");
+        user.setSalt("ABCD");
+        user.setPassword(SHA256Calculator.getSHA256(c.password(),user.getSalt()));
+        List<User> lu = new LinkedList<>();
+        lu.add(user);
+        users.setUsers(lu);
+
+        Grants grants = new Grants();
+        Grant grant = new Grant();
+        List<Grant> g = new ArrayList<>();
+        g.add(grant);
+        grant.setDomainid("sdn");
+        grant.setRoleid("admin");
+        grant.setUserid("admin");
+        grants.setGrants(g);
+        Role role = new Role();
+        role.setRoleid("admin");
+        role.setName("admin");
+        Mockito.when(store.readRole("admin")).thenReturn(role);
+        Mockito.when(store.getUsers(c.username(), c.domain())).thenReturn(users);
+        Mockito.when(store.getGrants(c.domain(), c.username())).thenReturn(grants);
     }
 
     @Test
