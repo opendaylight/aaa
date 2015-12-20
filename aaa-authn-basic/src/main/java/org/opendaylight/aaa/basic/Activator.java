@@ -17,18 +17,15 @@ import org.osgi.framework.BundleContext;
 public class Activator extends DependencyActivatorBase {
 
     @Override
-    public void init(BundleContext context, DependencyManager manager)
-            throws Exception {
-        manager.add(createComponent().setInterface(
-                new String[] { TokenAuth.class.getName() }, null)
+    public void init(BundleContext context, DependencyManager manager) throws Exception {
+        manager.add(createComponent()
+                .setInterface(new String[] { TokenAuth.class.getName() }, null)
                 .setImplementation(HttpBasicAuth.class)
-                .add(createServiceDependency().setService(CredentialAuth.class)
-                        .setRequired(true)));
+                .add(createServiceDependency().setService(CredentialAuth.class).setRequired(true)));
     }
 
     @Override
-    public void destroy(BundleContext context, DependencyManager manager)
-            throws Exception {
+    public void destroy(BundleContext context, DependencyManager manager) throws Exception {
     }
 
 }
