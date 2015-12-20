@@ -8,6 +8,7 @@
 
 package org.opendaylight.aaa.federation;
 
+import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 import static org.opendaylight.aaa.federation.FederationEndpoint.AUTH_CLAIM;
 
 import java.io.IOException;
@@ -17,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -26,9 +26,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
-
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.ClaimAuth;
 import org.slf4j.Logger;
@@ -52,8 +49,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class ClaimAuthFilter implements Filter {
-    private static final Logger logger = LoggerFactory
-            .getLogger(ClaimAuthFilter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ClaimAuthFilter.class);
 
     private static final String CGI_AUTH_TYPE = "AUTH_TYPE";
     private static final String CGI_PATH_INFO = "PATH_INFO";
@@ -79,18 +75,16 @@ public class ClaimAuthFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse resp,
-            FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
+            throws IOException, ServletException {
         Set<Integer> secureProxyPorts;
         int localPort;
 
         // Check to see if we are communicated over an authorized port or not
-        secureProxyPorts = FederationConfiguration.instance()
-                .secureProxyPorts();
+        secureProxyPorts = FederationConfiguration.instance().secureProxyPorts();
         localPort = req.getLocalPort();
         if (!secureProxyPorts.contains(localPort)) {
-            ((HttpServletResponse) resp).sendError(SC_UNAUTHORIZED,
-                    UNAUTHORIZED_PORT_ERR);
+            ((HttpServletResponse) resp).sendError(SC_UNAUTHORIZED, UNAUTHORIZED_PORT_ERR);
             return;
         }
 
@@ -188,8 +182,8 @@ public class ClaimAuthFilter implements Filter {
         claims.put(CGI_SCRIPT_NAME, req.getServletPath());
         claims.put(CGI_SERVER_PROTOCOL, req.getProtocol());
 
-        if (logger.isDebugEnabled()) {
-            logger.debug("ClaimAuthFilter claims = " + claims.toString());
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("ClaimAuthFilter claims = {}", claims.toString());
         }
 
         return claims;
@@ -247,7 +241,7 @@ public class ClaimAuthFilter implements Filter {
         try {
             return new String(string.getBytes("ISO8859-1"), "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            logger.warn("Unable to UTF-8 decode: " , string , e);
+            LOG.warn("Unable to UTF-8 decode: ", string, e);
             return string;
         }
     }
