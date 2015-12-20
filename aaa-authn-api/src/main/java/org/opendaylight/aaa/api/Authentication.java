@@ -8,7 +8,6 @@
 
 package org.opendaylight.aaa.api;
 
-
 /**
  * An immutable authentication context.
  *

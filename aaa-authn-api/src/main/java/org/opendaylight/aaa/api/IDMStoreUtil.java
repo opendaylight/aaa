@@ -8,6 +8,7 @@
 package org.opendaylight.aaa.api;
 
 import javax.naming.OperationNotSupportedException;
+
 /*
  *  This class is a utility to construct the different elements keys for the different data stores.
  *  For not making mistakes around the code constructing an element key, this class standardize the
@@ -17,22 +18,23 @@ import javax.naming.OperationNotSupportedException;
  */
 
 public class IDMStoreUtil {
-    private IDMStoreUtil() throws OperationNotSupportedException{
+    private IDMStoreUtil() throws OperationNotSupportedException {
         throw new OperationNotSupportedException();
     }
-    public static String createDomainid(String domainName){
+
+    public static String createDomainid(String domainName) {
         return domainName;
     }
 
-    public static String createUserid(String username,String domainid){
-        return username+"@"+domainid;
+    public static String createUserid(String username, String domainid) {
+        return username + "@" + domainid;
     }
 
-    public static String createRoleid(String rolename,String domainid){
-        return rolename+"@"+domainid;
+    public static String createRoleid(String rolename, String domainid) {
+        return rolename + "@" + domainid;
     }
 
-    public static String createGrantid(String userid,String domainid,String roleid){
-        return  userid+"@"+roleid+"@"+domainid;
+    public static String createGrantid(String userid, String domainid, String roleid) {
+        return userid + "@" + roleid + "@" + domainid;
     }
 }

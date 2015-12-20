@@ -14,74 +14,73 @@ package org.opendaylight.aaa.api.model;
  *
  */
 
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "domain")
 public class Domain {
-   private String domainid;
-   private String name;
-   private String description;
-   private Boolean enabled;
+    private String domainid;
+    private String name;
+    private String description;
+    private Boolean enabled;
 
-   public String getDomainid() {
-      return domainid;
-   }
+    public String getDomainid() {
+        return domainid;
+    }
 
-   public void setDomainid(String id) {
-      this.domainid = id;
-   }
+    public void setDomainid(String id) {
+        this.domainid = id;
+    }
 
-   public String getName() {
-      return name;
-   }
+    public String getName() {
+        return name;
+    }
 
-   public void setName(String name) {
-      this.name = name;
-   }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-   public String getDescription() {
-      return description;
-   }
+    public String getDescription() {
+        return description;
+    }
 
-   public void setDescription(String description) {
-      this.description = description;
-   }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-   public Boolean isEnabled() {
-      return enabled;
-   }
+    public Boolean isEnabled() {
+        return enabled;
+    }
 
-   public void setEnabled(Boolean enabled) {
-      this.enabled = enabled;
-   }
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 
-   @Override
-   public int hashCode() {
-       return this.name.hashCode();
-   }
+    @Override
+    public int hashCode() {
+        return this.name.hashCode();
+    }
 
-   @Override
-   public boolean equals(Object obj) {
-       Domain other = (Domain)obj;
-       if(other==null)
-           return false;
-       if(compareValues(getName(), other.getName()) &&
-          compareValues(getDomainid(), other.getDomainid()) &&
-          compareValues(getDescription(), other.getDescription()))
-              return true;
-       return false;
-   }
+    @Override
+    public boolean equals(Object obj) {
+        Domain other = (Domain) obj;
+        if (other == null)
+            return false;
+        if (compareValues(getName(), other.getName())
+                && compareValues(getDomainid(), other.getDomainid())
+                && compareValues(getDescription(), other.getDescription()))
+            return true;
+        return false;
+    }
 
-   private boolean compareValues(Object a,Object b){
-       if(a==null && b!=null)
-           return false;
-       if(a!=null && b==null)
-           return false;
-       if(a==null && b==null)
-           return true;
-       if(a.equals(b))
-           return true;
-       return false;
-   }
+    private boolean compareValues(Object a, Object b) {
+        if (a == null && b != null)
+            return false;
+        if (a != null && b == null)
+            return false;
+        if (a == null && b == null)
+            return true;
+        if (a.equals(b))
+            return true;
+        return false;
+    }
 }

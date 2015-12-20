@@ -19,7 +19,7 @@ import java.util.Set;
  */
 public interface Claim {
     /**
-     * Get the id of the authorized client.  If the id is an empty string, it
+     * Get the id of the authorized client. If the id is an empty string, it
      * means that the client is anonymous.
      *
      * @return id of the authorized client, or empty string if anonymous
@@ -32,7 +32,6 @@ public interface Claim {
      * @return unique user id
      */
     String userId();
-
 
     /**
      * Get the user name. User names are externally created.

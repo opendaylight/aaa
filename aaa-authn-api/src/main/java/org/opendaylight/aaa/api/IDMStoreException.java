@@ -10,14 +10,15 @@ package org.opendaylight.aaa.api;
 /*
  * @author - Sharon Aicler (saichler@cisco.com)
  */
-public class IDMStoreException extends Exception{
+public class IDMStoreException extends Exception {
 
     private static final long serialVersionUID = -7534127680943957878L;
 
-    public IDMStoreException(Exception e){
+    public IDMStoreException(Exception e) {
         super(e);
     }
-    public IDMStoreException(String msg){
+
+    public IDMStoreException(String msg) {
         super(msg);
     }
 }

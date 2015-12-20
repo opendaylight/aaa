@@ -18,8 +18,10 @@ public interface CredentialAuth<T extends Credentials> {
     /**
      * Authenticate a claim with the given credentials and domain scope.
      *
-     * @param cred credentials
-     * @throws AuthenticationException if failed authentication
+     * @param cred
+     *            credentials
+     * @throws AuthenticationException
+     *             if failed authentication
      * @return authenticated claim
      */
     Claim authenticate(T cred) throws AuthenticationException;

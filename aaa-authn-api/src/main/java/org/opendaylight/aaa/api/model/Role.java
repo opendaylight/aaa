@@ -18,69 +18,69 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "role")
 public class Role {
-   private String roleid;
-   private String name;
-   private String description;
-   private String domainid;
+    private String roleid;
+    private String name;
+    private String description;
+    private String domainid;
 
-   public String getRoleid() {
-      return roleid;
-   }
+    public String getRoleid() {
+        return roleid;
+    }
 
-   public void setRoleid(String id) {
-      this.roleid = id;
-   }
+    public void setRoleid(String id) {
+        this.roleid = id;
+    }
 
-   public String getName() {
-      return name;
-   }
+    public String getName() {
+        return name;
+    }
 
-   public void setName(String name) {
-      this.name = name;
-   }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-   public String getDescription() {
-      return description;
-   }
+    public String getDescription() {
+        return description;
+    }
 
-   public void setDescription(String description) {
-      this.description = description;
-   }
-   @Override
-   public int hashCode() {
-       return this.name.hashCode();
-   }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-   @Override
-   public boolean equals(Object obj) {
-       Role other = (Role)obj;
-       if(other==null)
-           return false;
-       if(compareValues(getName(), other.getName()) &&
-          compareValues(getRoleid(), other.getRoleid()) &&
-          compareValues(getDescription(), other.getDescription()))
-              return true;
-       return false;
-   }
+    @Override
+    public int hashCode() {
+        return this.name.hashCode();
+    }
 
-   public void setDomainid(String domainid){
-       this.domainid = domainid;
-   }
+    @Override
+    public boolean equals(Object obj) {
+        Role other = (Role) obj;
+        if (other == null)
+            return false;
+        if (compareValues(getName(), other.getName())
+                && compareValues(getRoleid(), other.getRoleid())
+                && compareValues(getDescription(), other.getDescription()))
+            return true;
+        return false;
+    }
 
-   public String getDomainid(){
-       return this.domainid;
-   }
+    public void setDomainid(String domainid) {
+        this.domainid = domainid;
+    }
 
-   private boolean compareValues(Object a,Object b){
-       if(a==null && b!=null)
-           return false;
-       if(a!=null && b==null)
-           return false;
-       if(a==null && b==null)
-           return true;
-       if(a.equals(b))
-           return true;
-       return false;
-   }
+    public String getDomainid() {
+        return this.domainid;
+    }
+
+    private boolean compareValues(Object a, Object b) {
+        if (a == null && b != null)
+            return false;
+        if (a != null && b == null)
+            return false;
+        if (a == null && b == null)
+            return true;
+        if (a.equals(b))
+            return true;
+        return false;
+    }
 }
-

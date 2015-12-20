@@ -11,10 +11,15 @@ import java.security.MessageDigest;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
  * @Author - Sharon Aicler (saichler@cisco.com)
  */
 public class SHA256Calculator {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SHA256Calculator.class);
 
     private static MessageDigest md = null;
     private static ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
@@ -42,7 +47,7 @@ public class SHA256Calculator {
                     try {
                         md = MessageDigest.getInstance("SHA-256");
                     } catch (Exception err) {
-                        err.printStackTrace();
+                        LOG.error("Error calculating SHA-256 for SALT", err);
                     }
                 }
             } finally {
@@ -69,7 +74,7 @@ public class SHA256Calculator {
     public static String removeSpecialCharacters(String str) {
         StringBuilder buff = new StringBuilder();
         for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) != '\'' && str.charAt(i)!=0) {
+            if (str.charAt(i) != '\'' && str.charAt(i) != 0) {
                 buff.append(str.charAt(i));
             }
         }

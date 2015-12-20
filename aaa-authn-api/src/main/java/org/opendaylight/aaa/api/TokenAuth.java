@@ -32,7 +32,6 @@ public interface TokenAuth {
      * @throws AuthenticationException
      *             if authentication fails
      */
-    Authentication validate(Map<String, List<String>> headers)
-            throws AuthenticationException;
+    Authentication validate(Map<String, List<String>> headers) throws AuthenticationException;
 
 }

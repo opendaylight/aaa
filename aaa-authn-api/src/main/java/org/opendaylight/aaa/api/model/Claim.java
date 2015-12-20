@@ -20,41 +20,41 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "Claim")
 public class Claim {
-   private String domainid;
-   private String userid;
-   private String username;
-   private List<Role> roles;
+    private String domainid;
+    private String userid;
+    private String username;
+    private List<Role> roles;
 
-   public String getDomainid() {
-      return domainid;
-   }
+    public String getDomainid() {
+        return domainid;
+    }
 
-   public void setDomainid(String id) {
-      this.domainid = id;
-   }
+    public void setDomainid(String id) {
+        this.domainid = id;
+    }
 
-   public String getUserid() {
-      return userid;
-   }
+    public String getUserid() {
+        return userid;
+    }
 
-   public void setUserid(String id) {
-      this.userid = id;
-   }
+    public void setUserid(String id) {
+        this.userid = id;
+    }
 
-   public String getUsername() {
-      return username;
-   }
+    public String getUsername() {
+        return username;
+    }
 
-   public void setUsername(String name) {
-      this.username = name;
-   }
+    public void setUsername(String name) {
+        this.username = name;
+    }
 
-   public List<Role> getRoles() {
-      return roles;
-   }
+    public List<Role> getRoles() {
+        return roles;
+    }
 
-   public void setRoles(List<Role> roles) {
-      this.roles = roles;
-   }
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
 }

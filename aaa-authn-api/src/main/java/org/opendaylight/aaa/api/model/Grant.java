@@ -14,74 +14,73 @@ package org.opendaylight.aaa.api.model;
  *
  */
 
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "grant")
 public class Grant {
-   private String grantid;
-   private String domainid;
-   private String userid;
-   private String roleid;
+    private String grantid;
+    private String domainid;
+    private String userid;
+    private String roleid;
 
-   public String getGrantid(){
-       return this.grantid;
-   }
+    public String getGrantid() {
+        return this.grantid;
+    }
 
-   public void setGrantid(String id){
-       this.grantid = id;
-   }
+    public void setGrantid(String id) {
+        this.grantid = id;
+    }
 
-   public String getDomainid() {
-      return domainid;
-   }
+    public String getDomainid() {
+        return domainid;
+    }
 
-   public void setDomainid(String id) {
-      this.domainid = id;
-   }
+    public void setDomainid(String id) {
+        this.domainid = id;
+    }
 
-   public String getUserid() {
-      return userid;
-   }
+    public String getUserid() {
+        return userid;
+    }
 
-   public void setUserid(String id) {
-      this.userid = id;
-   }
+    public void setUserid(String id) {
+        this.userid = id;
+    }
 
-   public String getRoleid() {
-      return roleid;
-   }
+    public String getRoleid() {
+        return roleid;
+    }
 
-   public void setRoleid(String id) {
-      this.roleid = id;
-   }
+    public void setRoleid(String id) {
+        this.roleid = id;
+    }
 
-   @Override
-   public int hashCode() {
-       return this.getUserid().hashCode();
-   }
+    @Override
+    public int hashCode() {
+        return this.getUserid().hashCode();
+    }
 
-   @Override
-   public boolean equals(Object obj) {
-       Grant other = (Grant)obj;
-       if(other==null)
-           return false;
-       if(compareValues(getDomainid(), other.getDomainid()) &&
-          compareValues(getRoleid(), other.getRoleid()) &&
-          compareValues(getUserid(), other.getUserid()))
-              return true;
-       return false;
-   }
+    @Override
+    public boolean equals(Object obj) {
+        Grant other = (Grant) obj;
+        if (other == null)
+            return false;
+        if (compareValues(getDomainid(), other.getDomainid())
+                && compareValues(getRoleid(), other.getRoleid())
+                && compareValues(getUserid(), other.getUserid()))
+            return true;
+        return false;
+    }
 
-   private boolean compareValues(Object a,Object b){
-       if(a==null && b!=null)
-           return false;
-       if(a!=null && b==null)
-           return false;
-       if(a==null && b==null)
-           return true;
-       if(a.equals(b))
-           return true;
-       return false;
-   }
+    private boolean compareValues(Object a, Object b) {
+        if (a == null && b != null)
+            return false;
+        if (a != null && b == null)
+            return false;
+        if (a == null && b == null)
+            return true;
+        if (a.equals(b))
+            return true;
+        return false;
+    }
 }

@@ -14,114 +14,113 @@ package org.opendaylight.aaa.api.model;
  *
  */
 
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "user")
 public class User {
-   private String userid;
-   private String name;
-   private String description;
-   private Boolean enabled;
-   private String email;
-   private String password;
-   private String salt;
-   private String domainid;
+    private String userid;
+    private String name;
+    private String description;
+    private Boolean enabled;
+    private String email;
+    private String password;
+    private String salt;
+    private String domainid;
 
-   public String getUserid() {
-      return userid;
-   }
+    public String getUserid() {
+        return userid;
+    }
 
-   public void setUserid(String id) {
-      this.userid = id;
-   }
+    public void setUserid(String id) {
+        this.userid = id;
+    }
 
-   public String getName() {
-      return name;
-   }
+    public String getName() {
+        return name;
+    }
 
-   public void setName(String name) {
-      this.name = name;
-   }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-   public String getDescription() {
-      return description;
-   }
+    public String getDescription() {
+        return description;
+    }
 
-   public void setDescription(String description) {
-      this.description = description;
-   }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-   public Boolean isEnabled() {
-      return enabled;
-   }
+    public Boolean isEnabled() {
+        return enabled;
+    }
 
-   public void setEnabled(Boolean enabled) {
-      this.enabled = enabled;
-   }
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 
-   public void setEmail(String email) {
-      this.email = email;
-   }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-   public String getEmail() {
-      return email;
-   }
+    public String getEmail() {
+        return email;
+    }
 
-   public void setPassword(String password) {
-      this.password = password;
-   }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-   public String getPassword() {
-      return password;
-   }
+    public String getPassword() {
+        return password;
+    }
 
-   public void setSalt(String s){
-       this.salt = s;
-   }
+    public void setSalt(String s) {
+        this.salt = s;
+    }
 
-   public String getSalt(){
-       return this.salt;
-   }
+    public String getSalt() {
+        return this.salt;
+    }
 
-   public String getDomainid(){
-       return domainid;
-   }
+    public String getDomainid() {
+        return domainid;
+    }
 
-   public void setDomainid(String domainid){
-       this.domainid = domainid;
-   }
+    public void setDomainid(String domainid) {
+        this.domainid = domainid;
+    }
 
-   @Override
-   public int hashCode() {
-       return this.name.hashCode();
-   }
+    @Override
+    public int hashCode() {
+        return this.name.hashCode();
+    }
 
-   @Override
-   public boolean equals(Object obj) {
-       User other = (User)obj;
-       if(other==null)
-           return false;
-       if(compareValues(getName(), other.getName()) &&
-          compareValues(getEmail(), other.getEmail()) &&
-          compareValues(isEnabled(), other.isEnabled()) &&
-          compareValues(getPassword(), other.getPassword()) &&
-          compareValues(getSalt(), other.getSalt()) &&
-          compareValues(getUserid(), other.getUserid()) &&
-          compareValues(getDescription(), other.getDescription()))
-              return true;
-       return false;
-   }
+    @Override
+    public boolean equals(Object obj) {
+        User other = (User) obj;
+        if (other == null)
+            return false;
+        if (compareValues(getName(), other.getName())
+                && compareValues(getEmail(), other.getEmail())
+                && compareValues(isEnabled(), other.isEnabled())
+                && compareValues(getPassword(), other.getPassword())
+                && compareValues(getSalt(), other.getSalt())
+                && compareValues(getUserid(), other.getUserid())
+                && compareValues(getDescription(), other.getDescription()))
+            return true;
+        return false;
+    }
 
-   private boolean compareValues(Object a,Object b){
-       if(a==null && b!=null)
-           return false;
-       if(a!=null && b==null)
-           return false;
-       if(a==null && b==null)
-           return true;
-       if(a.equals(b))
-           return true;
-       return false;
-   }
+    private boolean compareValues(Object a, Object b) {
+        if (a == null && b != null)
+            return false;
+        if (a != null && b == null)
+            return false;
+        if (a == null && b == null)
+            return true;
+        if (a.equals(b))
+            return true;
+        return false;
+    }
 }
