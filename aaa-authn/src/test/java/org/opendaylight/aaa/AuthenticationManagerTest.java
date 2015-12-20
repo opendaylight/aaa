@@ -8,7 +8,11 @@
 
 package org.opendaylight.aaa;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Dictionary;
@@ -26,8 +30,8 @@ import org.osgi.service.cm.ConfigurationException;
 public class AuthenticationManagerTest {
     @Test
     public void testAuthenticationCrudSameThread() {
-        Authentication auth = new AuthenticationBuilder(new ClaimBuilder().setUser("Bob").setUserId("1234")
-            .addRole("admin").addRole("guest").build()).build();
+        Authentication auth = new AuthenticationBuilder(new ClaimBuilder().setUser("Bob")
+                .setUserId("1234").addRole("admin").addRole("guest").build()).build();
         AuthenticationService as = AuthenticationManager.instance();
 
         assertNotNull(as);
@@ -40,10 +44,11 @@ public class AuthenticationManagerTest {
     }
 
     @Test
-    public void testAuthenticationCrudSpawnedThread() throws InterruptedException, ExecutionException {
+    public void testAuthenticationCrudSpawnedThread() throws InterruptedException,
+            ExecutionException {
         AuthenticationService as = AuthenticationManager.instance();
-        Authentication auth = new AuthenticationBuilder(new ClaimBuilder().setUser("Bob").setUserId("1234")
-            .addRole("admin").addRole("guest").build()).build();
+        Authentication auth = new AuthenticationBuilder(new ClaimBuilder().setUser("Bob")
+                .setUserId("1234").addRole("admin").addRole("guest").build()).build();
 
         as.set(auth);
         Future<Authentication> f = Executors.newSingleThreadExecutor().submit(new Worker());
@@ -55,14 +60,15 @@ public class AuthenticationManagerTest {
     }
 
     @Test
-    public void testAuthenticationCrudSpawnedThreadPool() throws InterruptedException, ExecutionException {
+    public void testAuthenticationCrudSpawnedThreadPool() throws InterruptedException,
+            ExecutionException {
         AuthenticationService as = AuthenticationManager.instance();
-        Authentication auth = new AuthenticationBuilder(new ClaimBuilder().setUser("Bob").setUserId("1234")
-            .addRole("admin").addRole("guest").build()).build();
+        Authentication auth = new AuthenticationBuilder(new ClaimBuilder().setUser("Bob")
+                .setUserId("1234").addRole("admin").addRole("guest").build()).build();
 
         as.set(auth);
-        List<Future<Authentication>> fs = Executors.newFixedThreadPool(2)
-            .invokeAll(Arrays.asList(new Worker(), new Worker()));
+        List<Future<Authentication>> fs = Executors.newFixedThreadPool(2).invokeAll(
+                Arrays.asList(new Worker(), new Worker()));
         for (Future<Authentication> f : fs) {
             assertEquals(auth, f.get());
         }

@@ -22,8 +22,8 @@ import org.opendaylight.aaa.api.Claim;
 
 public class AuthenticationBuilderTest {
     private Set<String> roles = new LinkedHashSet<>(Arrays.asList("role1", "role2"));
-    private Claim validClaim = new ClaimBuilder().setDomain("aName").setUserId("1").setClientId("2222")
-        .setUser("bob").addRole("foo").addRoles(roles).build();
+    private Claim validClaim = new ClaimBuilder().setDomain("aName").setUserId("1")
+            .setClientId("2222").setUser("bob").addRole("foo").addRoles(roles).build();
 
     @Test
     public void testBuildWithExpiration() {
@@ -55,13 +55,13 @@ public class AuthenticationBuilderTest {
         assertEquals(3, a1.roles().size());
     }
 
-    @Test(expected=IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void testBuildWithNegativeExpiration() {
         AuthenticationBuilder a1 = new AuthenticationBuilder(validClaim).setExpiration(-1);
         a1.build();
     }
 
-    @Test(expected=IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void testBuildWithNullClaim() {
         AuthenticationBuilder a1 = new AuthenticationBuilder(null);
         a1.build();
@@ -70,8 +70,9 @@ public class AuthenticationBuilderTest {
     @Test
     public void testToString() {
         Authentication a1 = new AuthenticationBuilder(validClaim).setExpiration(1).build();
-        assertEquals("expiration:1,clientId:2222,userId:1,userName:bob,domain:aName,roles:[foo, role1, role2]",
-            a1.toString());
+        assertEquals(
+                "expiration:1,clientId:2222,userId:1,userName:bob,domain:aName,roles:[foo, role1, role2]",
+                a1.toString());
     }
 
     @Test

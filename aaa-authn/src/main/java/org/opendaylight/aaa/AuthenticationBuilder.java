@@ -12,7 +12,6 @@ import static org.opendaylight.aaa.HashCodeUtil.hash;
 
 import java.io.Serializable;
 import java.util.Set;
-
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.Claim;
 
@@ -100,8 +99,8 @@ public class AuthenticationBuilder {
             }
             Authentication a = (Authentication) o;
             return areEqual(expiration, a.expiration()) && areEqual(claim.roles(), a.roles())
-                && areEqual(claim.domain(), a.domain()) && areEqual(claim.userId(), a.userId())
-                && areEqual(claim.user(), a.user()) && areEqual(claim.clientId(), a.clientId());
+                    && areEqual(claim.domain(), a.domain()) && areEqual(claim.userId(), a.userId())
+                    && areEqual(claim.user(), a.user()) && areEqual(claim.clientId(), a.clientId());
         }
 
         @Override

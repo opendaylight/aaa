@@ -8,7 +8,6 @@
 package org.opendaylight.aaa;
 
 import java.util.Dictionary;
-
 import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
 import org.opendaylight.aaa.api.AuthenticationService;
@@ -28,26 +27,21 @@ public class Activator extends DependencyActivatorBase {
     private static final String AUTHN_PID = "org.opendaylight.aaa.authn";
 
     @Override
-    public void init(BundleContext context, DependencyManager manager)
-            throws Exception {
+    public void init(BundleContext context, DependencyManager manager) throws Exception {
         manager.add(createComponent().setInterface(
-                new String[] { AuthenticationService.class.getName() }, null)
-                .setImplementation(AuthenticationManager.instance()));
+                new String[] { AuthenticationService.class.getName() }, null).setImplementation(
+                AuthenticationManager.instance()));
 
         ClientManager cm = new ClientManager();
-        manager.add(createComponent().setInterface(
-                new String[] { ClientService.class.getName() }, null)
-                .setImplementation(cm));
-        context.registerService(ManagedService.class.getName(), cm,
-                addPid(ClientManager.defaults));
-        context.registerService(ManagedService.class.getName(),
-                AuthenticationManager.instance(),
+        manager.add(createComponent().setInterface(new String[] { ClientService.class.getName() },
+                null).setImplementation(cm));
+        context.registerService(ManagedService.class.getName(), cm, addPid(ClientManager.defaults));
+        context.registerService(ManagedService.class.getName(), AuthenticationManager.instance(),
                 addPid(AuthenticationManager.defaults));
     }
 
     @Override
-    public void destroy(BundleContext context, DependencyManager manager)
-            throws Exception {
+    public void destroy(BundleContext context, DependencyManager manager) throws Exception {
     }
 
     private Dictionary<String, ?> addPid(Dictionary<String, String> dict) {

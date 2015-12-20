@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.apache.felix.dm.Component;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.ClientService;
@@ -49,8 +48,7 @@ public class ClientManager implements ClientService, ManagedService {
     }
 
     @Override
-    public void validate(String clientId, String clientSecret)
-            throws AuthenticationException {
+    public void validate(String clientId, String clientSecret) throws AuthenticationException {
         // TODO: Post-Helium, we will support a CRUD API
         if (!clients.containsKey(clientId)) {
             throw new AuthenticationException(UNAUTHORIZED_CLIENT_ERR);
@@ -61,8 +59,7 @@ public class ClientManager implements ClientService, ManagedService {
     }
 
     @Override
-    public void updated(Dictionary<String, ?> props)
-            throws ConfigurationException {
+    public void updated(Dictionary<String, ?> props) throws ConfigurationException {
         if (props == null) {
             props = defaults;
         }

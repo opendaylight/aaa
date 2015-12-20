@@ -15,11 +15,11 @@ import com.google.common.collect.ImmutableSet;
 import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
 import org.opendaylight.aaa.api.Claim;
 
 /**
- * Builder for a {@link Claim}. The userId, user, and roles information is mandatory.
+ * Builder for a {@link Claim}. The userId, user, and roles information is
+ * mandatory.
  *
  * @author liemmn
  *
@@ -92,12 +92,14 @@ public class ClaimBuilder {
             userId = base.userId;
             user = base.user;
             domain = base.domain;
-            roles = ImmutableSet.<String>builder().addAll(base.roles).build();
+            roles = ImmutableSet.<String> builder().addAll(base.roles).build();
 
             if (userId.isEmpty() || user.isEmpty() || roles.isEmpty() || roles.contains("")) {
-                throw new IllegalStateException("The Claim is missing one or more of the required fields.");
+                throw new IllegalStateException(
+                        "The Claim is missing one or more of the required fields.");
             }
         }
+
         @Override
         public String clientId() {
             return clientId;
@@ -131,8 +133,8 @@ public class ClaimBuilder {
                 return false;
             Claim a = (Claim) o;
             return areEqual(roles, a.roles()) && areEqual(domain, a.domain())
-                && areEqual(userId, a.userId()) && areEqual(user, a.user())
-                && areEqual(clientId, a.clientId());
+                    && areEqual(userId, a.userId()) && areEqual(user, a.user())
+                    && areEqual(clientId, a.clientId());
         }
 
         @Override
@@ -151,11 +153,8 @@ public class ClaimBuilder {
 
         @Override
         public String toString() {
-            return "clientId:" + clientId + ","
-                 + "userId:" + userId + ","
-                 + "userName:" + user + ","
-                 + "domain:" + domain + ","
-                 + "roles:" + roles;
+            return "clientId:" + clientId + "," + "userId:" + userId + "," + "userName:" + user
+                    + "," + "domain:" + domain + "," + "roles:" + roles;
         }
     }
 }
