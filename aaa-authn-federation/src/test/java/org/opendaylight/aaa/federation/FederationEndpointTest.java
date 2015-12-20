@@ -17,7 +17,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.TreeSet;
-
 import org.eclipse.jetty.testing.HttpTester;
 import org.eclipse.jetty.testing.ServletTester;
 import org.junit.After;
@@ -42,8 +41,8 @@ public class FederationEndpointTest {
     private static final String CONTEXT = "/oauth2/federation";
 
     private final static ServletTester server = new ServletTester();
-    private static final Claim claim = new ClaimBuilder().setUser("bob")
-            .setUserId("1234").addRole("admin").build();
+    private static final Claim claim = new ClaimBuilder().setUser("bob").setUserId("1234")
+            .addRole("admin").build();
 
     @BeforeClass
     public static void init() throws Exception {
@@ -92,8 +91,8 @@ public class FederationEndpointTest {
     @Test
     @SuppressWarnings("unchecked")
     public void testFederation() throws Exception {
-        when(ServiceLocator.getInstance().getClaimAuthCollection().get(0).transform(anyMap())).thenReturn(
-                claim);
+        when(ServiceLocator.getInstance().getClaimAuthCollection().get(0).transform(anyMap()))
+                .thenReturn(claim);
         when(ServiceLocator.getInstance().getIdmService().listDomains(anyString())).thenReturn(
                 Arrays.asList("pepsi", "coke"));
 

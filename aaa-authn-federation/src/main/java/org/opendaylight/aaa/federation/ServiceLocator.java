@@ -10,7 +10,6 @@ package org.opendaylight.aaa.federation;
 
 import java.util.List;
 import java.util.Vector;
-
 import org.opendaylight.aaa.api.ClaimAuth;
 import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.TokenStore;
@@ -42,7 +41,7 @@ public class ServiceLocator {
      * Called through reflection from the federation Activator
      *
      * @see org.opendaylight.aaa.federation.ServiceLocator
-     * @param ca
+     * @param ca the injected claims implementation
      */
     protected void claimAuthAdded(ClaimAuth ca) {
         this.claimAuthCollection.add(ca);
@@ -52,7 +51,7 @@ public class ServiceLocator {
      * Called through reflection from the federation Activator
      *
      * @see org.opendaylight.aaa.federation.Activator
-     * @param ca
+     * @param ca the claims implementation to remove
      */
     protected void claimAuthRemoved(ClaimAuth ca) {
         this.claimAuthCollection.remove(ca);
@@ -62,8 +61,7 @@ public class ServiceLocator {
         return claimAuthCollection;
     }
 
-    public void setClaimAuthCollection(
-            List<ClaimAuth> claimAuthCollection) {
+    public void setClaimAuthCollection(List<ClaimAuth> claimAuthCollection) {
         this.claimAuthCollection = claimAuthCollection;
     }
 
