@@ -15,10 +15,9 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.Set;
 import java.util.TreeSet;
-
+import java.util.concurrent.ConcurrentHashMap;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
 
@@ -53,8 +52,7 @@ public class FederationConfiguration implements ManagedService {
     }
 
     @Override
-    public void updated(Dictionary<String, ?> props)
-            throws ConfigurationException {
+    public void updated(Dictionary<String, ?> props) throws ConfigurationException {
         if (props == null) {
             configs.clear();
             configs.putAll(defaults);
@@ -73,8 +71,7 @@ public class FederationConfiguration implements ManagedService {
 
     public List<String> httpHeaders() {
         String headers = configs.get(HTTP_HEADERS);
-        return (headers == null) ? new ArrayList<String>() : Arrays
-                .asList(headers.split(" "));
+        return (headers == null) ? new ArrayList<String>() : Arrays.asList(headers.split(" "));
     }
 
     public List<String> httpAttributes() {

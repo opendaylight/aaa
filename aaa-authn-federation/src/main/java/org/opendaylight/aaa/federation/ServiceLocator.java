@@ -10,7 +10,6 @@ package org.opendaylight.aaa.federation;
 
 import java.util.List;
 import java.util.Vector;
-
 import org.opendaylight.aaa.api.ClaimAuth;
 import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.TokenStore;
@@ -62,8 +61,7 @@ public class ServiceLocator {
         return claimAuthCollection;
     }
 
-    public void setClaimAuthCollection(
-            List<ClaimAuth> claimAuthCollection) {
+    public void setClaimAuthCollection(List<ClaimAuth> claimAuthCollection) {
         this.claimAuthCollection = claimAuthCollection;
     }
 
