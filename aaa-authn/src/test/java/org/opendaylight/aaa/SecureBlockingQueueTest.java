@@ -24,7 +24,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.opendaylight.aaa.SecureBlockingQueue.SecureData;
@@ -39,27 +38,24 @@ public class SecureBlockingQueueTest {
     }
 
     @Test
-    public void testSecureThreadPoolExecutor() throws InterruptedException,
-            ExecutionException {
+    public void testSecureThreadPoolExecutor() throws InterruptedException, ExecutionException {
         BlockingQueue<Runnable> queue = new SecureBlockingQueue<>(
                 new ArrayBlockingQueue<SecureData<Runnable>>(10));
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 10, 500,
-                TimeUnit.MILLISECONDS, queue);
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 10, 500, TimeUnit.MILLISECONDS,
+                queue);
         executor.prestartAllCoreThreads();
         for (int cnt = 1; cnt <= MAX_TASKS; cnt++) {
             assertEquals(Integer.toString(cnt),
-                    executor.submit(new Task(Integer.toString(cnt), "1111", "user")).get()
-                            .user());
+                    executor.submit(new Task(Integer.toString(cnt), "1111", "user")).get().user());
         }
         executor.shutdown();
     }
 
     @Test
-    public void testNormalThreadPoolExecutor() throws InterruptedException,
-            ExecutionException {
+    public void testNormalThreadPoolExecutor() throws InterruptedException, ExecutionException {
         BlockingQueue<Runnable> queue = new ArrayBlockingQueue<Runnable>(10);
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 10, 500,
-                TimeUnit.MILLISECONDS, queue);
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 10, 500, TimeUnit.MILLISECONDS,
+                queue);
         executor.prestartAllCoreThreads();
         for (int cnt = 1; cnt <= MAX_TASKS; cnt++) {
             assertNull(executor.submit(new Task(Integer.toString(cnt), "1111", "user")).get());
@@ -99,7 +95,7 @@ public class SecureBlockingQueueTest {
         assertTrue(queue.containsAll(actual));
         queue.addAll(actual);
         assertEquals(6, queue.size());
-        queue.retainAll(Arrays.asList(new String[] {"User2"}));
+        queue.retainAll(Arrays.asList(new String[] { "User2" }));
         assertEquals(2, queue.size());
         assertEquals("User2", queue.iterator().next());
         queue.removeAll(actual);
@@ -122,7 +118,7 @@ public class SecureBlockingQueueTest {
         assertTrue(queue.contains("bar"));
         queue.remove("bar");
         assertEquals(3, queue.remainingCapacity());
-        queue.addAll(Arrays.asList(new String[] {"foo", "bar", "tom"}));
+        queue.addAll(Arrays.asList(new String[] { "foo", "bar", "tom" }));
         assertEquals(3, queue.size());
         assertEquals("foo", queue.poll(500, TimeUnit.MILLISECONDS));
         assertEquals(2, queue.size());
@@ -130,7 +126,7 @@ public class SecureBlockingQueueTest {
         queue.drainTo(drain);
         assertTrue(queue.isEmpty());
         assertEquals(2, drain.size());
-        queue.addAll(Arrays.asList(new String[] {"foo", "bar", "tom"}));
+        queue.addAll(Arrays.asList(new String[] { "foo", "bar", "tom" }));
         drain.clear();
         queue.drainTo(drain, 1);
         assertEquals(2, queue.size());
@@ -141,8 +137,9 @@ public class SecureBlockingQueueTest {
     private class Task implements Callable<Authentication> {
         Task(String name, String userId, String role) {
             // Mock that each task has its original authentication context
-            AuthenticationManager.instance().set(new AuthenticationBuilder(new ClaimBuilder().setUser(name)
-                .setUserId(userId).addRole(role).build()).build());
+            AuthenticationManager.instance().set(
+                    new AuthenticationBuilder(new ClaimBuilder().setUser(name).setUserId(userId)
+                            .addRole(role).build()).build());
         }
 
         @Override
@@ -167,8 +164,9 @@ public class SecureBlockingQueueTest {
 
         @Override
         public String call() throws InterruptedException {
-            AuthenticationManager.instance().set(new AuthenticationBuilder(new ClaimBuilder().setUser(name)
-                .setUserId(userId).addRole(role).build()).build());
+            AuthenticationManager.instance().set(
+                    new AuthenticationBuilder(new ClaimBuilder().setUser(name).setUserId(userId)
+                            .addRole(role).build()).build());
             queue.put(name);
             return name;
         }

@@ -11,7 +11,6 @@ package org.opendaylight.aaa;
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashSet;
-
 import org.junit.Test;
 import org.opendaylight.aaa.api.PasswordCredentials;
 
@@ -19,17 +18,17 @@ public class PasswordCredentialTest {
 
     @Test
     public void testBuilder() {
-        PasswordCredentials pc1 = new PasswordCredentialBuilder()
-                .setUserName("bob").setPassword("secrete").build();
+        PasswordCredentials pc1 = new PasswordCredentialBuilder().setUserName("bob")
+                .setPassword("secrete").build();
         assertEquals("bob", pc1.username());
         assertEquals("secrete", pc1.password());
 
-        PasswordCredentials pc2 = new PasswordCredentialBuilder()
-                .setUserName("bob").setPassword("secrete").build();
+        PasswordCredentials pc2 = new PasswordCredentialBuilder().setUserName("bob")
+                .setPassword("secrete").build();
         assertEquals(pc1, pc2);
 
-        PasswordCredentials pc3 = new PasswordCredentialBuilder()
-                .setUserName("bob").setPassword("secret").build();
+        PasswordCredentials pc3 = new PasswordCredentialBuilder().setUserName("bob")
+                .setPassword("secret").build();
         HashSet<PasswordCredentials> pcs = new HashSet<>();
         pcs.add(pc1);
         pcs.add(pc2);

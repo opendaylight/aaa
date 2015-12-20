@@ -9,7 +9,6 @@ package org.opendaylight.aaa;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
-
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.osgi.service.cm.ConfigurationException;
@@ -20,8 +19,7 @@ import org.osgi.service.cm.ManagedService;
  *
  * @author liemmn
  */
-public class AuthenticationManager implements AuthenticationService,
-        ManagedService {
+public class AuthenticationManager implements AuthenticationService, ManagedService {
     private static final String AUTH_ENABLED_ERR = "Error setting authEnabled";
 
     static final String AUTH_ENABLED = "authEnabled";
@@ -64,8 +62,7 @@ public class AuthenticationManager implements AuthenticationService,
     }
 
     @Override
-    public void updated(Dictionary<String, ?> properties)
-            throws ConfigurationException {
+    public void updated(Dictionary<String, ?> properties) throws ConfigurationException {
         if (properties == null) {
             return;
         }

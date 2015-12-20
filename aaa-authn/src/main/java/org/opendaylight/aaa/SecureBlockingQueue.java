@@ -13,7 +13,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
-
 import org.opendaylight.aaa.api.Authentication;
 
 /**
@@ -141,8 +140,7 @@ public class SecureBlockingQueue<T> implements BlockingQueue<T> {
     }
 
     @Override
-    public boolean offer(T e, long timeout, TimeUnit unit)
-            throws InterruptedException {
+    public boolean offer(T e, long timeout, TimeUnit unit) throws InterruptedException {
         return queue.offer(new SecureData<>(e), timeout, unit);
     }
 
@@ -220,8 +218,7 @@ public class SecureBlockingQueue<T> implements BlockingQueue<T> {
     // Extract the data portion out from the secure data
     @SuppressWarnings("unchecked")
     private Collection<T> toData() {
-        return toData(Arrays.<SecureData<T>> asList(queue
-                .toArray(new SecureData[0])));
+        return toData(Arrays.<SecureData<T>> asList(queue.toArray(new SecureData[0])));
     }
 
     // Extract the data portion out from the secure data
@@ -250,8 +247,7 @@ public class SecureBlockingQueue<T> implements BlockingQueue<T> {
             if (o == null) {
                 return false;
             }
-            return (o instanceof SecureData)
-                    ? data.equals(((SecureData) o).data): false;
+            return (o instanceof SecureData) ? data.equals(((SecureData) o).data) : false;
         }
 
         @Override

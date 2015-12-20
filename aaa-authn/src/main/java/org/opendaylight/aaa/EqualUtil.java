@@ -9,7 +9,8 @@
 package org.opendaylight.aaa;
 
 /**
- * Simple class to aide in implementing equals.<p>
+ * Simple class to aide in implementing equals.
+ * <p>
  *
  * <em>Arrays are not handled by this class</em>. This is because the
  * <code>Arrays.equals</code> methods should be used for array fields.

@@ -12,7 +12,6 @@ import static org.junit.Assert.fail;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.opendaylight.aaa.api.AuthenticationException;
@@ -36,7 +35,7 @@ public class ClientManagerTest {
         cm.validate("dlux", "secrete");
     }
 
-    @Test(expected=AuthenticationException.class)
+    @Test(expected = AuthenticationException.class)
     public void testFailValidate() {
         cm.validate("dlux", "what?");
     }

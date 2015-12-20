@@ -40,8 +40,7 @@ public class PasswordCredentialBuilder {
         return pc;
     }
 
-    private static class MutablePasswordCredentials implements
-            PasswordCredentials {
+    private static class MutablePasswordCredentials implements PasswordCredentials {
         private int hashCode = 0;
         private String username;
         private String password;
@@ -58,11 +57,11 @@ public class PasswordCredentialBuilder {
         }
 
         @Override
-		public String domain() {
-			return domain;
-		}
+        public String domain() {
+            return domain;
+        }
 
-		@Override
+        @Override
         public boolean equals(Object o) {
             if (this == o) {
                 return true;
@@ -71,8 +70,7 @@ public class PasswordCredentialBuilder {
                 return false;
             }
             PasswordCredentials p = (PasswordCredentials) o;
-            return areEqual(username, p.username())
-                    && areEqual(password, p.password());
+            return areEqual(username, p.username()) && areEqual(password, p.password());
         }
 
         @Override
