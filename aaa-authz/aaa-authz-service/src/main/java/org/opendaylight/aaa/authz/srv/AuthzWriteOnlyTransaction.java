@@ -14,11 +14,9 @@ import com.google.common.util.concurrent.ListenableFuture;
 
 import org.opendaylight.controller.md.sal.common.api.TransactionStatus;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
 import org.opendaylight.controller.md.sal.dom.api.DOMDataWriteTransaction;
 import org.opendaylight.yang.gen.v1.urn.aaa.yang.authz.ds.rev140722.ActionType;
-import org.opendaylight.yang.gen.v1.urn.aaa.yang.authz.ds.rev140722.AuthorizationResponseType;
 import org.opendaylight.yangtools.yang.common.RpcResult;
 import org.opendaylight.yangtools.yang.data.api.YangInstanceIdentifier;
 import org.opendaylight.yangtools.yang.data.api.schema.NormalizedNode;
@@ -36,26 +34,23 @@ public class AuthzWriteOnlyTransaction implements DOMDataWriteTransaction {
 
     @Override
     public void put(LogicalDatastoreType logicalDatastoreType,
-                    YangInstanceIdentifier yangInstanceIdentifier,
-                    NormalizedNode<?, ?> normalizedNode) {
+            YangInstanceIdentifier yangInstanceIdentifier, NormalizedNode<?, ?> normalizedNode) {
 
-        if (AuthzServiceImpl.isAuthorized(logicalDatastoreType,
-            yangInstanceIdentifier, ActionType.Put)) {
+        if (AuthzServiceImpl.isAuthorized(logicalDatastoreType, yangInstanceIdentifier,
+                ActionType.Put)) {
             domDataWriteTransaction.put(logicalDatastoreType, yangInstanceIdentifier,
-                normalizedNode);
+                    normalizedNode);
         }
     }
 
     @Override
     public void merge(LogicalDatastoreType logicalDatastoreType,
-                      YangInstanceIdentifier yangInstanceIdentifier,
-                      NormalizedNode<?, ?> normalizedNode) {
+            YangInstanceIdentifier yangInstanceIdentifier, NormalizedNode<?, ?> normalizedNode) {
 
-        if (AuthzServiceImpl.isAuthorized(logicalDatastoreType,
-            yangInstanceIdentifier, ActionType.Merge)) {
-            domDataWriteTransaction.merge(logicalDatastoreType,
-                yangInstanceIdentifier,
-                normalizedNode);
+        if (AuthzServiceImpl.isAuthorized(logicalDatastoreType, yangInstanceIdentifier,
+                ActionType.Merge)) {
+            domDataWriteTransaction.merge(logicalDatastoreType, yangInstanceIdentifier,
+                    normalizedNode);
         }
     }
 
@@ -69,12 +64,11 @@ public class AuthzWriteOnlyTransaction implements DOMDataWriteTransaction {
 
     @Override
     public void delete(LogicalDatastoreType logicalDatastoreType,
-                       YangInstanceIdentifier yangInstanceIdentifier) {
+            YangInstanceIdentifier yangInstanceIdentifier) {
 
-        if (AuthzServiceImpl.isAuthorized(logicalDatastoreType,
-            yangInstanceIdentifier, ActionType.Delete)) {
-            domDataWriteTransaction.delete(logicalDatastoreType,
-                yangInstanceIdentifier);
+        if (AuthzServiceImpl.isAuthorized(logicalDatastoreType, yangInstanceIdentifier,
+                ActionType.Delete)) {
+            domDataWriteTransaction.delete(logicalDatastoreType, yangInstanceIdentifier);
         }
     }
 
@@ -83,8 +77,8 @@ public class AuthzWriteOnlyTransaction implements DOMDataWriteTransaction {
         if (AuthzServiceImpl.isAuthorized(ActionType.Submit)) {
             return domDataWriteTransaction.submit();
         }
-        TransactionCommitFailedException e =
-            new TransactionCommitFailedException("Unauthorized User");
+        TransactionCommitFailedException e = new TransactionCommitFailedException(
+                "Unauthorized User");
         return Futures.immediateFailedCheckedFuture(e);
     }
 
@@ -94,8 +88,8 @@ public class AuthzWriteOnlyTransaction implements DOMDataWriteTransaction {
         if (AuthzServiceImpl.isAuthorized(ActionType.Commit)) {
             return domDataWriteTransaction.commit();
         }
-        TransactionCommitFailedException e =
-            new TransactionCommitFailedException("Unauthorized User");
+        TransactionCommitFailedException e = new TransactionCommitFailedException(
+                "Unauthorized User");
         return Futures.immediateFailedCheckedFuture(e);
     }
 

@@ -33,7 +33,7 @@ public class AuthzConsumerContextImpl extends ForwardingConsumerSession {
     @Override
     public <T extends BrokerService> T getService(Class<T> tClass) {
         T t;
-        //Check for class and return Authz broker only for DOMBroker
+        // Check for class and return Authz broker only for DOMBroker
         if (tClass == DOMDataBroker.class) {
             t = (T) AuthzDomDataBroker.getInstance();
         } else {
