@@ -9,27 +9,27 @@
 package org.opendaylight.aaa.idpmapping;
 
 /**
- * Exception thrown when the type of a value is incorrect for a given
- * context.
+ * Exception thrown when the type of a value is incorrect for a given context.
  *
  * @author John Dennis &lt;jdennis@redhat.com&gt;
  */
 
 public class InvalidTypeException extends RuntimeException {
 
-  private static final long serialVersionUID = 4437011247503994368L;
+    private static final long serialVersionUID = 4437011247503994368L;
 
-  public InvalidTypeException() {}
+    public InvalidTypeException() {
+    }
 
-  public InvalidTypeException(String message) {
-    super(message);
-  }
+    public InvalidTypeException(String message) {
+        super(message);
+    }
 
-  public InvalidTypeException(Throwable cause) {
-    super(cause);
-  }
+    public InvalidTypeException(Throwable cause) {
+        super(cause);
+    }
 
-  public InvalidTypeException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public InvalidTypeException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

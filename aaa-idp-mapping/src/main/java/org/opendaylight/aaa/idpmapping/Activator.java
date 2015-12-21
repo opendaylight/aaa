@@ -15,13 +15,11 @@ import org.osgi.framework.BundleContext;
 public class Activator extends DependencyActivatorBase {
 
     @Override
-    public void init(BundleContext context, DependencyManager manager)
-            throws Exception {
+    public void init(BundleContext context, DependencyManager manager) throws Exception {
     }
 
     @Override
-    public void destroy(BundleContext context, DependencyManager manager)
-            throws Exception {
+    public void destroy(BundleContext context, DependencyManager manager) throws Exception {
     }
 
 }

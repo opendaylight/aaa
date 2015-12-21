@@ -1,18 +1,25 @@
 package org.opendaylight.aaa.idpmapping;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.Test;
 
 public class TokenTest {
 
-    private final Map<String, Object> namespace = new HashMap<String, Object>() {{
-        put("foo1", new HashMap<String, String>(){{put("0", "1"); }});
-    }};
+    private final Map<String, Object> namespace = new HashMap<String, Object>() {
+        {
+            put("foo1", new HashMap<String, String>() {
+                {
+                    put("0", "1");
+                }
+            });
+        }
+    };
     private Object input = "$foo1[0]";
     private Token token = new Token(input, namespace);
     private Token mapToken = new Token(namespace, namespace);
@@ -30,7 +37,7 @@ public class TokenTest {
         assertEquals(Token.classify(new ArrayList<>()), TokenType.ARRAY);
         assertEquals(Token.classify(true), TokenType.BOOLEAN);
         assertEquals(Token.classify(new Long(365)), TokenType.INTEGER);
-        assertEquals(Token.classify(new HashMap<String , Object>()), TokenType.MAP);
+        assertEquals(Token.classify(new HashMap<String, Object>()), TokenType.MAP);
         assertEquals(Token.classify(null), TokenType.NULL);
         assertEquals(Token.classify(365.00), TokenType.REAL);
         assertEquals(Token.classify("foo_str"), TokenType.STRING);
