@@ -8,9 +8,7 @@
 
 package org.opendaylight.aaa.authn.mdsal.store;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import java.security.spec.KeySpec;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -18,7 +16,9 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
-import java.security.spec.KeySpec;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author - Sharon Aicler (saichler@cisco.com)
  **/
@@ -26,8 +26,7 @@ public class DataEncrypter {
 
     final protected SecretKey k;
     private static final Logger LOG = LoggerFactory.getLogger(DataEncrypter.class);
-    private static final byte[] iv = {0, 5, 0, 0, 7, 81, 0, 3, 0, 0, 0, 0, 0, 43, 0,
-        1};
+    private static final byte[] iv = { 0, 5, 0, 0, 7, 81, 0, 3, 0, 0, 0, 0, 0, 43, 0, 1 };
     private static final IvParameterSpec ivspec = new IvParameterSpec(iv);
     public static final String ENCRYPTED_TAG = "Encrypted:";
 

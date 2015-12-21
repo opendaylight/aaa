@@ -1,10 +1,10 @@
 package org.opendaylight.aaa.authn.mdsal.store.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -16,15 +16,17 @@ import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.tokencac
 import org.powermock.modules.junit4.PowerMockRunner;
 
 @RunWith(PowerMockRunner.class)
-
 public class AuthNStoreUtilTest {
 
     private String token = "foo_token_test";
     private String userId = "123";
     private Long expire = new Long(365);
-    @Mock private Authentication auth;
-    @Mock private UserTokens tokens;
-    @Mock private Claims claims;
+    @Mock
+    private Authentication auth;
+    @Mock
+    private UserTokens tokens;
+    @Mock
+    private Claims claims;
 
     @Test
     public void testCreateInstIdentifierForTokencache() {
@@ -34,7 +36,7 @@ public class AuthNStoreUtilTest {
 
     @Test
     public void testCreateInstIdentifierUserTokens() {
-        assertTrue(AuthNStoreUtil.createInstIdentifierUserTokens("","") == null);
+        assertTrue(AuthNStoreUtil.createInstIdentifierUserTokens("", "") == null);
         assertNotNull(AuthNStoreUtil.createInstIdentifierUserTokens(userId, token));
     }
 

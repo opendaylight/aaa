@@ -18,16 +18,21 @@ import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
-
-
-public class AuthNStoreModule extends org.opendaylight.yang.gen.v1.config.aaa.authn.mdsal.store.rev141031.AbstractAuthNStoreModule {
+public class AuthNStoreModule
+        extends
+        org.opendaylight.yang.gen.v1.config.aaa.authn.mdsal.store.rev141031.AbstractAuthNStoreModule {
     private BundleContext bundleContext;
 
-    public AuthNStoreModule(org.opendaylight.controller.config.api.ModuleIdentifier identifier, org.opendaylight.controller.config.api.DependencyResolver dependencyResolver) {
+    public AuthNStoreModule(org.opendaylight.controller.config.api.ModuleIdentifier identifier,
+            org.opendaylight.controller.config.api.DependencyResolver dependencyResolver) {
         super(identifier, dependencyResolver);
     }
 
-    public AuthNStoreModule(org.opendaylight.controller.config.api.ModuleIdentifier identifier, org.opendaylight.controller.config.api.DependencyResolver dependencyResolver, org.opendaylight.yang.gen.v1.config.aaa.authn.mdsal.store.rev141031.AuthNStoreModule oldModule, java.lang.AutoCloseable oldInstance) {
+    public AuthNStoreModule(
+            org.opendaylight.controller.config.api.ModuleIdentifier identifier,
+            org.opendaylight.controller.config.api.DependencyResolver dependencyResolver,
+            org.opendaylight.yang.gen.v1.config.aaa.authn.mdsal.store.rev141031.AuthNStoreModule oldModule,
+            java.lang.AutoCloseable oldInstance) {
         super(identifier, dependencyResolver, oldModule, oldInstance);
     }
 
@@ -46,9 +51,11 @@ public class AuthNStoreModule extends org.opendaylight.yang.gen.v1.config.aaa.au
 
         authNStore.setTimeToLive(getTimeToLive());
 
-      //Register the MD-SAL Token store with OSGI
-        final ServiceRegistration<?> serviceRegistration = bundleContext.registerService(TokenStore.class.getName(), authNStore, null);
-        final ServiceRegistration<?> idmServiceRegistration = bundleContext.registerService(IIDMStore.class.getName(), idmStore, null);
+        // Register the MD-SAL Token store with OSGI
+        final ServiceRegistration<?> serviceRegistration = bundleContext.registerService(
+                TokenStore.class.getName(), authNStore, null);
+        final ServiceRegistration<?> idmServiceRegistration = bundleContext.registerService(
+                IIDMStore.class.getName(), idmStore, null);
         final class AutoCloseableStore implements AutoCloseable {
 
             @Override
@@ -59,12 +66,11 @@ public class AuthNStoreModule extends org.opendaylight.yang.gen.v1.config.aaa.au
             }
         }
 
-
         return new AutoCloseableStore();
 
-//        return authNStore;
+        // return authNStore;
 
-//        throw new java.lang.UnsupportedOperationException();
+        // throw new java.lang.UnsupportedOperationException();
     }
 
     /**

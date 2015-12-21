@@ -8,6 +8,11 @@
 
 package org.opendaylight.aaa.authn.mdsal.store.util;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.opendaylight.aaa.AuthenticationBuilder;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.Claim;
@@ -24,12 +29,6 @@ import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.tokencac
 import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.tokencache.ClaimsKey;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 public class AuthNStoreUtil {
 
     public static InstanceIdentifier<Claims> createInstIdentifierForTokencache(String token) {
@@ -37,20 +36,26 @@ public class AuthNStoreUtil {
             return null;
 
         InstanceIdentifier<Claims> claims_iid = InstanceIdentifier.builder(Tokencache.class)
-            .child(Claims.class, new ClaimsKey(token))
-            .build();
+                                                                  .child(Claims.class,
+                                                                          new ClaimsKey(token))
+                                                                  .build();
         return claims_iid;
     }
 
-    public static InstanceIdentifier<UserTokens> createInstIdentifierUserTokens(String userId, String token) {
+    public static InstanceIdentifier<UserTokens> createInstIdentifierUserTokens(String userId,
+            String token) {
         if (userId == null || userId.length() == 0 || token == null || token.length() == 0)
             return null;
 
-        InstanceIdentifier<UserTokens> userTokens_iid =
-            InstanceIdentifier.builder(TokenCacheTimes.class)
-                .child(TokenList.class, new TokenListKey(userId))
-                .child(UserTokens.class, new UserTokensKey(token))
-                .build();
+        InstanceIdentifier<UserTokens> userTokens_iid = InstanceIdentifier.builder(
+                TokenCacheTimes.class)
+                                                                          .child(TokenList.class,
+                                                                                  new TokenListKey(
+                                                                                          userId))
+                                                                          .child(UserTokens.class,
+                                                                                  new UserTokensKey(
+                                                                                          token))
+                                                                          .build();
         return userTokens_iid;
     }
 

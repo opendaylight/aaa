@@ -9,7 +9,7 @@ import org.opendaylight.aaa.api.model.User;
 
 public class MDSALConvertTest {
     @Test
-    public void testConvertDomain(){
+    public void testConvertDomain() {
         Domain d = new Domain();
         d.setDescription("hello");
         d.setDomainid("hello");
@@ -23,7 +23,7 @@ public class MDSALConvertTest {
     }
 
     @Test
-    public void testConvertRole(){
+    public void testConvertRole() {
         Role r = new Role();
         r.setDescription("hello");
         r.setRoleid("Hello@hello");
@@ -37,7 +37,7 @@ public class MDSALConvertTest {
     }
 
     @Test
-    public void testConvertUser(){
+    public void testConvertUser() {
         User u = new User();
         u.setDescription("hello");
         u.setDomainid("hello");
@@ -55,7 +55,7 @@ public class MDSALConvertTest {
     }
 
     @Test
-    public void testConvertGrant(){
+    public void testConvertGrant() {
         Grant g = new Grant();
         g.setDomainid("hello");
         g.setUserid("hello@hello");
