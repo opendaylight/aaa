@@ -51,7 +51,7 @@
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.dependencymanager</artifactId>
       <scope>provided</scope>
-    </dependency>    
+    </dependency>
     <!-- Testing Dependencies -->
     <dependency>
       <groupId>com.sun.jersey.jersey-test-framework</groupId>
