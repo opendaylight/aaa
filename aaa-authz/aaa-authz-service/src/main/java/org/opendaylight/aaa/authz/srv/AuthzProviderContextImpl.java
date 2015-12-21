@@ -21,7 +21,8 @@ public class AuthzProviderContextImpl extends ForwardingProviderSession {
 
     private final Broker.ProviderSession realSession;
 
-    public AuthzProviderContextImpl(Broker.ProviderSession providerSession, AuthzBrokerImpl authzBroker) {
+    public AuthzProviderContextImpl(Broker.ProviderSession providerSession,
+            AuthzBrokerImpl authzBroker) {
         this.realSession = providerSession;
     }
 
@@ -34,7 +35,7 @@ public class AuthzProviderContextImpl extends ForwardingProviderSession {
     @Override
     public <T extends BrokerService> T getService(Class<T> tClass) {
         T t;
-        //Check for class and return Authz broker only for DOMBroker
+        // Check for class and return Authz broker only for DOMBroker
         if (tClass == DOMDataBroker.class) {
             t = (T) AuthzDomDataBroker.getInstance();
         } else {

@@ -29,67 +29,72 @@ import org.opendaylight.yangtools.yang.data.api.YangInstanceIdentifier;
  */
 public class AuthzDomDataBroker implements BrokerService, DOMDataBroker {
 
-  private DOMDataBroker domDataBroker;
-  private Broker.ProviderSession providerSession;
+    private DOMDataBroker domDataBroker;
+    private Broker.ProviderSession providerSession;
 
-  private volatile AuthenticationService authService;
+    private volatile AuthenticationService authService;
 
-  final static AuthzDomDataBroker INSTANCE = new AuthzDomDataBroker();
+    final static AuthzDomDataBroker INSTANCE = new AuthzDomDataBroker();
 
-  public static AuthzDomDataBroker getInstance() {
-    return INSTANCE;
-  }
+    public static AuthzDomDataBroker getInstance() {
+        return INSTANCE;
+    }
 
-  public void setDomDataBroker(DOMDataBroker domDataBroker) {
-    this.domDataBroker = domDataBroker;
-  }
+    public void setDomDataBroker(DOMDataBroker domDataBroker) {
+        this.domDataBroker = domDataBroker;
+    }
 
-  public void setProviderSession(Broker.ProviderSession providerSession) {
-    this.providerSession = providerSession;
-  }
+    public void setProviderSession(Broker.ProviderSession providerSession) {
+        this.providerSession = providerSession;
+    }
 
-  public void setAuthService(AuthenticationService authService) {
-    this.authService = authService;
-  }
+    public void setAuthService(AuthenticationService authService) {
+        this.authService = authService;
+    }
 
-  public AuthenticationService getAuthService(){
-    return this.authService;
-  }
+    public AuthenticationService getAuthService() {
+        return this.authService;
+    }
 
-  @Override
-  public DOMDataReadOnlyTransaction newReadOnlyTransaction() {
-    // new Authz transaction +  inject real DOM Transaction
-    DOMDataReadOnlyTransaction ro = domDataBroker.newReadOnlyTransaction();
+    @Override
+    public DOMDataReadOnlyTransaction newReadOnlyTransaction() {
+        // new Authz transaction + inject real DOM Transaction
+        DOMDataReadOnlyTransaction ro = domDataBroker.newReadOnlyTransaction();
 
-   // return domDataBroker.newReadOnlyTransaction(); //Return original
-    return new AuthzReadOnlyTransaction(ro);
-  }
+        // return domDataBroker.newReadOnlyTransaction(); //Return original
+        return new AuthzReadOnlyTransaction(ro);
+    }
 
-  @Override
+    @Override
     public Map<Class<? extends DOMDataBrokerExtension>, DOMDataBrokerExtension> getSupportedExtensions() {
         return domDataBroker.getSupportedExtensions();
     }
 
-  @Override
-  public DOMDataReadWriteTransaction newReadWriteTransaction() {
-    // return new Authz transaction +  inject real DOM Transaction
-    DOMDataReadWriteTransaction rw = domDataBroker.newReadWriteTransaction();
-    return new AuthzDataReadWriteTransaction(rw);
-  }
+    @Override
+    public DOMDataReadWriteTransaction newReadWriteTransaction() {
+        // return new Authz transaction + inject real DOM Transaction
+        DOMDataReadWriteTransaction rw = domDataBroker.newReadWriteTransaction();
+        return new AuthzDataReadWriteTransaction(rw);
+    }
 
-  @Override
-  public DOMDataWriteTransaction newWriteOnlyTransaction() {
-    DOMDataWriteTransaction wo = domDataBroker.newWriteOnlyTransaction();
-    return new AuthzWriteOnlyTransaction(wo);
-  }
+    @Override
+    public DOMDataWriteTransaction newWriteOnlyTransaction() {
+        DOMDataWriteTransaction wo = domDataBroker.newWriteOnlyTransaction();
+        return new AuthzWriteOnlyTransaction(wo);
+    }
 
-  @Override
-  public ListenerRegistration<DOMDataChangeListener> registerDataChangeListener(LogicalDatastoreType logicalDatastoreType, YangInstanceIdentifier yangInstanceIdentifier, DOMDataChangeListener domDataChangeListener, DataChangeScope dataChangeScope) {
-    return domDataBroker.registerDataChangeListener(logicalDatastoreType, yangInstanceIdentifier, domDataChangeListener, dataChangeScope);
-  }
+    @Override
+    public ListenerRegistration<DOMDataChangeListener> registerDataChangeListener(
+            LogicalDatastoreType logicalDatastoreType,
+            YangInstanceIdentifier yangInstanceIdentifier,
+            DOMDataChangeListener domDataChangeListener, DataChangeScope dataChangeScope) {
+        return domDataBroker.registerDataChangeListener(logicalDatastoreType,
+                yangInstanceIdentifier, domDataChangeListener, dataChangeScope);
+    }
 
-  @Override
-  public DOMTransactionChain createTransactionChain(TransactionChainListener transactionChainListener) {
-    return domDataBroker.createTransactionChain(transactionChainListener);
-  }
+    @Override
+    public DOMTransactionChain createTransactionChain(
+            TransactionChainListener transactionChainListener) {
+        return domDataBroker.createTransactionChain(transactionChainListener);
+    }
 }
