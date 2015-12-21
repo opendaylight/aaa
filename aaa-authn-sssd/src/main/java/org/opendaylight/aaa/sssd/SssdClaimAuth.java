@@ -12,22 +12,18 @@ import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.json.Json;
 import javax.json.JsonValue;
 import javax.json.stream.JsonGenerator;
 import javax.json.stream.JsonGeneratorFactory;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.felix.dm.Component;
-import org.opendaylight.aaa.idpmapping.RuleProcessor;
-import org.opendaylight.aaa.idpmapping.InvalidValueException;
 import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.ClaimAuth;
+import org.opendaylight.aaa.idpmapping.RuleProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,90 +33,76 @@ import org.slf4j.LoggerFactory;
  * @author John Dennis &lt;jdennis@redhat.com&gt;
  */
 public class SssdClaimAuth implements ClaimAuth {
-    private static final Logger logger = LoggerFactory
-            .getLogger(SssdClaimAuth.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SssdClaimAuth.class);
 
-    private static final String DEFAULT_MAPPING_RULES_PATHNAME =
-            "etc/idp_mapping_rules.json";
+    private static final String DEFAULT_MAPPING_RULES_PATHNAME = "etc/idp_mapping_rules.json";
     private JsonGeneratorFactory generatorFactory = null;
     private RuleProcessor ruleProcessor = null;
 
     // Called by DM when all required dependencies are satisfied.
     void init(Component c) {
-        logger.info("Initializing SSSD Plugin");
+        LOG.info("Initializing SSSD Plugin");
         Map<String, Object> properties = new HashMap<String, Object>(1);
         properties.put(JsonGenerator.PRETTY_PRINTING, true);
         generatorFactory = Json.createGeneratorFactory(properties);
 
         String mappingRulesFile = DEFAULT_MAPPING_RULES_PATHNAME;
         if (mappingRulesFile == null || mappingRulesFile.isEmpty()) {
-            logger.warn("mapping rules file is not configured, "
-                    + "SssdClaimAuth will be disabled");
+            LOG.warn("mapping rules file is not configured, " + "SssdClaimAuth will be disabled");
             return;
         }
 
         Path mappingRulesPath = Paths.get(mappingRulesFile);
 
         if (!Files.exists(mappingRulesPath)) {
-            logger.warn(String.format("mapping rules file (%s) "
-                    + "does not exist, SssdClaimAuth will be disabled",
-                    mappingRulesFile));
+            LOG.warn(String.format("mapping rules file (%s) "
+                    + "does not exist, SssdClaimAuth will be disabled", mappingRulesFile));
             return;
         }
 
         try {
             ruleProcessor = new RuleProcessor(mappingRulesPath, null);
         } catch (Exception e) {
-            logger.error(String.format("mapping rules file (%s) "
-                    + "could not be loaded, SssdClaimAuth will be disabled. "
-                    + "error = %s",
+            LOG.error(String.format("mapping rules file (%s) "
+                    + "could not be loaded, SssdClaimAuth will be disabled. " + "error = %s",
                     mappingRulesFile, e));
         }
     }
 
     /**
-     * Transform a Map of assertions into a {@link Claim} via a set of
-     * mapping rules.
+     * Transform a Map of assertions into a {@link Claim} via a set of mapping
+     * rules.
      *
-     * A set of mapping rules have been previously loaded. the
-     * incoming assertion is converted to a JSON document and
-     * presented to the {@link RuleProcessor}. If the RuleProcessor
-     * can successfully transform the assertion given the site
-     * specific set of rules it will return a Map of values which will
-     * then be used to build a {@link Claim}. The rule should return
-     * one or more of the following which will be used to populate the
-     * Claim.
+     * A set of mapping rules have been previously loaded. the incoming
+     * assertion is converted to a JSON document and presented to the
+     * {@link RuleProcessor}. If the RuleProcessor can successfully transform
+     * the assertion given the site specific set of rules it will return a Map
+     * of values which will then be used to build a {@link Claim}. The rule
+     * should return one or more of the following which will be used to populate
+     * the Claim.
      *
      * <dl>
-     *   <dt>ClientId</dt>
-     *   <dd>A string.
-     *        @see org.opendaylight.aaa.api.Claim#clientId()
-     *   </dd>
+     * <dt>ClientId</dt>
+     * <dd>A string.
      *
-     *   <dt>UserId</dt>
-     *   <dd> A string.
-     *        @see org.opendaylight.aaa.api.Claim#userId()
-     *   </dd>
+     * @see org.opendaylight.aaa.api.Claim#clientId() </dd>
      *
-     *   <dt>User</dt>
-     *   <dd>A string.
-     *       @see org.opendaylight.aaa.api.Claim#user()
-     *   </dd>
+     *      <dt>UserId</dt> <dd>A string.
+     * @see org.opendaylight.aaa.api.Claim#userId() </dd>
      *
-     *   <dt>Domain</dt>
-     *   <dd>A string.
-     *       @see org.opendaylight.aaa.api.Claim#domain()
-     *   </dd>
+     *      <dt>User</dt> <dd>A string.
+     * @see org.opendaylight.aaa.api.Claim#user() </dd>
      *
-     *   <dt>Roles</dt>
-     *   <dd>An array of strings.
-     *       @see org.opendaylight.aaa.api.Claim#roles()
-     *   </dd>
+     *      <dt>Domain</dt> <dd>A string.
+     * @see org.opendaylight.aaa.api.Claim#domain() </dd>
      *
-     * </dl>
+     *      <dt>Roles</dt> <dd>An array of strings.
+     * @see org.opendaylight.aaa.api.Claim#roles() </dd>
      *
-     * @param assertion A Map of name/value assertions provided by
-     *                   an external IdP
+     *      </dl>
+     *
+     * @param assertion
+     *            A Map of name/value assertions provided by an external IdP
      * @return A {@link Claim} if successful, null otherwise.
      */
 
@@ -131,24 +113,24 @@ public class SssdClaimAuth implements ClaimAuth {
         assertionJson = claimToJson(assertion);
 
         if (ruleProcessor == null) {
-            logger.debug("ruleProcessor not configured");
+            LOG.debug("ruleProcessor not configured");
             return null;
         }
 
-        if (logger.isDebugEnabled()) {
-            logger.debug("assertionJson=\n" + assertionJson);
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("assertionJson=\n{}", assertionJson);
         }
 
         mapped = ruleProcessor.process(assertionJson);
         if (mapped == null) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("RuleProcessor returned null");
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("RuleProcessor returned null");
             }
             return null;
         }
 
-        if (logger.isDebugEnabled()) {
-            logger.debug("RuleProcessor returned: " + mapped);
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("RuleProcessor returned: {}", mapped);
         }
 
         ClaimBuilder cb = new ClaimBuilder();
@@ -173,8 +155,8 @@ public class SssdClaimAuth implements ClaimAuth {
         }
         Claim claim = cb.build();
 
-        if (logger.isDebugEnabled()) {
-            logger.debug("returns claim = " + claim.toString());
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("returns claim = {}", claim.toString());
         }
 
         return claim;
@@ -183,37 +165,36 @@ public class SssdClaimAuth implements ClaimAuth {
     /**
      * Convert a Claim Map into a JSON object.
      *
-     * Given a Map of name/value pairs convert it into a JSON object
-     * and return it as a string. This is not a general purpose routine
-     * used to convert any Map into JSON because a claim has
-     * the restriction that each value must be a scalar and those
-     * scalars are restricted to the following types:
+     * Given a Map of name/value pairs convert it into a JSON object and return
+     * it as a string. This is not a general purpose routine used to convert any
+     * Map into JSON because a claim has the restriction that each value must be
+     * a scalar and those scalars are restricted to the following types:
      *
      * <ul>
-     *   <li>String</li>
-     *   <li>Integer</li>
-     *   <li>Long</li>
-     *   <li>Double</li>
-     *   <li>Boolean</li>
-     *   <li>null</li>
+     * <li>String</li>
+     * <li>Integer</li>
+     * <li>Long</li>
+     * <li>Double</li>
+     * <li>Boolean</li>
+     * <li>null</li>
      * </ul>
      *
      * See also {@link ClaimAuth}.
      *
-     * @param claim The Map containing assertion claims to be converted
-     *              into a JSON assertion document.
+     * @param claim
+     *            The Map containing assertion claims to be converted into a
+     *            JSON assertion document.
      * @return A string formatted as a JSON object.
-     * @throws InvalidValueException If value in the claim is unsupported.
+     * @throws InvalidValueException
+     *             If value in the claim is unsupported.
      */
 
     public String claimToJson(Map<String, Object> claim) {
         StringWriter stringWriter = new StringWriter();
-        JsonGenerator generator =
-                generatorFactory.createGenerator(stringWriter);
+        JsonGenerator generator = generatorFactory.createGenerator(stringWriter);
 
         generator.writeStartObject();
-        for (Map.Entry<String, Object> entry : claim
-                .entrySet()) {
+        for (Map.Entry<String, Object> entry : claim.entrySet()) {
             String name = entry.getKey();
             Object value = entry.getValue();
 
@@ -230,10 +211,8 @@ public class SssdClaimAuth implements ClaimAuth {
             } else if (value == null) {
                 generator.write(name, JsonValue.NULL);
             } else {
-                logger.warn(String.format(
-                    "ignoring claim unsupported value type "
-                    + "entry %s has type %s",
-                    name, value.getClass().getSimpleName()));
+                LOG.warn(String.format("ignoring claim unsupported value type "
+                        + "entry %s has type %s", name, value.getClass().getSimpleName()));
             }
         }
         generator.writeEnd();
