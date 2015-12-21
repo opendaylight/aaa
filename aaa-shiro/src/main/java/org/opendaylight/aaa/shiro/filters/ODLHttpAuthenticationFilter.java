@@ -8,10 +8,6 @@
 
 package org.opendaylight.aaa.shiro.filters;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-
-import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
@@ -19,10 +15,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extends <code>BasicHttpAuthenticationFilter</code> to include ability to
- * authenticate OAuth2 tokens, which is needed for backwards compatibility
- * with <code>TokenAuthFilter</code>.
+ * authenticate OAuth2 tokens, which is needed for backwards compatibility with
+ * <code>TokenAuthFilter</code>.
  *
- * This behavior is enabled by default for backwards compatibility.  To disable
+ * This behavior is enabled by default for backwards compatibility. To disable
  * OAuth2 functionality, just comment out the following line from the
  * <code>etc/shiro.ini</code> file:
  * <code>authcBasic = org.opendaylight.aaa.shiro.filters.ODLHttpAuthenticationFilter</code>
@@ -46,18 +42,19 @@ public class ODLHttpAuthenticationFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected String[] getPrincipalsAndCredentials(String scheme, String encoded) {
         final String decoded = Base64.decodeToString(encoded);
-        // attempt to decode username/password;  otherwise decode as token
-        if(decoded.contains(":")) {
+        // attempt to decode username/password; otherwise decode as token
+        if (decoded.contains(":")) {
             return decoded.split(":");
         }
-        return new String[]{encoded};
+        return new String[] { encoded };
     }
 
     @Override
     protected boolean isLoginAttempt(String authzHeader) {
         final String authzScheme = getAuthzScheme().toLowerCase();
         final String authzHeaderLowerCase = authzHeader.toLowerCase();
-        return authzHeaderLowerCase.startsWith(authzScheme) || authzHeaderLowerCase.startsWith(BEARER_SCHEME);
+        return authzHeaderLowerCase.startsWith(authzScheme)
+                || authzHeaderLowerCase.startsWith(BEARER_SCHEME);
     }
 
 }

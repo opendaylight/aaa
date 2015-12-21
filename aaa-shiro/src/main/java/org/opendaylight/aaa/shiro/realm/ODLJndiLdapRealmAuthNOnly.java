@@ -11,18 +11,19 @@ import org.slf4j.LoggerFactory;
 /**
  * Wrapper class for <code>org.apache.shiro.realm.ldap.JndiLdapRealm</code>.
  * This implementation disables Authorization so any LDAP user is able to access
- * server resources.  This is particularly useful for quickly prototyping ODL without
- * worrying about resolving LDAP attributes (groups) to OpenDaylight roles.
+ * server resources. This is particularly useful for quickly prototyping ODL
+ * without worrying about resolving LDAP attributes (groups) to OpenDaylight
+ * roles.
  *
- * The motivation for subclassing Shiro's implementation is two-fold:
- * 1) Enhance the default logging of Shiro.  This allows us to more easily log incoming
- *    connections, providing some security auditing.
- * 2) Provide a common package in the classpath for ODL supported Realm implementations
- *    (i.e., <code>org.opendaylight.aaa.shiro.realm</code>), which consolidates the
- *    number of <code>Import-Package</code> statements consumers need to enumerate.
- *    For example, the netconf project only needs to import
- *    <code>org.opendaylight.aaa.shiro.realm</code>, and does not need to worry about
- *    importing Shiro packages.
+ * The motivation for subclassing Shiro's implementation is two-fold: 1) Enhance
+ * the default logging of Shiro. This allows us to more easily log incoming
+ * connections, providing some security auditing. 2) Provide a common package in
+ * the classpath for ODL supported Realm implementations (i.e.,
+ * <code>org.opendaylight.aaa.shiro.realm</code>), which consolidates the number
+ * of <code>Import-Package</code> statements consumers need to enumerate. For
+ * example, the netconf project only needs to import
+ * <code>org.opendaylight.aaa.shiro.realm</code>, and does not need to worry
+ * about importing Shiro packages.
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  *
@@ -50,8 +51,8 @@ public class ODLJndiLdapRealmAuthNOnly extends JndiLdapRealm {
      * .apache.shiro.authc.AuthenticationToken)
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(
-            AuthenticationToken token) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
+            throws AuthenticationException {
 
         try {
             final String username = getUsername(token);
@@ -84,8 +85,7 @@ public class ODLJndiLdapRealmAuthNOnly extends JndiLdapRealm {
      *             The incoming token is not username/password (i.e., X.509
      *             certificate)
      */
-    public static String getUsername(AuthenticationToken token)
-            throws ClassCastException {
+    public static String getUsername(AuthenticationToken token) throws ClassCastException {
         if (null == token) {
             return null;
         }

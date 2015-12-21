@@ -31,8 +31,7 @@ public class Activator extends DependencyActivatorBase {
     private static final Logger LOG = LoggerFactory.getLogger(Activator.class);
 
     @Override
-    public void destroy(BundleContext bc, DependencyManager dm)
-            throws Exception {
+    public void destroy(BundleContext bc, DependencyManager dm) throws Exception {
         final String DEBUG_MESSAGE = "Destroying the aaa-shiro bundle";
         LOG.debug(DEBUG_MESSAGE);
     }

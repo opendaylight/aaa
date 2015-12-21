@@ -8,8 +8,14 @@
 
 package org.opendaylight.aaa.shiro.realm;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -17,14 +23,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
-
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.BasicAttributes;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.LdapContext;
-
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -51,8 +55,8 @@ public class ODLJndiLdapRealmTest {
          * returned the first time <code>next()</code> or
          * <code>nextElement()</code> is called.
          */
-        SearchResult searchResult = new SearchResult("testuser", null,
-                new BasicAttributes("memberOf", "engineering"));
+        SearchResult searchResult = new SearchResult("testuser", null, new BasicAttributes(
+                "memberOf", "engineering"));
 
         /**
          * returns true the first time, then false for subsequent calls
@@ -172,10 +176,9 @@ public class ODLJndiLdapRealmTest {
     public void testGetUsernameAuthenticationToken() {
         AuthenticationToken authenticationToken = null;
         assertNull(ODLJndiLdapRealm.getUsername(authenticationToken));
-        AuthenticationToken validAuthenticationToken = new UsernamePasswordToken(
-                "test", "testpassword");
-        assertEquals("test",
-                ODLJndiLdapRealm.getUsername(validAuthenticationToken));
+        AuthenticationToken validAuthenticationToken = new UsernamePasswordToken("test",
+                "testpassword");
+        assertEquals("test", ODLJndiLdapRealm.getUsername(validAuthenticationToken));
     }
 
     @Test
@@ -193,14 +196,12 @@ public class ODLJndiLdapRealmTest {
         LdapContext ldapContext = mock(LdapContext.class);
         // emulates an ldap search and returns the mocked up test class
         when(
-                ldapContext.search((String) any(), (String) any(),
-                        (Object[]) any(), (SearchControls) any())).thenReturn(
-                new TestNamingEnumeration());
+                ldapContext.search((String) any(), (String) any(), (Object[]) any(),
+                        (SearchControls) any())).thenReturn(new TestNamingEnumeration());
         LdapContextFactory ldapContextFactory = mock(LdapContextFactory.class);
         when(ldapContextFactory.getSystemLdapContext()).thenReturn(ldapContext);
-        AuthorizationInfo authorizationInfo = new ODLJndiLdapRealm()
-                .queryForAuthorizationInfo(new TestPrincipalCollection(
-                        "testuser"), ldapContextFactory);
+        AuthorizationInfo authorizationInfo = new ODLJndiLdapRealm().queryForAuthorizationInfo(
+                new TestPrincipalCollection("testuser"), ldapContextFactory);
         assertNotNull(authorizationInfo);
         assertFalse(authorizationInfo.getRoles().isEmpty());
         assertTrue(authorizationInfo.getRoles().contains("engineering"));
@@ -211,8 +212,7 @@ public class ODLJndiLdapRealmTest {
         assertNull(ODLJndiLdapRealm.buildAuthorizationInfo(null));
         Set<String> roleNames = new HashSet<String>();
         roleNames.add("engineering");
-        AuthorizationInfo authorizationInfo = ODLJndiLdapRealm
-                .buildAuthorizationInfo(roleNames);
+        AuthorizationInfo authorizationInfo = ODLJndiLdapRealm.buildAuthorizationInfo(roleNames);
         assertNotNull(authorizationInfo);
         assertFalse(authorizationInfo.getRoles().isEmpty());
         assertTrue(authorizationInfo.getRoles().contains("engineering"));
@@ -225,13 +225,11 @@ public class ODLJndiLdapRealmTest {
 
         // emulates an ldap search and returns the mocked up test class
         when(
-                ldapContext.search((String) any(), (String) any(),
-                        (Object[]) any(), (SearchControls) any())).thenReturn(
-                new TestNamingEnumeration());
+                ldapContext.search((String) any(), (String) any(), (Object[]) any(),
+                        (SearchControls) any())).thenReturn(new TestNamingEnumeration());
 
         // extracts the roles for "testuser" and ensures engineering is returned
-        Set<String> roles = ldapRealm.getRoleNamesForUser("testuser",
-                ldapContext);
+        Set<String> roles = ldapRealm.getRoleNamesForUser("testuser", ldapContext);
         assertFalse(roles.isEmpty());
         assertTrue(roles.iterator().next().equals("engineering"));
     }

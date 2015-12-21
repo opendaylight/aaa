@@ -28,8 +28,8 @@ public class RadiusRealm extends AuthorizingRealm {
     }
 
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(
-            AuthenticationToken arg0) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken arg0)
+            throws AuthenticationException {
         // TODO use JRadius to extract Authentication Info
         return null;
     }

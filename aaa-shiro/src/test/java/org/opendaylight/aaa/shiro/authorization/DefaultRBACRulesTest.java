@@ -8,13 +8,12 @@
 
 package org.opendaylight.aaa.shiro.authorization;
 
-import static org.junit.Assert.*;
-
-import java.util.Collection;
-
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import com.google.common.collect.Sets;
+import java.util.Collection;
+import org.junit.Test;
 
 /**
  * A few basic test cases for the DefualtRBACRules singleton container.

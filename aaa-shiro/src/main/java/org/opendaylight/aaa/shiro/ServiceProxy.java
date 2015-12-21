@@ -21,13 +21,14 @@ import org.slf4j.LoggerFactory;
  * the <code>getInstance()</code> function.
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
- * @see <a href="https://github.com/opendaylight/netconf/blob/master/opendaylight/restconf/sal-rest-connector/src/main/resources/WEB-INF/web.xml">resconf web,xml</a>
+ * @see <a
+ *      href="https://github.com/opendaylight/netconf/blob/master/opendaylight/restconf/sal-rest-connector/src/main/resources/WEB-INF/web.xml">resconf
+ *      web,xml</a>
  * @see <code>org.opendaylight.aaa.shiro.Activator</code>
  * @see <code>org.opendaylight.aaa.shiro.filters.AAAFilter</code>
  */
 public class ServiceProxy {
-    private static final Logger LOG = LoggerFactory
-            .getLogger(ServiceProxy.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ServiceProxy.class);
 
     /**
      * AuthN and AuthZ are disabled by default to support workflows included in
@@ -62,8 +63,7 @@ public class ServiceProxy {
      */
     public synchronized void setEnabled(final boolean enabled) {
         this.enabled = enabled;
-        final String SERVICE_ENABLED_INFO_MESSAGE = "Setting ServiceProxy enabled to "
-                + enabled;
+        final String SERVICE_ENABLED_INFO_MESSAGE = "Setting ServiceProxy enabled to " + enabled;
         LOG.info(SERVICE_ENABLED_INFO_MESSAGE);
         // check for null because of non-determinism in bundle load
         if (filter != null) {
