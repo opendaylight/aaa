@@ -13,12 +13,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.sun.jersey.core.util.Base64;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.opendaylight.aaa.ClaimBuilder;
@@ -26,8 +26,6 @@ import org.opendaylight.aaa.PasswordCredentialBuilder;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.CredentialAuth;
-
-import com.sun.jersey.core.util.Base64;
 
 public class HttpBasicAuthTest {
     private static final String USERNAME = "admin";
@@ -42,21 +40,22 @@ public class HttpBasicAuthTest {
         auth.credentialAuth = mock(CredentialAuth.class);
         when(
                 auth.credentialAuth.authenticate(new PasswordCredentialBuilder()
-                        .setUserName(USERNAME).setPassword(PASSWORD).setDomain(DOMAIN).build())).thenReturn(
-                new ClaimBuilder().setUser("admin").addRole("admin").setUserId("123").build());
+                        .setUserName(USERNAME).setPassword(PASSWORD).setDomain(DOMAIN).build()))
+                .thenReturn(
+                        new ClaimBuilder().setUser("admin").addRole("admin").setUserId("123")
+                                .build());
         when(
                 auth.credentialAuth.authenticate(new PasswordCredentialBuilder()
-                        .setUserName(USERNAME).setPassword("bozo").setDomain(DOMAIN).build())).thenThrow(new AuthenticationException("barf"));
+                        .setUserName(USERNAME).setPassword("bozo").setDomain(DOMAIN).build()))
+                .thenThrow(new AuthenticationException("barf"));
     }
 
     @Test
     public void testValidateOk() throws UnsupportedEncodingException {
         String data = USERNAME + ":" + PASSWORD + ":" + DOMAIN;
         Map<String, List<String>> headers = new HashMap<>();
-        headers.put(
-                "Authorization",
-                Arrays.asList("Basic "
-                        + new String(Base64.encode(data.getBytes("utf-8")))));
+        headers.put("Authorization",
+                Arrays.asList("Basic " + new String(Base64.encode(data.getBytes("utf-8")))));
         Claim claim = auth.validate(headers);
         assertNotNull(claim);
         assertEquals(USERNAME, claim.user());
@@ -67,10 +66,8 @@ public class HttpBasicAuthTest {
     public void testValidateBadPassword() throws UnsupportedEncodingException {
         String data = USERNAME + ":bozo:" + DOMAIN;
         Map<String, List<String>> headers = new HashMap<>();
-        headers.put(
-                "Authorization",
-                Arrays.asList("Basic "
-                        + new String(Base64.encode(data.getBytes("utf-8")))));
+        headers.put("Authorization",
+                Arrays.asList("Basic " + new String(Base64.encode(data.getBytes("utf-8")))));
         auth.validate(headers);
     }
 
@@ -78,10 +75,8 @@ public class HttpBasicAuthTest {
     public void testValidateBadPasswordNoDOMAIN() throws UnsupportedEncodingException {
         String data = USERNAME + ":bozo";
         Map<String, List<String>> headers = new HashMap<>();
-        headers.put(
-                "Authorization",
-                Arrays.asList("Basic "
-                        + new String(Base64.encode(data.getBytes("utf-8")))));
+        headers.put("Authorization",
+                Arrays.asList("Basic " + new String(Base64.encode(data.getBytes("utf-8")))));
         auth.validate(headers);
     }
 
@@ -90,10 +85,8 @@ public class HttpBasicAuthTest {
         // just provide the username
         String data = USERNAME;
         Map<String, List<String>> headers = new HashMap<>();
-        headers.put(
-                "Authorization",
-                Arrays.asList("Basic "
-                        + new String(Base64.encode(data.getBytes("utf-8")))));
+        headers.put("Authorization",
+                Arrays.asList("Basic " + new String(Base64.encode(data.getBytes("utf-8")))));
         auth.validate(headers);
     }
 
@@ -102,10 +95,8 @@ public class HttpBasicAuthTest {
         // provide username:
         String data = USERNAME + "$" + PASSWORD;
         Map<String, List<String>> headers = new HashMap<>();
-        headers.put(
-                "Authorization",
-                Arrays.asList("Basic "
-                        + new String(Base64.encode(data.getBytes("utf-8")))));
+        headers.put("Authorization",
+                Arrays.asList("Basic " + new String(Base64.encode(data.getBytes("utf-8")))));
         auth.validate(headers);
     }
 }
