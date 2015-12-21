@@ -56,7 +56,7 @@
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn</artifactId>
             <scope>test</scope>
-        </dependency>        
+        </dependency>
     </dependencies>
 
     <build>
@@ -93,7 +93,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>            
+            </plugin>
         </plugins>
     </build>
 
