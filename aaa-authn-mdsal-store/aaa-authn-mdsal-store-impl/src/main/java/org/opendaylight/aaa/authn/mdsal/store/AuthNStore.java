@@ -12,6 +12,9 @@ import com.google.common.base.Optional;
 import com.google.common.util.concurrent.CheckedFuture;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
+import java.math.BigInteger;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.authn.mdsal.store.util.AuthNStoreUtil;
@@ -30,15 +33,9 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.math.BigInteger;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-
 public class AuthNStore implements AutoCloseable, TokenStore {
 
-    private static final Logger LOGGER = LoggerFactory
-        .getLogger(AuthNStore.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AuthNStore.class);
     private DataBroker broker;
     private static BigInteger timeToLive;
     private static Integer timeToWait;
@@ -48,13 +45,13 @@ public class AuthNStore implements AutoCloseable, TokenStore {
     public AuthNStore(final DataBroker dataBroker, final String config_key) {
         this.broker = dataBroker;
         this.dataEncrypter = new DataEncrypter(config_key);
-        LOGGER.info("Created MD-SAL AAA Token Cache Service...");
+        LOG.info("Created MD-SAL AAA Token Cache Service...");
     }
 
     @Override
     public void close() throws Exception {
         deleteExpiredTokenThread.shutdown();
-        LOGGER.info("MD-SAL AAA Token Cache closed...");
+        LOG.info("MD-SAL AAA Token Cache closed...");
 
     }
 
@@ -63,7 +60,7 @@ public class AuthNStore implements AutoCloseable, TokenStore {
         token = dataEncrypter.encrypt(token);
         Claims claims = AuthNStoreUtil.createClaimsRecord(token, auth);
 
-        //create and insert parallel struct
+        // create and insert parallel struct
         UserTokens userTokens = AuthNStoreUtil.createUserTokens(token, timeToLive.longValue());
         TokenList tokenlist = AuthNStoreUtil.createTokenList(userTokens, auth.userId());
 
@@ -78,7 +75,8 @@ public class AuthNStore implements AutoCloseable, TokenStore {
         Claims claims = readClaims(token);
         if (claims != null) {
             UserTokens userToken = readUserTokensFromDS(claims.getToken(), claims.getUserId());
-            authentication = AuthNStoreUtil.convertClaimToAuthentication(claims, userToken.getExpiration());
+            authentication = AuthNStoreUtil.convertClaimToAuthentication(claims,
+                    userToken.getExpiration());
         }
         deleteExpiredTokenThread.execute(deleteOldTokens(claims));
         return authentication;
@@ -110,15 +108,15 @@ public class AuthNStore implements AutoCloseable, TokenStore {
         this.timeToWait = timeToWait;
     }
 
-    private void writeClaimAndTokenToStore(final Claims claims, UserTokens usertokens, final TokenList tokenlist) {
+    private void writeClaimAndTokenToStore(final Claims claims, UserTokens usertokens,
+            final TokenList tokenlist) {
 
-        final InstanceIdentifier<Claims> claims_iid =
-            AuthNStoreUtil.createInstIdentifierForTokencache(claims.getToken());
+        final InstanceIdentifier<Claims> claims_iid = AuthNStoreUtil.createInstIdentifierForTokencache(claims.getToken());
         WriteTransaction tx = broker.newWriteOnlyTransaction();
         tx.put(LogicalDatastoreType.OPERATIONAL, claims_iid, claims, true);
 
-        final InstanceIdentifier<UserTokens> userTokens_iid =
-            AuthNStoreUtil.createInstIdentifierUserTokens(tokenlist.getUserId(), usertokens.getTokenid());
+        final InstanceIdentifier<UserTokens> userTokens_iid = AuthNStoreUtil.createInstIdentifierUserTokens(
+                tokenlist.getUserId(), usertokens.getTokenid());
         tx.put(LogicalDatastoreType.OPERATIONAL, userTokens_iid, usertokens, true);
 
         CheckedFuture<Void, TransactionCommitFailedException> commitFuture = tx.submit();
@@ -126,65 +124,68 @@ public class AuthNStore implements AutoCloseable, TokenStore {
 
             @Override
             public void onSuccess(Void result) {
-                LOGGER.trace("Token {} was written to datastore.", claims.getToken());
-                LOGGER.trace("Tokenlist for userId {} was written to datastore.", tokenlist.getUserId());
+                LOG.trace("Token {} was written to datastore.", claims.getToken());
+                LOG.trace("Tokenlist for userId {} was written to datastore.",
+                        tokenlist.getUserId());
             }
 
             @Override
             public void onFailure(Throwable t) {
-                LOGGER.error("Inserting token {} to datastore failed.", claims.getToken());
-                LOGGER.trace("Inserting for userId {} tokenlist to datastore failed.", tokenlist.getUserId());
+                LOG.error("Inserting token {} to datastore failed.", claims.getToken());
+                LOG.trace("Inserting for userId {} tokenlist to datastore failed.",
+                        tokenlist.getUserId());
             }
 
         });
     }
 
     private Claims readClaims(String token) {
-        final InstanceIdentifier<Claims> claims_iid =
-            AuthNStoreUtil.createInstIdentifierForTokencache(token);
+        final InstanceIdentifier<Claims> claims_iid = AuthNStoreUtil.createInstIdentifierForTokencache(token);
         Claims claims = null;
         ReadTransaction rt = broker.newReadOnlyTransaction();
-        CheckedFuture<Optional<Claims>, ReadFailedException> claimsFuture =
-            rt.read(LogicalDatastoreType.OPERATIONAL, claims_iid);
+        CheckedFuture<Optional<Claims>, ReadFailedException> claimsFuture = rt.read(
+                LogicalDatastoreType.OPERATIONAL, claims_iid);
         try {
             Optional<Claims> maybeClaims = claimsFuture.checkedGet();
             if (maybeClaims.isPresent()) {
                 claims = maybeClaims.get();
             }
         } catch (ReadFailedException e) {
-            LOGGER.error("Something wrong happened in DataStore. Getting Claim for token {} failed.", token, e);
+            LOG.error(
+                    "Something wrong happened in DataStore. Getting Claim for token {} failed.",
+                    token, e);
         }
         return claims;
     }
 
     private TokenList readTokenListFromDS(String userId) {
-        InstanceIdentifier<TokenList> tokenList_iid =
-            InstanceIdentifier.builder(TokenCacheTimes.class)
-                .child(TokenList.class, new TokenListKey(userId))
-                .build();
+        InstanceIdentifier<TokenList> tokenList_iid = InstanceIdentifier.builder(
+                TokenCacheTimes.class).child(TokenList.class, new TokenListKey(userId)).build();
         TokenList tokenList = null;
         ReadTransaction rt = broker.newReadOnlyTransaction();
-        CheckedFuture<Optional<TokenList>, ReadFailedException> userTokenListFuture =
-            rt.read(LogicalDatastoreType.OPERATIONAL, tokenList_iid);
+        CheckedFuture<Optional<TokenList>, ReadFailedException> userTokenListFuture = rt.read(
+                LogicalDatastoreType.OPERATIONAL, tokenList_iid);
         try {
             Optional<TokenList> maybeTokenList = userTokenListFuture.checkedGet();
             if (maybeTokenList.isPresent()) {
                 tokenList = maybeTokenList.get();
             }
         } catch (ReadFailedException e) {
-            LOGGER.error("Something wrong happened in DataStore. Getting TokenList for userId {} failed.", userId, e);
+            LOG.error(
+                    "Something wrong happened in DataStore. Getting TokenList for userId {} failed.",
+                    userId, e);
         }
         return tokenList;
     }
 
     private UserTokens readUserTokensFromDS(String token, String userId) {
-        final InstanceIdentifier<UserTokens> userTokens_iid =
-            AuthNStoreUtil.createInstIdentifierUserTokens(userId, token);
+        final InstanceIdentifier<UserTokens> userTokens_iid = AuthNStoreUtil.createInstIdentifierUserTokens(
+                userId, token);
         UserTokens userTokens = null;
 
         ReadTransaction rt = broker.newReadOnlyTransaction();
-        CheckedFuture<Optional<UserTokens>, ReadFailedException> userTokensFuture =
-            rt.read(LogicalDatastoreType.OPERATIONAL, userTokens_iid);
+        CheckedFuture<Optional<UserTokens>, ReadFailedException> userTokensFuture = rt.read(
+                LogicalDatastoreType.OPERATIONAL, userTokens_iid);
 
         try {
             Optional<UserTokens> maybeUserTokens = userTokensFuture.checkedGet();
@@ -192,15 +193,16 @@ public class AuthNStore implements AutoCloseable, TokenStore {
                 userTokens = maybeUserTokens.get();
             }
         } catch (ReadFailedException e) {
-            LOGGER.error("Something wrong happened in DataStore. Getting UserTokens for token {} failed.", token, e);
+            LOG.error(
+                    "Something wrong happened in DataStore. Getting UserTokens for token {} failed.",
+                    token, e);
         }
 
         return userTokens;
     }
 
     private boolean deleteClaims(String token) {
-        final InstanceIdentifier<Claims> claims_iid =
-            AuthNStoreUtil.createInstIdentifierForTokencache(token);
+        final InstanceIdentifier<Claims> claims_iid = AuthNStoreUtil.createInstIdentifierForTokencache(token);
         boolean result = false;
         WriteTransaction tx = broker.newWriteOnlyTransaction();
         tx.delete(LogicalDatastoreType.OPERATIONAL, claims_iid);
@@ -210,15 +212,15 @@ public class AuthNStore implements AutoCloseable, TokenStore {
             commitFuture.checkedGet();
             result = true;
         } catch (TransactionCommitFailedException e) {
-            LOGGER.error("Something wrong happened in DataStore. Claim "
-                + "deletion for token {} from DataStore failed.", token, e);
+            LOG.error("Something wrong happened in DataStore. Claim "
+                    + "deletion for token {} from DataStore failed.", token, e);
         }
         return result;
     }
 
     private void deleteUserTokenFromDS(String token, String userId) {
-        final InstanceIdentifier<UserTokens> userTokens_iid =
-            AuthNStoreUtil.createInstIdentifierUserTokens(userId, token);
+        final InstanceIdentifier<UserTokens> userTokens_iid = AuthNStoreUtil.createInstIdentifierUserTokens(
+                userId, token);
 
         WriteTransaction tx = broker.newWriteOnlyTransaction();
         tx.delete(LogicalDatastoreType.OPERATIONAL, userTokens_iid);
@@ -226,8 +228,8 @@ public class AuthNStore implements AutoCloseable, TokenStore {
         try {
             commitFuture.checkedGet();
         } catch (TransactionCommitFailedException e) {
-            LOGGER.error("Something wrong happened in DataStore. UserToken "
-                + "deletion for token {} from DataStore failed.", token, e);
+            LOG.error("Something wrong happened in DataStore. UserToken "
+                    + "deletion for token {} from DataStore failed.", token, e);
         }
     }
 
@@ -242,12 +244,15 @@ public class AuthNStore implements AutoCloseable, TokenStore {
                 }
                 if (tokenList != null) {
                     for (UserTokens currUserToken : tokenList.getUserTokens()) {
-                        long diff = System.currentTimeMillis() - currUserToken.getTimestamp().longValue();
-                        if (diff > currUserToken.getExpiration() && currUserToken.getExpiration() != 0) {
+                        long diff = System.currentTimeMillis()
+                                - currUserToken.getTimestamp().longValue();
+                        if (diff > currUserToken.getExpiration()
+                                && currUserToken.getExpiration() != 0) {
                             if (deleteClaims(currUserToken.getTokenid())) {
                                 deleteUserTokenFromDS(currUserToken.getTokenid(),
-                                    claims.getUserId());
-                                LOGGER.trace("Expired tokens for UserId {} deleted.", claims.getUserId());
+                                        claims.getUserId());
+                                LOG.trace("Expired tokens for UserId {} deleted.",
+                                        claims.getUserId());
                             }
                         }
                     }
@@ -256,4 +261,3 @@ public class AuthNStore implements AutoCloseable, TokenStore {
         };
     }
 }
-

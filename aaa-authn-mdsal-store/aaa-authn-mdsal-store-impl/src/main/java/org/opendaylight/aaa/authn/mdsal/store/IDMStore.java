@@ -8,7 +8,6 @@
 package org.opendaylight.aaa.authn.mdsal.store;
 
 import java.util.List;
-
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.IIDMStore;
@@ -20,14 +19,15 @@ import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
+
 /**
  * @author Sharon Aicler - saichler@cisco.com
  *
  */
-public class IDMStore implements IIDMStore{
+public class IDMStore implements IIDMStore {
     private final IDMMDSALStore mdsalStore;
 
-    public IDMStore(IDMMDSALStore mdsalStore){
+    public IDMStore(IDMMDSALStore mdsalStore) {
         this.mdsalStore = mdsalStore;
     }
 
@@ -55,7 +55,7 @@ public class IDMStore implements IIDMStore{
     public Domains getDomains() throws IDMStoreException {
         Domains domains = new Domains();
         List<org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.Domain> mdSalDomains = mdsalStore.getAllDomains();
-        for(org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.Domain d:mdSalDomains){
+        for (org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.Domain d : mdSalDomains) {
             domains.getDomains().add(IDMObject2MDSAL.toIDMDomain(d));
         }
         return domains;
@@ -120,7 +120,7 @@ public class IDMStore implements IIDMStore{
     public Roles getRoles() throws IDMStoreException {
         Roles roles = new Roles();
         List<org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.Role> mdSalRoles = mdsalStore.getAllRoles();
-        for(org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.Role r:mdSalRoles){
+        for (org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.Role r : mdSalRoles) {
             roles.getRoles().add(IDMObject2MDSAL.toIDMRole(r));
         }
         return roles;
@@ -130,7 +130,7 @@ public class IDMStore implements IIDMStore{
     public Users getUsers() throws IDMStoreException {
         Users users = new Users();
         List<org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.User> mdSalUsers = mdsalStore.getAllUsers();
-        for(org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.User u:mdSalUsers){
+        for (org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.User u : mdSalUsers) {
             users.getUsers().add(IDMObject2MDSAL.toIDMUser(u));
         }
         return users;
@@ -140,8 +140,8 @@ public class IDMStore implements IIDMStore{
     public Users getUsers(String username, String domain) throws IDMStoreException {
         Users users = new Users();
         List<org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.User> mdSalUsers = mdsalStore.getAllUsers();
-        for(org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.User u:mdSalUsers){
-            if(u.getDomainid().equals(domain) && u.getName().equals(username)){
+        for (org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.User u : mdSalUsers) {
+            if (u.getDomainid().equals(domain) && u.getName().equals(username)) {
                 users.getUsers().add(IDMObject2MDSAL.toIDMUser(u));
             }
         }
@@ -153,7 +153,7 @@ public class IDMStore implements IIDMStore{
         Grants grants = new Grants();
         List<org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.Grant> mdSalGrants = mdsalStore.getAllGrants();
         String currentGrantUserId, currentGrantDomainId;
-        for(org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.Grant g:mdSalGrants){
+        for (org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.Grant g : mdSalGrants) {
             currentGrantUserId = g.getUserid();
             currentGrantDomainId = g.getDomainid();
             if (currentGrantUserId.equals(userid) && currentGrantDomainId.equals(domainid)) {
@@ -167,8 +167,8 @@ public class IDMStore implements IIDMStore{
     public Grants getGrants(String userid) throws IDMStoreException {
         Grants grants = new Grants();
         List<org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.Grant> mdSalGrants = mdsalStore.getAllGrants();
-        for(org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.Grant g:mdSalGrants){
-            if(g.getUserid().equals(userid)){
+        for (org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.Grant g : mdSalGrants) {
+            if (g.getUserid().equals(userid)) {
                 grants.getGrants().add(IDMObject2MDSAL.toIDMGrant(g));
             }
         }

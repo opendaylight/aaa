@@ -13,8 +13,7 @@ public class DataBrokerReadMocker implements InvocationHandler {
     private Class<?> mokingClass = null;
 
     @Override
-    public Object invoke(Object arg0, Method arg1, Object[] arg2)
-            throws Throwable {
+    public Object invoke(Object arg0, Method arg1, Object[] arg2) throws Throwable {
         List<StubContainer> stList = stubs.get(arg1);
         if (stList != null) {
             for (StubContainer sc : stList) {
@@ -31,8 +30,8 @@ public class DataBrokerReadMocker implements InvocationHandler {
     }
 
     public static Object addMock(Class<?> cls) {
-        return Proxy.newProxyInstance(cls.getClassLoader(),
-                new Class[] { cls }, new DataBrokerReadMocker(cls));
+        return Proxy.newProxyInstance(cls.getClassLoader(), new Class[] { cls },
+                new DataBrokerReadMocker(cls));
     }
 
     public static DataBrokerReadMocker getMocker(Object o) {
@@ -49,8 +48,7 @@ public class DataBrokerReadMocker implements InvocationHandler {
                 }
                 boolean match = true;
                 for (int i = 0; i < m.getParameterTypes().length; i++) {
-                    if (!m.getParameterTypes()[i].isAssignableFrom(args[i]
-                            .getClass())) {
+                    if (!m.getParameterTypes()[i].isAssignableFrom(args[i].getClass())) {
                         match = false;
                     }
                 }

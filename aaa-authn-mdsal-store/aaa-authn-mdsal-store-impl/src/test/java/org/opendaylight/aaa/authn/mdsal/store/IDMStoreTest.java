@@ -8,10 +8,11 @@ import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authenti
 import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.Grant;
 import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.Role;
 import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.authentication.User;
+
 public class IDMStoreTest {
 
     @Test
-    public void testWriteDomain () throws Exception{
+    public void testWriteDomain() throws Exception {
         IDMStoreTestUtil util = new IDMStoreTestUtil();
         IDMMDSALStore testedObject = new IDMMDSALStore(util.dataBroker);
         util.addMokitoFordomain();
@@ -21,7 +22,7 @@ public class IDMStoreTest {
     }
 
     @Test
-    public void testReadDomain () throws Exception{
+    public void testReadDomain() throws Exception {
         IDMStoreTestUtil util = new IDMStoreTestUtil();
         IDMMDSALStore testedObject = new IDMMDSALStore(util.dataBroker);
         util.addMokitoFordomain();
@@ -31,7 +32,7 @@ public class IDMStoreTest {
     }
 
     @Test
-    public void testDeleteDomain () throws Exception{
+    public void testDeleteDomain() throws Exception {
         IDMStoreTestUtil util = new IDMStoreTestUtil();
         IDMMDSALStore testedObject = new IDMMDSALStore(util.dataBroker);
         util.addMokitoFordomain();
@@ -40,7 +41,7 @@ public class IDMStoreTest {
     }
 
     @Test
-    public void testUpdateDomain () throws Exception{
+    public void testUpdateDomain() throws Exception {
         IDMStoreTestUtil util = new IDMStoreTestUtil();
         IDMMDSALStore testedObject = new IDMMDSALStore(util.dataBroker);
         util.addMokitoFordomain();
@@ -49,18 +50,19 @@ public class IDMStoreTest {
     }
 
     @Test
-    public void testWriteRole () throws Exception{
+    public void testWriteRole() throws Exception {
         IDMStoreTestUtil util = new IDMStoreTestUtil();
         IDMMDSALStore testedObject = new IDMMDSALStore(util.dataBroker);
         util.addMokitoForrole();
         util.addMokitoFordomain();
         Role role = testedObject.writeRole(util.role);
         Assert.assertNotNull(role);
-        Assert.assertEquals(role.getRoleid(), IDMStoreUtil.createRoleid(role.getName(),role.getDomainid()));
+        Assert.assertEquals(role.getRoleid(),
+                IDMStoreUtil.createRoleid(role.getName(), role.getDomainid()));
     }
 
     @Test
-    public void testReadRole () throws Exception{
+    public void testReadRole() throws Exception {
         IDMStoreTestUtil util = new IDMStoreTestUtil();
         IDMMDSALStore testedObject = new IDMMDSALStore(util.dataBroker);
         util.addMokitoForrole();
@@ -70,7 +72,7 @@ public class IDMStoreTest {
     }
 
     @Test
-    public void testDeleteRole () throws Exception{
+    public void testDeleteRole() throws Exception {
         IDMStoreTestUtil util = new IDMStoreTestUtil();
         IDMMDSALStore testedObject = new IDMMDSALStore(util.dataBroker);
         util.addMokitoForrole();
@@ -80,7 +82,7 @@ public class IDMStoreTest {
     }
 
     @Test
-    public void testUpdateRole () throws Exception{
+    public void testUpdateRole() throws Exception {
         IDMStoreTestUtil util = new IDMStoreTestUtil();
         IDMMDSALStore testedObject = new IDMMDSALStore(util.dataBroker);
         util.addMokitoForrole();
@@ -90,17 +92,18 @@ public class IDMStoreTest {
     }
 
     @Test
-    public void testWriteUser () throws Exception{
+    public void testWriteUser() throws Exception {
         IDMStoreTestUtil util = new IDMStoreTestUtil();
         IDMMDSALStore testedObject = new IDMMDSALStore(util.dataBroker);
         util.addMokitoForuser();
         User user = testedObject.writeUser(util.user);
         Assert.assertNotNull(user);
-        Assert.assertEquals(user.getUserid(), IDMStoreUtil.createUserid(user.getName(),util.user.getDomainid()));
+        Assert.assertEquals(user.getUserid(),
+                IDMStoreUtil.createUserid(user.getName(), util.user.getDomainid()));
     }
 
     @Test
-    public void testReadUser () throws Exception{
+    public void testReadUser() throws Exception {
         IDMStoreTestUtil util = new IDMStoreTestUtil();
         IDMMDSALStore testedObject = new IDMMDSALStore(util.dataBroker);
         util.addMokitoForuser();
@@ -110,7 +113,7 @@ public class IDMStoreTest {
     }
 
     @Test
-    public void testDeleteUser () throws Exception{
+    public void testDeleteUser() throws Exception {
         IDMStoreTestUtil util = new IDMStoreTestUtil();
         IDMMDSALStore testedObject = new IDMMDSALStore(util.dataBroker);
         util.addMokitoForuser();
@@ -120,17 +123,18 @@ public class IDMStoreTest {
     }
 
     @Test
-    public void testUpdateUser () throws Exception{
+    public void testUpdateUser() throws Exception {
         IDMStoreTestUtil util = new IDMStoreTestUtil();
         IDMMDSALStore testedObject = new IDMMDSALStore(util.dataBroker);
         util.addMokitoForuser();
         User user = testedObject.updateUser(util.user);
         Assert.assertNotNull(user);
-        Assert.assertEquals(user.getPassword(), SHA256Calculator.getSHA256(util.user.getPassword(),util.user.getSalt()));
+        Assert.assertEquals(user.getPassword(),
+                SHA256Calculator.getSHA256(util.user.getPassword(), util.user.getSalt()));
     }
 
     @Test
-    public void testWriteGrant () throws Exception{
+    public void testWriteGrant() throws Exception {
         IDMStoreTestUtil util = new IDMStoreTestUtil();
         IDMMDSALStore testedObject = new IDMMDSALStore(util.dataBroker);
         util.addMokitoFordomain();
@@ -142,7 +146,7 @@ public class IDMStoreTest {
     }
 
     @Test
-    public void testReadGrant () throws Exception{
+    public void testReadGrant() throws Exception {
         IDMStoreTestUtil util = new IDMStoreTestUtil();
         IDMMDSALStore testedObject = new IDMMDSALStore(util.dataBroker);
         util.addMokitoForgrant();
@@ -152,7 +156,7 @@ public class IDMStoreTest {
     }
 
     @Test
-    public void testDeleteGrant () throws Exception{
+    public void testDeleteGrant() throws Exception {
         IDMStoreTestUtil util = new IDMStoreTestUtil();
         IDMMDSALStore testedObject = new IDMMDSALStore(util.dataBroker);
         util.addMokitoForgrant();
