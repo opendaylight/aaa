@@ -60,7 +60,7 @@
             <artifactId>org.apache.felix.dependencymanager</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!-- Testing Dependencies -->     
+        <!-- Testing Dependencies -->
         <dependency>
             <groupId>com.sun.jersey.jersey-test-framework</groupId>
             <artifactId>jersey-test-framework-grizzly2</artifactId>

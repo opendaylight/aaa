@@ -8,24 +8,22 @@
 
 package org.opendaylight.aaa.sts;
 
+import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 import static javax.servlet.http.HttpServletResponse.SC_CREATED;
 import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 import static javax.servlet.http.HttpServletResponse.SC_NOT_IMPLEMENTED;
 import static javax.servlet.http.HttpServletResponse.SC_NO_CONTENT;
-import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
-import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
+import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuer;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuerImpl;
 import org.apache.oltu.oauth2.as.issuer.UUIDValueGenerator;
@@ -69,16 +67,13 @@ public class TokenEndpoint extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             if (req.getServletPath().equals(TOKEN_GRANT_ENDPOINT)) {
                 createAccessToken(req, resp);
-            }
-            else if (req.getServletPath().equals(TOKEN_REVOKE_ENDPOINT)) {
+            } else if (req.getServletPath().equals(TOKEN_REVOKE_ENDPOINT)) {
                 deleteAccessToken(req, resp);
-            }
-            else if (req.getServletPath().equals(TOKEN_VALIDATE_ENDPOINT)) {
+            } else if (req.getServletPath().equals(TOKEN_VALIDATE_ENDPOINT)) {
                 validateToken(req, resp);
             }
         } catch (AuthenticationException e) {
@@ -91,7 +86,7 @@ public class TokenEndpoint extends HttpServlet {
     }
 
     private void validateToken(HttpServletRequest req, HttpServletResponse resp)
-    throws IOException, OAuthSystemException {
+            throws IOException, OAuthSystemException {
         String token = req.getReader().readLine();
         if (token != null) {
             Authentication authn = ServiceLocator.getInstance().getTokenStore().get(token.trim());
@@ -107,14 +102,13 @@ public class TokenEndpoint extends HttpServlet {
     }
 
     // Delete an access token
-    private void deleteAccessToken(HttpServletRequest req,
-            HttpServletResponse resp) throws IOException {
+    private void deleteAccessToken(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
         String token = req.getReader().readLine();
         if (token != null) {
             if (ServiceLocator.getInstance().getTokenStore().delete(token.trim())) {
                 resp.setStatus(SC_NO_CONTENT);
-            }
-            else {
+            } else {
                 throw new AuthenticationException(UNAUTHORIZED);
             }
         } else {
@@ -123,9 +117,8 @@ public class TokenEndpoint extends HttpServlet {
     }
 
     // Create an access token
-    private void createAccessToken(HttpServletRequest req,
-            HttpServletResponse resp) throws OAuthSystemException,
-            OAuthProblemException, IOException {
+    private void createAccessToken(HttpServletRequest req, HttpServletResponse resp)
+            throws OAuthSystemException, OAuthProblemException, IOException {
         Claim claim = null;
         String clientId = null;
 
@@ -133,18 +126,16 @@ public class TokenEndpoint extends HttpServlet {
         // Any client credentials?
         clientId = oauthRequest.getClientId();
         if (clientId != null) {
-            ServiceLocator.getInstance().getClientService().validate(clientId,
-                    oauthRequest.getClientSecret());
+            ServiceLocator.getInstance().getClientService()
+                          .validate(clientId, oauthRequest.getClientSecret());
         }
 
         // Credential request...
-        if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(
-                GrantType.PASSWORD.toString())) {
+        if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(GrantType.PASSWORD.toString())) {
             String domain = oauthRequest.getScopes().iterator().next();
-            PasswordCredentials pc = new PasswordCredentialBuilder()
-                    .setUserName(oauthRequest.getUsername())
-                    .setPassword(oauthRequest.getPassword())
-                    .setDomain(domain).build();
+            PasswordCredentials pc = new PasswordCredentialBuilder().setUserName(
+                    oauthRequest.getUsername()).setPassword(oauthRequest.getPassword())
+                                                                    .setDomain(domain).build();
             if (!oauthRequest.getScopes().isEmpty()) {
                 claim = ServiceLocator.getInstance().getCredentialAuth().authenticate(pc);
             }
@@ -157,8 +148,8 @@ public class TokenEndpoint extends HttpServlet {
                 // Authenticate...
                 Authentication auth = ServiceLocator.getInstance().getTokenStore().get(token);
                 if (auth != null && domain != null) {
-                    List<String> roles = ServiceLocator.getInstance().getIdmService().listRoles(
-                            auth.userId(), domain);
+                    List<String> roles = ServiceLocator.getInstance().getIdmService()
+                                                       .listRoles(auth.userId(), domain);
                     if (!roles.isEmpty()) {
                         ClaimBuilder cb = new ClaimBuilder(auth);
                         cb.setDomain(domain); // scope domain
@@ -182,24 +173,22 @@ public class TokenEndpoint extends HttpServlet {
     }
 
     // Build OAuth access token response from the given claim
-    private void oauthAccessTokenResponse(HttpServletResponse resp,
-            Claim claim, String clientId) throws OAuthSystemException,
-            IOException {
+    private void oauthAccessTokenResponse(HttpServletResponse resp, Claim claim, String clientId)
+            throws OAuthSystemException, IOException {
         if (claim == null) {
             throw new AuthenticationException(UNAUTHORIZED);
         }
         String token = oi.accessToken();
 
         // Cache this token...
-        Authentication auth = new AuthenticationBuilder(new ClaimBuilder(claim)
-                .setClientId(clientId).build()).setExpiration(tokenExpiration()).build();
+        Authentication auth = new AuthenticationBuilder(new ClaimBuilder(claim).setClientId(
+                clientId).build()).setExpiration(tokenExpiration()).build();
         ServiceLocator.getInstance().getTokenStore().put(token, auth);
 
-        OAuthResponse r = OAuthASResponse.tokenResponse(SC_CREATED)
-                .setAccessToken(token)
-                .setTokenType(TokenType.BEARER.toString())
-                .setExpiresIn(Long.toString(auth.expiration()))
-                .buildJSONMessage();
+        OAuthResponse r = OAuthASResponse.tokenResponse(SC_CREATED).setAccessToken(token)
+                                         .setTokenType(TokenType.BEARER.toString())
+                                         .setExpiresIn(Long.toString(auth.expiration()))
+                                         .buildJSONMessage();
         write(resp, r);
     }
 
@@ -211,8 +200,8 @@ public class TokenEndpoint extends HttpServlet {
     // Emit an error OAuthResponse with the given HTTP code
     private void error(HttpServletResponse resp, int httpCode, String error) {
         try {
-            OAuthResponse r = OAuthResponse.errorResponse(httpCode)
-                    .setError(error).buildJSONMessage();
+            OAuthResponse r = OAuthResponse.errorResponse(httpCode).setError(error)
+                                           .buildJSONMessage();
             write(resp, r);
         } catch (Exception e1) {
             // Nothing to do here
@@ -222,8 +211,8 @@ public class TokenEndpoint extends HttpServlet {
     // Emit an error OAuthResponse for the given OAuth-related exception
     private void error(HttpServletResponse resp, OAuthProblemException e) {
         try {
-            OAuthResponse r = OAuthResponse.errorResponse(SC_BAD_REQUEST)
-                    .error(e).buildJSONMessage();
+            OAuthResponse r = OAuthResponse.errorResponse(SC_BAD_REQUEST).error(e)
+                                           .buildJSONMessage();
             write(resp, r);
         } catch (Exception e1) {
             // Nothing to do here
@@ -233,10 +222,9 @@ public class TokenEndpoint extends HttpServlet {
     // Emit an error OAuthResponse for the given generic exception
     private void error(HttpServletResponse resp, Exception e) {
         try {
-            OAuthResponse r = OAuthResponse
-                    .errorResponse(SC_INTERNAL_SERVER_ERROR)
-                    .setError(e.getClass().getName())
-                    .setErrorDescription(e.getMessage()).buildJSONMessage();
+            OAuthResponse r = OAuthResponse.errorResponse(SC_INTERNAL_SERVER_ERROR)
+                                           .setError(e.getClass().getName())
+                                           .setErrorDescription(e.getMessage()).buildJSONMessage();
             write(resp, r);
         } catch (Exception e1) {
             // Nothing to do here
@@ -244,8 +232,7 @@ public class TokenEndpoint extends HttpServlet {
     }
 
     // Write out an OAuthResponse
-    private void write(HttpServletResponse resp, OAuthResponse r)
-            throws IOException {
+    private void write(HttpServletResponse resp, OAuthResponse r) throws IOException {
         resp.setStatus(r.getResponseStatus());
         PrintWriter pw = resp.getWriter();
         pw.print(r.getBody());

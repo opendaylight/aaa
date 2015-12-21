@@ -8,6 +8,8 @@
 
 package org.opendaylight.aaa.sts;
 
+import java.util.List;
+import java.util.Vector;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.ClientService;
 import org.opendaylight.aaa.api.CredentialAuth;
@@ -15,9 +17,6 @@ import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
-
-import java.util.List;
-import java.util.Vector;
 
 /**
  * A service locator to bridge between the web world and OSGi world.
@@ -77,27 +76,26 @@ public class ServiceLocator {
     }
 
     protected void authenticationServiceAdded(AuthenticationService as) {
-      this.authenticationService = as;
+        this.authenticationService = as;
     }
 
     protected void authenticationServiceRemoved(AuthenticationService as) {
-      this.authenticationService = null;
+        this.authenticationService = null;
     }
 
     protected void credentialAuthAdded(CredentialAuth<PasswordCredentials> da) {
-      this.credentialAuth = da;
+        this.credentialAuth = da;
     }
 
     protected void credentialAuthAddedRemoved(CredentialAuth<PasswordCredentials> da) {
-      this.credentialAuth = null;
+        this.credentialAuth = null;
     }
 
     public List<TokenAuth> getTokenAuthCollection() {
         return tokenAuthCollection;
     }
 
-    public void setTokenAuthCollection(
-            List<TokenAuth> tokenAuthCollection) {
+    public void setTokenAuthCollection(List<TokenAuth> tokenAuthCollection) {
         this.tokenAuthCollection = tokenAuthCollection;
     }
 
@@ -105,8 +103,7 @@ public class ServiceLocator {
         return credentialAuth;
     }
 
-    public synchronized void setCredentialAuth(
-            CredentialAuth<PasswordCredentials> credentialAuth) {
+    public synchronized void setCredentialAuth(CredentialAuth<PasswordCredentials> credentialAuth) {
         this.credentialAuth = credentialAuth;
     }
 
@@ -122,8 +119,7 @@ public class ServiceLocator {
         return authenticationService;
     }
 
-    public void setAuthenticationService(
-            AuthenticationService authenticationService) {
+    public void setAuthenticationService(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
 

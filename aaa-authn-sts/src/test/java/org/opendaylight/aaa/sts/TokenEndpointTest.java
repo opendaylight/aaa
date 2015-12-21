@@ -16,7 +16,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-
 import org.eclipse.jetty.testing.HttpTester;
 import org.eclipse.jetty.testing.ServletTester;
 import org.junit.After;
@@ -47,8 +46,8 @@ public class TokenEndpointTest {
     private static final String DIRECT_AUTH = "grant_type=password&username=admin&password=admin&scope=pepsi&client_id=dlux&client_secret=secrete";
     private static final String REFRESH_TOKEN = "grant_type=refresh_token&refresh_token=whateverisgood&scope=pepsi";
 
-    private static final Claim claim = new ClaimBuilder().setUser("bob")
-            .setUserId("1234").addRole("admin").build();
+    private static final Claim claim = new ClaimBuilder().setUser("bob").setUserId("1234")
+                                                         .addRole("admin").build();
     private final static ServletTester server = new ServletTester();
 
     @BeforeClass
@@ -98,9 +97,8 @@ public class TokenEndpointTest {
     @Test
     public void testCreateTokenWithPassword() throws Exception {
         when(
-                ServiceLocator.getInstance().getCredentialAuth().authenticate(
-                        any(PasswordCredentials.class)))
-                .thenReturn(claim);
+                ServiceLocator.getInstance().getCredentialAuth()
+                              .authenticate(any(PasswordCredentials.class))).thenReturn(claim);
 
         HttpTester req = new HttpTester();
         req.setMethod("POST");
@@ -120,8 +118,8 @@ public class TokenEndpointTest {
     public void testCreateTokenWithRefreshToken() throws Exception {
         when(ServiceLocator.getInstance().getTokenStore().get(anyString())).thenReturn(
                 new AuthenticationBuilder(claim).build());
-        when(ServiceLocator.getInstance().getIdmService().listRoles(anyString(), anyString()))
-                .thenReturn(Arrays.asList("admin", "user"));
+        when(ServiceLocator.getInstance().getIdmService().listRoles(anyString(), anyString())).thenReturn(
+                Arrays.asList("admin", "user"));
 
         HttpTester req = new HttpTester();
         req.setMethod("POST");
@@ -139,8 +137,8 @@ public class TokenEndpointTest {
 
     @Test
     public void testDeleteToken() throws Exception {
-        when(ServiceLocator.getInstance().getTokenStore().delete("token_to_be_deleted"))
-                .thenReturn(true);
+        when(ServiceLocator.getInstance().getTokenStore().delete("token_to_be_deleted")).thenReturn(
+                true);
 
         HttpTester req = new HttpTester();
         req.setMethod("POST");

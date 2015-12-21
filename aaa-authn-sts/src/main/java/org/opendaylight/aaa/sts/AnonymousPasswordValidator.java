@@ -9,7 +9,6 @@
 package org.opendaylight.aaa.sts;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.oltu.oauth2.common.OAuth;
 import org.apache.oltu.oauth2.common.validators.AbstractValidator;
 
@@ -19,8 +18,7 @@ import org.apache.oltu.oauth2.common.validators.AbstractValidator;
  * @author liemmn
  *
  */
-public class AnonymousPasswordValidator extends
-        AbstractValidator<HttpServletRequest> {
+public class AnonymousPasswordValidator extends AbstractValidator<HttpServletRequest> {
 
     public AnonymousPasswordValidator() {
         requiredParams.add(OAuth.OAUTH_GRANT_TYPE);
