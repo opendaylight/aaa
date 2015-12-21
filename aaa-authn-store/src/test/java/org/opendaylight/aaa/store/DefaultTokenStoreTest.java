@@ -18,7 +18,6 @@ import static org.opendaylight.aaa.store.DefaultTokenStore.SECS_TO_LIVE;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
-
 import org.apache.felix.dm.Component;
 import org.junit.After;
 import org.junit.Before;
@@ -52,8 +51,9 @@ public class DefaultTokenStoreTest {
 
     @Test
     public void testCache() throws InterruptedException {
-        Authentication auth = new AuthenticationBuilder(new ClaimBuilder().setUser("foo").setUserId("1234").addRole
-            ("admin").build()).build();
+        Authentication auth = new AuthenticationBuilder(new ClaimBuilder().setUser("foo")
+                                                                          .setUserId("1234")
+                                                                          .addRole("admin").build()).build();
         dts.put(FOO_TOKEN, auth);
         assertEquals(auth, dts.get(FOO_TOKEN));
         dts.delete(FOO_TOKEN);

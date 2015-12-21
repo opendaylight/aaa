@@ -8,14 +8,13 @@
 
 package org.opendaylight.aaa.store;
 
+import java.util.Dictionary;
 import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
 import org.opendaylight.aaa.api.TokenStore;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.service.cm.ManagedService;
-
-import java.util.Dictionary;
 
 /**
  * An activator for the default datastore implementation of {@link TokenStore}.
@@ -27,19 +26,16 @@ public class Activator extends DependencyActivatorBase {
     private static final String TOKEN_PID = "org.opendaylight.aaa.tokens";
 
     @Override
-    public void init(BundleContext context, DependencyManager manager)
-        throws Exception {
+    public void init(BundleContext context, DependencyManager manager) throws Exception {
         DefaultTokenStore ts = new DefaultTokenStore();
-        manager.add(createComponent().setInterface(
-            new String[]{TokenStore.class.getName()}, null)
-            .setImplementation(ts));
+        manager.add(createComponent().setInterface(new String[] { TokenStore.class.getName() },
+                null).setImplementation(ts));
         context.registerService(ManagedService.class.getName(), ts,
-            addPid(DefaultTokenStore.defaults));
+                addPid(DefaultTokenStore.defaults));
     }
 
     @Override
-    public void destroy(BundleContext context, DependencyManager manager)
-        throws Exception {
+    public void destroy(BundleContext context, DependencyManager manager) throws Exception {
     }
 
     private Dictionary<String, ?> addPid(Dictionary<String, String> dict) {
