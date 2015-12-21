@@ -172,9 +172,9 @@
                 <configuration>
                     <bootFeatures>
                         <feature>standard</feature>
-                        <!-- Optional TODO: Add entries here for the features 
-                            you want in your local distro Note: odl-restconf is a separate feature from 
-                            odl-mdsal-broker. If you want restconf, you need to list it here explicitely. 
+                        <!-- Optional TODO: Add entries here for the features
+                            you want in your local distro Note: odl-restconf is a separate feature from
+                            odl-mdsal-broker. If you want restconf, you need to list it here explicitely.
                             Examples: <feature>odl-toaster</feature> <feature>odl-restconf</feature> -->
                         <!-- Final TODO: Remove TODO Comments ;) -->
                     </bootFeatures>
