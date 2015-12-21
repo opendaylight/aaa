@@ -8,14 +8,13 @@
 
 package org.opendaylight.aaa.authz.srv;
 
+import java.util.Collection;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.controller.md.sal.dom.api.DOMDataBroker;
 import org.opendaylight.controller.sal.core.api.Broker;
 import org.opendaylight.controller.sal.core.api.Consumer;
 import org.opendaylight.controller.sal.core.api.Provider;
 import org.osgi.framework.BundleContext;
-
-import java.util.Collection;
 
 /**
  * Created by wdec on 26/08/2014.
@@ -40,7 +39,8 @@ public class AuthzBrokerImpl implements Broker, AutoCloseable, Provider {
     public ConsumerSession registerConsumer(Consumer consumer) {
 
         ConsumerSession realSession = broker.registerConsumer(new ConsumerWrapper(consumer));
-        AuthzConsumerContextImpl authzConsumerContext = new AuthzConsumerContextImpl(realSession, this);
+        AuthzConsumerContextImpl authzConsumerContext = new AuthzConsumerContextImpl(realSession,
+                this);
         consumer.onSessionInitiated(authzConsumerContext);
         return authzConsumerContext;
     }
@@ -48,8 +48,10 @@ public class AuthzBrokerImpl implements Broker, AutoCloseable, Provider {
     @Override
     public ConsumerSession registerConsumer(Consumer consumer, BundleContext bundleContext) {
 
-        ConsumerSession realSession = broker.registerConsumer(new ConsumerWrapper(consumer), bundleContext);
-        AuthzConsumerContextImpl authzConsumerContext = new AuthzConsumerContextImpl(realSession, this);
+        ConsumerSession realSession = broker.registerConsumer(new ConsumerWrapper(consumer),
+                bundleContext);
+        AuthzConsumerContextImpl authzConsumerContext = new AuthzConsumerContextImpl(realSession,
+                this);
         consumer.onSessionInitiated(authzConsumerContext);
         return authzConsumerContext;
     }
@@ -58,7 +60,8 @@ public class AuthzBrokerImpl implements Broker, AutoCloseable, Provider {
     public ProviderSession registerProvider(Provider provider) {
 
         ProviderSession realSession = broker.registerProvider(new ProviderWrapper(provider));
-        AuthzProviderContextImpl authzProviderContext = new AuthzProviderContextImpl(realSession, this);
+        AuthzProviderContextImpl authzProviderContext = new AuthzProviderContextImpl(realSession,
+                this);
         provider.onSessionInitiated(authzProviderContext);
         return authzProviderContext;
     }
@@ -66,23 +69,28 @@ public class AuthzBrokerImpl implements Broker, AutoCloseable, Provider {
     @Override
     public ProviderSession registerProvider(Provider provider, BundleContext bundleContext) {
 
-        // Allow the real broker to do its thing, while providing a wrapped callback
-        ProviderSession realSession = broker.registerProvider(new ProviderWrapper(provider), bundleContext);
+        // Allow the real broker to do its thing, while providing a wrapped
+        // callback
+        ProviderSession realSession = broker.registerProvider(new ProviderWrapper(provider),
+                bundleContext);
 
         // Create Authz ProviderContext
-        AuthzProviderContextImpl authzProviderContext = new AuthzProviderContextImpl(realSession, this);
+        AuthzProviderContextImpl authzProviderContext = new AuthzProviderContextImpl(realSession,
+                this);
 
-        // Run onsessionInitiated on injected provider with the AuthZ provider context.
+        // Run onsessionInitiated on injected provider with the AuthZ provider
+        // context.
         provider.onSessionInitiated(authzProviderContext);
         return authzProviderContext;
 
     }
 
-    //Handle the AuthZBroker registration with the real broker
+    // Handle the AuthZBroker registration with the real broker
     @Override
     public void onSessionInitiated(ProviderSession providerSession) {
 
-        //Get now the real DOMDataBroker and register it with the AuthzDOMBroker together with the provider session
+        // Get now the real DOMDataBroker and register it with the
+        // AuthzDOMBroker together with the provider session
         final DOMDataBroker domDataBroker = providerSession.getService(DOMDataBroker.class);
         AuthzDomDataBroker.getInstance().setProviderSession(providerSession);
         AuthzDomDataBroker.getInstance().setDomDataBroker(domDataBroker);
@@ -98,11 +106,10 @@ public class AuthzBrokerImpl implements Broker, AutoCloseable, Provider {
         this.authenticationService = authenticationService;
     }
 
-    //Wrapper for Provider
+    // Wrapper for Provider
 
     public static class ProviderWrapper implements Provider {
         private final Provider provider;
-
 
         public ProviderWrapper(Provider provider) {
             this.provider = provider;
@@ -110,17 +117,17 @@ public class AuthzBrokerImpl implements Broker, AutoCloseable, Provider {
 
         @Override
         public void onSessionInitiated(ProviderSession providerSession) {
-            //Do a Noop when the real broker calls back
+            // Do a Noop when the real broker calls back
         }
 
         @Override
         public Collection<ProviderFunctionality> getProviderFunctionality() {
-            //Allow the RestconfImpl to respond to this
+            // Allow the RestconfImpl to respond to this
             return provider.getProviderFunctionality();
         }
     }
 
-    //Wrapper for Consumer
+    // Wrapper for Consumer
     public static class ConsumerWrapper implements Consumer {
 
         private final Consumer consumer;
@@ -131,7 +138,7 @@ public class AuthzBrokerImpl implements Broker, AutoCloseable, Provider {
 
         @Override
         public void onSessionInitiated(ConsumerSession consumerSession) {
-            //Do a Noop when the real broker calls back
+            // Do a Noop when the real broker calls back
         }
 
         @Override
