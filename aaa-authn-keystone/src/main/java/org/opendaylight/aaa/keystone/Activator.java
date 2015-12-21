@@ -22,16 +22,13 @@ import org.osgi.framework.BundleContext;
 public class Activator extends DependencyActivatorBase {
 
     @Override
-    public void init(BundleContext context, DependencyManager manager)
-            throws Exception {
-        manager.add(createComponent()
-                .setInterface(new String[] { TokenAuth.class.getName() }, null)
-                .setImplementation(KeystoneTokenAuth.class));
+    public void init(BundleContext context, DependencyManager manager) throws Exception {
+        manager.add(createComponent().setInterface(new String[] { TokenAuth.class.getName() }, null)
+                                     .setImplementation(KeystoneTokenAuth.class));
     }
 
     @Override
-    public void destroy(BundleContext context, DependencyManager manager)
-            throws Exception {
+    public void destroy(BundleContext context, DependencyManager manager) throws Exception {
     }
 
 }
