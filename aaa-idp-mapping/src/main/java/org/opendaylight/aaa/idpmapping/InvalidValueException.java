@@ -16,19 +16,20 @@ package org.opendaylight.aaa.idpmapping;
 
 public class InvalidValueException extends RuntimeException {
 
-  private static final long serialVersionUID = -2351651535772692180L;
+    private static final long serialVersionUID = -2351651535772692180L;
 
-  public InvalidValueException() {}
+    public InvalidValueException() {
+    }
 
-  public InvalidValueException(String message) {
-    super(message);
-  }
+    public InvalidValueException(String message) {
+        super(message);
+    }
 
-  public InvalidValueException(Throwable cause) {
-    super(cause);
-  }
+    public InvalidValueException(Throwable cause) {
+        super(cause);
+    }
 
-  public InvalidValueException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public InvalidValueException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

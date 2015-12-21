@@ -15,19 +15,20 @@ package org.opendaylight.aaa.idpmapping;
 
 public class UndefinedValueException extends RuntimeException {
 
-  private static final long serialVersionUID = -1607453931670834435L;
+    private static final long serialVersionUID = -1607453931670834435L;
 
-  public UndefinedValueException() {}
+    public UndefinedValueException() {
+    }
 
-  public UndefinedValueException(String message) {
-    super(message);
-  }
+    public UndefinedValueException(String message) {
+        super(message);
+    }
 
-  public UndefinedValueException(Throwable cause) {
-    super(cause);
-  }
+    public UndefinedValueException(Throwable cause) {
+        super(cause);
+    }
 
-  public UndefinedValueException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public UndefinedValueException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
