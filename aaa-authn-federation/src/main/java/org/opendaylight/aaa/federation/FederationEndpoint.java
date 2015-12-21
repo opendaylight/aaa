@@ -14,13 +14,11 @@ import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuer;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuerImpl;
 import org.apache.oltu.oauth2.as.issuer.UUIDValueGenerator;
@@ -32,7 +30,6 @@ import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
-
 
 /**
  * An endpoint for claim-based authentication federation (in-bound).
@@ -57,8 +54,8 @@ public class FederationEndpoint extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException, ServletException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException,
+            ServletException {
         try {
             createRefreshToken(req, resp);
         } catch (Exception e) {
@@ -67,8 +64,8 @@ public class FederationEndpoint extends HttpServlet {
     }
 
     // Create a refresh token
-    private void createRefreshToken(HttpServletRequest req,
-            HttpServletResponse resp) throws OAuthSystemException, IOException {
+    private void createRefreshToken(HttpServletRequest req, HttpServletResponse resp)
+            throws OAuthSystemException, IOException {
         Claim claim = (Claim) req.getAttribute(AUTH_CLAIM);
         oauthRefreshTokenResponse(resp, claim);
     }
@@ -93,11 +90,11 @@ public class FederationEndpoint extends HttpServlet {
             throw new AuthenticationException(UNAUTHORIZED);
         }
 
-        String userId = userName+"@"+domain;
+        String userId = userName + "@" + domain;
 
         // Create an unscoped ODL context from the external claim
-        Authentication auth = new AuthenticationBuilder(new ClaimBuilder(claim).setUserId(userId).build())
-            .setExpiration(tokenExpiration()).build();
+        Authentication auth = new AuthenticationBuilder(new ClaimBuilder(claim).setUserId(userId)
+                .build()).setExpiration(tokenExpiration()).build();
 
         // Create OAuth response
         String token = oi.refreshToken();
@@ -108,9 +105,8 @@ public class FederationEndpoint extends HttpServlet {
                 .setScope(
                 // Use mapped domain if there is one, else list
                 // all the ones that this user has access to
-                    (claim.domain().isEmpty()) ? listToString(ServiceLocator.getInstance().getIdmService().listDomains(userId))
-                        : claim.domain()
-                )
+                        (claim.domain().isEmpty()) ? listToString(ServiceLocator.getInstance()
+                                .getIdmService().listDomains(userId)) : claim.domain())
                 .buildJSONMessage();
         // Cache this token...
         ServiceLocator.getInstance().getTokenStore().put(token, auth);
@@ -134,8 +130,8 @@ public class FederationEndpoint extends HttpServlet {
     // Emit an error OAuthResponse with the given HTTP code
     private void error(HttpServletResponse resp, int httpCode, String error) {
         try {
-            OAuthResponse r = OAuthResponse.errorResponse(httpCode)
-                    .setError(error).buildJSONMessage();
+            OAuthResponse r = OAuthResponse.errorResponse(httpCode).setError(error)
+                    .buildJSONMessage();
             write(resp, r);
         } catch (Exception e1) {
             // Nothing to do here
@@ -143,8 +139,7 @@ public class FederationEndpoint extends HttpServlet {
     }
 
     // Write out an OAuthResponse
-    private void write(HttpServletResponse resp, OAuthResponse r)
-            throws IOException {
+    private void write(HttpServletResponse resp, OAuthResponse r) throws IOException {
         resp.setStatus(r.getResponseStatus());
         PrintWriter pw = resp.getWriter();
         pw.print(r.getBody());
