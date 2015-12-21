@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Activator extends DependencyActivatorBase {
 
-    private static Logger LOG = LoggerFactory.getLogger(Activator.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Activator.class);
 
     @Override
     public void destroy(BundleContext bc, DependencyManager dm)
