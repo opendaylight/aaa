@@ -11,7 +11,6 @@ package org.opendaylight.aaa.shiro.realm;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
@@ -19,7 +18,6 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.LdapContext;
-
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -40,11 +38,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  * @see <code>org.apache.shiro.realm.ldap.JndiLdapRealm</code>
- * @see <a href="https://shiro.apache.org/static/1.2.3/apidocs/org/apache/shiro/realm/ldap/JndiLdapRealm.html">Shiro documentation</a>
+ * @see <a
+ *      href="https://shiro.apache.org/static/1.2.3/apidocs/org/apache/shiro/realm/ldap/JndiLdapRealm.html">Shiro
+ *      documentation</a>
  */
 public class ODLJndiLdapRealm extends JndiLdapRealm {
-    private static final Logger LOG = LoggerFactory
-            .getLogger(ODLJndiLdapRealm.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ODLJndiLdapRealm.class);
 
     private static final String LDAP_CONNECTION_MESSAGE = "AAA LDAP connection from ";
 
@@ -66,8 +65,8 @@ public class ODLJndiLdapRealm extends JndiLdapRealm {
      * .apache.shiro.authc.AuthenticationToken)
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(
-            AuthenticationToken token) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
+            throws AuthenticationException {
 
         try {
             final String username = getUsername(token);
@@ -101,8 +100,7 @@ public class ODLJndiLdapRealm extends JndiLdapRealm {
      *             The incoming token is not username/password (i.e., X.509
      *             certificate)
      */
-    public static String getUsername(AuthenticationToken token)
-            throws ClassCastException {
+    public static String getUsername(AuthenticationToken token) throws ClassCastException {
         if (null == token) {
             return null;
         }
@@ -110,13 +108,11 @@ public class ODLJndiLdapRealm extends JndiLdapRealm {
     }
 
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(
-            PrincipalCollection principals) {
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 
         AuthorizationInfo ai = null;
         try {
-            ai = this
-                    .queryForAuthorizationInfo(principals, getContextFactory());
+            ai = this.queryForAuthorizationInfo(principals, getContextFactory());
         } catch (NamingException e) {
             LOG.error("Unable to query for AuthZ info: ", e);
         }
@@ -132,8 +128,7 @@ public class ODLJndiLdapRealm extends JndiLdapRealm {
      *             the PrincipalCollection contains an element that is not in
      *             username/password form (i.e., X.509 certificate)
      */
-    protected String getUsername(final PrincipalCollection principals)
-            throws ClassCastException {
+    protected String getUsername(final PrincipalCollection principals) throws ClassCastException {
 
         if (null == principals) {
             return null;
@@ -142,8 +137,7 @@ public class ODLJndiLdapRealm extends JndiLdapRealm {
     }
 
     @Override
-    protected AuthorizationInfo queryForAuthorizationInfo(
-            PrincipalCollection principals,
+    protected AuthorizationInfo queryForAuthorizationInfo(PrincipalCollection principals,
             LdapContextFactory ldapContextFactory) throws NamingException {
 
         AuthorizationInfo authorizationInfo = null;
@@ -165,8 +159,7 @@ public class ODLJndiLdapRealm extends JndiLdapRealm {
         return authorizationInfo;
     }
 
-    public static AuthorizationInfo buildAuthorizationInfo(
-            final Set<String> roleNames) {
+    public static AuthorizationInfo buildAuthorizationInfo(final Set<String> roleNames) {
         if (null == roleNames) {
             return null;
         }
@@ -182,8 +175,8 @@ public class ODLJndiLdapRealm extends JndiLdapRealm {
      * @return
      * @throws NamingException
      */
-    protected Set<String> getRoleNamesForUser(String username,
-            LdapContext ldapContext) throws NamingException {
+    protected Set<String> getRoleNamesForUser(String username, LdapContext ldapContext)
+            throws NamingException {
 
         Set<String> roleNames = new LinkedHashSet<String>();
         SearchControls searchControls = createSearchControls();
@@ -191,10 +184,10 @@ public class ODLJndiLdapRealm extends JndiLdapRealm {
         String SEARCH_FILTER = "(&(objectClass=*)(CN={0}))";
         Object[] SEARCH_ARGS = new Object[] { username };
         String searchBase = super.getUserDnSuffix();
-        final String DEBUG_MESSAGE = searchBase=" + searchBase";
+        final String DEBUG_MESSAGE = searchBase = " + searchBase";
         LOG.debug(DEBUG_MESSAGE);
-        NamingEnumeration<SearchResult> answer = ldapContext.search(searchBase,
-                SEARCH_FILTER, SEARCH_ARGS, searchControls);
+        NamingEnumeration<SearchResult> answer = ldapContext.search(searchBase, SEARCH_FILTER,
+                SEARCH_ARGS, searchControls);
 
         String MEMBER_OF = "memberOf";
         while (answer.hasMoreElements()) {
@@ -205,8 +198,7 @@ public class ODLJndiLdapRealm extends JndiLdapRealm {
                 while (ae.hasMore()) {
                     Attribute attr = ae.next();
                     if (attr.getID().equals(MEMBER_OF)) {
-                        Collection<String> groupNames = LdapUtils
-                                .getAllAttributeValues(attr);
+                        Collection<String> groupNames = LdapUtils.getAllAttributeValues(attr);
                         Collection<String> rolesForGroups = groupNames;
                         roleNames.addAll(rolesForGroups);
                     }
@@ -227,6 +219,7 @@ public class ODLJndiLdapRealm extends JndiLdapRealm {
         return searchControls;
     }
 
+    @Override
     public String getUserDnSuffix() {
         return super.getUserDnSuffix();
     }

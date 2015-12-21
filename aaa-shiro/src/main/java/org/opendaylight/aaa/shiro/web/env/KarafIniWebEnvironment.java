@@ -11,11 +11,6 @@ package org.opendaylight.aaa.shiro.web.env;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Vector;
-
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.Ini.Section;
 import org.apache.shiro.web.env.IniWebEnvironment;
@@ -24,8 +19,6 @@ import org.opendaylight.aaa.shiro.authorization.DefaultRBACRules;
 import org.opendaylight.aaa.shiro.authorization.RBACRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.collect.Sets;
 
 /**
  * Identical to <code>IniWebEnvironment</code> except the Ini is loaded from
@@ -36,8 +29,7 @@ import com.google.common.collect.Sets;
  */
 public class KarafIniWebEnvironment extends IniWebEnvironment {
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(KarafIniWebEnvironment.class);
+    private static final Logger LOG = LoggerFactory.getLogger(KarafIniWebEnvironment.class);
     public static final String DEFAULT_SHIRO_INI_FILE = "etc/shiro.ini";
     public static final String SHIRO_FILE_PREFIX = "file:/";
 
@@ -51,7 +43,7 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
         Ini ini;
         try {
             ini = createDefaultShiroIni();
-            //appendCustomIniRules(ini);
+            // appendCustomIniRules(ini);
             setIni(ini);
         } catch (FileNotFoundException e) {
             final String ERROR_MESSAGE = "Could not find etc/shiro.ini";
@@ -69,7 +61,7 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
         final String INSTALL_MESSAGE = "Installing the RBAC rule: %s";
         Section urlSection = getOrCreateUrlSection(ini);
         Collection<RBACRule> rbacRules = DefaultRBACRules.getInstance().getRBACRules();
-        for (RBACRule rbacRule : rbacRules ) {
+        for (RBACRule rbacRule : rbacRules) {
             urlSection.put(rbacRule.getUrlPattern(), rbacRule.getRolesInShiroFormat());
             Accounter.output(String.format(INSTALL_MESSAGE, rbacRule));
         }
@@ -85,7 +77,7 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
     private Section getOrCreateUrlSection(final Ini ini) {
         final String URL_SECTION_TITLE = "urls";
         Section urlSection = ini.getSection(URL_SECTION_TITLE);
-        if(urlSection == null) {
+        if (urlSection == null) {
             LOG.debug("shiro.ini does not contain a [urls] section; creating one");
             urlSection = ini.addSection(URL_SECTION_TITLE);
         } else {
@@ -113,8 +105,7 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
     static Ini createShiroIni(final String path) throws FileNotFoundException {
         File f = new File(path);
         Ini ini = new Ini();
-        final String fileBasedIniPath = createFileBasedIniPath(f
-                .getAbsolutePath());
+        final String fileBasedIniPath = createFileBasedIniPath(f.getAbsolutePath());
         ini.loadFromPath(fileBasedIniPath);
         return ini;
     }

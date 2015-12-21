@@ -20,14 +20,14 @@
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.dependencymanager</artifactId>
     </dependency>
-	<dependency>
-	  <groupId>org.opendaylight.aaa</groupId>
-	  <artifactId>aaa-authn-sts</artifactId>
-	</dependency>
-	<dependency>
-	  <groupId>org.opendaylight.aaa</groupId>
-	  <artifactId>aaa-authn-basic</artifactId>
-	</dependency>
+    <dependency>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-authn-sts</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-authn-basic</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.apache.shiro</groupId>
       <artifactId>shiro-core</artifactId>

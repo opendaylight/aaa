@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class AAAFilter extends ShiroFilter {
 
-    private static Logger LOG = LoggerFactory.getLogger(AAAFilter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AAAFilter.class);
 
     public AAAFilter() {
         super();
@@ -36,11 +36,11 @@ public class AAAFilter extends ShiroFilter {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * Adds context clues that aid in debugging. Also initializes the enable
      * status to correspond with
      * <code>ServiceProxy.getInstance.getEnabled()</code>.
-     * 
+     *
      * @see org.apache.shiro.web.servlet.ShiroFilter#init()
      */
     @Override
@@ -57,9 +57,9 @@ public class AAAFilter extends ShiroFilter {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * Adds context clues to aid in debugging whether the filter is enabled.
-     * 
+     *
      * @see
      * org.apache.shiro.web.servlet.OncePerRequestFilter#setEnabled(boolean)
      */

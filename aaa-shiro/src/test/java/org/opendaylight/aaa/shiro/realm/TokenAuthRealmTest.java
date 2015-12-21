@@ -8,17 +8,19 @@
 
 package org.opendaylight.aaa.shiro.realm;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import com.google.common.collect.Lists;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.shiro.authc.AuthenticationToken;
 import org.junit.Test;
-
-import com.google.common.collect.Lists;
 
 /**
  *
@@ -34,7 +36,7 @@ public class TokenAuthRealmTest extends TokenAuthRealm {
         assertEquals("TokenAuthRealm", testRealm.getName());
     }
 
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void testDoGetAuthorizationInfoPrincipalCollectionNullCacheToken() {
         testRealm.doGetAuthorizationInfo(null);
     }
@@ -44,29 +46,29 @@ public class TokenAuthRealmTest extends TokenAuthRealm {
         final String username = "user";
         final String password = "password";
         final String expectedUsernamePasswordString = "user:password";
-        assertEquals(expectedUsernamePasswordString, getUsernamePasswordString(username,password));
+        assertEquals(expectedUsernamePasswordString, getUsernamePasswordString(username, password));
     }
 
     @Test
     public void testGetEncodedToken() {
         final String stringToEncode = "admin1:admin1";
-        final byte [] bytesToEncode = stringToEncode.getBytes();
+        final byte[] bytesToEncode = stringToEncode.getBytes();
         final String expectedToken = org.apache.shiro.codec.Base64.encodeToString(bytesToEncode);
         assertEquals(expectedToken, getEncodedToken(stringToEncode));
     }
 
     @Test
     public void testGetTokenAuthHeader() {
-        final String encodedCredentials = getEncodedToken(
-                getUsernamePasswordString("user1","password"));
+        final String encodedCredentials = getEncodedToken(getUsernamePasswordString("user1",
+                "password"));
         final String expectedTokenAuthHeader = "Basic " + encodedCredentials;
         assertEquals(expectedTokenAuthHeader, getTokenAuthHeader(encodedCredentials));
     }
 
     @Test
     public void testFormHeadersWithToken() {
-        final String authHeader = getEncodedToken(
-                getTokenAuthHeader(getUsernamePasswordString("user1","password")));
+        final String authHeader = getEncodedToken(getTokenAuthHeader(getUsernamePasswordString(
+                "user1", "password")));
         final Map<String, List<String>> expectedHeaders = new HashMap<String, List<String>>();
         expectedHeaders.put("Authorization", Lists.newArrayList(authHeader));
         final Map<String, List<String>> actualHeaders = formHeadersWithToken(authHeader);
@@ -81,8 +83,8 @@ public class TokenAuthRealmTest extends TokenAuthRealm {
     public void testFormHeaders() {
         final String username = "basicUser";
         final String password = "basicPassword";
-        final String authHeader = getTokenAuthHeader(
-                getEncodedToken(getUsernamePasswordString(username, password)));
+        final String authHeader = getTokenAuthHeader(getEncodedToken(getUsernamePasswordString(
+                username, password)));
         final Map<String, List<String>> expectedHeaders = new HashMap<String, List<String>>();
         expectedHeaders.put("Authorization", Lists.newArrayList(authHeader));
         final Map<String, List<String>> actualHeaders = formHeaders(username, password);
@@ -98,7 +100,7 @@ public class TokenAuthRealmTest extends TokenAuthRealm {
         assertFalse(testRealm.isTokenAuthAvailable());
     }
 
-    @Test (expected = org.apache.shiro.authc.AuthenticationException.class)
+    @Test(expected = org.apache.shiro.authc.AuthenticationException.class)
     public void testDoGetAuthenticationInfoAuthenticationToken() {
         testRealm.doGetAuthenticationInfo(null);
     }
@@ -110,7 +112,7 @@ public class TokenAuthRealmTest extends TokenAuthRealm {
         assertNull(extractUsername(at));
     }
 
-    @Test (expected = ClassCastException.class)
+    @Test(expected = ClassCastException.class)
     public void testExtractPasswordNullPassword() {
         AuthenticationToken at = mock(AuthenticationToken.class);
         when(at.getPrincipal()).thenReturn("username");
@@ -118,14 +120,14 @@ public class TokenAuthRealmTest extends TokenAuthRealm {
         extractPassword(at);
     }
 
-    @Test (expected = ClassCastException.class)
+    @Test(expected = ClassCastException.class)
     public void testExtractUsernameBadUsernameClass() {
         AuthenticationToken at = mock(AuthenticationToken.class);
         when(at.getPrincipal()).thenReturn(new Integer(1));
         extractUsername(at);
     }
 
-    @Test (expected = ClassCastException.class)
+    @Test(expected = ClassCastException.class)
     public void testExtractPasswordBadPasswordClass() {
         AuthenticationToken at = mock(AuthenticationToken.class);
         when(at.getPrincipal()).thenReturn("username");

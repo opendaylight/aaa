@@ -7,18 +7,17 @@
  */
 package org.opendaylight.aaa.shiro.authorization;
 
+import com.google.common.collect.Sets;
 import java.util.Collection;
 import java.util.HashSet;
 
-import com.google.common.collect.Sets;
-
 /**
- * A singleton container of default authorization rules that are installed
- * as part of Shiro initialization.  This class defines an immutable set of
- * rules that are needed to provide system-wide security.  These include
- * protecting certain MD-SAL leaf nodes that contain AAA data from random
- * access.  This is not a place to define your custom rule set;  additional
- * RBAC rules are configured through the shiro initialization file:
+ * A singleton container of default authorization rules that are installed as
+ * part of Shiro initialization. This class defines an immutable set of rules
+ * that are needed to provide system-wide security. These include protecting
+ * certain MD-SAL leaf nodes that contain AAA data from random access. This is
+ * not a place to define your custom rule set; additional RBAC rules are
+ * configured through the shiro initialization file:
  * <code>$KARAF_HOME/shiro.ini</code>
  *
  * An important distinction to consider is that Shiro URL rules work to protect
@@ -38,8 +37,8 @@ public class DefaultRBACRules {
     private Collection<RBACRule> rbacRules = new HashSet<RBACRule>();
 
     /**
-     * protects the AAA MD-SAL store by preventing access to the leaf nodes
-     * to non-admin users.
+     * protects the AAA MD-SAL store by preventing access to the leaf nodes to
+     * non-admin users.
      */
     private static final RBACRule PROTECT_AAA_MDSAL = RBACRule.createAuthorizationRule(
             "*/authorization/*", Sets.newHashSet("admin"));
@@ -48,7 +47,7 @@ public class DefaultRBACRules {
      * private for singleton pattern
      */
     private DefaultRBACRules() {
-        //rbacRules.add(PROTECT_AAA_MDSAL);
+        // rbacRules.add(PROTECT_AAA_MDSAL);
     }
 
     /**
@@ -65,11 +64,11 @@ public class DefaultRBACRules {
     /**
      *
      * @return a copy of the default rules, so any modifications to the returned
-     * reference do not affect the <code>DefaultRBACRules</code>.
+     *         reference do not affect the <code>DefaultRBACRules</code>.
      */
     public final Collection<RBACRule> getRBACRules() {
         // Returns a copy of the rbacRules set such that the original set keeps
-        // its contract of remaining immutable.  Calls to rbacRules.add() are
+        // its contract of remaining immutable. Calls to rbacRules.add() are
         // encapsulated solely in <code>DefaultRBACRules</code>.
         //
         // Since this method is only called at shiro initialiation time,

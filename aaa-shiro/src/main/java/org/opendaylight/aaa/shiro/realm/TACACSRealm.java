@@ -29,8 +29,8 @@ public class TACACSRealm extends AuthorizingRealm {
     }
 
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(
-            AuthenticationToken arg0) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken arg0)
+            throws AuthenticationException {
         // TODO Extract AuthenticationInfo using JNetLib
         return null;
     }

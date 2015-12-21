@@ -8,11 +8,11 @@
 
 package org.opendaylight.aaa.shiro.realm;
 
+import com.google.common.base.Strings;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -30,11 +30,9 @@ import org.opendaylight.aaa.sts.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Strings;
-
 /**
  * TokenAuthRealm is an adapter between the AAA shiro subsystem and the existing
- * <code>TokenAuth</code> mechanisms.  Thus, one can enable use of
+ * <code>TokenAuth</code> mechanisms. Thus, one can enable use of
  * <code>IDMStore</code> and <code>IDMMDSALStore</code>.
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
@@ -50,27 +48,23 @@ public class TokenAuthRealm extends AuthorizingRealm {
      * The message that is displayed if no <code>TokenAuth</code> interface is
      * available yet
      */
-    private static final String AUTHENTICATION_SERVICE_UNAVAILABLE_MESSAGE =
-            "{\"error\":\"Authentication service unavailable\"}";
+    private static final String AUTHENTICATION_SERVICE_UNAVAILABLE_MESSAGE = "{\"error\":\"Authentication service unavailable\"}";
 
     /**
      * The message that is displayed if credentials are missing or malformed
      */
-    private static final String FATAL_ERROR_DECODING_CREDENTIALS =
-            "{\"error\":\"Unable to decode credentials\"}";
+    private static final String FATAL_ERROR_DECODING_CREDENTIALS = "{\"error\":\"Unable to decode credentials\"}";
 
     /**
      * The message that is displayed if non-Basic Auth is attempted
      */
-    private static final String FATAL_ERROR_BASIC_AUTH_ONLY =
-            "{\"error\":\"Only basic authentication is supported by TokenAuthRealm\"}";
+    private static final String FATAL_ERROR_BASIC_AUTH_ONLY = "{\"error\":\"Only basic authentication is supported by TokenAuthRealm\"}";
 
     /**
-     * The purposefully generic message displayed if <code>TokenAuth</code> is unable
-     * to validate the given credentials
+     * The purposefully generic message displayed if <code>TokenAuth</code> is
+     * unable to validate the given credentials
      */
-    private static final String UNABLE_TO_AUTHENTICATE =
-            "{\"error\":\"Could not authenticate\"}";
+    private static final String UNABLE_TO_AUTHENTICATE = "{\"error\":\"Could not authenticate\"}";
 
     private static final Logger LOG = LoggerFactory.getLogger(TokenAuthRealm.class);
 
@@ -89,10 +83,12 @@ public class TokenAuthRealm extends AuthorizingRealm {
     /*
      * (non-Javadoc)
      *
-     * Roles are derived from <code>TokenAuth.authenticate()</code>.  Shiro roles are identical
-     * to existing IDM roles.
+     * Roles are derived from <code>TokenAuth.authenticate()</code>. Shiro roles
+     * are identical to existing IDM roles.
      *
-     * @see org.apache.shiro.realm.AuthorizingRealm#doGetAuthorizationInfo(org.apache.shiro.subject.PrincipalCollection)
+     * @see
+     * org.apache.shiro.realm.AuthorizingRealm#doGetAuthorizationInfo(org.apache
+     * .shiro.subject.PrincipalCollection)
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -141,8 +137,8 @@ public class TokenAuthRealm extends AuthorizingRealm {
     }
 
     /**
-     * Adapter between basic authentication mechanism and existing <code>TokenAuth</code>
-     * interface.
+     * Adapter between basic authentication mechanism and existing
+     * <code>TokenAuth</code> interface.
      *
      * @param username
      * @param password
@@ -157,6 +153,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
 
     /**
      * Adapter to check for available <code>TokenAuth<code> implementations.
+     *
      * @return
      */
     boolean isTokenAuthAvailable() {
@@ -169,11 +166,13 @@ public class TokenAuthRealm extends AuthorizingRealm {
      * Authenticates against any <code>TokenAuth</code> registered with the
      * <code>ServiceLocator</code>
      *
-     * @see org.apache.shiro.realm.AuthenticatingRealm#doGetAuthenticationInfo(org.apache.shiro.authc.AuthenticationToken)
+     * @see
+     * org.apache.shiro.realm.AuthenticatingRealm#doGetAuthenticationInfo(org
+     * .apache.shiro.authc.AuthenticationToken)
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(
-            AuthenticationToken authenticationToken) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
+            throws AuthenticationException {
 
         String username;
         String password;
@@ -192,24 +191,26 @@ public class TokenAuthRealm extends AuthorizingRealm {
             throw new AuthenticationException(AUTHENTICATION_SERVICE_UNAVAILABLE_MESSAGE);
         }
 
-        // if the password is empty, this is an OAuth2 request, not a Basic HTTP Auth request
+        // if the password is empty, this is an OAuth2 request, not a Basic HTTP
+        // Auth request
         if (!Strings.isNullOrEmpty(password)) {
             if (ServiceLocator.getInstance().getAuthenticationService().isAuthEnabled()) {
-                Map<String, List<String>> headers = formHeaders(username,password);
-                // iterate over <code>TokenAuth</code> implementations and attempt to
+                Map<String, List<String>> headers = formHeaders(username, password);
+                // iterate over <code>TokenAuth</code> implementations and
+                // attempt to
                 // authentication with each one
-                final List<TokenAuth> tokenAuthCollection =
-                        ServiceLocator.getInstance().getTokenAuthCollection();
+                final List<TokenAuth> tokenAuthCollection = ServiceLocator.getInstance()
+                        .getTokenAuthCollection();
                 for (TokenAuth ta : tokenAuthCollection) {
                     try {
-                        LOG.debug("Authentication attempt using " + ta.getClass().getName());
+                        LOG.debug("Authentication attempt using {}", ta.getClass().getName());
                         Authentication auth = ta.validate(headers);
                         if (auth != null) {
                             LOG.debug("Authentication attempt successful");
                             ServiceLocator.getInstance().getAuthenticationService().set(auth);
                             this.cachedAuthenticationToken = auth;
-                            return new SimpleAuthenticationInfo(
-                                    username, password.toCharArray(), getName());
+                            return new SimpleAuthenticationInfo(username, password.toCharArray(),
+                                    getName());
                         }
                     } catch (AuthenticationException ae) {
                         LOG.debug("Authentication attempt unsuccessful");
@@ -228,10 +229,9 @@ public class TokenAuthRealm extends AuthorizingRealm {
             auth = validate(token);
             if (auth != null) {
                 cachedAuthenticationToken = auth;
-                return new SimpleAuthenticationInfo(auth.user(),
-                        "", getName());
+                return new SimpleAuthenticationInfo(auth.user(), "", getName());
             }
-        } catch(AuthenticationException e) {
+        } catch (AuthenticationException e) {
             cachedAuthenticationToken = null;
             LOG.info("Unknown OAuth2 Token Access Request", e);
         }
@@ -263,7 +263,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
     static String extractUsername(final AuthenticationToken authenticationToken)
             throws ClassCastException, NullPointerException {
 
-        return (String)authenticationToken.getPrincipal();
+        return (String) authenticationToken.getPrincipal();
     }
 
     /**

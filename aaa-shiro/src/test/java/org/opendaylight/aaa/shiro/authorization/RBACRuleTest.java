@@ -8,30 +8,37 @@
 
 package org.opendaylight.aaa.shiro.authorization;
 
-import static org.junit.Assert.*;
-
-import java.util.Collection;
-import java.util.HashSet;
-
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import com.google.common.collect.Sets;
+import java.util.Collection;
+import java.util.HashSet;
+import org.junit.Test;
 
 public class RBACRuleTest {
 
     private static final String BASIC_RBAC_RULE_URL_PATTERN = "/*";
     private static final Collection<String> BASIC_RBAC_RULE_ROLES = Sets.newHashSet("admin");
-    private RBACRule basicRBACRule = RBACRule.createAuthorizationRule(BASIC_RBAC_RULE_URL_PATTERN, BASIC_RBAC_RULE_ROLES);
+    private RBACRule basicRBACRule = RBACRule.createAuthorizationRule(BASIC_RBAC_RULE_URL_PATTERN,
+            BASIC_RBAC_RULE_ROLES);
 
     private static final String COMPLEX_RBAC_RULE_URL_PATTERN = "/auth/v1/";
-    private static final Collection<String> COMPLEX_RBAC_RULE_ROLES = Sets.newHashSet("admin", "user");
-    private RBACRule complexRBACRule = RBACRule.createAuthorizationRule(COMPLEX_RBAC_RULE_URL_PATTERN, COMPLEX_RBAC_RULE_ROLES);
+    private static final Collection<String> COMPLEX_RBAC_RULE_ROLES = Sets.newHashSet("admin",
+            "user");
+    private RBACRule complexRBACRule = RBACRule.createAuthorizationRule(
+            COMPLEX_RBAC_RULE_URL_PATTERN, COMPLEX_RBAC_RULE_ROLES);
 
     @Test
     public void testCreateAuthorizationRule() {
         // positive test cases
-        assertNotNull(RBACRule.createAuthorizationRule(BASIC_RBAC_RULE_URL_PATTERN, BASIC_RBAC_RULE_ROLES));
-        assertNotNull(RBACRule.createAuthorizationRule(COMPLEX_RBAC_RULE_URL_PATTERN, COMPLEX_RBAC_RULE_ROLES));
+        assertNotNull(RBACRule.createAuthorizationRule(BASIC_RBAC_RULE_URL_PATTERN,
+                BASIC_RBAC_RULE_ROLES));
+        assertNotNull(RBACRule.createAuthorizationRule(COMPLEX_RBAC_RULE_URL_PATTERN,
+                COMPLEX_RBAC_RULE_ROLES));
 
         // negative test cases
         // both null
@@ -45,7 +52,8 @@ public class RBACRuleTest {
         // roles is null
         assertNull(RBACRule.createAuthorizationRule(BASIC_RBAC_RULE_URL_PATTERN, null));
         // roles is empty collection
-        assertNull(RBACRule.createAuthorizationRule(COMPLEX_RBAC_RULE_URL_PATTERN, new HashSet<String>()));
+        assertNull(RBACRule.createAuthorizationRule(COMPLEX_RBAC_RULE_URL_PATTERN,
+                new HashSet<String>()));
     }
 
     @Test
@@ -77,10 +85,10 @@ public class RBACRuleTest {
         // set ordering is not predictable, so both formats must be considered
         final String COMPLEX_RBAC_RULE_EXPECTED_SHIRO_FORMAT_1 = "roles[admin, user]";
         final String COMPLEX_RBAC_RULE_EXPECTED_SHIRO_FORMAT_2 = "roles[user, admin]";
-        assertTrue(
-                COMPLEX_RBAC_RULE_EXPECTED_SHIRO_FORMAT_1.equals(complexRBACRule.getRolesInShiroFormat()) ||
-                COMPLEX_RBAC_RULE_EXPECTED_SHIRO_FORMAT_2.equals(complexRBACRule.getRolesInShiroFormat())
-                );
+        assertTrue(COMPLEX_RBAC_RULE_EXPECTED_SHIRO_FORMAT_1.equals(complexRBACRule
+                .getRolesInShiroFormat())
+                || COMPLEX_RBAC_RULE_EXPECTED_SHIRO_FORMAT_2.equals(complexRBACRule
+                        .getRolesInShiroFormat()));
     }
 
     @Test
@@ -91,10 +99,8 @@ public class RBACRuleTest {
         // set ordering is not predictable,s o both formats must be considered
         final String COMPLEX_RBAC_RULE_EXPECTED_SHIRO_FORMAT_1 = "/auth/v1/=roles[admin, user]";
         final String COMPLEX_RBAC_RULE_EXPECTED_SHIRO_FORMAT_2 = "/auth/v1/=roles[user, admin]";
-        assertTrue(
-                COMPLEX_RBAC_RULE_EXPECTED_SHIRO_FORMAT_1.equals(complexRBACRule.toString()) ||
-                COMPLEX_RBAC_RULE_EXPECTED_SHIRO_FORMAT_2.equals(complexRBACRule.toString())
-                );
+        assertTrue(COMPLEX_RBAC_RULE_EXPECTED_SHIRO_FORMAT_1.equals(complexRBACRule.toString())
+                || COMPLEX_RBAC_RULE_EXPECTED_SHIRO_FORMAT_2.equals(complexRBACRule.toString()));
     }
 
 }

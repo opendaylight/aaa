@@ -8,12 +8,13 @@
 
 package org.opendaylight.aaa.shiro.web.env;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.Ini.Section;
 import org.junit.AfterClass;
@@ -38,8 +39,8 @@ public class KarafIniWebEnvironmentTest {
     }
 
     private static String createFakeShiroIniContents() {
-        return "[users]\n" + "admin=admin, ROLE_ADMIN \n" + "[roles]\n"
-                + "ROLE_ADMIN = *\n" + "[urls]\n" + "/** = authcBasic";
+        return "[users]\n" + "admin=admin, ROLE_ADMIN \n" + "[roles]\n" + "ROLE_ADMIN = *\n"
+                + "[urls]\n" + "/** = authcBasic";
     }
 
     private static File createShiroIniFile() throws IOException {
@@ -53,8 +54,7 @@ public class KarafIniWebEnvironmentTest {
 
     @Test
     public void testCreateShiroIni() throws IOException {
-        Ini ini = KarafIniWebEnvironment.createShiroIni(iniFile
-                .getAbsolutePath());
+        Ini ini = KarafIniWebEnvironment.createShiroIni(iniFile.getAbsolutePath());
         assertNotNull(ini);
         assertNotNull(ini.getSection("users"));
         assertNotNull(ini.getSection("roles"));
@@ -68,10 +68,8 @@ public class KarafIniWebEnvironmentTest {
     @Test
     public void testCreateFileBasedIniPath() {
         String testPath = "/shiro.ini";
-        String expectedFileBasedIniPath = KarafIniWebEnvironment.SHIRO_FILE_PREFIX
-                + testPath;
-        String actualFileBasedIniPath = KarafIniWebEnvironment
-                .createFileBasedIniPath(testPath);
+        String expectedFileBasedIniPath = KarafIniWebEnvironment.SHIRO_FILE_PREFIX + testPath;
+        String actualFileBasedIniPath = KarafIniWebEnvironment.createFileBasedIniPath(testPath);
         assertEquals(expectedFileBasedIniPath, actualFileBasedIniPath);
     }
 
