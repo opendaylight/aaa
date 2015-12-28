@@ -14,8 +14,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/*
- * @Author - Sharon Aicler (saichler@cisco.com)
+/**
+ * @author Sharon Aicler (saichler@cisco.com)
  */
 public class SHA256Calculator {
 
