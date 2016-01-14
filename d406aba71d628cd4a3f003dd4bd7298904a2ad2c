@@ -1,0 +1,3148 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_08550bc6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 21
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "This patch is \u003e 2K lines.  Please add comments regarding what functionality was added.  As a rule of thumb, ODL prefers a greater number of smaller patches rather than one large one, so the changes can be reviewed independently.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e851c7d9",
+        "filename": "aaa-cert/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Use ${project.groupId}",
+      "range": {
+        "startLine": 11,
+        "startChar": 13,
+        "endLine": 11,
+        "endChar": 33
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_2863afb2",
+        "filename": "aaa-cert/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Use $(project.version}",
+      "range": {
+        "startLine": 13,
+        "startChar": 13,
+        "endLine": 13,
+        "endChar": 27
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e868a789",
+        "filename": "aaa-cert/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Use ${project.groupId}",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 31
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_480553c1",
+        "filename": "aaa-cert/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Use ${project.version}",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_081a2b17",
+        "filename": "aaa-cert/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Neither of these properties are used.",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 48
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_88dd9b45",
+        "filename": "aaa-cert/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Do you really need version 1.53?  If you look at odlparent (from which this pom inherits), you will see that there are already inlined dependencies for bcprov-jdk15on for version 1.52.  In general, we try to stay with what is defined in odlparent.  For more information, see this:\n\nhttps://github.com/opendaylight/odlparent/blob/master/odlparent/pom.xml",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_08f18bcd",
+        "filename": "aaa-cert/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "can you use 1.10?  This is also the ODL parent version.  IF so, just delete this line and it will use the version specified in odlparent.",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 30
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_28bf2fd2",
+        "filename": "aaa-cert/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "This spacing is not correct.  Please only indent 2 spaces for this new section.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_288d6f32",
+        "filename": "aaa-cert/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Please rename default-config.xml to something more appropriate.  Also, please move the config file to the src/main/resources directory.  Then you can refer to it using this:\n\u003cfile\u003e${project.build.directory}/classes/initial/CONFIG_FILE_NAME.xml\u003c/file\u003e\n\nI find this much cleaner since its not really part of the source, but part of the provided resources of the bundle.  This is also the convention followed by several other AAA bundles including aaa-h2-store, which you can look at for reference.",
+      "range": {
+        "startLine": 123,
+        "startChar": 36,
+        "endLine": 123,
+        "endChar": 83
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_48a1d3a8",
+        "filename": "aaa-cert/src/main/config/default-config.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Please change the name of this file to aaa-cert-config.xml.",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 31
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a8917f54",
+        "filename": "aaa-cert/src/main/config/default-config.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Did you mean to assume all these defaults?  Not everyone will be running with these parameters.",
+      "range": {
+        "startLine": 36,
+        "startChar": 19,
+        "endLine": 36,
+        "endChar": 73
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a8785f2c",
+        "filename": "aaa-cert/src/main/config/default-config.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Is this the addition of a new default password?  If so, we will want to make sure there is appropriate documentation concerning this on the wiki.",
+      "range": {
+        "startLine": 42,
+        "startChar": 27,
+        "endLine": 42,
+        "endChar": 40
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e8726748",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Please add a class documentation comment.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c853236b",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "In general we try to separate the package for api v.s. impl.  Please move this class to aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertProvider.java.",
+      "range": {
+        "startLine": 42,
+        "startChar": 13,
+        "endLine": 42,
+        "endChar": 28
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_488f1324",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "should be static.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_28944f36",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Arguments should be final.",
+      "range": {
+        "startLine": 51,
+        "startChar": 27,
+        "endLine": 51,
+        "endChar": 79
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_08ad0b89",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "What does this mean?",
+      "range": {
+        "startLine": 72,
+        "startChar": 11,
+        "endLine": 72,
+        "endChar": 32
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e8a9c77c",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Should be final.",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 29
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c8c9635c",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Should be final.",
+      "range": {
+        "startLine": 87,
+        "startChar": 38,
+        "endLine": 87,
+        "endChar": 87
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a8c69f47",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Please uses french braces even with single line conditionals, as this is the current style guidelines for AAA.",
+      "range": {
+        "startLine": 91,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 59
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_48dd5314",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Should be final.",
+      "range": {
+        "startLine": 98,
+        "startChar": 36,
+        "endLine": 99,
+        "endChar": 38
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_88e75be4",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Please use french braces even with single line conditionals, as this is the current style guidelines for AAA.",
+      "range": {
+        "startLine": 105,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 59
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a8cdff5f",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Should be final.",
+      "range": {
+        "startLine": 112,
+        "startChar": 43,
+        "endLine": 112,
+        "endChar": 75
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_08db4b1c",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Should be final.",
+      "range": {
+        "startLine": 117,
+        "startChar": 46,
+        "endLine": 117,
+        "endChar": 78
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e8d707ec",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Should be final.",
+      "range": {
+        "startLine": 123,
+        "startChar": 44,
+        "endLine": 123,
+        "endChar": 96
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_4804337e",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Should be final.  \"alias\" is not spelled correctly.",
+      "range": {
+        "startLine": 128,
+        "startChar": 43,
+        "endLine": 128,
+        "endChar": 76
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_6803f773",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "should be final.",
+      "range": {
+        "startLine": 133,
+        "startChar": 45,
+        "endLine": 133,
+        "endChar": 97
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_08f22b9a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Please add a comment why you are appending \"ca\" to the front of this.",
+      "range": {
+        "startLine": 152,
+        "startChar": 8,
+        "endLine": 152,
+        "endChar": 60
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_482b93eb",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Make this final.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_88359b48",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Make this final.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c83e8329",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Still need curly braces.",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 174,
+        "endChar": 90
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_08498bd0",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Make final.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e84547b4",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Make final.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_481273b5",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "add braces",
+      "range": {
+        "startLine": 190,
+        "startChar": 12,
+        "endLine": 190,
+        "endChar": 19
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_28172fa5",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Make final.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_880c7b96",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Make final.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_681137ac",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Add braces.",
+      "range": {
+        "startLine": 205,
+        "startChar": 8,
+        "endLine": 206,
+        "endChar": 19
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_8883dbcb",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/AaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Please use prepared strings since Logger.info() will take them:\n\nLOG.info(\"{} Certificate will be added to the trust keystore.\", input.getNodeAlias());",
+      "range": {
+        "startLine": 212,
+        "startChar": 17,
+        "endLine": 212,
+        "endChar": 86
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_4860b335",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "An API ought to have at least a class documentation comment.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e8738713",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Please prefer \"implements\" to \"extends\".",
+      "range": {
+        "startLine": 13,
+        "startChar": 34,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a8505f5f",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ConnectionConfigurationImp.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "1) Change name to \"ConnectionConfigurationImpl\"\n\n2) Please add a space here before the curly brace.  After pulling the code, it appears there are 38 checkstyle errors reported.  Please fix these; even though they won\u0027t cause a build failure in Beryllium, there are plans to make checkstyle errors compile time errors in Boron.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_084eabc1",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ConnectionConfigurationImp.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Make final.",
+      "range": {
+        "startLine": 23,
+        "startChar": 38,
+        "endLine": 23,
+        "endChar": 104
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_6872d7e6",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "add a class comment.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c87683d8",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "This seems like incorrect spelling.  Maybe just \"KeyStoreUtils\".",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 27
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c8da03e9",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "This is treated as a constant within the context of this file.  Please make this final.  Please also capitalize the name to KEYSTORE_PATH.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a8d7bfbe",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Please use this instead:\n\"configuration\" + File.separator + \"ssl\" + File.separator;",
+      "range": {
+        "startLine": 19,
+        "startChar": 41,
+        "endLine": 19,
+        "endChar": 59
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_08e50ba8",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Do these really need to be public?",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 10
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e8e1c79b",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Why do you have this here?",
+      "range": {
+        "startLine": 26,
+        "startChar": 45,
+        "endLine": 26,
+        "endChar": 51
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_48eef38c",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Why is this here?",
+      "range": {
+        "startLine": 28,
+        "startChar": 48,
+        "endLine": 28,
+        "endChar": 53
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_88e8fb7d",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_68edb78b",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e8f8a74b",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "add braces.  Also add logging here, and include the else case.  I.e.,\n\nelse {\n    LOG.info(\"{} already exists, skipping creation\", dir);\n}",
+      "range": {
+        "startLine": 33,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_489553e3",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_289a8f14",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_889f5b03",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c88843c9",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Add braces.  Also add LOG messages.",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 24
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_28c1efe4",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Please use the constant defined in:\njava.nio.charset.StandardCharsets",
+      "range": {
+        "startLine": 52,
+        "startChar": 48,
+        "endLine": 52,
+        "endChar": 55
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_48bc336d",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_88b63b89",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "There ought to be some reporting here in the log.",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 9
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_68bbf772",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Make final.",
+      "range": {
+        "startLine": 59,
+        "startChar": 35,
+        "endLine": 59,
+        "endChar": 63
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c8afa32a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "braces",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a8acdf36",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e8a6e752",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreUtilis.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Add a log message.",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 9
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_4863931a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Missing license.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_2868cff4",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Add a class comment.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_886d9b07",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "should be static.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a8733fe6",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_08818b8f",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Make the appropriate variables final here.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a85a1f4e",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Magic numbers aren\u0027t allowed.  Please define constants for these and add an appropriate comment.",
+      "range": {
+        "startLine": 59,
+        "startChar": 77,
+        "endLine": 59,
+        "endChar": 108
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_7373e8b1",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "LOG.info(\"{} is created\", keyStoreName);",
+      "range": {
+        "startLine": 70,
+        "startChar": 21,
+        "endLine": 70,
+        "endChar": 49
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c85de34a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "LOG.error(\"Fatal error creating key cert: {}\", e);\n\nThis will force the entire error to the karaf.log instead of just e.getMessage().  This will allow for line numbers and easier debugging.",
+      "range": {
+        "startLine": 74,
+        "startChar": 22,
+        "endLine": 74,
+        "endChar": 36
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_28360f04",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e82b8792",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Please store the SecureRandom instance as a class variable.",
+      "range": {
+        "startLine": 80,
+        "startChar": 47,
+        "endLine": 80,
+        "endChar": 75
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_4818b384",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 84,
+        "startChar": 33,
+        "endLine": 84,
+        "endChar": 107
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a8085f2e",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Just use string concatenation;  Java will auto-convert the string concatenation to a StringBuilder in modern supported JVMs.  This makes it easier to read.",
+      "range": {
+        "startLine": 93,
+        "startChar": 20,
+        "endLine": 99,
+        "endChar": 41
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_0806ab20",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Use prepared string.",
+      "range": {
+        "startLine": 103,
+        "startChar": 21,
+        "endLine": 103,
+        "endChar": 83
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d312b457",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "\"Failed to get Certificate {}\", e\n\nAgain, lets not truncate the rest of the information e is providing.",
+      "range": {
+        "startLine": 106,
+        "startChar": 23,
+        "endLine": 106,
+        "endChar": 67
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e802670a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 111,
+        "startChar": 41,
+        "endLine": 112,
+        "endChar": 33
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_53ffc401",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_3304c014",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Just use string concatenation.",
+      "range": {
+        "startLine": 128,
+        "startChar": 20,
+        "endLine": 134,
+        "endChar": 41
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_93094c2f",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Use prepared string.",
+      "range": {
+        "startLine": 138,
+        "startChar": 12,
+        "endLine": 138,
+        "endChar": 84
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b30f302e",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Same as above.",
+      "range": {
+        "startLine": 142,
+        "startChar": 66,
+        "endLine": 142,
+        "endChar": 79
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_131d3c67",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 147,
+        "startChar": 43,
+        "endLine": 147,
+        "endChar": 61
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_f319b87a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "braces",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 149,
+        "endChar": 24
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_5326a4bb",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 152,
+        "startChar": 13,
+        "endLine": 153,
+        "endChar": 20
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_332b2084",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 170,
+        "startChar": 44,
+        "endLine": 171,
+        "endChar": 31
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d33914da",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Prepared string.",
+      "range": {
+        "startLine": 181,
+        "startChar": 21,
+        "endLine": 181,
+        "endChar": 49
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_93202c9d",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Include the error in the log or we will have no idea why this failed.",
+      "range": {
+        "startLine": 184,
+        "startChar": 22,
+        "endLine": 184,
+        "endChar": 65
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b33610e6",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 189,
+        "startChar": 34,
+        "endLine": 189,
+        "endChar": 108
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_13341cdd",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Prepared string.",
+      "range": {
+        "startLine": 199,
+        "startChar": 21,
+        "endLine": 199,
+        "endChar": 76
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_534d0472",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "don\u0027t truncate error.",
+      "range": {
+        "startLine": 202,
+        "startChar": 45,
+        "endLine": 202,
+        "endChar": 68
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_33520014",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 207,
+        "startChar": 32,
+        "endLine": 207,
+        "endChar": 74
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_f347f849",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "don\u0027t truncate error.",
+      "range": {
+        "startLine": 214,
+        "startChar": 41,
+        "endLine": 214,
+        "endChar": 64
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d36754e9",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/TlsConfigurationImp.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "add a class documentation comment.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b36450e6",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/TlsConfigurationImp.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 27,
+        "startChar": 31,
+        "endLine": 29,
+        "endChar": 73
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_13625cd8",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/yang/aaa/cert/rev151126/AaaCertProviderModule.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Add a class documentation comment.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_539b44c9",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/yang/aaa/cert/rev151126/AaaCertProviderModule.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_33a040f4",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/yang/aaa/cert/rev151126/AaaCertProviderModule.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d3959489",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/yang/aaa/cert/rev151126/AaaCertProviderModule.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "switchConnectionProviders",
+      "range": {
+        "startLine": 53,
+        "startChar": 39,
+        "endLine": 53,
+        "endChar": 67
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_93a5cc06",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/yang/aaa/cert/rev151126/AaaCertProviderModule.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_7381284a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/yang/aaa/cert/rev151126/AaaCertProviderModule.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Fix spelling",
+      "range": {
+        "startLine": 54,
+        "startChar": 38,
+        "endLine": 54,
+        "endChar": 55
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_3387a063",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/yang/aaa/cert/rev151126/AaaCertProviderModule.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_13b9bc2e",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/yang/aaa/cert/rev151126/AaaCertProviderModule.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "final",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b3abb0d5",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/yang/aaa/cert/rev151126/AaaCertProviderModule.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "bad spacing.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_f38c1882",
+        "filename": "aaa-cert/src/main/test/org/opendaylight/aaa/cert/test/AaaCertProviderTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Missing license.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_53e98419",
+        "filename": "aaa-cert/src/main/test/org/opendaylight/aaa/cert/test/AaaCertProviderTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Use File.separator.",
+      "range": {
+        "startLine": 61,
+        "startChar": 39,
+        "endLine": 61,
+        "endChar": 51
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_f3e37831",
+        "filename": "aaa-cert/src/main/test/org/opendaylight/aaa/cert/test/KeyStoreUtilisTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Use File.separator.",
+      "range": {
+        "startLine": 25,
+        "startChar": 39,
+        "endLine": 25,
+        "endChar": 53
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_33d5e043",
+        "filename": "aaa-cert/src/main/yang/aaa-cert-rpc.yang",
+        "patchSetId": 21
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Use quotes for consistency.",
+      "range": {
+        "startLine": 12,
+        "startChar": 11,
+        "endLine": 12,
+        "endChar": 23
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_93caec9f",
+        "filename": "aaa-cert/src/main/yang/aaa-cert-rpc.yang",
+        "patchSetId": 21
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Please write a better description.",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 15,
+        "endChar": 49
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_333cc093",
+        "filename": "aaa-cert/src/main/yang/aaa-cert-rpc.yang",
+        "patchSetId": 21
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "space",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_73cf68b1",
+        "filename": "aaa-cert/src/main/yang/aaa-cert-rpc.yang",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Capitalize.",
+      "range": {
+        "startLine": 48,
+        "startChar": 13,
+        "endLine": 48,
+        "endChar": 14
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d3c3d488",
+        "filename": "aaa-cert/src/main/yang/aaa-cert-rpc.yang",
+        "patchSetId": 21
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "space.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_13bedcff",
+        "filename": "aaa-cert/src/main/yang/aaa-cert-rpc.yang",
+        "patchSetId": 21
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "space.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_735da8e9",
+        "filename": "aaa-cert/src/main/yang/aaa-cert.yang",
+        "patchSetId": 21
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "\"keystore name;  default is ctl\"",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d3711479",
+        "filename": "aaa-cert/src/main/yang/aaa-cert.yang",
+        "patchSetId": 21
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "It might be nice to elaborate on what these mean.",
+      "range": {
+        "startLine": 83,
+        "startChar": 33,
+        "endLine": 83,
+        "endChar": 111
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d3f8f4c6",
+        "filename": "aaa-cli/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "${project.groupId}",
+      "range": {
+        "startLine": 14,
+        "startChar": 13,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b3f570cd",
+        "filename": "aaa-cli/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "${project.version}",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_13037cb9",
+        "filename": "aaa-cli/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Please put this after groupId;  this is the convetion of aaa POM files.",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 34
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_731488f5",
+        "filename": "aaa-cli/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "${project.groupId}",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 31
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_930f8ce1",
+        "filename": "aaa-cli/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "${project.version}",
+      "range": {
+        "startLine": 23,
+        "startChar": 11,
+        "endLine": 23,
+        "endChar": 25
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_330a00d3",
+        "filename": "aaa-cli/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "${project.groupId}",
+      "range": {
+        "startLine": 28,
+        "startChar": 15,
+        "endLine": 28,
+        "endChar": 35
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_f3fff8a8",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/AddCertODLKeyStore.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Add a comment on how to use these commands in karaf to the class documentation comment.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_532ce44a",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/AddCertODLKeyStore.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Add a class documentation comment.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_93266c67",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/AddCertODLKeyStore.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "bad spacing.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_732be830",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/AddCertODLKeyStore.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Use the ocnstant defined in:\njava.nio.charset.StandardCharsets",
+      "range": {
+        "startLine": 55,
+        "startChar": 51,
+        "endLine": 55,
+        "endChar": 58
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d31f5408",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/AddCertODLKeyStore.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "braces",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 77
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b31c5015",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/AddCertTrustStore.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Add a class documentation comment including the command usage defined above.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_131a5c17",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/AddCertTrustStore.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Use constant defined in\njava.nio.charset.StandardCharsets",
+      "range": {
+        "startLine": 55,
+        "startChar": 51,
+        "endLine": 55,
+        "endChar": 58
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_f316d8f0",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/AddCertTrustStore.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "braces",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 79
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_33d84053",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/CreateODLKeyStore.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Add a class documentation comment including command usage.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_53d34438",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/CreateODLKeyStore.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Use string concatenation.",
+      "range": {
+        "startLine": 63,
+        "startChar": 10,
+        "endLine": 66,
+        "endChar": 92
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_93ddcc45",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/CreateTrustKeyStore.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Add a class documentation comment including command usage.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d3e63416",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/CreateTrustKeyStore.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "use string concatenation",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 29
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b3e3b004",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/GenerateCertReq.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Add a class documentation comment including command usage.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_13f1bccd",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/GetODLSelfSignCert.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Add a class documentation comment including command usage.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_53ba24e2",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/GetTrustStoreCert.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "Add a class documentation comment including command usage.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_93b4acf3",
+        "filename": "features/aaa-cert/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "${project.groupId}",
+      "range": {
+        "startLine": 21,
+        "startChar": 13,
+        "endLine": 21,
+        "endChar": 33
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_f3c41861",
+        "filename": "features/aaa-cert/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "${project.artifactId}",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_73b928e9",
+        "filename": "features/aaa-cert/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "why not bundle?",
+      "range": {
+        "startLine": 24,
+        "startChar": 15,
+        "endLine": 24,
+        "endChar": 18
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d3cd9488",
+        "filename": "features/aaa-cert/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "fix spacing.",
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b3ca906c",
+        "filename": "features/aaa-cert/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "unused",
+      "range": {
+        "startLine": 41,
+        "startChar": 3,
+        "endLine": 42,
+        "endChar": 48
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_13c89c73",
+        "filename": "features/aaa-cert/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "can you just get these from odlparent?",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 52
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_33a680c2",
+        "filename": "features/aaa-cert/src/main/features/features.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "{{VERSION}}",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_53a184a8",
+        "filename": "features/aaa-cert/src/main/features/features.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "{{VERSION}}",
+      "range": {
+        "startLine": 22,
+        "startChar": 52,
+        "endLine": 22,
+        "endChar": 75
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_93ab0c89",
+        "filename": "features/aaa-cert/src/main/features/features.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "{{VERSION}}",
+      "range": {
+        "startLine": 23,
+        "startChar": 48,
+        "endLine": 23,
+        "endChar": 71
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_73b008f5",
+        "filename": "features/aaa-cli/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "${project.groupId}",
+      "range": {
+        "startLine": 21,
+        "startChar": 13,
+        "endLine": 21,
+        "endChar": 33
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_f39b7870",
+        "filename": "features/aaa-cli/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "${project.artifactId}",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d3947446",
+        "filename": "features/aaa-cli/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "why not bundle",
+      "range": {
+        "startLine": 24,
+        "startChar": 15,
+        "endLine": 24,
+        "endChar": 18
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b391f054",
+        "filename": "features/aaa-cli/pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-14T15:12:41Z",
+      "side": 1,
+      "message": "unused",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 48
+      },
+      "revId": "d406aba71d628cd4a3f003dd4bd7298904a2ad2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
