@@ -1,5 +1,4 @@
 [gerrit]
-host=git.opendaylight.org
+host=review.inocybe.com
 port=29418
-project=aaa.git
-defaultbranch=master
+project=odl/aaa
