@@ -9,10 +9,13 @@
 package org.opendaylight.aaa.shiro.realm;
 
 import com.google.common.base.Strings;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -68,13 +71,6 @@ public class TokenAuthRealm extends AuthorizingRealm {
 
     private static final Logger LOG = LoggerFactory.getLogger(TokenAuthRealm.class);
 
-    /**
-     * This is a cached value to allow quick retrieval of roles between
-     * <code>doGetAuthenticationInfo</code>, which is called first, and
-     * <code>doGetAuthorizationInfo</code>, which is called next.
-     */
-    private Authentication cachedAuthenticationToken;
-
     public TokenAuthRealm() {
         super();
         super.setName(TOKEN_AUTH_REALM_DEFAULT_NAME);
@@ -92,7 +88,15 @@ public class TokenAuthRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return new SimpleAuthorizationInfo(cachedAuthenticationToken.roles());
+        final Object primaryPrincipal = principalCollection.getPrimaryPrincipal();
+        final ODLPrincipal odlPrincipal;
+        try {
+            odlPrincipal = (ODLPrincipal) primaryPrincipal;
+            return new SimpleAuthorizationInfo(odlPrincipal.getRoles());
+        } catch(ClassCastException e) {
+            LOG.error("Couldn't decode authorization request", e);
+        }
+        return null;
     }
 
     /**
@@ -204,18 +208,17 @@ public class TokenAuthRealm extends AuthorizingRealm {
                 for (TokenAuth ta : tokenAuthCollection) {
                     try {
                         LOG.debug("Authentication attempt using {}", ta.getClass().getName());
-                        Authentication auth = ta.validate(headers);
+                        final Authentication auth = ta.validate(headers);
                         if (auth != null) {
                             LOG.debug("Authentication attempt successful");
                             ServiceLocator.getInstance().getAuthenticationService().set(auth);
-                            this.cachedAuthenticationToken = auth;
-                            return new SimpleAuthenticationInfo(username, password.toCharArray(),
+                            final ODLPrincipal odlPrincipal = ODLPrincipal.createODLPrincipal(auth);
+                            return new SimpleAuthenticationInfo(odlPrincipal, password.toCharArray(),
                                     getName());
                         }
                     } catch (AuthenticationException ae) {
                         LOG.debug("Authentication attempt unsuccessful");
                         // invalidate cached token
-                        cachedAuthenticationToken = null;
                         throw new AuthenticationException(UNABLE_TO_AUTHENTICATE, ae);
                     }
                 }
@@ -228,17 +231,15 @@ public class TokenAuthRealm extends AuthorizingRealm {
         try {
             auth = validate(token);
             if (auth != null) {
-                cachedAuthenticationToken = auth;
-                return new SimpleAuthenticationInfo(auth.user(), "", getName());
+                final ODLPrincipal odlPrincipal = ODLPrincipal.createODLPrincipal(auth);
+                return new SimpleAuthenticationInfo(odlPrincipal, "", getName());
             }
         } catch (AuthenticationException e) {
-            cachedAuthenticationToken = null;
             LOG.info("Unknown OAuth2 Token Access Request", e);
         }
 
         LOG.debug("Authentication failed: exhausted TokenAuth resources");
         // invalidate cached token
-        cachedAuthenticationToken = null;
         return null;
     }
 
@@ -279,5 +280,91 @@ public class TokenAuthRealm extends AuthorizingRealm {
 
         final UsernamePasswordToken upt = (UsernamePasswordToken) authenticationToken;
         return new String(upt.getPassword());
+    }
+
+    /**
+     * Since <code>TokenAuthRealm</code> is an <code>AuthorizingRealm</code>, it supports
+     * individual steps for authentication and authorization.  In ODL's existing <code>TokenAuth</code>
+     * mechanism, authentication and authorization are currently done in a single monolithic step.
+     * <code>ODLPrincipal</code> is abstracted as a DTO between the two steps.  It fulfills the
+     * responsibility of a <code>Principal</code>, since it contains identification information
+     * but no credential information.
+     *
+     * @author Ryan Goulding (ryandgoulding@gmail.com)
+     */
+    static class ODLPrincipal {
+
+        private String username;
+        private String domain;
+        private String userId;
+        private Set<String> roles;
+
+        private ODLPrincipal(final String username, final String domain, final String userId, final Set<String> roles) {
+            setUsername(username);
+            setDomain(domain);
+            setUserId(userId);
+            setRoles(roles);
+        }
+
+        /**
+         * A static factory method to create <code>ODLPrincipal</code> instances.
+         *
+         * @param username The authenticated user
+         * @param domain The domain <code>username</code> belongs to.
+         * @param userId The unique key for <code>username</code>
+         * @param roles The roles associated with <code>username</code>@<code>domain</code>
+         * @return A Principal for the given session;  essentially a DTO.
+         */
+        public static ODLPrincipal createODLPrincipal(final String username, final String domain,
+                final String userId, final Set<String> roles) {
+
+            return new ODLPrincipal(username, domain, userId, roles);
+        }
+
+        /**
+         * A static factory method to create <code>ODLPrincipal</code> instances.
+         *
+         * @param auth Contains identifying information for the particular request.
+         * @return A Principal for the given session;  essentially a DTO.
+         */
+        public static ODLPrincipal createODLPrincipal(final Authentication auth) {
+            final String username = auth.user();
+            final String domain = auth.domain();
+            final String userId = auth.userId();
+            final Set<String> roles = auth.roles();
+            return createODLPrincipal(username, domain, userId, roles);
+        }
+
+        private void setUsername(final String username) {
+            this.username = username;
+        }
+
+        private void setDomain(final String domain) {
+            this.domain = domain;
+        }
+
+        private void setUserId(final String userId) {
+            this.userId = userId;
+        }
+
+        private void setRoles(final Set<String> roles) {
+            this.roles = roles;
+        }
+
+        public String getUsername() {
+            return this.username;
+        }
+
+        public String getDomain() {
+            return this.domain;
+        }
+
+        public String getUserId() {
+            return this.userId;
+        }
+
+        public Set<String> getRoles() {
+            return this.roles;
+        }
     }
 }
