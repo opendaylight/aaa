@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_7bee03ee",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/TokenAuthRealm.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-01-20T19:03:24Z",
+      "side": 1,
+      "message": "You can just pass the params in directly instead of putting in to locals.",
+      "revId": "988c6094a2a3a0e34ce240376856cbc305b20a4e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_3be47b0c",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/TokenAuthRealm.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-01-20T19:03:24Z",
+      "side": 1,
+      "message": "crap - tabs snuck in - also below.",
+      "revId": "988c6094a2a3a0e34ce240376856cbc305b20a4e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
