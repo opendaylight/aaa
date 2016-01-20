@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_9f04947f",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/TokenAuthRealm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-20T17:09:58Z",
+      "side": 1,
+      "message": "Online documentation doesn\u0027t mention that you can\u0027t.  To be safe, I will return an empty SimpleAuthorizationInfo.  This makes more sense since if we got to this point anyway, the user is definitely valid.  It just means he/she doesn\u0027t have permissions to view the resource.",
+      "parentUuid": "9a3d3df0_9fddb417",
+      "revId": "b43f5b1a197b466875160d6c2d9f5ff036c35f13",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_5fc4cc3f",
         "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/TokenAuthRealm.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-01-20T16:59:31Z",
       "side": 1,
       "message": "Looks like this inner class is only accessed locally so it can be private.",
+      "revId": "b43f5b1a197b466875160d6c2d9f5ff036c35f13",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_7f09d094",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/TokenAuthRealm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-20T17:09:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_5fc4cc3f",
       "revId": "b43f5b1a197b466875160d6c2d9f5ff036c35f13",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_5ff20c9b",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/TokenAuthRealm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-20T17:09:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_1fca444f",
+      "revId": "b43f5b1a197b466875160d6c2d9f5ff036c35f13",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_ffc68048",
         "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/TokenAuthRealm.java",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_3fef48b2",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/TokenAuthRealm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-20T17:09:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_ffc68048",
+      "revId": "b43f5b1a197b466875160d6c2d9f5ff036c35f13",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_1fd1a4fb",
         "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/TokenAuthRealm.java",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2016-01-20T16:59:31Z",
       "side": 1,
       "message": "It doesn\u0027t look like this method is called.",
+      "revId": "b43f5b1a197b466875160d6c2d9f5ff036c35f13",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_9f2bf4ea",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/TokenAuthRealm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-01-20T17:09:58Z",
+      "side": 1,
+      "message": "it is by the other factory method.",
+      "parentUuid": "9a3d3df0_1fd1a4fb",
       "revId": "b43f5b1a197b466875160d6c2d9f5ff036c35f13",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
