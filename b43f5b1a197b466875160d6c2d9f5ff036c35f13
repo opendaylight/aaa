@@ -174,6 +174,24 @@
       "revId": "b43f5b1a197b466875160d6c2d9f5ff036c35f13",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_9f7934ff",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/TokenAuthRealm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-01-20T17:19:03Z",
+      "side": 1,
+      "message": "Ok - but you could eliminate the method b/c it\u0027s only called by the other one. Not a big deal though.",
+      "parentUuid": "9a3d3df0_9f2bf4ea",
+      "revId": "b43f5b1a197b466875160d6c2d9f5ff036c35f13",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
