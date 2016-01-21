@@ -7,7 +7,7 @@
 <features name="odl-aaa-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
-    <repository>mvn:org.opendaylight.yangtools/features-yangtools/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.yangtools/features-yangtools/${yangtools.version}/xml/features</repository>
         <repository>mvn:org.opendaylight.mdsal/features-mdsal/{{VERSION}}/xml/features</repository>
     <feature name='odl-aaa-api' description='OpenDaylight :: AAA :: APIs'
         version='${project.version}'>
