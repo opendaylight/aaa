@@ -30,7 +30,7 @@
         <parent-path>${basedir}</parent-path>
 
         <!-- AuthZ -->
-        <yangtools.version>0.9.0-SNAPSHOT</yangtools.version>
+        <yangtools.version>1.0.0-SNAPSHOT</yangtools.version>
         <jmxGeneratorPath>src/main/yang-gen-config</jmxGeneratorPath>
         <salGeneratorPath>src/main/yang-gen-sal</salGeneratorPath>
         <mdsal.version>2.1.0-SNAPSHOT</mdsal.version>
