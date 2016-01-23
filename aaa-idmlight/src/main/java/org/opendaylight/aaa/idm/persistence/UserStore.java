@@ -288,7 +288,7 @@ protected void finalize () throws Throwable {
 
       Connection conn = dbConnect();
       try {
-         String query = "DELETE FROM DOMAINS WHERE domainid = ?";
+         String query = "DELETE FROM USERS WHERE userid = ?";
          PreparedStatement statement = conn.prepareStatement(query);
          statement.setLong(1, savedUser.getUserid());
          int deleteCount = statement.executeUpdate(query);
