@@ -204,7 +204,7 @@
                 <configuration>
                     <!-- checkstyle is evil -->
                     <skip>false</skip>
-                    <failOnViolation>false</failOnViolation>
+                    <failOnViolation>true</failOnViolation>
                     <configLocation>checkstyle-logging.xml</configLocation>
                     <consoleOutput>true</consoleOutput>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
