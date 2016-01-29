@@ -87,8 +87,8 @@ public class ODLJndiLdapRealmAuthNOnly extends JndiLdapRealm {
     /**
      * Extracts the username from <code>token</code>
      *
-     * @param token
-     * @return
+     * @param token Which possibly contains a username
+     * @return the username if it can be extracted
      * @throws ClassCastException
      *             The incoming token is not username/password (i.e., X.509
      *             certificate)
