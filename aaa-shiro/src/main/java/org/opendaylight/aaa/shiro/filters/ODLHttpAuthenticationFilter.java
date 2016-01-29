@@ -8,8 +8,13 @@
 
 package org.opendaylight.aaa.shiro.filters;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
+import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +39,8 @@ public class ODLHttpAuthenticationFilter extends BasicHttpAuthenticationFilter {
     // defined in lower-case for more efficient string comparison
     protected static final String BEARER_SCHEME = "bearer";
 
+    protected static final String OPTIONS_HEADER = "OPTIONS";
+
     public ODLHttpAuthenticationFilter() {
         super();
         LOG.info("Creating the ODLHttpAuthenticationFilter");
@@ -57,4 +64,15 @@ public class ODLHttpAuthenticationFilter extends BasicHttpAuthenticationFilter {
                 || authzHeaderLowerCase.startsWith(BEARER_SCHEME);
     }
 
+    @Override
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response,
+            Object mappedValue) {
+        final HttpServletRequest httpRequest = WebUtils.toHttp(request);
+        final String httpMethod = httpRequest.getMethod();
+        if (OPTIONS_HEADER.equalsIgnoreCase(httpMethod)) {
+            return true;
+        } else {
+            return super.isAccessAllowed(httpRequest, response, mappedValue);
+        }
+    }
 }
