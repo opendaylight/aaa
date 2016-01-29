@@ -196,7 +196,7 @@ public class ODLJndiLdapRealmTest {
         LdapContext ldapContext = mock(LdapContext.class);
         // emulates an ldap search and returns the mocked up test class
         when(
-                ldapContext.search((String) any(), (String) any(), (Object[]) any(),
+                ldapContext.search((String) any(), (String) any(),
                         (SearchControls) any())).thenReturn(new TestNamingEnumeration());
         LdapContextFactory ldapContextFactory = mock(LdapContextFactory.class);
         when(ldapContextFactory.getSystemLdapContext()).thenReturn(ldapContext);
@@ -225,7 +225,7 @@ public class ODLJndiLdapRealmTest {
 
         // emulates an ldap search and returns the mocked up test class
         when(
-                ldapContext.search((String) any(), (String) any(), (Object[]) any(),
+                ldapContext.search((String) any(), (String) any(),
                         (SearchControls) any())).thenReturn(new TestNamingEnumeration());
 
         // extracts the roles for "testuser" and ensures engineering is returned
