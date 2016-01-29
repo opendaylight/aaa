@@ -67,7 +67,7 @@ public class ServiceProxy {
      * Enables/disables the feature, cascading the state information to the
      * AAAFilter.
      *
-     * @param enabled
+     * @param enabled A flag indicating whether to enable the Service.
      */
     public synchronized void setEnabled(final boolean enabled) {
         this.enabled = enabled;
@@ -85,7 +85,7 @@ public class ServiceProxy {
      * @param filter
      *            register an optional Filter for callback if enable state
      *            changes
-     * @return
+     * @return Whether the service is enabled
      */
     public synchronized boolean getEnabled(final AAAFilter filter) {
         this.filter = filter;
