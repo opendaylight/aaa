@@ -17,7 +17,12 @@
         <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.felix/org.apache.felix.metatype/{{VERSION}}</bundle>
 
-        <!-- Third Party Shiro & Jersey dependency bundles -->
+        <!-- Existing AAA infrastructure -->
+        <feature version='${project.version}'>odl-aaa-authn</feature>
+
+        <bundle>mvn:org.apache.shiro/shiro-web/{{VERSION}}</bundle>
+        <bundle>mvn:org.apache.shiro/shiro-core/{{VERSION}}</bundle>
+
         <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
         <bundle>wrap:mvn:javax.annotation/javax.annotation-api/{{VERSION}}</bundle>
         <bundle>wrap:mvn:com.google.code.findbugs/jsr305/{{VERSION}}</bundle>
@@ -26,20 +31,8 @@
         <bundle>wrap:mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.authzserver/{{VERSION}}</bundle>
         <bundle>wrap:mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.common/{{VERSION}}</bundle>
         <bundle>wrap:mvn:org.json/json/{{VERSION}}</bundle>
-        <bundle>wrap:mvn:javax.ws.rs/javax.ws.rs-api/{{VERSION}}</bundle>
-        <bundle>wrap:mvn:javax.servlet/javax.servlet-api/{{VERSION}}</bundle>
-        <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
-        <bundle>mvn:com.sun.jersey/jersey-servlet/{{VERSION}}</bundle>
-        <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
-        <bundle>mvn:org.apache.shiro/shiro-web/{{VERSION}}</bundle>
-        <bundle>mvn:org.apache.shiro/shiro-core/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.commons-beanutils/{{VERSION}}</bundle>
 
-        <!-- Existing AAA infrastructure -->
-        <feature version='${project.version}'>odl-aaa-authn</feature>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-api/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}</bundle>
 
         <!-- AAA configuration file -->
