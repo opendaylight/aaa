@@ -94,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_2ce1b5d0",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-02-02T19:46:46Z",
+      "side": 1,
+      "message": "Please fix indentation",
+      "range": {
+        "startLine": 114,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 13
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_8c83a103",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
         "patchSetId": 1
