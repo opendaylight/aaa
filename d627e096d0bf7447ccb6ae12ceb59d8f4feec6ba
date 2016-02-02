@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_6c9d7d59",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-02-02T19:11:13Z",
+      "side": 1,
+      "message": "I know this wasn\u0027t constant in past code, but please make it a constant since it is used so often.",
+      "range": {
+        "startLine": 62,
+        "startChar": 12,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_6caf3d95",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-02-02T19:11:13Z",
+      "side": 1,
+      "message": "This is prone to 4782.  Can you add synchronization per table so we can solve both issues at once?  Even synchronization(this) is okay though less performant.",
+      "range": {
+        "startLine": 63,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 13
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_ac90254f",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-02-02T19:11:13Z",
+      "side": 1,
+      "message": "Yes, thats fine but do we need the \"WHERE\" clause?  tableName is pure java so there is little to no risk of SQL Injection, so I am fine with this otherwise.",
+      "range": {
+        "startLine": 87,
+        "startChar": 12,
+        "endLine": 87,
+        "endChar": 74
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_4c899925",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-02-02T19:11:13Z",
+      "side": 1,
+      "message": "SQL is generally capitalized. Please capitalize to match AAA code style.",
+      "range": {
+        "startLine": 88,
+        "startChar": 26,
+        "endLine": 88,
+        "endChar": 37
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_8c83a103",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-02-02T19:11:13Z",
+      "side": 1,
+      "message": "This should be a constant.  Preferably private static final.",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 23
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_ac77853a",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/GrantStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-02-02T19:11:13Z",
+      "side": 1,
+      "message": "Make this a class constant.",
+      "range": {
+        "startLine": 36,
+        "startChar": 15,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_ec718d45",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/RoleStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-02-02T19:11:13Z",
+      "side": 1,
+      "message": "Make this a class constant.",
+      "range": {
+        "startLine": 38,
+        "startChar": 14,
+        "endLine": 38,
+        "endChar": 21
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_4c907943",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/UserStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-02-02T19:11:13Z",
+      "side": 1,
+      "message": "Make this a constant.",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 21
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
