@@ -30,7 +30,7 @@ public class Accounter {
     /**
      * Account for a particular <code>message</code>
      *
-     * @param message
+     * @param message A message for the aggregated AAA log.
      */
     public static void output(final String message) {
         LOG.debug(message);
