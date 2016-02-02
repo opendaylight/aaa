@@ -31,7 +31,7 @@
         <bundle>wrap:mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.authzserver/{{VERSION}}</bundle>
         <bundle>wrap:mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.common/{{VERSION}}</bundle>
         <bundle>wrap:mvn:org.json/json/{{VERSION}}</bundle>
-
+        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.commons-beanutils/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}</bundle>
 
         <!-- AAA configuration file -->
