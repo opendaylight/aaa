@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_4f618b38",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 4540
+      },
+      "writtenOn": "2016-02-03T08:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_6c9d7d59",
+      "range": {
+        "startLine": 62,
+        "startChar": 12,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_6caf3d95",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_cf547b56",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4540
+      },
+      "writtenOn": "2016-02-03T08:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_ec498db8",
+      "range": {
+        "startLine": 63,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 13
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_ac90254f",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
         "patchSetId": 1
@@ -83,6 +131,30 @@
       "writtenOn": "2016-02-02T19:11:13Z",
       "side": 1,
       "message": "Yes, thats fine but do we need the \"WHERE\" clause?  tableName is pure java so there is little to no risk of SQL Injection, so I am fine with this otherwise.",
+      "range": {
+        "startLine": 87,
+        "startChar": 12,
+        "endLine": 87,
+        "endChar": 74
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_2f640748",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 4540
+      },
+      "writtenOn": "2016-02-03T08:21:09Z",
+      "side": 1,
+      "message": "The WHERE clause was present in the original code, I just left it for the sake of consistency. It shouldn\u0027t be needed though, I\u0027ll remove it.",
+      "parentUuid": "9a3d3df0_ac90254f",
       "range": {
         "startLine": 87,
         "startChar": 12,
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_8f5b9386",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 4540
+      },
+      "writtenOn": "2016-02-03T08:21:09Z",
+      "side": 1,
+      "message": "That was preserved from the original code ;-). Fixed!",
+      "parentUuid": "9a3d3df0_4c899925",
+      "range": {
+        "startLine": 88,
+        "startChar": 26,
+        "endLine": 88,
+        "endChar": 37
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_2ce1b5d0",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
         "patchSetId": 1
@@ -129,6 +225,30 @@
       "writtenOn": "2016-02-02T19:46:46Z",
       "side": 1,
       "message": "Please fix indentation",
+      "range": {
+        "startLine": 114,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 13
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_6f5e0f78",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 4540
+      },
+      "writtenOn": "2016-02-03T08:21:09Z",
+      "side": 1,
+      "message": "How would you like it indented? The stmt and rs lines are part of the try, aligned with the conn line; the while block is indented by four spaces relative to the try block.",
+      "parentUuid": "9a3d3df0_2ce1b5d0",
       "range": {
         "startLine": 114,
         "startChar": 12,
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_af4f77bd",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/DomainStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4540
+      },
+      "writtenOn": "2016-02-03T08:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_8c83a103",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 23
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_ac77853a",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/GrantStore.java",
         "patchSetId": 1
@@ -175,6 +319,30 @@
       "writtenOn": "2016-02-02T19:11:13Z",
       "side": 1,
       "message": "Make this a class constant.",
+      "range": {
+        "startLine": 36,
+        "startChar": 15,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_0f4f83be",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/GrantStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4540
+      },
+      "writtenOn": "2016-02-03T08:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_ac77853a",
       "range": {
         "startLine": 36,
         "startChar": 15,
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_ef497fb8",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/RoleStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4540
+      },
+      "writtenOn": "2016-02-03T08:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_ec718d45",
+      "range": {
+        "startLine": 38,
+        "startChar": 14,
+        "endLine": 38,
+        "endChar": 21
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_4c907943",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/UserStore.java",
         "patchSetId": 1
@@ -221,6 +413,30 @@
       "writtenOn": "2016-02-02T19:11:13Z",
       "side": 1,
       "message": "Make this a constant.",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 21
+      },
+      "revId": "d627e096d0bf7447ccb6ae12ceb59d8f4feec6ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_4fc86b22",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/UserStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 4540
+      },
+      "writtenOn": "2016-02-03T08:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_4c907943",
       "range": {
         "startLine": 43,
         "startChar": 14,
