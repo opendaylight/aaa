@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2016 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -23,7 +23,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.opendaylight.aaa.api.model.Grants;
-import org.opendaylight.aaa.h2.persistence.GrantStore;
 
 public class GrantStoreTest {
 
@@ -40,11 +39,12 @@ public class GrantStoreTest {
     @Test
     public void getGrantsTest() throws Exception {
         // Setup Mock Behavior
+        String[] tableTypes = { "TABLE" };
         Mockito.when(connectionMock.isClosed()).thenReturn(false);
         DatabaseMetaData dbmMock = mock(DatabaseMetaData.class);
         Mockito.when(connectionMock.getMetaData()).thenReturn(dbmMock);
         ResultSet rsUserMock = mock(ResultSet.class);
-        Mockito.when(dbmMock.getTables(null, null, "GRANTS", null)).thenReturn(rsUserMock);
+        Mockito.when(dbmMock.getTables(null, null, "GRANTS", tableTypes)).thenReturn(rsUserMock);
         Mockito.when(rsUserMock.next()).thenReturn(true);
 
         PreparedStatement pstmtMock = mock(PreparedStatement.class);
