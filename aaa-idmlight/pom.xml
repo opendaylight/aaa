@@ -188,6 +188,23 @@
                             </artifacts>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>attach-artifacts-idmtool</id>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>${project.build.directory}/classes/idmtool.py</file>
+                                    <type>py</type>
+                                    <classifier>config</classifier>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+
                 </executions>
             </plugin>
             <plugin>
