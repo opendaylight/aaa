@@ -131,7 +131,9 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
             for (int z = 0; z < grantList.size(); z++) {
                 Grant grant = grantList.get(z);
                 Role role = AAAIDMLightModule.getStore().readRole(grant.getRoleid());
-                roles.add(role.getName());
+                if (role != null) {
+                    roles.add(role.getName());
+                }
             }
 
             // build up the claim

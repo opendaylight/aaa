@@ -12,7 +12,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Grants;
@@ -137,16 +139,16 @@ public class GrantStore extends AbstractStore<Grant> {
     }
 
     protected Grant deleteGrant(String grantid) throws StoreException {
+        grantid = StringEscapeUtils.escapeHtml4(grantid);
         Grant savedGrant = this.getGrant(grantid);
         if (savedGrant == null) {
             return null;
         }
 
-        String query = "DELETE FROM GRANTS WHERE grantid = ?";
+        String query = String.format("DELETE FROM GRANTS WHERE grantid = '%s'", grantid);
         try (Connection conn = dbConnect();
-             PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setString(1, savedGrant.getGrantid());
-            int deleteCount = ps.executeUpdate(query);
+             Statement statement = conn.createStatement()) {
+            int deleteCount = statement.executeUpdate(query);
             LOG.debug("deleted {} records", deleteCount);
             return savedGrant;
         } catch (SQLException s) {

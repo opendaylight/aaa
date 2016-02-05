@@ -44,6 +44,9 @@
         <bundle>mvn:commons-codec/commons-codec/{{VERSION}}</bundle>
         <bundle>wrap:mvn:org.json/json/{{VERSION}}</bundle>
 
+        <!-- commons-lang -->
+        <bundle>wrap:mvn:org.apache.commons/commons-lang3/{{VERSION}}</bundle>
+
         <!-- AuthN -->
         <bundle>mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/{{VERSION}}</bundle>
@@ -108,6 +111,9 @@
         <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.resourceserver/{{VERSION}}</bundle>
         <bundle>mvn:commons-codec/commons-codec/{{VERSION}}</bundle>
         <bundle>wrap:mvn:org.json/json/{{VERSION}}</bundle>
+
+        <!-- commons-lang -->
+        <bundle>wrap:mvn:org.apache.commons/commons-lang3/{{VERSION}}</bundle>
 
         <!-- AuthN -->
         <bundle>mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}</bundle>
