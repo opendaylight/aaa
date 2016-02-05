@@ -14,7 +14,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
@@ -130,15 +132,15 @@ public class RoleStore extends AbstractStore<Role> {
     }
 
     protected Role deleteRole(String roleid) throws StoreException {
+        roleid = StringEscapeUtils.escapeHtml4(roleid);
         Role savedRole = this.getRole(roleid);
         if (savedRole == null) {
             return null;
         }
 
-        String query = "DELETE FROM DOMAINS WHERE domainid = ?";
+        String query = String.format("DELETE FROM ROLES WHERE roleid = '%s'", roleid);
         try (Connection conn = dbConnect();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setString(1, savedRole.getRoleid());
+             Statement statement = conn.createStatement()) {
             int deleteCount = statement.executeUpdate(query);
             LOG.debug("deleted {} records", deleteCount);
             return savedRole;

@@ -576,7 +576,7 @@ public class DomainHandler {
                         + " rid:" + roleId);
                 return Response.status(404).entity(idmerror).build();
             }
-            existingGrant = AAAIDMLightModule.getStore().deleteGrant(existingGrant.getDomainid());
+            existingGrant = AAAIDMLightModule.getStore().deleteGrant(existingGrant.getGrantid());
         } catch (IDMStoreException se) {
             LOG.error("StoreException: ", se);
             IDMError idmerror = new IDMError();
