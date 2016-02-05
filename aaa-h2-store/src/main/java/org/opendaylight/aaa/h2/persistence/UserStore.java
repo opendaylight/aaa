@@ -156,7 +156,12 @@ public class UserStore extends AbstractStore<User> {
             savedUser.setEmail(user.getEmail());
         }
         if (user.getPassword() != null) {
-            savedUser.setPassword(SHA256Calculator.getSHA256(user.getPassword(), user.getSalt()));
+            // If a new salt is provided, use it.  Otherwise, derive salt from existing.
+            String salt = user.getSalt();
+            if (salt == null) {
+                salt = savedUser.getSalt();
+            }
+            savedUser.setPassword(SHA256Calculator.getSHA256(user.getPassword(), salt));
         }
 
         String query = "UPDATE users SET email = ?, password = ?, description = ?, enabled = ? WHERE userid = ?";
