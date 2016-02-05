@@ -14,7 +14,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Domains;
 import org.slf4j.Logger;
@@ -145,15 +147,15 @@ public class DomainStore extends AbstractStore<Domain> {
     }
 
     protected Domain deleteDomain(String domainid) throws StoreException {
+        domainid = StringEscapeUtils.escapeHtml4(domainid);
         Domain deletedDomain = this.getDomain(domainid);
         if (deletedDomain == null) {
             return null;
         }
-        String query = "DELETE FROM DOMAINS WHERE domainid = ?";
+        String query = String.format("DELETE FROM DOMAINS WHERE domainid = '%s'", domainid);
         try (Connection conn = dbConnect();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setString(1, deletedDomain.getDomainid());
-            int deleteCount = statement.executeUpdate();
+             Statement statement = conn.createStatement()) {
+            int deleteCount = statement.executeUpdate(query);
             LOG.debug("deleted {} records", deleteCount);
             return deletedDomain;
         } catch (SQLException e) {

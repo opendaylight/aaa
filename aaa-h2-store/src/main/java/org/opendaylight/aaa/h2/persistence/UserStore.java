@@ -14,7 +14,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.model.User;
@@ -181,15 +183,15 @@ public class UserStore extends AbstractStore<User> {
     }
 
     protected User deleteUser(String userid) throws StoreException {
+        userid = StringEscapeUtils.escapeHtml4(userid);
         User savedUser = this.getUser(userid);
         if (savedUser == null) {
             return null;
         }
 
-        String query = "DELETE FROM USERS WHERE userid = ?";
+        String query = String.format("DELETE FROM USERS WHERE userid = '%s'", userid);
         try (Connection conn = dbConnect();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setString(1, savedUser.getUserid());
+             Statement statement = conn.createStatement()) {
             int deleteCount = statement.executeUpdate(query);
             LOG.debug("deleted {} records", deleteCount);
             return savedUser;
