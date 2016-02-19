@@ -19,7 +19,6 @@
     <packaging>jar</packaging>
 
     <properties>
-        <javax.annotation.api.version>1.2</javax.annotation.api.version>
         <servicemix.version>1.8.3_2</servicemix.version>
     </properties>
     <dependencyManagement>
@@ -117,11 +116,6 @@
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn-sts</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <version>${javax.annotation.api.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.felix</groupId>
