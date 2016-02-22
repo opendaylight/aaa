@@ -8,12 +8,16 @@
 
 package org.opendaylight.aaa.idm;
 
+import org.opendaylight.aaa.ClaimBuilder;
+import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
+import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.User;
+import org.opendaylight.aaa.api.model.Users;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -114,5 +118,40 @@ public class StoreBuilder {
         grant.setUserid(adminUser.getUserid());
         grant.setRoleid(adminRole.getRoleid());
         grant = store.writeGrant(grant);
+    }
+
+    public static Claim createUserInStore(PasswordCredentials creds, IIDMStore store) throws IDMStoreException {
+        if(store!=null) {
+            Users users = store.getUsers(creds.username(), creds.domain());
+            // Local User does not exist, create it with a default user role
+            if (users != null && users.getUsers() != null && users.getUsers().size() == 0) {
+                Domain domain = store.readDomain(IIDMStore.DEFAULT_DOMAIN);
+                Role role = store.readRole("user@sdn");
+
+                User userUser = new User();
+                userUser.setEnabled(true);
+                userUser.setName(creds.username());
+                userUser.setDomainid(domain.getDomainid());
+                userUser.setDescription(creds.username()+" external user");
+                userUser.setEmail("");
+                userUser.setPassword(creds.password());
+                userUser = store.writeUser(userUser);
+                Grant grant = new Grant();
+                grant.setRoleid(role.getRoleid());
+                grant.setDomainid(domain.getDomainid());
+                grant.setUserid(userUser.getUserid());
+                grant = store.writeGrant(grant);
+
+                ClaimBuilder claim = new ClaimBuilder();
+
+                claim.setUserId(userUser.getUserid());
+                claim.setUser(creds.username());
+                claim.setDomain(domain.getDomainid());
+                claim.addRole(role.getRoleid());
+                return claim.build();
+
+            }
+        }
+        return null;
     }
 }

@@ -4,6 +4,7 @@ import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.IdMService;
+import org.opendaylight.aaa.api.ThirdPartyAuthenticationService;
 import org.opendaylight.aaa.idm.IdmLightProxy;
 import org.opendaylight.aaa.idm.StoreBuilder;
 import org.osgi.framework.BundleContext;
@@ -19,6 +20,7 @@ public class AAAIDMLightModule extends org.opendaylight.yang.gen.v1.config.aaa.a
     private static final Logger LOG = LoggerFactory.getLogger(AAAIDMLightModule.class);
     private BundleContext bundleContext = null;
     private static volatile IIDMStore store = null;
+    private static volatile ThirdPartyAuthenticationService thirdPartyAuthenticationService = null;
 
     public AAAIDMLightModule(org.opendaylight.controller.config.api.ModuleIdentifier identifier, org.opendaylight.controller.config.api.DependencyResolver dependencyResolver) {
         super(identifier, dependencyResolver);
@@ -65,6 +67,26 @@ public class AAAIDMLightModule extends org.opendaylight.yang.gen.v1.config.aaa.a
 
         storeServiceTracker.open();
 
+        final ServiceTracker<ThirdPartyAuthenticationService, ThirdPartyAuthenticationService> thirdPartyAuthenticationTracker = new ServiceTracker<>(bundleContext, ThirdPartyAuthenticationService.class,
+                new ServiceTrackerCustomizer<ThirdPartyAuthenticationService, ThirdPartyAuthenticationService>() {
+                    @Override
+                    public ThirdPartyAuthenticationService addingService(ServiceReference<ThirdPartyAuthenticationService> reference) {
+                        thirdPartyAuthenticationService = reference.getBundle().getBundleContext().getService(reference);
+                        LOG.info("Third Party Authentication service {} was found", store.getClass());
+                        return thirdPartyAuthenticationService;
+                    }
+
+                    @Override
+                    public void modifiedService(ServiceReference<ThirdPartyAuthenticationService> reference, ThirdPartyAuthenticationService service) {
+                    }
+
+                    @Override
+                    public void removedService(ServiceReference<ThirdPartyAuthenticationService> reference, ThirdPartyAuthenticationService service) {
+                    }
+                });
+
+        thirdPartyAuthenticationTracker.open();
+
         LOG.info("AAA IDM Light Module Initialized");
         return new AutoCloseable() {
             @Override
@@ -86,5 +108,9 @@ public class AAAIDMLightModule extends org.opendaylight.yang.gen.v1.config.aaa.a
 
     public static final void setStore(IIDMStore s){
         store = s;
+    }
+
+    public static final ThirdPartyAuthenticationService getThirdPartyAuthenticationService(){
+        return thirdPartyAuthenticationService;
     }
 }

@@ -59,6 +59,31 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
         Preconditions.checkNotNull(creds);
         Preconditions.checkNotNull(creds.username());
         Preconditions.checkNotNull(creds.password());
+
+        //if there a third party authentication service serving this interface
+        if(AAAIDMLightModule.getThirdPartyAuthenticationService()!=null){
+            //authenticate with the third party service.
+            if(AAAIDMLightModule.getThirdPartyAuthenticationService().authenticate(creds)){
+                //create the user, if needed, in the local store by default as a "user" role
+                //so the admin can give it local privileges later on.
+                if(AAAIDMLightModule.getThirdPartyAuthenticationService().shouldCreateLocalUser()){
+                    try {
+                        return StoreBuilder.createUserInStore(creds, AAAIDMLightModule.getStore());
+                    } catch (IDMStoreException e) {
+                        LOG.error("Failed to create external user in local store",e);
+                        //We failed to creare the user in the local store so check if we are allowed to continue to noral authentication
+                        if(!AAAIDMLightModule.getThirdPartyAuthenticationService().allowLocalAuthentication()) {
+                            return null;
+                        }
+                    }
+                }
+            }//Authentication failed, if this service allows to use the local store then continue. Otherwise return null.
+            else if(!AAAIDMLightModule.getThirdPartyAuthenticationService().allowLocalAuthentication()){
+                return null;
+            }
+
+        }
+
         String domain = creds.domain() == null ? IIDMStore.DEFAULT_DOMAIN : creds.domain();
         // FIXME: Add cache invalidation
         Map<PasswordCredentials, Claim> cache = claimCache.get(domain);
