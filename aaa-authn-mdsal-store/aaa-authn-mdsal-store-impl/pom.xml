@@ -22,10 +22,6 @@
     <artifactId>aaa-authn-mdsal-store-impl</artifactId>
     <packaging>bundle</packaging>
 
-    <properties>
-        <powermock.version>1.5.2</powermock.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
@@ -91,13 +87,11 @@
         <dependency>
           <groupId>org.powermock</groupId>
           <artifactId>powermock-api-mockito</artifactId>
-          <version>${powermock.version}</version>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.powermock</groupId>
           <artifactId>powermock-module-junit4</artifactId>
-          <version>${powermock.version}</version>
           <scope>test</scope>
         </dependency>
     </dependencies>
