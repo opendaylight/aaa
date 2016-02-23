@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_ed5f700d",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/IdmLightProxy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-02-23T21:52:57Z",
+      "side": 1,
+      "message": "just typo \"normal\"",
+      "range": {
+        "startLine": 74,
+        "startChar": 116,
+        "endLine": 74,
+        "endChar": 122
+      },
+      "revId": "4bc4b5d1164f3d1fac4e307fee2666f44a23226b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_4d449c1a",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/IdmLightProxy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-02-23T21:52:57Z",
+      "side": 1,
+      "message": "would you give more explantation here, because there is no way for this code to proceed if there is a ThirdPartyAuthenticationService and not allowed for local authentication. it will always return null ? \nyou assume using ThirdPartyAuthenticationService or  Local sdn domain authentication ? we can not use the 2 cases at the same time?",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 85,
+        "endChar": 9
+      },
+      "revId": "4bc4b5d1164f3d1fac4e307fee2666f44a23226b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
