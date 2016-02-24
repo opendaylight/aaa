@@ -212,6 +212,38 @@
 
     </feature>
 
+    <feature name='odl-aaa-third-party-authn' description='AAA Third Party Authentication' version='${project.version}'>
+
+        <!-- MD-SAL -->
+        <feature version='${yangtools.version}'>odl-yangtools-common</feature>
+        <feature version='${mdsal.version}'>odl-mdsal-binding-base</feature>
+        <feature version='${controller.mdsal.version}'>odl-mdsal-broker</feature>
+        <feature version='${config.version}'>odl-config-core</feature>
+
+        <!-- AuthN -->
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-api/{{VERSION}}</bundle>
+        <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
+
+        <!-- REST -->
+        <feature>war</feature>
+        <bundle>mvn:com.sun.jersey/jersey-servlet/{{VERSION}}</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
+
+        <!-- Radius - Un-mark below for tiny radius support -->
+        <!--bundle>wrap:mvn:org.tinyradius/tinyradius/1.0</bundle>
+        <bundle>wrap:mvn:commons-logging/commons-logging/1.1</bundle-->
+
+        <!-- Ldap -->
+        <bundle>mvn:com.unboundid/unboundid-ldapsdk/3.1.0</bundle>
+
+        <bundle>mvn:org.opendaylight.aaa/aaa-third-party-authn/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-thrid-party-authn-config.xml">mvn:org.opendaylight.aaa/aaa-third-party-authn/{{VERSION}}/xml/config</configfile>
+        <configfile finalname="/etc/ldap.cfg">mvn:org.opendaylight.aaa/aaa-third-party-authn/{{VERSION}}/cfg/config1</configfile>
+        <configfile finalname="/etc/radius.cfg">mvn:org.opendaylight.aaa/aaa-third-party-authn/{{VERSION}}/cfg/config2</configfile>
+        <configfile finalname="/etc/default_dictionary.txt">mvn:org.opendaylight.aaa/aaa-third-party-authn/{{VERSION}}/cfg/config3</configfile>
+    </feature>
+
     <feature name='odl-aaa-keystone-plugin' description='OpenDaylight :: AAA :: Keystone Plugin - NO CLUSTER'
              version='${project.version}'>
         <feature version='${project.version}'>odl-aaa-authn</feature>

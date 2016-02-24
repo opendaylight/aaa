@@ -141,6 +141,19 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>aaa-third-party-authn</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>aaa-third-party-authn</artifactId>
+                <version>${project.version}</version>
+                <type>xml</type>
+                <classifier>config</classifier>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-idmlight</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -151,6 +164,7 @@
                 <type>xml</type>
                 <classifier>config</classifier>
             </dependency>
+
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-authn-idpmapping</artifactId>

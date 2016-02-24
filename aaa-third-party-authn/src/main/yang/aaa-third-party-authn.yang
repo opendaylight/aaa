@@ -1,0 +1,28 @@
+module aaa-third-party-authn {
+  yang-version 1;
+  namespace "config:aaa:authn:third:party";
+  prefix "aaa-third-party-authn";
+    organization "OpenDayLight";
+
+    import config { prefix config; revision-date 2013-04-05; }
+    import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
+
+    contact "saichler@gmail.com";
+
+    revision 2016-02-22 {
+        description
+            "Initial revision.";
+    }
+
+    identity aaa-third-party-authn {
+        base config:module-type;
+        config:java-name-prefix AAAThirdParty;
+    }
+
+    augment "/config:modules/config:module/config:configuration" {
+        case aaa-third-party-authn {
+            when "/config:modules/config:module/config:type = 'aaa-third-party-authn'";
+        }
+    }
+
+}

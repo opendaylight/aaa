@@ -221,6 +221,58 @@
             <version>4.2.0</version>
         </dependency>
 
+        <!-- Radius - Un-mark below for tiny Radius support-->
+        <!--dependency>
+            <groupId>org.tinyradius</groupId>
+            <artifactId>tinyradius</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1</version>
+        </dependency-->
+
+        <!-- LDAP -->
+        <dependency>
+            <groupId>com.unboundid</groupId>
+            <artifactId>unboundid-ldapsdk</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-third-party-authn</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-third-party-authn</artifactId>
+            <type>xml</type>
+            <classifier>config</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-third-party-authn</artifactId>
+            <version>${project.version}</version>
+            <type>cfg</type>
+            <classifier>config1</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-third-party-authn</artifactId>
+            <version>${project.version}</version>
+            <type>cfg</type>
+            <classifier>config2</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-third-party-authn</artifactId>
+            <version>${project.version}</version>
+            <type>cfg</type>
+            <classifier>config3</classifier>
+        </dependency>
+
+
+
         <!-- AuthN MD-SAL Cache dependencies -->
 
         <dependency>
