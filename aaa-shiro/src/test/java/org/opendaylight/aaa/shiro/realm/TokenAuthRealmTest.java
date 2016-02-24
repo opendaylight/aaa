@@ -42,11 +42,12 @@ public class TokenAuthRealmTest extends TokenAuthRealm {
     }
 
     @Test
-    public void testGetUsernamePasswordString() {
+    public void testGetUsernamePasswordDomainString() {
         final String username = "user";
         final String password = "password";
-        final String expectedUsernamePasswordString = "user:password";
-        assertEquals(expectedUsernamePasswordString, getUsernamePasswordString(username, password));
+        final String domain = "domain";
+        final String expectedUsernamePasswordString = "user:password:domain";
+        assertEquals(expectedUsernamePasswordString, getUsernamePasswordDomainString(username, password, domain));
     }
 
     @Test
@@ -59,16 +60,16 @@ public class TokenAuthRealmTest extends TokenAuthRealm {
 
     @Test
     public void testGetTokenAuthHeader() {
-        final String encodedCredentials = getEncodedToken(getUsernamePasswordString("user1",
-                "password"));
+        final String encodedCredentials = getEncodedToken(getUsernamePasswordDomainString("user1",
+                "password", "sdn"));
         final String expectedTokenAuthHeader = "Basic " + encodedCredentials;
         assertEquals(expectedTokenAuthHeader, getTokenAuthHeader(encodedCredentials));
     }
 
     @Test
     public void testFormHeadersWithToken() {
-        final String authHeader = getEncodedToken(getTokenAuthHeader(getUsernamePasswordString(
-                "user1", "password")));
+        final String authHeader = getEncodedToken(getTokenAuthHeader(getUsernamePasswordDomainString(
+                "user1", "password", "sdn")));
         final Map<String, List<String>> expectedHeaders = new HashMap<String, List<String>>();
         expectedHeaders.put("Authorization", Lists.newArrayList(authHeader));
         final Map<String, List<String>> actualHeaders = formHeadersWithToken(authHeader);
@@ -83,11 +84,12 @@ public class TokenAuthRealmTest extends TokenAuthRealm {
     public void testFormHeaders() {
         final String username = "basicUser";
         final String password = "basicPassword";
-        final String authHeader = getTokenAuthHeader(getEncodedToken(getUsernamePasswordString(
-                username, password)));
+        final String domain = "basicDomain";
+        final String authHeader = getTokenAuthHeader(getEncodedToken(getUsernamePasswordDomainString(
+                username, password, domain)));
         final Map<String, List<String>> expectedHeaders = new HashMap<String, List<String>>();
         expectedHeaders.put("Authorization", Lists.newArrayList(authHeader));
-        final Map<String, List<String>> actualHeaders = formHeaders(username, password);
+        final Map<String, List<String>> actualHeaders = formHeaders(username, password, domain);
         List<String> value;
         for (String key : expectedHeaders.keySet()) {
             value = expectedHeaders.get(key);
