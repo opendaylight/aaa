@@ -42,6 +42,8 @@ import org.slf4j.LoggerFactory;
  */
 public class TokenAuthRealm extends AuthorizingRealm {
 
+    private static final String USERNAME_DOMAIN_SEPARATOR = "@";
+
     /**
      * The unique identifying name for <code>TokenAuthRealm</code>
      */
@@ -100,13 +102,16 @@ public class TokenAuthRealm extends AuthorizingRealm {
     }
 
     /**
+     * Bridge new to old style <code>TokenAuth</code> interface.
      *
-     * @param username
-     * @param password
-     * @return <code>username</code>:<code>password</code>
+     * @param username The request username
+     * @param password The request password
+     * @param domain The request domain
+     * @return <code>username:password:domain</code>
      */
-    static String getUsernamePasswordString(final String username, final String password) {
-        return username + HttpBasicAuth.AUTH_SEP + password;
+    static String getUsernamePasswordDomainString(final String username, final String password,
+            final String domain) {
+        return username + HttpBasicAuth.AUTH_SEP + password  + HttpBasicAuth.AUTH_SEP + domain;
     }
 
     /**
@@ -144,12 +149,14 @@ public class TokenAuthRealm extends AuthorizingRealm {
      * Adapter between basic authentication mechanism and existing
      * <code>TokenAuth</code> interface.
      *
-     * @param username
-     * @param password
+     * @param username Username from the request
+     * @param password Password from the request
+     * @param domain Domain from the request
      * @return input map for <code>TokenAuth.validate()</code>
      */
-    Map<String, List<String>> formHeaders(final String username, final String password) {
-        String usernamePasswordToken = getUsernamePasswordString(username, password);
+    Map<String, List<String>> formHeaders(final String username, final String password,
+            final String domain) {
+        String usernamePasswordToken = getUsernamePasswordDomainString(username, password, domain);
         String encodedToken = getEncodedToken(usernamePasswordToken);
         String tokenAuthHeader = getTokenAuthHeader(encodedToken);
         return formHeadersWithToken(tokenAuthHeader);
@@ -178,12 +185,26 @@ public class TokenAuthRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
             throws AuthenticationException {
 
-        String username;
-        String password;
+        String username = "";
+        String password = "";
+        String domain = HttpBasicAuth.DEFAULT_DOMAIN;
 
         try {
-            username = extractUsername(authenticationToken);
+            final String qualifiedUser = extractUsername(authenticationToken);
+            if (qualifiedUser.contains(USERNAME_DOMAIN_SEPARATOR)) {
+                final String [] qualifiedUserArray = qualifiedUser.split(USERNAME_DOMAIN_SEPARATOR);
+                try {
+                    username = qualifiedUserArray[0];
+                    domain = qualifiedUserArray[1];
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    LOG.trace("Couldn't parse domain from {}; trying without one",
+                            qualifiedUser, e);
+                }
+            } else {
+                username = qualifiedUser;
+            }
             password = extractPassword(authenticationToken);
+
         } catch (NullPointerException e) {
             throw new AuthenticationException(FATAL_ERROR_DECODING_CREDENTIALS, e);
         } catch (ClassCastException e) {
@@ -199,7 +220,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
         // Auth request
         if (!Strings.isNullOrEmpty(password)) {
             if (ServiceLocator.getInstance().getAuthenticationService().isAuthEnabled()) {
-                Map<String, List<String>> headers = formHeaders(username, password);
+                Map<String, List<String>> headers = formHeaders(username, password, domain);
                 // iterate over <code>TokenAuth</code> implementations and
                 // attempt to
                 // authentication with each one
