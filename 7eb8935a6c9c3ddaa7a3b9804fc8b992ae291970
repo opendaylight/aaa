@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_d1331e60",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/TokenAuthRealm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-02-25T18:28:39Z",
+      "side": 1,
+      "message": "just update method param comment",
+      "range": {
+        "startLine": 106,
+        "startChar": 1,
+        "endLine": 107,
+        "endChar": 22
+      },
+      "revId": "7eb8935a6c9c3ddaa7a3b9804fc8b992ae291970",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b1381a3e",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/TokenAuthRealm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-02-25T18:28:39Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 150,
+        "startChar": 7,
+        "endLine": 151,
+        "endChar": 22
+      },
+      "revId": "7eb8935a6c9c3ddaa7a3b9804fc8b992ae291970",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
