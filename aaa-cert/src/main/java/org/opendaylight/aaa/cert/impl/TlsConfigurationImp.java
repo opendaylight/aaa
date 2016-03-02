@@ -8,6 +8,8 @@
 
 package org.opendaylight.aaa.cert.impl;
 
+import java.util.List;
+
 import org.opendaylight.openflowjava.protocol.api.connection.TlsConfiguration;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.openflow.config.rev140630.KeystoreType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.openflow.config.rev140630.PathType;
@@ -46,6 +48,12 @@ public class TlsConfigurationImp implements TlsConfiguration{
     @Override
     public String getCertificatePassword() {
         return certPwd;
+    }
+
+    @Override
+    public List<String> getCipherSuites() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
