@@ -271,10 +271,32 @@ public class UserHandler {
 
         try {
             user.setUserid(id);
+
+            if (checkInputFieldLength(user.getPassword())) {
+                return providedFieldTooLong("password", IdmLightApplication.MAX_FIELD_LEN);
+            }
+
+            if (checkInputFieldLength(user.getName())) {
+                return providedFieldTooLong("name", IdmLightApplication.MAX_FIELD_LEN);
+            }
+
+            if (checkInputFieldLength(user.getDescription())) {
+                return providedFieldTooLong("description", IdmLightApplication.MAX_FIELD_LEN);
+            }
+
+            if (checkInputFieldLength(user.getEmail())) {
+                return providedFieldTooLong("email", IdmLightApplication.MAX_FIELD_LEN);
+            }
+
+            if (checkInputFieldLength(user.getDomainid())) {
+                return providedFieldTooLong("domain", IdmLightApplication.MAX_FIELD_LEN);
+            }
+
             user = AAAIDMLightModule.getStore().updateUser(user);
             if (user == null) {
                 return new IDMError(404, String.format("User not found for id %s", id), "").response();
             }
+
             IdmLightProxy.clearClaimCache();
 
             // Redact the password and salt for security reasons.
@@ -383,5 +405,14 @@ public class UserHandler {
     private static void redactUserPasswordInfo(final User user) {
         user.setPassword(REDACTED_PASSWORD);
         user.setSalt(REDACTED_SALT);
+    }
+
+    /**
+     * Validate the input field length
+     * @param inputField
+     * @return true if input field bigger than the MAX_FIELD_LEN
+     */
+    private boolean checkInputFieldLength(final String inputField) {
+        return inputField != null && (inputField.length() > IdmLightApplication.MAX_FIELD_LEN);
     }
 }
