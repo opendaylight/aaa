@@ -9,7 +9,7 @@
     <parent>
         <groupId>org.opendaylight.aaa</groupId>
         <artifactId>features-aggregator</artifactId>
-        <version>0.2.4-Lithium-SR4</version>
+        <version>0.2.5-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
@@ -80,12 +80,14 @@
         </dependency>
 
         <!-- test to validate features.xml -->
+        <!-- TEMPORARILY DISABLE TO BREAK CYCLIC DEPENDENCY
         <dependency>
             <groupId>org.opendaylight.odlparent</groupId>
             <artifactId>features-test</artifactId>
             <version>${features.test.version}</version>
             <scope>test</scope>
         </dependency>
+        -->
         <!-- dependency for opendaylight-karaf-empty for use by testing -->
         <dependency>
             <groupId>org.opendaylight.controller</groupId>

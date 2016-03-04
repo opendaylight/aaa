@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>odlparent</artifactId>
-        <version>1.5.4-Lithium-SR4</version>
+        <version>1.5.5-SNAPSHOT</version>
         <relativePath/>
     </parent>
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>commons.aaa</artifactId>
-    <version>0.2.4-Lithium-SR4</version>
+    <version>0.2.5-SNAPSHOT</version>
     <packaging>pom</packaging>
     <prerequisites>
         <maven>3.0.4</maven>
@@ -19,9 +19,9 @@
 
     <properties>
         <!-- Karaf -->
-        <karaf.branding.version>1.1.4-Lithium-SR4</karaf.branding.version>
-        <karaf.resources.version>1.5.4-Lithium-SR4</karaf.resources.version>
-        <karaf.empty.version>1.5.4-Lithium-SR4</karaf.empty.version>
+        <karaf.branding.version>1.1.5-SNAPSHOT</karaf.branding.version>
+        <karaf.resources.version>1.5.5-SNAPSHOT</karaf.resources.version>
+        <karaf.empty.version>1.5.5-SNAPSHOT</karaf.empty.version>
 
         <!-- Plugins -->
         <compiler.plugin.version>3.1</compiler.plugin.version>
@@ -34,12 +34,12 @@
         <osgi.metatype.version>1.0.10</osgi.metatype.version>
 
         <!-- AuthZ -->
-        <yangtools.version>0.7.4-Lithium-SR4</yangtools.version>
+        <yangtools.version>0.7.5-SNAPSHOT</yangtools.version>
         <jmxGeneratorPath>src/main/yang-gen-config</jmxGeneratorPath>
         <salGeneratorPath>src/main/yang-gen-sal</salGeneratorPath>
-        <mdsal.version>1.2.4-Lithium-SR4</mdsal.version>
-        <restconf.version>1.2.4-Lithium-SR4</restconf.version>
-        <config.version>0.3.4-Lithium-SR4</config.version>
+        <mdsal.version>1.2.5-SNAPSHOT</mdsal.version>
+        <restconf.version>1.2.5-SNAPSHOT</restconf.version>
+        <config.version>0.3.5-SNAPSHOT</config.version>
         <config.authz.service.configfile>08-authz-config.xml</config.authz.service.configfile>
         <config.restconf.configfile>09-rest-connector.xml</config.restconf.configfile>
         <config.configfile.directory>etc/opendaylight/karaf</config.configfile.directory>
@@ -55,7 +55,7 @@
         <config.authn.store.configfile>08-authn-config.xml</config.authn.store.configfile>
 
         <!-- Netconf plugin -->
-        <netconf.version>0.3.4-Lithium-SR4</netconf.version>
+        <netconf.version>0.3.5-SNAPSHOT</netconf.version>
 
         <!-- IdmLight -->
         <h2.version>1.4.185</h2.version>
@@ -67,7 +67,7 @@
         <!-- Test -->
         <javax.inject.version>1</javax.inject.version>
         <servlet.tester.version>7.0.0.M2</servlet.tester.version>
-        <features.test.version>1.5.4-Lithium-SR4</features.test.version>
+        <features.test.version>1.5.5-SNAPSHOT</features.test.version>
     </properties>
 
     <dependencyManagement>

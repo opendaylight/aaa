@@ -5,13 +5,13 @@
     <parent>
         <artifactId>aaa.project</artifactId>
         <groupId>org.opendaylight.aaa</groupId>
-        <version>0.2.4-Lithium-SR4</version>
+        <version>0.2.5-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>aaa-authn-mdsal-store</artifactId>
     <name>${project.artifactId}</name>
-    <version>0.2.4-Lithium-SR4</version>
+    <version>0.2.5-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>

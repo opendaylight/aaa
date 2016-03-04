@@ -7,12 +7,12 @@
     <parent>
         <artifactId>aaa-authn-mdsal-store</artifactId>
         <groupId>org.opendaylight.aaa</groupId>
-        <version>0.2.4-Lithium-SR4</version>
+        <version>0.2.5-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>aaa-authn-mdsal-api</artifactId>
-    <version>0.2.4-Lithium-SR4</version>
+    <version>0.2.5-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
