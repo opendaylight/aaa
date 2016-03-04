@@ -271,10 +271,42 @@ public class UserHandler {
 
         try {
             user.setUserid(id);
+
+            // The password field has a maximum length.
+            final String password = user.getPassword();
+            if (password != null && (password.length() > IdmLightApplication.MAX_FIELD_LEN)) {
+                return providedFieldTooLong("password", IdmLightApplication.MAX_FIELD_LEN);
+            }
+
+            // The "name" field has a maximum length.
+            final String name = user.getName();
+            if (name != null && (name.length() > IdmLightApplication.MAX_FIELD_LEN)) {
+                return providedFieldTooLong("name", IdmLightApplication.MAX_FIELD_LEN);
+            }
+
+            // The "description" field has a maximum length.
+            final String description = user.getDescription();
+            if (description != null && (description.length() > IdmLightApplication.MAX_FIELD_LEN)) {
+                return providedFieldTooLong("description", IdmLightApplication.MAX_FIELD_LEN);
+            }
+
+            // The "email" field is optional and defaults to "".
+            final String email = user.getEmail();
+            if (email != null && (email.length() > IdmLightApplication.MAX_FIELD_LEN)) {
+                return providedFieldTooLong("email", IdmLightApplication.MAX_FIELD_LEN);
+            }
+
+            // The "domain" field has a maximum length.
+            final String domainId = user.getDomainid();
+            if (domainId != null && (domainId.length() > IdmLightApplication.MAX_FIELD_LEN)) {
+                return providedFieldTooLong("domain", IdmLightApplication.MAX_FIELD_LEN);
+            }
+
             user = AAAIDMLightModule.getStore().updateUser(user);
             if (user == null) {
                 return new IDMError(404, String.format("User not found for id %s", id), "").response();
             }
+
             IdmLightProxy.clearClaimCache();
 
             // Redact the password and salt for security reasons.
