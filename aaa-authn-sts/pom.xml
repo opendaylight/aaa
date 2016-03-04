@@ -5,12 +5,12 @@
     <parent>
         <groupId>org.opendaylight.aaa</groupId>
         <artifactId>aaa.project</artifactId>
-        <version>0.2.4-SNAPSHOT</version>
+        <version>0.2.4-Lithium-SR4</version>
         <relativePath>../</relativePath>
     </parent>
 
     <artifactId>aaa-authn-sts</artifactId>
-    <version>0.2.4-SNAPSHOT</version>
+    <version>0.2.4-Lithium-SR4</version>
     <packaging>bundle</packaging>
 
     <dependencies>

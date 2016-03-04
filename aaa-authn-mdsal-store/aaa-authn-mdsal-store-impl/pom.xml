@@ -14,12 +14,12 @@
     <parent>
         <artifactId>aaa-authn-mdsal-store</artifactId>
         <groupId>org.opendaylight.aaa</groupId>
-        <version>0.2.4-SNAPSHOT</version>
+        <version>0.2.4-Lithium-SR4</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>aaa-authn-mdsal-store-impl</artifactId>
-    <version>0.2.4-SNAPSHOT</version>
+    <version>0.2.4-Lithium-SR4</version>
     <packaging>bundle</packaging>
 
     <dependencies>
@@ -54,12 +54,12 @@
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn-api</artifactId>
-            <version>0.2.4-SNAPSHOT</version>
+            <version>0.2.4-Lithium-SR4</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn</artifactId>
-            <version>0.2.4-SNAPSHOT</version>
+            <version>0.2.4-Lithium-SR4</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
@@ -68,7 +68,7 @@
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn-mdsal-api</artifactId>
-            <version>0.2.4-SNAPSHOT</version>
+            <version>0.2.4-Lithium-SR4</version>
         </dependency>
 
         <!-- Test dependencies -->

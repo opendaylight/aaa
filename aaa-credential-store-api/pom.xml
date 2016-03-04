@@ -10,18 +10,18 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <parent>
     <groupId>org.opendaylight.yangtools</groupId>
     <artifactId>binding-parent</artifactId>
-    <version>0.7.4-SNAPSHOT</version>
+    <version>0.7.4-Lithium-SR4</version>
     <relativePath/>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-credential-store-api</artifactId>
-  <version>0.2.4-SNAPSHOT</version>
+  <version>0.2.4-Lithium-SR4</version>
   <packaging>bundle</packaging>
 
   <properties>
-    <mdsal.version>1.2.4-SNAPSHOT</mdsal.version>
+    <mdsal.version>1.2.4-Lithium-SR4</mdsal.version>
   </properties>
 
   <dependencies>
