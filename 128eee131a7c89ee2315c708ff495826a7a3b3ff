@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_9a051448",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-07T13:30:43Z",
+      "side": 1,
+      "message": "Hi Mohamed,\n\nPlease put a more detailed message here containing some sense of the implementation details.  The format should be:\n\n\"\nBug 1835 - No ...\n\u003cempty line\u003e\nHere is a bit longer description of what was done in this patch.  This particular patch should only require a few sentences, since it is relatively small.\"\n\u003cempty line\u003e\nChange-Id: ...\nSigned-off-by: ...\n\"",
+      "revId": "128eee131a7c89ee2315c708ff495826a7a3b3ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_baf6185b",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-07T13:30:43Z",
+      "side": 1,
+      "message": "This comment really doesn\u0027t add anything to the context;  I think most people can understand what this does without this here.  Please remove it.",
+      "range": {
+        "startLine": 275,
+        "startChar": 12,
+        "endLine": 275,
+        "endChar": 55
+      },
+      "revId": "128eee131a7c89ee2315c708ff495826a7a3b3ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_1a990420",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-07T13:30:43Z",
+      "side": 1,
+      "message": "Please make a helper function for this;  you can call it something like:\n\n\"private boolean checkInputFieldLength(final String input) {\nreturn (input !\u003d null \u0026\u0026 input.length() \u003c IDMLightApplication.MAX_FIELD_LEN);\n}\"\n\nThen add appropriate documentation to the new function.",
+      "range": {
+        "startLine": 277,
+        "startChar": 16,
+        "endLine": 277,
+        "endChar": 91
+      },
+      "revId": "128eee131a7c89ee2315c708ff495826a7a3b3ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
