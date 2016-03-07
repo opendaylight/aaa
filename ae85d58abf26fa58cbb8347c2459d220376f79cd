@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_79e65d45",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-07T21:31:56Z",
+      "side": 1,
+      "message": "A nit;  something we don\u0027t enforce with checkstyle, but you should have a blank line in between the description and the @param declaration.",
+      "revId": "ae85d58abf26fa58cbb8347c2459d220376f79cd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
