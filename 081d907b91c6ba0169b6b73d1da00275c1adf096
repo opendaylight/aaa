@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_ffe7eda9",
+        "filename": "aaa-shiro/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-03-08T16:24:39Z",
+      "side": 1,
+      "message": "if you can add \u003cproperties\u003e tag and set the version there, will be much easier to change.",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 30
+      },
+      "revId": "081d907b91c6ba0169b6b73d1da00275c1adf096",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_1f8731b6",
+        "filename": "aaa-shiro/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-03-08T16:24:39Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 77,
+        "startChar": 6,
+        "endLine": 77,
+        "endChar": 30
+      },
+      "revId": "081d907b91c6ba0169b6b73d1da00275c1adf096",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
