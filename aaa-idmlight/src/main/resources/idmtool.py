@@ -223,6 +223,13 @@ args = parser.parse_args()
 command = args.func.prog.split()[1:]
 user = args.user[0]
 password = getpass.getpass()
+temp_host_arr = args.target_host
+if temp_host_arr is not None:
+    temp_host_val = temp_host_arr[0]
+    if temp_host_val is not None:
+        target_host = temp_host_val
+        if not target_host.endswith("/"):
+            target_host += "/"
 if "list-users" in command:
     list_users(user,password)
 if "list-domains" in command:
@@ -245,3 +252,4 @@ if "add-role" in command:
     add_role(user, password, args.role[0])
 if "delete-grant" in command:
     delete_grant(user, password, args.userid[0], args.roleid[0])
+
