@@ -32,14 +32,12 @@ public class Activator extends DependencyActivatorBase {
 
     @Override
     public void destroy(BundleContext bc, DependencyManager dm) throws Exception {
-        final String DEBUG_MESSAGE = "Destroying the aaa-shiro bundle";
-        LOG.debug(DEBUG_MESSAGE);
+        LOG.debug("Destroying the aaa-shiro bundle");
     }
 
     @Override
     public void init(BundleContext bc, DependencyManager dm) throws Exception {
-        final String DEBUG_MESSAGE = "Initializing the aaa-shiro bundle";
-        LOG.debug(DEBUG_MESSAGE);
+        LOG.debug("Initializing the aaa-shiro bundle");
     }
 
 }
