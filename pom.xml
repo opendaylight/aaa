@@ -40,6 +40,7 @@
     <module>aaa-h2-store</module>
     <module>aaa-cert</module>
     <module>aaa-cli</module>
+    <module>aaa-filterchain</module>
   </modules>
 
   <scm>

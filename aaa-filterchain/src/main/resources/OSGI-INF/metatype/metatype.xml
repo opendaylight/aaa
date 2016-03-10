@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metatype:MetaData xmlns:metatype="http://www.osgi.org/xmlns/metatype/v1.0.0"
+    localization="OSGI-INF/metatype/metatype">
+    <OCD id="org.opendaylight.aaa.filterchain" name="%org.opendaylight.aaa.filterchain.name"
+        description="%org.opendaylight.aaa.filterchain.description">
+        <AD id="customFilterList" type="String" default=""
+            name="%org.opendaylight.aaa.filterchain.customFilterList.name"
+            description="%org.opendaylight.aaa.filterchain.customFilterList.description" />
+    </OCD>
+    <Designate pid="org.opendaylight.aaa.filterchain">
+        <Object ocdref="org.opendaylight.aaa.filterchain" />
+    </Designate>
+</metatype:MetaData>

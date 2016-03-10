@@ -52,6 +52,7 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-store/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
         <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
 
         <!--H2 Store -->
@@ -81,6 +82,7 @@
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/aaa-authn-store/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}/cfg/config</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
     </feature>
 
     <feature name='odl-aaa-authn' description='OpenDaylight :: AAA :: Authentication - NO CLUSTER'
@@ -122,6 +124,7 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-store/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
         <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
 
         <!--H2 Store -->
@@ -151,6 +154,7 @@
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/aaa-authn-store/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}/cfg/config</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
     </feature>
 
     <feature name='odl-aaa-authn-mdsal-cluster' description='OpenDaylight :: AAA :: Authentication :: MD-SAL'
@@ -181,6 +185,7 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-api/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-store-impl/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
         <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
 
         <!-- IDMLight -->
@@ -209,7 +214,7 @@
         <configfile finalname="etc/opendaylight/karaf/08-authn-config.xml">mvn:org.opendaylight.aaa/aaa-authn-mdsal-config/{{VERSION}}/xml/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}/cfg/config</configfile>
-
+        <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
     </feature>
 
     <feature name='odl-aaa-keystone-plugin' description='OpenDaylight :: AAA :: Keystone Plugin - NO CLUSTER'
