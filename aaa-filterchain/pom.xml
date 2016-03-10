@@ -12,7 +12,7 @@
     <relativePath>../parent</relativePath>
   </parent>
 
-  <artifactId>aaa-shiro</artifactId>
+  <artifactId>aaa-filterchain</artifactId>
   <packaging>bundle</packaging>
 
   <dependencies>
@@ -21,29 +21,8 @@
       <artifactId>org.apache.felix.dependencymanager</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.opendaylight.aaa</groupId>
-      <artifactId>aaa-authn-sts</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.aaa</groupId>
-      <artifactId>aaa-authn-basic</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-web</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>commons-beanutils</groupId>
-      <artifactId>commons-beanutils</artifactId>
-      <version>1.8.3</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -63,18 +42,6 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-all</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-core</artifactId>
-      <version>1.1.6</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>1.1.6</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -102,7 +69,7 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Bundle-Activator>org.opendaylight.aaa.shiro.Activator</Bundle-Activator>
+            <Bundle-Activator>org.opendaylight.aaa.filterchain.Activator</Bundle-Activator>
             <DynamicImport-Package>*</DynamicImport-Package>
           </instructions>
         </configuration>
@@ -124,9 +91,9 @@
             <configuration>
               <artifacts>
                 <artifact>
-                  <file>${project.build.directory}/classes/shiro.ini</file>
+                  <file>${project.build.directory}/classes/filterchain.cfg</file>
                   <type>cfg</type>
-                  <classifier>configuration</classifier>
+                  <classifier>config</classifier>
                 </artifact>
               </artifacts>
             </configuration>
