@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author liemmn
  */
+@Deprecated
 public class KeystoneTokenAuth implements TokenAuth {
     private static final Logger LOG = LoggerFactory.getLogger(KeystoneTokenAuth.class);
 

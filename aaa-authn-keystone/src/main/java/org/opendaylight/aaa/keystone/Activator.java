@@ -19,6 +19,7 @@ import org.osgi.framework.BundleContext;
  * @author liemmn
  *
  */
+@Deprecated
 public class Activator extends DependencyActivatorBase {
 
     @Override
