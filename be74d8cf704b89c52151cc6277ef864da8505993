@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_eca74009",
+        "filename": "aaa-idmlight/src/main/resources/idmtool.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-03-11T14:52:42Z",
+      "side": 1,
+      "message": "u can us  os.sep    instead of  \"/\"",
+      "range": {
+        "startLine": 231,
+        "startChar": 36,
+        "endLine": 231,
+        "endChar": 39
+      },
+      "revId": "be74d8cf704b89c52151cc6277ef864da8505993",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
