@@ -1,0 +1,378 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_d8814dfc",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "You should save off the ServiceReference from registerService and unregister here.",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_788e412f",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "Can you explain the use of the DependencyManager here? It seems all you need to do is register the CustomFilterAdapterConfiguration below, unless I\u0027m missing something (I\u0027ve never used DependencyManager).",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_58c37d37",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "ConcurrentHashMap isn\u0027t needed - initialize to Collections.emptyMap",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b8ad699d",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "This should be final instead of volatile.",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_988b451e",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "It looks like \u0027configuration\u0027 doesn\u0027t need to be stored as a field so you could just create a new instance here and pass it to updateListeners. \n\nHowever if you do need it stored then I would suggest making it an immutable map (use ImmutableMap.Builder). Also extractPropertiesMap creates a new instance while resetPropertiesToDefault mutates the existing instance. You should be consistent and have resetPropertiesToDefault also create a new instance. So both code paths would create an immutable instance.",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d8aaed83",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "Iterating the listeners Vector isn\u0027t thread-safe. Instead of using a Vector I would suggest using a CopyOnWriteArrayList.",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_98a4e5ba",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "Why does a user have to enable dynamic imports? Can\u0027t you enable dynamic imports via Class.forName in your maven-bundle-plugin config?",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_78a761bd",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "I\u0027m curious by the name \"injectCustomFilter\". The code loads a class and returns a new instance. How about calling it \"newInstanceOf\".\n\nAlso pass the className as the code doesn\u0027t need a FilterDTO.",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_38c2f952",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "These can be final.",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_f8cb716f",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "This can be private",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_18d1f522",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "These can be final.",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_58c7fd63",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "I assume this reads a referenced cfg file. Instead of parsing it yourself, you could use ConfigAdmin to read it. Or you should be able to use java.util.Properties#load.",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_f8c7f142",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "Should this call the listener with the initial state?",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b884490b",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/AAAFilterChain.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "This is not used.",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_187f3516",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/AAAFilterChain.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "Is this iterator thread-safe?",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_98b985ce",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "Initialize to Collections.emptyList as Vector is synchronized.",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b8b289e2",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "I\u0027m not clear on the purpose of the volatile injectedFilterChainHasElements boolean rather than checking injectedFilterChain.isEmpty() directly. I assume this is for protection against the injectedFilterChain field changing in between lines 83 and 84? If so, you can do this simply by first storing injectedFilterChain into a local var, i.e.\n\nList\u003cFilter\u003e localFilterChain \u003d injectedFilterChain;\nif(!localFilterChain.isEmpty()) {\n    createAAAFilterChain().doFilter(..., localFilterChain);\n}",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_18cd7566",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "Can you be sure filterChain is immutable? It would be safest to make an immutable copy via ImmutableList.copyOf(filterChain)",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d8982d6c",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapterListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "It seems this is part of the CustomFilterAdapterConfiguration API and should be in that package.",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_58ac1d8c",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/Filter1.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "I\u0027m not clear on the purpose/usage of this class (and Filter2). The names aren\u0027t descriptive...",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b89ba964",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/Filter1.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "Remove TODO",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_38a799a8",
+        "filename": "aaa-filterchain/src/main/resources/OSGI-INF/metatype/metatype.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-16T06:45:46Z",
+      "side": 1,
+      "message": "What is this file and metatype.properties for?",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
