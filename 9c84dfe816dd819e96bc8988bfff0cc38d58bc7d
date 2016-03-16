@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_4fd9f455",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_d8814dfc",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_788e412f",
         "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/Activator.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-03-16T06:45:46Z",
       "side": 1,
       "message": "Can you explain the use of the DependencyManager here? It seems all you need to do is register the CustomFilterAdapterConfiguration below, unless I\u0027m missing something (I\u0027ve never used DependencyManager).",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_afdc0047",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "I shamelessly copied this from another example, I will drop it.  It doesn\u0027t look like it is really needed.",
+      "parentUuid": "9a3d3df0_788e412f",
       "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_efe9e8e6",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9a3d3df0_58c37d37",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_b8ad699d",
         "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2016-03-16T06:45:46Z",
       "side": 1,
       "message": "This should be final instead of volatile.",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_cfe4e40e",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "Changed to final and CopyOnWriteArraylist",
+      "parentUuid": "9a3d3df0_b8ad699d",
       "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_2ff0f0c7",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "It does since when a listener is added, it needs to be informed of the \"current\" configuration.  I tried to minimize its use though.",
+      "parentUuid": "9a3d3df0_988b451e",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_d8aaed83",
         "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2016-03-16T06:45:46Z",
       "side": 1,
       "message": "Iterating the listeners Vector isn\u0027t thread-safe. Instead of using a Vector I would suggest using a CopyOnWriteArrayList.",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_0feb6cdc",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_d8aaed83",
       "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_6fbdd8d7",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_78a761bd",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_38c2f952",
         "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
         "patchSetId": 1
@@ -149,6 +275,24 @@
       "writtenOn": "2016-03-16T06:45:46Z",
       "side": 1,
       "message": "These can be final.",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_0fc24c52",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_38c2f952",
       "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_ef60c802",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_f8cb716f",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_18d1f522",
         "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
         "patchSetId": 1
@@ -183,6 +345,24 @@
       "writtenOn": "2016-03-16T06:45:46Z",
       "side": 1,
       "message": "These can be final.",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_af59a08f",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_18d1f522",
       "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_cf5b4452",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_58c7fd63",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_f8c7f142",
         "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
         "patchSetId": 1
@@ -217,6 +415,24 @@
       "writtenOn": "2016-03-16T06:45:46Z",
       "side": 1,
       "message": "Should this call the listener with the initial state?",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_deeda5f1",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_f8c7f142",
       "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -240,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "7a42497e_1e942d36",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/AAAFilterChain.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "I removed it.",
+      "parentUuid": "9a3d3df0_b884490b",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_187f3516",
         "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/AAAFilterChain.java",
         "patchSetId": 1
@@ -251,6 +485,24 @@
       "writtenOn": "2016-03-16T06:45:46Z",
       "side": 1,
       "message": "Is this iterator thread-safe?",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_3e8f6925",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/AAAFilterChain.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "Switched to CopyOnWriteArraylist in CustomFilterAdapterConfiguration.convertCustomFilterList().  However, you also mentioned I should set injectedFilterChain instance variable to be immutable in setInjectedFilterChain().  Technically ImmutableList.iterator() is not thread safe, but the underlying collection can\u0027t change.  Is that good enough for this case?",
+      "parentUuid": "9a3d3df0_187f3516",
       "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -274,6 +526,24 @@
     },
     {
       "key": {
+        "uuid": "7a42497e_5e9eb557",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_98b985ce",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_b8b289e2",
         "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapter.java",
         "patchSetId": 1
@@ -285,6 +555,24 @@
       "writtenOn": "2016-03-16T06:45:46Z",
       "side": 1,
       "message": "I\u0027m not clear on the purpose of the volatile injectedFilterChainHasElements boolean rather than checking injectedFilterChain.isEmpty() directly. I assume this is for protection against the injectedFilterChain field changing in between lines 83 and 84? If so, you can do this simply by first storing injectedFilterChain into a local var, i.e.\n\nList\u003cFilter\u003e localFilterChain \u003d injectedFilterChain;\nif(!localFilterChain.isEmpty()) {\n    createAAAFilterChain().doFilter(..., localFilterChain);\n}",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_8f3dbcdf",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "It was meant to be a heuristic to just check a boolean rather than do a method call.  Method calls are cheap though;  I\u0027ll do it the way you recommended instead.",
+      "parentUuid": "9a3d3df0_b8b289e2",
       "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -308,6 +596,24 @@
     },
     {
       "key": {
+        "uuid": "7a42497e_7e99f16d",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_18cd7566",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_d8982d6c",
         "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapterListener.java",
         "patchSetId": 1
@@ -319,6 +625,24 @@
       "writtenOn": "2016-03-16T06:45:46Z",
       "side": 1,
       "message": "It seems this is part of the CustomFilterAdapterConfiguration API and should be in that package.",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_0f29ac9a",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapterListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_d8982d6c",
       "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -342,6 +666,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_4f1e1471",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/Filter1.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "This functionality is particularly useful when developing new Filter(s);  for example, you can sandwich the newly created filter in between filter1 and filter2 to ensure that the chain is traversed correctly and in order.",
+      "parentUuid": "9a3d3df0_58ac1d8c",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_b89ba964",
         "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/Filter1.java",
         "patchSetId": 1
@@ -359,6 +701,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_af11a05e",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/Filter1.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_b89ba964",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_38a799a8",
         "filename": "aaa-filterchain/src/main/resources/OSGI-INF/metatype/metatype.xml",
         "patchSetId": 1
@@ -370,6 +730,24 @@
       "writtenOn": "2016-03-16T06:45:46Z",
       "side": 1,
       "message": "What is this file and metatype.properties for?",
+      "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_8f149c4d",
+        "filename": "aaa-filterchain/src/main/resources/OSGI-INF/metatype/metatype.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-16T21:16:42Z",
+      "side": 1,
+      "message": "This sets up a schema for the config admin webconsole (makes it look nice basically).  This is one of the reasons I used the strange CSV with properties files after $ format.\n\nthe metatype.properites just defines the values for the different varaiables in this file (i.e., \"%org.opendaylight.aaa.filterchain.name\" is replaced with the value from metatype.properties.  This is standard config admin convention.",
+      "parentUuid": "9a3d3df0_38a799a8",
       "revId": "9c84dfe816dd819e96bc8988bfff0cc38d58bc7d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
