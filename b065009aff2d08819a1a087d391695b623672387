@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a42497e_a7fec836",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-17T15:24:58Z",
+      "side": 1,
+      "message": "It is recommended to add the PID in the config admin user guide.  I can change it so it is done in extractPropertiesMap;  good call.",
+      "parentUuid": "7a42497e_677320b2",
+      "revId": "b065009aff2d08819a1a087d391695b623672387",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a42497e_a73d28be",
         "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2016-03-17T12:16:00Z",
       "side": 1,
       "message": "Why was this changed to CopyOnWriteArrayList? This should be immutable right? Plus every add call below will incur copy-on-write which is unnecessary.",
+      "revId": "b065009aff2d08819a1a087d391695b623672387",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_e7f8d04b",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-17T15:24:58Z",
+      "side": 1,
+      "message": "Switched it to ImmutableList.  Good call.",
+      "parentUuid": "7a42497e_a73d28be",
       "revId": "b065009aff2d08819a1a087d391695b623672387",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7a42497e_479544e3",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-17T15:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a42497e_4774249c",
+      "revId": "b065009aff2d08819a1a087d391695b623672387",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a42497e_27791894",
         "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7a42497e_07933cfb",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-17T15:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a42497e_27791894",
+      "revId": "b065009aff2d08819a1a087d391695b623672387",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a42497e_2752b813",
         "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/Filter1.java",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2016-03-17T12:16:00Z",
       "side": 1,
       "message": "Since this is for testing, can you name the TestFilter1 and TestFilter2 to make that clear?",
+      "revId": "b065009aff2d08819a1a087d391695b623672387",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_e78f30cb",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/Filter1.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-17T15:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a42497e_2752b813",
       "revId": "b065009aff2d08819a1a087d391695b623672387",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
