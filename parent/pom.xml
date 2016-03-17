@@ -51,7 +51,7 @@
         <config.authn.store.configfile>08-authn-config.xml</config.authn.store.configfile>
 
         <!-- IdmLight -->
-        <h2.version>1.4.185</h2.version>
+        <h2.version>1.4.191</h2.version>
 
         <!-- Keystone plugin -->
         <httpclient.version>4.4</httpclient.version>
