@@ -23,7 +23,7 @@
         <karaf.resources.version>1.7.0-SNAPSHOT</karaf.resources.version>
 
         <!-- OSGi -->
-        <osgi.metatype.version>1.0.10</osgi.metatype.version>
+        <osgi.metatype.version>1.1.2</osgi.metatype.version>
 
         <!-- Local project version, needed for import -->
         <aaa.version>${project.version}</aaa.version>
