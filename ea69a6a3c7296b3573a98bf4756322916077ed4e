@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a42497e_18039db9",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-18T15:30:47Z",
+      "side": 1,
+      "message": "This should be volatile.",
+      "revId": "ea69a6a3c7296b3573a98bf4756322916077ed4e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_383139a3",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-18T15:30:47Z",
+      "side": 1,
+      "message": "Minor thing but could you move the static above the class members? Recommended ordering is:\n\nstatic final\nstatic non-final\nfinal\nnon-final",
+      "revId": "ea69a6a3c7296b3573a98bf4756322916077ed4e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_d81f7508",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2016-03-18T15:30:47Z",
+      "side": 1,
+      "message": "I think this should be an immutable list as well.",
+      "revId": "ea69a6a3c7296b3573a98bf4756322916077ed4e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
