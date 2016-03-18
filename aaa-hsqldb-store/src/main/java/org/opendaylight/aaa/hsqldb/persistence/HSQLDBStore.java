@@ -6,11 +6,10 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.h2.persistence;
+package org.opendaylight.aaa.hsqldb.persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.IIDMStore;
@@ -22,28 +21,28 @@ import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
-import org.opendaylight.aaa.h2.config.H2StoreConfig;
+import org.opendaylight.aaa.hsqldb.config.HsqldbStoreConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class H2Store implements IIDMStore {
+public class HSQLDBStore implements IIDMStore {
 
-    private static final Logger LOG = LoggerFactory.getLogger(H2Store.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HSQLDBStore.class);
 
-    private static H2StoreConfig config = new H2StoreConfig();
+    private static HsqldbStoreConfig config = new HsqldbStoreConfig();
     private DomainStore domainStore = new DomainStore();
     private UserStore userStore = new UserStore();
     private RoleStore roleStore = new RoleStore();
     private GrantStore grantStore = new GrantStore();
 
-    public H2Store() {
+    public HSQLDBStore() {
     }
 
     public static Connection getConnection(Connection existingConnection) throws StoreException {
         Connection connection = existingConnection;
         try {
             if (existingConnection == null || existingConnection.isClosed()) {
-                new org.h2.Driver();
+                new org.hsqldb.jdbcDriver();
                 connection = DriverManager.getConnection(config.getDbPath(), config.getDbUser(),
                         config.getDbPwd());
             }
@@ -54,7 +53,7 @@ public class H2Store implements IIDMStore {
         return connection;
     }
 
-    public static H2StoreConfig getConfig() {
+    public static HsqldbStoreConfig getConfig() {
         return config;
     }
 
