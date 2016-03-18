@@ -23,6 +23,7 @@
         <mdsal.version>2.1.0-SNAPSHOT</mdsal.version>
         <controller.mdsal.version>1.4.0-SNAPSHOT</controller.mdsal.version>
         <yangtools.version>1.0.0-SNAPSHOT</yangtools.version>
+        <hsqldb.version>2.3.2</hsqldb.version>
     </properties>
 
     <dependencyManagement>
@@ -248,7 +249,22 @@
             <type>xml</type>
             <classifier>config</classifier>
         </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-hsqldb-store</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-hsqldb-store</artifactId>
+            <type>xml</type>
+            <classifier>config</classifier>
+        </dependency>
 
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>${hsqldb.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.osgi</groupId>

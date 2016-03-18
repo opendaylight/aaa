@@ -18,9 +18,9 @@ import org.slf4j.LoggerFactory;
  * @author peter.mellquist@hp.com
  *
  */
-public class IdmLightConfig {
+public class H2StoreConfig {
 
-    private static final Logger LOG = LoggerFactory.getLogger(IdmLightConfig.class);
+    private static final Logger LOG = LoggerFactory.getLogger(H2StoreConfig.class);
 
     /**
      * The default timeout for db connections in seconds.
@@ -88,7 +88,7 @@ public class IdmLightConfig {
     /**
      * Creates an valid database configuration using default values.
      */
-    public IdmLightConfig() {
+    public H2StoreConfig() {
         // TODO make this configurable
         dbName = DEFAULT_IDMLIGHT_DB_FILENAME;
         dbPath = DEFAULT_CONNECTION_STRING + dbName;
