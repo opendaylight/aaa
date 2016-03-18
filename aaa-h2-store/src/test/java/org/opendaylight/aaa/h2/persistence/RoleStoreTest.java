@@ -22,7 +22,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.opendaylight.aaa.api.model.Roles;
-import org.opendaylight.aaa.h2.persistence.RoleStore;
 
 public class RoleStoreTest {
 

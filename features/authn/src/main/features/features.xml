@@ -59,10 +59,13 @@
         <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
 
         <!--H2 Store -->
-        <bundle>mvn:org.osgi/org.osgi.enterprise/4.2.0</bundle>
+        <!--bundle>mvn:org.osgi/org.osgi.enterprise/4.2.0</bundle>
         <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/08-aaa-h2-store-config.xml">mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}/xml/config</configfile>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-h2-store-config.xml">mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}/xml/config</configfile-->
+        <bundle>wrap:mvn:hsqldb/hsqldb/1.8.0.10</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-hsqldb-store/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-hsqldb-store-config.xml">mvn:org.opendaylight.aaa/aaa-hsqldb-store/{{VERSION}}/xml/config</configfile>
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>

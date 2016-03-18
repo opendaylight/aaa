@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.h2.persistence;
+package org.opendaylight.aaa.hsqldb.persistence;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
