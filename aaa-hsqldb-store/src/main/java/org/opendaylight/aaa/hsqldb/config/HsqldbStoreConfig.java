@@ -6,59 +6,43 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.h2.config;
+package org.opendaylight.aaa.hsqldb.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Responsible for providing configuration properties for the IDMLight/H2
+ * Responsible for providing configuration properties for the IDMLight/HSQLDB
  * data store implementation.
  *
  * @author peter.mellquist@hp.com
  *
  */
-public class IdmLightConfig {
+public class HsqldbStoreConfig {
 
-    private static final Logger LOG = LoggerFactory.getLogger(IdmLightConfig.class);
-
-    /**
-     * The default timeout for db connections in seconds.
-     */
-    private static final int DEFAULT_DB_TIMEOUT = 3;
+    private static final Logger LOG = LoggerFactory.getLogger(HsqldbStoreConfig.class);
 
     /**
      * The default password for the database
      */
-    private static final String DEFAULT_PASSWORD = "bar";
+    private static final String DEFAULT_PASSWORD = "";
 
     /**
      * The default username for the database
      */
-    private static final String DEFAULT_USERNAME = "foo";
+    private static final String DEFAULT_USERNAME = "sa";
 
     /**
-     * The default driver for the databse is H2;  a pure-java implementation
-     * of JDBC.
-     */
-    private static final String DEFAULT_JDBC_DRIVER = "org.h2.Driver";
-
-    /**
-     * The default connection string includes the intention to use h2 as
+     * The default connection string includes the intention to use hsqldb as
      * the JDBC driver, and the path for the file is located relative to
      * KARAF_HOME.
      */
-    private static final String DEFAULT_CONNECTION_STRING = "jdbc:h2:./";
-
-    /**
-     * The default filename for the database file.
-     */
-    private static final String DEFAULT_IDMLIGHT_DB_FILENAME = "idmlight.db";
+    private static final String DEFAULT_CONNECTION_STRING = "jdbc:hsqldb:./aaa/";
 
     /**
      * The database filename
      */
-    private String dbName;
+    private String dbName = "aaa-hsqldb";
 
     /**
      * the database connection string
@@ -66,7 +50,7 @@ public class IdmLightConfig {
     private String dbPath;
 
     /**
-     * The database driver (i.e., H2)
+     * The database driver (i.e., HSQLDB)
      */
     private String dbDriver;
 
@@ -88,14 +72,11 @@ public class IdmLightConfig {
     /**
      * Creates an valid database configuration using default values.
      */
-    public IdmLightConfig() {
+    public HsqldbStoreConfig() {
         // TODO make this configurable
-        dbName = DEFAULT_IDMLIGHT_DB_FILENAME;
         dbPath = DEFAULT_CONNECTION_STRING + dbName;
-        dbDriver = DEFAULT_JDBC_DRIVER;
         dbUser = DEFAULT_USERNAME;
         dbPwd = DEFAULT_PASSWORD;
-        dbValidTimeOut = DEFAULT_DB_TIMEOUT;
     }
 
     /**
@@ -107,16 +88,8 @@ public class IdmLightConfig {
         LOG.info("DB Valid Time Out       : {}", dbValidTimeOut);
     }
 
-    public String getDbName() {
-        return this.dbName;
-    }
-
     public String getDbPath() {
         return this.dbPath;
-    }
-
-    public String getDbDriver() {
-        return this.dbDriver;
     }
 
     public String getDbUser() {
@@ -125,9 +98,5 @@ public class IdmLightConfig {
 
     public String getDbPwd() {
         return this.dbPwd;
-    }
-
-    public int getDbValidTimeOut() {
-        return this.dbValidTimeOut;
     }
 }
