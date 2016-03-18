@@ -58,11 +58,10 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
         <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
 
-        <!--H2 Store -->
-        <bundle>mvn:org.osgi/org.osgi.enterprise/4.2.0</bundle>
-        <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/08-aaa-h2-store-config.xml">mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}/xml/config</configfile>
+        <!-- HSQLDB Store -->
+        <bundle>wrap:mvn:org.hsqldb/hsqldb/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-hsqldb-store/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-hsqldb-store-config.xml">mvn:org.opendaylight.aaa/aaa-hsqldb-store/{{VERSION}}/xml/config</configfile>
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
@@ -133,11 +132,10 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
         <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
 
-        <!--H2 Store -->
-        <bundle>mvn:org.osgi/org.osgi.enterprise/4.2.0</bundle>
-        <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/08-aaa-h2-store-config.xml">mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}/xml/config</configfile>
+        <!-- HSQLDB Store -->
+        <bundle>wrap:mvn:org.hsqldb/hsqldb/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-hsqldb-store/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-hsqldb-store-config.xml">mvn:org.opendaylight.aaa/aaa-hsqldb-store/{{VERSION}}/xml/config</configfile>
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
@@ -207,7 +205,6 @@
         <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/{{VERSION}}</bundle>
-        <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
 
         <!-- Federation -->
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}</bundle>
