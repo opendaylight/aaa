@@ -18,6 +18,7 @@
         <bundle>mvn:org.apache.felix/org.apache.felix.metatype/{{VERSION}}</bundle>
 
         <!-- Existing AAA infrastructure -->
+        <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
         <feature version='${project.version}'>odl-aaa-authn</feature>
 
         <bundle>mvn:org.apache.shiro/shiro-web/{{VERSION}}</bundle>
