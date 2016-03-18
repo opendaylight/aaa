@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.h2.persistence;
+package org.opendaylight.aaa.hsqldb.persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,38 +14,30 @@ import java.sql.DriverManager;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.IIDMStore;
-import org.opendaylight.aaa.api.model.Domain;
-import org.opendaylight.aaa.api.model.Domains;
-import org.opendaylight.aaa.api.model.Grant;
-import org.opendaylight.aaa.api.model.Grants;
-import org.opendaylight.aaa.api.model.Role;
-import org.opendaylight.aaa.api.model.Roles;
-import org.opendaylight.aaa.api.model.User;
-import org.opendaylight.aaa.api.model.Users;
-import org.opendaylight.aaa.h2.config.H2StoreConfig;
+import org.opendaylight.aaa.api.model.*;
+import org.opendaylight.aaa.hsqldb.config.HsqldbStoreConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class H2Store implements IIDMStore {
+public class HSQLDBStore implements IIDMStore {
 
-    private static final Logger LOG = LoggerFactory.getLogger(H2Store.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HSQLDBStore.class);
 
-    private static H2StoreConfig config = new H2StoreConfig();
+    private static HsqldbStoreConfig config = new HsqldbStoreConfig();
     private DomainStore domainStore = new DomainStore();
     private UserStore userStore = new UserStore();
     private RoleStore roleStore = new RoleStore();
     private GrantStore grantStore = new GrantStore();
 
-    public H2Store() {
+    public HSQLDBStore() {
     }
 
     public static Connection getConnection(Connection existingConnection) throws StoreException {
         Connection connection = existingConnection;
         try {
             if (existingConnection == null || existingConnection.isClosed()) {
-                new org.h2.Driver();
-                connection = DriverManager.getConnection(config.getDbPath(), config.getDbUser(),
-                        config.getDbPwd());
+                new org.hsqldb.jdbcDriver();
+                connection = DriverManager.getConnection(config.getDbPath(), config.getDbUser(), config.getDbPwd());
             }
         } catch (Exception e) {
             throw new StoreException("Cannot connect to database server" + e);
@@ -54,7 +46,9 @@ public class H2Store implements IIDMStore {
         return connection;
     }
 
-    public static H2StoreConfig getConfig() {
+
+
+    public static HsqldbStoreConfig getConfig() {
         return config;
     }
 
@@ -273,17 +267,14 @@ public class H2Store implements IIDMStore {
         return readGrant(IDMStoreUtil.createGrantid(userid, domainid, roleid));
     }
 
-    public static Domain createDomain(String domainName, boolean enable) throws StoreException {
-        DomainStore ds = new DomainStore();
+    public static Domain createDomain(String domainName, boolean enable, HSQLDBStore store) throws StoreException {
         Domain d = new Domain();
         d.setName(domainName);
         d.setEnabled(enable);
-        return ds.createDomain(d);
+        return store.domainStore.createDomain(d);
     }
 
-    public static User createUser(String name, String password, String domain, String description,
-            String email, boolean enabled, String SALT) throws StoreException {
-        UserStore us = new UserStore();
+    public static User createUser(String name, String password, String domain, String description, String email, boolean enabled, String SALT, HSQLDBStore store) throws StoreException {
         User u = new User();
         u.setName(name);
         u.setDomainid(domain);
@@ -292,25 +283,36 @@ public class H2Store implements IIDMStore {
         u.setEnabled(enabled);
         u.setPassword(password);
         u.setSalt(SALT);
-        return us.createUser(u);
+        return store.userStore.createUser(u);
     }
 
-    public static Role createRole(String name, String domain, String description)
-            throws StoreException {
-        RoleStore rs = new RoleStore();
+    public static Role createRole(String name, String domain, String description, HSQLDBStore store) throws StoreException {
         Role r = new Role();
         r.setDescription(description);
         r.setName(name);
         r.setDomainid(domain);
-        return rs.createRole(r);
+        return store.roleStore.createRole(r);
     }
 
-    public static Grant createGrant(String domain, String user, String role) throws StoreException {
-        GrantStore gs = new GrantStore();
+    public static Grant createGrant(String domain, String user, String role, HSQLDBStore store) throws StoreException {
         Grant g = new Grant();
         g.setDomainid(domain);
         g.setRoleid(role);
         g.setUserid(user);
-        return gs.createGrant(g);
+        return store.grantStore.createGrant(g);
+    }
+
+    public void dbClean() throws StoreException {
+        this.domainStore.dbClean();
+        this.userStore.dbClean();
+        this.roleStore.dbClean();
+        this.grantStore.dbClean();
+    }
+
+    public void closeConnections(){
+        this.domainStore.closeConnection();
+        this.userStore.closeConnection();
+        this.roleStore.closeConnection();
+        this.grantStore.closeConnection();
     }
 }
