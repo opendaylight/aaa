@@ -22,7 +22,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.opendaylight.aaa.api.model.Domains;
-import org.opendaylight.aaa.h2.persistence.DomainStore;
 
 public class DomainStoreTest {
 
