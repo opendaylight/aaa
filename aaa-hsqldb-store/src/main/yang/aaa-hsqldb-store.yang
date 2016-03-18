@@ -1,0 +1,32 @@
+module aaa-hsqldb-store {
+
+    yang-version 1;
+
+    namespace "config:aaa:authn:hsqldb:store";
+
+    prefix "aaa-hsqldb-store";
+
+    organization "OpenDayLight";
+
+    import config { prefix config; revision-date 2013-04-05; }
+    import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
+
+    contact "saichler@gmail.com";
+
+    revision 2016-03-18 {
+        description
+            "Initial revision.";
+    }
+
+    identity aaa-hsqldb-store {
+        base config:module-type;
+        config:java-name-prefix AAAHSQLDBStore;
+    }
+
+    augment "/config:modules/config:module/config:configuration" {
+        case aaa-hsqldb-store {
+            when "/config:modules/config:module/config:type = 'aaa-hsqldb-store'";
+        }
+    }
+
+}
