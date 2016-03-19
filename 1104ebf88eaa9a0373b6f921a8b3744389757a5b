@@ -22,6 +22,30 @@
       "revId": "1104ebf88eaa9a0373b6f921a8b3744389757a5b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_13f25e9a",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-19T15:01:20Z",
+      "side": 1,
+      "message": "Hi Vratko,\n\nI removed this in a follow up commit... the shiro-act bundle actually enables AAA and this essentially always enabled it.  Since RESTCONF is the primary consumer, we have adjusted the semantics to support odl-restconf-noauth.  I am investigating ways to improve modularity of this in the future.\n\nThis was unintentional, sorry for the temporary change in behavior; it has been fixed.\n\nThanks,\nRyan",
+      "parentUuid": "7a42497e_ed8f11cb",
+      "range": {
+        "startLine": 126,
+        "startChar": 41,
+        "endLine": 126,
+        "endChar": 54
+      },
+      "revId": "1104ebf88eaa9a0373b6f921a8b3744389757a5b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
