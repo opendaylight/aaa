@@ -21,10 +21,10 @@ module aaa-cert {
         revision-date 2013-10-28;
     }
 
-    import openflow-switch-connection-provider {
-        prefix openflow-switch-connection-provider;
-        revision-date 2014-03-28;
-    }
+//    import openflow-switch-connection-provider {
+//        prefix openflow-switch-connection-provider;
+//        revision-date 2014-03-28;
+//    }
 
     description
         "Service definition for aaa certificate";
@@ -53,14 +53,14 @@ module aaa-cert {
                     }
                 }
             }
-            list openflow-switch-connection {
-                uses config:service-ref {
-                    refine type {
-                        mandatory true;
-                        config:required-identity openflow-switch-connection-provider:openflow-switch-connection-provider;
-                    }
-                }
-            }
+//            list openflow-switch-connection {
+//                uses config:service-ref {
+//                    refine type {
+//                        mandatory true;
+//                        config:required-identity openflow-switch-connection-provider:openflow-switch-connection-provider;
+//                    }
+//                }
+//            }
             leaf useConfig {
                 description "Use the configuration data to create the keystores";
                 type boolean;

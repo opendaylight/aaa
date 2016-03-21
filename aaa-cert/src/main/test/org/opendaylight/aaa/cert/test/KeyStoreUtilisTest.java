@@ -15,7 +15,7 @@ import java.io.File;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.opendaylight.aaa.cert.impl.KeyStoreUtilis;
+import org.opendaylight.aaa.cert.impl.KeyStoreConstant;;
 
 public class KeyStoreUtilisTest {
 
@@ -24,12 +24,12 @@ public class KeyStoreUtilisTest {
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        KeyStoreUtilis.keyStorePath = "target" + File.separator + "test" + File.separator;
+    	KeyStoreConstant.keyStorePath = "target" + File.separator + "test" + File.separator;
     }
 
     @Test
     public void testCreateDir() {
-        final String path = KeyStoreUtilis.createDir(KeyStoreUtilis.keyStorePath);
+        final String path = KeyStoreConstant.createDir(KeyStoreConstant.keyStorePath);
         assertTrue(!path.isEmpty());
         final File dir = new File(path);
         assertTrue(dir.exists());
@@ -37,18 +37,18 @@ public class KeyStoreUtilisTest {
 
     @Test
     public void testSaveCert() {
-        assertTrue(KeyStoreUtilis.saveCert(fileName, txt));
+        assertTrue(KeyStoreConstant.saveCert(fileName, txt));
     }
 
     @Test
     public void testCheckKeyStoreFile() {
-        assertTrue(KeyStoreUtilis.checkKeyStoreFile(fileName));
-        assertTrue(!KeyStoreUtilis.checkKeyStoreFile("notExist.txt"));
+        assertTrue(KeyStoreConstant.checkKeyStoreFile(fileName));
+        assertTrue(!KeyStoreConstant.checkKeyStoreFile("notExist.txt"));
     }
 
     @Test
     public void testReadFile() {
-        final String readTxt = KeyStoreUtilis.readFile(fileName);
+        final String readTxt = KeyStoreConstant.readFile(fileName);
         assertEquals(txt, readTxt);
     }
 }
