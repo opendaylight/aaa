@@ -1,0 +1,267 @@
+/*
+Copyright (c) 2016 Inocybe Technology All rights reserved.
+
+This program and the accompanying materials are made available under the
+terms of the Eclipse Public License v1.0 which accompanies this distribution,
+and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
+*/
+
+module aaa-cert-mdsal-rpc {
+    namespace "urn:opendaylight:aaa:cert:mdsal:rpc";
+    prefix "aaa-cert-mdsal-rpc";
+
+    revision 2016-03-21 {
+        description "Initial revision";
+    }
+
+    import aaa-cert-mdsal {
+        prefix cert;
+        revision-date 2016-03-21;
+    }
+
+    rpc create-ssl-data {
+        description
+            "create the odl-bundle ssl keystores and cipher suites";
+        input {
+            leaf bundle-name {
+                type string;
+            }
+            leaf odl-keystore-name {
+                type string;
+            }
+            leaf odl-keystore-passwd {
+                type string;
+            }
+            leaf odl-keystore-alias {
+                type string;
+            }
+            leaf odl-keystore-dname {
+                type string;
+            }
+            leaf odl-keystore-key-alg {
+                type string;
+            }
+            leaf odl-keystore-sign-alg {
+                type string;
+            }
+            leaf odl-keystore-keysize {
+                type string;
+            }
+            leaf odl-keystore-validity {
+                type string;
+            }
+            leaf trust-keystore-name {
+                type string;
+            }
+            leaf trust-keystore-passwd {
+                type string;
+            }
+            list trust-certificates{
+                uses cert:node-certificate;
+            }
+            uses cert:cipher-suite;
+        }
+        output {
+            leaf result {
+                type boolean;
+            }
+        }
+    }
+
+    rpc import-ssl-data{
+        description
+            "import the odl-bundle ssl keystores and cipher suites";
+        input {
+            leaf bundle-name {
+                type string;
+            }
+            leaf odl-keystore-name {
+                type string;
+            }
+            leaf odl-keystore-passwd {
+                type string;
+            }
+            leaf odl-keystore-file {
+                type binary;
+            }
+            leaf trust-keystore-name {
+                type string;
+            }
+            leaf trust-keystore-passwd {
+                type string;
+            }
+            leaf trust-keystore-file {
+                type binary;
+            }
+            uses cert:cipher-suite;
+        }
+        output {
+            leaf result {
+                type boolean;
+            }
+        }
+    }
+
+    rpc get-ssl-data {
+        description
+            "Get the odl-bundle ssl-data (odl-keystore, trust-keystore and cipher suites)";
+        input {
+            leaf bundle-name {
+                type string;
+            }
+        }
+        output {
+                uses cert:ssl-data;
+        }
+    }
+
+    rpc delete-ssl-data {
+        description
+            "delete the odl-bundle ssl-data (odl-keystore, trust-keystore and cipher suites)";
+        input {
+            leaf bundle-name {
+                type string;
+            }
+        }
+        output {
+            leaf result {
+                type boolean;
+            }
+        }
+    }
+
+    rpc update-ssl-data {
+        description
+            "update the odl-bundle ssl-data (odl-keystore, trust-keystore and cipher suites)";
+        input {
+            uses cert:ssl-data;
+        }
+        output {
+            leaf result {
+                 type boolean;
+            }
+        }
+    }
+
+    rpc add-node-certificate {
+        description
+            "Add certificate to trust-keystore";
+        input {
+           leaf bundle-name {
+               type string;
+           }
+           leaf keystore-name {
+               type string;
+           }
+           leaf keystore-passwd {
+               type string;
+           }
+           leaf cert-alias {
+               type string;
+           }
+           leaf node-cert {
+               type string;
+           }
+        }
+        output {
+            leaf result {
+                type boolean;
+            }
+        }
+    }
+
+    rpc add-odl-signed-certificate {
+        description
+            "The certifcate should be generated based on a certifcate request
+            generated from the odl-keystore and signed by a valid CA otherwise the
+            certifcated will not be added to the keystore.";
+        input {
+           leaf bundle-name {
+               type string;
+           }
+           leaf keystore-name {
+               type string;
+           }
+           leaf keystore-passwd {
+               type string;
+           }
+           leaf key-alias {
+               type string;
+           }
+           leaf signed-cert {
+               type string;
+           }
+        }
+        output {
+            leaf result {
+                type boolean;
+            }
+        }
+    }
+
+    rpc get-node-certificate {
+        description
+            "Get the network node certificate based on node alias from the trust-keystore";
+        input {
+            leaf bundle-name {
+                type string;
+            }
+            leaf keystore-name {
+               type string;
+           }
+           leaf keystore-passwd {
+               type string;
+           }
+           leaf cert-alias {
+               type string;
+           }
+        }
+        output {
+            leaf node-cert {
+                type string;
+            }
+        }
+    }
+
+    rpc get-odl-certificate {
+        description
+            "Get the odl-keystore certificate.";
+        input {
+            leaf bundle-name {
+                type string;
+            }
+            leaf keystore-name {
+                type string;
+            }
+            leaf keystore-passwd {
+                type string;
+            }
+        }
+        output {
+           leaf certificate {
+               type string;
+           }
+        }
+    }
+
+    rpc get-odl-certificate-request {
+        description
+            "Generate a certificate request from the odl-keystore to be signed by the CA";
+        input {
+            leaf bundle-name {
+                type string;
+            }
+            leaf keystore-name {
+                type string;
+            }
+            leaf keystore-passwd {
+                type string;
+            }
+        }
+        output {
+           leaf cert-req {
+               type string;
+           }
+        }
+    }
+}

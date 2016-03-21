@@ -20,7 +20,7 @@ import java.nio.charset.StandardCharsets;
  * @author mserngawy
  * Utility class for aaa-cert bundle
  */
-public class KeyStoreUtilis {
+public class KeyStoreConstant {
 
     public static final String BEGIN_CERTIFICATE = "-----BEGIN CERTIFICATE-----";
 
