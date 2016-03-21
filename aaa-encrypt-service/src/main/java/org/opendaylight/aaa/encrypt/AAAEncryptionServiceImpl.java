@@ -89,7 +89,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
                 return encryptTag + cryptostring;
             }
         } catch (IllegalBlockSizeException | BadPaddingException e) {
-            LOG.error("Failed to encrypt data.",e);
+            LOG.error("Failed to encrypt data.", e);
         }
 
         return data;
@@ -98,7 +98,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     @Override
     public String decrypt(String encData) {
         if (key == null || encData == null || encData.length() == 0 || !encData.startsWith(encryptTag)) {
-            LOG.warn("String {} was not decrypted.",encData);
+            LOG.warn("String {} was not decrypted.", encData);
             return encData;
         }
 
@@ -107,7 +107,40 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             byte[] clearbytes = decryptCipher.doFinal(cryptobytes);
             return new String(clearbytes);
         } catch (IllegalBlockSizeException | BadPaddingException e){
-            LOG.error("Failed to decrypt encoded data",e);
+            LOG.error("Failed to decrypt encoded data", e);
+        }
+        return encData;
+    }
+
+    @Override
+    public byte[] encrypt(byte[] data) {
+        //We could not instantiate the encryption key, hence no encryption or decryption will be done.
+        if (key == null) {
+            LOG.warn("Encryption Key is NULL, will not encrypt data.");
+            return data;
+        }
+
+        try {
+            synchronized(encryptCipher) {
+                return encryptCipher.doFinal(data);
+            }
+        } catch (IllegalBlockSizeException | BadPaddingException e) {
+            LOG.error("Failed to encrypt data.", e);
+        }
+        return data;
+    }
+
+    @Override
+    public byte[] decrypt(byte[] encData) {
+        if (encData == null) {
+            LOG.warn("encData is null.");
+            return encData;
+        }
+
+        try {
+            return decryptCipher.doFinal(encData);
+        } catch (IllegalBlockSizeException | BadPaddingException e){
+            LOG.error("Failed to decrypt encoded data", e);
         }
         return encData;
     }

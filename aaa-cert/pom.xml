@@ -18,16 +18,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
   <artifactId>aaa-cert</artifactId>
   <packaging>bundle</packaging>
 
-  <properties>
-    <openflowplugin.version>0.3.0-SNAPSHOT</openflowplugin.version>
-    <openflow.protocol.spi.version>0.8.0-SNAPSHOT</openflow.protocol.spi.version>
-  </properties>
-
-
   <dependencies>
     <dependency>
       <groupId>org.opendaylight.controller</groupId>
       <artifactId>sal-binding-config</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-encrypt-service</artifactId>
     </dependency>
 
     <!-- Bouncy Castle dependency -->
@@ -38,21 +36,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <dependency>
         <groupId>commons-codec</groupId>
         <artifactId>commons-codec</artifactId>
-    </dependency>
-
-    <!-- openflow dependency -->
-    <dependency>
-      <groupId>org.opendaylight.openflowplugin</groupId>
-      <artifactId>features-openflowplugin</artifactId>
-      <classifier>features</classifier>
-      <version>${openflowplugin.version}</version>
-      <type>xml</type>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.openflowjava</groupId>
-      <artifactId>openflow-protocol-spi</artifactId>
-      <version>${openflow.protocol.spi.version}</version>
     </dependency>
 
     <!-- Testing Dependencies -->
