@@ -35,7 +35,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     </dependencyManagement>
 
   <properties>
-    <openflowplugin.version>0.3.0-SNAPSHOT</openflowplugin.version>
+    <restconf.version>1.4.0-SNAPSHOT</restconf.version>
+    <yangtools.version>1.0.0-SNAPSHOT</yangtools.version>
+    <dlux.version>0.4.0-SNAPSHOT</dlux.version>
+    <mdsal.model.version>0.9.0-SNAPSHOT</mdsal.model.version>
+    <netconf.version>1.1.0-SNAPSHOT</netconf.version>
     <controller.mdsal.version>1.4.0-SNAPSHOT</controller.mdsal.version>
   </properties>
 
@@ -57,24 +61,67 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
       <type>xml</type>
     </dependency>
     <dependency>
-      <groupId>org.opendaylight.controller</groupId>
-      <artifactId>features-mdsal</artifactId>
-      <classifier>features</classifier>
-      <type>xml</type>
-    </dependency>
-    <dependency>
     <groupId>org.apache.maven</groupId>
       <artifactId>maven-aether-provider</artifactId>
       <version>3.0.5</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
-      <groupId>org.opendaylight.openflowplugin</groupId>
-      <artifactId>features-openflowplugin</artifactId>
-      <version>${openflowplugin.version}</version>
+      <groupId>org.opendaylight.yangtools</groupId>
+      <artifactId>features-yangtools</artifactId>
+      <classifier>features</classifier>
+      <version>${yangtools.version}</version>
+      <type>xml</type>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.mdsal.model</groupId>
+      <artifactId>features-mdsal-model</artifactId>
+      <version>${mdsal.model.version}</version>
       <classifier>features</classifier>
       <type>xml</type>
+      <scope>runtime</scope>
     </dependency>
+    <dependency>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>features-mdsal</artifactId>
+      <classifier>features</classifier>
+      <version>${controller.mdsal.version}</version>
+      <type>xml</type>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.netconf</groupId>
+      <artifactId>features-restconf</artifactId>
+      <classifier>features</classifier>
+      <type>xml</type>
+      <version>${restconf.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.netconf</groupId>
+      <artifactId>features-netconf</artifactId>
+      <type>xml</type>
+      <classifier>features</classifier>
+      <version>${netconf.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.netconf</groupId>
+      <artifactId>features-netconf-connector</artifactId>
+      <type>xml</type>
+      <classifier>features</classifier>
+      <version>${netconf.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.dlux</groupId>
+      <artifactId>features-dlux</artifactId>
+      <classifier>features</classifier>
+      <version>${dlux.version}</version>
+      <type>xml</type>
+      <scope>runtime</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.bouncycastle</groupId>
       <artifactId>bcprov-jdk15on</artifactId>

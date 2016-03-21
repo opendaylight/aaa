@@ -20,7 +20,7 @@ import java.nio.charset.StandardCharsets;
  * @author mserngawy
  * Utility class for aaa-cert bundle
  */
-public class KeyStoreUtilis {
+public class KeyStoreConstant {
 
     public static final String BEGIN_CERTIFICATE = "-----BEGIN CERTIFICATE-----";
 
@@ -28,6 +28,7 @@ public class KeyStoreUtilis {
     public static String defaultKeyAlg = "RSA"; //DES
     public static int defaultKeySize = 2048; //1024
     public static String defaultSignAlg = "SHA1WithRSAEncryption"; //MD5WithRSAEncryption
+    public static final String dname = "CN=SDN, OU=Dev, O=Opendaylight, L=linuxfoundation, S=ODL, C=SDN-Network";
 
     public static int defaultValidity = 365;
     public static final String END_CERTIFICATE = "-----END CERTIFICATE-----";

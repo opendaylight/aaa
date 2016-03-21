@@ -85,7 +85,7 @@ public class AaaCertProvider implements AutoCloseable, IAaaCertProvider, Binding
         ctlKeyStore.setName(keyStore);
         ctlKeyStore.setStorePassword(storePasswd);
         ctlKeyStore.setValidity(validity);
-        if(odlKeyTool.createKeyStoreWithSelfSignCert(keyStore, storePasswd, dName, alias, validity)) {
+        if(odlKeyTool.createKeyStoreWithSelfSignCert(keyStore, storePasswd, dName, alias, validity) != null) {
             return keyStore + " Keystore created.";
         } else {
             return "Failed to create keystore " + keyStore;
@@ -112,7 +112,7 @@ public class AaaCertProvider implements AutoCloseable, IAaaCertProvider, Binding
     @Override
     public String genODLKeyStorCertificateReq(final String storePasswd, final String alias) {
         return odlKeyTool.generateCertificateReq(ctlKeyStore.getName(), storePasswd,
-                     alias,KeyStoreUtilis.defaultSignAlg, true);
+                     alias,KeyStoreConstant.defaultSignAlg, true);
     }
 
     @Override
@@ -156,7 +156,7 @@ public class AaaCertProvider implements AutoCloseable, IAaaCertProvider, Binding
     public Future<RpcResult<GetODLCertificateReqOutput>> getODLCertificateReq() {
         final SettableFuture<RpcResult<GetODLCertificateReqOutput>> futureResult = SettableFuture.create();
         final String certReq = odlKeyTool.generateCertificateReq(ctlKeyStore.getName(), ctlKeyStore.getStorePassword(),
-                                 ctlKeyStore.getAlias(), KeyStoreUtilis.defaultSignAlg, true);
+                                 ctlKeyStore.getAlias(), KeyStoreConstant.defaultSignAlg, true);
         if (certReq != null) {
             final GetODLCertificateReqOutput odlCertReqOutput = new GetODLCertificateReqOutputBuilder()
                                                         .setOdlCertReq(certReq)
