@@ -1,0 +1,95 @@
+/*
+Copyright (c) 2016 Inocybe Technology All rights reserved.
+
+This program and the accompanying materials are made available under the
+terms of the Eclipse Public License v1.0 which accompanies this distribution,
+and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
+*/
+
+module aaa-cert-mdsal-rpc {
+    namespace "urn:opendaylight:aaa:cert:mdsal:rpc";
+    prefix "aaa-cert-mdsal-rpc";
+
+    revision 2016-03-21 {
+        description "Initial revision";
+    }
+
+    rpc AddCertificate {
+        description
+            "Add certificate to keystore";
+        input {
+           leaf keystore-name {
+               type string;
+           }
+           leaf keystore-passwd {
+               type string;
+           }
+           leaf alias {
+               type string;
+           }
+           leaf node-cert {
+               type string;
+           }
+        }
+    }
+
+    rpc AddSignedCertificate {
+        description
+            "The certifcate should be generated based on a certifcate request
+            generated from the keystore and signed by a valid CA otherwise the
+            certifcated will not be added to the keystore.";
+        input {
+           leaf keystore-name {
+               type string;
+           }
+           leaf keystore-passwd {
+               type string;
+           }
+           leaf key-alias {
+               type string;
+           }
+           leaf signed-cert {
+               type string;
+           }
+        }
+    }
+
+    rpc getCertificate {
+        description
+            "Get the network node certificate based on node alias";
+        input {
+           leaf keystore-name {
+               type string;
+           }
+           leaf keystore-passwd {
+               type string;
+           }
+           leaf alias {
+               type string;
+           }
+        }
+        output {
+            leaf node-cert {
+                type string;
+            }
+        }
+    }
+
+    rpc getCertificateRequest {
+        description
+            "Generate a certificate request from the keystore to be signed by the CA";
+        input {
+            leaf keystore-name {
+                type string;
+            }
+            leaf keystore-passwd {
+                type string;
+            }
+        }
+        output {
+           leaf cert-req {
+               type string;
+           }
+        }
+    }
+}

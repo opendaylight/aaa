@@ -22,17 +22,6 @@ module aaa-cert-rpc {
             "Initial revision.";
     }
 
-    grouping node-certificate {
-        leaf alias {
-            description "ovs node certificate alias";
-            type string;
-        }
-        leaf certificate {
-            description "ovs node certificate";
-            type string;
-        }
-    }
-
     rpc getODLCertificate {
         description
             "Get the ctl.jks keystore certificate";
