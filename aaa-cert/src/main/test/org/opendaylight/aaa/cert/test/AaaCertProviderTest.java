@@ -23,7 +23,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.opendaylight.aaa.cert.impl.AaaCertProvider;
-import org.opendaylight.aaa.cert.impl.KeyStoreUtilis;
+import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.CtlKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.TrustKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertifcateInput;
@@ -43,7 +43,7 @@ public class AaaCertProviderTest {
     private static TrustKeystore trustKeyStore;
 
     private String dummyAlias = "fooAlias";
-    private String dummyCert = KeyStoreUtilis.BEGIN_CERTIFICATE +
+    private String dummyCert = KeyStoreConstant.BEGIN_CERTIFICATE +
                           "MIIDLjCCAhagAwIBAgIELsFzhjANBgkqhkiG9w0BAQUFADBZMQwwCgYDV"+
                           "QQDDANPREwxDDAKBgNVBAsMA0RldjEYMBYGA1UECgwPTGludXhGb3VuZG"+
                           "F0aW9uMRQwEgYDVQQHDAtRQyBNb250cmVhbDELMAkGA1UEBhMCQ0EwHhc"+
@@ -63,11 +63,11 @@ public class AaaCertProviderTest {
                           "OT0fAjQi6Mypje08OstA2sklTSPfYtrDFJUpJW7+5fGic/wf5ITPmMVJl"+
                           "rt6aSStfyOLhCSAWXmU/1Pn1pixltJvaLnd0HYQdhcFOS9XG5LfA3Mlqm"+
                           "ZEwGEjhpmk810dJyRjoCEsokljWyhmJGW6hTK1j+2V+PCHqyawghiTB0jQFRTt2zo="+
-                          KeyStoreUtilis.END_CERTIFICATE;
+                          KeyStoreConstant.END_CERTIFICATE;
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        KeyStoreUtilis.keyStorePath = "target" + File.separator + "test" + File.separator;
+        KeyStoreConstant.KEY_STORE_PATH = "target" + File.separator + "test" + File.separator;
         String dName = "CN=ODL, OU=Dev, O=LinuxFoundation, L=QC Montreal, C=CA";
         Security.addProvider(new BouncyCastleProvider());
         ctlKeyStore = new CtlKeystore();
@@ -75,7 +75,7 @@ public class AaaCertProviderTest {
         ctlKeyStore.setDname(dName);
         ctlKeyStore.setName("fooTest.jks");
         ctlKeyStore.setStorePassword("passWord");
-        ctlKeyStore.setValidity(KeyStoreUtilis.defaultValidity);
+        ctlKeyStore.setValidity(KeyStoreConstant.DEFAULT_VALIDITY);
         trustKeyStore = new TrustKeystore();
         trustKeyStore.setAlias("trustTest");
         trustKeyStore.setCertFile("cacert.pem");
@@ -106,7 +106,7 @@ public class AaaCertProviderTest {
         assertTrue(rpc.isSuccessful());
         String certReq = rpc.getResult().getOdlCertReq();
         assertTrue(certReq != null);
-        assertTrue(certReq.contains(KeyStoreUtilis.BEGIN_CERTIFICATE_REQUEST));
+        assertTrue(certReq.contains(KeyStoreConstant.BEGIN_CERTIFICATE_REQUEST));
     }
 
     @Test
