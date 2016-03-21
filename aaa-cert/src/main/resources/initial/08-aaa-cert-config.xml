@@ -8,6 +8,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
 <snapshot>
   <required-capabilities>
       <capability>urn:opendaylight:yang:aaa:cert?module=aaa-cert&amp;revision=2015-11-26</capability>
+      <capability>urn:opendaylight:yang:aaa:cert:mdsal?module=aaa-cert-mdsal&amp;revision=2016-03-21</capability>
       <capability>urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding?module=opendaylight-md-sal-binding&amp;revision=2013-10-28</capability>
   </required-capabilities>
   <configuration>
@@ -42,6 +43,16 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <storePassword>storePassword</storePassword>
             <certFile>cacert.pem</certFile>
           </trustKeystore>
+        </module>
+        <module>
+          <type xmlns:prefix="urn:opendaylight:yang:aaa:cert:mdsal">prefix:aaa-cert-mdsal</type>
+          <name>aaa-cert-mdsal</name>
+          <aaa-broker>
+            <type xmlns:binding="urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding">binding:binding-broker-osgi-registry</type>
+            <name>binding-osgi-broker</name>
+          </aaa-broker>
+          <password>changeTheWeakPa$$w0rd</password>
+          <init-vector>atLeastSixteenChars</init-vector>
         </module>
       </modules>
     </data>
