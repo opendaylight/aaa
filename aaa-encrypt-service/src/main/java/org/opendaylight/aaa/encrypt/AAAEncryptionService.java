@@ -12,6 +12,12 @@ package org.opendaylight.aaa.encrypt;
  */
 
 public interface AAAEncryptionService {
+
     public String encrypt(String data);
+
     public String decrypt(String encData);
+
+    public byte[] encrypt(byte[] data);
+
+    public byte[] decrypt(byte[] encData);
 }

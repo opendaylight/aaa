@@ -35,9 +35,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * AaaCertProvider use to manage the certificates manipulation operations add, revoke and update
  *
  * @author mserngawy
- * AaaCertProvider use to manage the certificates manipulation operations add, revoke and update
+ *
  */
 public class AaaCertProvider implements AutoCloseable, IAaaCertProvider, BindingAwareProvider, AaaCertRpcService {
 
@@ -112,7 +113,7 @@ public class AaaCertProvider implements AutoCloseable, IAaaCertProvider, Binding
     @Override
     public String genODLKeyStorCertificateReq(final String storePasswd, final String alias) {
         return odlKeyTool.generateCertificateReq(ctlKeyStore.getName(), storePasswd,
-                     alias,KeyStoreUtilis.defaultSignAlg, true);
+                     alias, KeyStoreConstant.DEFAULT_SIGN_ALG, true);
     }
 
     @Override
@@ -156,7 +157,7 @@ public class AaaCertProvider implements AutoCloseable, IAaaCertProvider, Binding
     public Future<RpcResult<GetODLCertificateReqOutput>> getODLCertificateReq() {
         final SettableFuture<RpcResult<GetODLCertificateReqOutput>> futureResult = SettableFuture.create();
         final String certReq = odlKeyTool.generateCertificateReq(ctlKeyStore.getName(), ctlKeyStore.getStorePassword(),
-                                 ctlKeyStore.getAlias(), KeyStoreUtilis.defaultSignAlg, true);
+                                 ctlKeyStore.getAlias(), KeyStoreConstant.DEFAULT_SIGN_ALG, true);
         if (certReq != null) {
             final GetODLCertificateReqOutput odlCertReqOutput = new GetODLCertificateReqOutputBuilder()
                                                         .setOdlCertReq(certReq)

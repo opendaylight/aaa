@@ -11,10 +11,10 @@ package org.opendaylight.aaa.cert.api;
 import java.security.KeyStore;
 
 /**
+ * IAaaCertProvider define the basic operation for certificates management
  *
  * @author mserngawy
  *
- * IAaaCertProvider define the basic operation for certificates management
  */
 public interface IAaaCertProvider extends java.lang.AutoCloseable {
 

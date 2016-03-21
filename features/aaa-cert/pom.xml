@@ -35,7 +35,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     </dependencyManagement>
 
   <properties>
-    <openflowplugin.version>0.3.0-SNAPSHOT</openflowplugin.version>
+    <mdsal.model.version>0.9.0-SNAPSHOT</mdsal.model.version>
     <controller.mdsal.version>1.4.0-SNAPSHOT</controller.mdsal.version>
   </properties>
 
@@ -57,10 +57,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
       <type>xml</type>
     </dependency>
     <dependency>
-      <groupId>org.opendaylight.controller</groupId>
-      <artifactId>features-mdsal</artifactId>
-      <classifier>features</classifier>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-encrypt-service</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-encrypt-service</artifactId>
       <type>xml</type>
+      <classifier>config</classifier>
     </dependency>
     <dependency>
     <groupId>org.apache.maven</groupId>
@@ -69,11 +73,12 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.opendaylight.openflowplugin</groupId>
-      <artifactId>features-openflowplugin</artifactId>
-      <version>${openflowplugin.version}</version>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>features-mdsal</artifactId>
       <classifier>features</classifier>
+      <version>${controller.mdsal.version}</version>
       <type>xml</type>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.bouncycastle</groupId>
