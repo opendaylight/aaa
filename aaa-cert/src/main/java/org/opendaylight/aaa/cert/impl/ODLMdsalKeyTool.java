@@ -9,6 +9,7 @@
 package org.opendaylight.aaa.cert.impl;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,8 +30,14 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.security.spec.KeySpec;
 import java.util.Date;
+import java.util.Map;
 
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.codec.binary.Base64;
@@ -47,64 +54,80 @@ import org.slf4j.LoggerFactory;
  *
  * ODLKeyTool has the basic operation to manage the Java keyStores such as generate, add and delete certificates
  */
-public class ODLKeyTool {
+public class ODLMdsalKeyTool {
 
-    private final static Logger LOG = LoggerFactory.getLogger(ODLKeyTool.class);
+    private final static Logger LOG = LoggerFactory.getLogger(ODLMdsalKeyTool.class);
     // Day time in millisecond
     private final long dayTime = 1000L * 60 * 60 * 24;
     private String workingDir = KeyStoreConstant.keyStorePath;
+    private SecretKey secretKey;
 
-    protected ODLKeyTool() {
+    protected ODLMdsalKeyTool(final byte[] initVector, final String cipherKey) {
+        SecretKey tmp = null;
+        if (cipherKey != null && !cipherKey.isEmpty()) {
+            try {
+                SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+                KeySpec spec = new PBEKeySpec(cipherKey.toCharArray(), initVector, 32768, 128);
+                tmp = keyFactory.generateSecret(spec);
+            } catch (Exception e) {
+                LOG.error("Couldn't initialize key factory", e);
+            }
+            if (tmp != null) {
+                secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
+            }else {
+                secretKey = null;
+                LOG.warn("Void crypto key passed! AuthN Store Encryption disabled");
+            }
+        }
         KeyStoreConstant.createDir(workingDir);
     }
 
-    public ODLKeyTool(final String workingDirectory) {
+    public ODLMdsalKeyTool(final byte[] initVector, final String cipherKey, final String workingDirectory) {
         workingDir = workingDirectory;
         KeyStoreConstant.createDir(workingDir);
     }
 
-    public boolean addCertificate(final String keyStoreName, final String keyStorePwd, final String certificate, final String alias) {
+    public KeyStore addCertificate(final KeyStore keyStore, final String certificate, final String alias, boolean deleteOld) {
         try {
             final X509Certificate newCert = getCertificate(certificate);
-            final KeyStore keyStore = KeyStore.getInstance("JKS");
-            final FileInputStream fInputStream = new FileInputStream(workingDir + keyStoreName);
-            keyStore.load(fInputStream, keyStorePwd.toCharArray());
-            if(keyStore.isCertificateEntry(alias)) {
+            if(keyStore.isCertificateEntry(alias) && deleteOld) {
                 keyStore.deleteEntry(alias);
             }
-            keyStore.setCertificateEntry(alias, newCert);
-            keyStore.store( new FileOutputStream(workingDir + keyStoreName), keyStorePwd.toCharArray());
-            LOG.info("Certificate {}  Added to keyStore {}", alias, keyStoreName);
-            return true;
-        } catch (CertificateException | KeyStoreException | NoSuchAlgorithmException | IOException e) {
+            if (newCert != null ) {
+                keyStore.setCertificateEntry(alias, newCert);
+                LOG.info("Certificate {}  Added to keyStore", alias);
+            } else {
+                LOG.warn("{} Not a valid certificate {}", alias, certificate);
+            }
+            return keyStore;
+        } catch (KeyStoreException e) {
             LOG.error("failed to add certificate {}", e.getMessage());
-            return false;
+            return null;
         }
     }
 
-    public boolean createKeyStoreImportCert(final String keyStoreName, final String keyStorePwd, final String certFile, final String alias) {
-        KeyStore trustKeyStore;
+    public KeyStore createTrustKeyStoreImportCert(final String keyStorePwd, Map<String,String> mapAliasCert) {
         try {
-            trustKeyStore = KeyStore.getInstance("JKS");
+            KeyStore trustKeyStore = KeyStore.getInstance("JKS");
             trustKeyStore.load(null, keyStorePwd.toCharArray());
-            if(KeyStoreConstant.checkKeyStoreFile(certFile)) {
-                final String certificate = KeyStoreConstant.readFile(certFile);
+            for (String alias: mapAliasCert.keySet()) {
+                final String certificate = mapAliasCert.get(alias);
                 final X509Certificate newCert = getCertificate(certificate);
                 trustKeyStore.setCertificateEntry(alias, newCert);
             }
-            trustKeyStore.store( new FileOutputStream(workingDir + keyStoreName), keyStorePwd.toCharArray());
-            LOG.info("{} is created", keyStoreName);
-            return true;
+            LOG.info("trust keystore is created");
+            return trustKeyStore;
         } catch (KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
-            LOG.error("Failed to create keystore {}", keyStoreName);
-            return false;
+            LOG.error("Failed to create trust keystore");
+            return null;
         }
     }
 
-    public boolean createKeyStoreWithSelfSignCert(final String keyStoreName, final String keyStorePwd, final String dName, final String keyAlias, final int validity) {
+    public KeyStore createKeyStoreWithSelfSignCert(final String keyStoreName, final String keyStorePwd, final String dName,
+            final String keyAlias, final int validity, final String keyAlg, final int keySize, final String signAlg) {
         try {
-            final KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(KeyStoreConstant.defaultKeyAlg);
-            keyPairGenerator.initialize(KeyStoreConstant.defaultKeySize);
+            final KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(keyAlg);
+            keyPairGenerator.initialize(keySize);
             final KeyPair keyPair = keyPairGenerator.generateKeyPair();
             final X509V3CertificateGenerator x509V3CertGen = new X509V3CertificateGenerator();
             x509V3CertGen.setSerialNumber(getSecureRandomeInt());
@@ -113,33 +136,63 @@ public class ODLKeyTool {
             x509V3CertGen.setNotAfter(new Date(System.currentTimeMillis() + (dayTime * validity)));
             x509V3CertGen.setSubjectDN(new X509Principal(dName));
             x509V3CertGen.setPublicKey(keyPair.getPublic());
-            x509V3CertGen.setSignatureAlgorithm(KeyStoreConstant.defaultSignAlg);
+            x509V3CertGen.setSignatureAlgorithm(signAlg);
             final X509Certificate x509Cert = x509V3CertGen.generateX509Certificate(keyPair.getPrivate());
             final KeyStore ctlKeyStore = KeyStore.getInstance("JKS");
             ctlKeyStore.load(null, keyStorePwd.toCharArray());
             ctlKeyStore.setKeyEntry(keyAlias, keyPair.getPrivate(), keyStorePwd.toCharArray(),
                        new java.security.cert.Certificate[]{x509Cert});
-            final FileOutputStream fOutputStream = new FileOutputStream(workingDir + keyStoreName);
-            ctlKeyStore.store( fOutputStream, keyStorePwd.toCharArray());
             LOG.info("{} is created", keyStoreName);
-            return true;
+            return ctlKeyStore;
         }
         catch (NoSuchAlgorithmException | InvalidKeyException | SecurityException | SignatureException | KeyStoreException | CertificateException | IOException e) {
-            LOG.error("Fatal error creating key cert: {}", e.getMessage());
-            return false;
+            LOG.error("Fatal error creating keystore: {}", e.getMessage());
+            return null;
         }
     }
 
-    public String generateCertificateReq(final String keyStoreName, final String keyStorePwd, final String keyAlias, final String signAlg,
-                  final boolean withTag) {
+    public KeyStore createKeyStoreWithSelfSignCert(final String keyStoreName, final String keyStorePwd, final String dName, final String keyAlias, final int validity) {
+        return createKeyStoreWithSelfSignCert(keyStoreName, keyStorePwd, dName, keyAlias, validity, KeyStoreConstant.defaultKeyAlg,
+                KeyStoreConstant.defaultKeySize, KeyStoreConstant.defaultSignAlg);
+    }
+
+    public byte[] convertKeystoreToBytes(final KeyStore keyStore, final String keyStorePwd) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
-            final KeyStore ctlKeyStore = KeyStore.getInstance("JKS");
-            final FileInputStream fInputStream = new FileInputStream(workingDir + keyStoreName);
-            ctlKeyStore.load(fInputStream, keyStorePwd.toCharArray());
-            if (ctlKeyStore.containsAlias(keyAlias)) {
-                final X509Certificate odlCert = (X509Certificate)ctlKeyStore.getCertificate(keyAlias);
+            keyStore.store(byteArrayOutputStream, keyStorePwd.toCharArray());
+        } catch (KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
+            LOG.error("Fatal error convert keystore to byets {}", e.getMessage());
+        }
+        return byteArrayOutputStream.toByteArray();
+    }
+
+    public KeyStore loadKeyStore(final byte[] keyStoreBytes, final String keyStorePwd) {
+        try {
+            final KeyStore keyStore = KeyStore.getInstance("JKS");
+            keyStore.load(new ByteArrayInputStream(keyStoreBytes), keyStorePwd.toCharArray());
+            return keyStore;
+        } catch (KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
+            LOG.error("Fatal error load keystore {}", e.getMessage());
+            return null;
+        }
+    }
+
+    public void exportKeystore(KeyStore keystore, String keystorePassword, String fileName) {
+        try {
+        final FileOutputStream fOutputStream = new FileOutputStream(workingDir + fileName);
+        keystore.store(fOutputStream, keystorePassword.toCharArray());
+        } catch (KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
+            LOG.error("Fatal error export keystore {}", e.getMessage());
+        }
+    }
+
+    public String generateCertificateReq(final KeyStore odlKeyStore, final String keyStorePwd, final String keyAlias, final String signAlg,
+            final boolean withTag) {
+        try {
+            if (odlKeyStore.containsAlias(keyAlias)) {
+                final X509Certificate odlCert = (X509Certificate)odlKeyStore.getCertificate(keyAlias);
                 final PublicKey pubKey = odlCert.getPublicKey();
-                final PrivateKey privKey = (PrivateKey)ctlKeyStore.getKey(keyAlias, keyStorePwd.toCharArray());
+                final PrivateKey privKey = (PrivateKey)odlKeyStore.getKey(keyAlias, keyStorePwd.toCharArray());
                 final String subject = odlCert.getSubjectDN().getName();
                 final X509Name xname = new X509Name(subject);
                 final String signatureAlgorithm = signAlg;
@@ -157,14 +210,14 @@ public class ODLKeyTool {
                 }
                 return certReq;
             }
-            LOG.info("{} KeyStore does not contain alias {}", keyStoreName, keyAlias);
+            LOG.info("KeyStore does not contain alias {}", keyAlias);
             return null;
-        } catch (NoSuchAlgorithmException | CertificateException | IOException | KeyStoreException |
+        } catch (NoSuchAlgorithmException | KeyStoreException |
                  UnrecoverableKeyException | InvalidKeyException | NoSuchProviderException | SignatureException e) {
             LOG.error("Failed to generate certificate request {}", e.getMessage());
             return null;
         }
-    }
+}
 
     private X509Certificate getCertificate(String certificate) {
         if (certificate.isEmpty()) {
@@ -190,13 +243,10 @@ public class ODLKeyTool {
         }
     }
 
-    public String getCertificate(final String keyStoreName, final String keyStorePwd, final String certAlias, final boolean withTag) {
+    public String getCertificate(final KeyStore keyStore, final String keyStorePwd, final String certAlias, final boolean withTag) {
         try {
-            final KeyStore ctlKeyStore = KeyStore.getInstance("JKS");
-            final FileInputStream fInputStream = new FileInputStream(workingDir + keyStoreName);
-            ctlKeyStore.load(fInputStream, keyStorePwd.toCharArray());
-            if (ctlKeyStore.containsAlias(certAlias)) {
-                final X509Certificate odlCert = (X509Certificate)ctlKeyStore.getCertificate(certAlias);
+            if (keyStore.containsAlias(certAlias)) {
+                final X509Certificate odlCert = (X509Certificate) keyStore.getCertificate(certAlias);
                 final String cert = DatatypeConverter.printBase64Binary(odlCert.getEncoded());
                 if (withTag) {
                     final StringBuilder sb = new StringBuilder();
@@ -209,22 +259,10 @@ public class ODLKeyTool {
                 }
                 return cert;
             }
-            LOG.info("{} KeyStore does not contain alias {}", keyStoreName, certAlias);
+            LOG.info("KeyStore does not contain alias {}", certAlias);
             return null;
-        } catch (NoSuchAlgorithmException | CertificateException | IOException | KeyStoreException e) {
+        } catch (CertificateException | KeyStoreException e) {
             LOG.error("Failed to get Certificate {}", e.getMessage());
-            return null;
-        }
-    }
-
-    public KeyStore getKeyStore(final String keyStoreName, final String keyStorePwd) {
-        try {
-            final KeyStore keyStore = KeyStore.getInstance("JKS");
-            final FileInputStream fInputStream = new FileInputStream(workingDir + keyStoreName);
-            keyStore.load(fInputStream, keyStorePwd.toCharArray());
-            return keyStore;
-        } catch (NoSuchAlgorithmException | CertificateException | IOException | KeyStoreException e) {
-            LOG.error("failed to get keystore {}", e.getMessage());
             return null;
         }
     }

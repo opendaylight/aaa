@@ -12,12 +12,18 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
 
     <repository>mvn:org.opendaylight.mdsal/features-mdsal/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.aaa/features-aaa/{{VERSION}}/xml/features</repository>
-    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.yangtools/features-yangtools/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.controller/features-mdsal/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.netconf/features-restconf/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.dlux/features-dlux/{{VERSION}}/xml/features</repository>
 
     <feature name='odl-aaa-cert' description='OpenDaylight :: AAA :: aaa opendaylight certificate Plugin'
              version='${project.version}'>
+        <feature version='${mdsal.model.version}'>odl-mdsal-models</feature>
         <feature version='${controller.mdsal.version}'>odl-mdsal-broker</feature>
-        <feature version="${openflowplugin.version}">odl-openflowplugin-southbound</feature>
+        <feature version="${restconf.version}">odl-restconf</feature>
+        <feature version="${dlux.version}">odl-dlux-all</feature>
+        <feature version='${project.version}'>odl-aaa-encryption-service</feature>
 
         <bundle>mvn:org.bouncycastle/bcprov-jdk15on/{{VERSION}}</bundle>
         <bundle>mvn:commons-codec/commons-codec/{{VERSION}}</bundle>
