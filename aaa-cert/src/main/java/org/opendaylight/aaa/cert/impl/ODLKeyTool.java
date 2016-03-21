@@ -29,8 +29,13 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.security.spec.KeySpec;
 import java.util.Date;
 
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.codec.binary.Base64;
@@ -53,6 +58,26 @@ public class ODLKeyTool {
     // Day time in millisecond
     private final long dayTime = 1000L * 60 * 60 * 24;
     private String workingDir = KeyStoreUtilis.keyStorePath;
+    private SecretKey secretKey;
+
+    protected ODLKeyTool(final byte[] initVector, final String cipherKey) {
+        SecretKey tmp = null;
+        if (cipherKey != null && !cipherKey.isEmpty()) {
+            try {
+                SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+                KeySpec spec = new PBEKeySpec(cipherKey.toCharArray(), initVector, 32768, 128);
+                tmp = keyFactory.generateSecret(spec);
+            } catch (Exception e) {
+                LOG.error("Couldn't initialize key factory", e);
+            }
+            if (tmp != null) {
+                secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
+            }else {
+                secretKey = null;
+                LOG.warn("Void crypto key passed! AuthN Store Encryption disabled");
+            }
+        }
+    }
 
     protected ODLKeyTool() {
         KeyStoreUtilis.createDir(workingDir);
