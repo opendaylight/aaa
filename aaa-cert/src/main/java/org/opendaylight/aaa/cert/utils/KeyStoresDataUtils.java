@@ -1,0 +1,251 @@
+/*
+ * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ */
+
+package org.opendaylight.aaa.cert.utils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
+import org.opendaylight.aaa.cert.impl.ODLMdsalKeyTool;
+import org.opendaylight.aaa.encrypt.AAAEncryptionService;
+import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.KeyStores;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.cipher.suite.CipherSuites;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.cipher.suite.CipherSuitesBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslData;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslDataBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslDataKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.keystore.Certificates;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.keystore.CertificatesBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.OdlKeystore;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.OdlKeystoreBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.TrustKeystore;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.TrustKeystoreBuilder;
+import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * KeyStoresDataUtils manage the SslData operations add, delete and update
+ *
+ * @author mohamedel-serngawy
+ *
+ */
+public class KeyStoresDataUtils {
+
+    public static final String KEYSTORES_DATA_TREE = "KeyStores:1";
+    private static final Logger LOG = LoggerFactory.getLogger(KeyStoresDataUtils.class);
+
+    public static InstanceIdentifier<KeyStores> getKeystoresIid() {
+        return InstanceIdentifier.builder(KeyStores.class).build();
+    }
+
+    public static InstanceIdentifier<SslData> getSslDataIid() {
+        return InstanceIdentifier.create(KeyStores.class).child(SslData.class);
+    }
+
+    public static InstanceIdentifier<SslData> getSslDataIid(final String bundleName) {
+        final SslDataKey sslDataKey = new SslDataKey(bundleName);
+        return InstanceIdentifier.create(KeyStores.class).child(SslData.class, sslDataKey);
+    }
+
+    public static OdlKeystore updateOdlKeystore(final OdlKeystore baseOdlKeyStore, final byte[] keyStoreBytes) {
+        final OdlKeystore odlKeystore = new OdlKeystoreBuilder(baseOdlKeyStore)
+                                .setKeystoreFile(keyStoreBytes)
+                                .build();
+        return odlKeystore;
+    }
+
+    private final AAAEncryptionService encryService;
+
+    public KeyStoresDataUtils(final AAAEncryptionService encryService) {
+        this.encryService = encryService;
+    }
+
+    public SslData addSslData(final DataBroker dataBroker, final String bundleName, final OdlKeystore odlKeystore,
+            final TrustKeystore trustKeystore, final List<CipherSuites> cipherSuites) {
+        final SslDataKey sslDataKey = new SslDataKey(bundleName);
+        final SslData sslData = new SslDataBuilder()
+                            .setKey(sslDataKey)
+                            .setOdlKeystore(encryptOdlKeyStore(odlKeystore))
+                            .setTrustKeystore(encryptTrustKeystore(trustKeystore))
+                            .setCipherSuites(cipherSuites)
+                            .build();
+
+        if (MdsalUtils.put(dataBroker, LogicalDatastoreType.CONFIGURATION, getSslDataIid(bundleName), sslData)) {
+            return new SslDataBuilder().setKey(sslDataKey)
+                    .setOdlKeystore(odlKeystore)
+                    .setTrustKeystore(trustKeystore)
+                    .setCipherSuites(cipherSuites)
+                    .build();
+        } else {
+            return null;
+        }
+    }
+
+    public Certificates createCertificates(final String alias, final String x509Cert) {
+        final Certificates cert = new CertificatesBuilder()
+                            .setAlias(alias)
+                            .setX500Certificate(x509Cert)
+                            .build();
+        return cert;
+    }
+
+    public CipherSuites createCipherSuite(final String suiteName) {
+        final CipherSuites cipherSuite = new CipherSuitesBuilder()
+                                    .setSuiteName(suiteName)
+                                    .build();
+        return cipherSuite;
+    }
+
+    public OdlKeystore createOdlKeystore(final String name, final String alias, final String password, final byte[] keyStoreBytes) {
+        final OdlKeystore odlKeystore = new OdlKeystoreBuilder()
+                                .setKeystoreFile(keyStoreBytes)
+                                .setAlias(alias)
+                                .setName(name)
+                                .setStorePassword(password)
+                                .setCertificates(new ArrayList<>())
+                                .build();
+        return odlKeystore;
+        }
+
+    public OdlKeystore createOdlKeystore(final String name, final String alias, final String password, final String dname,
+                                                final ODLMdsalKeyTool odlKeyTool) {
+        return createOdlKeystore(name, alias, password, dname, KeyStoreConstant.DEFAULT_SIGN_ALG, KeyStoreConstant.DEFAULT_KEY_ALG,
+                KeyStoreConstant.DEFAULT_VALIDITY, KeyStoreConstant.DEFAULT_KEY_SIZE, odlKeyTool);
+    }
+
+    public OdlKeystore createOdlKeystore(final String name, final String alias, final String password, final String dname,
+                        final String sigAlg, final String keyAlg, final int validity, final int keySize, final ODLMdsalKeyTool odlKeyTool) {
+        final byte[] keyStoreBytes = odlKeyTool.convertKeystoreToBytes(odlKeyTool.createKeyStoreWithSelfSignCert(name, password,
+                dname, alias, validity, keyAlg, keySize, sigAlg), password);
+        LOG.info("Odl keystore string {} ", keyStoreBytes);
+        final OdlKeystore odlKeystore = new OdlKeystoreBuilder()
+                                    .setKeystoreFile(keyStoreBytes)
+                                    .setAlias(alias)
+                                    .setDname(dname)
+                                    .setKeyAlg(keyAlg)
+                                    .setKeysize(keySize)
+                                    .setName(name)
+                                    .setSignAlg(sigAlg)
+                                    .setStorePassword(password)
+                                    .setValidity(validity)
+                                    .setCertificates(new ArrayList<>())
+                                    .build();
+        return odlKeystore;
+    }
+
+    public TrustKeystore createTrustKeystore(final String name, final String password, final byte[] keyStoreBytes) {
+        final TrustKeystore trustKeystore = new TrustKeystoreBuilder()
+                                        .setCertificates(new ArrayList<>())
+                                        .setKeystoreFile(keyStoreBytes)
+                                        .setName(name)
+                                        .setStorePassword(password)
+                                        .build();
+        return trustKeystore;
+    }
+
+    public TrustKeystore createTrustKeystore(final String name, final String password, final List<Certificates> certificates, final ODLMdsalKeyTool odlKeyTool) {
+        final byte[] keyStoreBytes = odlKeyTool.convertKeystoreToBytes(odlKeyTool.createTrustKeyStoreImportCert(password, certificates), password);
+        LOG.info("trust keystore string {} ", keyStoreBytes);
+        final TrustKeystore trustKeystore = new TrustKeystoreBuilder()
+                                        .setCertificates(certificates)
+                                        .setKeystoreFile(keyStoreBytes)
+                                        .setName(name)
+                                        .setStorePassword(password)
+                                        .build();
+        return trustKeystore;
+    }
+
+    private OdlKeystore decryptOdlKeyStore(final OdlKeystore odlKeystore) {
+        final OdlKeystoreBuilder odlKeystoreBuilder = new OdlKeystoreBuilder(odlKeystore);
+        odlKeystoreBuilder.setKeystoreFile(encryService.decrypt(odlKeystore.getKeystoreFile()));
+        odlKeystoreBuilder.setStorePassword(encryService.decrypt(odlKeystore.getStorePassword()));
+        return odlKeystoreBuilder.build();
+    }
+
+    private SslData decryptSslData(final SslData sslData) {
+        final SslDataBuilder sslDataBuilder = new SslDataBuilder(sslData)
+                .setOdlKeystore(decryptOdlKeyStore(sslData.getOdlKeystore()))
+                .setTrustKeystore(decryptTrustKeystore(sslData.getTrustKeystore()));
+        return sslDataBuilder.build();
+    }
+
+    private TrustKeystore decryptTrustKeystore(final TrustKeystore trustKeyStore) {
+        final TrustKeystoreBuilder trustKeyStoreBuilder = new TrustKeystoreBuilder(trustKeyStore);
+        trustKeyStoreBuilder.setKeystoreFile(encryService.decrypt(trustKeyStore.getKeystoreFile()));
+        trustKeyStoreBuilder.setStorePassword(encryService.decrypt(trustKeyStore.getStorePassword()));
+        return trustKeyStoreBuilder.build();
+    }
+
+    private OdlKeystore encryptOdlKeyStore(final OdlKeystore odlKeystore) {
+        final OdlKeystoreBuilder odlKeystoreBuilder = new OdlKeystoreBuilder(odlKeystore);
+        odlKeystoreBuilder.setKeystoreFile(encryService.encrypt(odlKeystore.getKeystoreFile()));
+        odlKeystoreBuilder.setStorePassword(encryService.encrypt(odlKeystore.getStorePassword()));
+        return odlKeystoreBuilder.build();
+    }
+
+    private SslData encryptSslData(final SslData sslData) {
+        final SslDataBuilder sslDataBuilder = new SslDataBuilder(sslData)
+                                        .setOdlKeystore(encryptOdlKeyStore(sslData.getOdlKeystore()))
+                                        .setTrustKeystore(encryptTrustKeystore(sslData.getTrustKeystore()));
+        return sslDataBuilder.build();
+    }
+
+    private TrustKeystore encryptTrustKeystore(final TrustKeystore trustKeyStore) {
+        final TrustKeystoreBuilder trustKeyStoreBuilder = new TrustKeystoreBuilder(trustKeyStore);
+        trustKeyStoreBuilder.setKeystoreFile(encryService.encrypt(trustKeyStore.getKeystoreFile()));
+        trustKeyStoreBuilder.setStorePassword(encryService.encrypt(trustKeyStore.getStorePassword()));
+        return trustKeyStoreBuilder.build();
+    }
+
+    public SslData getSslData(final DataBroker dataBroker, final String bundleName) {
+        final InstanceIdentifier<SslData> sslDataIid = getSslDataIid(bundleName);
+        return decryptSslData(MdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION, sslDataIid));
+    }
+
+    public boolean removeSslData(final DataBroker dataBroker, final String bundleName) {
+        final InstanceIdentifier<SslData> sslDataIid = getSslDataIid(bundleName);
+        return MdsalUtils.delete(dataBroker, LogicalDatastoreType.CONFIGURATION, sslDataIid);
+    }
+
+    public boolean updateSslData(final DataBroker dataBroker, final SslData sslData) {
+        final InstanceIdentifier<SslData> sslDataIid = getSslDataIid(sslData.getBundleName());
+        return MdsalUtils.merge(dataBroker, LogicalDatastoreType.CONFIGURATION, sslDataIid, encryptSslData(sslData));
+    }
+
+    public boolean updateSslDataCipherSuites(final DataBroker dataBroker, final SslData baseSslData, final List<CipherSuites> cipherSuites) {
+        final SslDataBuilder sslDataBuilder = new SslDataBuilder(baseSslData)
+                                        .setCipherSuites(cipherSuites);
+        return MdsalUtils.merge(dataBroker, LogicalDatastoreType.CONFIGURATION, getSslDataIid(baseSslData.getBundleName()),
+                sslDataBuilder.build());
+    }
+
+    public boolean updateSslDataOdlKeystore(final DataBroker dataBroker, final SslData baseSslData, final OdlKeystore odlKeyStore) {
+        final SslDataBuilder sslDataBuilder = new SslDataBuilder(baseSslData)
+                                        .setOdlKeystore(encryptOdlKeyStore(odlKeyStore));
+        return MdsalUtils.merge(dataBroker, LogicalDatastoreType.CONFIGURATION, getSslDataIid(baseSslData.getBundleName()),
+                sslDataBuilder.build());
+    }
+
+    public boolean updateSslDataTrustKeystore(final DataBroker dataBroker, final SslData baseSslData, final TrustKeystore trustKeyStore) {
+        final SslDataBuilder sslDataBuilder = new SslDataBuilder(baseSslData)
+                                        .setTrustKeystore(encryptTrustKeystore(trustKeyStore));
+        return MdsalUtils.merge(dataBroker, LogicalDatastoreType.CONFIGURATION, getSslDataIid(baseSslData.getBundleName()),
+                sslDataBuilder.build());
+    }
+
+    public TrustKeystore updateTrustKeystore(final TrustKeystore baseTrustKeyStore, final byte[] keyStoreBytes) {
+        final TrustKeystore trustKeystore = new TrustKeystoreBuilder(baseTrustKeyStore)
+                                .setKeystoreFile(keyStoreBytes)
+                                .build();
+        return trustKeystore;
+    }
+}
