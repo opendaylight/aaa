@@ -42,25 +42,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * ODLKeyTool has the basic operation to manage the Java keyStores such as generate, add and delete certificates
  *
  * @author mserngawy
  *
- * ODLKeyTool has the basic operation to manage the Java keyStores such as generate, add and delete certificates
  */
 public class ODLKeyTool {
 
     private final static Logger LOG = LoggerFactory.getLogger(ODLKeyTool.class);
-    // Day time in millisecond
-    private final long dayTime = 1000L * 60 * 60 * 24;
-    private String workingDir = KeyStoreUtilis.keyStorePath;
+    private final String workingDir;
 
     protected ODLKeyTool() {
-        KeyStoreUtilis.createDir(workingDir);
+        workingDir = KeyStoreConstant.KEY_STORE_PATH;
+        KeyStoreConstant.createDir(workingDir);
     }
 
     public ODLKeyTool(final String workingDirectory) {
         workingDir = workingDirectory;
-        KeyStoreUtilis.createDir(workingDir);
+        KeyStoreConstant.createDir(workingDir);
     }
 
     public boolean addCertificate(final String keyStoreName, final String keyStorePwd, final String certificate, final String alias) {
@@ -77,7 +76,7 @@ public class ODLKeyTool {
             LOG.info("Certificate {}  Added to keyStore {}", alias, keyStoreName);
             return true;
         } catch (CertificateException | KeyStoreException | NoSuchAlgorithmException | IOException e) {
-            LOG.error("failed to add certificate {}", e.getMessage());
+            LOG.error("failed to add certificate", e);
             return false;
         }
     }
@@ -87,8 +86,8 @@ public class ODLKeyTool {
         try {
             trustKeyStore = KeyStore.getInstance("JKS");
             trustKeyStore.load(null, keyStorePwd.toCharArray());
-            if(KeyStoreUtilis.checkKeyStoreFile(certFile)) {
-                final String certificate = KeyStoreUtilis.readFile(certFile);
+            if(KeyStoreConstant.checkKeyStoreFile(certFile)) {
+                final String certificate = KeyStoreConstant.readFile(certFile);
                 final X509Certificate newCert = getCertificate(certificate);
                 trustKeyStore.setCertificateEntry(alias, newCert);
             }
@@ -96,24 +95,24 @@ public class ODLKeyTool {
             LOG.info("{} is created", keyStoreName);
             return true;
         } catch (KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
-            LOG.error("Failed to create keystore {}", keyStoreName);
+            LOG.error("Failed to create keystore {}", keyStoreName, e);
             return false;
         }
     }
 
     public boolean createKeyStoreWithSelfSignCert(final String keyStoreName, final String keyStorePwd, final String dName, final String keyAlias, final int validity) {
         try {
-            final KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(KeyStoreUtilis.defaultKeyAlg);
-            keyPairGenerator.initialize(KeyStoreUtilis.defaultKeySize);
+            final KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(KeyStoreConstant.DEFAULT_KEY_ALG);
+            keyPairGenerator.initialize(KeyStoreConstant.DEFAULT_KEY_SIZE);
             final KeyPair keyPair = keyPairGenerator.generateKeyPair();
             final X509V3CertificateGenerator x509V3CertGen = new X509V3CertificateGenerator();
             x509V3CertGen.setSerialNumber(getSecureRandomeInt());
             x509V3CertGen.setIssuerDN(new X509Principal(dName));
             x509V3CertGen.setNotBefore(new Date(System.currentTimeMillis()));
-            x509V3CertGen.setNotAfter(new Date(System.currentTimeMillis() + (dayTime * validity)));
+            x509V3CertGen.setNotAfter(new Date(System.currentTimeMillis() + (KeyStoreConstant.DAY_TIME * validity)));
             x509V3CertGen.setSubjectDN(new X509Principal(dName));
             x509V3CertGen.setPublicKey(keyPair.getPublic());
-            x509V3CertGen.setSignatureAlgorithm(KeyStoreUtilis.defaultSignAlg);
+            x509V3CertGen.setSignatureAlgorithm(KeyStoreConstant.DEFAULT_SIGN_ALG);
             final X509Certificate x509Cert = x509V3CertGen.generateX509Certificate(keyPair.getPrivate());
             final KeyStore ctlKeyStore = KeyStore.getInstance("JKS");
             ctlKeyStore.load(null, keyStorePwd.toCharArray());
@@ -125,7 +124,7 @@ public class ODLKeyTool {
             return true;
         }
         catch (NoSuchAlgorithmException | InvalidKeyException | SecurityException | SignatureException | KeyStoreException | CertificateException | IOException e) {
-            LOG.error("Fatal error creating key cert: {}", e.getMessage());
+            LOG.error("Fatal error creating key", e);
             return false;
         }
     }
@@ -148,11 +147,11 @@ public class ODLKeyTool {
                 final String certReq = DatatypeConverter.printBase64Binary(csr.getEncoded());
                 if (withTag) {
                     final StringBuilder sb = new StringBuilder();
-                    sb.append(KeyStoreUtilis.BEGIN_CERTIFICATE_REQUEST);
+                    sb.append(KeyStoreConstant.BEGIN_CERTIFICATE_REQUEST);
                     sb.append("\n");
                     sb.append(certReq);
                     sb.append("\n");
-                    sb.append(KeyStoreUtilis.END_CERTIFICATE_REQUEST);
+                    sb.append(KeyStoreConstant.END_CERTIFICATE_REQUEST);
                     return sb.toString();
                 }
                 return certReq;
@@ -171,9 +170,9 @@ public class ODLKeyTool {
             return null;
         }
 
-        if (certificate.contains(KeyStoreUtilis.BEGIN_CERTIFICATE)) {
-            final int fIdx = certificate.indexOf(KeyStoreUtilis.BEGIN_CERTIFICATE) + KeyStoreUtilis.BEGIN_CERTIFICATE.length();
-            final int sIdx = certificate.indexOf(KeyStoreUtilis.END_CERTIFICATE);
+        if (certificate.contains(KeyStoreConstant.BEGIN_CERTIFICATE)) {
+            final int fIdx = certificate.indexOf(KeyStoreConstant.BEGIN_CERTIFICATE) + KeyStoreConstant.BEGIN_CERTIFICATE.length();
+            final int sIdx = certificate.indexOf(KeyStoreConstant.END_CERTIFICATE);
             certificate = certificate.substring(fIdx, sIdx);
         }
         final byte[] byteCert = Base64.decodeBase64(certificate);
@@ -200,11 +199,11 @@ public class ODLKeyTool {
                 final String cert = DatatypeConverter.printBase64Binary(odlCert.getEncoded());
                 if (withTag) {
                     final StringBuilder sb = new StringBuilder();
-                    sb.append(KeyStoreUtilis.BEGIN_CERTIFICATE);
+                    sb.append(KeyStoreConstant.BEGIN_CERTIFICATE);
                     sb.append("\n");
                     sb.append(cert);
                     sb.append("\n");
-                    sb.append(KeyStoreUtilis.END_CERTIFICATE);
+                    sb.append(KeyStoreConstant.END_CERTIFICATE);
                     return sb.toString();
                 }
                 return cert;
