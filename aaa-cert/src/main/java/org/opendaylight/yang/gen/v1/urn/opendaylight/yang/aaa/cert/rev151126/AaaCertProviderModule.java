@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.opendaylight.aaa.cert.impl.AaaCertProvider;
 import org.opendaylight.aaa.cert.impl.ConnectionConfigurationImpl;
-import org.opendaylight.aaa.cert.impl.KeyStoreUtilis;
+import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
 import org.opendaylight.aaa.cert.impl.TlsConfigurationImp;
 import org.opendaylight.openflowjava.protocol.api.connection.ConnectionConfiguration;
 import org.opendaylight.openflowjava.protocol.api.connection.TlsConfiguration;
@@ -44,7 +44,7 @@ public class AaaCertProviderModule extends org.opendaylight.yang.gen.v1.urn.open
         final CtlKeystore ctlKeyStore = this.getCtlKeystore();
         final TrustKeystore trust = this.getTrustKeystore();
         final AaaCertProvider aaaCertProvider = new AaaCertProvider(ctlKeyStore, trust);
-        if (this.getUseConfig() && !KeyStoreUtilis.checkKeyStoreFile(ctlKeyStore.getName())) {
+        if (this.getUseConfig() && !KeyStoreConstant.checkKeyStoreFile(ctlKeyStore.getName())) {
             LOG.info("Creating keystore based on given configuration");
             aaaCertProvider.createODLKeyStore();
             aaaCertProvider.createTrustKeyStore();
@@ -55,8 +55,8 @@ public class AaaCertProviderModule extends org.opendaylight.yang.gen.v1.urn.open
             if (switchConnProvider.getConfiguration() != null) {
                 LOG.info("Set TLS config then restart the connections ");
                 final ConnectionConfiguration connConfig = switchConnProvider.getConfiguration();
-                final TlsConfiguration tlsConfig = new TlsConfigurationImp(KeyStoreUtilis.keyStorePath + ctlKeyStore.getName(),
-                             KeyStoreUtilis.keyStorePath + trust.getName(), ctlKeyStore.getStorePassword(), trust.getStorePassword(),
+                final TlsConfiguration tlsConfig = new TlsConfigurationImp(KeyStoreConstant.keyStorePath + ctlKeyStore.getName(),
+                             KeyStoreConstant.keyStorePath + trust.getName(), ctlKeyStore.getStorePassword(), trust.getStorePassword(),
                              trust.getStorePassword(), KeystoreType.JKS, KeystoreType.JKS,
                              PathType.PATH, PathType.PATH);
                 final ConnectionConfigurationImpl connConfigImpl = new ConnectionConfigurationImpl(connConfig, tlsConfig);
