@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_9c415c0e",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/IdmLightConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-23T21:17:49Z",
+      "side": 1,
+      "message": "We shouldn\u0027t change the default password.",
+      "range": {
+        "startLine": 33,
+        "startChar": 51,
+        "endLine": 33,
+        "endChar": 53
+      },
+      "revId": "729b6c0922cac2673da6a00dbb54ae9bdc1b65a3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_3c3c8893",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/IdmLightConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-23T21:17:49Z",
+      "side": 1,
+      "message": "We shouldn\u0027t change the default username.",
+      "range": {
+        "startLine": 38,
+        "startChar": 52,
+        "endLine": 38,
+        "endChar": 54
+      },
+      "revId": "729b6c0922cac2673da6a00dbb54ae9bdc1b65a3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_fcba2009",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/IdmLightConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-23T21:17:49Z",
+      "side": 1,
+      "message": "We shouldn\u0027t change the path IMO.",
+      "range": {
+        "startLine": 51,
+        "startChar": 75,
+        "endLine": 51,
+        "endChar": 78
+      },
+      "revId": "729b6c0922cac2673da6a00dbb54ae9bdc1b65a3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
