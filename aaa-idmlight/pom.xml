@@ -215,7 +215,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Import-Package>javax.servlet.http,javax.ws.rs,javax.ws.rs.core,javax.xml.bind.annotation,org.apache.felix.dm,org.opendaylight.aaa,org.opendaylight.aaa.api.*,org.osgi.framework,org.slf4j,org.eclipse.jetty.servlets,com.sun.jersey.spi.container.servlet,com.google.*,org.opendaylight.*,org.osgi.util.tracker</Import-Package>
+                        <Import-Package>org.opendaylight.aaa.shiro.realm,org.apache.shiro.web.env,org.apache.shiro.authc,org.opendaylight.aaa.shiro.web.env,org.opendaylight.aaa.shiro.filters,javax.servlet.http,javax.ws.rs,javax.ws.rs.core,javax.xml.bind.annotation,org.apache.felix.dm,org.opendaylight.aaa,org.opendaylight.aaa.api.*,org.osgi.framework,org.slf4j,org.eclipse.jetty.servlets,com.sun.jersey.spi.container.servlet,com.google.*,org.opendaylight.*,org.osgi.util.tracker</Import-Package>
                         <Web-ContextPath>/auth</Web-ContextPath>
                         <!--<Web-Connectors>adminConn</Web-Connectors> -->
                         <!--Bundle-Activator>org.opendaylight.aaa.idm.Activator</Bundle-Activator-->
