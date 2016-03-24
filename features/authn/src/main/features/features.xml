@@ -226,7 +226,7 @@
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
     </feature>
 
-    <feature name='odl-aaa-keystone-plugin' description='OpenDaylight :: AAA :: Keystone Plugin - NO CLUSTER'
+    <feature name='odl-aaa-keystone-plugin' description='OpenDaylight :: AAA :: Keystone Plugin - Deprecated Do Not Use!'
              version='${project.version}'>
         <feature version='${project.version}'>odl-aaa-authn</feature>
         <bundle>mvn:org.apache.httpcomponents/httpclient-osgi/{{VERSION}}</bundle>
