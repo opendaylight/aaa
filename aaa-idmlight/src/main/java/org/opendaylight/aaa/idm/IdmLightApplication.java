@@ -17,7 +17,6 @@ import javax.ws.rs.core.Application;
 import org.opendaylight.aaa.idm.rest.DomainHandler;
 import org.opendaylight.aaa.idm.rest.RoleHandler;
 import org.opendaylight.aaa.idm.rest.UserHandler;
-import org.opendaylight.aaa.idm.rest.VersionHandler;
 
 /**
  * A JAX-RS application for IdmLight.  The REST endpoints delivered by this
@@ -49,8 +48,7 @@ public class IdmLightApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-        return new HashSet<Class<?>>(Arrays.asList(VersionHandler.class,
-                                                   DomainHandler.class,
+        return new HashSet<Class<?>>(Arrays.asList(DomainHandler.class,
                                                    RoleHandler.class,
                                                    UserHandler.class));
     }
