@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5a3f45e8_3a93e8fb",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/IdmLightConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-31T15:39:51Z",
+      "side": 1,
+      "message": "I see your point;  is there a way to make this configurable?  We can do that in a follow up if so.  My point is I know some integrators who depend on a particular password, and I don\u0027t want to catch them by surprise ;).  I am not voting we don\u0027t do it, more that we provide some documentation surrounding it if we do change the default pw.",
+      "parentUuid": "5a3f45e8_1c1a6c17",
+      "range": {
+        "startLine": 33,
+        "startChar": 51,
+        "endLine": 33,
+        "endChar": 53
+      },
+      "revId": "729b6c0922cac2673da6a00dbb54ae9bdc1b65a3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a3f45e8_3c3c8893",
         "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/IdmLightConfig.java",
         "patchSetId": 2
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Why not? the H2 implementation is creating the db on the controler root directory, which I think is wrong as one that does not know the controller do not know to which module this file (that just pop up) belongs to. Putting it in the aaa indicated that this file belongs to the aaa module.",
       "parentUuid": "5a3f45e8_fcba2009",
+      "range": {
+        "startLine": 51,
+        "startChar": 75,
+        "endLine": 51,
+        "endChar": 78
+      },
+      "revId": "729b6c0922cac2673da6a00dbb54ae9bdc1b65a3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_7abc506d",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/IdmLightConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-31T15:39:51Z",
+      "side": 1,
+      "message": "Same comment as above;  people are used to it being there.  I actually have an internal bug to move this as well... others have raised concerns about it being in the root.  We just need to make sure it is well advertised if we decide to do so, as other people repackage this and script around that file being in one particular place.",
+      "parentUuid": "5a3f45e8_7cb9f0e8",
       "range": {
         "startLine": 51,
         "startChar": 75,
