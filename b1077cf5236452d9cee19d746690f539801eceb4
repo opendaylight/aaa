@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4c51b2_2d1d7267",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/H2StoreConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-31T15:39:51Z",
+      "side": 1,
+      "message": "I don\u0027t think we actually use this field.  I guess we can remove it in a separate patch though.",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 31
+      },
+      "revId": "b1077cf5236452d9cee19d746690f539801eceb4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_0db6b63d",
+        "filename": "aaa-hsqldb-store/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-31T15:39:51Z",
+      "side": 1,
+      "message": "Can you be explicit about the version.  I.e., \u003cversion\u003e${project.version}\u003c/version\u003e",
+      "revId": "b1077cf5236452d9cee19d746690f539801eceb4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_6d82da53",
+        "filename": "aaa-hsqldb-store/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-31T15:39:51Z",
+      "side": 1,
+      "message": "Can you add the dependency to the parent/pom.xml and then exclude the version here?",
+      "range": {
+        "startLine": 19,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "b1077cf5236452d9cee19d746690f539801eceb4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_ad7ce273",
+        "filename": "aaa-hsqldb-store/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-31T15:39:51Z",
+      "side": 1,
+      "message": "This should be below in the testing dependencies section.",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 21
+      },
+      "revId": "b1077cf5236452d9cee19d746690f539801eceb4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_4d871e62",
+        "filename": "aaa-hsqldb-store/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-31T15:39:51Z",
+      "side": 1,
+      "message": "Can you add this to the parent/pom.xml instead?",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 21
+      },
+      "revId": "b1077cf5236452d9cee19d746690f539801eceb4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_cd920e9f",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/HsqldbStoreConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-31T15:39:51Z",
+      "side": 1,
+      "message": "psql will not allow ineteraction with database that doesn\u0027t have a password.  Can we make a default password for hsql?\n\nI will also spawn a separate bug to externalize these settings in a config admin file.",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 54
+      },
+      "revId": "b1077cf5236452d9cee19d746690f539801eceb4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_2d90d294",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/HsqldbStoreConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-31T15:39:51Z",
+      "side": 1,
+      "message": "maybe we should call this something else now?  If we want to change the name then this is the time... up to you.",
+      "range": {
+        "startLine": 56,
+        "startChar": 63,
+        "endLine": 56,
+        "endChar": 76
+      },
+      "revId": "b1077cf5236452d9cee19d746690f539801eceb4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_324b0d5b",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-31T15:39:51Z",
+      "side": 1,
+      "message": "Please use {{VERSION}} instead of inlining the specific version.  This makes upgrades a little easier.",
+      "range": {
+        "startLine": 66,
+        "startChar": 39,
+        "endLine": 66,
+        "endChar": 47
+      },
+      "revId": "b1077cf5236452d9cee19d746690f539801eceb4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_1248915a",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-03-31T15:39:51Z",
+      "side": 1,
+      "message": "{{VERSION}}",
+      "range": {
+        "startLine": 144,
+        "startChar": 39,
+        "endLine": 144,
+        "endChar": 47
+      },
+      "revId": "b1077cf5236452d9cee19d746690f539801eceb4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
