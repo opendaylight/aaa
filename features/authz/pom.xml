@@ -20,7 +20,7 @@
 
     <properties>
         <config.version>0.5.0-SNAPSHOT</config.version>
-        <mdsal.version>2.1.0-SNAPSHOT</mdsal.version>
+        <mdsal.version>1.4.0-SNAPSHOT</mdsal.version>
         <controller.mdsal.version>1.4.0-SNAPSHOT</controller.mdsal.version>
         <yangtools.version>1.0.0-SNAPSHOT</yangtools.version>
     </properties>
