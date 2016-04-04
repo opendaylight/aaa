@@ -10,7 +10,7 @@ package org.opendaylight.aaa.api;
 import java.security.MessageDigest;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
-
+import javax.xml.bind.DatatypeConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,20 +64,11 @@ public class SHA256Calculator {
         } finally {
             writeLock.unlock();
         }
-        return removeSpecialCharacters(new String(by));
+        //Make sure the outcome hash does not contain special characters
+        return DatatypeConverter.printBase64Binary(by);
     }
 
     public static String getSHA256(String password, String salt) {
         return getSHA256(password.getBytes(), salt);
-    }
-
-    public static String removeSpecialCharacters(String str) {
-        StringBuilder buff = new StringBuilder();
-        for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) != '\'' && str.charAt(i) != 0) {
-                buff.append(str.charAt(i));
-            }
-        }
-        return buff.toString();
     }
 }
