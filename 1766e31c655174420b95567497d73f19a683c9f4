@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "3a4c51b2_1a13785d",
+        "filename": "aaa-hsqldb-store/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-06T17:05:47Z",
+      "side": 1,
+      "message": "tried that, maven was complaining on cyclic version",
+      "parentUuid": "3a4c51b2_bf5cf626",
+      "revId": "1766e31c655174420b95567497d73f19a683c9f4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4c51b2_5f34d2dd",
         "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/HsqldbStoreConfig.java",
         "patchSetId": 4
@@ -47,6 +65,30 @@
       "writtenOn": "2016-04-06T13:17:09Z",
       "side": 1,
       "message": "Did you decide against a default password?  I know for a fact that psql won\u0027t allow you to open a database without a password (strange I know).  Is there a mechanism to provide hsql a default password?",
+      "range": {
+        "startLine": 28,
+        "startChar": 51,
+        "endLine": 28,
+        "endChar": 53
+      },
+      "revId": "1766e31c655174420b95567497d73f19a683c9f4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_5a1d0066",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/HsqldbStoreConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-06T17:05:47Z",
+      "side": 1,
+      "message": "I been looking into this, there is no was to change the default password either than download the code and change it. The simple workaround is just to create an admin user with password \"admin/admin\" for external tools. BTW, not sure this is a good idea as we might be creating a security breach...",
+      "parentUuid": "3a4c51b2_5f34d2dd",
       "range": {
         "startLine": 28,
         "startChar": 51,
@@ -106,6 +148,54 @@
     },
     {
       "key": {
+        "uuid": "3a4c51b2_3a1ab46e",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/AbstractStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-06T17:05:47Z",
+      "side": 1,
+      "message": "I want to replace the H2 implementation due to a lot of dependency issues that the HP guys solved by embedding it, hence I copy the code in a thought i would eventually delete the H2 implementation.",
+      "parentUuid": "3a4c51b2_1fafeae4",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "1766e31c655174420b95567497d73f19a683c9f4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_9a2668b9",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/AbstractStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-06T17:05:47Z",
+      "side": 1,
+      "message": "Not relevant to my intentions... would very much like to delete H2 implementation.",
+      "parentUuid": "3a4c51b2_dff3c208",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "1766e31c655174420b95567497d73f19a683c9f4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4c51b2_1f41aa39",
         "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/AbstractStore.java",
         "patchSetId": 4
@@ -117,6 +207,30 @@
       "writtenOn": "2016-04-06T13:17:09Z",
       "side": 1,
       "message": "Was this added or already there?  It is a pretty useless comment.",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 7
+      },
+      "revId": "1766e31c655174420b95567497d73f19a683c9f4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_da20f09d",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/AbstractStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-06T17:05:47Z",
+      "side": 1,
+      "message": "Copied it from somewhere...removed it.",
+      "parentUuid": "3a4c51b2_1f41aa39",
       "range": {
         "startLine": 26,
         "startChar": 4,
@@ -146,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "3a4c51b2_fa368ce6",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/yang/gen/v1/config/aaa/authn/hsqldb/store/rev160318/AAAHSQLDBStoreModule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-06T17:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4c51b2_ff3ddebc",
+      "revId": "1766e31c655174420b95567497d73f19a683c9f4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4c51b2_5f4b3259",
         "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/yang/gen/v1/config/aaa/authn/hsqldb/store/rev160318/AAAHSQLDBStoreModuleFactory.java",
         "patchSetId": 4
@@ -163,6 +295,24 @@
     },
     {
       "key": {
+        "uuid": "3a4c51b2_5a34e0dd",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/yang/gen/v1/config/aaa/authn/hsqldb/store/rev160318/AAAHSQLDBStoreModuleFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-06T17:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4c51b2_5f4b3259",
+      "revId": "1766e31c655174420b95567497d73f19a683c9f4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4c51b2_ffab1ed4",
         "filename": "features/authn/src/main/features/features.xml",
         "patchSetId": 4
@@ -174,6 +324,30 @@
       "writtenOn": "2016-04-06T13:17:09Z",
       "side": 1,
       "message": "This logically falls under the comment \"\u003c--H2 Store --\u003e\" even though it is actually should be \"\u003c!--HSQLDB Store --\u003e\"",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 59
+      },
+      "revId": "1766e31c655174420b95567497d73f19a683c9f4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_3a3114ed",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-06T17:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4c51b2_ffab1ed4",
       "range": {
         "startLine": 66,
         "startChar": 8,
