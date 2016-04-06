@@ -82,6 +82,30 @@
     },
     {
       "key": {
+        "uuid": "3a4c51b2_dff3c208",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/AbstractStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-06T13:30:24Z",
+      "side": 1,
+      "message": "I\u0027ll clarify by saying that they appear identical;  If this is the case, I would prefer not duplicating code and using a common underlying impl of the API.",
+      "parentUuid": "3a4c51b2_1fafeae4",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "1766e31c655174420b95567497d73f19a683c9f4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4c51b2_1f41aa39",
         "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/AbstractStore.java",
         "patchSetId": 4
