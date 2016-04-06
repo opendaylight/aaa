@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4c51b2_7f526e14",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-06T13:17:09Z",
+      "side": 1,
+      "message": "Please add a bit more about this here.  You should probably mention that this also changes HSQLDB to be the \"default\" instead of H2.  You should also mention the fact that most of this code was derived from the h2 version, so that people outside of the AAA circle know that it isnt all new code.",
+      "revId": "1766e31c655174420b95567497d73f19a683c9f4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_bf5cf626",
+        "filename": "aaa-hsqldb-store/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-06T13:17:09Z",
+      "side": 1,
+      "message": "still no version here?  I know it isn\u0027t required but it is nice to have.",
+      "revId": "1766e31c655174420b95567497d73f19a683c9f4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_5f34d2dd",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/HsqldbStoreConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-06T13:17:09Z",
+      "side": 1,
+      "message": "Did you decide against a default password?  I know for a fact that psql won\u0027t allow you to open a database without a password (strange I know).  Is there a mechanism to provide hsql a default password?",
+      "range": {
+        "startLine": 28,
+        "startChar": 51,
+        "endLine": 28,
+        "endChar": 53
+      },
+      "revId": "1766e31c655174420b95567497d73f19a683c9f4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_1fafeae4",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/AbstractStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-06T13:17:09Z",
+      "side": 1,
+      "message": "Something I admittedly missed last time I looked at this;  it appears we are just copying a bunch of files from the existing implementation, and it doesn\u0027t really seem as though we should need this.  Is there a reason you didn\u0027t just reference the AbstractStore that is part of H2?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "1766e31c655174420b95567497d73f19a683c9f4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_1f41aa39",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/AbstractStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-06T13:17:09Z",
+      "side": 1,
+      "message": "Was this added or already there?  It is a pretty useless comment.",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 7
+      },
+      "revId": "1766e31c655174420b95567497d73f19a683c9f4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_ff3ddebc",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/yang/gen/v1/config/aaa/authn/hsqldb/store/rev160318/AAAHSQLDBStoreModule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-06T13:17:09Z",
+      "side": 1,
+      "message": "This file is missing a copyright header.",
+      "revId": "1766e31c655174420b95567497d73f19a683c9f4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_5f4b3259",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/yang/gen/v1/config/aaa/authn/hsqldb/store/rev160318/AAAHSQLDBStoreModuleFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-06T13:17:09Z",
+      "side": 1,
+      "message": "This file is missing a copyright header.",
+      "revId": "1766e31c655174420b95567497d73f19a683c9f4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_ffab1ed4",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-06T13:17:09Z",
+      "side": 1,
+      "message": "This logically falls under the comment \"\u003c--H2 Store --\u003e\" even though it is actually should be \"\u003c!--HSQLDB Store --\u003e\"",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 59
+      },
+      "revId": "1766e31c655174420b95567497d73f19a683c9f4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
