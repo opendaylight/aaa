@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a4c51b2_8ebbd2c3",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/H2StoreConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-06T17:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4c51b2_2d1d7267",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 31
+      },
+      "revId": "b1077cf5236452d9cee19d746690f539801eceb4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4c51b2_0db6b63d",
         "filename": "aaa-hsqldb-store/pom.xml",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "3a4c51b2_2eca7e4f",
+        "filename": "aaa-hsqldb-store/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-06T17:05:47Z",
+      "side": 1,
+      "message": "Tried, maven did not like it...",
+      "parentUuid": "3a4c51b2_0db6b63d",
+      "revId": "b1077cf5236452d9cee19d746690f539801eceb4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4c51b2_6d82da53",
         "filename": "aaa-hsqldb-store/pom.xml",
         "patchSetId": 3
@@ -53,6 +95,30 @@
       "writtenOn": "2016-03-31T15:39:51Z",
       "side": 1,
       "message": "Can you add the dependency to the parent/pom.xml and then exclude the version here?",
+      "range": {
+        "startLine": 19,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "b1077cf5236452d9cee19d746690f539801eceb4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_0ec7c246",
+        "filename": "aaa-hsqldb-store/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-06T17:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4c51b2_6d82da53",
       "range": {
         "startLine": 19,
         "startChar": 12,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "3a4c51b2_aeddee16",
+        "filename": "aaa-hsqldb-store/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-06T17:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4c51b2_ad7ce273",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 21
+      },
+      "revId": "b1077cf5236452d9cee19d746690f539801eceb4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4c51b2_4d871e62",
         "filename": "aaa-hsqldb-store/pom.xml",
         "patchSetId": 3
@@ -99,6 +189,30 @@
       "writtenOn": "2016-03-31T15:39:51Z",
       "side": 1,
       "message": "Can you add this to the parent/pom.xml instead?",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 21
+      },
+      "revId": "b1077cf5236452d9cee19d746690f539801eceb4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_8ee2b2d3",
+        "filename": "aaa-hsqldb-store/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-06T17:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4c51b2_4d871e62",
       "range": {
         "startLine": 61,
         "startChar": 8,
@@ -180,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "3a4c51b2_0ecea25a",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-06T17:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4c51b2_324b0d5b",
+      "range": {
+        "startLine": 66,
+        "startChar": 39,
+        "endLine": 66,
+        "endChar": 47
+      },
+      "revId": "b1077cf5236452d9cee19d746690f539801eceb4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4c51b2_1248915a",
         "filename": "features/authn/src/main/features/features.xml",
         "patchSetId": 3
@@ -191,6 +329,30 @@
       "writtenOn": "2016-03-31T15:39:51Z",
       "side": 1,
       "message": "{{VERSION}}",
+      "range": {
+        "startLine": 144,
+        "startChar": 39,
+        "endLine": 144,
+        "endChar": 47
+      },
+      "revId": "b1077cf5236452d9cee19d746690f539801eceb4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_6edbe61b",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-06T17:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4c51b2_1248915a",
       "range": {
         "startLine": 144,
         "startChar": 39,
