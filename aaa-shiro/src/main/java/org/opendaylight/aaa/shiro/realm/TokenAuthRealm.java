@@ -255,7 +255,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
                 return new SimpleAuthenticationInfo(odlPrincipal, "", getName());
             }
         } catch (AuthenticationException e) {
-            LOG.info("Unknown OAuth2 Token Access Request", e);
+            LOG.debug("Unknown OAuth2 Token Access Request", e);
         }
 
         LOG.debug("Authentication failed: exhausted TokenAuth resources");
