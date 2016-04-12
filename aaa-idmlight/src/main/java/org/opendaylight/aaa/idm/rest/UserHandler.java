@@ -150,7 +150,8 @@ public class UserHandler {
             final User user = AAAIDMLightModule.getStore().readUser(id);
 
             if (user == null) {
-                return new IDMError(404, String.format("user not found! id: %d", id), "").response();
+                final String error = "user not found! id: " + id;
+                return new IDMError(404, error, "").response();
             }
 
             // Redact the password and salt for security purposes.
