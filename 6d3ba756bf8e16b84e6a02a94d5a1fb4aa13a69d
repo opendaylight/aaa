@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a494da4_e771ed78",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-04-12T21:21:05Z",
+      "side": 1,
+      "message": "Add* It\u0027s best practice to write commit messages in present-tense, imperative-style.",
+      "revId": "6d3ba756bf8e16b84e6a02a94d5a1fb4aa13a69d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
