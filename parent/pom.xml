@@ -203,7 +203,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <configuration>
                     <!-- checkstyle is evil -->
-                    <skip>false</skip>
+                    <skip>true</skip>
                     <failOnViolation>true</failOnViolation>
                     <configLocation>checkstyle-logging.xml</configLocation>
                     <consoleOutput>true</consoleOutput>

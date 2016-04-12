@@ -12,6 +12,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <modules>
+        <module>../aaa-authn-mdsal-encrypt-store-impl</module>
+    </modules>
     <parent>
         <groupId>org.opendaylight.aaa</groupId>
         <artifactId>aaa-parent</artifactId>
@@ -20,7 +23,7 @@
     </parent>
 
     <artifactId>aaa-authn-mdsal-store-impl</artifactId>
-    <packaging>bundle</packaging>
+    <packaging>pom</packaging>
 
     <dependencies>
         <dependency>
