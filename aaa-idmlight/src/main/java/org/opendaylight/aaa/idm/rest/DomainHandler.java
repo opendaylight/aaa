@@ -291,6 +291,7 @@ public class DomainHandler {
         } catch (NumberFormatException nfe) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Invalid Role id :" + grant.getRoleid());
+            LOG.debug("Invalid Role id : {}", grant.getRoleid());
             return Response.status(404).entity(idmerror).build();
         }
         try {
@@ -396,6 +397,7 @@ public class DomainHandler {
             if (userList.size() == 0) {
                 IDMError idmerror = new IDMError();
                 idmerror.setMessage("did not find username: " + username);
+                LOG.debug("did not find username: {}", username);
                 return Response.status(404).entity(idmerror).build();
             }
             User user = userList.get(0);
