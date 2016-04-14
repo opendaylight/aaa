@@ -116,6 +116,30 @@
       "revId": "d54e31b8aa67babf931b4176c73bdf28c1cc7602",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_c9fe8038",
+        "filename": "aaa-idmlight/src/test/java/org/opendaylight/aaa/idm/rest/test/DomainHandlerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-14T16:06:17Z",
+      "side": 1,
+      "message": "Okay I am fine with that.",
+      "parentUuid": "1a494da4_a9e8547d",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 29
+      },
+      "revId": "d54e31b8aa67babf931b4176c73bdf28c1cc7602",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
