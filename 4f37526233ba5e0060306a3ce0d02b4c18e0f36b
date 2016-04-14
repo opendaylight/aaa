@@ -1,0 +1,245 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a494da4_64d03b54",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IIDMStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-14T15:59:04Z",
+      "side": 1,
+      "message": "This seems implementation dependent and not a candidate for API.  What would the \"main node\" be for CDS?  The shard leader?",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 41
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_a90cd495",
+        "filename": "aaa-cassandra-store/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-14T15:59:04Z",
+      "side": 1,
+      "message": "can we just add this to the parent pom instead?  That way we inherit the version.",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 48
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_091d08be",
+        "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/AbstractStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-14T15:59:04Z",
+      "side": 1,
+      "message": "This appears to be an API in an impl folder?",
+      "range": {
+        "startLine": 34,
+        "startChar": 22,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_69792cfc",
+        "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/AbstractStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-14T15:59:04Z",
+      "side": 1,
+      "message": "inconsistent spacing",
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_497ef0e5",
+        "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/CassandraConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-14T15:59:04Z",
+      "side": 1,
+      "message": "Should probably use a constant dictionary for the defaults.",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 46
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_a98334cb",
+        "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/CassandraStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-14T15:59:04Z",
+      "side": 1,
+      "message": "spacing",
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_294e04c2",
+        "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/StoreException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-14T15:59:04Z",
+      "side": 1,
+      "message": "Instead of copying this class into this package, we should just put the Exception in a more accessible place.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 1
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_094b48b1",
+        "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/UserStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-14T15:59:04Z",
+      "side": 1,
+      "message": "spacing",
+      "range": {
+        "startLine": 22,
+        "startChar": 16,
+        "endLine": 22,
+        "endChar": 67
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_69c76c13",
+        "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/controller/config/yang/config/aaa/cassandra/store/AAACassandraStoreModule.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-14T15:59:04Z",
+      "side": 1,
+      "message": "wrong year",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_e9da5ce8",
+        "filename": "aaa-cassandra-store/src/test/java/org/opendaylight/aaa/cassandra/persistence/CassandraStoreTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-14T15:59:04Z",
+      "side": 1,
+      "message": "Why not use mockito?",
+      "range": {
+        "startLine": 219,
+        "startChar": 18,
+        "endLine": 219,
+        "endChar": 33
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_89d638c4",
+        "filename": "aaa-cassandra-store/src/test/java/org/opendaylight/aaa/cassandra/persistence/CassandraStoreTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-14T15:59:04Z",
+      "side": 1,
+      "message": "Why not use Mockito?",
+      "range": {
+        "startLine": 282,
+        "startChar": 5,
+        "endLine": 282,
+        "endChar": 42
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
