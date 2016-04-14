@@ -128,6 +128,29 @@
     },
     {
       "key": {
+        "uuid": "1a494da4_6d3c9794",
+        "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/StoreException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-04-14T21:22:27Z",
+      "side": 1,
+      "message": "what is the benefits of using this class instead of handling Exception ? there is no add info to the error",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 27
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a494da4_294e04c2",
         "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/StoreException.java",
         "patchSetId": 5
