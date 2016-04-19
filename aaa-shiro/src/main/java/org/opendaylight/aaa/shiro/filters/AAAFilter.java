@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The default AAA JAX-RS 1.X Web Filter. This class is also responsible for
+ * The RESTCONF AAA JAX-RS 1.X Web Filter. This class is also responsible for
  * delivering debug information; to enable these debug statements, please issue
  * the following in the karaf shell:
  *
