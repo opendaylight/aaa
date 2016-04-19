@@ -6,11 +6,9 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.authn.mdsal.store;
+package org.opendaylight.aaa.api;
 
 import static org.junit.Assert.assertEquals;
-
-import javax.xml.bind.DatatypeConverter;
 import org.junit.Test;
 
 public class DataEncrypterTest {
@@ -22,8 +20,7 @@ public class DataEncrypterTest {
         String eToken = dataEncry.encrypt(token);
         // check for decryption result
         String returnToken = dataEncry.decrypt(eToken);
-        String tokenBase64 = DatatypeConverter.printBase64Binary(token.getBytes());
-        assertEquals(tokenBase64, returnToken);
+        assertEquals(token, returnToken);
     }
 
     @Test

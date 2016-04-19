@@ -18,5 +18,6 @@
         <module>aaa-authn-mdsal-api</module>
         <module>aaa-authn-mdsal-config</module>
         <module>aaa-authn-mdsal-store-impl</module>
+        <module>aaa-authn-mdsal-encrypt-store-impl</module>
     </modules>
 </project>

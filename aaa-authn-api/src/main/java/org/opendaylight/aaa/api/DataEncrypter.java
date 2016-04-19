@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.authn.mdsal.store;
+package org.opendaylight.aaa.api;
 
 import java.security.spec.KeySpec;
 import javax.crypto.Cipher;
@@ -53,7 +53,7 @@ public class DataEncrypter {
 
     }
 
-    protected String encrypt(String token) {
+    public String encrypt(String token) {
 
         if (k == null) {
             return token;
@@ -72,7 +72,7 @@ public class DataEncrypter {
         }
     }
 
-    protected String decrypt(String eToken) {
+    public String decrypt(String eToken) {
         if (k == null) {
             return eToken;
         }
@@ -91,7 +91,8 @@ public class DataEncrypter {
 
             byte[] cryptobytes = DatatypeConverter.parseBase64Binary(eToken.substring(ENCRYPTED_TAG.length()));
             byte[] clearbytes = c.doFinal(cryptobytes);
-            return DatatypeConverter.printBase64Binary(clearbytes);
+//            return DatatypeConverter.printBase64Binary(clearbytes);
+            return new String(clearbytes);
 
         } catch (Exception e) {
             LOG.error("Couldn't decrypt token", e);

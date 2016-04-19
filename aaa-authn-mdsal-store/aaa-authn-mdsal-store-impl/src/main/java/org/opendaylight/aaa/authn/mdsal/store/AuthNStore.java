@@ -16,6 +16,7 @@ import java.math.BigInteger;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.opendaylight.aaa.api.Authentication;
+import org.opendaylight.aaa.api.DataEncrypter;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.authn.mdsal.store.util.AuthNStoreUtil;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;

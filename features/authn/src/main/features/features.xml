@@ -193,6 +193,7 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-api/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-store-impl/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-encrypt-store-impl/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
         <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
