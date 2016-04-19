@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.authn.mdsal.store;
+package org.opendaylight.aaa.api;
 
 import static org.junit.Assert.assertEquals;
 

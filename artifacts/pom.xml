@@ -76,6 +76,11 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>aaa-authn-mdsal-encrypt-store-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-authn-mdsal-config</artifactId>
                 <version>${project.version}</version>
                 <type>xml</type>
