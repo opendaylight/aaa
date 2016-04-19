@@ -22,6 +22,9 @@
         <karaf.branding.version>1.3.0-SNAPSHOT</karaf.branding.version>
         <karaf.resources.version>1.7.0-SNAPSHOT</karaf.resources.version>
 
+        <!-- OSGi -->
+        <osgi.metatype.version>1.1.2</osgi.metatype.version>
+
         <!-- Local project version, needed for import -->
         <aaa.version>${project.version}</aaa.version>
         <parent-path>${basedir}</parent-path>
@@ -114,6 +117,7 @@
             <dependency>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>org.apache.felix.metatype</artifactId>
+                <version>${osgi.metatype.version}</version>
             </dependency>
             <dependency>
                 <groupId>net.sf.ehcache</groupId>
