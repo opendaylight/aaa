@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa57193c_9025c1ad",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/DataEncrypter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-04-20T16:50:07Z",
+      "side": 1,
+      "message": "I think this should stored in the 08-authn-config.xml with secret as well.",
+      "range": {
+        "startLine": 29,
+        "startChar": 37,
+        "endLine": 29,
+        "endChar": 90
+      },
+      "revId": "8d868cdacf2c87c2b0bd9f1ec032299c9b23bdba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_b0572502",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-encrypt-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/encrypt/store/AttributesEncryptDataBroker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-04-20T16:50:07Z",
+      "side": 1,
+      "message": "what is the purpose of passing this as an argument ? can I specify the encrypted objects ? pleas explain more",
+      "range": {
+        "startLine": 47,
+        "startChar": 74,
+        "endLine": 47,
+        "endChar": 96
+      },
+      "revId": "8d868cdacf2c87c2b0bd9f1ec032299c9b23bdba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
