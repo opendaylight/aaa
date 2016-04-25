@@ -255,10 +255,6 @@
         </dependencies>
     </dependencyManagement>
 
-  <properties>
-    <nexusproxy>http://nexus.opendaylight.org/content</nexusproxy>
-  </properties>
-
   <distributionManagement>
     <!-- OpenDayLight Released artifact -->
     <repository>
