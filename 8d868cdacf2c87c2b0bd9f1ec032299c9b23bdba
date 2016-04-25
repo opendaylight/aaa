@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fa57193c_521a036f",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/DataEncrypter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-04-25T17:01:04Z",
+      "side": 1,
+      "message": "Doing this puts implementation classes in the API;  its better if we add an abstract class or interface to the api and put this in an impl package.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 33
+      },
+      "revId": "8d868cdacf2c87c2b0bd9f1ec032299c9b23bdba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_9025c1ad",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/DataEncrypter.java",
         "patchSetId": 1
