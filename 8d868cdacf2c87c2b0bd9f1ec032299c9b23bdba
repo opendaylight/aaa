@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_4f037c0f",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/DataEncrypter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-25T16:59:43Z",
+      "side": 1,
+      "message": "yes, will do that in a different patch as this patch is just moving the DataEncrypter from MDSAL to API for public use.",
+      "parentUuid": "fa57193c_9025c1ad",
+      "range": {
+        "startLine": 29,
+        "startChar": 37,
+        "endLine": 29,
+        "endChar": 90
+      },
+      "revId": "8d868cdacf2c87c2b0bd9f1ec032299c9b23bdba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_92049b16",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-encrypt-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/encrypt/store/AttributesEncryptDataBroker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-25T16:59:43Z",
+      "side": 1,
+      "message": "No need for this to be abstract, this is a simple util and we don\u0027t expect it to be a base for other implementations.",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 15
+      },
+      "revId": "8d868cdacf2c87c2b0bd9f1ec032299c9b23bdba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_b0572502",
         "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-encrypt-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/encrypt/store/AttributesEncryptDataBroker.java",
         "patchSetId": 1
@@ -42,6 +89,47 @@
         "endLine": 47,
         "endChar": 96
       },
+      "revId": "8d868cdacf2c87c2b0bd9f1ec032299c9b23bdba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_b2ff1f01",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-encrypt-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/encrypt/store/AttributesEncryptDataBroker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-25T16:59:43Z",
+      "side": 1,
+      "message": "I talked to Sunil, this constructor variable will be removed. We will encapsulate this with a method call addEncryptedAttribute(String methodName,Class\u003c?\u003e interfac).\ne.g. you instantiate this util with a DataBroker and then add the methods that should be encrypted when you do a write transaction.",
+      "parentUuid": "fa57193c_b0572502",
+      "range": {
+        "startLine": 47,
+        "startChar": 74,
+        "endLine": 47,
+        "endChar": 96
+      },
+      "revId": "8d868cdacf2c87c2b0bd9f1ec032299c9b23bdba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_d20e1334",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-encrypt-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/encrypt/store/AttributesEncryptDataBrokerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-25T16:59:43Z",
+      "side": 1,
+      "message": "No need for this class...",
       "revId": "8d868cdacf2c87c2b0bd9f1ec032299c9b23bdba",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
