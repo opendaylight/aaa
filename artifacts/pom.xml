@@ -58,11 +58,6 @@
                 <type>cfg</type>
                 <classifier>config</classifier>
             </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-authn-keystone</artifactId>
-                <version>${project.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
