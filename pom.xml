@@ -25,7 +25,6 @@
     <module>aaa-authn-store</module>
     <module>aaa-authn-federation</module>
     <module>aaa-authn-sssd</module>
-    <module>aaa-authn-keystone</module>
     <module>aaa-authn-basic</module>
     <module>aaa-idmlight</module>
     <module>aaa-authn-mdsal-store</module>
