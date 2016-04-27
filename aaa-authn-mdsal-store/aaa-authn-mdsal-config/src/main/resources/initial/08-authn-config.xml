@@ -30,7 +30,6 @@
                     </data-broker>
                     <timeToLive>3600000</timeToLive>
                     <timeToWait>15</timeToWait>
-                    <password>CHANGE_ME</password>
                 </module>
             </modules>
         </data>
