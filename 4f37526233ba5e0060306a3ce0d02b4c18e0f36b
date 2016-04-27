@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_b6654c47",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IIDMStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T21:51:22Z",
+      "side": 1,
+      "message": "So I was having doubts myself, let me describe the purpose and see if we can come up with a better name/way of doing this.\nIn a cluster database only one of the nodes should create the schema, the sole purpose of this boolean is to indicate if this node should create the schema or not in the database. In HSQLDB this boolean should always be \"true\". For Cassandra, out of the box it will also always be true. In a cluster environment, if using Cassandra or some other cluster data store, this should be true only on one of the nodes.\n\nHow about I change the name to \"shouldCreateSchema\"?",
+      "parentUuid": "1a494da4_64d03b54",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 41
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a494da4_a90cd495",
         "filename": "aaa-cassandra-store/pom.xml",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2016-04-14T15:59:04Z",
       "side": 1,
       "message": "can we just add this to the parent pom instead?  That way we inherit the version.",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 48
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_d6ee008b",
+        "filename": "aaa-cassandra-store/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T21:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a494da4_a90cd495",
       "range": {
         "startLine": 20,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_b6f38c72",
+        "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/AbstractStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T21:51:22Z",
+      "side": 1,
+      "message": "No, To avoid writing the same cassandra impl code over and over again for different type of objects, I use this abstract store to and just change the generic types. e.g. User/Users or Role/Roles \u0026 etc.",
+      "parentUuid": "1a494da4_091d08be",
+      "range": {
+        "startLine": 34,
+        "startChar": 22,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a494da4_69792cfc",
         "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/AbstractStore.java",
         "patchSetId": 5
@@ -82,6 +154,24 @@
       "writtenOn": "2016-04-14T15:59:04Z",
       "side": 1,
       "message": "inconsistent spacing",
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_16e99880",
+        "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/AbstractStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T21:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a494da4_69792cfc",
       "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_96fc8840",
+        "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/CassandraConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T21:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a494da4_497ef0e5",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 46
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a494da4_a98334cb",
         "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/CassandraStore.java",
         "patchSetId": 5
@@ -122,6 +236,24 @@
       "writtenOn": "2016-04-14T15:59:04Z",
       "side": 1,
       "message": "spacing",
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_76f9f44c",
+        "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/CassandraStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T21:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a494da4_a98334cb",
       "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -163,6 +295,30 @@
       "side": 1,
       "message": "@Mohamed this has been part of the API for a long time;  as it is a checked exception changing it would fundamentally change the API.  We could consider this but I don\u0027t think it is super important to do so.",
       "parentUuid": "1a494da4_6d3c9794",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 27
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_3622dcb9",
+        "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/StoreException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T21:51:22Z",
+      "side": 1,
+      "message": "Actually Mohamed is right...there is no need for this, we just need to use the IDMStoreException from the API package",
+      "parentUuid": "fa57193c_60178652",
       "range": {
         "startLine": 19,
         "startChar": 13,
@@ -221,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_962f68a1",
+        "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/StoreException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T21:51:22Z",
+      "side": 1,
+      "message": "already done with IDMStoreException...going to use that and delete this class.",
+      "parentUuid": "1a494da4_294e04c2",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 1
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a494da4_094b48b1",
         "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/UserStore.java",
         "patchSetId": 5
@@ -232,6 +412,30 @@
       "writtenOn": "2016-04-14T15:59:04Z",
       "side": 1,
       "message": "spacing",
+      "range": {
+        "startLine": 22,
+        "startChar": 16,
+        "endLine": 22,
+        "endChar": 67
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_762c54ac",
+        "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/aaa/cassandra/persistence/UserStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T21:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a494da4_094b48b1",
       "range": {
         "startLine": 22,
         "startChar": 16,
@@ -267,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_d618c086",
+        "filename": "aaa-cassandra-store/src/main/java/org/opendaylight/controller/config/yang/config/aaa/cassandra/store/AAACassandraStoreModule.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T21:51:22Z",
+      "side": 1,
+      "message": "Changed to 2016...although i have started this @ 2015...:o)",
+      "parentUuid": "1a494da4_69c76c13",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a494da4_e9da5ce8",
         "filename": "aaa-cassandra-store/src/test/java/org/opendaylight/aaa/cassandra/persistence/CassandraStoreTest.java",
         "patchSetId": 5
@@ -290,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_f90e9733",
+        "filename": "aaa-cassandra-store/src/test/java/org/opendaylight/aaa/cassandra/persistence/CassandraStoreTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T21:51:22Z",
+      "side": 1,
+      "message": "I don\u0027t remember, I figured out this is an easier way than Mockito in this context.",
+      "parentUuid": "1a494da4_e9da5ce8",
+      "range": {
+        "startLine": 219,
+        "startChar": 18,
+        "endLine": 219,
+        "endChar": 33
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a494da4_89d638c4",
         "filename": "aaa-cassandra-store/src/test/java/org/opendaylight/aaa/cassandra/persistence/CassandraStoreTest.java",
         "patchSetId": 5
@@ -301,6 +553,30 @@
       "writtenOn": "2016-04-14T15:59:04Z",
       "side": 1,
       "message": "Why not use Mockito?",
+      "range": {
+        "startLine": 282,
+        "startChar": 5,
+        "endLine": 282,
+        "endChar": 42
+      },
+      "revId": "4f37526233ba5e0060306a3ce0d02b4c18e0f36b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_39100f4e",
+        "filename": "aaa-cassandra-store/src/test/java/org/opendaylight/aaa/cassandra/persistence/CassandraStoreTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T21:51:22Z",
+      "side": 1,
+      "message": "same as above, it was easier.",
+      "parentUuid": "1a494da4_89d638c4",
       "range": {
         "startLine": 282,
         "startChar": 5,
