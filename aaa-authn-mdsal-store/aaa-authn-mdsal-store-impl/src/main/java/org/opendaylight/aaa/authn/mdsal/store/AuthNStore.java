@@ -18,6 +18,7 @@ import java.util.concurrent.Executors;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.authn.mdsal.store.util.AuthNStoreUtil;
+import org.opendaylight.aaa.encrypt.AAAEncryptionService;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
@@ -40,11 +41,11 @@ public class AuthNStore implements AutoCloseable, TokenStore {
     private static BigInteger timeToLive;
     private static Integer timeToWait;
     private final ExecutorService deleteExpiredTokenThread = Executors.newFixedThreadPool(1);
-    private final DataEncrypter dataEncrypter;
+    private final AAAEncryptionService dataEncrypter;
 
-    public AuthNStore(final DataBroker dataBroker, final String config_key) {
+    public AuthNStore(final DataBroker dataBroker, final AAAEncryptionService dataEncrypter) {
         this.broker = dataBroker;
-        this.dataEncrypter = new DataEncrypter(config_key);
+        this.dataEncrypter = dataEncrypter;
         LOG.info("Created MD-SAL AAA Token Cache Service...");
     }
 

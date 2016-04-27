@@ -14,6 +14,7 @@ import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.authn.mdsal.store.AuthNStore;
 import org.opendaylight.aaa.authn.mdsal.store.IDMMDSALStore;
 import org.opendaylight.aaa.authn.mdsal.store.IDMStore;
+import org.opendaylight.aaa.encrypt.AAAEncryptionService;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -45,7 +46,8 @@ public class AuthNStoreModule
     public java.lang.AutoCloseable createInstance() {
 
         DataBroker dataBrokerService = getDataBrokerDependency();
-        final AuthNStore authNStore = new AuthNStore(dataBrokerService, getPassword());
+        final AAAEncryptionService encryptionService = bundleContext.getService(bundleContext.getServiceReference(AAAEncryptionService.class));
+        final AuthNStore authNStore = new AuthNStore(dataBrokerService, encryptionService);
         final IDMMDSALStore mdsalStore = new IDMMDSALStore(dataBrokerService);
         final IDMStore idmStore = new IDMStore(mdsalStore);
 
