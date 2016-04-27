@@ -196,6 +196,9 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
         <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
+        <feature version='${project.version}'>odl-aaa-encryption-service</feature>
+        <!--bundle>mvn:org.opendaylight.aaa/aaa-encrypt-service/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-encrypt-service-config.xml">mvn:org.opendaylight.aaa/aaa-encrypt-service/{{VERSION}}/xml/config</configfile-->
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
@@ -236,5 +239,18 @@
              version='${project.version}'>
         <feature version='${project.version}'>odl-aaa-authn-no-cluster</feature>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sssd/{{VERSION}}</bundle>
+    </feature>
+
+    <feature name='odl-aaa-encryption-service' description='OpenDaylight :: AAA :: Encryption Service'
+             version='${project.version}'>
+        <!-- MD-SAL -->
+        <feature version='${yangtools.version}'>odl-yangtools-common</feature>
+        <feature version='${mdsal.version}'>odl-mdsal-binding-base</feature>
+        <feature version='${controller.mdsal.version}'>odl-mdsal-broker</feature>
+        <feature version='${config.version}'>odl-config-core</feature>
+        <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
+
+        <bundle>mvn:org.opendaylight.aaa/aaa-encrypt-service/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-encrypt-service-config.xml">mvn:org.opendaylight.aaa/aaa-encrypt-service/{{VERSION}}/xml/config</configfile>
     </feature>
 </features>
