@@ -196,6 +196,8 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
         <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-encrypt-service/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-encrypt-service-config.xml">mvn:org.opendaylight.aaa/aaa-encrypt-service/{{VERSION}}/xml/config</configfile>
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
