@@ -348,6 +348,17 @@
             <artifactId>aaa-authn-idpmapping</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-encrypt-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-encrypt-service</artifactId>
+            <type>xml</type>
+            <classifier>config</classifier>
+        </dependency>
+
     </dependencies>
     <scm>
         <connection>scm:git:ssh://git.opendaylight.org:29418/aaa.git</connection>
