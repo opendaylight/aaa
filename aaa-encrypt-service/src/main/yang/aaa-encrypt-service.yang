@@ -1,0 +1,36 @@
+module aaa-encrypt-service {
+  yang-version 1;
+  namespace "config:aaa:authn:encrypt:service";
+  prefix "aaa-encrypt-service";
+    organization "OpenDayLight";
+
+    import config { prefix config; revision-date 2013-04-05; }
+    import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
+
+    contact "saichler@gmail.com";
+
+    revision 2016-04-26 {
+        description
+            "Initial revision.";
+    }
+
+    identity aaa-encrypt-service {
+        base config:module-type;
+        config:java-name-prefix AAAEncryptService;
+    }
+
+    augment "/config:modules/config:module/config:configuration" {
+        case aaa-encrypt-service {
+            when "/config:modules/config:module/config:type = 'aaa-encrypt-service'";
+            leaf encrypt-key {
+                description "encryption key";
+                type string;
+            }
+            leaf encrypt-salt {
+                description "encryption key salt";
+                type string;
+            }
+        }
+    }
+
+}

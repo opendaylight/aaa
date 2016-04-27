@@ -40,6 +40,7 @@
     <module>aaa-cert</module>
     <module>aaa-cli</module>
     <module>aaa-filterchain</module>
+    <module>aaa-encrypt-service</module>
   </modules>
 
   <scm>
