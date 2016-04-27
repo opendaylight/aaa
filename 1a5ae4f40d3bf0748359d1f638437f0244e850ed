@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_d99bd3c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_f6ed048d",
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_5602f03e",
         "filename": "aaa-hsqldb-store/pom.xml",
         "patchSetId": 9
@@ -30,6 +48,30 @@
       "writtenOn": "2016-04-27T19:55:02Z",
       "side": 1,
       "message": "Please put the version in parent and avoid it here.",
+      "range": {
+        "startLine": 58,
+        "startChar": 21,
+        "endLine": 58,
+        "endChar": 38
+      },
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_b9a09ff5",
+        "filename": "aaa-hsqldb-store/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_5602f03e",
       "range": {
         "startLine": 58,
         "startChar": 21,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_19a6eb10",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/HsqldbStoreConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "I added an admin user called \"admin/admin\" as you cannot change the default hsqldb system user. Third party jdbc should use that user to connect to the database.",
+      "parentUuid": "fa57193c_36ff7c36",
+      "range": {
+        "startLine": 33,
+        "startChar": 51,
+        "endLine": 33,
+        "endChar": 55
+      },
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_16a07842",
         "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/HsqldbStoreConfig.java",
         "patchSetId": 9
@@ -76,6 +142,30 @@
       "writtenOn": "2016-04-27T19:55:02Z",
       "side": 1,
       "message": "Is this just used in the log() function?  If so, I don\u0027t know how useful it is seeing it isn\u0027t ever set.  I\u0027d say get rid of this too.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_f9aa17d3",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/HsqldbStoreConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_16a07842",
       "range": {
         "startLine": 52,
         "startChar": 4,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_39ac8fed",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/HsqldbStoreConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_d69560e5",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 31
+      },
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_b69a6c12",
         "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/HsqldbStoreConfig.java",
         "patchSetId": 9
@@ -122,6 +236,30 @@
       "writtenOn": "2016-04-27T19:55:02Z",
       "side": 1,
       "message": "This isn\u0027t used.",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 65
+      },
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_59afc3e3",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/HsqldbStoreConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_b69a6c12",
       "range": {
         "startLine": 88,
         "startChar": 8,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_99b95b31",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/AbstractStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "It was not, by default if you don\u0027t specify it is \"protected\", I just don\u0027t like not declaring visibility.",
+      "parentUuid": "fa57193c_b668acf6",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 14
+      },
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_f6a4e458",
         "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/AbstractStore.java",
         "patchSetId": 9
@@ -168,6 +330,30 @@
       "writtenOn": "2016-04-27T19:55:02Z",
       "side": 1,
       "message": "Please include the exception in the log message:\nLOG.error(\"Failed to close the database\", e);",
+      "range": {
+        "startLine": 191,
+        "startChar": 26,
+        "endLine": 191,
+        "endChar": 56
+      },
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_79b6073f",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/AbstractStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_f6a4e458",
       "range": {
         "startLine": 191,
         "startChar": 26,
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_d982b351",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/DomainStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "Unique is coming from H2 and not supported in HSQLDB. Need to create an index and seems useless as the domainid and name are identical. Added back the \"Not Null\".",
+      "parentUuid": "fa57193c_568950c9",
+      "range": {
+        "startLine": 47,
+        "startChar": 44,
+        "endLine": 47,
+        "endChar": 48
+      },
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_36865cba",
         "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/HSQLDBStore.java",
         "patchSetId": 9
@@ -214,6 +424,24 @@
       "writtenOn": "2016-04-27T19:55:02Z",
       "side": 1,
       "message": "spacing.",
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_b987ff60",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/HSQLDBStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_36865cba",
       "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -237,6 +465,24 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_197d4b6f",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/HSQLDBStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_9693e8f9",
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_d6bc406f",
         "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/HSQLDBStore.java",
         "patchSetId": 9
@@ -248,6 +494,30 @@
       "writtenOn": "2016-04-27T19:55:02Z",
       "side": 1,
       "message": "These should be closed regardless, not just if \"!rs.next()\"",
+      "range": {
+        "startLine": 55,
+        "startChar": 20,
+        "endLine": 56,
+        "endChar": 31
+      },
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_f981774b",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/HSQLDBStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_d6bc406f",
       "range": {
         "startLine": 55,
         "startChar": 20,
@@ -283,6 +553,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_5996a395",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/HSQLDBStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "Username is not case sensitive so left it as \"ADMIN\".\nPassword is case sensitive so change it to \"admin\".\nDatabase Role is case sensitive so leaving it as \"ADMIN\".",
+      "parentUuid": "fa57193c_b6c1cce6",
+      "range": {
+        "startLine": 58,
+        "startChar": 59,
+        "endLine": 58,
+        "endChar": 70
+      },
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_16b7d887",
         "filename": "aaa-hsqldb-store/src/main/yang/aaa-hsqldb-store.yang",
         "patchSetId": 9
@@ -294,6 +588,30 @@
       "writtenOn": "2016-04-27T19:55:02Z",
       "side": 1,
       "message": "fix spacing please.",
+      "range": {
+        "startLine": 2,
+        "startChar": 2,
+        "endLine": 4,
+        "endChar": 28
+      },
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_3993efa4",
+        "filename": "aaa-hsqldb-store/src/main/yang/aaa-hsqldb-store.yang",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_16b7d887",
       "range": {
         "startLine": 2,
         "startChar": 2,
@@ -329,6 +647,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_99903b97",
+        "filename": "aaa-hsqldb-store/src/test/java/org/opendaylight/aaa/hsqldb/persistence/HSQLDBStoreTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_f6bb4470",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 19
+      },
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_36adbc32",
         "filename": "aaa-hsqldb-store/src/test/java/org/opendaylight/aaa/hsqldb/persistence/HSQLDBStoreTest.java",
         "patchSetId": 9
@@ -340,6 +682,24 @@
       "writtenOn": "2016-04-27T19:55:02Z",
       "side": 1,
       "message": "spacing issue.",
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_798d677b",
+        "filename": "aaa-hsqldb-store/src/test/java/org/opendaylight/aaa/hsqldb/persistence/HSQLDBStoreTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_36adbc32",
       "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -363,6 +723,24 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_d9e9131c",
+        "filename": "aaa-hsqldb-store/src/test/java/org/opendaylight/aaa/hsqldb/persistence/HSQLDBStoreTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_56b0308b",
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_76a73450",
         "filename": "features/authn/pom.xml",
         "patchSetId": 9
@@ -374,6 +752,30 @@
       "writtenOn": "2016-04-27T19:55:02Z",
       "side": 1,
       "message": "Just inline the version instead of using a property.",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_39dacf78",
+        "filename": "features/authn/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "This version is used in other poms...",
+      "parentUuid": "fa57193c_76a73450",
       "range": {
         "startLine": 26,
         "startChar": 8,
@@ -409,6 +811,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_99e79b40",
+        "filename": "features/authn/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "So using the single location of the version.",
+      "parentUuid": "fa57193c_96aac817",
+      "range": {
+        "startLine": 252,
+        "startChar": 21,
+        "endLine": 252,
+        "endChar": 38
+      },
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_d663a018",
         "filename": "parent/pom.xml",
         "patchSetId": 9
@@ -420,6 +846,30 @@
       "writtenOn": "2016-04-27T19:55:02Z",
       "side": 1,
       "message": "Inline the dependency instead of using a property.",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 52,
+        "endChar": 46
+      },
+      "revId": "1a5ae4f40d3bf0748359d1f638437f0244e850ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_79e4473b",
+        "filename": "parent/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-04-27T23:04:00Z",
+      "side": 1,
+      "message": "sorry, i don\u0027t get it.. this version is user cross poms...",
+      "parentUuid": "fa57193c_d663a018",
       "range": {
         "startLine": 52,
         "startChar": 8,
