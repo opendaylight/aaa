@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa57193c_7cd8b51d",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/config/HsqldbStoreConfig.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-04-28T14:42:08Z",
+      "side": 1,
+      "message": "bad license ?",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 55
+      },
+      "revId": "eb5797ac2a028079791c50b9f4ef8c88129f12b6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_dc12a1b3",
+        "filename": "aaa-hsqldb-store/src/main/java/org/opendaylight/aaa/hsqldb/persistence/DomainStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-04-28T14:42:08Z",
+      "side": 1,
+      "message": "this should be not null, enable is true or false there is no in between state, default true",
+      "range": {
+        "startLine": 49,
+        "startChar": 19,
+        "endLine": 49,
+        "endChar": 38
+      },
+      "revId": "eb5797ac2a028079791c50b9f4ef8c88129f12b6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
