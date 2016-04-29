@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa57193c_6572d47d",
+        "filename": "aaa-encrypt-service/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-04-29T15:32:29Z",
+      "side": 1,
+      "message": "you are not using this.",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 21
+      },
+      "revId": "dfa7971e5806429cf612db9697fccbc0da6749de",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_2559fcfe",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-04-29T15:32:29Z",
+      "side": 1,
+      "message": "what is the benefits of adding this tag ?",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 60
+      },
+      "revId": "dfa7971e5806429cf612db9697fccbc0da6749de",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_e53704af",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-04-29T15:32:29Z",
+      "side": 1,
+      "message": "create final variable for this",
+      "range": {
+        "startLine": 44,
+        "startChar": 72,
+        "endLine": 44,
+        "endChar": 90
+      },
+      "revId": "dfa7971e5806429cf612db9697fccbc0da6749de",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_25429c10",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-04-29T15:32:29Z",
+      "side": 1,
+      "message": "same here, create final variable for this",
+      "range": {
+        "startLine": 47,
+        "startChar": 63,
+        "endLine": 47,
+        "endChar": 66
+      },
+      "revId": "dfa7971e5806429cf612db9697fccbc0da6749de",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_855288db",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-04-29T15:32:29Z",
+      "side": 1,
+      "message": "should add key is null LOG here.",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "dfa7971e5806429cf612db9697fccbc0da6749de",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_05479820",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-04-29T15:32:29Z",
+      "side": 1,
+      "message": "same create final variable for this",
+      "range": {
+        "startLine": 64,
+        "startChar": 43,
+        "endLine": 64,
+        "endChar": 63
+      },
+      "revId": "dfa7971e5806429cf612db9697fccbc0da6749de",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_c5d5a044",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-04-29T15:32:29Z",
+      "side": 1,
+      "message": "same as above, should move all encryption properties cipher, secretkey and algorithm  to config with the password and salt.",
+      "range": {
+        "startLine": 84,
+        "startChar": 43,
+        "endLine": 84,
+        "endChar": 63
+      },
+      "revId": "dfa7971e5806429cf612db9697fccbc0da6749de",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
