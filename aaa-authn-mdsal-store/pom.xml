@@ -16,7 +16,6 @@
 
     <modules>
         <module>aaa-authn-mdsal-api</module>
-        <module>aaa-authn-mdsal-config</module>
         <module>aaa-authn-mdsal-store-impl</module>
     </modules>
 </project>

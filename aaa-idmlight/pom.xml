@@ -1,53 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2016 Brocade Communications Systems, Inc. and others. All rights reserved.
+
+ This program and the accompanying materials are made available under the
+ terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ and is available at http://www.eclipse.org/legal/epl-v10.html
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.opendaylight.aaa</groupId>
-        <artifactId>aaa-parent</artifactId>
-        <version>0.4.0-SNAPSHOT</version>
-        <relativePath>../parent</relativePath>
+        <groupId>org.opendaylight.controller</groupId>
+        <artifactId>config-parent</artifactId>
+        <version>0.5.0-SNAPSHOT</version>
+        <relativePath />
     </parent>
 
+    <groupId>org.opendaylight.aaa</groupId>
     <artifactId>aaa-idmlight</artifactId>
+    <version>0.4.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <dependencies>
-        <!--Yang Binding -->
-        <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>config-api</artifactId>
-            <version>${config.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>sal-binding-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>sal-binding-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>sal-common-util</artifactId>
-        </dependency>
-
+        <!-- project specific dependencies -->
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn-api</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-shiro</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-filterchain</artifactId>
+            <version>${project.version}</version>
         </dependency>
+        <!-- external dependencies -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -68,15 +64,14 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <scope>test</scope>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlets</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
         </dependency>
-
         <!-- JSON JAXB Stuff -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -106,13 +101,6 @@
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-jaxb-annotations</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlets</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- Testing Dependencies -->
         <dependency>
             <groupId>com.sun.jersey.jersey-test-framework</groupId>
@@ -129,73 +117,19 @@
             <artifactId>slf4j-simple</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>org.opendaylight.yangtools</groupId>
-                <artifactId>yang-maven-plugin</artifactId>
-                <version>${yangtools.version}</version>
-                <executions>
-                    <execution>
-                        <id>config</id>
-                        <goals>
-                            <goal>generate-sources</goal>
-                        </goals>
-                        <configuration>
-                            <codeGenerators>
-                                <generator>
-                                    <codeGeneratorClass>org.opendaylight.controller.config.yangjmxgenerator.plugin.JMXGenerator</codeGeneratorClass>
-                                    <outputBaseDir>${jmxGeneratorPath}</outputBaseDir>
-                                    <additionalConfiguration>
-                                        <namespaceToPackage1>urn:opendaylight:params:xml:ns:yang:controller==org.opendaylight.controller.config.yang</namespaceToPackage1>
-                                    </additionalConfiguration>
-                                </generator>
-                                <generator>
-                                    <codeGeneratorClass>org.opendaylight.yangtools.maven.sal.api.gen.plugin.CodeGeneratorImpl</codeGeneratorClass>
-                                    <outputBaseDir>${salGeneratorPath}</outputBaseDir>
-                                </generator>
-                            </codeGenerators>
-                            <inspectDependencies>true</inspectDependencies>
-                        </configuration>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.opendaylight.mdsal</groupId>
-                        <artifactId>maven-sal-api-gen-plugin</artifactId>
-                        <version>${mdsal.model.version}</version>
-                        <type>jar</type>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.opendaylight.controller</groupId>
-                        <artifactId>yang-jmx-generator-plugin</artifactId>
-                        <version>${config.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
                 <executions>
-                    <execution>
-                        <id>attach-artifacts</id>
-                        <goals>
-                            <goal>attach-artifact</goal>
-                        </goals>
-                        <phase>package</phase>
-                        <configuration>
-                            <artifacts>
-                                <artifact>
-                                    <file>${project.build.directory}/classes/initial/08-aaa-idmlight-config.xml</file>
-                                    <type>xml</type>
-                                    <classifier>config</classifier>
-                                </artifact>
-                            </artifacts>
-                        </configuration>
-                    </execution>
                     <execution>
                         <id>attach-artifacts-idmtool</id>
                         <goals>
@@ -212,26 +146,20 @@
                             </artifacts>
                         </configuration>
                     </execution>
-
                 </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
-                <!-- override default version so we don't use bnd 2.3.0 when embedding sqlite -->
-
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
                         <Import-Package>org.opendaylight.aaa.shiro.realm,org.apache.shiro.web.env,org.apache.shiro.authc,org.opendaylight.aaa.shiro.web.env,org.opendaylight.aaa.shiro.filters,org.opendaylight.aaa.filterchain.filters,javax.servlet.http,javax.ws.rs,javax.ws.rs.core,javax.xml.bind.annotation,org.apache.felix.dm,org.opendaylight.aaa,org.opendaylight.aaa.api.*,org.osgi.framework,org.slf4j,org.eclipse.jetty.servlets,com.sun.jersey.spi.container.servlet,com.google.*,org.opendaylight.*,org.osgi.util.tracker</Import-Package>
                         <Web-ContextPath>/auth</Web-ContextPath>
-                        <!--<Web-Connectors>adminConn</Web-Connectors> -->
-                        <!--Bundle-Activator>org.opendaylight.aaa.idm.Activator</Bundle-Activator-->
                     </instructions>
                     <manifestLocation>${project.basedir}/META-INF</manifestLocation>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>
