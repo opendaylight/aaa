@@ -8,25 +8,27 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
-
+  <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.opendaylight.aaa</groupId>
-    <artifactId>aaa-parent</artifactId>
-    <version>0.4.0-SNAPSHOT</version>
-    <relativePath>../parent</relativePath>
+    <groupId>org.opendaylight.controller</groupId>
+    <artifactId>config-parent</artifactId>
+    <version>0.5.0-SNAPSHOT</version>
+    <relativePath />
   </parent>
 
-  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-cli</artifactId>
+  <version>0.4.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
   <dependencies>
+    <!-- project specific dependencies -->
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>aaa-cert</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <!-- external dependencies -->
     <dependency>
       <groupId>org.apache.karaf.shell</groupId>
       <artifactId>org.apache.karaf.shell.console</artifactId>
@@ -45,13 +47,4 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
 </project>
