@@ -17,7 +17,6 @@
     <modules>
         <module>aaa-authz-model</module>
         <module>aaa-authz-service</module>
-        <module>aaa-authz-config</module>
         <module>aaa-authz-restconf-config</module>
     </modules>
 </project>
