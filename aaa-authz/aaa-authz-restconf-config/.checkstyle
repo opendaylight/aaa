@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<fileset-config file-format-version="1.2.0" simple-config="false" sync-formatter="false">
+  <local-check-config name="maven-checkstyle-plugin check-license" location="jar:file:/Users/adetalhouet/.m2/repository/org/opendaylight/odlparent/checkstyle/0.2.0-SNAPSHOT/checkstyle-0.2.0-SNAPSHOT.jar!/check-license.xml" type="remote" description="maven-checkstyle-plugin configuration check-license">
+    <property name="checkstyle.cache.file" value="${project_loc}/target/checkstyle-cachefile"/>
+    <property name="checkstyle.header.file" value="/Users/adetalhouet/odl/aaa/aaa-authz/aaa-authz-restconf-config/target/checkstyle-header-check-license.txt"/>
+  </local-check-config>
+  <local-check-config name="maven-checkstyle-plugin default" location="jar:file:/Users/adetalhouet/.m2/repository/org/opendaylight/yangtools/checkstyle-logging/1.0.0-SNAPSHOT/checkstyle-logging-1.0.0-SNAPSHOT.jar!/checkstyle-logging.xml" type="remote" description="maven-checkstyle-plugin configuration default">
+    <property name="checkstyle.cache.file" value="${project_loc}/target/checkstyle-cachefile"/>
+    <property name="checkstyle.header.file" value="/Users/adetalhouet/odl/aaa/aaa-authz/aaa-authz-restconf-config/target/checkstyle-header-default.txt"/>
+  </local-check-config>
+  <fileset name="java-sources-check-license" enabled="true" check-config-name="maven-checkstyle-plugin check-license" local="true">
+    <file-match-pattern match-pattern="src/test/java.*\.java" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/test/java.*\.xml" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/test/java.*\.ini" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/test/java.*\.sh" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/test/java.*\.bat" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/test/java.*\.yang" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/main/java.*\.java" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/main/java.*\.xml" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/main/java.*\.ini" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/main/java.*\.sh" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/main/java.*\.bat" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/main/java.*\.yang" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/test/java.*org/opendaylight/yang/gen/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern="src/test/java.*.*protobuff/messages/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern="src/test/java.*.*thrift/gen/.*\.java" include-pattern="false"/>
+    <file-match-pattern match-pattern="src/main/java.*org/opendaylight/yang/gen/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern="src/main/java.*.*protobuff/messages/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern="src/main/java.*.*thrift/gen/.*\.java" include-pattern="false"/>
+  </fileset>
+  <fileset name="java-sources-default" enabled="true" check-config-name="maven-checkstyle-plugin default" local="true">
+    <file-match-pattern match-pattern="src/test/java.*\.java" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/test/java.*\.xml" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/test/java.*\.ini" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/test/java.*\.sh" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/test/java.*\.bat" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/test/java.*\.yang" include-pattern="true"/>
+    <file-match-pattern match-pattern=".*\.java" include-pattern="true"/>
+    <file-match-pattern match-pattern=".*\.xml" include-pattern="true"/>
+    <file-match-pattern match-pattern=".*\.ini" include-pattern="true"/>
+    <file-match-pattern match-pattern=".*\.sh" include-pattern="true"/>
+    <file-match-pattern match-pattern=".*\.bat" include-pattern="true"/>
+    <file-match-pattern match-pattern=".*\.yang" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/main/java.*\.java" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/main/java.*\.xml" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/main/java.*\.ini" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/main/java.*\.sh" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/main/java.*\.bat" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/main/java.*\.yang" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/test/java.*.*target/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern="src/test/java.*.*bin/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern="src/test/java.*.*target-ide/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern="src/test/java.*.*src/main/yang-gen-config/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern="src/test/java.*.*src/main/yang-gen-sal/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern=".*.*target/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern=".*.*bin/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern=".*.*target-ide/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern=".*.*src/main/yang-gen-config/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern=".*.*src/main/yang-gen-sal/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern="src/main/java.*.*target/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern="src/main/java.*.*bin/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern="src/main/java.*.*target-ide/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern="src/main/java.*.*src/main/yang-gen-config/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern="src/main/java.*.*src/main/yang-gen-sal/.*" include-pattern="false"/>
+    <file-match-pattern match-pattern="src/main/resources/.*\.properties" include-pattern="true"/>
+    <file-match-pattern match-pattern="src/test/resources.*\.properties" include-pattern="true"/>
+  </fileset>
+</fileset-config>
