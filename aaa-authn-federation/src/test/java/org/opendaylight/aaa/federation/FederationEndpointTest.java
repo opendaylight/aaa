@@ -17,14 +17,14 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.TreeSet;
-import org.eclipse.jetty.testing.HttpTester;
-import org.eclipse.jetty.testing.ServletTester;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mortbay.jetty.testing.HttpTester;
+import org.mortbay.jetty.testing.ServletTester;
 import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.ClaimAuth;
@@ -79,18 +79,6 @@ public class FederationEndpointTest {
     }
 
     @Test
-    public void testFederationUnconfiguredProxyPort() throws Exception {
-        HttpTester req = new HttpTester();
-        req.setMethod("POST");
-        req.setURI(CONTEXT + "/");
-        req.setVersion("HTTP/1.0");
-
-        HttpTester resp = new HttpTester();
-        resp.parse(server.getResponses(req.generate()));
-        assertEquals(401, resp.getStatus());
-    }
-
-    @Test
     @SuppressWarnings("unchecked")
     public void testFederation() throws Exception {
         when(ServiceLocator.getInstance().getClaimAuthCollection().get(0).transform(anyMap()))
@@ -113,6 +101,18 @@ public class FederationEndpointTest {
         assertEquals(201, resp.getStatus());
         String content = resp.getContent();
         assertTrue(content.contains("pepsi coke"));
+    }
+
+    @Test
+    public void testFederationUnconfiguredProxyPort() throws Exception {
+        HttpTester req = new HttpTester();
+        req.setMethod("POST");
+        req.setURI(CONTEXT + "/");
+        req.setVersion("HTTP/1.0");
+
+        HttpTester resp = new HttpTester();
+        resp.parse(server.getResponses(req.generate()));
+        assertEquals(401, resp.getStatus());
     }
 
     private static void mockServiceLocator() {
