@@ -55,7 +55,7 @@
 
         <!-- Test -->
         <javax.inject.version>1</javax.inject.version>
-        <servlet.tester.version>7.0.0.M2</servlet.tester.version>
+        <servlet.tester.version>7.0.0.pre5</servlet.tester.version>
         <features.test.version>1.7.0-SNAPSHOT</features.test.version>
     </properties>
 
@@ -160,10 +160,10 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-servlet-tester</artifactId>
-                <version>${servlet.tester.version}</version>
-                <scope>test</scope>
+              <groupId>org.mortbay.jetty</groupId>
+              <artifactId>jetty-servlet-tester</artifactId>
+              <version>${servlet.tester.version}</version>
+              <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
