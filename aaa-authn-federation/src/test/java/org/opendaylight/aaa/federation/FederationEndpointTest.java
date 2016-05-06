@@ -23,6 +23,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.Claim;
@@ -36,6 +37,7 @@ import org.opendaylight.aaa.api.TokenStore;
  * @author liemmn
  *
  */
+@Ignore
 public class FederationEndpointTest {
     private static final long TOKEN_TIMEOUT_SECS = 10;
     private static final String CONTEXT = "/oauth2/federation";
