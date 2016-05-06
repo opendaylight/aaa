@@ -16,13 +16,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import org.eclipse.jetty.testing.HttpTester;
-import org.eclipse.jetty.testing.ServletTester;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mortbay.jetty.testing.HttpTester;
+import org.mortbay.jetty.testing.ServletTester;
 import org.opendaylight.aaa.AuthenticationBuilder;
 import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.AuthenticationService;
