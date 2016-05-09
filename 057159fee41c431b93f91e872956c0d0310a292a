@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa57193c_3f59f6fe",
+        "filename": "aaa-authn-basic/pom.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-09T15:15:23Z",
+      "side": 1,
+      "message": "Wrong number of spaces.  Please use 4 for AAA as it is at least the current preference.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 2
+      },
+      "revId": "057159fee41c431b93f91e872956c0d0310a292a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_5f6f8a92",
+        "filename": "aaa-authn-federation/pom.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-09T15:15:23Z",
+      "side": 1,
+      "message": "can\u0027t we just change aaa-parent instead?",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 42
+      },
+      "revId": "057159fee41c431b93f91e872956c0d0310a292a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
