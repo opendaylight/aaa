@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_b639a843",
+        "filename": "aaa-encrypt-service/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-11T21:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_6572d47d",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 21
+      },
+      "revId": "dfa7971e5806429cf612db9697fccbc0da6749de",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_2559fcfe",
         "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptServiceImpl.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2016-04-29T15:32:29Z",
       "side": 1,
       "message": "what is the benefits of adding this tag ?",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 60
+      },
+      "revId": "dfa7971e5806429cf612db9697fccbc0da6749de",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_f6f3209d",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-11T21:54:29Z",
+      "side": 1,
+      "message": "I use this to identify encrypted string that were done using this service to avoid meaningless efforts in trying to either decrypt un-encrypted string or strings that were not encrypted using this util, in which chase you just return the string that was passed to the encryption util.\n\nA good example is when you want a configuration file to be maintained using some notepad/vi, giving the user the capability to place inside the file a plain text value that is later on encrypted when the system reads the config file.",
+      "parentUuid": "fa57193c_2559fcfe",
       "range": {
         "startLine": 35,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_56f3ec9d",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-11T21:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_e53704af",
+      "range": {
+        "startLine": 44,
+        "startChar": 72,
+        "endLine": 44,
+        "endChar": 90
+      },
+      "revId": "dfa7971e5806429cf612db9697fccbc0da6749de",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_25429c10",
         "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptServiceImpl.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2016-04-29T15:32:29Z",
       "side": 1,
       "message": "same here, create final variable for this",
+      "range": {
+        "startLine": 47,
+        "startChar": 63,
+        "endLine": 47,
+        "endChar": 66
+      },
+      "revId": "dfa7971e5806429cf612db9697fccbc0da6749de",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_36ee38b5",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-11T21:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_25429c10",
       "range": {
         "startLine": 47,
         "startChar": 63,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_962c6404",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-11T21:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_855288db",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "dfa7971e5806429cf612db9697fccbc0da6749de",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_05479820",
         "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptServiceImpl.java",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_762f10f7",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-11T21:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_05479820",
+      "range": {
+        "startLine": 64,
+        "startChar": 43,
+        "endLine": 64,
+        "endChar": 63
+      },
+      "revId": "dfa7971e5806429cf612db9697fccbc0da6749de",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_c5d5a044",
         "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptServiceImpl.java",
         "patchSetId": 3
@@ -151,6 +295,30 @@
       "writtenOn": "2016-04-29T15:32:29Z",
       "side": 1,
       "message": "same as above, should move all encryption properties cipher, secretkey and algorithm  to config with the password and salt.",
+      "range": {
+        "startLine": 84,
+        "startChar": 43,
+        "endLine": 84,
+        "endChar": 63
+      },
+      "revId": "dfa7971e5806429cf612db9697fccbc0da6749de",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_d636dc51",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-11T21:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_c5d5a044",
       "range": {
         "startLine": 84,
         "startChar": 43,
