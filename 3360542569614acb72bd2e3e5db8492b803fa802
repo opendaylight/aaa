@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa57193c_9d2abc7c",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-05-12T19:27:35Z",
+      "side": 1,
+      "message": "please create a new feature for the encryption service. We don\u0027t need to make it bounded with authn as it could be used by other projects and bundles.",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 200,
+        "endChar": 169
+      },
+      "revId": "3360542569614acb72bd2e3e5db8492b803fa802",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
