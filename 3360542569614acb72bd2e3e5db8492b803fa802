@@ -22,6 +22,30 @@
       "revId": "3360542569614acb72bd2e3e5db8492b803fa802",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_9358e833",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-13T15:37:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_9d2abc7c",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 200,
+        "endChar": 169
+      },
+      "revId": "3360542569614acb72bd2e3e5db8492b803fa802",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
