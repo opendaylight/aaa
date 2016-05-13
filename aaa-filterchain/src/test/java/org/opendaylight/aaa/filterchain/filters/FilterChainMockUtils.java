@@ -41,15 +41,15 @@ public class FilterChainMockUtils {
     private static Filter createMockFilter(final String name, final List<String> callStack) throws IOException, ServletException {
         final Filter testFilter = mock(Filter.class);
         doAnswer(invocationOnMock -> {
-                callStack.add(name + " ingress");
-                final Object[] args = invocationOnMock.getArguments();
-                final ServletRequest servletRequest = (ServletRequest) args[0];
-                final ServletResponse servletResponse = (ServletResponse) args[1];
-                final FilterChain filterChain = (FilterChain) args[2];
-                filterChain.doFilter(servletRequest, servletResponse);
-                callStack.add(name + " egress");
-                return null;
-            }).when(testFilter).doFilter(any(), any(), any());
+            callStack.add(name + " ingress");
+            final Object[] args = invocationOnMock.getArguments();
+            final ServletRequest servletRequest = (ServletRequest) args[0];
+            final ServletResponse servletResponse = (ServletResponse) args[1];
+            final FilterChain filterChain = (FilterChain) args[2];
+            filterChain.doFilter(servletRequest, servletResponse);
+            callStack.add(name + " egress");
+            return null;
+        }).when(testFilter).doFilter(any(), any(), any());
         return testFilter;
     }
 
