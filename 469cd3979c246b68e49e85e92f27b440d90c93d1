@@ -1,0 +1,239 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa57193c_f39a046d",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-13T19:16:53Z",
+      "side": 1,
+      "message": "It would be cool to make this an abstract class and implement the guava Convertor interface.",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 39
+      },
+      "revId": "469cd3979c246b68e49e85e92f27b440d90c93d1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_338c7c35",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-13T19:16:53Z",
+      "side": 1,
+      "message": "Please add a space here.",
+      "range": {
+        "startLine": 31,
+        "startChar": 68,
+        "endLine": 31,
+        "endChar": 70
+      },
+      "revId": "469cd3979c246b68e49e85e92f27b440d90c93d1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_53893025",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-13T19:16:53Z",
+      "side": 1,
+      "message": "Does this need to be public or could we make it default scope?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 6
+      },
+      "revId": "469cd3979c246b68e49e85e92f27b440d90c93d1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_9383c803",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-13T19:16:53Z",
+      "side": 1,
+      "message": "Can we reduce the scope here?",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 9
+      },
+      "revId": "469cd3979c246b68e49e85e92f27b440d90c93d1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_7386f414",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-13T19:16:53Z",
+      "side": 1,
+      "message": "Please add a space here.",
+      "revId": "469cd3979c246b68e49e85e92f27b440d90c93d1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_d37c2023",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-13T19:16:53Z",
+      "side": 1,
+      "message": "I\u0027d bump this up to warning level.",
+      "range": {
+        "startLine": 64,
+        "startChar": 16,
+        "endLine": 64,
+        "endChar": 20
+      },
+      "revId": "469cd3979c246b68e49e85e92f27b440d90c93d1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_939aa861",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-13T19:16:53Z",
+      "side": 1,
+      "message": "Please add a space here.",
+      "revId": "469cd3979c246b68e49e85e92f27b440d90c93d1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_d3a3809c",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-13T19:16:53Z",
+      "side": 1,
+      "message": "Should we log here?",
+      "revId": "469cd3979c246b68e49e85e92f27b440d90c93d1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_b3d6ccc1",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/yang/gen/v1/config/aaa/authn/encrypt/service/rev160426/AAAEncryptServiceModule.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-13T19:16:53Z",
+      "side": 1,
+      "message": "Why not ImmutableList?",
+      "range": {
+        "startLine": 59,
+        "startChar": 34,
+        "endLine": 59,
+        "endChar": 48
+      },
+      "revId": "469cd3979c246b68e49e85e92f27b440d90c93d1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_53ef7087",
+        "filename": "aaa-encrypt-service/src/main/resources/initial/08-aaa-encrypt-service-config.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-13T19:16:53Z",
+      "side": 1,
+      "message": "Can you add some documentation here.  I know \"CHANGE_ME\" seems obvious to us, but others may need a bit more prodding to actually take action on these.",
+      "range": {
+        "startLine": 17,
+        "startChar": 20,
+        "endLine": 18,
+        "endChar": 97
+      },
+      "revId": "469cd3979c246b68e49e85e92f27b440d90c93d1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_33f2bc6f",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-13T19:16:53Z",
+      "side": 1,
+      "message": "Please remove this.",
+      "range": {
+        "startLine": 200,
+        "startChar": 8,
+        "endLine": 201,
+        "endChar": 171
+      },
+      "revId": "469cd3979c246b68e49e85e92f27b440d90c93d1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
