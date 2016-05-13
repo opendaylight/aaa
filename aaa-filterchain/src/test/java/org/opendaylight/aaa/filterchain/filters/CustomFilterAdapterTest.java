@@ -45,9 +45,9 @@ public class CustomFilterAdapterTest {
         customFilterAdapter.updateInjectedFilters(testFilterDTO.getFilters());
         final boolean[] existingFilterChainEncountered = {false};
         doAnswer(invocationOnMock -> {
-                existingFilterChainEncountered[0] = true;
-                return null;
-            }).when(filterChain).doFilter(any(), any());
+            existingFilterChainEncountered[0] = true;
+            return null;
+        }).when(filterChain).doFilter(any(), any());
         customFilterAdapter.doFilter(servletRequest, servletResponse,
                 filterChain);
         assertTrue(existingFilterChainEncountered[0]);
@@ -126,9 +126,9 @@ public class CustomFilterAdapterTest {
         customFilterAdapter.doFilter(servletRequest, servletResponse, filterChain);
         final boolean[] existingFilterChainEncountered = {false};
         doAnswer(invocationOnMock -> {
-                existingFilterChainEncountered[0] = true;
-                return null;
-            }).when(filterChain).doFilter(any(), any());
+            existingFilterChainEncountered[0] = true;
+            return null;
+        }).when(filterChain).doFilter(any(), any());
         customFilterAdapter.doFilter(servletRequest, servletResponse,
                 filterChain);
         assertTrue(existingFilterChainEncountered[0]);
