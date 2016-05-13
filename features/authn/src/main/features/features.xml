@@ -35,7 +35,6 @@
 
         <!-- EhCache -->
         <bundle>mvn:net.sf.ehcache/ehcache/{{VERSION}}</bundle>
-        <bundle>mvn:org.apache.geronimo.specs/geronimo-jta_1.1_spec/{{VERSION}}</bundle>
 
         <!-- OAuth -->
         <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.common/{{VERSION}}</bundle>
@@ -110,7 +109,6 @@
 
         <!-- EhCache -->
         <bundle>mvn:net.sf.ehcache/ehcache/{{VERSION}}</bundle>
-        <bundle>mvn:org.apache.geronimo.specs/geronimo-jta_1.1_spec/{{VERSION}}</bundle>
 
         <!-- OAuth -->
         <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.common/{{VERSION}}</bundle>
