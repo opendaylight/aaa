@@ -33,10 +33,12 @@ hostname='localhost'
 protocol='http'
 port='8181'
 target_host='{}://{}:{}/'.format(protocol, hostname, port)
+verifyCertificates=True
 
 # main program arguments
 parser.add_argument('user',help='username for BSC node', nargs=1)
-parser.add_argument('--target-host', help="target host node", nargs=1)
+parser.add_argument('--target-host', help="target host url in form protocol://host:port", nargs=1)
+parser.add_argument('-k', '--insecure', help="disable HTTPS certificate verification", action='store_false')
 
 subparsers = parser.add_subparsers(help='sub-command help')
 
@@ -101,45 +103,46 @@ def process_result(r):
     else:
         print "Unknown error; HTTP status code: {}".format(sc)
 
-def get_request(user, password, url, description, outputResult=True):
-    if outputResult:
-        print description
+def handle_exception(e):
+    exceptionType = type(e)
+    if exceptionType is requests.exceptions.SSLError:
+        print "requests.exception.SSLError: Is HTTPS configured correctly?  To disable certificate verification, use the -k or --insecure flag"
+    else:
+        print "Unable to connect; are you sure the controller is up?"
+    sys.exit(1)
+
+def get_request(user, password, url, description):
+    print description
     try:
-        r = requests.get(url, auth=(user,password))
-        if outputResult:
-            process_result(r)
+        r = requests.get(url, auth=(user,password), verify=verifyCertificates)
+        process_result(r)
         return r
-    except(requests.exceptions.ConnectionError):
-        if outputResult:
-            print "Unable to connect;  are you sure the controller is up?"
-            sys.exit(1)
+    except requests.exceptions.ConnectionError as e:
+        handle_exception(e)
 
 def post_request(user, password, url, description, payload, params):
     print description
     try:
-        r = requests.post(url, auth=(user,password), data=payload, headers=params)
+        r = requests.post(url, auth=(user,password), data=payload, headers=params, verify=verifyCertificates)
         process_result(r)
-    except(requests.exceptions.ConnectionError):
-        print "Unable to connect; are you sure the controller is up?"
-        sys.exit(1)
+    except requests.exceptions.ConnectionError as e:
+        handle_exception(e)
 
 def put_request(user, password, url, description, payload, params):
     print description
     try:
-        r = requests.put(url, auth=(user,password), data=payload, headers=params)
+        r = requests.put(url, auth=(user,password), data=payload, headers=params, verify=verifyCertificates)
         process_result(r)
-    except(requests.exceptions.ConnectionError):
-        print "Unable to connect; are you sure the controller is up?"
-        sys.exit(1)
+    except requests.exceptions.ConnectionError as e:
+        handle_exception(e)
 
 def delete_request(user, password, url, description, payload='', params={'Content-Type':'application/json'}):
     print description
     try:
-        r = requests.delete(url, auth=(user,password), data=payload, headers=params)
+        r = requests.delete(url, auth=(user,password), data=payload, headers=params, verify=verifyCertificates)
         process_result(r)
-    except(requests.exceptions.ConnectionError):
-        print "Unable to connect; are you sure the controller is up?"
-        sys.exit(1)
+    except requests.exceptions.ConnectionError as e:
+        handle_exception(e)
 
 def poll_new_password():
     new_password = getpass.getpass(prompt="Enter new password: ")
@@ -221,6 +224,14 @@ def delete_grant(user, password, userid, roleid):
 
 args = parser.parse_args()
 command = args.func.prog.split()[1:]
+
+
+verifyCertificates = args.insecure
+# disable SSL warning messages if --insecure option was chosen.
+if not verifyCertificates:
+    requests.packages.urllib3.disable_warnings()
+    print "Warning:  HTTPS certificate verification has been disabled.  Use at your own risk!"
+
 user = args.user[0]
 password = getpass.getpass()
 temp_host_arr = args.target_host
@@ -230,6 +241,7 @@ if temp_host_arr is not None:
         target_host = temp_host_val
         if not target_host.endswith("/"):
             target_host += "/"
+
 if "list-users" in command:
     list_users(user,password)
 if "list-domains" in command:
