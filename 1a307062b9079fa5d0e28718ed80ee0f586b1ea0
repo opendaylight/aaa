@@ -1,0 +1,210 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa57193c_8d6431e6",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-19T13:43:42Z",
+      "side": 1,
+      "message": "Just raising the question to play Devil\u0027s advocate;  would it be good to expose some of these options in the config xml so that they can be swapped based on deployer\u0027s desire?",
+      "range": {
+        "startLine": 35,
+        "startChar": 52,
+        "endLine": 35,
+        "endChar": 73
+      },
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_cd5e2912",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-19T13:43:42Z",
+      "side": 1,
+      "message": "space missing here.",
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_2d9d25bd",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-19T13:43:42Z",
+      "side": 1,
+      "message": "Do we need to create this every time?  Can it be saved off locally in private static final variable?",
+      "range": {
+        "startLine": 71,
+        "startChar": 12,
+        "endLine": 71,
+        "endChar": 61
+      },
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_0da021f3",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-19T13:43:42Z",
+      "side": 1,
+      "message": "space missing",
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_6da71d0d",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-19T13:43:42Z",
+      "side": 1,
+      "message": "Space missing",
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_4daa19d5",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/yang/gen/v1/config/aaa/authn/encrypt/service/rev160426/AAAEncryptServiceModule.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-19T13:43:42Z",
+      "side": 1,
+      "message": "missing a space.",
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_adb01544",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/yang/gen/v1/config/aaa/authn/encrypt/service/rev160426/AAAEncryptServiceModule.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-19T13:43:42Z",
+      "side": 1,
+      "message": "I thought we were going to use an ImmutableList here?",
+      "range": {
+        "startLine": 59,
+        "startChar": 34,
+        "endLine": 59,
+        "endChar": 48
+      },
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_8dab91d5",
+        "filename": "aaa-encrypt-service/src/main/resources/initial/08-aaa-encrypt-service-config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-19T13:43:42Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 20,
+        "startChar": 30,
+        "endLine": 20,
+        "endChar": 33
+      },
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_edba0d22",
+        "filename": "aaa-encrypt-service/src/main/resources/initial/08-aaa-encrypt-service-config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-19T13:43:42Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 21,
+        "startChar": 33,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_2d84055d",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-05-19T13:43:42Z",
+      "side": 1,
+      "message": "Remove this",
+      "range": {
+        "startLine": 198,
+        "startChar": 8,
+        "endLine": 199,
+        "endChar": 171
+      },
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
