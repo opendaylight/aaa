@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_58cf79b0",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-19T23:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_8d6431e6",
+      "range": {
+        "startLine": 35,
+        "startChar": 52,
+        "endLine": 35,
+        "endChar": 73
+      },
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_cd5e2912",
         "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2016-05-19T13:43:42Z",
       "side": 1,
       "message": "space missing here.",
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_b8c5f58f",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-19T23:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_cd5e2912",
       "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_98c0f17d",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-19T23:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_2d9d25bd",
+      "range": {
+        "startLine": 71,
+        "startChar": 12,
+        "endLine": 71,
+        "endChar": 61
+      },
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_0da021f3",
         "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
         "patchSetId": 8
@@ -76,6 +142,24 @@
       "writtenOn": "2016-05-19T13:43:42Z",
       "side": 1,
       "message": "space missing",
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_d8542923",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-19T23:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_0da021f3",
       "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_3833a515",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-19T23:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_6da71d0d",
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_4daa19d5",
         "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/yang/gen/v1/config/aaa/authn/encrypt/service/rev160426/AAAEncryptServiceModule.java",
         "patchSetId": 8
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_1836a103",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/yang/gen/v1/config/aaa/authn/encrypt/service/rev160426/AAAEncryptServiceModule.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-19T23:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_4daa19d5",
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_adb01544",
         "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/yang/gen/v1/config/aaa/authn/encrypt/service/rev160426/AAAEncryptServiceModule.java",
         "patchSetId": 8
@@ -127,6 +247,30 @@
       "writtenOn": "2016-05-19T13:43:42Z",
       "side": 1,
       "message": "I thought we were going to use an ImmutableList here?",
+      "range": {
+        "startLine": 59,
+        "startChar": 34,
+        "endLine": 59,
+        "endChar": 48
+      },
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_783d1dde",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/yang/gen/v1/config/aaa/authn/encrypt/service/rev160426/AAAEncryptServiceModule.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-19T23:40:28Z",
+      "side": 1,
+      "message": "no need... as we talk.",
+      "parentUuid": "fa57193c_adb01544",
       "range": {
         "startLine": 59,
         "startChar": 34,
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_b82695cc",
+        "filename": "aaa-encrypt-service/src/main/resources/initial/08-aaa-encrypt-service-config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-19T23:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_8dab91d5",
+      "range": {
+        "startLine": 20,
+        "startChar": 30,
+        "endLine": 20,
+        "endChar": 33
+      },
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_edba0d22",
         "filename": "aaa-encrypt-service/src/main/resources/initial/08-aaa-encrypt-service-config.xml",
         "patchSetId": 8
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_982111b7",
+        "filename": "aaa-encrypt-service/src/main/resources/initial/08-aaa-encrypt-service-config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-19T23:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_edba0d22",
+      "range": {
+        "startLine": 21,
+        "startChar": 33,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_2d84055d",
         "filename": "features/authn/src/main/features/features.xml",
         "patchSetId": 8
@@ -196,6 +388,30 @@
       "writtenOn": "2016-05-19T13:43:42Z",
       "side": 1,
       "message": "Remove this",
+      "range": {
+        "startLine": 198,
+        "startChar": 8,
+        "endLine": 199,
+        "endChar": 171
+      },
+      "revId": "1a307062b9079fa5d0e28718ed80ee0f586b1ea0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_f8300d03",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 2025
+      },
+      "writtenOn": "2016-05-19T23:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_2d84055d",
       "range": {
         "startLine": 198,
         "startChar": 8,
