@@ -268,4 +268,8 @@ public class IDMTestStore implements IIDMStore {
         return null;
     }
 
+    @Override
+    public boolean isMainNodeInCluster() {
+        return true;
+    }
 }
