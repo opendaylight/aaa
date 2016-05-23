@@ -24,7 +24,7 @@ __maintainer__ = "Ryan Goulding"
 __email__ = "ryandgoulding@gmail.com"
 __status__ = "Production"
 
-import argparse, getpass, json, requests, sys
+import argparse, getpass, json, requests, sys, warnings
 
 parser = argparse.ArgumentParser('idmtool')
 
@@ -233,7 +233,11 @@ command = args.func.prog.split()[1:]
 verifyCertificates = args.insecure
 # disable SSL warning messages if --insecure option was chosen.
 if not verifyCertificates:
-    requests.packages.urllib3.disable_warnings()
+    try:
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", message=".*InsecurePlatformWarning.*")
+    except:
+        print "Unable to supress SSL warnings in this particular environment"
     print "Warning:  HTTPS certificate verification has been disabled.  Use at your own risk!"
 
 user = args.user[0]
