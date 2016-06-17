@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba51214e_345bf455",
+        "filename": "features/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-06-17T14:48:36Z",
+      "side": 1,
+      "message": "bad spacing.",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 4
+      },
+      "revId": "0d344580dadcb7c78d163c728e9dcab007473cf7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
