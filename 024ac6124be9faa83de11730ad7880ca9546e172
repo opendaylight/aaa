@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba51214e_de88cee9",
+        "filename": "aaa-authn-mdsal-store/pom.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2016-06-21T11:11:09Z",
+      "side": 0,
+      "message": "This is still needed to be build, for features/authn to work.",
+      "range": {
+        "startLine": 19,
+        "startChar": 16,
+        "endLine": 19,
+        "endChar": 38
+      },
+      "revId": "024ac6124be9faa83de11730ad7880ca9546e172",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_7e770203",
+        "filename": "aaa-authz/pom.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2016-06-21T11:11:09Z",
+      "side": 0,
+      "message": "This is still needed to be build, for features/authz to work.",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 20,
+        "endChar": 32
+      },
+      "revId": "024ac6124be9faa83de11730ad7880ca9546e172",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
