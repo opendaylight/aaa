@@ -148,7 +148,7 @@ public class SssdClaimAuth implements ClaimAuth {
         }
         if (mapped.containsKey("Roles")) {
             @SuppressWarnings("unchecked")
-            List<String> roles = (List<String>) mapped.get("roles");
+            List<String> roles = (List<String>) mapped.get("Roles");
             for (String role : roles) {
                 cb.addRole(role);
             }
