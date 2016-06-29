@@ -70,7 +70,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     </dependency>
     <dependency>
       <groupId>org.opendaylight.openflowplugin</groupId>
-      <artifactId>features-openflowplugin-li</artifactId>
+      <artifactId>features-openflowplugin</artifactId>
       <version>${openflowplugin.version}</version>
       <classifier>features</classifier>
       <type>xml</type>

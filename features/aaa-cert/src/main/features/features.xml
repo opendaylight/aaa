@@ -12,12 +12,12 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
 
     <repository>mvn:org.opendaylight.mdsal/features-mdsal/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.aaa/features-aaa/{{VERSION}}/xml/features</repository>
-    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin-li/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin/{{VERSION}}/xml/features</repository>
 
     <feature name='odl-aaa-cert' description='OpenDaylight :: AAA :: aaa opendaylight certificate Plugin'
              version='${project.version}'>
         <feature version='${controller.mdsal.version}'>odl-mdsal-broker</feature>
-        <feature version="${openflowplugin.version}">odl-openflowplugin-southbound-li</feature>
+        <feature version="${openflowplugin.version}">odl-openflowplugin-southbound</feature>
 
         <bundle>mvn:org.bouncycastle/bcprov-jdk15on/{{VERSION}}</bundle>
         <bundle>mvn:commons-codec/commons-codec/{{VERSION}}</bundle>
