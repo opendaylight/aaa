@@ -179,7 +179,7 @@ public class Activator extends DependencyActivatorBase {
         @Override
         public S addingService(ServiceReference<S> reference) {
             S service = reference.getBundle().getBundleContext().getService(reference);
-            LOG.info("Unable to resolve {}", service.getClass());
+            LOG.info("Attempting to resolve {} through AAAServiceTrackerCustomizer", service.getClass());
             try {
                 callback.apply(service);
             } catch (Exception e) {
