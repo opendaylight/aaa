@@ -9,7 +9,7 @@ module aaa-authz-service-impl {
     import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
     import opendaylight-md-sal-dom {prefix dom;}
     import authorization-schema { prefix authzs; revision-date 2014-07-22; }
-    import ietf-inet-types {prefix inet; revision-date 2010-09-24;}
+    import ietf-inet-types {prefix inet; revision-date 2013-07-15;}
 
     description
         "This module contains the base YANG definitions for
