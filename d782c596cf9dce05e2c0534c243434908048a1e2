@@ -1,0 +1,434 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_fc42d80e",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "javadoc is necessary for API.  Please document the class and the methods.",
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_3cc5708e",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "This should be capitalized.",
+      "range": {
+        "startLine": 34,
+        "startChar": 17,
+        "endLine": 34,
+        "endChar": 18
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_1cc06c7b",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "This is mispelled.",
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_7cbfe8fb",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "Be consistent;  either choose SSL or Ssl.  This differs from the convention above on line 34.",
+      "range": {
+        "startLine": 42,
+        "startChar": 15,
+        "endLine": 42,
+        "endChar": 18
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_5cbae40a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "Is there a reason you chose to make this final in the API instead of just the impl?",
+      "range": {
+        "startLine": 42,
+        "startChar": 23,
+        "endLine": 42,
+        "endChar": 28
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_9c3bdc9b",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "Please remove this file from the changeset... there is no actual change.",
+      "range": {
+        "startLine": 38,
+        "startChar": 1,
+        "endLine": 38,
+        "endChar": 1
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_3c4c5042",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertMdsalProvider.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "Should be final.  choose a better name also.",
+      "range": {
+        "startLine": 54,
+        "startChar": 51,
+        "endLine": 54,
+        "endChar": 55
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_7c56c8d3",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreConstant.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "choose a better name. Use either \"dn\" or go for full enumeration of the name.  Also, this is a constant, so please make the name capitalized.",
+      "range": {
+        "startLine": 31,
+        "startChar": 31,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_9c62bcab",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "wrong order... the @author annotation comes last.",
+      "range": {
+        "startLine": 53,
+        "startChar": 3,
+        "endLine": 55,
+        "endChar": 16
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_fc5938ff",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "should be static and a constant... so capitalize.",
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_dc5c34f0",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "is this a constant?  if so it should be capitalized in KeyStoreConstant.  Also, if it is not a constant, make it private and add an accessor in KeyStoreConstant.",
+      "range": {
+        "startLine": 62,
+        "startChar": 49,
+        "endLine": 62,
+        "endChar": 61
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_3c73b081",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "final",
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_7c6d2898",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "I believe we should use a concurrent collection here...",
+      "range": {
+        "startLine": 92,
+        "startChar": 76,
+        "endLine": 92,
+        "endChar": 107
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_1c6eac96",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "final",
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_5c682487",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/utils/KeyStoresDataUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "bad spacing.",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 4
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_9c091ce0",
+        "filename": "aaa-cert/src/main/yang/aaa-cert.yang",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 7
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_fc101803",
+        "filename": "aaa-cert/src/main/yang/aaa-cert.yang",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 2
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_1cf50ccb",
+        "filename": "features/aaa-cert/pom.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "why are we pulling in dlux?  This is a definite no.  dlux is offset 2, we are offset 0.  We cannot pull in dlux.",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 47
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_7c0408c0",
+        "filename": "features/aaa-cert/pom.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "remove this.",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 133,
+        "endChar": 17
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_5cff84aa",
+        "filename": "features/aaa-cert/src/main/features/features.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-12T15:45:01Z",
+      "side": 1,
+      "message": "remove this.",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 65
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
