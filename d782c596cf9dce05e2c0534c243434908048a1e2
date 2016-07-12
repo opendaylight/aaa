@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_3c21f04d",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-07-12T15:57:42Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a561d44_fc42d80e",
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_3cc5708e",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
         "patchSetId": 12
@@ -30,6 +48,30 @@
       "writtenOn": "2016-07-12T15:45:01Z",
       "side": 1,
       "message": "This should be capitalized.",
+      "range": {
+        "startLine": 34,
+        "startChar": 17,
+        "endLine": 34,
+        "endChar": 18
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_1c1cec12",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-07-12T15:57:42Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a561d44_3cc5708e",
       "range": {
         "startLine": 34,
         "startChar": 17,
@@ -105,6 +147,30 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_7c1b681b",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-07-12T15:57:42Z",
+      "side": 1,
+      "message": "ok for data objects will keep it Ssl",
+      "parentUuid": "9a561d44_7cbfe8fb",
+      "range": {
+        "startLine": 42,
+        "startChar": 15,
+        "endLine": 42,
+        "endChar": 18
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_9c3bdc9b",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
         "patchSetId": 12
@@ -116,6 +182,30 @@
       "writtenOn": "2016-07-12T15:45:01Z",
       "side": 1,
       "message": "Please remove this file from the changeset... there is no actual change.",
+      "range": {
+        "startLine": 38,
+        "startChar": 1,
+        "endLine": 38,
+        "endChar": 1
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_5c1664f2",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-07-12T15:57:42Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a561d44_9c3bdc9b",
       "range": {
         "startLine": 38,
         "startChar": 1,
@@ -151,6 +241,30 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_bcd4e020",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertMdsalProvider.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-07-12T15:57:42Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a561d44_3c4c5042",
+      "range": {
+        "startLine": 54,
+        "startChar": 51,
+        "endLine": 54,
+        "endChar": 55
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_7c56c8d3",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreConstant.java",
         "patchSetId": 12
@@ -162,6 +276,30 @@
       "writtenOn": "2016-07-12T15:45:01Z",
       "side": 1,
       "message": "choose a better name. Use either \"dn\" or go for full enumeration of the name.  Also, this is a constant, so please make the name capitalized.",
+      "range": {
+        "startLine": 31,
+        "startChar": 31,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_9cd75c23",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreConstant.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-07-12T15:57:42Z",
+      "side": 1,
+      "message": "ok will capitalize all constant",
+      "parentUuid": "9a561d44_7c56c8d3",
       "range": {
         "startLine": 31,
         "startChar": 31,
@@ -208,6 +346,24 @@
       "writtenOn": "2016-07-12T15:45:01Z",
       "side": 1,
       "message": "should be static and a constant... so capitalize.",
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_fcde583e",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-07-12T15:57:42Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a561d44_fc5938ff",
       "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -265,6 +421,30 @@
       "writtenOn": "2016-07-12T15:45:01Z",
       "side": 1,
       "message": "I believe we should use a concurrent collection here...",
+      "range": {
+        "startLine": 92,
+        "startChar": 76,
+        "endLine": 92,
+        "endChar": 107
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_9cbe3cd3",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-07-12T15:57:42Z",
+      "side": 1,
+      "message": "okay will change it to list of certificates",
+      "parentUuid": "9a561d44_7c6d2898",
       "range": {
         "startLine": 92,
         "startChar": 76,
@@ -340,6 +520,30 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_3ccf3081",
+        "filename": "aaa-cert/src/main/yang/aaa-cert.yang",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-07-12T15:57:42Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a561d44_9c091ce0",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 7
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_fc101803",
         "filename": "aaa-cert/src/main/yang/aaa-cert.yang",
         "patchSetId": 12
@@ -386,6 +590,30 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_1ce34c06",
+        "filename": "features/aaa-cert/pom.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-07-12T15:57:42Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a561d44_1cf50ccb",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 47
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_7c0408c0",
         "filename": "features/aaa-cert/pom.xml",
         "patchSetId": 12
@@ -420,6 +648,30 @@
       "writtenOn": "2016-07-12T15:45:01Z",
       "side": 1,
       "message": "remove this.",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 65
+      },
+      "revId": "d782c596cf9dce05e2c0534c243434908048a1e2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_dce1d4ff",
+        "filename": "features/aaa-cert/src/main/features/features.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-07-12T15:57:42Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a561d44_5cff84aa",
       "range": {
         "startLine": 25,
         "startChar": 8,
