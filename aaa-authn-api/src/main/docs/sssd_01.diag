@@ -1,6 +1,0 @@
-blockdiag {
-   User <-> AAA;
-   User [numbered = 1, shape = actor]
-   AAA [numbered = 2, label = "App Server\nAAA"]
-}
-
