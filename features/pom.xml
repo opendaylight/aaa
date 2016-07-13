@@ -24,7 +24,9 @@
     <module>api</module>
     <module>authn</module>
     <module>authz</module>
-    <module>aaa-cert</module>
+    <!-- Temporarily remove aaa-cert, since it is causing a build cycle with ope
+nflowplugin and openflowjava -->
+    <!-- <module>aaa-cert</module> -->
     <module>aaa-cli</module>
   </modules>
 

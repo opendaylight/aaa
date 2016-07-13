@@ -46,7 +46,8 @@
     <module>aaa-shiro</module>
     <module>aaa-shiro-act</module>
     <module>aaa-h2-store</module>
-    <module>aaa-cert</module>
+    <!-- Temporarily remove aaa-cert, since it is causing a build cycle with openflowplugin and openflowjava -->
+    <!-- <module>aaa-cert</module> -->
     <module>aaa-cli</module>
     <module>aaa-filterchain</module>
     <module>aaa-cassandra-store</module>
