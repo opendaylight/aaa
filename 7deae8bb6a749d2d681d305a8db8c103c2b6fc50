@@ -1,0 +1,210 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_2f2d1dff",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T12:32:43Z",
+      "side": 1,
+      "message": "Remove this space.",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 3
+      },
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_0f093995",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T12:32:43Z",
+      "side": 1,
+      "message": "And this one.",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 3
+      },
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_8ff42988",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T12:32:43Z",
+      "side": 1,
+      "message": "Add a space between the javadoc method description and @param annotations.  Also please add parameter descriptions.",
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_6f00b567",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T12:32:43Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 89,
+        "startChar": 40,
+        "endLine": 89,
+        "endChar": 41
+      },
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_cfee21b4",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T12:32:43Z",
+      "side": 1,
+      "message": "Remove this space.",
+      "range": {
+        "startLine": 151,
+        "startChar": 29,
+        "endLine": 151,
+        "endChar": 30
+      },
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_6f37154f",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T12:32:43Z",
+      "side": 1,
+      "message": "defines",
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_2f7b5df6",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T12:32:43Z",
+      "side": 1,
+      "message": "What is the result?  Please elaborate that the cert will not be added.  Sorry to be a stickler;  I am sure I will have a customer ask at some point what it means :).",
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_af6e4d2d",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T12:32:43Z",
+      "side": 1,
+      "message": "Why e.getMessage()?  Instead, please just use \"e\".  Logger.error(String message, Throwable t) is the preferred logging method in this case.",
+      "range": {
+        "startLine": 208,
+        "startChar": 53,
+        "endLine": 208,
+        "endChar": 68
+      },
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_4f5fb172",
+        "filename": "aaa-cert/src/main/yang/aaa-cert-mdsal.yang",
+        "patchSetId": 13
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T12:32:43Z",
+      "side": 1,
+      "message": "We are DEFINITELY going to want to limit RESTCONF access to this model.  We should probably add a rule to the default shiro.ini to block access to this for everyone but the admin role.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 23
+      },
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_8f50a95f",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T12:32:43Z",
+      "side": 1,
+      "message": "spacing.",
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
