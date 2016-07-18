@@ -128,6 +128,40 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_04011b05",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T18:52:01Z",
+      "side": 1,
+      "message": "Can we get some javadoc here?",
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_440b1325",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertMdsalProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T18:52:01Z",
+      "side": 1,
+      "message": "suite",
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_2f7b5df6",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
         "patchSetId": 13
@@ -139,6 +173,161 @@
       "writtenOn": "2016-07-18T12:32:43Z",
       "side": 1,
       "message": "What is the result?  Please elaborate that the cert will not be added.  Sorry to be a stickler;  I am sure I will have a customer ask at some point what it means :).",
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_640f372f",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T18:52:01Z",
+      "side": 1,
+      "message": "just use \"e\"",
+      "range": {
+        "startLine": 81,
+        "startChar": 54,
+        "endLine": 81,
+        "endChar": 68
+      },
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_a4194f7b",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T18:52:01Z",
+      "side": 1,
+      "message": "just use \"e\"",
+      "range": {
+        "startLine": 91,
+        "startChar": 68,
+        "endLine": 91,
+        "endChar": 80
+      },
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_0428fb84",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T18:52:01Z",
+      "side": 1,
+      "message": "just use \"e\"",
+      "range": {
+        "startLine": 124,
+        "startChar": 59,
+        "endLine": 124,
+        "endChar": 73
+      },
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_e42a277d",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T18:52:01Z",
+      "side": 1,
+      "message": "Propagate the exception.",
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_24253fab",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T18:52:01Z",
+      "side": 1,
+      "message": "Just use e",
+      "range": {
+        "startLine": 152,
+        "startChar": 56,
+        "endLine": 152,
+        "endChar": 70
+      },
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_843b6bd0",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T18:52:01Z",
+      "side": 1,
+      "message": "just use e",
+      "range": {
+        "startLine": 184,
+        "startChar": 67,
+        "endLine": 184,
+        "endChar": 81
+      },
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_a4302fe9",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T18:52:01Z",
+      "side": 1,
+      "message": "Just use string concatenation.  It will be automatically converted under the hood by the JDK and is cleaner to read.",
+      "range": {
+        "startLine": 195,
+        "startChar": 20,
+        "endLine": 195,
+        "endChar": 65
+      },
       "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -160,6 +349,52 @@
         "startLine": 208,
         "startChar": 53,
         "endLine": 208,
+        "endChar": 68
+      },
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_84424b3c",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T18:52:01Z",
+      "side": 1,
+      "message": "just use e",
+      "range": {
+        "startLine": 232,
+        "startChar": 54,
+        "endLine": 232,
+        "endChar": 68
+      },
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_245c1f25",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-18T18:52:01Z",
+      "side": 1,
+      "message": "juste use e",
+      "range": {
+        "startLine": 249,
+        "startChar": 54,
+        "endLine": 249,
         "endChar": 68
       },
       "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
