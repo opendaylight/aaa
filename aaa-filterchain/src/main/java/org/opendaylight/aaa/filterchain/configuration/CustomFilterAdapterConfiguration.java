@@ -49,10 +49,6 @@ import org.slf4j.LoggerFactory;
  * them scoped to the filter on a new line.  For example:
  * <code>c.b.a.TestFilter1.propertyKey=propertyValue</code>
  *
- * Note:  If you wish to use a Filter from an outside package that does not explicitly Export the
- * bundle, you must first enable dynamic import for that bundle:
- * <code>bundle:dynamic-import ID</code>
- *
  * This class follows the Singleton design pattern, and the instance is extracted through:
  * <code>CustomFilterAdapterConfiguration.getInstance()</code>
  *
