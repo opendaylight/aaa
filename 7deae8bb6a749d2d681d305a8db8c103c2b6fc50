@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_383a7c36",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-07-19T13:36:46Z",
+      "side": 1,
+      "message": "ok, will fix all doc style",
+      "parentUuid": "9a561d44_2f2d1dff",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 3
+      },
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_0f093995",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
         "patchSetId": 13
@@ -139,6 +163,24 @@
       "writtenOn": "2016-07-18T18:52:01Z",
       "side": 1,
       "message": "Can we get some javadoc here?",
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_3811dcac",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-07-19T13:36:46Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a561d44_04011b05",
       "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -311,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_187b38f6",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-07-19T13:36:46Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a561d44_843b6bd0",
+      "range": {
+        "startLine": 184,
+        "startChar": 67,
+        "endLine": 184,
+        "endChar": 81
+      },
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_a4302fe9",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
         "patchSetId": 13
@@ -322,6 +388,30 @@
       "writtenOn": "2016-07-18T18:52:01Z",
       "side": 1,
       "message": "Just use string concatenation.  It will be automatically converted under the hood by the JDK and is cleaner to read.",
+      "range": {
+        "startLine": 195,
+        "startChar": 20,
+        "endLine": 195,
+        "endChar": 65
+      },
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_b81cccc2",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-07-19T13:36:46Z",
+      "side": 1,
+      "message": "certificate string formate required a new line after and before the certificate Tag, so using the string builder easier to formate the string",
+      "parentUuid": "9a561d44_a4302fe9",
       "range": {
         "startLine": 195,
         "startChar": 20,
@@ -414,6 +504,30 @@
       "writtenOn": "2016-07-18T12:32:43Z",
       "side": 1,
       "message": "We are DEFINITELY going to want to limit RESTCONF access to this model.  We should probably add a rule to the default shiro.ini to block access to this for everyone but the admin role.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 23
+      },
+      "revId": "7deae8bb6a749d2d681d305a8db8c103c2b6fc50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_580e508e",
+        "filename": "aaa-cert/src/main/yang/aaa-cert-mdsal.yang",
+        "patchSetId": 13
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-07-19T13:36:46Z",
+      "side": 1,
+      "message": "totally agree,  we can do this in another patch.",
+      "parentUuid": "9a561d44_4f5fb172",
       "range": {
         "startLine": 8,
         "startChar": 0,
