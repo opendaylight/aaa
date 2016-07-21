@@ -1,0 +1,531 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_45277b12",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "In general you should elaborate with a more in depth description.  The first line should be used for a subject, then a blank line, then a full in depth description that explains the major functionality added.  Someone else looking at this probably doesn\u0027t have a good idea about how it what it is and how it works.",
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_e55e8f75",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "Could we refactor this to use Optional instead of the raw object?  There are a bunch of places where you return null in the impl;  I think optional is a better way to handle this.",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 10
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_857873f3",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "Please add @NotNull annotations.",
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_25224701",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "Please remove this space.",
+      "range": {
+        "startLine": 95,
+        "startChar": 40,
+        "endLine": 95,
+        "endChar": 41
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_2569a725",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "None of these should be null, correct?  If you could, please add the @NotNull annotations at least in the API?",
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_058583cf",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertMdsalProvider.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "Please make this final.  We can discuss in the future (Carbon) if we want to keep the \"make all local variables and parameters final\" convention;  but for now I would prefer at least keeping it consistent across the code base.",
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_c561cb3a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertMdsalProvider.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "final List\u003cString\u003e cipherSuites \u003d Lists.newArrayList();\ncipherSuites.addAll(sslData.getCipherSuites());",
+      "range": {
+        "startLine": 156,
+        "startChar": 16,
+        "endLine": 160,
+        "endChar": 57
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_4555bb4e",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "Just use \"e\".",
+      "range": {
+        "startLine": 79,
+        "startChar": 54,
+        "endLine": 79,
+        "endChar": 68
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_2550875d",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "add \", e\".",
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_654a7fad",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "Please change to just \"e\".  I must have missed this in the first patch...",
+      "range": {
+        "startLine": 163,
+        "startChar": 67,
+        "endLine": 163,
+        "endChar": 81
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_05d3c3d6",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "remove the space",
+      "range": {
+        "startLine": 81,
+        "startChar": 48,
+        "endLine": 81,
+        "endChar": 49
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_e5d5efb9",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "typo, and remove the trailing space.  slf4j will handle formatting this for us :).",
+      "range": {
+        "startLine": 91,
+        "startChar": 55,
+        "endLine": 91,
+        "endChar": 61
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_45dc9be4",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "remove the space and colon.",
+      "range": {
+        "startLine": 124,
+        "startChar": 53,
+        "endLine": 124,
+        "endChar": 54
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_25d7e7c0",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "remove the space",
+      "range": {
+        "startLine": 142,
+        "startChar": 54,
+        "endLine": 142,
+        "endChar": 55
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_65e1df99",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "These should be indented.  Also, please switch to use the new try-with-resources... i.e.,\n\ntry (final FileOutputStream fOutputStream \u003d new FileOutputStream(...)) {\n\nThis will automatically close the stream when the try block is exited (successful or not), which also will invoke flush().  Otherwise, the stream may not flush properly...",
+      "range": {
+        "startLine": 149,
+        "startChar": 8,
+        "endLine": 150,
+        "endChar": 70
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_85e6b3b2",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "remove the space",
+      "range": {
+        "startLine": 152,
+        "startChar": 50,
+        "endLine": 152,
+        "endChar": 51
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_c5ef0b86",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "remove space.",
+      "range": {
+        "startLine": 232,
+        "startChar": 48,
+        "endLine": 232,
+        "endChar": 49
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_a5f2d76c",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "remove space",
+      "range": {
+        "startLine": 249,
+        "startChar": 48,
+        "endLine": 249,
+        "endChar": 49
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_4503fb41",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/utils/KeyStoresDataUtils.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "\"manages\".  also please put a period so it is formatted nicely in the javadoc.",
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_e5eccf91",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/utils/KeyStoresDataUtils.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "Please use a consistent author annotation.",
+      "range": {
+        "startLine": 38,
+        "startChar": 19,
+        "endLine": 38,
+        "endChar": 20
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_85fd133d",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/utils/KeyStoresDataUtils.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "move this up above any method definitions.  All instance variables should precede method definitions.",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 52
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_65f8bf49",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/utils/MdsalUtils.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "Please add javadoc to the top of this class.",
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_c596ebef",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/utils/MdsalUtils.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "add a blank line below this.",
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_05a10347",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/yang/aaa/cert/mdsal/rev160321/AaaCertMdsalProviderModule.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "Remove the autogen code here.",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 61
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_458adbbf",
+        "filename": "aaa-cert/src/main/test/org/opendaylight/aaa/cert/test/KeyStoreUtilisTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-07-21T15:29:54Z",
+      "side": 1,
+      "message": "Extra semicolon here...",
+      "range": {
+        "startLine": 18,
+        "startChar": 55,
+        "endLine": 18,
+        "endChar": 56
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
