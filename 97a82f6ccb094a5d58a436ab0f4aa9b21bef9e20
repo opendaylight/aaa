@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "7a6b29fe_59cfe7b0",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-08-01T08:58:02Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a561d44_857873f3",
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_25224701",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
         "patchSetId": 15
@@ -110,6 +128,24 @@
       "writtenOn": "2016-07-21T15:29:54Z",
       "side": 1,
       "message": "Please make this final.  We can discuss in the future (Carbon) if we want to keep the \"make all local variables and parameters final\" convention;  but for now I would prefer at least keeping it consistent across the code base.",
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_b9c39b89",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertMdsalProvider.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-08-01T08:58:02Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a561d44_058583cf",
       "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -271,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "7a6b29fe_d9bad709",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-08-01T08:58:02Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a561d44_45dc9be4",
+      "range": {
+        "startLine": 124,
+        "startChar": 53,
+        "endLine": 124,
+        "endChar": 54
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_25d7e7c0",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
         "patchSetId": 15
@@ -305,6 +365,30 @@
       "writtenOn": "2016-07-21T15:29:54Z",
       "side": 1,
       "message": "These should be indented.  Also, please switch to use the new try-with-resources... i.e.,\n\ntry (final FileOutputStream fOutputStream \u003d new FileOutputStream(...)) {\n\nThis will automatically close the stream when the try block is exited (successful or not), which also will invoke flush().  Otherwise, the stream may not flush properly...",
+      "range": {
+        "startLine": 149,
+        "startChar": 8,
+        "endLine": 150,
+        "endChar": 70
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_f9bd1304",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLMdsalKeyTool.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-08-01T08:58:02Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a561d44_65e1df99",
       "range": {
         "startLine": 149,
         "startChar": 8,
@@ -437,6 +521,30 @@
       "writtenOn": "2016-07-21T15:29:54Z",
       "side": 1,
       "message": "move this up above any method definitions.  All instance variables should precede method definitions.",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 52
+      },
+      "revId": "97a82f6ccb094a5d58a436ab0f4aa9b21bef9e20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_39378bb2",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/utils/KeyStoresDataUtils.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-08-01T08:58:02Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a561d44_85fd133d",
       "range": {
         "startLine": 66,
         "startChar": 4,
