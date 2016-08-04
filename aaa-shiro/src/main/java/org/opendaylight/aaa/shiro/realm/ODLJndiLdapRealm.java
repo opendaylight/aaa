@@ -9,7 +9,9 @@
 package org.opendaylight.aaa.shiro.realm;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.naming.NamingEnumeration;
@@ -31,6 +33,8 @@ import org.apache.shiro.realm.ldap.LdapUtils;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.Nameable;
 import org.opendaylight.aaa.shiro.accounting.Accounter;
+import org.opendaylight.aaa.shiro.realm.mapping.api.GroupsToRolesMappingStrategy;
+import org.opendaylight.aaa.shiro.realm.mapping.impl.BestAttemptGroupToRolesMappingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,6 +85,17 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
     private static final String UID = "uid";
 
     /**
+     * When multiple roles are specified in groupRolesMap, this delimiter separates the individual roles.
+     */
+    private static final String ROLE_NAMES_DELIMITER = ",";
+
+    /**
+     * Strategy to determine how groups are mapped to roles.
+     */
+    private static final GroupsToRolesMappingStrategy GROUPS_TO_ROLES_MAPPING_STRATEGY =
+            new BestAttemptGroupToRolesMappingStrategy();
+
+    /**
      * The searchBase for the ldap query, which indicates the LDAP realms to
      * search.  By default, this is set to the
      * <code>super.getUserDnSuffix()</code>.
@@ -94,6 +109,8 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
      * <code>DEFAULT_LDAP_ATTRIBUTE_FOR_COMPARISON</code>.
      */
     private String ldapAttributeForComparison = DEFAULT_LDAP_ATTRIBUTE_FOR_COMPARISON;
+
+    private Map<String, String> groupRolesMap;
 
     /*
      * Adds debugging information surrounding creation of ODLJndiLdapRealm
@@ -235,10 +252,7 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
     protected Set<String> getRoleNamesForUser(final String username, final LdapContext ldapContext)
             throws NamingException {
 
-        // Stores the role names, which are equivalent to the set of group names extracted
-        // from the LDAP query.
         final Set<String> roleNames = new LinkedHashSet<String>();
-
         final SearchControls searchControls = createSearchControls();
 
         LOG.debug("Asking the configured LDAP about which groups uid=\"{}\" belongs to using "
@@ -247,28 +261,44 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
         final NamingEnumeration<SearchResult> answer = ldapContext.search(searchBase,
                 String.format("%s=%s", UID, username), searchControls);
 
-        // Cursor based traversal over the LDAP query result
         while (answer.hasMoreElements()) {
             final SearchResult searchResult = answer.next();
             final Attributes attrs = searchResult.getAttributes();
             if (attrs != null) {
-                // Extract the attributes from the LDAP search.
-                // attrs.getAttr(String) was not chosen, since all attributes should be exposed
-                // in trace logging should the operator wish to use an alternate attribute.
                 final NamingEnumeration<? extends Attribute> ae = attrs.getAll();
                 while (ae.hasMore()) {
                     final Attribute attr = ae.next();
-                    LOG.trace("LDAP returned \"{}\" attribute for \"{}\"", attr.getID(), username);
+                    LOG.debug("LDAP returned \"{}\" attribute for \"{}\"", attr.getID(), username);
                     if (attr.getID().equals(ldapAttributeForComparison)) {
-                        // Stresses the point that LDAP groups are EQUIVALENT to ODL role names
-                        // TODO make this configurable via a Strategy pattern so more interesting mappings can be made
                         final Collection<String> groupNamesExtractedFromLdap = LdapUtils.getAllAttributeValues(attr);
-                        final Collection<String> roleNamesFromLdapGroups = groupNamesExtractedFromLdap;
-                        if (LOG.isTraceEnabled()) {
-                            for (String roleName : roleNamesFromLdapGroups) {
-                                LOG.trace("Mapped the \"{}\" LDAP group to ODL role for \"{}\"", roleName, username);
+                        final Map<String, Set<String>> groupsToRoles = this.GROUPS_TO_ROLES_MAPPING_STRATEGY.mapGroupsToRoles(
+                                groupNamesExtractedFromLdap, ROLE_NAMES_DELIMITER, groupRolesMap);
+
+                        final Collection<String> roleNamesFromLdapGroups;
+                        // map the groups
+                        if (groupRolesMap != null) {
+                            roleNamesFromLdapGroups = new HashSet<>();
+                            for (String  rolesKey : groupsToRoles.keySet()) {
+                                roleNamesFromLdapGroups.addAll(groupsToRoles.get(rolesKey));
+                            }
+                            if (LOG.isDebugEnabled()) {
+                                for (String group : groupsToRoles.keySet()) {
+                                    LOG.debug("Mapped the \"{}\" LDAP group to \"{}\" ODL role for \"{}\"", group,
+                                            groupsToRoles.get(group), username);
+                                }
+                            }
+                        } else {
+                            LOG.debug("Since groupRolesMap was unspecified, no mapping is attempted so " +
+                                    "the role names are set to the extracted group names");
+                            roleNamesFromLdapGroups = groupNamesExtractedFromLdap;
+                            if (LOG.isDebugEnabled()) {
+                                for (String group : groupNamesExtractedFromLdap) {
+                                    LOG.debug("Mapped the \"{}\" LDAP group to \"{}\" ODL role for \"{}\"",
+                                            group, group, username);
+                                }
                             }
                         }
+
                         roleNames.addAll(roleNamesFromLdapGroups);
                     }
                 }
@@ -311,5 +341,14 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
     public void setLdapAttributeForComparison(final String ldapAttributeForComparison) {
         // public for injection reasons
         this.ldapAttributeForComparison = ldapAttributeForComparison;
+    }
+
+    /**
+     * Injected from <code>shiro.ini</code> configuration.
+     *
+     * @param groupRolesMap Something like <code>"ldapAdmin":"admin,user","organizationalPerson":"user"</code>
+     */
+    public void setGroupRolesMap(final Map<String, String> groupRolesMap) {
+        this.groupRolesMap = groupRolesMap;
     }
 }
