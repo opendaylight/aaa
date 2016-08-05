@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_50addb87",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/ODLJndiLdapRealm.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-08-05T09:26:01Z",
+      "side": 1,
+      "message": "this could be final",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 41
+      },
+      "revId": "b82bac1812680c51834d1bd6a0aa100c899d3793",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
