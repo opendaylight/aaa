@@ -9,11 +9,8 @@
 */
 package org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204;
 
-import org.opendaylight.controller.config.api.DependencyResolver;
-import org.osgi.framework.BundleContext;
-
-public class AAAIDMLightModuleFactory extends org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AbstractAAAIDMLightModuleFactory {
-    @Override
+public class AAAIDMLightModuleFactory { //extends org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AbstractAAAIDMLightModuleFactory {
+    /*@Override
     public AAAIDMLightModule instantiateModule(String instanceName, DependencyResolver dependencyResolver, AAAIDMLightModule oldModule, AutoCloseable oldInstance, BundleContext bundleContext) {
         AAAIDMLightModule module = super.instantiateModule(instanceName, dependencyResolver, oldModule, oldInstance, bundleContext);
         module.setBundleContext(bundleContext);
@@ -25,5 +22,5 @@ public class AAAIDMLightModuleFactory extends org.opendaylight.yang.gen.v1.confi
         AAAIDMLightModule module = super.instantiateModule(instanceName, dependencyResolver, bundleContext);
         module.setBundleContext(bundleContext);
         return module;
-    }
+    }*/
 }
