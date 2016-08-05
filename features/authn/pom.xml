@@ -234,12 +234,6 @@
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-idmlight</artifactId>
-            <type>xml</type>
-            <classifier>config</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-idmlight</artifactId>
             <version>${project.version}</version>
             <type>py</type>
             <classifier>config</classifier>
