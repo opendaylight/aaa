@@ -215,6 +215,13 @@
                 <type>xml</type>
             </dependency>
             <dependency>
+                <groupId>org.opendaylight.aaa</groupId>
+                <artifactId>aaa-h2-store</artifactId>
+                <version>${project.version}</version>
+                <classifier>config</classifier>
+                <type>cfg</type>
+            </dependency>
+            <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-cli</artifactId>
                 <version>${project.version}</version>
