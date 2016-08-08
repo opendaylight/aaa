@@ -62,6 +62,7 @@
         <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/08-aaa-h2-store-config.xml">mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}/xml/config</configfile>
+        <configfile finalname="etc/h2.cfg">mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}/cfg/config</configfile>
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
@@ -136,6 +137,7 @@
         <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/08-aaa-h2-store-config.xml">mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}/xml/config</configfile>
+        <configfile finalname="etc/h2.cfg">mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}/cfg/config</configfile>
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
