@@ -29,13 +29,14 @@ public class H2Store implements IIDMStore {
 
     private static final Logger LOG = LoggerFactory.getLogger(H2Store.class);
 
-    private static IdmLightConfig config = new IdmLightConfig();
+    private static IdmLightConfig config;
     private DomainStore domainStore = new DomainStore();
     private UserStore userStore = new UserStore();
     private RoleStore roleStore = new RoleStore();
     private GrantStore grantStore = new GrantStore();
 
     public H2Store() {
+        config = new IdmLightConfig();
     }
 
     public static Connection getConnection(Connection existingConnection) throws StoreException {
