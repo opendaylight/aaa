@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_641acf6f",
+        "filename": "aaa-h2-store/src/main/resources/org/opendaylight/blueprint/aaah2store.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-08-08T15:48:53Z",
+      "side": 1,
+      "message": "Generally bean ids are similar to instance variables in terms of naming convention (at least in ODL).  I believe we should use lowercase h2Store.  Added TomP since he is the blueprint wizard.",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 19
+      },
+      "revId": "be1d34ae31fab16d01457a5e27d10a0883bdb36f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
