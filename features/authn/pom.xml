@@ -278,12 +278,6 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-h2-store</artifactId>
-            <type>xml</type>
-            <classifier>config</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-cassandra-store</artifactId>
         </dependency>
         <dependency>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+                 xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0">
+
+  <bean id="H2Store" class="org.opendaylight.aaa.h2.persistence.H2Store">
+  </bean>
+
+  <service ref="H2Store" interface="org.opendaylight.aaa.api.IIDMStore" odl:type="default"/>
+
+</blueprint>
