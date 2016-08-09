@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_171d0f10",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 48
+      },
+      "writtenOn": "2016-08-09T15:35:25Z",
+      "side": 1,
+      "message": "Presumably you want this to be \u003cli\u003e, \u003cli\u003e, \u003cli\u003e, right?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "9daa103815cbbb6149968fd00e45a1a5f29be8c9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_97d8ff54",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 48
+      },
+      "writtenOn": "2016-08-09T15:35:25Z",
+      "side": 1,
+      "message": "this would make more sense as usedDefault",
+      "range": {
+        "startLine": 117,
+        "startChar": 16,
+        "endLine": 117,
+        "endChar": 26
+      },
+      "revId": "9daa103815cbbb6149968fd00e45a1a5f29be8c9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_37200b49",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/H2Store.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 48
+      },
+      "writtenOn": "2016-08-09T15:35:25Z",
+      "side": 1,
+      "message": "Why is this change needed?",
+      "revId": "9daa103815cbbb6149968fd00e45a1a5f29be8c9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
