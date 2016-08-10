@@ -25,6 +25,7 @@ import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.mdsal.store.rev141031.MdsalConfig;
 import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.TokenCacheTimes;
 import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.token_cache_times.TokenList;
 import org.opendaylight.yang.gen.v1.urn.aaa.yang.authn.claims.rev141029.token_cache_times.TokenListKey;
@@ -43,9 +44,11 @@ public class AuthNStore implements AutoCloseable, TokenStore {
     private final ExecutorService deleteExpiredTokenThread = Executors.newFixedThreadPool(1);
     private final AAAEncryptionService dataEncrypter;
 
-    public AuthNStore(final DataBroker dataBroker, final AAAEncryptionService dataEncrypter) {
+    public AuthNStore(final DataBroker dataBroker, final AAAEncryptionService dataEncrypter, final MdsalConfig mdsalConfig) {
         this.broker = dataBroker;
         this.dataEncrypter = dataEncrypter;
+        this.timeToLive = mdsalConfig.getTimeToLive();
+        this.timeToWait = mdsalConfig.getTimeToWait();
         LOG.info("Created MD-SAL AAA Token Cache Service...");
     }
 

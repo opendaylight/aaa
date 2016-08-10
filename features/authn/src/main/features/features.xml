@@ -214,7 +214,6 @@
         <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
         <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
 
-        <configfile finalname="etc/opendaylight/karaf/08-authn-config.xml">mvn:org.opendaylight.aaa/aaa-authn-mdsal-config/{{VERSION}}/xml/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
