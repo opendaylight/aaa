@@ -83,13 +83,6 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-authn-mdsal-config</artifactId>
-                <version>${project.version}</version>
-                <type>xml</type>
-                <classifier>config</classifier>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-shiro</artifactId>
                 <version>${project.version}</version>
             </dependency>

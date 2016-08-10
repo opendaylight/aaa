@@ -38,8 +38,8 @@ public class AuthNStore implements AutoCloseable, TokenStore {
 
     private static final Logger LOG = LoggerFactory.getLogger(AuthNStore.class);
     private DataBroker broker;
-    private static BigInteger timeToLive;
-    private static Integer timeToWait;
+    private static BigInteger timeToLive = new BigInteger("360000");
+    private static Integer timeToWait = 10;
     private final ExecutorService deleteExpiredTokenThread = Executors.newFixedThreadPool(1);
     private final AAAEncryptionService dataEncrypter;
 

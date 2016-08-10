@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+                 xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0">
+
+  <reference id="dataBroker" interface="org.opendaylight.controller.md.sal.binding.api.DataBroker"/>
+
+  <reference id="encryService" interface="org.opendaylight.aaa.encrypt.AAAEncryptionService"/>
+
+  <bean id="authNStore" class="org.opendaylight.aaa.authn.mdsal.store.AuthNStore">
+    <argument ref="dataBroker"/>
+    <argument ref="encryService"/>
+  </bean>
+
+  <bean id="idmStore" class="org.opendaylight.aaa.authn.mdsal.store.IDMStore">
+    <argument ref="authNStore"/>
+  </bean>
+
+  <service ref="authNStore" interface="org.opendaylight.aaa.api.TokenStore"/>
+
+  <service ref="idmStore" interface="org.opendaylight.aaa.api.IIDMStore"/>
+
+</blueprint>
