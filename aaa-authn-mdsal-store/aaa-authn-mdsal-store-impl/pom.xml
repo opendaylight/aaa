@@ -106,14 +106,6 @@
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <!-- <Bundle-Activator>/Bundle-Activator> -->
-                        <Export-Package>org.opendaylight.yang.gen.v1.config.aaa.authn.mdsal.store.*
-                        </Export-Package>
-                    </instructions>
-                </configuration>
-                <!-- <configuration> <Export-Package> </Export-Package> </configuration> -->
             </plugin>
             <plugin>
                 <groupId>org.opendaylight.yangtools</groupId>
@@ -128,17 +120,6 @@
                         <configuration>
                             <codeGenerators>
                                 <generator>
-                                    <codeGeneratorClass>
-                                        org.opendaylight.controller.config.yangjmxgenerator.plugin.JMXGenerator
-                                    </codeGeneratorClass>
-                                    <outputBaseDir>${jmxGeneratorPath}</outputBaseDir>
-                                    <additionalConfiguration>
-                                        <namespaceToPackage1>
-                                            urn:opendaylight:params:xml:ns:yang:controller==org.opendaylight.controller.config.yang
-                                        </namespaceToPackage1>
-                                    </additionalConfiguration>
-                                </generator>
-                                <generator>
                                     <codeGeneratorClass>org.opendaylight.yangtools.maven.sal.api.gen.plugin.CodeGeneratorImpl</codeGeneratorClass>
                                     <outputBaseDir>${salGeneratorPath}</outputBaseDir>
                                 </generator>
@@ -149,11 +130,6 @@
                 </executions>
                 <dependencies>
                     <dependency>
-                        <groupId>org.opendaylight.controller</groupId>
-                        <artifactId>yang-jmx-generator-plugin</artifactId>
-                        <version>${config.version}</version>
-                    </dependency>
-                    <dependency>
                         <groupId>org.opendaylight.mdsal</groupId>
                         <artifactId>maven-sal-api-gen-plugin</artifactId>
                         <version>${mdsal.model.version}</version>
@@ -162,6 +138,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>
