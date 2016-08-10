@@ -4,12 +4,6 @@ module aaa-authn-mdsal-store-cfg {
     namespace "config:aaa:authn:mdsal:store";
     prefix "aaa-authn-store-cfg";
 
-    import config { prefix config; revision-date 2013-04-05; }
-    import rpc-context { prefix rpcx; revision-date 2013-06-17; }
-    import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
-    import opendaylight-md-sal-dom {prefix dom;}
-
-
     description
         "This module contains the base YANG definitions for
         AuthN MD-SAL backed data cache implementation.";
@@ -19,45 +13,7 @@ module aaa-authn-mdsal-store-cfg {
             "Initial revision.";
     }
 
-    identity token-store-service{
-           base config:service-type;
-           config:java-class "org.opendaylight.aaa.api.TokenStore";
-    }
-
-
-    // This is the definition of the service implementation as a module identity.
-    identity aaa-authn-mdsal-store {
-            base config:module-type;
-            // Specifies the prefix for generated java classes.
-            config:java-name-prefix AuthNStore;
-            config:provided-service token-store-service;
-    }
-
-    // Augments the 'configuration' choice node under modules/module.
-
-    augment "/config:modules/config:module/config:configuration" {
-        case aaa-authn-mdsal-store {
-            when "/config:modules/config:module/config:type = 'aaa-authn-mdsal-store'";
-
-    //Defines reference to the Bundle context and MD-SAL data broker
-            container dom-broker {
-               uses config:service-ref {
-                   refine type {
-                       mandatory true;
-                       config:required-identity dom:dom-broker-osgi-registry;
-                   }
-               }
-           }
-           container data-broker {
-               uses config:service-ref {
-                   refine type {
-                       mandatory true;
-                       config:required-identity mdsal:binding-async-data-broker;
-
-                   }
-               }
-           }
-
+    container mdsal-config {
            leaf timeToLive {
              description "Time to live for tokens. When set to 0 = never expire";
              type uint64;
@@ -69,5 +25,5 @@ module aaa-authn-mdsal-store-cfg {
              default 10;
            }
        }
-    }
+
 }

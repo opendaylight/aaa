@@ -100,7 +100,7 @@
         </dependency>
     </dependencies>
 
-    <build>
+ <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.felix</groupId>
@@ -113,7 +113,6 @@
                         </Export-Package>
                     </instructions>
                 </configuration>
-                <!-- <configuration> <Export-Package> </Export-Package> </configuration> -->
             </plugin>
             <plugin>
                 <groupId>org.opendaylight.yangtools</groupId>
@@ -162,6 +161,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>
