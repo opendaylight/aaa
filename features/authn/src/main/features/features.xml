@@ -296,13 +296,13 @@
         <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
 
         <!--Cassandra Store -->
-        <bundle>mvn:io.netty/netty-transport/4.0.27.Final</bundle>
-        <bundle>mvn:io.netty/netty-codec/4.0.27.Final</bundle>
-        <bundle>mvn:io.netty/netty-common/4.0.27.Final</bundle>
-        <bundle>mvn:io.netty/netty-buffer/4.0.27.Final</bundle>
-        <bundle>mvn:io.netty/netty-handler/4.0.27.Final</bundle>
-        <bundle>mvn:com.codahale.metrics/metrics-core/3.0.2</bundle>
-        <bundle>mvn:com.datastax.cassandra/cassandra-driver-core/2.1.9</bundle>
+        <bundle>mvn:io.netty/netty-transport/{{VERSION}}</bundle>
+        <bundle>mvn:io.netty/netty-codec/{{VERSION}}</bundle>
+        <bundle>mvn:io.netty/netty-common/{{VERSION}}</bundle>
+        <bundle>mvn:io.netty/netty-buffer/{{VERSION}}</bundle>
+        <bundle>mvn:io.netty/netty-handler/{{VERSION}}</bundle>
+        <bundle>mvn:io.dropwizard.metrics/metrics-core/{{VERSION}}</bundle>
+        <bundle>mvn:com.datastax.cassandra/cassandra-driver-core/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-cassandra-store/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/08-aaa-cassandra-store-config.xml">mvn:org.opendaylight.aaa/aaa-cassandra-store/{{VERSION}}/xml/config</configfile>
         <configfile finalname="etc/aaacassandra.cfg">mvn:org.opendaylight.aaa/aaa-cassandra-store/{{VERSION}}/cfg/config-1</configfile>
