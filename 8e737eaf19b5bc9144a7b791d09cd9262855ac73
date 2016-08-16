@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_b3e881b5",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-08-16T14:46:39Z",
+      "side": 1,
+      "message": "Is this actually doing anything?  There is no config/instructions...",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 108,
+        "endChar": 45
+      },
+      "revId": "8e737eaf19b5bc9144a7b791d09cd9262855ac73",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_53080d91",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/AuthNStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-08-16T14:46:39Z",
+      "side": 1,
+      "message": "You still didn\u0027t make these configurable.  We need to maintain some way to change these since it existed in the past (i.e., through configuration system).  We can\u0027t simply stop exposing the configuration option.",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 43
+      },
+      "revId": "8e737eaf19b5bc9144a7b791d09cd9262855ac73",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
