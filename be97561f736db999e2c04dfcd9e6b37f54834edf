@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_111de273",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-08-18T14:50:26Z",
+      "side": 1,
+      "message": "bad spacing?",
+      "revId": "be97561f736db999e2c04dfcd9e6b37f54834edf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
