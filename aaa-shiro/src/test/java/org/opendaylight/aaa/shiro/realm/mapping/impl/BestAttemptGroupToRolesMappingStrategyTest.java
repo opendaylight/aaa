@@ -44,4 +44,17 @@ public class BestAttemptGroupToRolesMappingStrategyTest {
         assertNull(result.get("noNeedToExist"));
     }
 
+    @Test
+    public void mapGroupsWithEmptyAssociationMap() {
+        final GroupsToRolesMappingStrategy groupToRolesMappingStrategy = new BestAttemptGroupToRolesMappingStrategy();
+        final Collection<String> groups = Sets.newHashSet("person", "it");
+        final String delimeter = ",";
+        final Map<String, String> groupRolesMap = null;
+
+        final Map<String, Set<String>> result = groupsToRolesMappingStrategy.mapGroupsToRoles(
+                groups, delimeter, groupRolesMap);
+        assertTrue(result.keySet.contains("it"));
+        assertTrue(result.keySet.get("it").contains("it"));
+    }
+
 }

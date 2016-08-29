@@ -47,6 +47,11 @@ public class BestAttemptGroupToRolesMappingStrategy implements GroupsToRolesMapp
                     roleNamesBuilder.put(groupName, rolesSet.build());
                 }
             }
+        } else {
+            LOG.info("groupRolesMap was unspecified; directly mapping LDAP groups instead: {}", groupNames);
+            for (String groupName : groupNames) {
+                roleNamesBuilder.put(groupName, groupName);
+            }
         }
 
         return roleNamesBuilder.build();
