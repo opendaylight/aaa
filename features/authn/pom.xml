@@ -341,6 +341,30 @@
             <classifier>config</classifier>
         </dependency>
 
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-cert</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-cert</artifactId>
+            <classifier>config</classifier>
+            <type>xml</type>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-aether-provider</artifactId>
+            <version>3.0.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-cli</artifactId>
+        </dependency>
     </dependencies>
     <scm>
         <connection>scm:git:ssh://git.opendaylight.org:29418/aaa.git</connection>

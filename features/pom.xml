@@ -24,8 +24,6 @@
     <module>api</module>
     <module>authn</module>
     <module>authz</module>
-    <module>aaa-cert</module>
-    <module>aaa-cli</module>
   </modules>
 
   <build>
