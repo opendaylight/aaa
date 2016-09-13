@@ -343,5 +343,21 @@
         <configfile finalname="etc/opendaylight/karaf/08-aaa-encrypt-service-config.xml">mvn:org.opendaylight.aaa/aaa-encrypt-service/{{VERSION}}/xml/config</configfile>
     </feature>
 
+    <feature name='odl-aaa-cert' description='OpenDaylight :: AAA :: aaa opendaylight certificate Plugin'
+             version='${project.version}'>
+        <feature version='${controller.mdsal.version}'>odl-mdsal-broker</feature>
+        <feature version='${project.version}'>odl-aaa-encryption-service</feature>
+
+        <bundle>mvn:org.bouncycastle/bcprov-jdk15on/{{VERSION}}</bundle>
+        <bundle>mvn:commons-codec/commons-codec/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/08-aaa-cert-config.xml">mvn:org.opendaylight.aaa/aaa-cert/{{VERSION}}/xml/config</configfile>
+        <bundle>mvn:org.opendaylight.aaa/aaa-cert/{{VERSION}}</bundle>
+    </feature>
+
+    <feature name='odl-aaa-cli' description='OpenDaylight :: AAA :: aaa opendaylight command line'
+             version='${project.version}'>
+        <feature version="${project.version}">odl-aaa-cert</feature>
+        <bundle>mvn:org.opendaylight.aaa/aaa-cli/{{VERSION}}</bundle>
+    </feature>
 </features>
 

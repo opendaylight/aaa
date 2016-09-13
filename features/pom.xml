@@ -22,8 +22,6 @@
   <modules>
     <module>shiro</module>
     <module>authn</module>
-    <module>aaa-cert</module>
-    <module>aaa-cli</module>
   </modules>
 
   <build>
