@@ -24,13 +24,13 @@ import org.apache.oltu.oauth2.common.validators.OAuthValidator;
  */
 public class OAuthRequest extends AbstractOAuthTokenRequest {
 
-    protected OAuthRequest(HttpServletRequest request) throws OAuthSystemException,
+    public OAuthRequest(HttpServletRequest request) throws OAuthSystemException,
             OAuthProblemException {
         super(request);
     }
 
     @Override
-    protected OAuthValidator<HttpServletRequest> initValidator() throws OAuthProblemException,
+    public OAuthValidator<HttpServletRequest> initValidator() throws OAuthProblemException,
             OAuthSystemException {
         validators.put(GrantType.PASSWORD.toString(), AnonymousPasswordValidator.class);
         validators.put(GrantType.REFRESH_TOKEN.toString(), AnonymousRefreshTokenValidator.class);
