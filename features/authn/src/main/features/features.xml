@@ -52,6 +52,7 @@
         <bundle>mvn:com.sun.jersey/jersey-servlet/{{VERSION}}</bundle>
         <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
         <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-client/{{VERSION}}</bundle>
 
         <!-- OSGi -->
         <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/{{VERSION}}</bundle>
@@ -124,6 +125,7 @@
         <bundle>mvn:com.sun.jersey/jersey-servlet/{{VERSION}}</bundle>
         <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
         <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-client/{{VERSION}}</bundle>
 
         <!-- OSGi -->
         <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/{{VERSION}}</bundle>
@@ -237,6 +239,7 @@
         <bundle>mvn:com.sun.jersey/jersey-servlet/{{VERSION}}</bundle>
         <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
         <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
+        <bundle>mvn:com.sun.jersey/jersey-client/{{VERSION}}</bundle>
 
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}/cfg/config</configfile>
@@ -267,6 +270,7 @@
 
         <!-- REST -->
         <feature>war</feature>
+        <bundle>mvn:com.sun.jersey/jersey-client/{{VERSION}}</bundle>
         <bundle>mvn:com.sun.jersey/jersey-servlet/{{VERSION}}</bundle>
         <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
         <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
