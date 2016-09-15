@@ -13,19 +13,18 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.rev160426.AAAEncryptServiceModule;
-
+import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
 
 /*
  *  @author - Sharon Aicler (saichler@gmail.com)
  */
 public class AAAEncryptServiceImplTest {
 
-    private AAAEncryptServiceModule module = mock(AAAEncryptServiceModule.class);
     private AAAEncryptionServiceImpl impl = null;
+    private AaaEncryptServiceConfig module = mock(AaaEncryptServiceConfig.class);
 
     private static final String ENCRYPT_KEY = "Test Key";
-    private static final byte[] ENCRYPT_SALT = new byte[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
+    private static final String ENCRYPT_SALT = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16";
     private static final String ENCRYPTED_TAG = "Encrypted:";
     private static final String ENCRYPTION_METHOD = "PBKDF2WithHmacSHA1";
     private static final String ENCRYPTION_TYPE = "AES";
@@ -36,7 +35,7 @@ public class AAAEncryptServiceImplTest {
     @Before
     public void setup(){
 
-        Mockito.when(module.getEncryptionKeySalt()).thenReturn(ENCRYPT_SALT);
+        Mockito.when(module.getEncryptSalt()).thenReturn(ENCRYPT_SALT);
         Mockito.when(module.getEncryptKey()).thenReturn(ENCRYPT_KEY);
         Mockito.when(module.getEncryptTag()).thenReturn(ENCRYPTED_TAG);
         Mockito.when(module.getEncryptMethod()).thenReturn(ENCRYPTION_METHOD);

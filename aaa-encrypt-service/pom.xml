@@ -77,13 +77,6 @@
                         <configuration>
                             <codeGenerators>
                                 <generator>
-                                    <codeGeneratorClass>org.opendaylight.controller.config.yangjmxgenerator.plugin.JMXGenerator</codeGeneratorClass>
-                                    <outputBaseDir>${jmxGeneratorPath}</outputBaseDir>
-                                    <additionalConfiguration>
-                                        <namespaceToPackage1>urn:opendaylight:params:xml:ns:yang:controller==org.opendaylight.controller.config.yang</namespaceToPackage1>
-                                    </additionalConfiguration>
-                                </generator>
-                                <generator>
                                     <codeGeneratorClass>org.opendaylight.yangtools.maven.sal.api.gen.plugin.CodeGeneratorImpl</codeGeneratorClass>
                                     <outputBaseDir>${salGeneratorPath}</outputBaseDir>
                                 </generator>
@@ -98,11 +91,6 @@
                         <artifactId>maven-sal-api-gen-plugin</artifactId>
                         <version>${mdsal.model.version}</version>
                         <type>jar</type>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.opendaylight.controller</groupId>
-                        <artifactId>yang-jmx-generator-plugin</artifactId>
-                        <version>${config.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -119,7 +107,7 @@
                         <configuration>
                             <artifacts>
                                 <artifact>
-                                    <file>${project.build.directory}/classes/initial/08-aaa-encrypt-service-config.xml</file>
+                                    <file>${project.build.directory}/classes/initial/aaa-encrypt-service-config.xml</file>
                                     <type>xml</type>
                                     <classifier>config</classifier>
                                 </artifact>

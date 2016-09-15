@@ -311,7 +311,7 @@
         <feature version='${config.version}'>odl-config-core</feature>
 
         <bundle>mvn:org.opendaylight.aaa/aaa-encrypt-service/{{VERSION}}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/08-aaa-encrypt-service-config.xml">mvn:org.opendaylight.aaa/aaa-encrypt-service/{{VERSION}}/xml/config</configfile>
+        <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-encrypt-service-config.xml">mvn:org.opendaylight.aaa/aaa-encrypt-service/{{VERSION}}/xml/config</configfile>
     </feature>
 
 </features>

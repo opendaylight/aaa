@@ -1,0 +1,10 @@
+<aaa-encrypt-service-config xmlns="config:aaa:authn:encrypt:service:config">
+    <encrypt-key>CHANGE_ME</encrypt-key>
+    <encrypt-salt>0, 5, 0, 0, 7, 81, 0, 3, 0, 0, 0, 0, 0, 43, 0, 1</encrypt-salt>
+    <encrypt-tag>Encrypted:</encrypt-tag>
+    <encrypt-method>PBKDF2WithHmacSHA1</encrypt-method>
+    <encrypt-type>AES</encrypt-type>
+    <encrypt-iteration-count>32768</encrypt-iteration-count>
+    <encrypt-key-length>128</encrypt-key-length>
+    <cipher-transforms>AES/CBC/PKCS5Padding</cipher-transforms>
+</aaa-encrypt-service-config>
