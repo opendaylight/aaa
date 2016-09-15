@@ -119,7 +119,7 @@
                         <configuration>
                             <artifacts>
                                 <artifact>
-                                    <file>${project.build.directory}/classes/initial/08-aaa-encrypt-service-config.xml</file>
+                                    <file>${project.build.directory}/classes/initial/aaa-encrypt-service-config.xml</file>
                                     <type>xml</type>
                                     <classifier>config</classifier>
                                 </artifact>
