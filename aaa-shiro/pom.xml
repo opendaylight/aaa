@@ -16,6 +16,34 @@
   <packaging>bundle</packaging>
 
   <dependencies>
+      <!-- jersey client for moon authN -->
+     <dependency>
+       <groupId>com.sun.jersey</groupId>
+       <artifactId>jersey-client</artifactId>
+       <scope>provided</scope>
+     </dependency>
+     <dependency>
+       <groupId>org.json</groupId>
+       <artifactId>json</artifactId>
+       <version>20140107</version>
+    </dependency>
+    <!-- OAuth2 dependencies for moon -->
+    <dependency>
+        <groupId>org.apache.oltu.oauth2</groupId>
+        <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
+        <scope>provided</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.oltu.oauth2</groupId>
+        <artifactId>org.apache.oltu.oauth2.common</artifactId>
+        <scope>provided</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.oltu.oauth2</groupId>
+        <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
+        <scope>provided</scope>
+    </dependency>
+    <!-- end -->
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.dependencymanager</artifactId>
@@ -100,8 +128,12 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
+             <Import-Package>
+              *
+            </Import-Package>
+            <Web-ContextPath>/moon</Web-ContextPath>
             <Bundle-Activator>org.opendaylight.aaa.shiro.Activator</Bundle-Activator>
-            <DynamicImport-Package>*</DynamicImport-Package>
+            <!-- <DynamicImport-Package>*</DynamicImport-Package> -->
           </instructions>
         </configuration>
       </plugin>

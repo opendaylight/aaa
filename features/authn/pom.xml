@@ -113,6 +113,11 @@
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-json</artifactId>
         </dependency>
+        <!-- jersey client for moon APIs calls -->
+        <dependency>
+           <groupId>com.sun.jersey</groupId>
+           <artifactId>jersey-client</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
