@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_e91c566c",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/filters/MoonOAuthFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-09-16T18:23:29Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 1
+      },
+      "revId": "f718157ce79e6a9d1a2cb4f0560862e78f7df9ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_092d5295",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/filters/MoonOAuthFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-09-16T18:23:29Z",
+      "side": 1,
+      "message": "add space after ,\nhttpResponse, claim, \"\", principal.getToken()",
+      "revId": "f718157ce79e6a9d1a2cb4f0560862e78f7df9ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_6920469b",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/filters/MoonOAuthFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-09-16T18:23:29Z",
+      "side": 1,
+      "message": "handle the exception at least log the errors",
+      "revId": "f718157ce79e6a9d1a2cb4f0560862e78f7df9ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_4923caa6",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/filters/MoonOAuthFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-09-16T18:23:29Z",
+      "side": 1,
+      "message": "same for all",
+      "revId": "f718157ce79e6a9d1a2cb4f0560862e78f7df9ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_a93d3ec6",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/moon/MoonPrincipal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-09-16T18:23:29Z",
+      "side": 1,
+      "message": "please add comment on this value",
+      "revId": "f718157ce79e6a9d1a2cb4f0560862e78f7df9ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_893842d4",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/MoonRealm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-09-16T18:23:29Z",
+      "side": 1,
+      "message": "as long as u implement the method please remove the auto generated comments",
+      "revId": "f718157ce79e6a9d1a2cb4f0560862e78f7df9ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_e933b6f3",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/MoonRealm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-09-16T18:23:29Z",
+      "side": 1,
+      "message": "space",
+      "revId": "f718157ce79e6a9d1a2cb4f0560862e78f7df9ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_e94a9653",
+        "filename": "aaa-shiro/src/main/resources/shiro.ini",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-09-16T18:23:29Z",
+      "side": 1,
+      "message": "keep the default values as it and comment the moon realm, if the user want to use moon realm will uncomment it and adjust the realm list",
+      "revId": "f718157ce79e6a9d1a2cb4f0560862e78f7df9ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
