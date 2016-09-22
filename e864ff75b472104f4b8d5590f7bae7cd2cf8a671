@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7a6b29fe_01a19093",
+        "filename": "aaa-encrypt-service/src/main/resources/initial/aaa-encrypt-service-config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-09-22T15:28:10Z",
+      "side": 1,
+      "message": "Thanks!  That would be very helpful for end users.  I will work on adding it to our proper documentation.",
+      "parentUuid": "7a6b29fe_01ccf087",
+      "range": {
+        "startLine": 8,
+        "startChar": 24,
+        "endLine": 8,
+        "endChar": 27
+      },
+      "revId": "e864ff75b472104f4b8d5590f7bae7cd2cf8a671",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a6b29fe_c17e7869",
         "filename": "aaa-encrypt-service/src/main/yang/aaa-encrypt-service-config.yang",
         "patchSetId": 3
