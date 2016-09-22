@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_81880072",
+        "filename": "aaa-encrypt-service/src/main/resources/initial/aaa-encrypt-service-config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-09-22T14:42:11Z",
+      "side": 1,
+      "message": "Unrelated to this change;  we may want to increase this.  We should also mention that people should change the encryption salt in their own deployments... Either that or bootstrap creation of the salt using a SecureRandom upon first boot.  My worry is that people will end up missing this file and use common values.",
+      "range": {
+        "startLine": 8,
+        "startChar": 24,
+        "endLine": 8,
+        "endChar": 27
+      },
+      "revId": "e864ff75b472104f4b8d5590f7bae7cd2cf8a671",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_c17e7869",
+        "filename": "aaa-encrypt-service/src/main/yang/aaa-encrypt-service-config.yang",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-09-22T14:42:11Z",
+      "side": 1,
+      "message": "Please add a basic description for these leaf nodes for completeness.",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "e864ff75b472104f4b8d5590f7bae7cd2cf8a671",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
