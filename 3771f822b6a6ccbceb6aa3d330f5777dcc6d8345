@@ -68,6 +68,52 @@
       "revId": "3771f822b6a6ccbceb6aa3d330f5777dcc6d8345",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_acbff35f",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/moon/MoonTokenEndpoint.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-09-22T19:38:24Z",
+      "side": 1,
+      "message": "what is this variable used for ?",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 70
+      },
+      "revId": "3771f822b6a6ccbceb6aa3d330f5777dcc6d8345",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_8cc2f7e6",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/MoonRealm.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-09-22T19:38:24Z",
+      "side": 1,
+      "message": "add space , please take care of all the style space",
+      "range": {
+        "startLine": 81,
+        "startChar": 41,
+        "endLine": 81,
+        "endChar": 43
+      },
+      "revId": "3771f822b6a6ccbceb6aa3d330f5777dcc6d8345",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
