@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_ec344b4b",
+        "filename": "aaa-shiro/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-09-22T18:54:52Z",
+      "side": 1,
+      "message": "Why is this needed?  This license is not smiled upon in the community due to the \"do no evil\" clause.",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 29,
+        "endChar": 17
+      },
+      "revId": "3771f822b6a6ccbceb6aa3d330f5777dcc6d8345",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_2c42c3ad",
+        "filename": "aaa-shiro/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-09-22T18:54:52Z",
+      "side": 1,
+      "message": "This is implied, please get rid of it.",
+      "range": {
+        "startLine": 131,
+        "startChar": 13,
+        "endLine": 133,
+        "endChar": 29
+      },
+      "revId": "3771f822b6a6ccbceb6aa3d330f5777dcc6d8345",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_0c3d472b",
+        "filename": "aaa-shiro/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-09-22T18:54:52Z",
+      "side": 1,
+      "message": "This is needed, uncomment it.  It is used for the dynamic filtering framework.  Please do not comment it out.",
+      "range": {
+        "startLine": 136,
+        "startChar": 12,
+        "endLine": 136,
+        "endChar": 69
+      },
+      "revId": "3771f822b6a6ccbceb6aa3d330f5777dcc6d8345",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
