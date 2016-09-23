@@ -12,6 +12,10 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -22,7 +26,8 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.rev160426.AAAEncryptServiceModule;
+
+import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,17 +38,17 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAEncryptionServiceImpl.class);
 
-    private final SecretKey key;
-    private final IvParameterSpec ivspec;
-    private final Cipher encryptCipher;
-    private final Cipher decryptCipher;
-    private final String encryptTag;
+    private SecretKey key;
+    private IvParameterSpec ivspec;
+    private Cipher encryptCipher;
+    private Cipher decryptCipher;
+    private String encryptTag;
 
-    public AAAEncryptionServiceImpl(AAAEncryptServiceModule module) {
+    public AAAEncryptionServiceImpl(AaaEncryptServiceConfig module) {
         SecretKey tempKey = null;
         IvParameterSpec tempIvSpec = null;
         this.encryptTag = module.getEncryptTag();
-        final byte[] enryptionKeySalt = module.getEncryptionKeySalt();
+        final byte[] enryptionKeySalt = getEncryptionKeySalt(module.getEncryptSalt());
         try {
             final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(module.getEncryptMethod());
             final KeySpec spec = new PBEKeySpec(module.getEncryptKey().toCharArray(), enryptionKeySalt, module.getEncryptIterationCount(), module.getEncryptKeyLength());
@@ -144,4 +149,21 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
         }
         return encData;
     }
+
+    private byte[] getEncryptionKeySalt(String encryptSalt){
+        StringTokenizer tokens = new StringTokenizer(encryptSalt, ",");
+        List<Byte> saltList = new ArrayList<>();
+        while(tokens.hasMoreTokens()){
+            String by = tokens.nextToken();
+            saltList.add(Byte.parseByte(by.trim()));
+        }
+        byte salt[] = new byte[saltList.size()];
+        int i=0;
+        for(Byte b:saltList){
+            salt[i] = b;
+            i++;
+        }
+        return salt;
+    }
+
 }

@@ -340,7 +340,7 @@
         <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
 
         <bundle>mvn:org.opendaylight.aaa/aaa-encrypt-service/{{VERSION}}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/08-aaa-encrypt-service-config.xml">mvn:org.opendaylight.aaa/aaa-encrypt-service/{{VERSION}}/xml/config</configfile>
+        <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-encrypt-service-config.xml">mvn:org.opendaylight.aaa/aaa-encrypt-service/{{VERSION}}/xml/config</configfile>
     </feature>
 
     <feature name='odl-aaa-cert' description='OpenDaylight :: AAA :: aaa opendaylight certificate Plugin'
