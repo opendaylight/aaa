@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_16189fd1",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/MoonRealm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-03T14:35:02Z",
+      "side": 1,
+      "message": "Those variables should be configured through shiro.ini. we can not rely on the environment variables.",
+      "range": {
+        "startLine": 92,
+        "startChar": 5,
+        "endLine": 93,
+        "endChar": 73
+      },
+      "revId": "fcbe79c174ba5f1289c0dd8c0ceb555debed7ebb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_d6a627aa",
+        "filename": "aaa-shiro/src/main/java/org/opendaylight/aaa/shiro/realm/MoonRealm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-03T14:35:02Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 109,
+        "startChar": 26,
+        "endLine": 109,
+        "endChar": 45
+      },
+      "revId": "fcbe79c174ba5f1289c0dd8c0ceb555debed7ebb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
