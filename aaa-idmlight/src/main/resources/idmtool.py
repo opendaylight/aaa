@@ -13,25 +13,72 @@ idmtool
 
 Used to manipulate ODL AAA idm on a node-per-node basis.  Assumes only one domain (sdn)
 since current support in ODL is limited.
+
+The best way to find out how to use this script is to invoke the normal argparse help:
+> python idmtool -h
+
+This script attempts to determine whether HTTP or HTTPS is used through reading the
+org.ops4j.pax.web.cfg file, and determining whether HTTPS is enabled for the container.
 '''
 
 __author__ = "Ryan Goulding"
 __copyright__ = "Copyright (c) 2016 Brocade Communications Systems and others"
 __credits__ = "Ryan Goulding"
 __license__ = "EPL"
-__version__ = "1.0"
+__version__ = "1.1"
 __maintainer__ = "Ryan Goulding"
 __email__ = "ryandgoulding@gmail.com"
 __status__ = "Production"
 
-import argparse, getpass, json, requests, sys, warnings
+import argparse, getpass, json, os, requests, sys, warnings
 
 parser = argparse.ArgumentParser('idmtool')
 
+
+# Constants used to peek into the pax web config.  This is useful to determine whether HTTPS is enabled.
+PAX_WEB_CFG_FILENAME = 'org.ops4j.pax.web.cfg'
+HTTP_SECURE_ENABLED_KEY = 'org.osgi.service.http.secure.enabled'
+HTTP_PORT_SECURE_KEY = 'org.osgi.service.http.port.secure'
+DEFAULT_HTTP_PORT_SECURE = '8443'
+DEFAULT_HTTP_PORT = '8181'
+HTTP_PORT_KEY = 'org.osgi.service.http.port'
+DEFAULT_PROTOCOL = 'http'
+HTTPS_PROTOCOL = 'https'
+
+def setup_http():
+    '''
+    Sets the default port to try based on org.ops4j.pax.web.cfg.  If HTTPS is enabled then the script attempts
+    to determine the port from org.osgi.service.http.port.secure.  If no port is specified (perfectly valid),
+    then the script assumes the default (8443).  This functionality can still be overriden through specifying
+    the --target-host argument during idmtool invocation.
+    '''
+
+    try:
+        pax_web_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), PAX_WEB_CFG_FILENAME)
+        with open(pax_web_path) as f:
+            # build up a dictionary of the properties specified in the pax config
+            content = f.readlines()
+            d = dict()
+            for line in content:
+                if '=' in line and not line.startswith('#'):
+                    pair = line.split('=')
+                    loperand = pair[0].strip()
+                    roperand = pair[1].strip()
+                    d[loperand] = roperand
+
+            # if HTTPS is enabled, return the secure port (if it is specified), or 8443 if it is not specified.
+            http_secure_enabled = d.get(HTTP_SECURE_ENABLED_KEY)
+            if http_secure_enabled is not None and 'true' in http_secure_enabled:
+                return d.get(HTTP_PORT_SECURE_KEY, DEFAULT_HTTP_PORT_SECURE), HTTPS_PROTOCOL
+            else:
+                return DEFAULT_HTTP_PORT, DEFAULT_PROTOCOL
+    except IOError:
+        return DEFAULT_HTTP_PORT, DEFAULT_PROTOCOL
+
+
 user=''
 hostname='localhost'
-protocol='http'
-port='8181'
+port,protocol=setup_http()
 target_host='{}://{}:{}/'.format(protocol, hostname, port)
 verifyCertificates=True
 
