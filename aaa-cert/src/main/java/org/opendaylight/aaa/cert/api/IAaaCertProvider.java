@@ -8,9 +8,8 @@
 
 package org.opendaylight.aaa.cert.api;
 
-import java.security.KeyStore;
-
 import javax.annotation.Nonnull;
+import java.security.KeyStore;
 
 /**
  * IAaaCertProvider defines the basic operation for certificates management
@@ -18,7 +17,7 @@ import javax.annotation.Nonnull;
  * @author mserngawy
  *
  */
-public interface IAaaCertProvider extends java.lang.AutoCloseable {
+public interface IAaaCertProvider {
 
     /**
      * Add certificate to ODL keystore, the certificate should be signed by a CA (Certificate Authority) based on a certificate
@@ -103,4 +102,11 @@ public interface IAaaCertProvider extends java.lang.AutoCloseable {
      * @return Trust keystore
      */
     KeyStore getTrustKeyStore();
+
+    /**
+     * Get list of of the allowed cipher suites otherwise empty array
+     *
+     * @return Cipher suites
+     */
+    String[] getCipherSuites();
 }
