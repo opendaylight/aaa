@@ -1,0 +1,19 @@
+<aaa-cert-service-config xmlns="urn:opendaylight:yang:aaa:cert">
+  <useConfig>false</useConfig>
+  <ctlKeystore>
+    <name>ctl.jks</name>
+    <alias>controller</alias>
+    <storePassword>storePassword</storePassword>
+    <dname>CN=ODL, OU=Dev, O=LinuxFoundation, L=QC Montreal, C=CA</dname>
+    <validity>365</validity>
+    <cipher-suites>
+      <suiteName></suiteName>
+    </cipher-suites>
+  </ctlKeystore>
+  <trustKeystore>
+    <name>truststore.jks</name>
+    <alias>controller</alias>
+    <storePassword>storePassword</storePassword>
+    <certFile>cacert.pem</certFile>
+  </trustKeystore>
+</aaa-cert-service-config>
