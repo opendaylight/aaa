@@ -350,7 +350,7 @@
 
         <bundle>mvn:org.bouncycastle/bcprov-jdk15on/{{VERSION}}</bundle>
         <bundle>mvn:commons-codec/commons-codec/{{VERSION}}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/08-aaa-cert-config.xml">mvn:org.opendaylight.aaa/aaa-cert/{{VERSION}}/xml/config</configfile>
+        <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-cert-config.xml">mvn:org.opendaylight.aaa/aaa-cert/{{VERSION}}/xml/config</configfile>
         <bundle>mvn:org.opendaylight.aaa/aaa-cert/{{VERSION}}</bundle>
     </feature>
 

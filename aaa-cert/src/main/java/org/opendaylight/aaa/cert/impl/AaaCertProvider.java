@@ -8,14 +8,18 @@
 
 package org.opendaylight.aaa.cert.impl;
 
-import com.google.common.util.concurrent.SettableFuture;
 import java.security.KeyStore;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Future;
+
 import org.opendaylight.aaa.cert.api.IAaaCertProvider;
-import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
-import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.CtlKeystore;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.TrustKeystore;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.AaaCertServiceConfig;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystore;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystoreBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.TrustKeystore;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.TrustKeystoreBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.ctlkeystore.CipherSuites;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.AaaCertRpcService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertifcateInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertifcateOutput;
@@ -28,11 +32,10 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertifcateInput;
 import org.opendaylight.yangtools.yang.common.RpcResult;
 import org.opendaylight.yangtools.yang.common.RpcResultBuilder;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.util.concurrent.SettableFuture;
 
 /**
  * AaaCertProvider use to manage the certificates manipulation operations add, revoke and update
@@ -40,20 +43,23 @@ import org.slf4j.LoggerFactory;
  * @author mserngawy
  *
  */
-public class AaaCertProvider implements AutoCloseable, IAaaCertProvider, BindingAwareProvider, AaaCertRpcService {
+public class AaaCertProvider implements IAaaCertProvider, AaaCertRpcService {
 
     private final static Logger LOG = LoggerFactory.getLogger(AaaCertProvider.class);
-    private ServiceRegistration<AaaCertRpcService> aaaCertRpcServiceRegisteration;
-    private ServiceRegistration<IAaaCertProvider> aaaCertServiceRegisteration;
-    private final CtlKeystore ctlKeyStore;
+    private CtlKeystore ctlKeyStore;
     private final ODLKeyTool odlKeyTool;
-    private final TrustKeystore trustKeyStore;
+    private TrustKeystore trustKeyStore;
 
-    public AaaCertProvider(final CtlKeystore ctlKeyStore, final TrustKeystore trustKeyStore) {
-        LOG.info("aaa Certificate Service Initalized");
+    public AaaCertProvider(final AaaCertServiceConfig aaaCertServiceConfig) {
         odlKeyTool = new ODLKeyTool();
-        this.ctlKeyStore = ctlKeyStore;
-        this.trustKeyStore = trustKeyStore;
+        this.ctlKeyStore = aaaCertServiceConfig.getCtlKeystore();
+        this.trustKeyStore = aaaCertServiceConfig.getTrustKeystore();
+        if (aaaCertServiceConfig.isUseConfig() && !KeyStoreConstant.checkKeyStoreFile(ctlKeyStore.getName())) {
+            LOG.info("Creating keystore based on given configuration");
+            this.createODLKeyStore();
+            this.createTrustKeyStore();
+        }
+        LOG.info("aaa Certificate Service Initalized");
     }
 
     @Override
@@ -66,13 +72,6 @@ public class AaaCertProvider implements AutoCloseable, IAaaCertProvider, Binding
         return odlKeyTool.addCertificate(trustKeyStore.getName(), storePasswd, certificate, alias);
     }
 
-    @Override
-    public void close() throws Exception {
-        LOG.info("aaa Certificate Service Closed");
-        aaaCertServiceRegisteration.unregister();
-        aaaCertRpcServiceRegisteration.unregister();
-    }
-
     public void createODLKeyStore() {
         createODLKeyStore(ctlKeyStore.getName(),ctlKeyStore.getStorePassword(), ctlKeyStore.getAlias(),
                   ctlKeyStore.getDname(), ctlKeyStore.getValidity());
@@ -81,11 +80,12 @@ public class AaaCertProvider implements AutoCloseable, IAaaCertProvider, Binding
     @Override
     public String createODLKeyStore(final String keyStore, final String storePasswd, final String alias,
             final String dName, final int validity) {
-        ctlKeyStore.setAlias(alias);
-        ctlKeyStore.setDname(dName);
-        ctlKeyStore.setName(keyStore);
-        ctlKeyStore.setStorePassword(storePasswd);
-        ctlKeyStore.setValidity(validity);
+        ctlKeyStore = new CtlKeystoreBuilder().setAlias(alias)
+                                              .setDname(dName)
+                                              .setName(keyStore)
+                                              .setStorePassword(storePasswd)
+                                              .setValidity(validity)
+                                              .build();
         if(odlKeyTool.createKeyStoreWithSelfSignCert(keyStore, storePasswd, dName, alias, validity)) {
             return keyStore + " Keystore created.";
         } else {
@@ -100,9 +100,10 @@ public class AaaCertProvider implements AutoCloseable, IAaaCertProvider, Binding
 
     @Override
     public String createTrustKeyStore(final String keyStore, final String storePasswd, final String alias) {
-        trustKeyStore.setAlias(alias);
-        trustKeyStore.setName(keyStore);
-        trustKeyStore.setStorePassword(storePasswd);
+        trustKeyStore = new TrustKeystoreBuilder().setAlias(alias)
+                                                  .setName(keyStore)
+                                                  .setStorePassword(storePasswd)
+                                                  .build();
         if(odlKeyTool.createKeyStoreImportCert(keyStore, storePasswd, trustKeyStore.getCertFile(), alias)) {
             return keyStore + " Keystore created.";
         } else {
@@ -185,11 +186,14 @@ public class AaaCertProvider implements AutoCloseable, IAaaCertProvider, Binding
     }
 
     @Override
-    public void onSessionInitiated(final ProviderContext session) {
-        LOG.info("aaa Certificate Service Session Initiated");
-        final BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
-        aaaCertServiceRegisteration = context.registerService(IAaaCertProvider.class, this, null);
-        aaaCertRpcServiceRegisteration = context.registerService(AaaCertRpcService.class, this, null);
+    public String[] getCipherSuites() {
+        List<String> suites = new ArrayList<>();
+        if (ctlKeyStore.getCipherSuites() != null && !ctlKeyStore.getCipherSuites().isEmpty()) {
+            for (CipherSuites cipherSuite : ctlKeyStore.getCipherSuites()) {
+                suites.add(cipherSuite.getSuiteName());
+            }
+        }
+        return (String[]) suites.toArray();
     }
 
     @Override
@@ -211,7 +215,7 @@ public class AaaCertProvider implements AutoCloseable, IAaaCertProvider, Binding
         final SettableFuture<RpcResult<Void>> futureResult = SettableFuture.create();
         //adding ca to the alias of signed certificate by Certificate Authority.
         //can not have 2 certifciate under the same alias.
-        ctlKeyStore.setAlias("ca" + ctlKeyStore.getAlias());
+        ctlKeyStore = new CtlKeystoreBuilder(ctlKeyStore).setAlias("ca" + ctlKeyStore.getAlias()).build();
         if (odlKeyTool.addCertificate(ctlKeyStore.getName(), ctlKeyStore.getStorePassword(),
                 input.getOdlCert(), ctlKeyStore.getAlias())) {
             futureResult.set(RpcResultBuilder.<Void> success().build());
