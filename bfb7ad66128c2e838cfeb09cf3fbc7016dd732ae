@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_e4ab981c",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-06T14:24:39Z",
+      "side": 1,
+      "message": "I believe an empty \"@return\" generates a javadoc warning.  Could you:\n1) add a space above this.\n2) add a trivial description to avoid any possible warning",
+      "revId": "bfb7ad66128c2e838cfeb09cf3fbc7016dd732ae",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_24a63054",
+        "filename": "aaa-cert/src/main/resources/initial/aaa-cert-config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-06T14:24:39Z",
+      "side": 1,
+      "message": "Is anything supposed to be here?  If not, can we please prefer the \"\u003csuiteName /\u003e\" style of empty XML?  Sorry if this is nit-picky...",
+      "revId": "bfb7ad66128c2e838cfeb09cf3fbc7016dd732ae",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_64678826",
+        "filename": "features/authn/src/main/features/features.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-06T14:24:39Z",
+      "side": 1,
+      "message": "cool! Glad people are using this :)",
+      "range": {
+        "startLine": 353,
+        "startChar": 48,
+        "endLine": 353,
+        "endChar": 73
+      },
+      "revId": "bfb7ad66128c2e838cfeb09cf3fbc7016dd732ae",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
