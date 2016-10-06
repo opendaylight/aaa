@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a6b29fe_641ca878",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-06T14:36:17Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "7a6b29fe_e4ab981c",
+      "revId": "bfb7ad66128c2e838cfeb09cf3fbc7016dd732ae",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a6b29fe_24a63054",
         "filename": "aaa-cert/src/main/resources/initial/aaa-cert-config.xml",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2016-10-06T14:24:39Z",
       "side": 1,
       "message": "Is anything supposed to be here?  If not, can we please prefer the \"\u003csuiteName /\u003e\" style of empty XML?  Sorry if this is nit-picky...",
+      "revId": "bfb7ad66128c2e838cfeb09cf3fbc7016dd732ae",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_040b342c",
+        "filename": "aaa-cert/src/main/resources/initial/aaa-cert-config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-06T14:36:17Z",
+      "side": 1,
+      "message": "by default all the cipher suites are allowed. However, if the user  need to specify the cipher suites he need to list them there. ok",
+      "parentUuid": "7a6b29fe_24a63054",
       "revId": "bfb7ad66128c2e838cfeb09cf3fbc7016dd732ae",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
