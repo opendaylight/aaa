@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "7a6b29fe_872586b0",
+        "filename": "aaa-cert/src/main/resources/initial/aaa-cert-config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-06T14:38:10Z",
+      "side": 1,
+      "message": "Okay, awesome.",
+      "parentUuid": "7a6b29fe_040b342c",
+      "revId": "bfb7ad66128c2e838cfeb09cf3fbc7016dd732ae",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a6b29fe_64678826",
         "filename": "features/authn/src/main/features/features.xml",
         "patchSetId": 2
