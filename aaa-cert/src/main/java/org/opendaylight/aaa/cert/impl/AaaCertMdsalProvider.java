@@ -39,15 +39,19 @@ import org.slf4j.LoggerFactory;
  * @author mserngawy
  *
  */
-public class AaaCertMdsalProvider implements AutoCloseable, BindingAwareProvider, IAaaCertMdsalProvider {
+public class AaaCertMdsalProvider implements IAaaCertMdsalProvider {
 
-    private final static Logger LOG = LoggerFactory.getLogger(AaaCertMdsalProvider.class);
-    private ServiceRegistration<IAaaCertMdsalProvider> aaaCertMdsalServiceRegisteration;
-    private DataBroker dataBroker;
-    private KeyStoresDataUtils keyStoresData;
+    private static final Logger LOG = LoggerFactory.getLogger(AaaCertMdsalProvider.class);
+
+    private final DataBroker dataBroker;
+    private final KeyStoresDataUtils keyStoresData;
     private final ODLMdsalKeyTool odlKeyTool;
 
-    public AaaCertMdsalProvider() {
+    public AaaCertMdsalProvider(final DataBroker dataBroker, final AAAEncryptionService encryptionSrv) {
+        this.dataBroker = dataBroker;
+        final KeyStores keyStoreData = new KeyStoresBuilder().setId(KeyStoresDataUtils.KEYSTORES_DATA_TREE).build();
+        MdsalUtils.initalizeDatastore(LogicalDatastoreType.CONFIGURATION, dataBroker, KeyStoresDataUtils.getKeystoresIid(), keyStoreData);
+        keyStoresData = new KeyStoresDataUtils(encryptionSrv);
         odlKeyTool = new ODLMdsalKeyTool();
         LOG.info("AaaCertMdsalProvider Initialized");
     }
@@ -111,12 +115,6 @@ public class AaaCertMdsalProvider implements AutoCloseable, BindingAwareProvider
             }
         }
         return false;
-    }
-
-    @Override
-    public void close() throws Exception {
-        LOG.info("Aaa Certificate Mdsal Service Closed");
-        aaaCertMdsalServiceRegisteration.unregister();
     }
 
     @Override
@@ -226,23 +224,6 @@ public class AaaCertMdsalProvider implements AutoCloseable, BindingAwareProvider
             cipherSuitesList.add(cipherSuite);
         }
         return keyStoresData.addSslData(dataBroker, bundleName, odlKeystore, trustKeystore, cipherSuitesList);
-    }
-
-    @Override
-    public void onSessionInitiated(final ProviderContext session) {
-        LOG.info("Aaa Certificate Mdsal Service Session Initiated");
-        final BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
-        aaaCertMdsalServiceRegisteration = context.registerService(IAaaCertMdsalProvider.class, this, null);
-
-        // Retrieve the data broker to create transactions
-        dataBroker =  session.getSALService(DataBroker.class);
-        final KeyStores keyStoreData = new KeyStoresBuilder().setId(KeyStoresDataUtils.KEYSTORES_DATA_TREE).build();
-        MdsalUtils.initalizeDatastore(LogicalDatastoreType.CONFIGURATION, dataBroker, KeyStoresDataUtils.getKeystoresIid(), keyStoreData);
-        final ServiceReference<?> serviceReference = context.getServiceReference(AAAEncryptionService.class);
-        if (serviceReference != null) {
-            final AAAEncryptionService encryptionSrv = (AAAEncryptionService) context.getService(serviceReference);
-            keyStoresData = new KeyStoresDataUtils(encryptionSrv);
-        }
     }
 
     @Override

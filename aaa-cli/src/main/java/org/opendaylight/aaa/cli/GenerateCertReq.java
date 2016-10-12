@@ -47,7 +47,7 @@ public class GenerateCertReq extends OsgiCommandSupport{
 
     @Override
     protected Object doExecute() throws Exception {
-        return certProvider.genODLKeyStorCertificateReq(keyStorePassword, alias);
+        return certProvider.genODLKeyStoreCertificateReq(keyStorePassword, alias, true);
     }
 
 }
