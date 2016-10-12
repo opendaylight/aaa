@@ -13,7 +13,14 @@
 
   <service ref="aaaCert" interface="org.opendaylight.aaa.cert.api.IAaaCertProvider"/>
 
-  <bean id="aaaCertMdsal" class="org.opendaylight.aaa.cert.impl.AaaCertMdsalProvider" />
+  <reference id="dataBroker" interface="org.opendaylight.controller.md.sal.binding.api.DataBroker"/>
+
+  <reference id="encryService" interface="org.opendaylight.aaa.encrypt.AAAEncryptionService"/>
+
+  <bean id="aaaCertMdsal" class="org.opendaylight.aaa.cert.impl.AaaCertMdsalProvider">
+      <argument ref="dataBroker"/>
+      <argument ref="encryService"/>
+  </bean>
 
   <service ref="aaaCertMdsal" interface="org.opendaylight.aaa.cert.api.IAaaCertMdsalProvider"/>
 
