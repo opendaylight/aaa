@@ -63,8 +63,23 @@ public class AaaCertProvider implements IAaaCertProvider, AaaCertRpcService {
     }
 
     @Override
+    public TrustKeystore getTrustKeyStoreInfo() {
+        return trustKeyStore;
+    }
+
+    @Override
+    public CtlKeystore getOdlKeyStoreInfo() {
+        return ctlKeyStore;
+    }
+
+    @Override
     public boolean addCertificateODLKeyStore(final String storePasswd, final String alias, final String certificate) {
         return odlKeyTool.addCertificate(ctlKeyStore.getName(), storePasswd, certificate, alias);
+    }
+
+    @Override
+    public boolean addCertificateODLKeyStore(final String alias, final String certificate) {
+        return addCertificateODLKeyStore(ctlKeyStore.getStorePassword(), alias, certificate);
     }
 
     @Override
@@ -72,6 +87,12 @@ public class AaaCertProvider implements IAaaCertProvider, AaaCertRpcService {
         return odlKeyTool.addCertificate(trustKeyStore.getName(), storePasswd, certificate, alias);
     }
 
+    @Override
+    public boolean addCertificateTrustStore(final String alias, final String certificate) {
+        return addCertificateTrustStore(trustKeyStore.getStorePassword(), alias, certificate);
+    }
+
+    @Override
     public void createODLKeyStore() {
         createODLKeyStore(ctlKeyStore.getName(),ctlKeyStore.getStorePassword(), ctlKeyStore.getAlias(),
                   ctlKeyStore.getDname(), ctlKeyStore.getValidity());
@@ -93,6 +114,7 @@ public class AaaCertProvider implements IAaaCertProvider, AaaCertRpcService {
         }
     }
 
+    @Override
     public void createTrustKeyStore() {
         odlKeyTool.createKeyStoreImportCert(trustKeyStore.getName(), trustKeyStore.getStorePassword(),
                 trustKeyStore.getCertFile(), trustKeyStore.getAlias());
@@ -118,8 +140,18 @@ public class AaaCertProvider implements IAaaCertProvider, AaaCertRpcService {
     }
 
     @Override
+    public String genODLKeyStorCertificateReq(final String alias) {
+        return genODLKeyStorCertificateReq(ctlKeyStore.getStorePassword(), alias);
+    }
+
+    @Override
     public String getCertificateTrustStore(final String storePasswd, final String aliase) {
         return odlKeyTool.getCertificate(trustKeyStore.getName(), storePasswd, aliase, true);
+    }
+
+    @Override
+    public String getCertificateTrustStore(final String aliase) {
+        return getCertificateTrustStore(trustKeyStore.getStorePassword(), aliase);
     }
 
     @Override
