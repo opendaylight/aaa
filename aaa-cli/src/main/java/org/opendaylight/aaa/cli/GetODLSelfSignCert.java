@@ -44,7 +44,7 @@ public class GetODLSelfSignCert extends OsgiCommandSupport{
 
     @Override
     protected Object doExecute() throws Exception {
-        return certProvider.getODLKeyStorCertificate(keyStorePassword, alias);
+        return certProvider.getODLKeyStorCertificate(keyStorePassword, alias, true);
     }
 
 }

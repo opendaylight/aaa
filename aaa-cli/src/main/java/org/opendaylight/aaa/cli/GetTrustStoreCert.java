@@ -47,7 +47,7 @@ public class GetTrustStoreCert  extends OsgiCommandSupport{
 
     @Override
     protected Object doExecute() throws Exception {
-        return certProvider.getCertificateTrustStore(keyStorePassword, alias);
+        return certProvider.getCertificateTrustStore(keyStorePassword, alias, true);
     }
 
 }
