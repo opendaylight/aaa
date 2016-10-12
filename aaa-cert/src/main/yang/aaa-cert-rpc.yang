@@ -25,6 +25,11 @@ module aaa-cert-rpc {
     rpc getODLCertificate {
         description
             "Get the ctl.jks keystore certificate";
+        input {
+            leaf cert-alias {
+                type string;
+            }
+         }
         output {
            leaf odl-cert {
                type string;
@@ -35,6 +40,11 @@ module aaa-cert-rpc {
     rpc getODLCertificateReq {
         description
             "Generate a certificate request from the ctl.jks keystore to be signed by a CA";
+        input {
+            leaf cert-req-alias {
+                type string;
+            }
+         }
         output {
            leaf odl-cert-req {
                type string;
@@ -48,6 +58,9 @@ module aaa-cert-rpc {
             a certifcate request generated from the ctl.jks
             keystore otherwise the certifcated will not be added to ctl keystore";
         input {
+            leaf odl-cert-alias {
+                type string;
+            }
            leaf odl-cert {
                type string;
            }
