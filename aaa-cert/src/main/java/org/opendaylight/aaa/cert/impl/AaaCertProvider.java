@@ -62,14 +62,30 @@ public class AaaCertProvider implements IAaaCertProvider, AaaCertRpcService {
         LOG.info("aaa Certificate Service Initalized");
     }
 
+    public TrustKeystore getTrustKeyStoreInfo() {
+        return trustKeyStore;
+    }
+
+    public CtlKeystore getOdlKeyStoreInfo() {
+        return ctlKeyStore;
+    }
+
     @Override
     public boolean addCertificateODLKeyStore(final String storePasswd, final String alias, final String certificate) {
         return odlKeyTool.addCertificate(ctlKeyStore.getName(), storePasswd, certificate, alias);
     }
 
+    public boolean addCertificateODLKeyStore(final String alias, final String certificate) {
+        return addCertificateODLKeyStore(ctlKeyStore.getStorePassword(), alias, certificate);
+    }
+
     @Override
     public boolean addCertificateTrustStore(final String storePasswd, final String alias, final String certificate) {
         return odlKeyTool.addCertificate(trustKeyStore.getName(), storePasswd, certificate, alias);
+    }
+
+    public boolean addCertificateTrustStore(final String alias, final String certificate) {
+        return addCertificateTrustStore(trustKeyStore.getStorePassword(), alias, certificate);
     }
 
     public void createODLKeyStore() {
@@ -117,9 +133,17 @@ public class AaaCertProvider implements IAaaCertProvider, AaaCertRpcService {
                      alias, KeyStoreConstant.DEFAULT_SIGN_ALG, true);
     }
 
+    public String genODLKeyStorCertificateReq(final String alias) {
+        return genODLKeyStorCertificateReq(ctlKeyStore.getStorePassword(), alias);
+    }
+
     @Override
     public String getCertificateTrustStore(final String storePasswd, final String aliase) {
         return odlKeyTool.getCertificate(trustKeyStore.getName(), storePasswd, aliase, true);
+    }
+
+    public String getCertificateTrustStore(final String aliase) {
+        return getCertificateTrustStore(trustKeyStore.getStorePassword(), aliase);
     }
 
     @Override
