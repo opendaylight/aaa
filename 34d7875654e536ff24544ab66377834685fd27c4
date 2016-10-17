@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7a6b29fe_ce5139da",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-17T20:39:21Z",
+      "side": 1,
+      "message": "ok, this suppose to be automatically happen by check style. will fix",
+      "parentUuid": "7a6b29fe_ce8c9982",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "34d7875654e536ff24544ab66377834685fd27c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a6b29fe_ee8fd573",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
         "patchSetId": 5
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "7a6b29fe_8e47411d",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-17T20:39:21Z",
+      "side": 1,
+      "message": "this to prevent passing null as parameter",
+      "parentUuid": "7a6b29fe_8e92a19d",
+      "range": {
+        "startLine": 61,
+        "startChar": 37,
+        "endLine": 61,
+        "endChar": 53
+      },
+      "revId": "34d7875654e536ff24544ab66377834685fd27c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a6b29fe_ae95dd89",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
         "patchSetId": 5
@@ -82,6 +130,30 @@
       "writtenOn": "2016-10-17T20:27:48Z",
       "side": 1,
       "message": "true if certificate was adding successfully",
+      "range": {
+        "startLine": 62,
+        "startChar": 15,
+        "endLine": 62,
+        "endChar": 52
+      },
+      "revId": "34d7875654e536ff24544ab66377834685fd27c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_ee54f5cb",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-17T20:39:21Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "7a6b29fe_ae95dd89",
       "range": {
         "startLine": 62,
         "startChar": 15,
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "7a6b29fe_2e5eede9",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-17T20:39:21Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "7a6b29fe_6e7c6573",
+      "range": {
+        "startLine": 93,
+        "startChar": 22,
+        "endLine": 93,
+        "endChar": 60
+      },
+      "revId": "34d7875654e536ff24544ab66377834685fd27c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a6b29fe_0eee9122",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertProvider.java",
         "patchSetId": 5
@@ -128,6 +224,30 @@
       "writtenOn": "2016-10-17T20:27:48Z",
       "side": 1,
       "message": "whitespaces",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 4
+      },
+      "revId": "34d7875654e536ff24544ab66377834685fd27c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_0e6331b2",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-17T20:39:21Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "7a6b29fe_0eee9122",
       "range": {
         "startLine": 102,
         "startChar": 0,
