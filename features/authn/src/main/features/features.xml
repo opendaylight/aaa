@@ -80,7 +80,6 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-store/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
-        <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
 
         <!--H2 Store -->
         <bundle>mvn:org.osgi/org.osgi.enterprise/4.2.0</bundle>
@@ -153,7 +152,6 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-store/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
-        <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
 
         <!--H2 Store -->
         <bundle>mvn:org.osgi/org.osgi.enterprise/4.2.0</bundle>
@@ -215,7 +213,6 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-store-impl/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
-        <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
         <feature version='${project.version}'>odl-aaa-encryption-service</feature>
 
         <!-- IDMLight -->
@@ -297,7 +294,6 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
-        <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
 
         <!--Cassandra Store -->
         <bundle>mvn:io.netty/netty-transport/{{VERSION}}</bundle>
@@ -341,7 +337,6 @@
         <feature version='${mdsal.version}'>odl-mdsal-binding-base</feature>
         <feature version='${controller.mdsal.version}'>odl-mdsal-broker</feature>
         <feature version='${config.version}'>odl-config-core</feature>
-        <bundle>mvn:com.google.guava/guava/{{VERSION}}</bundle>
 
         <bundle>mvn:org.opendaylight.aaa/aaa-encrypt-service/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-encrypt-service-config.xml">mvn:org.opendaylight.aaa/aaa-encrypt-service/{{VERSION}}/xml/config</configfile>
