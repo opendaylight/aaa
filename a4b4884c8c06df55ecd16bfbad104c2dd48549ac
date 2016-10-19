@@ -22,6 +22,30 @@
       "revId": "a4b4884c8c06df55ecd16bfbad104c2dd48549ac",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_85943745",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-10-19T13:04:37Z",
+      "side": 1,
+      "message": "I\u0027m not an expert in OSGi and its dependency management, but I noticed that removing this in DLUX has indeed fixed the bug as mentioned in the commit message.\n\nThe OSGi container was clearly saying, bundle ... com.google.guava refresh, impacting the whole ODL, as it was restarting all the dependent blueprint container.\n\nSo it is true DLUX was the culprit, and the patch to remove wrapping the Guava bundle in the feature definition was merged (https://git.opendaylight.org/gerrit/#/c/47098/). But I figured I\u0027ll remove it everywhere, as not needed.\n\nI tend to think that it\u0027s not needed in AAA as Jenkins successfully validated that patch. But I could be missing something/.",
+      "parentUuid": "7a6b29fe_85e6f714",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 51
+      },
+      "revId": "a4b4884c8c06df55ecd16bfbad104c2dd48549ac",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
