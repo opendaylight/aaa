@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_074b042c",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-20T16:17:52Z",
+      "side": 1,
+      "message": "We don\u0027t need to specify final in the API, but I am fine with changing that in a follow up.",
+      "range": {
+        "startLine": 103,
+        "startChar": 72,
+        "endLine": 103,
+        "endChar": 77
+      },
+      "revId": "a73026af473ae0a450bc3ced7ea143f2d61faf2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_676118a8",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-20T16:17:52Z",
+      "side": 1,
+      "message": "There should be a blank line between the description and the @return annotation.",
+      "revId": "a73026af473ae0a450bc3ced7ea143f2d61faf2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_c758ecfc",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-20T16:17:52Z",
+      "side": 1,
+      "message": "There should be a blank line between the description and the @return annotation.",
+      "revId": "a73026af473ae0a450bc3ced7ea143f2d61faf2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_0772e47b",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertMdsalProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-20T16:17:52Z",
+      "side": 1,
+      "message": "Extraneous to this patch, but the ordering should be \"static final\"",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "a73026af473ae0a450bc3ced7ea143f2d61faf2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_870554c4",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertRpcServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-20T16:17:52Z",
+      "side": 1,
+      "message": "Should be \"static final\"",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 24
+      },
+      "revId": "a73026af473ae0a450bc3ced7ea143f2d61faf2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_a7121007",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertRpcServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-20T16:17:52Z",
+      "side": 1,
+      "message": "Please put a blank line between constants and instance variable declarations.",
+      "revId": "a73026af473ae0a450bc3ced7ea143f2d61faf2c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
