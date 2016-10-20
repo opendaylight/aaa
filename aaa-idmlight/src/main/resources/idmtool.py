@@ -83,7 +83,7 @@ target_host='{}://{}:{}/'.format(protocol, hostname, port)
 verifyCertificates=True
 
 # main program arguments
-parser.add_argument('user',help='username for BSC node', nargs=1)
+parser.add_argument('user',help='username for ODL node', nargs=1)
 parser.add_argument('--target-host', help="target host url in form protocol://host:port", nargs=1)
 parser.add_argument('-k', '--insecure', help="disable HTTPS certificate verification", action='store_false')
 
