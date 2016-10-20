@@ -36,36 +36,7 @@ import org.slf4j.LoggerFactory;
  * REST application used to manipulate the H2 database users table. The REST
  * endpoint is <code>/auth/v1/users</code>.
  *
- * The following provides examples of how curl commands and payloads to utilize
- * the users REST endpoint:
- *
- * <b>Get All Users</b>
- * <code>curl -u admin:admin http://{HOST}:{PORT}/auth/v1/users</code>
- *
- * <b>Get A Specific User</b>
- * <code>curl -u admin:admin http://{HOST}:{PORT}/auth/v1/users/{id}</code>
- *
- * <b>Create A User</b>
- * <code>curl -u admin:admin -X POST -H "Content-type: application/json" --data-binary {@literal @}user.json http://{HOST}:{PORT}/auth/v1/users</code>
- * An example of user.json file is:
- * <code>{
- *   "name": "admin2",
- *   "password", "admin2",
- *   "domain": "sdn"
- * }</code>
- *
- * <b>Update A User</b>
- * <code>curl -u admin:admin -X PUT -H "Content-type: application/json" --data-binary {@literal @}user.json http://{HOST}:{PORT}/auth/v1/users/{id}</code>
- * An example of user.json file is:
- * <code>{
- *   "name": "admin2",
- *   "password", "admin2",
- *   "domain": "sdn",
- *   "description", "Simple description."
- * }</code>
- *
- * <b>Delete A User</b>
- * <code>curl -u admin:admin -X DELETE http://{HOST}:{PORT}/auth/v1/users/{id}</code>
+ * A wrapper script called <code>idmtool</code> is provided to manipulate AAA data.
  *
  * @author peter.mellquist@hp.com
  * @author Ryan Goulding (ryandgoulding@gmail.com)

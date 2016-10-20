@@ -42,30 +42,7 @@ import org.slf4j.LoggerFactory;
  * REST application used to manipulate the H2 database domains table. The REST
  * endpoint is <code>/auth/v1/domains</code>.
  *
- * The following provides examples of curl commands and payloads to utilize the
- * domains REST endpoint:
- *
- * <b>Get All Domains</b>
- * <code>curl -u admin:admin http://{HOST}:{PORT}/auth/v1/domains</code>
- *
- * <b>Get A Specific Domain</b>
- * <code>curl -u admin:admin http://{HOST}:{PORT}/auth/v1/domains/{id}</code>
- *
- * <b>Create A Domain</b>
- * <code>curl -u admin:admin -X POST -H "Content-Type: application/json" --data-binary {@literal @}domain.json http://{HOST}:{PORT}/auth/v1/domains</code>
- * Example domain.json <code>{
- *   "description": "new domain",
- *   "enabled", "true",
- *   "name", "not sdn"
- * }</code>
- *
- * <b>Update A Domain</b>
- * <code>curl -u admin:admin -X PUT -H "Content-Type: application/json" --data-binary {@literal @}domain.json http://{HOST}:{PORT}/auth/v1/domains</code>
- * Example domain.json <code>{
- *   "description": "new domain description",
- *   "enabled", "true",
- *   "name", "not sdn"
- * }</code>
+ * A wrapper script called <code>idmtool</code> is provided to manipulate AAA data.
  *
  * @author peter.mellquist@hp.com
  * @author Ryan Goulding (ryandgoulding@gmail.com)

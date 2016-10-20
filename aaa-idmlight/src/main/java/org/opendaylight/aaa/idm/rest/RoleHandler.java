@@ -34,30 +34,7 @@ import org.slf4j.LoggerFactory;
  * REST application used to manipulate the H2 database roles table. The REST
  * endpoint is <code>/auth/v1/roles</code>.
  *
- * The following provides examples of curl commands and payloads to utilize the
- * roles REST endpoint:
- *
- * <b>Get All Roles</b>
- * <code>curl -u admin:admin http://{HOST}:{PORT}/auth/v1/roles</code>
- *
- * <b>Get A Specific Role</b>
- * <code>curl -u admin:admin http://{HOST}:{PORT}/auth/v1/roles/{id}</code>
- *
- * <b>Create A Role</b>
- * <code>curl -u admin:admin -X POST -H "Content-Type: application/json" --data-binary {@literal @}role.json http://{HOST}:{PORT}/auth/v1/roles</code>
- * An example of role.json:
- * <code>{
- *  "name":"IT Administrator",
- *  "description":"A user role for IT admins"
- * }</code>
- *
- * <b>Update A Role</b>
- * <code>curl -u admin:admin -X PUT -H "Content-Type: application/json" --data-binary {@literal @}role.json http://{HOST}:{PORT}/auth/v1/roles/{id}</code>
- * An example of role.json:
- * <code>{
- *  "name":"IT Administrator Limited",
- *  "description":"A user role for IT admins who can only do one thing"
- * }</code>
+ * A wrapper script called <code>idmtool</code> is provided to manipulate AAA data.
  *
  * @author peter.mellquist@hp.com
  * @author Ryan Goulding (ryandgoulding@gmail.com)
