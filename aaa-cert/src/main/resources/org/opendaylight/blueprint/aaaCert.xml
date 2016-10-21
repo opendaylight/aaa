@@ -7,27 +7,24 @@
                             list-key-value="aaa-cert-provider">
   </odl:clustered-app-config>
 
-  <bean id="aaaCert" class="org.opendaylight.aaa.cert.impl.AaaCertProvider">
-      <argument ref="aaaCertDefaultConfig"/>
-  </bean>
-
-  <service ref="aaaCert" interface="org.opendaylight.aaa.cert.api.IAaaCertProvider"/>
-
-  <bean id="aaaCertRpcService" class="org.opendaylight.aaa.cert.impl.AaaCertRpcServiceImpl">
-      <argument ref="aaaCert"/>
-  </bean>
-
-  <odl:rpc-implementation ref="aaaCertRpcService"/>
-
   <reference id="dataBroker" interface="org.opendaylight.controller.md.sal.binding.api.DataBroker"/>
 
   <reference id="encryService" interface="org.opendaylight.aaa.encrypt.AAAEncryptionService"/>
 
-  <bean id="aaaCertMdsal" class="org.opendaylight.aaa.cert.impl.AaaCertMdsalProvider">
+  <bean id="certManager" class="org.opendaylight.aaa.cert.impl.CertificateManagerService">
+      <argument ref="aaaCertDefaultConfig"/>
       <argument ref="dataBroker"/>
       <argument ref="encryService"/>
   </bean>
 
-  <service ref="aaaCertMdsal" interface="org.opendaylight.aaa.cert.api.IAaaCertMdsalProvider"/>
+  <service ref="certManager" interface="org.opendaylight.aaa.cert.api.ICertificateManager"/>
+
+  <bean id="aaaCertRpcService" class="org.opendaylight.aaa.cert.impl.AaaCertRpcServiceImpl">
+      <argument ref="aaaCertDefaultConfig"/>
+      <argument ref="dataBroker"/>
+      <argument ref="encryService"/>
+  </bean>
+
+  <odl:rpc-implementation ref="aaaCertRpcService"/>
 
 </blueprint>

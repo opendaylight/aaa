@@ -11,9 +11,7 @@ package org.opendaylight.aaa.cli;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
-import org.opendaylight.aaa.cert.api.IAaaCertProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.opendaylight.aaa.cert.api.ICertificateManager;
 
 @Command(name = "gen-cert-req", scope = "aaa", description = "generate a certificate request for the opendaylight controller.")
 
@@ -24,8 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public class GenerateCertReq extends OsgiCommandSupport{
 
-    private static final Logger LOG = LoggerFactory.getLogger(GenerateCertReq.class);
-    protected IAaaCertProvider certProvider;
+    protected ICertificateManager certProvider;
 
     @Option(name = "-storepass",
             aliases = { "--KeyStorePass" },
@@ -34,20 +31,13 @@ public class GenerateCertReq extends OsgiCommandSupport{
             multiValued = false)
     private String keyStorePassword = "";
 
-    @Option(name = "-alias",
-            aliases = { "--alias" },
-            description = "The alias.\n-alias / --default is controller",
-            required = false,
-            multiValued = false)
-    private String alias = "controller";
-
-    public GenerateCertReq(final IAaaCertProvider aaaCertProvider) {
+    public GenerateCertReq(final ICertificateManager aaaCertProvider) {
         this.certProvider = aaaCertProvider;
     }
 
     @Override
     protected Object doExecute() throws Exception {
-        return certProvider.genODLKeyStoreCertificateReq(keyStorePassword, alias, true);
+        return certProvider.genODLKeyStoreCertificateReq(keyStorePassword, true);
     }
 
 }

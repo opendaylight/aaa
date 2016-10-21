@@ -8,11 +8,9 @@
 
 package org.opendaylight.aaa.cert.utils;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
-import org.opendaylight.aaa.cert.impl.ODLMdsalKeyTool;
+import org.opendaylight.aaa.cert.impl.ODLKeyTool;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
@@ -22,8 +20,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev1603
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslData;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslDataBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslDataKey;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.keystore.Certificates;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.keystore.CertificatesBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.OdlKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.OdlKeystoreBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.TrustKeystore;
@@ -89,14 +85,6 @@ public class KeyStoresDataUtils {
         }
     }
 
-    public Certificates createCertificates(final String alias, final String x509Cert) {
-        final Certificates cert = new CertificatesBuilder()
-                            .setAlias(alias)
-                            .setX500Certificate(x509Cert)
-                            .build();
-        return cert;
-    }
-
     public CipherSuites createCipherSuite(final String suiteName) {
         final CipherSuites cipherSuite = new CipherSuitesBuilder()
                                     .setSuiteName(suiteName)
@@ -110,22 +98,21 @@ public class KeyStoresDataUtils {
                                 .setAlias(alias)
                                 .setName(name)
                                 .setStorePassword(password)
-                                .setCertificates(new ArrayList<>())
                                 .build();
         return odlKeystore;
         }
 
     public OdlKeystore createOdlKeystore(final String name, final String alias, final String password, final String dname,
-                                                final ODLMdsalKeyTool odlKeyTool) {
+                                                final ODLKeyTool odlKeyTool) {
         return createOdlKeystore(name, alias, password, dname, KeyStoreConstant.DEFAULT_SIGN_ALG, KeyStoreConstant.DEFAULT_KEY_ALG,
                 KeyStoreConstant.DEFAULT_VALIDITY, KeyStoreConstant.DEFAULT_KEY_SIZE, odlKeyTool);
     }
 
     public OdlKeystore createOdlKeystore(final String name, final String alias, final String password, final String dname,
-                        final String sigAlg, final String keyAlg, final int validity, final int keySize, final ODLMdsalKeyTool odlKeyTool) {
+                        final String sigAlg, final String keyAlg, final int validity, final int keySize, final ODLKeyTool odlKeyTool) {
         final byte[] keyStoreBytes = odlKeyTool.convertKeystoreToBytes(odlKeyTool.createKeyStoreWithSelfSignCert(name, password,
                 dname, alias, validity, keyAlg, keySize, sigAlg), password);
-        LOG.info("Odl keystore string {} ", keyStoreBytes);
+        LOG.debug("Odl keystore string {} ", keyStoreBytes);
         final OdlKeystore odlKeystore = new OdlKeystoreBuilder()
                                     .setKeystoreFile(keyStoreBytes)
                                     .setAlias(alias)
@@ -136,14 +123,12 @@ public class KeyStoresDataUtils {
                                     .setSignAlg(sigAlg)
                                     .setStorePassword(password)
                                     .setValidity(validity)
-                                    .setCertificates(new ArrayList<>())
                                     .build();
         return odlKeystore;
     }
 
     public TrustKeystore createTrustKeystore(final String name, final String password, final byte[] keyStoreBytes) {
         final TrustKeystore trustKeystore = new TrustKeystoreBuilder()
-                                        .setCertificates(new ArrayList<>())
                                         .setKeystoreFile(keyStoreBytes)
                                         .setName(name)
                                         .setStorePassword(password)
@@ -151,11 +136,10 @@ public class KeyStoresDataUtils {
         return trustKeystore;
     }
 
-    public TrustKeystore createTrustKeystore(final String name, final String password, final List<Certificates> certificates, final ODLMdsalKeyTool odlKeyTool) {
-        final byte[] keyStoreBytes = odlKeyTool.convertKeystoreToBytes(odlKeyTool.createTrustKeyStoreImportCert(password, certificates), password);
-        LOG.info("trust keystore string {} ", keyStoreBytes);
+    public TrustKeystore createTrustKeystore(final String name, final String password, final ODLKeyTool odlKeyTool) {
+        final byte[] keyStoreBytes = odlKeyTool.convertKeystoreToBytes(odlKeyTool.createEmptyTrustKeyStore(password), password);
+        LOG.debug("trust keystore string {} ", keyStoreBytes);
         final TrustKeystore trustKeystore = new TrustKeystoreBuilder()
-                                        .setCertificates(certificates)
                                         .setKeystoreFile(keyStoreBytes)
                                         .setName(name)
                                         .setStorePassword(password)
