@@ -11,21 +11,19 @@ package org.opendaylight.aaa.cli;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
-import org.opendaylight.aaa.cert.api.IAaaCertProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.opendaylight.aaa.cert.api.ICertificateManager;
 
 @Command(name = "get-node-cert", scope = "aaa", description = "get node certificate form the opendaylight trust keystore .")
 
 /**
+ * GetTrustStoreCert get a certain certificate stored in the trust key store using the its alias
  *
  * @author mserngawy
- * GetTrustStoreCert get a certain certificate stored in the trust key store using the its alias
+ *
  */
 public class GetTrustStoreCert  extends OsgiCommandSupport{
 
-    private static final Logger LOG = LoggerFactory.getLogger(GetTrustStoreCert.class);
-    protected IAaaCertProvider certProvider;
+    protected ICertificateManager certProvider;
 
     @Option(name = "-storepass",
             aliases = { "--KeyStorePass" },
@@ -41,7 +39,7 @@ public class GetTrustStoreCert  extends OsgiCommandSupport{
             multiValued = false)
     private String alias = "";
 
-    public GetTrustStoreCert(final IAaaCertProvider aaaCertProvider) {
+    public GetTrustStoreCert(final ICertificateManager aaaCertProvider) {
         this.certProvider = aaaCertProvider;
     }
 
