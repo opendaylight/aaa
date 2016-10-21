@@ -10,15 +10,12 @@ package org.opendaylight.aaa.cert.impl;
 import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.opendaylight.aaa.cert.api.IAaaCertMdsalProvider;
 import org.opendaylight.aaa.cert.utils.KeyStoresDataUtils;
 import org.opendaylight.aaa.cert.utils.MdsalUtils;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
-import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.KeyStores;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.KeyStoresBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.cipher.suite.CipherSuites;
@@ -26,10 +23,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev1603
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslData;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.OdlKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.TrustKeystore;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,14 +38,12 @@ public class AaaCertMdsalProvider implements IAaaCertMdsalProvider {
 
     private final DataBroker dataBroker;
     private final KeyStoresDataUtils keyStoresData;
-    private final ODLMdsalKeyTool odlKeyTool;
+    private final ODLKeyTool odlKeyTool;
 
     public AaaCertMdsalProvider(final DataBroker dataBroker, final AAAEncryptionService encryptionSrv) {
         this.dataBroker = dataBroker;
-        final KeyStores keyStoreData = new KeyStoresBuilder().setId(KeyStoresDataUtils.KEYSTORES_DATA_TREE).build();
-        MdsalUtils.initalizeDatastore(LogicalDatastoreType.CONFIGURATION, dataBroker, KeyStoresDataUtils.getKeystoresIid(), keyStoreData);
         keyStoresData = new KeyStoresDataUtils(encryptionSrv);
-        odlKeyTool = new ODLMdsalKeyTool();
+        odlKeyTool = new ODLKeyTool();
         LOG.info("AaaCertMdsalProvider Initialized");
     }
 
@@ -80,7 +71,7 @@ public class AaaCertMdsalProvider implements IAaaCertMdsalProvider {
             final String[] cipherSuites) {
         final OdlKeystore odlKeystore = keyStoresData.createOdlKeystore(odlKeystoreName, odlKeystoreAlias, odlKeystorePwd,
                     odlKeystoreDname, odlKeystoreSignAlg, odlKeystoreKeyAlg, odlKeystoreValidity, odlKeystoreKeysize, odlKeyTool);
-        final TrustKeystore trustKeystore = keyStoresData.createTrustKeystore(trustKeystoreName, trustKeystorePwd, null, odlKeyTool);
+        final TrustKeystore trustKeystore = keyStoresData.createTrustKeystore(trustKeystoreName, trustKeystorePwd, odlKeyTool);
         final List<CipherSuites> cipherSuitesList = new ArrayList<>();
         if (cipherSuites != null) {
             for (final String suite : cipherSuites) {
@@ -130,18 +121,14 @@ public class AaaCertMdsalProvider implements IAaaCertMdsalProvider {
         }
     }
 
-    @Override
-    public String genODLKeyStoreCertificateReq(final String bundleName, final boolean withTag) {
-        return genODLKeyStoreCertificateReq(bundleName, KeyStoreConstant.DEFAULT_SIGN_ALG, withTag);
-    }
 
     @Override
-    public String genODLKeyStoreCertificateReq(final String bundleName, final String signAlg, final boolean withTag) {
+    public String genODLKeyStoreCertificateReq(final String bundleName, final boolean withTag) {
         final SslData sslData = keyStoresData.getSslData(dataBroker, bundleName);
         if (sslData != null) {
             final OdlKeystore odlKeyStore = sslData.getOdlKeystore();
             final KeyStore keystore = odlKeyTool.loadKeyStore(odlKeyStore.getKeystoreFile(), sslData.getOdlKeystore().getStorePassword());
-            return odlKeyTool.generateCertificateReq(keystore, odlKeyStore.getStorePassword(), odlKeyStore.getAlias(), signAlg, withTag);
+            return odlKeyTool.generateCertificateReq(keystore, odlKeyStore.getStorePassword(), odlKeyStore.getAlias(), odlKeyStore.getSignAlg(), withTag);
         }
         return null;
     }
@@ -149,16 +136,16 @@ public class AaaCertMdsalProvider implements IAaaCertMdsalProvider {
     @Override
     public String[] getCipherSuites(final String bundleName) {
         final SslData sslData = keyStoresData.getSslData(dataBroker, bundleName);
+        String[] cipherSuites = null;
         if (sslData != null) {
-            if (sslData.getCipherSuites() != null) {
-                final List<String> cipherSuites = new ArrayList<>();
-                for (final CipherSuites suite : sslData.getCipherSuites()) {
-                    cipherSuites.add(suite.getSuiteName());
+            if (sslData.getCipherSuites() != null && !sslData.getCipherSuites().isEmpty()) {
+                cipherSuites = new String[sslData.getCipherSuites().size()];
+                for (int i = 0; i < sslData.getCipherSuites().size(); i++) {
+                    cipherSuites[i] = sslData.getCipherSuites().get(i).getSuiteName();
                 }
-                return (String[]) cipherSuites.toArray();
             }
         }
-        return null;
+        return cipherSuites;
     }
 
     @Override
@@ -178,7 +165,7 @@ public class AaaCertMdsalProvider implements IAaaCertMdsalProvider {
         if (sslData != null) {
             final OdlKeystore odlKeyStore = sslData.getOdlKeystore();
             final KeyStore keystore = odlKeyTool.loadKeyStore(odlKeyStore.getKeystoreFile(), odlKeyStore.getStorePassword());
-            return odlKeyTool.getCertificate(keystore, odlKeyStore.getStorePassword(), odlKeyStore.getAlias(), withTag);
+            return odlKeyTool.getCertificate(keystore, odlKeyStore.getAlias(), withTag);
         }
         return null;
     }
@@ -205,7 +192,7 @@ public class AaaCertMdsalProvider implements IAaaCertMdsalProvider {
         if (sslData != null) {
             final TrustKeystore trustKeyStore = sslData.getTrustKeystore();
             final KeyStore keystore = odlKeyTool.loadKeyStore(trustKeyStore.getKeystoreFile(), trustKeyStore.getStorePassword());
-            return odlKeyTool.getCertificate(keystore, trustKeyStore.getStorePassword(), alias, withTag);
+            return odlKeyTool.getCertificate(keystore, alias, withTag);
         }
         return null;
     }
@@ -237,5 +224,13 @@ public class AaaCertMdsalProvider implements IAaaCertMdsalProvider {
             return sslData;
         }
         return null;
+    }
+
+    @Override
+    public void initializeKeystoreDataTree() {
+        if (MdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION, KeyStoresDataUtils.getKeystoresIid()) == null) {
+            final KeyStores keyStoreData = new KeyStoresBuilder().setId(KeyStoresDataUtils.KEYSTORES_DATA_TREE).build();
+            MdsalUtils.initalizeDatastore(LogicalDatastoreType.CONFIGURATION, dataBroker, KeyStoresDataUtils.getKeystoresIid(), keyStoreData);
+        }
     }
 }
