@@ -62,45 +62,21 @@ public interface IAaaCertProvider {
     boolean addCertificateTrustStore(@Nonnull String alias, @Nonnull String certificate);
 
     /**
-     * Create ODL keyStore.
-     *
-     * @param keyStoreName keystore Name
-     * @param storePasswd keystore password
-     * @param alias key alias
-     * @param dName of the keystore
-     * @param validity of the keystore
-     * @return succeed or failed message
-     */
-    @Nonnull String createODLKeyStore(@Nonnull String keyStoreName, @Nonnull String storePasswd, @Nonnull String alias, @Nonnull String dName, int validity);
-
-    /**
-     * Create Trust keyStore.
-     *
-     * @param keyStoreName keystore Name
-     * @param storePasswd keystore password
-     * @param alias key alias
-     * @return succeed or failed message
-     */
-    @Nonnull String createTrustKeyStore(@Nonnull String keyStoreName, @Nonnull String storePasswd, @Nonnull String alias);
-
-    /**
      * Generate certificate request from the ODL keystore to be signed by a CA
      *
      * @param storePasswd ODL keystore password
-     * @param alias ODL keystore alias
      * @param withTag return the certificate Req string with tag if true
      * @return the certificate request
      */
-    @Nonnull String genODLKeyStoreCertificateReq(@Nonnull String storePasswd, @Nonnull String alias, boolean withTag);
+    @Nonnull String genODLKeyStoreCertificateReq(@Nonnull String storePasswd, boolean withTag);
 
     /**
      * Generate certificate request from the ODL keystore to be signed by a CA
      *
-     * @param alias ODL keystore alias
      * @param withTag return the certificate Req string with tag if true
      * @return the certificate request
      */
-    @Nonnull String genODLKeyStoreCertificateReq(@Nonnull String alias, boolean withTag);
+    @Nonnull String genODLKeyStoreCertificateReq(boolean withTag);
 
     /**
      * Get certificate from the Trust keystore
@@ -125,20 +101,18 @@ public interface IAaaCertProvider {
      * Get ODL keystore certificate.
      *
      * @param storePasswd ODL keystore password
-     * @param alias ODL keystore alias
      * @param withTag return certificate string with tag if true
      * @return the certificate
      */
-    @Nonnull String getODLKeyStoreCertificate(@Nonnull String storePasswd, @Nonnull String alias, boolean withTag);
+    @Nonnull String getODLKeyStoreCertificate(@Nonnull String storePasswd, boolean withTag);
 
     /**
      * Get ODL keystore certificate
      *
-     * @param alias ODL keystore alias
      * @param withTag return certificate string with tag if true
      * @return the certificate
      */
-    @Nonnull String getODLKeyStoreCertificate(@Nonnull String alias, boolean withTag);
+    @Nonnull String getODLKeyStoreCertificate(boolean withTag);
 
     /**
      * Get ODL Keystore as java keystore object
@@ -176,12 +150,9 @@ public interface IAaaCertProvider {
     CtlKeystore getOdlKeyStoreInfo();
 
     /**
-     * Create the ODL keystore based on the CtlKeystore given data
+     * Create the ODL and Trust keystores based on the CtlKeystore and TrustKeystore data
+     *
+     * @return true if success
      */
-    void createODLKeyStore();
-
-    /**
-     * Create the Trust keystore based on the TrustKeystore given data
-     */
-    void createTrustKeyStore();
+    boolean createKeyStores();
 }
