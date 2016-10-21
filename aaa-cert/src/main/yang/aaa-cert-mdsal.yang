@@ -85,10 +85,6 @@ module aaa-cert-mdsal {
             description "keystore file as Binary";
             type binary;
         }
-        list certificates {
-            description "list of certificates that exist in the keystore";
-            uses node-certificate;
-        }
     }
 
     grouping cipher-suite {

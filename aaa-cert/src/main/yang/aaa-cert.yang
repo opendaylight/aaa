@@ -23,10 +23,19 @@ module aaa-cert {
     }
 
     container aaa-cert-service-config {
-        leaf useConfig {
+        leaf use-config {
             description "Use the configuration data to create the keystores";
             type boolean;
             default false;
+        }
+        leaf use-mdsal {
+            description "Use Mdsal as Data store for the keystore and certificates";
+            type boolean;
+            default false;
+        }
+        leaf bundle-name {
+            description "bundle name of the default TLS config in MdsaL";
+            type string;
         }
         container ctlKeystore {
             leaf name {
@@ -37,7 +46,7 @@ module aaa-cert {
                 description "key alias";
                 type string;
             }
-            leaf storePassword {
+            leaf store-password {
                 description "keystore password";
                 type string;
             }
@@ -55,8 +64,20 @@ module aaa-cert {
                 description "validity";
                 type int32;
             }
+            leaf key-alg {
+                description "The supported key generation algorithms i.e: DSA or RSA";
+                type string;
+            }
+            leaf sign-alg {
+                description "The supported sign algorithmes i.e: SHA1withDSA or SHA1withRSA";
+                type string;
+            }
+            leaf keysize {
+                description "the key size i.e: 1024";
+                type int32;
+            }
             list cipher-suites {
-                 leaf suiteName {
+                 leaf suite-name {
                      type string;
                  }
             }
@@ -66,16 +87,8 @@ module aaa-cert {
                 description "keystore name default is truststore";
                 type string;
             }
-            leaf alias {
-                description "key alias";
-                type string;
-            }
-            leaf storePassword {
+            leaf store-password {
                 description "keystore password";
-                type string;
-            }
-            leaf certFile {
-                description "path to CA certificate pem file";
                 type string;
             }
         }

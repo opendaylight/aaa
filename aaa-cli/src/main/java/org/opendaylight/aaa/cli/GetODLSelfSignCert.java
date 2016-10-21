@@ -11,18 +11,19 @@ package org.opendaylight.aaa.cli;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
-import org.opendaylight.aaa.cert.api.IAaaCertProvider;
+import org.opendaylight.aaa.cert.api.ICertificateManager;
 
 @Command(name = "get-odl-cert", scope = "aaa", description = "get self sign certificate for the opendaylight controller.")
 
 /**
+ * GetODLSelfSignCert get the ODL key store self sign certificate.
  *
  * @author mserngawy
- * GetODLSelfSignCert get the ODL key store self sign certificate.
+ *
  */
 public class GetODLSelfSignCert extends OsgiCommandSupport{
 
-    protected IAaaCertProvider certProvider;
+    protected ICertificateManager certProvider;
 
     @Option(name = "-storepass",
             aliases = { "--KeyStorePass" },
@@ -38,13 +39,13 @@ public class GetODLSelfSignCert extends OsgiCommandSupport{
             multiValued = false)
     private String alias = "controller";
 
-    public GetODLSelfSignCert(final IAaaCertProvider aaaCertProvider) {
+    public GetODLSelfSignCert(final ICertificateManager aaaCertProvider) {
         this.certProvider = aaaCertProvider;
     }
 
     @Override
     protected Object doExecute() throws Exception {
-        return certProvider.getODLKeyStoreCertificate(keyStorePassword, alias, true);
+        return certProvider.getODLKeyStoreCertificate(keyStorePassword, true);
     }
 
 }
