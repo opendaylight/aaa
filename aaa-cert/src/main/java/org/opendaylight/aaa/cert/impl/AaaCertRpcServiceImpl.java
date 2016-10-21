@@ -8,11 +8,12 @@
 
 package org.opendaylight.aaa.cert.impl;
 
-import com.google.common.util.concurrent.SettableFuture;
-
 import java.util.concurrent.Future;
 
 import org.opendaylight.aaa.cert.api.IAaaCertProvider;
+import org.opendaylight.aaa.encrypt.AAAEncryptionService;
+import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.AaaCertServiceConfig;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.AaaCertRpcService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertifcateInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertifcateOutput;
@@ -30,15 +31,27 @@ import org.opendaylight.yangtools.yang.common.RpcResultBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.util.concurrent.SettableFuture;
+
 public class AaaCertRpcServiceImpl implements AaaCertRpcService {
 
     private static final Logger LOG = LoggerFactory.getLogger(AaaCertRpcServiceImpl.class);
 
     private final IAaaCertProvider aaaCertProvider;
 
-    public AaaCertRpcServiceImpl(IAaaCertProvider aaaCertProvider) {
-        this.aaaCertProvider = aaaCertProvider;
-        LOG.info("AaaCert Rpc Service has been Initalized");
+    public AaaCertRpcServiceImpl(final AaaCertServiceConfig aaaCertServiceConfig, final DataBroker dataBroker, final AAAEncryptionService encryptionSrv) {
+        if (aaaCertServiceConfig.isUseConfig()) {
+            if (aaaCertServiceConfig.isUseMdsal()) {
+                aaaCertProvider = new DefaultMdsalSslData(new AaaCertMdsalProvider(dataBroker, encryptionSrv), aaaCertServiceConfig.getBundleName(),
+                        aaaCertServiceConfig.getCtlKeystore(), aaaCertServiceConfig.getTrustKeystore());
+            } else {
+                aaaCertProvider = new AaaCertProvider(aaaCertServiceConfig.getCtlKeystore(), aaaCertServiceConfig.getTrustKeystore());
+            }
+            LOG.info("AaaCert Rpc Service has been initialized");
+        } else {
+            aaaCertProvider = null;
+            LOG.info("AaaCert Rpc Service has not been initialized, change the initial aaa-cert-config data and restart Opendaylight");
+        }
     }
 
     @Override

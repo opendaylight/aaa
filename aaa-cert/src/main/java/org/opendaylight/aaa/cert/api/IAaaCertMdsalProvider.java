@@ -51,7 +51,7 @@ public interface IAaaCertMdsalProvider {
      * @param odlKeystoreKeyAlg Key algorithm to create secret key i.e RSA
      * @param odlKeystoreSignAlg sign algorithm i.e SHA1WithRSAEncryption
      * @param odlKeystoreKeysize the key size i.e 1024
-     * @param odlKeystoreValidity validity if the key
+     * @param odlKeystoreValidity validity of the key
      * @param trustKeystoreName Trust Keystore Name
      * @param trustKeystorePwd Trust Keystore Password
      * @param cipherSuites cipher suites that will be used by the SSL connection
@@ -91,23 +91,13 @@ public interface IAaaCertMdsalProvider {
     void exportSslDataKeystores(@Nonnull String bundleName);
 
     /**
-     * Generate a certificate request to be signed by a CA.
-     *
-     * @param bundleName name of the bundle that will use the keystores
-     * @param signAlg the sign algorithm
-     * @param withTag boolean to add cert-req tag to the return string
-     * @return certificate request as string
-     */
-    String genODLKeyStoreCertificateReq(@Nonnull String bundleName, @Nonnull String signAlg, boolean withTag);
-
-    /**
      * Generate a certificate request to be signed by a CA with default sign algorithm SHA1WithRSAEncryption
      *
      * @param bundleName name of the bundle that will use the keystores
      * @param withTag boolean to add cert-req tag to the return string
      * @return certificate request as string
      */
-    public String genODLKeyStoreCertificateReq(@Nonnull String bundleName, boolean withTag);
+    String genODLKeyStoreCertificateReq(@Nonnull String bundleName, boolean withTag);
 
     /**
      * Get the ODL keystore certificate
@@ -194,4 +184,8 @@ public interface IAaaCertMdsalProvider {
      */
     SslData updateSslData(@Nonnull SslData sslData);
 
+    /**
+     * Initialize the Keystore data tree at Mdsal 
+     */
+    void initializeKeystoreDataTree();
 }
