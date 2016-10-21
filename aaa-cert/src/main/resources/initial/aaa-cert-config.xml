@@ -1,19 +1,22 @@
 <aaa-cert-service-config xmlns="urn:opendaylight:yang:aaa:cert">
-  <useConfig>false</useConfig>
+  <use-config>false</use-config>
+  <use-mdsal>false</use-mdsal>
+  <bundle-name>opendaylight</bundle-name>
   <ctlKeystore>
     <name>ctl.jks</name>
     <alias>controller</alias>
-    <storePassword>storePassword</storePassword>
+    <store-password>storePassword</store-password>
     <dname>CN=ODL, OU=Dev, O=LinuxFoundation, L=QC Montreal, C=CA</dname>
     <validity>365</validity>
+    <key-alg>RSA</key-alg>
+    <sign-alg>SHA1WithRSAEncryption</sign-alg>
+    <keysize>1024</keysize>
     <cipher-suites>
-      <suiteName />
+      <suite-name />
     </cipher-suites>
   </ctlKeystore>
   <trustKeystore>
     <name>truststore.jks</name>
-    <alias>controller</alias>
-    <storePassword>storePassword</storePassword>
-    <certFile>cacert.pem</certFile>
+    <store-password>storePassword</store-password>
   </trustKeystore>
 </aaa-cert-service-config>
