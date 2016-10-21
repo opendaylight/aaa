@@ -3,31 +3,27 @@
                  xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0">
 
   <odl:clustered-app-config id="aaaCertDefaultConfig" default-config-file-name="aaa-cert-config.xml"
-                            binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.AaaCertServiceConfig"
-                            list-key-value="aaa-cert-provider">
+                            binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.AaaCertServiceConfig">
   </odl:clustered-app-config>
 
-  <bean id="aaaCert" class="org.opendaylight.aaa.cert.impl.AaaCertProvider">
-      <argument ref="aaaCertDefaultConfig"/>
-  </bean>
-
-  <service ref="aaaCert" interface="org.opendaylight.aaa.cert.api.IAaaCertProvider"/>
-
-  <bean id="aaaCertRpcService" class="org.opendaylight.aaa.cert.impl.AaaCertRpcServiceImpl">
-      <argument ref="aaaCert"/>
-  </bean>
-
-  <odl:rpc-implementation ref="aaaCertRpcService"/>
-
-  <reference id="dataBroker" interface="org.opendaylight.controller.md.sal.binding.api.DataBroker"/>
+  <reference id="dataBroker" interface="org.opendaylight.controller.md.sal.binding.api.DataBroker" odl:type="default"/>
 
   <reference id="encryService" interface="org.opendaylight.aaa.encrypt.AAAEncryptionService"/>
 
-  <bean id="aaaCertMdsal" class="org.opendaylight.aaa.cert.impl.AaaCertMdsalProvider">
+  <bean id="certManager" class="org.opendaylight.aaa.cert.impl.CertificateManagerService">
+      <argument ref="aaaCertDefaultConfig"/>
       <argument ref="dataBroker"/>
       <argument ref="encryService"/>
   </bean>
 
-  <service ref="aaaCertMdsal" interface="org.opendaylight.aaa.cert.api.IAaaCertMdsalProvider"/>
+  <service ref="certManager" interface="org.opendaylight.aaa.cert.api.ICertificateManager" odl:type="default-certificate-manager"/>
+
+  <bean id="aaaCertRpcService" class="org.opendaylight.aaa.cert.impl.AaaCertRpcServiceImpl">
+      <argument ref="aaaCertDefaultConfig"/>
+      <argument ref="dataBroker"/>
+      <argument ref="encryService"/>
+  </bean>
+
+  <odl:rpc-implementation ref="aaaCertRpcService" />
 
 </blueprint>
