@@ -1,0 +1,743 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a682502_f74513b4",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "Are there any users of this method downstream?  I doubt it, but want to check before we downgrade visibility from public to package-private.",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 85
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_37178ba5",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "would be easier to just categorize as \"success\" IMO.",
+      "range": {
+        "startLine": 155,
+        "startChar": 15,
+        "endLine": 155,
+        "endChar": 46
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_970c9f96",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/ICertificateManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "\"are\"",
+      "range": {
+        "startLine": 15,
+        "startChar": 54,
+        "endLine": 15,
+        "endChar": 61
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_775f4373",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertMdsalProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "Pull sslData.getCipherSuites() out into an local variable instead of calling it on this line \u0026 then again for every cipher suite below.",
+      "range": {
+        "startLine": 143,
+        "startChar": 36,
+        "endLine": 143,
+        "endChar": 61
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_b7227bff",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertMdsalProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "Could be done with a java 8 stream and would look a lot cleaner.",
+      "range": {
+        "startLine": 143,
+        "startChar": 16,
+        "endLine": 145,
+        "endChar": 17
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_f71cf3c3",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "could be final",
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_377e6be5",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "could be final",
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_9783ffcb",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "final",
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_7788e3e7",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "final",
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_b769db27",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "This is a bit confusing;  I would separate this into several statements and LOG the values at debug level...",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 60
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_d753b76a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "Pull out a local variable.  I guess JVM might do this for you anyway but better to be explicit.",
+      "range": {
+        "startLine": 133,
+        "startChar": 32,
+        "endLine": 133,
+        "endChar": 61
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_174ecfc1",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertRpcServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "and from",
+      "range": {
+        "startLine": 33,
+        "startChar": 72,
+        "endLine": 33,
+        "endChar": 74
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_b750bb5f",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertRpcServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "s",
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_f74a33ab",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertRpcServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "These RPCs",
+      "range": {
+        "startLine": 34,
+        "startChar": 3,
+        "endLine": 34,
+        "endChar": 12
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_37ccab35",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertRpcServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "by users who have the ODL admin role.",
+      "range": {
+        "startLine": 34,
+        "startChar": 33,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_97d13fd0",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertRpcServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "Move this up into the conditionals and report which method was used to create the keystore.  This is helpful for debugging.",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 65
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_17e52fa8",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/CertificateManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "s",
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_f7e1939b",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/CertificateManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "add an INFO message here.",
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_57ee878c",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/CertificateManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "add an INFO message here.",
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_77ed838b",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/DefaultMdsalSslData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "in",
+      "range": {
+        "startLine": 21,
+        "startChar": 74,
+        "endLine": 21,
+        "endChar": 82
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_97e81f7e",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/DefaultMdsalSslData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "Impelementation",
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_37f30b75",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/DefaultMdsalSslData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "space",
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_f7f8734b",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/DefaultMdsalSslData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "this can be \"private static final\"",
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_5795e7e2",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/DefaultMdsalSslData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "why does this need to be public?  If it is accessed outside of this class, thane make it private and utilize a getter.",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 10
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_379aeb14",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/DefaultMdsalSslData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "This seems like a \"magic\" string/ default.  I would make this a private static final String constant.",
+      "range": {
+        "startLine": 77,
+        "startChar": 19,
+        "endLine": 77,
+        "endChar": 21
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_979f7f03",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/DefaultMdsalSslData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "would look much better using a jdk8 stream.",
+      "range": {
+        "startLine": 151,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 13
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_d788d7c8",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "put a period after this.",
+      "range": {
+        "startLine": 44,
+        "startChar": 119,
+        "endLine": 44,
+        "endChar": 120
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_77a46357",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "implements",
+      "range": {
+        "startLine": 44,
+        "startChar": 14,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_b7855baf",
+        "filename": "aaa-cert/src/main/resources/initial/aaa-cert-config.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "Is this default?",
+      "range": {
+        "startLine": 12,
+        "startChar": 14,
+        "endLine": 12,
+        "endChar": 35
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_97b65f89",
+        "filename": "aaa-cert/src/main/resources/initial/aaa-cert-config.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "I agree with a high default, but this is problematic with JDK8 + default JCE + unlimited strength encryption policy on Ubuntu.  Even though they claim support for 2K DH keys, I have only ever been able to generate 1K keys without exception.",
+      "range": {
+        "startLine": 13,
+        "startChar": 13,
+        "endLine": 13,
+        "endChar": 17
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_b7ac3b37",
+        "filename": "aaa-cert/src/main/resources/initial/aaa-cert-config.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "Does this essentially mean all cipher suites provided by JCE(s) are fair game?",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_5763271a",
+        "filename": "aaa-cert/src/main/yang/aaa-cert.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "The supported",
+      "range": {
+        "startLine": 68,
+        "startChar": 29,
+        "endLine": 68,
+        "endChar": 38
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_f7a6b352",
+        "filename": "aaa-cert/src/main/yang/aaa-cert.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "algorithms",
+      "range": {
+        "startLine": 68,
+        "startChar": 54,
+        "endLine": 68,
+        "endChar": 65
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_17aa4f19",
+        "filename": "aaa-cert/src/main/yang/aaa-cert.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "generation",
+      "range": {
+        "startLine": 68,
+        "startChar": 43,
+        "endLine": 68,
+        "endChar": 53
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_d77617d8",
+        "filename": "aaa-cert/src/main/yang/aaa-cert.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-25T15:12:52Z",
+      "side": 1,
+      "message": "We shouldn\u0027t put an upper limit on this.  Bouncy Castle JCE does not.",
+      "range": {
+        "startLine": 77,
+        "startChar": 49,
+        "endLine": 77,
+        "endChar": 53
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
