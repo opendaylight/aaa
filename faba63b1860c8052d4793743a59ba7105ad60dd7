@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a682502_727911fc",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-25T17:20:12Z",
+      "side": 1,
+      "message": "that was a miss, the default access modifier is public for java interface",
+      "parentUuid": "5a682502_f74513b4",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 85
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a682502_37178ba5",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertProvider.java",
         "patchSetId": 5
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "5a682502_92882de9",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertMdsalProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-25T17:20:12Z",
+      "side": 1,
+      "message": "ok will fix",
+      "parentUuid": "5a682502_775f4373",
+      "range": {
+        "startLine": 143,
+        "startChar": 36,
+        "endLine": 143,
+        "endChar": 61
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a682502_b7227bff",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertMdsalProvider.java",
         "patchSetId": 5
@@ -128,6 +176,24 @@
       "writtenOn": "2016-10-25T15:12:52Z",
       "side": 1,
       "message": "could be final",
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_f26c0139",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-25T17:20:12Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "5a682502_f71cf3c3",
       "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -196,6 +262,30 @@
       "writtenOn": "2016-10-25T15:12:52Z",
       "side": 1,
       "message": "This is a bit confusing;  I would separate this into several statements and LOG the values at debug level...",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 60
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_d2690527",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-25T17:20:12Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "5a682502_b769db27",
       "range": {
         "startLine": 84,
         "startChar": 8,
@@ -328,6 +418,30 @@
       "writtenOn": "2016-10-25T15:12:52Z",
       "side": 1,
       "message": "Move this up into the conditionals and report which method was used to create the keystore.  This is helpful for debugging.",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 65
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_7260f135",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertRpcServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-25T17:20:12Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "5a682502_97d13fd0",
       "range": {
         "startLine": 53,
         "startChar": 12,
@@ -488,6 +602,30 @@
     },
     {
       "key": {
+        "uuid": "5a682502_f253616a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/DefaultMdsalSslData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-25T17:20:12Z",
+      "side": 1,
+      "message": "just miss, will keep it private",
+      "parentUuid": "5a682502_5795e7e2",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 10
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a682502_379aeb14",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/DefaultMdsalSslData.java",
         "patchSetId": 5
@@ -499,6 +637,30 @@
       "writtenOn": "2016-10-25T15:12:52Z",
       "side": 1,
       "message": "This seems like a \"magic\" string/ default.  I would make this a private static final String constant.",
+      "range": {
+        "startLine": 77,
+        "startChar": 19,
+        "endLine": 77,
+        "endChar": 21
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_92edcd8e",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/DefaultMdsalSslData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-25T17:20:12Z",
+      "side": 1,
+      "message": "ok, will use StringUtils.EMPTY instead",
+      "parentUuid": "5a682502_379aeb14",
       "range": {
         "startLine": 77,
         "startChar": 19,
@@ -637,6 +799,30 @@
       "writtenOn": "2016-10-25T15:12:52Z",
       "side": 1,
       "message": "Does this essentially mean all cipher suites provided by JCE(s) are fair game?",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "faba63b1860c8052d4793743a59ba7105ad60dd7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_92a4ad58",
+        "filename": "aaa-cert/src/main/resources/initial/aaa-cert-config.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-25T17:20:12Z",
+      "side": 1,
+      "message": "yes, when the user create the SSLContext object if he did not specify the cipher suites all the communication will be accepted. so if he has a concern about the cipher suites that will be used he should specify them here then pass it to the SSLContext object.",
+      "parentUuid": "5a682502_b7ac3b37",
       "range": {
         "startLine": 15,
         "startChar": 6,
