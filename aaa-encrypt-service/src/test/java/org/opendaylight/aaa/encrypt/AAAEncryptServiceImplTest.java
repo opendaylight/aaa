@@ -25,7 +25,6 @@ public class AAAEncryptServiceImplTest {
 
     private static final String ENCRYPT_KEY = "Test Key";
     private static final String ENCRYPT_SALT = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16";
-    private static final String ENCRYPTED_TAG = "Encrypted:";
     private static final String ENCRYPTION_METHOD = "PBKDF2WithHmacSHA1";
     private static final String ENCRYPTION_TYPE = "AES";
     private static final int ENCRYPTION_ITERATION_COUNT = 32768;
@@ -37,7 +36,6 @@ public class AAAEncryptServiceImplTest {
 
         Mockito.when(module.getEncryptSalt()).thenReturn(ENCRYPT_SALT);
         Mockito.when(module.getEncryptKey()).thenReturn(ENCRYPT_KEY);
-        Mockito.when(module.getEncryptTag()).thenReturn(ENCRYPTED_TAG);
         Mockito.when(module.getEncryptMethod()).thenReturn(ENCRYPTION_METHOD);
         Mockito.when(module.getEncryptType()).thenReturn(ENCRYPTION_TYPE);
         Mockito.when(module.getEncryptIterationCount()).thenReturn(ENCRYPTION_ITERATION_COUNT);

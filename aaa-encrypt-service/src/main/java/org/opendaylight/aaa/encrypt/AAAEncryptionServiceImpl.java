@@ -42,12 +42,10 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     private IvParameterSpec ivspec;
     private Cipher encryptCipher;
     private Cipher decryptCipher;
-    private String encryptTag;
 
     public AAAEncryptionServiceImpl(AaaEncryptServiceConfig module) {
         SecretKey tempKey = null;
         IvParameterSpec tempIvSpec = null;
-        this.encryptTag = module.getEncryptTag();
         final byte[] enryptionKeySalt = getEncryptionKeySalt(module.getEncryptSalt());
         try {
             final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(module.getEncryptMethod());
@@ -91,7 +89,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             synchronized(encryptCipher) {
                 byte[] cryptobytes = encryptCipher.doFinal(data.getBytes());
                 String cryptostring = DatatypeConverter.printBase64Binary(cryptobytes);
-                return encryptTag + cryptostring;
+                return cryptostring;
             }
         } catch (IllegalBlockSizeException | BadPaddingException e) {
             LOG.error("Failed to encrypt data.", e);
@@ -102,13 +100,13 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
 
     @Override
     public String decrypt(String encData) {
-        if (key == null || encData == null || encData.length() == 0 || !encData.startsWith(encryptTag)) {
+        if (key == null || encData == null || encData.length() == 0) {
             LOG.warn("String {} was not decrypted.", encData);
             return encData;
         }
 
         try{
-            byte[] cryptobytes = DatatypeConverter.parseBase64Binary(encData.substring(encryptTag.length()));
+            byte[] cryptobytes = DatatypeConverter.parseBase64Binary(encData);
             byte[] clearbytes = decryptCipher.doFinal(cryptobytes);
             return new String(clearbytes);
         } catch (IllegalBlockSizeException | BadPaddingException e){
