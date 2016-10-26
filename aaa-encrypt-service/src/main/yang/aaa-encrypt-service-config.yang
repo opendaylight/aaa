@@ -20,10 +20,6 @@ module aaa-encrypt-service-config {
             description "Encryption key salt";
             type string;
         }
-        leaf encrypt-tag {
-            description "Encryption tag to mark an encrypted string";
-            type string;
-        }
         leaf encrypt-method {
             description "The encryption method to use";
             type string;
