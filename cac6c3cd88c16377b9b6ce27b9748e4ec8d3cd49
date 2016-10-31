@@ -22,6 +22,30 @@
       "revId": "cac6c3cd88c16377b9b6ce27b9748e4ec8d3cd49",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_ec78a12d",
+        "filename": "aaa-encrypt-service/src/main/resources/initial/aaa-encrypt-service-config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-10-31T20:05:55Z",
+      "side": 0,
+      "message": "okay, but it is not a functional change, it is a configuration thing.",
+      "parentUuid": "3a65312a_8c880d24",
+      "range": {
+        "startLine": 4,
+        "startChar": 4,
+        "endLine": 4,
+        "endChar": 41
+      },
+      "revId": "cac6c3cd88c16377b9b6ce27b9748e4ec8d3cd49",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
