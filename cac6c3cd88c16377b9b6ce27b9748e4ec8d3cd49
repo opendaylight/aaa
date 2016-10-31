@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_8c880d24",
+        "filename": "aaa-encrypt-service/src/main/resources/initial/aaa-encrypt-service-config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-31T19:37:20Z",
+      "side": 0,
+      "message": "This was technically a part of the Boron release, correct?  If so, we should release note in Carbon that this no longer exists.",
+      "range": {
+        "startLine": 4,
+        "startChar": 4,
+        "endLine": 4,
+        "endChar": 41
+      },
+      "revId": "cac6c3cd88c16377b9b6ce27b9748e4ec8d3cd49",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}

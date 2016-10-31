@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_4c9f1560",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-31T19:37:20Z",
+      "side": 1,
+      "message": "Spaces at the end of a line.",
+      "range": {
+        "startLine": 9,
+        "startChar": 67,
+        "endLine": 9,
+        "endChar": 68
+      },
+      "revId": "dab98116ccb3b63f4ca8b2a63d5ac636147f730c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_2c9c5969",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-31T19:37:20Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 10,
+        "startChar": 71,
+        "endLine": 10,
+        "endChar": 72
+      },
+      "revId": "dab98116ccb3b63f4ca8b2a63d5ac636147f730c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
