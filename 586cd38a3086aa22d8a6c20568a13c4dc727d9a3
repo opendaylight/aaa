@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_eccd415f",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/ICertificateManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-10-31T20:48:25Z",
+      "side": 1,
+      "message": "Space.",
+      "range": {
+        "startLine": 73,
+        "startChar": 72,
+        "endLine": 73,
+        "endChar": 73
+      },
+      "revId": "586cd38a3086aa22d8a6c20568a13c4dc727d9a3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
