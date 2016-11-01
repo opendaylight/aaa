@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a65312a_cf82f7ff",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-11-01T14:10:20Z",
+      "side": 1,
+      "message": "this method to initialize the data tree, it creates the data tree once the bundle installed and if it fails, we log error at the onfailure  event. not sure we why we need to return a future?",
+      "range": {
+        "startLine": 188,
+        "startChar": 4,
+        "endLine": 188,
+        "endChar": 8
+      },
+      "revId": "586cd38a3086aa22d8a6c20568a13c4dc727d9a3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_eccd415f",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/ICertificateManager.java",
         "patchSetId": 9
@@ -13,6 +36,30 @@
       "writtenOn": "2016-10-31T20:48:25Z",
       "side": 1,
       "message": "Space.",
+      "range": {
+        "startLine": 73,
+        "startChar": 72,
+        "endLine": 73,
+        "endChar": 73
+      },
+      "revId": "586cd38a3086aa22d8a6c20568a13c4dc727d9a3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_2fc56b5b",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/ICertificateManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-11-01T14:10:20Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "3a65312a_eccd415f",
       "range": {
         "startLine": 73,
         "startChar": 72,
