@@ -59,7 +59,7 @@ module aaa-cert-rpc {
 
     rpc setNodeCertifcate {
         description
-            "Certifcate of the ovs node that will communicate with opendaylight through TLS connection";
+            "Set the certifcate of the netowrk node that will communicate with opendaylight through TLS connection";
         input {
            leaf node-alias {
                type string;
@@ -72,7 +72,7 @@ module aaa-cert-rpc {
 
     rpc getNodeCertifcate {
         description
-            "Get the ovs node certificate based on node alias";
+            "Get the network node certificate based on node alias";
         input {
            leaf node-alias {
                type string;
