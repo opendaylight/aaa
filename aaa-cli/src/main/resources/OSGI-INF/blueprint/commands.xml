@@ -20,6 +20,11 @@
                 <argument ref="KeyStoreConsoleProvider" />
             </action>
         </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.GetCipherSuites">
+                <argument ref="KeyStoreConsoleProvider" />
+            </action>
+        </command>
     </command-bundle>
 
 </blueprint>

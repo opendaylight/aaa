@@ -9,36 +9,28 @@
 package org.opendaylight.aaa.cli;
 
 import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 
-@Command(name = "get-odl-cert", scope = "aaa", description = "get self sign certificate for the opendaylight controller.")
+@Command(name = "get-cipher-suites", scope = "aaa", description = "Get the allowed cipher suites for the TLS communication.")
 
 /**
- * GetODLSelfSignCert get the ODL key store self sign certificate.
+ * GetCipherSuites get the allowed cipher suites for the TLS communication.
  *
  * @author mserngawy
  *
  */
-public class GetODLSelfSignCert extends OsgiCommandSupport{
+public class GetCipherSuites  extends OsgiCommandSupport{
 
     protected ICertificateManager certProvider;
 
-    @Option(name = "-storepass",
-            aliases = { "--KeyStorePass" },
-            description = "The keystore password.\n-storepass",
-            required = true,
-            multiValued = false)
-    private String keyStorePassword = "";
-
-    public GetODLSelfSignCert(final ICertificateManager aaaCertProvider) {
+    public GetCipherSuites(final ICertificateManager aaaCertProvider) {
         this.certProvider = aaaCertProvider;
     }
 
     @Override
     protected Object doExecute() throws Exception {
-        return certProvider.getODLKeyStoreCertificate(keyStorePassword, true);
+        return certProvider.getCipherSuites();
     }
 
 }
