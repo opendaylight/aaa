@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_042cb098",
+        "filename": "aaa-cert/src/main/yang/aaa-cert-rpc.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-11-09T23:39:38Z",
+      "side": 1,
+      "message": "typo.",
+      "range": {
+        "startLine": 62,
+        "startChar": 39,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "revId": "65cf1f0e4219e5d67b005fc1a347660237001d67",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
