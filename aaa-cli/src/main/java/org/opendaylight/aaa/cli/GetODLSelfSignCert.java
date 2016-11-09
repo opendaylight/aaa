@@ -32,13 +32,6 @@ public class GetODLSelfSignCert extends OsgiCommandSupport{
             multiValued = false)
     private String keyStorePassword = "";
 
-    @Option(name = "-alias",
-            aliases = { "--alias" },
-            description = "The alias.\n-alias / --default is controller",
-            required = false,
-            multiValued = false)
-    private String alias = "controller";
-
     public GetODLSelfSignCert(final ICertificateManager aaaCertProvider) {
         this.certProvider = aaaCertProvider;
     }
