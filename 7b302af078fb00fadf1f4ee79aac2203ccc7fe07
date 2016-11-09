@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_843720e3",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/GetCipherSuites.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-11-09T23:41:49Z",
+      "side": 1,
+      "message": "nix \"the\"",
+      "range": {
+        "startLine": 15,
+        "startChar": 101,
+        "endLine": 15,
+        "endChar": 104
+      },
+      "revId": "7b302af078fb00fadf1f4ee79aac2203ccc7fe07",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_e43414e0",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/GetCipherSuites.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-11-09T23:41:49Z",
+      "side": 1,
+      "message": "nix \"the\"",
+      "range": {
+        "startLine": 18,
+        "startChar": 53,
+        "endLine": 18,
+        "endChar": 56
+      },
+      "revId": "7b302af078fb00fadf1f4ee79aac2203ccc7fe07",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_c43118ee",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/GetCipherSuites.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-11-09T23:41:49Z",
+      "side": 1,
+      "message": "Extra space.",
+      "range": {
+        "startLine": 23,
+        "startChar": 28,
+        "endLine": 23,
+        "endChar": 29
+      },
+      "revId": "7b302af078fb00fadf1f4ee79aac2203ccc7fe07",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_244e0c70",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/GetCipherSuites.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-11-09T23:41:49Z",
+      "side": 1,
+      "message": "This would imply that this could be accessed via multiple threads?  If so this should probably be volatile.",
+      "range": {
+        "startLine": 25,
+        "startChar": 14,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "7b302af078fb00fadf1f4ee79aac2203ccc7fe07",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
