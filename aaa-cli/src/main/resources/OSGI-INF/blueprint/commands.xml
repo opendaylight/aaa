@@ -4,7 +4,16 @@
         activation="eager" interface="org.opendaylight.aaa.cert.api.ICertificateManager">
     </reference>
 
+    <reference id="iIDMStore" interface="org.opendaylight.aaa.api.IIDMStore"
+        availability="optional" timeout="30000">
+    </reference>
+
     <command-bundle xmlns="http://karaf.apache.org/xmlns/shell/v1.1.0">
+        <command>
+            <action class="org.opendaylight.aaa.cli.ChangeUserPassword">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
         <command>
             <action class="org.opendaylight.aaa.cli.GetODLSelfSignCert">
                 <argument ref="KeyStoreConsoleProvider" />
