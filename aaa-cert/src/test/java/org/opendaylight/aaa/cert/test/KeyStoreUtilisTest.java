@@ -28,26 +28,16 @@ public class KeyStoreUtilisTest {
     }
 
     @Test
-    public void testCreateDir() {
+    public void testKeyStoreUtils() {
         final String path = KeyStoreConstant.createDir(KeyStoreConstant.KEY_STORE_PATH);
         assertTrue(!path.isEmpty());
         final File dir = new File(path);
         assertTrue(dir.exists());
-    }
-
-    @Test
-    public void testSaveCert() {
+        //Test save file
         assertTrue(KeyStoreConstant.saveCert(fileName, txt));
-    }
-
-    @Test
-    public void testCheckKeyStoreFile() {
+        //Test check file
         assertTrue(KeyStoreConstant.checkKeyStoreFile(fileName));
-        assertTrue(!KeyStoreConstant.checkKeyStoreFile("notExist.txt"));
-    }
-
-    @Test
-    public void testReadFile() {
+        //Test read file
         final String readTxt = KeyStoreConstant.readFile(fileName);
         assertEquals(txt, readTxt);
     }
