@@ -8,8 +8,6 @@
 
 package org.opendaylight.aaa.h2.persistence;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.IIDMStore;
@@ -21,7 +19,9 @@ import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
+import org.opendaylight.aaa.h2.config.ConnectionProvider;
 import org.opendaylight.aaa.h2.config.IdmLightConfig;
+import org.opendaylight.aaa.h2.config.IdmLightSimpleConnectionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,32 +29,20 @@ public class H2Store implements IIDMStore {
 
     private static final Logger LOG = LoggerFactory.getLogger(H2Store.class);
 
-    private static IdmLightConfig config = new IdmLightConfig();
-    private DomainStore domainStore = new DomainStore();
-    private UserStore userStore = new UserStore();
-    private RoleStore roleStore = new RoleStore();
-    private GrantStore grantStore = new GrantStore();
+    private final DomainStore domainStore;
+    private final UserStore userStore;
+    private final RoleStore roleStore;
+    private final GrantStore grantStore;
 
     public H2Store() {
+        this(new IdmLightSimpleConnectionProvider(new IdmLightConfig()));
     }
 
-    public static Connection getConnection(Connection existingConnection) throws StoreException {
-        Connection connection = existingConnection;
-        try {
-            if (existingConnection == null || existingConnection.isClosed()) {
-                new org.h2.Driver();
-                connection = DriverManager.getConnection(config.getDbPath(), config.getDbUser(),
-                        config.getDbPwd());
-            }
-        } catch (Exception e) {
-            throw new StoreException("Cannot connect to database server" + e);
-        }
-
-        return connection;
-    }
-
-    public static IdmLightConfig getConfig() {
-        return config;
+    public H2Store(ConnectionProvider connectionFactory) {
+        this.domainStore = new DomainStore(connectionFactory);
+        this.userStore = new UserStore(connectionFactory);
+        this.roleStore = new RoleStore(connectionFactory);
+        this.grantStore = new GrantStore(connectionFactory);
     }
 
     @Override
@@ -272,17 +260,15 @@ public class H2Store implements IIDMStore {
         return readGrant(IDMStoreUtil.createGrantid(userid, domainid, roleid));
     }
 
-    public static Domain createDomain(String domainName, boolean enable) throws StoreException {
-        DomainStore ds = new DomainStore();
+    public Domain createDomain(String domainName, boolean enable) throws StoreException {
         Domain d = new Domain();
         d.setName(domainName);
         d.setEnabled(enable);
-        return ds.createDomain(d);
+        return domainStore.createDomain(d);
     }
 
-    public static User createUser(String name, String password, String domain, String description,
+    public User createUser(String name, String password, String domain, String description,
             String email, boolean enabled, String SALT) throws StoreException {
-        UserStore us = new UserStore();
         User u = new User();
         u.setName(name);
         u.setDomainid(domain);
@@ -291,26 +277,24 @@ public class H2Store implements IIDMStore {
         u.setEnabled(enabled);
         u.setPassword(password);
         u.setSalt(SALT);
-        return us.createUser(u);
+        return userStore.createUser(u);
     }
 
-    public static Role createRole(String name, String domain, String description)
+    public Role createRole(String name, String domain, String description)
             throws StoreException {
-        RoleStore rs = new RoleStore();
         Role r = new Role();
         r.setDescription(description);
         r.setName(name);
         r.setDomainid(domain);
-        return rs.createRole(r);
+        return roleStore.createRole(r);
     }
 
-    public static Grant createGrant(String domain, String user, String role) throws StoreException {
-        GrantStore gs = new GrantStore();
+    public Grant createGrant(String domain, String user, String role) throws StoreException {
         Grant g = new Grant();
         g.setDomainid(domain);
         g.setRoleid(role);
         g.setUserid(user);
-        return gs.createGrant(g);
+        return grantStore.createGrant(g);
     }
 
     @Override

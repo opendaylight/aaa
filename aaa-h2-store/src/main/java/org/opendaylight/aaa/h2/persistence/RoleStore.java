@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
+import org.opendaylight.aaa.h2.config.ConnectionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,8 +38,8 @@ public class RoleStore extends AbstractStore<Role> {
     protected final static String SQL_DESCR = "description";
     private static final String TABLE_NAME = "ROLES";
 
-    protected RoleStore() {
-        super(TABLE_NAME);
+    protected RoleStore(ConnectionProvider dbConnectionFactory) {
+        super(dbConnectionFactory, TABLE_NAME);
     }
 
     @Override
@@ -50,6 +51,7 @@ public class RoleStore extends AbstractStore<Role> {
                 + "description VARCHAR(128)      NOT NULL)";
     }
 
+    @Override
     protected Role fromResultSet(ResultSet rs) throws SQLException {
         Role role = new Role();
         try {

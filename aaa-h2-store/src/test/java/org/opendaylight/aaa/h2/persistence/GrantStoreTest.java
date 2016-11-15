@@ -19,22 +19,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.opendaylight.aaa.api.model.Grants;
+import org.opendaylight.aaa.h2.config.ConnectionProvider;
 
 public class GrantStoreTest {
 
-    Connection connectionMock = mock(Connection.class);
-    private final GrantStore grantStoreUnderTest = new GrantStore();
-    private String did = "5";
-    private String uid = "5";
+    private final Connection connectionMock = mock(Connection.class);
 
-    @Before
-    public void setup() {
-        grantStoreUnderTest.dbConnection = connectionMock;
-    }
+    private final ConnectionProvider connectionFactoryMock = () -> connectionMock;
+
+    private final GrantStore grantStoreUnderTest = new GrantStore(connectionFactoryMock);
+
+    private final String did = "5";
+    private final String uid = "5";
 
     @Test
     public void getGrantsTest() throws Exception {
@@ -70,7 +69,6 @@ public class GrantStoreTest {
         Mockito.when(rsMock.getString(GrantStore.SQL_ROLEID)).thenReturn("Role_1");
 
         return rsMock;
-
     }
 
 }

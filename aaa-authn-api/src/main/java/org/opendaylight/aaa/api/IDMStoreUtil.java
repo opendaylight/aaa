@@ -9,15 +9,15 @@ package org.opendaylight.aaa.api;
 
 import javax.naming.OperationNotSupportedException;
 
-/*
+/**
  *  This class is a utility to construct the different elements keys for the different data stores.
  *  For not making mistakes around the code constructing an element key, this class standardize the
  *  way the key is constructed to be used by the different data stores.
  *
  *  @author - Sharon Aicler (saichler@cisco.com)
  */
-
 public class IDMStoreUtil {
+
     private IDMStoreUtil() throws OperationNotSupportedException {
         throw new OperationNotSupportedException();
     }

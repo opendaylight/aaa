@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * data store implementation.
  *
  * @author peter.mellquist@hp.com
- *
  */
 public class IdmLightConfig {
 

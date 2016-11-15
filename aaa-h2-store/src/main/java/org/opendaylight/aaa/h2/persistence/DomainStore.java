@@ -19,6 +19,7 @@ import java.sql.Statement;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Domains;
+import org.opendaylight.aaa.h2.config.ConnectionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,8 +37,8 @@ public class DomainStore extends AbstractStore<Domain> {
     protected final static String SQL_ENABLED = "enabled";
     private static final String TABLE_NAME = "DOMAINS";
 
-    protected DomainStore() {
-        super(TABLE_NAME);
+    protected DomainStore(ConnectionProvider dbConnectionFactory) {
+        super(dbConnectionFactory, TABLE_NAME);
     }
 
     @Override
