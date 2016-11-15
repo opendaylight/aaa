@@ -17,27 +17,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.opendaylight.aaa.api.model.Domains;
+import org.opendaylight.aaa.h2.config.ConnectionFactory;
 import org.opendaylight.aaa.h2.persistence.DomainStore;
 
 public class DomainStoreTest {
 
-    Connection connectionMock = mock(Connection.class);
-    private final DomainStore domainStoreUnderTest = new DomainStore();
+    private final Connection connectionMock = mock(Connection.class);
 
-    @Before
-    public void setup() {
-        domainStoreUnderTest.dbConnection = connectionMock;
-    }
+    private final ConnectionFactory connectionFactoryMock = () -> connectionMock;
 
-    @After
-    public void teardown() {
-        // dts.destroy();
-    }
+    private final DomainStore domainStoreUnderTest = new DomainStore(connectionFactoryMock);
 
     @Test
     public void getDomainsTest() throws SQLException, Exception {
