@@ -24,7 +24,7 @@ public class IdmLightConnectionFactory implements ConnectionFactory {
     private Connection existingConnection;
 
     public IdmLightConnectionFactory() {
-        this(new IdmLightConfig());
+        this(new IdmLightConfigBuilder().build());
     }
 
     public IdmLightConnectionFactory(IdmLightConfig config) {
