@@ -203,13 +203,6 @@
                         <phase>process-sources</phase>
                     </execution>
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.opendaylight.yangtools</groupId>
-                        <artifactId>checkstyle-logging</artifactId>
-                        <version>${yangtools.version}</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>
