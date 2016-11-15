@@ -8,6 +8,10 @@
 
 package org.opendaylight.aaa.h2.config;
 
+import org.immutables.value.Value;
+import org.immutables.value.Value.Default;
+import org.immutables.value.Value.Immutable;
+import org.immutables.value.Value.Style.ImplementationVisibility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,119 +19,83 @@ import org.slf4j.LoggerFactory;
  * Responsible for providing configuration properties for the IDMLight/H2
  * data store implementation.
  *
- * @author peter.mellquist@hp.com
- *
+ * @author peter.mellquist@hp.com - Initial contribution
+ * @author Michael Vorburger.ch - Made it configurable, as Immutable with Builder
  */
-public class IdmLightConfig {
+@Immutable
+@Value.Style(stagedBuilder = true, strictBuilder = true,
+    builder = "new", typeImmutable = "*Impl", visibility = ImplementationVisibility.PRIVATE)
+public abstract class IdmLightConfig {
 
     private static final Logger LOG = LoggerFactory.getLogger(IdmLightConfig.class);
 
     /**
-     * The default timeout for db connections in seconds.
+     * The filename for the H2 database file.
      */
-    private static final int DEFAULT_DB_TIMEOUT = 3;
+    @Default public String getDbName() {
+        return "idmlight.db";
+    }
 
     /**
-     * The default password for the database
+     * The database directory for the h2 database file.
+     * Either absolute or relative to KARAF_HOME.
      */
-    private static final String DEFAULT_PASSWORD = "bar";
+    @Default public String getDbDirectory() {
+        return ".";
+    }
 
     /**
-     * The default username for the database
+     * The database JDBC driver, default is H2;  a pure-java implementation.
      */
-    private static final String DEFAULT_USERNAME = "foo";
-
-    /**
-     * The default driver for the databse is H2;  a pure-java implementation
-     * of JDBC.
-     */
-    private static final String DEFAULT_JDBC_DRIVER = "org.h2.Driver";
-
-    /**
-     * The default connection string includes the intention to use h2 as
-     * the JDBC driver, and the path for the file is located relative to
-     * KARAF_HOME.
-     */
-    private static final String DEFAULT_CONNECTION_STRING = "jdbc:h2:./";
-
-    /**
-     * The default filename for the database file.
-     */
-    private static final String DEFAULT_IDMLIGHT_DB_FILENAME = "idmlight.db";
-
-    /**
-     * The database filename
-     */
-    private String dbName;
-
-    /**
-     * the database connection string
-     */
-    private String dbPath;
-
-    /**
-     * The database driver (i.e., H2)
-     */
-    private String dbDriver;
-
-    /**
-     * The database password.  This is not the same as AAA credentials!
-     */
-    private String dbUser;
+    @Default public String getDbDriver() {
+        return "org.h2.Driver";
+    }
 
     /**
      * The database username.  This is not the same as AAA credentials!
      */
-    private String dbPwd;
-
-    /**
-     * Timeout for database connections in seconds
-     */
-    private int dbValidTimeOut;
-
-    /**
-     * Creates an valid database configuration using default values.
-     */
-    public IdmLightConfig() {
-        // TODO make this configurable
-        dbName = DEFAULT_IDMLIGHT_DB_FILENAME;
-        dbPath = DEFAULT_CONNECTION_STRING + dbName;
-        dbDriver = DEFAULT_JDBC_DRIVER;
-        dbUser = DEFAULT_USERNAME;
-        dbPwd = DEFAULT_PASSWORD;
-        dbValidTimeOut = DEFAULT_DB_TIMEOUT;
+    @Default public String getDbUser() {
+        return "foo";
     }
 
     /**
-     * Outputs some debugging information surrounding idmlight config
+     * The database password.  This is not the same as AAA credentials!
      */
+    @Default public String getDbPwd() {
+        return "bar";
+    }
+
+    /**
+     * Timeout for database connections in seconds.
+     */
+    @Default public int getDbValidTimeOut() {
+        return 3;
+    }
+
+    /**
+     * The JDBC default connection string.
+     */
+    @Default public String getDbConnectionStringPrefix() {
+        return "jdbc:h2:";
+    }
+
+    /**
+     * The JDBC database connection string.
+     */
+    @Default public String getDbConnectionString() {
+        return getDbConnectionStringPrefix() + getDbDirectory() + "/" + getDbName();
+    }
+
     public void log() {
-        LOG.info("DB Path                 : {}", dbPath);
-        LOG.info("DB Driver               : {}", dbDriver);
-        LOG.info("DB Valid Time Out       : {}", dbValidTimeOut);
+        LOG.info("DB Path                 : {}", getDbConnectionString());
+        LOG.info("DB Driver               : {}", getDbDriver());
+        LOG.info("DB Valid Time Out       : {}", getDbValidTimeOut());
     }
 
-    public String getDbName() {
-        return this.dbName;
-    }
-
-    public String getDbPath() {
-        return this.dbPath;
-    }
-
-    public String getDbDriver() {
-        return this.dbDriver;
-    }
-
-    public String getDbUser() {
-        return this.dbUser;
-    }
-
-    public String getDbPwd() {
-        return this.dbPwd;
-    }
-
-    public int getDbValidTimeOut() {
-        return this.dbValidTimeOut;
+    /**
+     * @deprecated use {@link #getDbConnectionString()}
+     */
+    @Deprecated public String getDbPath() {
+        return getDbConnectionString();
     }
 }

@@ -22,6 +22,7 @@ import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.h2.config.IdmLightConfig;
+import org.opendaylight.aaa.h2.config.IdmLightConfigBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,11 +30,11 @@ public class H2Store implements IIDMStore {
 
     private static final Logger LOG = LoggerFactory.getLogger(H2Store.class);
 
-    private static IdmLightConfig config = new IdmLightConfig();
-    private DomainStore domainStore = new DomainStore();
-    private UserStore userStore = new UserStore();
-    private RoleStore roleStore = new RoleStore();
-    private GrantStore grantStore = new GrantStore();
+    private static IdmLightConfig config = new IdmLightConfigBuilder().build();
+    private final DomainStore domainStore = new DomainStore();
+    private final UserStore userStore = new UserStore();
+    private final RoleStore roleStore = new RoleStore();
+    private final GrantStore grantStore = new GrantStore();
 
     public H2Store() {
     }
@@ -43,7 +44,7 @@ public class H2Store implements IIDMStore {
         try {
             if (existingConnection == null || existingConnection.isClosed()) {
                 new org.h2.Driver();
-                connection = DriverManager.getConnection(config.getDbPath(), config.getDbUser(),
+                connection = DriverManager.getConnection(config.getDbConnectionString(), config.getDbUser(),
                         config.getDbPwd());
             }
         } catch (Exception e) {
