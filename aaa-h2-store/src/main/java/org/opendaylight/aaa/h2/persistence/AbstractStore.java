@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
+import org.opendaylight.aaa.h2.config.ConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,9 +23,7 @@ import org.slf4j.LoggerFactory;
  * Base class for H2 stores.
  */
 abstract class AbstractStore<T> {
-    /**
-     * Logger.
-     */
+
     private static final Logger LOG = LoggerFactory.getLogger(AbstractStore.class);
 
     /**
@@ -34,9 +32,9 @@ abstract class AbstractStore<T> {
     private final String tableName;
 
     /**
-     * Database connection, only used for tests.
+     * Database connection factory.
      */
-    Connection dbConnection = null;
+    private final ConnectionFactory dbConnectionFactory;
 
     /**
      * Table types we're interested in (when checking tables' existence).
@@ -48,7 +46,8 @@ abstract class AbstractStore<T> {
      *
      * @param tableName The name of the table being managed.
      */
-    protected AbstractStore(String tableName) {
+    protected AbstractStore(ConnectionFactory dbConnectionFactory, String tableName) {
+        this.dbConnectionFactory = dbConnectionFactory;
         this.tableName = tableName;
     }
 
@@ -61,7 +60,7 @@ abstract class AbstractStore<T> {
      * @throws StoreException if an error occurs.
      */
     protected Connection dbConnect() throws StoreException {
-        Connection conn = H2Store.getConnection(dbConnection);
+        Connection conn = dbConnectionFactory.getConnection();
         try {
             // Ensure table check/creation is atomic
             synchronized (this) {
@@ -133,7 +132,7 @@ abstract class AbstractStore<T> {
     /**
      * Lists the stored items returned by the given statement.
      *
-     * @param ps The statement (which must be ready for execution). It is the caller's reponsibility to close this.
+     * @param ps The statement (which must be ready for execution). It is the caller's responsibility to close this.
      *
      * @return The stored items.
      *
@@ -155,7 +154,7 @@ abstract class AbstractStore<T> {
     /**
      * Extracts the first item returned by the given statement, if any.
      *
-     * @param ps The statement (which must be ready for execution). It is the caller's reponsibility to close this.
+     * @param ps The statement (which must be ready for execution). It is the caller's responsibility to close this.
      *
      * @return The first item, or {@code null} if none.
      *

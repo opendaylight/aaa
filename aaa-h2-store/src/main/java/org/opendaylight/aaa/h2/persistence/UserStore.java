@@ -21,6 +21,7 @@ import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
+import org.opendaylight.aaa.h2.config.ConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,8 +43,8 @@ public class UserStore extends AbstractStore<User> {
     protected final static String SQL_SALT = "salt";
     private static final String TABLE_NAME = "USERS";
 
-    protected UserStore() {
-        super(TABLE_NAME);
+    protected UserStore(ConnectionFactory dbConnectionFactory) {
+        super(dbConnectionFactory, TABLE_NAME);
     }
 
     @Override
