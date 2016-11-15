@@ -17,27 +17,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.opendaylight.aaa.api.model.Users;
+import org.opendaylight.aaa.h2.config.ConnectionProvider;
 import org.opendaylight.aaa.h2.persistence.UserStore;
 
 public class UserStoreTest {
 
-    Connection connectionMock = mock(Connection.class);
-    private final UserStore userStoreUnderTest = new UserStore();
+    private final Connection connectionMock = mock(Connection.class);
 
-    @Before
-    public void setup() {
-        userStoreUnderTest.dbConnection = connectionMock;
-    }
+    private final ConnectionProvider connectionFactoryMock = () -> connectionMock;
 
-    @After
-    public void teardown() {
-        // dts.destroy();
-    }
+    private final UserStore userStoreUnderTest = new UserStore(connectionFactoryMock);
 
     @Test
     public void getUsersTest() throws SQLException, Exception {

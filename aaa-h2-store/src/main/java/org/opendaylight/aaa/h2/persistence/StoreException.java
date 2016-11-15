@@ -13,8 +13,9 @@ package org.opendaylight.aaa.h2.persistence;
  *
  * @author peter.mellquist@hp.com
  */
-
+@SuppressWarnings("serial")
 public class StoreException extends Exception {
+
     public StoreException(String message) {
         super(message);
     }
