@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * data store implementation.
  *
  * @author peter.mellquist@hp.com
- *
  */
 public class IdmLightConfig {
 
@@ -58,32 +57,32 @@ public class IdmLightConfig {
     /**
      * The database filename
      */
-    private String dbName;
+    private final String dbName;
 
     /**
      * the database connection string
      */
-    private String dbPath;
+    private final String dbPath;
 
     /**
      * The database driver (i.e., H2)
      */
-    private String dbDriver;
+    private final String dbDriver;
 
     /**
      * The database password.  This is not the same as AAA credentials!
      */
-    private String dbUser;
+    private final String dbUser;
 
     /**
      * The database username.  This is not the same as AAA credentials!
      */
-    private String dbPwd;
+    private final String dbPwd;
 
     /**
      * Timeout for database connections in seconds
      */
-    private int dbValidTimeOut;
+    private final int dbValidTimeOut;
 
     /**
      * Creates an valid database configuration using default values.
