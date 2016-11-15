@@ -52,7 +52,7 @@ public class IdmLightConfig {
      * The default directory for the h2 database file.
      * Either absolute or relative to KARAF_HOME.
      */
-    private static final String DEFAULT_DIRECTORY = "./";
+    private static final String DEFAULT_DIRECTORY = ".";
 
     /**
      * The default filename for the database file.
@@ -118,7 +118,7 @@ public class IdmLightConfig {
      * Get the database connection string.
      */
     public String getDbPath() {
-        return DEFAULT_CONNECTION_STRING_PREFIX + dbDirectory + dbName;
+        return DEFAULT_CONNECTION_STRING_PREFIX + dbDirectory + "/" + dbName;
     }
 
     public String getDbDriver() {
