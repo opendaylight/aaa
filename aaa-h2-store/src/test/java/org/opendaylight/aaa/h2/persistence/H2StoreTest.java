@@ -22,8 +22,11 @@ import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.User;
+import org.opendaylight.aaa.h2.config.IdmLightConfig;
+import org.opendaylight.aaa.h2.config.IdmLightConnectionFactory;
 
 public class H2StoreTest {
+
     @BeforeClass
     public static void start() {
         File f = new File("idmlight.db.mv.db");
@@ -48,23 +51,27 @@ public class H2StoreTest {
         }
     }
 
+    private H2Store h2Store;
+
     @Before
     public void before() throws StoreException, SQLException {
-        UserStore us = new UserStore();
+        UserStore us = new UserStore(new IdmLightConnectionFactory(new IdmLightConfig()));
         us.dbClean();
-        DomainStore ds = new DomainStore();
+        DomainStore ds = new DomainStore(new IdmLightConnectionFactory(new IdmLightConfig()));
         ds.dbClean();
-        RoleStore rs = new RoleStore();
+        RoleStore rs = new RoleStore(new IdmLightConnectionFactory(new IdmLightConfig()));
         rs.dbClean();
-        GrantStore gs = new GrantStore();
+        GrantStore gs = new GrantStore(new IdmLightConnectionFactory(new IdmLightConfig()));
         gs.dbClean();
+
+        h2Store = new H2Store();
     }
 
     @Test
     public void testCreateDefaultDomain() throws StoreException {
         Domain d = new Domain();
         Assert.assertEquals(true, d != null);
-        DomainStore ds = new DomainStore();
+        DomainStore ds = new DomainStore(new IdmLightConnectionFactory(new IdmLightConfig()));
         d.setName(IIDMStore.DEFAULT_DOMAIN);
         d.setEnabled(true);
         d = ds.createDomain(d);
@@ -73,31 +80,30 @@ public class H2StoreTest {
 
     @Test
     public void testCreateTempRole() throws StoreException {
-        Role role = H2Store.createRole("temp", "temp domain", "Temp Testing role");
+        Role role = h2Store.createRole("temp", "temp domain", "Temp Testing role");
         Assert.assertEquals(true, role != null);
     }
 
     @Test
     public void testCreateUser() throws StoreException {
-        User user = H2Store.createUser("test", "pass", "domain", "desc", "email", true, "SALT");
+        User user = h2Store.createUser("test", "pass", "domain", "desc", "email", true, "SALT");
         Assert.assertEquals(true, user != null);
     }
 
     @Test
     public void testCreateGrant() throws StoreException {
-        Domain d = H2Store.createDomain("sdn", true);
-        Role role = H2Store.createRole("temp", "temp domain", "Temp Testing role");
-        User user = H2Store.createUser("test", "pass", "domain", "desc", "email", true, "SALT");
-        Grant g = H2Store.createGrant(d.getDomainid(), user.getUserid(), role.getRoleid());
+        Domain d = h2Store.createDomain("sdn", true);
+        Role role = h2Store.createRole("temp", "temp domain", "Temp Testing role");
+        User user = h2Store.createUser("test", "pass", "domain", "desc", "email", true, "SALT");
+        Grant g = h2Store.createGrant(d.getDomainid(), user.getUserid(), role.getRoleid());
         Assert.assertEquals(true, g != null);
     }
 
     @Test
     public void testUpdatingUserEmail() throws StoreException {
-        UserStore us = new UserStore();
-        Domain d = H2Store.createDomain("sdn", true);
-        User user = H2Store.createUser("test", "pass", d.getDomainid(), "desc", "email", true,
-                "SALT");
+        UserStore us = new UserStore(new IdmLightConnectionFactory(new IdmLightConfig()));
+        Domain d = h2Store.createDomain("sdn", true);
+        User user = h2Store.createUser("test", "pass", d.getDomainid(), "desc", "email", true, "SALT");
 
         user.setName("test");
         user = us.putUser(user);
@@ -113,6 +119,7 @@ public class H2StoreTest {
 
         Assert.assertEquals("Test@Test.com", user.getEmail());
     }
+
     /*
      * @Test public void testCreateUserViaAPI() throws StoreException { Domain d
      * = StoreBuilder.createDomain("sdn",true);
