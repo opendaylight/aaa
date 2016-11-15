@@ -13,8 +13,10 @@ package org.opendaylight.aaa.h2.persistence;
  *
  * @author peter.mellquist@hp.com
  */
-
 public class StoreException extends Exception {
+
+    private static final long serialVersionUID = -6780428258358881917L;
+
     public StoreException(String message) {
         super(message);
     }
