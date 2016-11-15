@@ -45,10 +45,15 @@ public class IdmLightConfig {
 
     /**
      * The default connection string includes the intention to use h2 as
-     * the JDBC driver, and the path for the file is located relative to
-     * KARAF_HOME.
+     * the JDBC driver.
      */
-    private static final String DEFAULT_CONNECTION_STRING = "jdbc:h2:./";
+    private static final String DEFAULT_CONNECTION_STRING_PREFIX = "jdbc:h2:";
+
+    /**
+     * The default directory for the h2 database file.
+     * Either absolute or relative to KARAF_HOME.
+     */
+    private static final String DEFAULT_DIRECTORY = "./";
 
     /**
      * The default filename for the database file.
@@ -61,14 +66,14 @@ public class IdmLightConfig {
     private String dbName;
 
     /**
-     * the database connection string
+     * The database directory.
      */
-    private String dbPath;
+    private String dbDirectory;
 
     /**
      * The database driver (i.e., H2)
      */
-    private String dbDriver;
+    private final String dbDriver;
 
     /**
      * The database password.  This is not the same as AAA credentials!
@@ -89,9 +94,8 @@ public class IdmLightConfig {
      * Creates an valid database configuration using default values.
      */
     public IdmLightConfig() {
-        // TODO make this configurable
+        dbDirectory = DEFAULT_DIRECTORY;
         dbName = DEFAULT_IDMLIGHT_DB_FILENAME;
-        dbPath = DEFAULT_CONNECTION_STRING + dbName;
         dbDriver = DEFAULT_JDBC_DRIVER;
         dbUser = DEFAULT_USERNAME;
         dbPwd = DEFAULT_PASSWORD;
@@ -102,7 +106,7 @@ public class IdmLightConfig {
      * Outputs some debugging information surrounding idmlight config
      */
     public void log() {
-        LOG.info("DB Path                 : {}", dbPath);
+        LOG.info("DB Path                 : {}", getDbPath());
         LOG.info("DB Driver               : {}", dbDriver);
         LOG.info("DB Valid Time Out       : {}", dbValidTimeOut);
     }
@@ -111,8 +115,11 @@ public class IdmLightConfig {
         return this.dbName;
     }
 
+    /**
+     * Get the database connection string.
+     */
     public String getDbPath() {
-        return this.dbPath;
+        return DEFAULT_CONNECTION_STRING_PREFIX + dbDirectory + dbName;
     }
 
     public String getDbDriver() {
@@ -130,4 +137,25 @@ public class IdmLightConfig {
     public int getDbValidTimeOut() {
         return this.dbValidTimeOut;
     }
+
+    public void setDbDirectory(String dbDirectory) {
+        this.dbDirectory = dbDirectory;
+    }
+
+    public void setDbName(String dbName) {
+        this.dbName = dbName;
+    }
+
+    public void setDbUser(String dbUser) {
+        this.dbUser = dbUser;
+    }
+
+    public void setDbPwd(String dbPwd) {
+        this.dbPwd = dbPwd;
+    }
+
+    public void setDbValidTimeOut(int dbValidTimeOut) {
+        this.dbValidTimeOut = dbValidTimeOut;
+    }
+
 }
