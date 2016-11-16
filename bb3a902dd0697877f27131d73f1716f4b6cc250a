@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_ed106203",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConnectionFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-16T17:49:10Z",
+      "side": 1,
+      "message": "OK; Done.",
+      "parentUuid": "3a65312a_327d951d",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 13
+      },
+      "revId": "bb3a902dd0697877f27131d73f1716f4b6cc250a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_d286e112",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConnectionFactory.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_cd13e60b",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConnectionFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-16T17:49:10Z",
+      "side": 1,
+      "message": "OK; Done.",
+      "parentUuid": "3a65312a_d286e112",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 5
+      },
+      "revId": "bb3a902dd0697877f27131d73f1716f4b6cc250a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_b2908544",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/H2Store.java",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2016-11-16T15:26:06Z",
       "side": 1,
       "message": "Can you explain why you are adding this ? there is no way to set the connection after initiate the H2Store like that !",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 5
+      },
+      "revId": "bb3a902dd0697877f27131d73f1716f4b6cc250a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_6d0452c0",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/H2Store.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-16T17:49:10Z",
+      "side": 1,
+      "message": "NOK; this is required because otherwise the BP \u003cbean id\u003d\"H2Store\" class\u003d\"org.opendaylight.aaa.h2.persistence.H2Store\"/\u003e in src/main/resources/org/opendaylight/blueprint/aaah2store.xml would break, and all hell would break loose in ODL... ;-)\n\nNow, you may argue that we could remove this constructor, and put this wiring into the BP XML.  (FYI I\u0027ve done some work on BP \u0026 DI in the past; see e.g. my https://wiki.opendaylight.org/view/BestPractices/DI_Guidelines and https://wiki.opendaylight.org/view/BestPractices/Component_Tests; totally unrelated to this, just FYI.)  Personally I do not like that kind of XML wiring at all, and find simple Java-based object wiring MUCH preferable.\n\nAs to \"no way to set the connection after initiate the H2Store like that\", yes, that\u0027s intentional, that\u0027s the whole point... ;-) One would use the other constructor for that; first configure an IdmLightConnectionFactory, and then pass it to the other constructor.  This Is a Feature, Not a Bug.  The intention is NOT to be able to change this hot at run time, only during wiring at construction time.  IMHO that is better.",
+      "parentUuid": "3a65312a_b2908544",
       "range": {
         "startLine": 36,
         "startChar": 4,
