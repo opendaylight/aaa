@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_72dc2d13",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-11-16T15:43:58Z",
+      "side": 1,
+      "message": "This introduces some interesting concurrency concerns, which is partly why they were read only to begin with (I had done some work to expose them through a ManagedService but that was abandoned for a separate reason).  We should either implement synchronization or mark the class as not thread safe...",
+      "range": {
+        "startLine": 141,
+        "startChar": 4,
+        "endLine": 159,
+        "endChar": 5
+      },
+      "revId": "cc16b126b673f87c5350b67b568ac53da404c099",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
