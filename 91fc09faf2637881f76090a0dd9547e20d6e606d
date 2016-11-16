@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_72ba6d24",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/ConnectionFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-16T14:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a65312a_19dc04e4",
+      "revId": "91fc09faf2637881f76090a0dd9547e20d6e606d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_99ef7487",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConnectionFactory.java",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2016-11-16T00:05:51Z",
       "side": 1,
       "message": "what is the purpose of this? I must be missing something, but it doesn\u0027t seem to be used, nor nothing, hence wondering.",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 28
+      },
+      "revId": "91fc09faf2637881f76090a0dd9547e20d6e606d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_b2836555",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConnectionFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-16T14:16:19Z",
+      "side": 1,
+      "message": "This was like this already in where I re-factored this code from in AAA, and AFAIK it\u0027s correct as this is required when using JDBC for the Driver to register itself; that\u0027s just how JDBC works (check some online tutorial).",
+      "parentUuid": "3a65312a_99ef7487",
       "range": {
         "startLine": 31,
         "startChar": 8,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_92862964",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConnectionFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-16T14:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a65312a_b9d510bb",
+      "range": {
+        "startLine": 36,
+        "startChar": 11,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "91fc09faf2637881f76090a0dd9547e20d6e606d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_39e1009b",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
         "patchSetId": 2
@@ -76,6 +142,24 @@
       "writtenOn": "2016-11-16T00:05:51Z",
       "side": 1,
       "message": "update javadoc please",
+      "revId": "91fc09faf2637881f76090a0dd9547e20d6e606d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_b2ea450d",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-16T14:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a65312a_39e1009b",
       "revId": "91fc09faf2637881f76090a0dd9547e20d6e606d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
