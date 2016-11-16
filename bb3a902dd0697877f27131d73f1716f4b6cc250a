@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_327d951d",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConnectionFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-11-16T15:26:06Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 13
+      },
+      "revId": "bb3a902dd0697877f27131d73f1716f4b6cc250a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_d286e112",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConnectionFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-11-16T15:26:06Z",
+      "side": 1,
+      "message": "this is useless, please remove it",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 5
+      },
+      "revId": "bb3a902dd0697877f27131d73f1716f4b6cc250a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_b2908544",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/H2Store.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-11-16T15:26:06Z",
+      "side": 1,
+      "message": "Can you explain why you are adding this ? there is no way to set the connection after initiate the H2Store like that !",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 5
+      },
+      "revId": "bb3a902dd0697877f27131d73f1716f4b6cc250a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
