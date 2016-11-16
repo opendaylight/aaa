@@ -22,6 +22,30 @@
       "revId": "cc16b126b673f87c5350b67b568ac53da404c099",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_2d737a81",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-16T17:37:03Z",
+      "side": 1,
+      "message": "I really only need the setDbDirectory(), in the follow-up Gerrits which motivated this one, and am happy to remove the others.. but I\u0027m sure that would not address your underlying concern?  \n\nInstead of implementing synchronization or mark the class as not thread safe, how about I make IdmLightConfig immutable, and introduce a IdmLightConfigBuilder?  Before I go ahead, could you confirm you like this design, please.  Also, could you confirm that you have no objection to me using http://immutables.org and intro. it in AAA.. FYI: I\u0027ve already used it to write some structures for test data elsewhere in ODL, and think it\u0027s great.  If you do have any objection to using Immutables.org, then of course I could just as well code it out.",
+      "parentUuid": "3a65312a_72dc2d13",
+      "range": {
+        "startLine": 141,
+        "startChar": 4,
+        "endLine": 159,
+        "endChar": 5
+      },
+      "revId": "cc16b126b673f87c5350b67b568ac53da404c099",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
