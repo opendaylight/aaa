@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_72e8ad10",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConnectionFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-11-16T14:17:08Z",
+      "side": 1,
+      "message": "Ack, strange but OK. Thanks for confirming.",
+      "parentUuid": "3a65312a_b2836555",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 28
+      },
+      "revId": "91fc09faf2637881f76090a0dd9547e20d6e606d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_b9d510bb",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConnectionFactory.java",
         "patchSetId": 2
