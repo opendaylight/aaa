@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_8e6e0500",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/ConnectionFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-11-17T17:32:23Z",
+      "side": 1,
+      "message": "What does this mean?",
+      "range": {
+        "startLine": 22,
+        "startChar": 46,
+        "endLine": 22,
+        "endChar": 78
+      },
+      "revId": "9d4bba2ee0b15aa7fb1a46591b63199b34545c58",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_0e82f593",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConnectionFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-11-17T17:32:23Z",
+      "side": 1,
+      "message": "This should be volatile, as multiple RESTCONF requests could be made simultaneously.",
+      "revId": "9d4bba2ee0b15aa7fb1a46591b63199b34545c58",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_ae59415d",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-11-17T17:32:23Z",
+      "side": 1,
+      "message": "Factories are generally for instantiating objects, not holding them over for future use.  I would suggest that we use a Connection Pool instead.",
+      "range": {
+        "startLine": 64,
+        "startChar": 26,
+        "endLine": 64,
+        "endChar": 45
+      },
+      "revId": "9d4bba2ee0b15aa7fb1a46591b63199b34545c58",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_ee533937",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/H2Store.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-11-17T17:32:23Z",
+      "side": 1,
+      "message": "Again, this would probably be better as a pool.  Maybe we can do that in a follow up so we can just get this in for you first...",
+      "range": {
+        "startLine": 41,
+        "startChar": 19,
+        "endLine": 41,
+        "endChar": 54
+      },
+      "revId": "9d4bba2ee0b15aa7fb1a46591b63199b34545c58",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_6e3f29d7",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/StoreException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-11-17T17:32:23Z",
+      "side": 1,
+      "message": "We never serialize these Exceptions, but you are right this should be added to conform to the Exception interface.  We could add an annotation to ignore the missing instance var instead... I am open to either approach.",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 71
+      },
+      "revId": "9d4bba2ee0b15aa7fb1a46591b63199b34545c58",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
