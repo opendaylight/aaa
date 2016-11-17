@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_ce0c7d45",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConnectionFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-11-17T17:34:14Z",
+      "side": 1,
+      "message": "In fact, we should wrap assignments and gets in synchronized blocks as well...  Technically one thread might result in a borked Connection, in which case we need to gen a new one and block a second thread from getting the borked one.",
+      "parentUuid": "3a65312a_0e82f593",
+      "revId": "9d4bba2ee0b15aa7fb1a46591b63199b34545c58",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_ae59415d",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
         "patchSetId": 5
