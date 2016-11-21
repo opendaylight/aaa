@@ -2,7 +2,7 @@ package org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204;
 
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
-import org.opendaylight.aaa.idm.StoreBuilder;
+import org.opendaylight.aaa.api.StoreBuilder;
 import org.osgi.framework.BundleContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ public class AAAIDMLightModule {
         try {
             if (store != null) {
                 LOG.info("IIDMStore service {} was found", store.getClass());
-                StoreBuilder.init(store);
+                new StoreBuilder(store).init();
             }
         } catch (IDMStoreException e) {
             LOG.error("Failed to initialize data in store", e);
