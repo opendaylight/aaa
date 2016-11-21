@@ -8,6 +8,7 @@
 
 package org.opendaylight.aaa.h2.config;
 
+import java.io.File;
 import org.immutables.value.Value;
 import org.immutables.value.Value.Default;
 import org.immutables.value.Value.Immutable;
@@ -83,7 +84,7 @@ public abstract class IdmLightConfig {
      * The JDBC database connection string.
      */
     @Default public String getDbConnectionString() {
-        return getDbConnectionStringPrefix() + getDbDirectory() + "/" + getDbName();
+        return getDbConnectionStringPrefix() + getDbDirectory() + File.separatorChar + getDbName();
     }
 
     public void log() {
