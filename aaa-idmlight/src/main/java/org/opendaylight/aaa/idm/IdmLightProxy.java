@@ -21,6 +21,7 @@ import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.IdMService;
+import org.opendaylight.aaa.api.IdMServiceImpl;
 import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.model.Domain;
@@ -35,7 +36,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An OSGi proxy for the IdmLight server.
- *
  */
 public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMService {
 
@@ -63,7 +63,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
         // FIXME: Add cache invalidation
         Map<PasswordCredentials, Claim> cache = claimCache.get(domain);
         if (cache == null) {
-            cache = new ConcurrentHashMap<PasswordCredentials, Claim>();
+            cache = new ConcurrentHashMap<>();
             claimCache.put(domain, cache);
         }
         Claim claim = cache.get(creds);
@@ -124,7 +124,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
 
             // get all grants & roles for this domain and user
             LOG.debug("get grants");
-            List<String> roles = new ArrayList<String>();
+            List<String> roles = new ArrayList<>();
             Grants grants = AAAIDMLightModule.getStore().getGrants(domain.getDomainid(),
                     user.getUserid());
             List<Grant> grantList = grants.getGrants();
@@ -153,56 +153,16 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
 
     @Override
     public List<String> listDomains(String userId) {
-        LOG.debug("list Domains for userId: {}", userId);
-        List<String> domains = new ArrayList<String>();
-        try {
-            Grants grants = AAAIDMLightModule.getStore().getGrants(userId);
-            List<Grant> grantList = grants.getGrants();
-            for (int z = 0; z < grantList.size(); z++) {
-                Grant grant = grantList.get(z);
-                Domain domain = AAAIDMLightModule.getStore().readDomain(grant.getDomainid());
-                domains.add(domain.getName());
-            }
-            return domains;
-        } catch (IDMStoreException se) {
-            LOG.warn("error getting domains ", se.toString(), se);
-            return domains;
-        }
-
+        return new IdMServiceImpl(AAAIDMLightModule.getStore()).listDomains(userId);
     }
 
     @Override
     public List<String> listRoles(String userId, String domainName) {
-        LOG.debug("listRoles");
-        List<String> roles = new ArrayList<String>();
+        return new IdMServiceImpl(AAAIDMLightModule.getStore()).listRoles(userId, domainName);
+    }
 
-        try {
-            // find domain name for specied domain name
-            String did = null;
-            try {
-                Domain domain = AAAIDMLightModule.getStore().readDomain(domainName);
-                if (domain == null) {
-                    LOG.debug("DomainName: {}", domainName + " Not found!");
-                    return roles;
-                }
-                did = domain.getDomainid();
-            } catch (IDMStoreException e) {
-                return roles;
-            }
-
-            // find all grants for uid and did
-            Grants grants = AAAIDMLightModule.getStore().getGrants(did, userId);
-            List<Grant> grantList = grants.getGrants();
-            for (int z = 0; z < grantList.size(); z++) {
-                Grant grant = grantList.get(z);
-                Role role = AAAIDMLightModule.getStore().readRole(grant.getRoleid());
-                roles.add(role.getName());
-            }
-
-            return roles;
-        } catch (IDMStoreException se) {
-            LOG.warn("error getting roles ", se.toString(), se);
-            return roles;
-        }
+    @Override
+    public List<String> listUserIDs() throws IDMStoreException {
+        return new IdMServiceImpl(AAAIDMLightModule.getStore()).listUserIDs();
     }
 }
