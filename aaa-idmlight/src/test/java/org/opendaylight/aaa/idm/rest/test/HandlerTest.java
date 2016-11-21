@@ -13,8 +13,8 @@ import com.sun.jersey.test.framework.AppDescriptor;
 import com.sun.jersey.test.framework.JerseyTest;
 import com.sun.jersey.test.framework.WebAppDescriptor;
 import org.junit.Before;
+import org.opendaylight.aaa.api.impl.StoreBuilder;
 import org.opendaylight.aaa.idm.IdmLightApplication;
-import org.opendaylight.aaa.idm.StoreBuilder;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule;
 
 
