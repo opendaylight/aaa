@@ -13,8 +13,8 @@ import com.sun.jersey.test.framework.AppDescriptor;
 import com.sun.jersey.test.framework.JerseyTest;
 import com.sun.jersey.test.framework.WebAppDescriptor;
 import org.junit.Before;
+import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.idm.IdmLightApplication;
-import org.opendaylight.aaa.idm.StoreBuilder;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule;
 
 
@@ -30,9 +30,10 @@ public abstract class HandlerTest extends JerseyTest {
     }
 
     @Before
+    @Override
     public void setUp() throws Exception {
         super.setUp();
-        StoreBuilder.init(testStore);
+        new StoreBuilder(testStore).init();
         AAAIDMLightModule.setStore(testStore);
     }
 }

@@ -6,10 +6,8 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.idm;
+package org.opendaylight.aaa.api;
 
-import org.opendaylight.aaa.api.IDMStoreException;
-import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Role;
@@ -46,7 +44,14 @@ public class StoreBuilder {
 
     private static final Logger LOG = LoggerFactory.getLogger(StoreBuilder.class);
 
-    public static void init(IIDMStore store) throws IDMStoreException {
+    private final IIDMStore store;
+
+    public StoreBuilder(IIDMStore store) {
+        super();
+        this.store = store;
+    }
+
+    public void init() throws IDMStoreException {
         LOG.info("creating idmlight schema in store");
 
         // Check whether the default domain exists. If it exists, then do not
