@@ -17,27 +17,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.opendaylight.aaa.api.model.Roles;
+import org.opendaylight.aaa.h2.config.ConnectionProvider;
 import org.opendaylight.aaa.h2.persistence.RoleStore;
 
 public class RoleStoreTest {
 
-    Connection connectionMock = mock(Connection.class);
-    private final RoleStore RoleStoreUnderTest = new RoleStore();
+    private final Connection connectionMock = mock(Connection.class);
 
-    @Before
-    public void setup() {
-        RoleStoreUnderTest.dbConnection = connectionMock;
-    }
+    private final ConnectionProvider connectionFactoryMock = () -> connectionMock;
 
-    @After
-    public void teardown() {
-        // dts.destroy();
-    }
+    private final RoleStore RoleStoreUnderTest = new RoleStore(connectionFactoryMock);
 
     @Test
     public void getRolesTest() throws SQLException, Exception {

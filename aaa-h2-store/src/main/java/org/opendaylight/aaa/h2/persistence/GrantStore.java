@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Grants;
+import org.opendaylight.aaa.h2.config.ConnectionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,8 +36,8 @@ public class GrantStore extends AbstractStore<Grant> {
     protected final static String SQL_ROLEID = "roleid";
     private static final String TABLE_NAME = "GRANTS";
 
-    protected GrantStore() {
-        super(TABLE_NAME);
+    protected GrantStore(ConnectionProvider dbConnectionFactory) {
+        super(dbConnectionFactory, TABLE_NAME);
     }
 
     @Override
@@ -48,6 +49,7 @@ public class GrantStore extends AbstractStore<Grant> {
                 + "roleid      VARCHAR(128)         NOT NULL)";
     }
 
+    @Override
     protected Grant fromResultSet(ResultSet rs) throws SQLException {
         Grant grant = new Grant();
         try {
