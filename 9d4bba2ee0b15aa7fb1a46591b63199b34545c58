@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_6371fadf",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/ConnectionFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-21T14:04:29Z",
+      "side": 1,
+      "message": "OK, JavaDoc clarified.  The originally code I\u0027m touching here seems to be able to want to do something like re-using already opened JDBC connections.  This may originally already have been a Bad Idea, but I\u0027m trying to do a refactoring without changing the current implementation...",
+      "parentUuid": "3a65312a_8e6e0500",
+      "range": {
+        "startLine": 22,
+        "startChar": 46,
+        "endLine": 22,
+        "endChar": 78
+      },
+      "revId": "9d4bba2ee0b15aa7fb1a46591b63199b34545c58",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_0e82f593",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConnectionFactory.java",
         "patchSetId": 5
@@ -60,6 +84,42 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_b50a251f",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConnectionFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-21T14:04:29Z",
+      "side": 1,
+      "message": "NOK, this seems to go beyond the simple refactoring I had in mind here? Would you be willing to first merge this as proposed, and then afterwards you or Mohamed (or me... although I wasn\u0027t planning to get too much dragged into AAA! ;-) could, on top of this change, introduce a real Connection Pool?  Or would have to have to do that as part of this change already?  Can do also, if you insist...",
+      "parentUuid": "3a65312a_ce0c7d45",
+      "revId": "9d4bba2ee0b15aa7fb1a46591b63199b34545c58",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_a32032b1",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConnectionFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-21T14:04:29Z",
+      "side": 1,
+      "message": "OK, if you like.. this is getting somewhat out of scope of my proposed first refactoring here?  The real solution, after this goes in, is probably to put together an alternative implementation of ConnectionFactory based on a real Connection Pool?",
+      "parentUuid": "3a65312a_0e82f593",
+      "revId": "9d4bba2ee0b15aa7fb1a46591b63199b34545c58",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_ae59415d",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
         "patchSetId": 5
@@ -71,6 +131,30 @@
       "writtenOn": "2016-11-17T17:32:23Z",
       "side": 1,
       "message": "Factories are generally for instantiating objects, not holding them over for future use.  I would suggest that we use a Connection Pool instead.",
+      "range": {
+        "startLine": 64,
+        "startChar": 26,
+        "endLine": 64,
+        "endChar": 45
+      },
+      "revId": "9d4bba2ee0b15aa7fb1a46591b63199b34545c58",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_15195979",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/AbstractStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-21T14:04:29Z",
+      "side": 1,
+      "message": "OK, I\u0027ve renamed the proposed new API as a \"ConnectionProvider\" instead of a \"ConnectionFactory\", as that is more neutral.  Please note that this change, as a first step, is essentially (hopefully!) just a refactoring, allowing me to do what I\u0027m really after (which is c/48372, not this).  I would agree with you that a ConnectionPool-based implementation of ConnectionProvider would be a sensible next step, but would propose to that separately later in a follow-up Gerrit.  If you think we must do this here already, please just say so, and I\u0027ll push this Gerrit further already.  It just further delays c/48372 - which Tim Rozet is waiting on!",
+      "parentUuid": "3a65312a_ae59415d",
       "range": {
         "startLine": 64,
         "startChar": 26,
@@ -106,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_b5cb45a4",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/H2Store.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-21T14:04:29Z",
+      "side": 1,
+      "message": "NOK, follow-up would be my preference, if that was acceptable to you.  (But with the refactoring because of your previous comment, its now ConnectionProvider instead of ConnectionFactory.)",
+      "parentUuid": "3a65312a_ee533937",
+      "range": {
+        "startLine": 41,
+        "startChar": 19,
+        "endLine": 41,
+        "endChar": 54
+      },
+      "revId": "9d4bba2ee0b15aa7fb1a46591b63199b34545c58",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_6e3f29d7",
         "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/StoreException.java",
         "patchSetId": 5
@@ -117,6 +225,30 @@
       "writtenOn": "2016-11-17T17:32:23Z",
       "side": 1,
       "message": "We never serialize these Exceptions, but you are right this should be added to conform to the Exception interface.  We could add an annotation to ignore the missing instance var instead... I am open to either approach.",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 71
+      },
+      "revId": "9d4bba2ee0b15aa7fb1a46591b63199b34545c58",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_f5c49d93",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/persistence/StoreException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-21T14:04:29Z",
+      "side": 1,
+      "message": "OK, done.",
+      "parentUuid": "3a65312a_6e3f29d7",
       "range": {
         "startLine": 18,
         "startChar": 4,
