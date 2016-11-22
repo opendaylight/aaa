@@ -1,13 +1,18 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2016 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.api;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Role;
@@ -18,19 +23,19 @@ import org.slf4j.LoggerFactory;
 /**
  * StoreBuilder is triggered during feature installation by
  * <code>AAAIDMLightModule.createInstance()</code>. StoreBuilder is responsible
- * for initializing the H2 database with initial default user account
+ * for initializing the IIDMStore with initial default user account
  * information. By default, the following users are created:
  * <ol>
  * <li>admin</li>
  * <li>user</li>
  * </ol>
  *
- * By default, the following domain is created:
+ * <p>By default, the following domain is created:
  * <ol>
  * <li>sdn</li>
  * </ol>
  *
- * By default, the following grants are created:
+ * <p>By default, the following grants are created:
  * <ol>
  * <li>admin with admin role on sdn</li>
  * <li>admin with user role on sdn</li>
@@ -39,6 +44,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author peter.mellquist@hp.com
  * @author saichler@cisco.com
+ * @author Michael Vorburger.ch - some refactoring, for new CLI tool
  */
 public class StoreBuilder {
 
@@ -51,73 +57,141 @@ public class StoreBuilder {
         this.store = store;
     }
 
+    /**
+     * Initialize IIDMStore with some default entries.
+     *
+     * @deprecated Better explicitly use
+     *             {@link #initDomainAndRolesWithoutUsers()} or
+     *             {@link #initWithDefaultUsers(String)}
+     *
+     * @throws IDMStoreException for issues coming from the IIDMStore
+     */
+    @Deprecated
     public void init() throws IDMStoreException {
-        LOG.info("creating idmlight schema in store");
+        initWithDefaultUsers(IIDMStore.DEFAULT_DOMAIN);
+    }
+
+    /**
+     * Initialize IIDMStore with the default domain and the 'user' and 'admin' roles, if needed.
+     * This does not create any default user entries (because they are an inherent security risk).
+     * @return ID of the just newly created Domain, or null if no new one had to be created
+     * @return true if initialization took place, false if it wasn't needed
+     * @throws IDMStoreException for issues coming from the IIDMStore
+     */
+    public String initDomainAndRolesWithoutUsers(String domainID) throws IDMStoreException {
+        LOG.info("Checking if default entries must be created in IDM store");
 
         // Check whether the default domain exists. If it exists, then do not
         // create default data in the store.
         // TODO Address the fact that someone may delete the sdn domain, or make
         // sdn mandatory.
-        Domain defaultDomain = store.readDomain(IIDMStore.DEFAULT_DOMAIN);
+        Domain defaultDomain = store.readDomain(domainID);
         if (defaultDomain != null) {
-            LOG.info("Found default domain in Store, skipping insertion of default data");
-            return;
+            LOG.info("Found default domain in IDM store, skipping insertion of default data");
+            return null;
         }
 
-        // make domain
+        // Create default domain
         Domain domain = new Domain();
-        User adminUser = new User();
-        User userUser = new User();
-        Role adminRole = new Role();
-        Role userRole = new Role();
         domain.setEnabled(true);
         domain.setName(IIDMStore.DEFAULT_DOMAIN);
         domain.setDescription("default odl sdn domain");
         domain = store.writeDomain(domain);
-
-        // Create default users
-        // "admin" user
-        adminUser.setEnabled(true);
-        adminUser.setName("admin");
-        adminUser.setDomainid(domain.getDomainid());
-        adminUser.setDescription("admin user");
-        adminUser.setEmail("");
-        adminUser.setPassword("admin");
-        adminUser = store.writeUser(adminUser);
-        // "user" user
-        userUser.setEnabled(true);
-        userUser.setName("user");
-        userUser.setDomainid(domain.getDomainid());
-        userUser.setDescription("user user");
-        userUser.setEmail("");
-        userUser.setPassword("user");
-        userUser = store.writeUser(userUser);
+        LOG.info("Created default domain");
+        String newDomainID = domain.getDomainid();
 
         // Create default Roles ("admin" and "user")
+        Role adminRole = new Role();
         adminRole.setName("admin");
-        adminRole.setDomainid(domain.getDomainid());
+        adminRole.setDomainid(newDomainID);
         adminRole.setDescription("a role for admins");
         adminRole = store.writeRole(adminRole);
+        LOG.info("Created 'admin' role");
+
+        Role userRole = new Role();
         userRole.setName("user");
-        userRole.setDomainid(domain.getDomainid());
+        userRole.setDomainid(newDomainID);
         userRole.setDescription("a role for users");
         userRole = store.writeRole(userRole);
+        LOG.info("Created 'user' role");
 
-        // Create default grants
+        return newDomainID;
+    }
+
+    /**
+     * Initialize IIDMStore with the default domain and the 'user' and 'admin'
+     * roles AND 2 default user accounts (with default passwords, which is bad practice).
+     * @param domainID ID (same as name) of the "authentication domain"
+     * @throws IDMStoreException for issues coming from the IIDMStore
+     */
+    public void initWithDefaultUsers(String domainID) throws IDMStoreException {
+        String newDomainID = initDomainAndRolesWithoutUsers(domainID);
+        if (newDomainID != null) {
+            List<String> userAndAdminRoleIDs = getRoleIDs(newDomainID, Arrays.asList("user", "admin"));
+            createUser(newDomainID, "admin", "admin", userAndAdminRoleIDs);
+
+            List<String> userRoleID = getRoleIDs(newDomainID, Collections.singletonList("user"));
+            createUser(newDomainID, "user", "user", userRoleID);
+        }
+    }
+
+    public List<String> getRoleIDs(String domainID, List<String> roleNames) throws IDMStoreException {
+        Map<String, String> roleNameToID = new HashMap<>();
+        List<Role> roles = store.getRoles().getRoles();
+        for (Role role : roles) {
+            if (domainID.equals(role.getDomainid())) {
+                roleNameToID.put(role.getName(), role.getRoleid());
+            }
+        }
+
+        List<String> roleIDs = new ArrayList<>(roleNames.size());
+        for (String roleName : roleNames) {
+            String roleID = roleNameToID.get(roleName);
+            if (roleID == null) {
+                throw new IllegalStateException("'" + roleName + "' role not found (in domain '" + domainID + "')");
+            }
+            roleIDs.add(roleID);
+        }
+
+        return roleIDs;
+    }
+
+    /**
+     * Create new user.
+     *
+     * @param domainID ID (same as name) of the "authentication domain"
+     * @param userName new user name (without the domain prefix which gets automatically added)
+     * @param password the new user's initial password
+     * @param isAdmin whether to also grant the user the 'admin' role, or just the 'user' role
+     * @return ID of the just newly created user, useful to reference it e.g. in grants
+     * @throws IDMStoreException for issues coming from the IIDMStore
+     */
+    public String createUser(String domainID, String userName, String password, List<String> roleIDs)
+            throws IDMStoreException {
+        User newUser = new User();
+        newUser.setEnabled(true);
+        newUser.setDomainid(domainID);
+        newUser.setName(userName);
+        newUser.setDescription(userName + " user");
+        newUser.setEmail("");
+        newUser.setPassword(password);
+        newUser = store.writeUser(newUser);
+        LOG.info("Created '" + userName + "' user in domain '" + domainID + "'");
+
+        String newUserID = newUser.getUserid();
+        for (String roleID : roleIDs) {
+            createGrant(domainID, newUserID, roleID);
+        }
+        return newUserID;
+    }
+
+    private void createGrant(String domainID, String userID, String roleID)
+            throws IDMStoreException {
         Grant grant = new Grant();
-        grant.setDomainid(domain.getDomainid());
-        grant.setUserid(userUser.getUserid());
-        grant.setRoleid(userRole.getRoleid());
+        grant.setDomainid(domainID);
+        grant.setUserid(userID);
+        grant.setRoleid(roleID);
         grant = store.writeGrant(grant);
-
-        grant.setDomainid(domain.getDomainid());
-        grant.setUserid(adminUser.getUserid());
-        grant.setRoleid(userRole.getRoleid());
-        grant = store.writeGrant(grant);
-
-        grant.setDomainid(domain.getDomainid());
-        grant.setUserid(adminUser.getUserid());
-        grant.setRoleid(adminRole.getRoleid());
-        grant = store.writeGrant(grant);
+        LOG.info("Granted '" + userID + "' user the '" + roleID + "' role in domain '" + domainID + "'");
     }
 }

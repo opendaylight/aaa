@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.idm.IdmLightApplication;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
 
 public abstract class HandlerTest extends JerseyTest {
@@ -26,12 +27,16 @@ public abstract class HandlerTest extends JerseyTest {
     protected AppDescriptor configure() {
         return new WebAppDescriptor.Builder()
                                    .initParam(WebComponent.RESOURCE_CONFIG_CLASS, IdmLightApplication.class.getName())
+                                   .initParam("com.sun.jersey.config.feature.Trace", "true")
+                                   .initParam("com.sun.jersey.spi.container.ContainerResponseFilters", "com.sun.jersey.api.container.filter.LoggingFilter")
                                    .build();
     }
 
     @Before
     @Override
     public void setUp() throws Exception {
+        SLF4JBridgeHandler.removeHandlersForRootLogger();
+        SLF4JBridgeHandler.install();
         super.setUp();
         new StoreBuilder(testStore).init();
         AAAIDMLightModule.setStore(testStore);
