@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_e34ce072",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/StoreBuilder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-11-23T15:54:52Z",
+      "side": 1,
+      "message": "I know it was there Michael. But as you do refactoring and cleaning just do it right. The current aaa committers and PTL were not there when this start.  I take the chance you do things and review it with you. \nreally appreciate, what you are doing for refactoring and re-design things.",
+      "parentUuid": "3a65312a_e0305603",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 16
+      },
+      "revId": "3950092ffcb67b70ce95be89de0e289f42acce9c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_807362e6",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/StoreBuilder.java",
         "patchSetId": 5
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Done, even though I disagree; there is little logic in keeping the earlier LOG on info and this on debug; in fact this is the step that as an admin it\u0027s important that are aware that a default user was created, so IMHO it would be important to have this in info().  But I need to move forward, and you\u0027re the commiter, so I\u0027ve changed it.",
       "parentUuid": "3a65312a_807362e6",
+      "range": {
+        "startLine": 182,
+        "startChar": 12,
+        "endLine": 182,
+        "endChar": 16
+      },
+      "revId": "3950092ffcb67b70ce95be89de0e289f42acce9c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_6370d0a5",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/StoreBuilder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-11-23T15:54:52Z",
+      "side": 1,
+      "message": "do not take like that if you are disagree. I\u0027m just doing review from my point of view. Moreover logging the identity information is not good from security prospective, it should be on the debug mode only.",
+      "parentUuid": "3a65312a_001d9273",
       "range": {
         "startLine": 182,
         "startChar": 12,
