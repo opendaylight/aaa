@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_0068f2f3",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/StoreBuilder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-11-23T15:25:48Z",
+      "side": 1,
+      "message": "you don\u0027t need to call this, compiler will do it anyway. just remove it",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 16
+      },
+      "revId": "3950092ffcb67b70ce95be89de0e289f42acce9c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_807362e6",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/StoreBuilder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-11-23T15:25:48Z",
+      "side": 1,
+      "message": "I prefer put this into debug logging",
+      "range": {
+        "startLine": 182,
+        "startChar": 12,
+        "endLine": 182,
+        "endChar": 16
+      },
+      "revId": "3950092ffcb67b70ce95be89de0e289f42acce9c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_a0781ec5",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/StoreBuilder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-11-23T15:25:48Z",
+      "side": 1,
+      "message": "I prefer put this into debug logging",
+      "range": {
+        "startLine": 198,
+        "startChar": 12,
+        "endLine": 198,
+        "endChar": 16
+      },
+      "revId": "3950092ffcb67b70ce95be89de0e289f42acce9c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
