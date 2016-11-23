@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_e0305603",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/StoreBuilder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-23T15:36:14Z",
+      "side": 1,
+      "message": "Done, just to move forward; but Mohamed, this super() was already there, and typically when we code review, we review the changes proposed, not the existing code...",
+      "parentUuid": "3a65312a_0068f2f3",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 16
+      },
+      "revId": "3950092ffcb67b70ce95be89de0e289f42acce9c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_807362e6",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/StoreBuilder.java",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_001d9273",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/StoreBuilder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-23T15:36:14Z",
+      "side": 1,
+      "message": "Done, even though I disagree; there is little logic in keeping the earlier LOG on info and this on debug; in fact this is the step that as an admin it\u0027s important that are aware that a default user was created, so IMHO it would be important to have this in info().  But I need to move forward, and you\u0027re the commiter, so I\u0027ve changed it.",
+      "parentUuid": "3a65312a_807362e6",
+      "range": {
+        "startLine": 182,
+        "startChar": 12,
+        "endLine": 182,
+        "endChar": 16
+      },
+      "revId": "3950092ffcb67b70ce95be89de0e289f42acce9c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_a0781ec5",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/StoreBuilder.java",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2016-11-23T15:25:48Z",
       "side": 1,
       "message": "I prefer put this into debug logging",
+      "range": {
+        "startLine": 198,
+        "startChar": 12,
+        "endLine": 198,
+        "endChar": 16
+      },
+      "revId": "3950092ffcb67b70ce95be89de0e289f42acce9c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_6014464e",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/StoreBuilder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-23T15:36:14Z",
+      "side": 1,
+      "message": "Done, but as above.",
+      "parentUuid": "3a65312a_a0781ec5",
       "range": {
         "startLine": 198,
         "startChar": 12,
