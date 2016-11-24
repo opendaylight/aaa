@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_d8d8b881",
+        "filename": "aaa-cli-jar/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:25:29Z",
+      "side": 1,
+      "message": "OK, Done.",
+      "parentUuid": "3a65312a_b205257c",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 44
+      },
+      "revId": "7a44d441394c07c6c710c310fdfb64d3406fa07e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_9208e992",
         "filename": "aaa-cli-jar/pom.xml",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2016-11-16T16:06:00Z",
       "side": 1,
       "message": "\"compiled\"?",
+      "range": {
+        "startLine": 50,
+        "startChar": 67,
+        "endLine": 50,
+        "endChar": 74
+      },
+      "revId": "7a44d441394c07c6c710c310fdfb64d3406fa07e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_b8cb3ca4",
+        "filename": "aaa-cli-jar/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:25:29Z",
+      "side": 1,
+      "message": "NOK, I do mean (scope) \"compile\", not \"compiled\".. ;-) But I\u0027ve edited the inline comment \u003cscope\u003e, so hopefully its clearer now.",
+      "parentUuid": "3a65312a_9208e992",
       "range": {
         "startLine": 50,
         "startChar": 67,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_d8bf18fb",
+        "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/AbstractMain.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:25:29Z",
+      "side": 1,
+      "message": "NOK, this was about something slightly different than what you understood (I thought it may be cool to dynamically configure logging to show debug level messages *IFF* -X option is given..), but in hindsight that\u0027s not that important - so I\u0027ve removed that TODO for now, to avoid confusion.",
+      "parentUuid": "3a65312a_922f49f6",
+      "range": {
+        "startLine": 45,
+        "startChar": 16,
+        "endLine": 45,
+        "endChar": 56
+      },
+      "revId": "7a44d441394c07c6c710c310fdfb64d3406fa07e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_d239c142",
         "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/AbstractMain.java",
         "patchSetId": 8
@@ -82,6 +154,30 @@
       "writtenOn": "2016-11-16T16:06:00Z",
       "side": 1,
       "message": "Magic number?  I am unfamiliar with this return code.  Can you please create a private static final constant for this?",
+      "range": {
+        "startLine": 58,
+        "startChar": 23,
+        "endLine": 58,
+        "endChar": 25
+      },
+      "revId": "7a44d441394c07c6c710c310fdfb64d3406fa07e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_782d2446",
+        "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/AbstractMain.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:25:29Z",
+      "side": 1,
+      "message": "OK, done.  (Re. \"unfamiliar\", it\u0027s not any standard return code of course, but I believe the UNIX convention is that any negative return codes mean \"failure\", right?  These different codes are used in my integration test, and could, in theory, be exploited by whatever is going to call this standalone JAR in the future.)",
+      "parentUuid": "3a65312a_d239c142",
       "range": {
         "startLine": 58,
         "startChar": 23,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_5830289e",
+        "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/AbstractMain.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:25:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a65312a_123b3939",
+      "range": {
+        "startLine": 63,
+        "startChar": 23,
+        "endLine": 63,
+        "endChar": 25
+      },
+      "revId": "7a44d441394c07c6c710c310fdfb64d3406fa07e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_326e3530",
         "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/AbstractMain.java",
         "patchSetId": 8
@@ -128,6 +248,30 @@
       "writtenOn": "2016-11-16T16:06:00Z",
       "side": 1,
       "message": "See above.",
+      "range": {
+        "startLine": 75,
+        "startChar": 16,
+        "endLine": 75,
+        "endChar": 26
+      },
+      "revId": "7a44d441394c07c6c710c310fdfb64d3406fa07e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_b827bc63",
+        "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/AbstractMain.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:25:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a65312a_326e3530",
       "range": {
         "startLine": 75,
         "startChar": 16,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_f84bf428",
+        "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/AbstractMain.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:25:29Z",
+      "side": 1,
+      "message": "NOK; the point of this big try/catch all around main() is specifically to not propagate errors to the end-user CLI, and instead use system return codes (unless -X is used).  I\u0027m big on proper exception handling, and wrote extensively about it on https://wiki.opendaylight.org/view/BestPractices/Coding_Guidelines#IllegalCatch, and I would argue that in this particular case, this is the right thing to do.",
+      "parentUuid": "3a65312a_b261a53b",
+      "range": {
+        "startLine": 91,
+        "startChar": 17,
+        "endLine": 91,
+        "endChar": 26
+      },
+      "revId": "7a44d441394c07c6c710c310fdfb64d3406fa07e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_1250595d",
         "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/Main.java",
         "patchSetId": 8
@@ -174,6 +342,30 @@
       "writtenOn": "2016-11-16T16:06:00Z",
       "side": 1,
       "message": "Why not use iterators instead of introducing an index variable?",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 50
+      },
+      "revId": "7a44d441394c07c6c710c310fdfb64d3406fa07e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_58d78823",
+        "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/Main.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:25:29Z",
+      "side": 1,
+      "message": "NOK, it\u0027s because the way this work there are two lists, see code; sure I could iterate through them at the same time, but I found this much clearer / more explicit.",
+      "parentUuid": "3a65312a_1250595d",
       "range": {
         "startLine": 46,
         "startChar": 8,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_78d40420",
+        "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/Main.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:25:29Z",
+      "side": 1,
+      "message": "NOK, yeah, it would need a MessageFormat.. with translation support.. ;) lets leave this overall topic for another day; No Action taken on this point.",
+      "parentUuid": "3a65312a_d25ee175",
+      "range": {
+        "startLine": 51,
+        "startChar": 16,
+        "endLine": 52,
+        "endChar": 78
+      },
+      "revId": "7a44d441394c07c6c710c310fdfb64d3406fa07e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_32559550",
         "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/Main.java",
         "patchSetId": 8
@@ -220,6 +436,30 @@
       "writtenOn": "2016-11-16T16:06:00Z",
       "side": 1,
       "message": "Magic number...",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 26
+      },
+      "revId": "7a44d441394c07c6c710c310fdfb64d3406fa07e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_f820144b",
+        "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/Main.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:25:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a65312a_32559550",
       "range": {
         "startLine": 55,
         "startChar": 16,
@@ -278,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_b8b5fcef",
+        "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/StandaloneCommandLineInterface.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:25:29Z",
+      "side": 1,
+      "message": "OK, done.",
+      "parentUuid": "3a65312a_f2d2fdd0",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 9
+      },
+      "revId": "7a44d441394c07c6c710c310fdfb64d3406fa07e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_d2d541ba",
         "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/StandaloneCommandLineInterface.java",
         "patchSetId": 8
@@ -301,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_75640d22",
+        "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/StandaloneCommandLineInterface.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:25:29Z",
+      "side": 1,
+      "message": "OK, but actually, I probably should not have used getUsers() and loop over it to begin with? ;-) New Patch Set uses readUser() API instead..",
+      "parentUuid": "3a65312a_d2d541ba",
+      "range": {
+        "startLine": 50,
+        "startChar": 12,
+        "endLine": 50,
+        "endChar": 50
+      },
+      "revId": "7a44d441394c07c6c710c310fdfb64d3406fa07e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_12d7b9c0",
         "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/StandaloneCommandLineInterface.java",
         "patchSetId": 8
@@ -312,6 +600,30 @@
       "writtenOn": "2016-11-16T16:06:00Z",
       "side": 1,
       "message": "Preconditions are nicer...",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 9
+      },
+      "revId": "7a44d441394c07c6c710c310fdfb64d3406fa07e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_98b800e7",
+        "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/StandaloneCommandLineInterface.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:25:29Z",
+      "side": 1,
+      "message": "OK, done.",
+      "parentUuid": "3a65312a_12d7b9c0",
       "range": {
         "startLine": 60,
         "startChar": 8,
@@ -358,6 +670,30 @@
       "writtenOn": "2016-11-16T16:06:00Z",
       "side": 1,
       "message": "Use File.Separator.  We do not want to become *nix dependent (well I do but thats beside the point ;)).",
+      "range": {
+        "startLine": 121,
+        "startChar": 64,
+        "endLine": 121,
+        "endChar": 67
+      },
+      "revId": "7a44d441394c07c6c710c310fdfb64d3406fa07e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_18c4f05d",
+        "filename": "aaa-h2-store/src/main/java/org/opendaylight/aaa/h2/config/IdmLightConfig.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:25:29Z",
+      "side": 1,
+      "message": "OK, see https://git.opendaylight.org/gerrit/#/c/48547/",
+      "parentUuid": "3a65312a_b2efe586",
       "range": {
         "startLine": 121,
         "startChar": 64,
