@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_c9a62553",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IdMServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:54:26Z",
+      "side": 1,
+      "message": "Done.. None other than that\u0027s how it was in IdmLightProxy, where I had refactored this from, without looking more closely into it.",
+      "parentUuid": "3a65312a_465cc225",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 56
+      },
+      "revId": "4c7580d2831dac0cf03eda68beca29b37603d865",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_0652ca12",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IdMServiceImpl.java",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2016-11-23T20:33:36Z",
       "side": 1,
       "message": "Is this missing a prepared string placeholder?",
+      "revId": "4c7580d2831dac0cf03eda68beca29b37603d865",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_2965191e",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IdMServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:54:26Z",
+      "side": 1,
+      "message": "Done.. None other than that\u0027s how it was in IdmLightProxy, where I had refactored this from, without looking more closely into it.",
+      "parentUuid": "3a65312a_0652ca12",
       "revId": "4c7580d2831dac0cf03eda68beca29b37603d865",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_09681df4",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IdMServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:54:26Z",
+      "side": 1,
+      "message": "Done.. None other than that\u0027s how it was in IdmLightProxy, where I had refactored this from, without looking more closely into it.",
+      "parentUuid": "3a65312a_6659fe35",
+      "revId": "4c7580d2831dac0cf03eda68beca29b37603d865",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_a642f63b",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IdMServiceImpl.java",
         "patchSetId": 2
@@ -70,6 +130,30 @@
       "writtenOn": "2016-11-23T20:33:36Z",
       "side": 1,
       "message": "Should be\nLOG.debug(\"DomainName: {} Not found!\", domainName);\n\nI believe.",
+      "range": {
+        "startLine": 67,
+        "startChar": 20,
+        "endLine": 67,
+        "endChar": 76
+      },
+      "revId": "4c7580d2831dac0cf03eda68beca29b37603d865",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_a97809c5",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IdMServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:54:26Z",
+      "side": 1,
+      "message": "Done.. none other than that\u0027s how it was in IdmLightProxy, where I had refactored this from, without looking more closely into it.",
+      "parentUuid": "3a65312a_a642f63b",
       "range": {
         "startLine": 67,
         "startChar": 20,
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_094f7d93",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/IdmLightProxy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:54:26Z",
+      "side": 1,
+      "message": "NOK.  I actually thought about that, but realized that doing what you suggest would subtly change the behaviour from what it currently does (see the red on the left).  Note that AAAIDMLightModule has a setStore(IIDMStore s), so at least in theory it seems to be intended to be able to change at runtime? Therefore, I\u0027m not comfortable changing this logic to be different from how it is.  You may know that \"it actually never changes\", but I don\u0027t, and the code says otherwise, so it\u0027s best not to touch this.  Of course we could start clean that up, but you know how it is - one things leads to another.. I need to get this done and over with.. ;-)",
+      "parentUuid": "3a65312a_863d3abe",
+      "range": {
+        "startLine": 156,
+        "startChar": 15,
+        "endLine": 156,
+        "endChar": 63
+      },
+      "revId": "4c7580d2831dac0cf03eda68beca29b37603d865",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_e64cee72",
         "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/IdmLightProxy.java",
         "patchSetId": 2
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_6946f17d",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/IdmLightProxy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:54:26Z",
+      "side": 1,
+      "message": "NOK",
+      "parentUuid": "3a65312a_e64cee72",
+      "range": {
+        "startLine": 161,
+        "startChar": 8,
+        "endLine": 161,
+        "endChar": 33
+      },
+      "revId": "4c7580d2831dac0cf03eda68beca29b37603d865",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_c647324a",
         "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/IdmLightProxy.java",
         "patchSetId": 2
@@ -139,6 +271,30 @@
       "writtenOn": "2016-11-23T20:33:36Z",
       "side": 1,
       "message": "Same as above.",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 166,
+        "endChar": 33
+      },
+      "revId": "4c7580d2831dac0cf03eda68beca29b37603d865",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_4949758a",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/IdmLightProxy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2016-11-24T10:54:26Z",
+      "side": 1,
+      "message": "NOK",
+      "parentUuid": "3a65312a_c647324a",
       "range": {
         "startLine": 166,
         "startChar": 8,
