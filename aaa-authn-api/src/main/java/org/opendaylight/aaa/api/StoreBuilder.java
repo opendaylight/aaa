@@ -9,7 +9,6 @@ package org.opendaylight.aaa.api;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -128,11 +127,8 @@ public class StoreBuilder {
     public void initWithDefaultUsers(String domainID) throws IDMStoreException {
         String newDomainID = initDomainAndRolesWithoutUsers(domainID);
         if (newDomainID != null) {
-            List<String> userAndAdminRoleIDs = getRoleIDs(newDomainID, Arrays.asList("user", "admin"));
-            createUser(newDomainID, "admin", "admin", userAndAdminRoleIDs);
-
-            List<String> userRoleID = getRoleIDs(newDomainID, Collections.singletonList("user"));
-            createUser(newDomainID, "user", "user", userRoleID);
+            createUser(newDomainID, "admin", "admin", true);
+            createUser(newDomainID, "user", "user", false);
         }
     }
 
@@ -187,8 +183,18 @@ public class StoreBuilder {
         return newUserID;
     }
 
-    private void createGrant(String domainID, String userID, String roleID)
+    public String createUser(String domainID, String userName, String password, boolean isAdmin)
             throws IDMStoreException {
+        List<String> roleIDs;
+        if (isAdmin) {
+            roleIDs = getRoleIDs(domainID, Arrays.asList("user", "admin"));
+        } else {
+            roleIDs = getRoleIDs(domainID, Arrays.asList("user"));
+        }
+        return createUser(domainID, userName, password, roleIDs);
+    }
+
+    private void createGrant(String domainID, String userID, String roleID) throws IDMStoreException {
         Grant grant = new Grant();
         grant.setDomainid(domainID);
         grant.setUserid(userID);
