@@ -8,10 +8,6 @@
 
 package org.opendaylight.aaa.cli;
 
-import java.io.BufferedReader;
-import java.io.Console;
-import java.io.InputStreamReader;
-import java.util.Scanner;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
@@ -48,12 +44,8 @@ public class ChangeUserPassword extends OsgiCommandSupport {
         if (identityStore == null) {
            return "Failed to access the users data store";
         }
-        System.out.println("Enter current password:");
-        final InputStreamReader istreamReader = new InputStreamReader(this.session.getKeyboard());
-        final BufferedReader bReader = new BufferedReader(istreamReader);
-        final String currentPwd = bReader.readLine();
-        System.out.println("Enter new password:");
-        final String newPwd = bReader.readLine();
+        final String currentPwd = CliUtils.readPassword(this.session, "Enter current password:");
+        final String newPwd = CliUtils.readPassword(this.session, "Enter new password:");
         final Users users = identityStore.getUsers();
         for (User usr : users.getUsers()) {
             final String realPwd = SHA256Calculator.getSHA256(currentPwd, usr.getSalt());
