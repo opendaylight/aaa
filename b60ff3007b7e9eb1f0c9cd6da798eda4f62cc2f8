@@ -22,6 +22,30 @@
       "revId": "b60ff3007b7e9eb1f0c9cd6da798eda4f62cc2f8",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_4b37e9e3",
+        "filename": "aaa-shiro/src/main/resources/shiro.ini",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2016-12-07T17:39:59Z",
+      "side": 1,
+      "message": "well, looks like we should specify the restricted URLs before setting the AAAFilter. I didn\u0027t notice its there as it didn\u0027t work. \n\nThe ODL user is able to access /config/aaa-authn-model:authentication if the url under the AAAFilter configuration. \nWill try to push update this week",
+      "parentUuid": "1a622d24_a7eebb89",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 52
+      },
+      "revId": "b60ff3007b7e9eb1f0c9cd6da798eda4f62cc2f8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
