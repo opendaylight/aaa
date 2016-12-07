@@ -9,7 +9,6 @@
 package org.opendaylight.aaa.cli;
 
 import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 
@@ -25,20 +24,13 @@ public class GetODLSelfSignCert extends OsgiCommandSupport{
 
     protected ICertificateManager certProvider;
 
-    @Option(name = "-storepass",
-            aliases = { "--KeyStorePass" },
-            description = "The keystore password.\n-storepass",
-            required = true,
-            multiValued = false)
-    private String keyStorePassword = "";
-
     public GetODLSelfSignCert(final ICertificateManager aaaCertProvider) {
         this.certProvider = aaaCertProvider;
     }
 
     @Override
     protected Object doExecute() throws Exception {
-        return certProvider.getODLKeyStoreCertificate(keyStorePassword, true);
+        return certProvider.getODLKeyStoreCertificate(CliUtils.readPassword(this.session, "Enter Keystore Password:"), true);
     }
 
 }

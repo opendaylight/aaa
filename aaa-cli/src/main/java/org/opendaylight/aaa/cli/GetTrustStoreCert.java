@@ -25,13 +25,6 @@ public class GetTrustStoreCert  extends OsgiCommandSupport{
 
     protected ICertificateManager certProvider;
 
-    @Option(name = "-storepass",
-            aliases = { "--KeyStorePass" },
-            description = "The keystore password.\n-storepass",
-            required = true,
-            multiValued = false)
-    private String keyStorePassword = "";
-
     @Option(name = "-alias",
             aliases = { "--alias" },
             description = "The alias.\n-alias / --should be the node certificate alias",
@@ -45,7 +38,7 @@ public class GetTrustStoreCert  extends OsgiCommandSupport{
 
     @Override
     protected Object doExecute() throws Exception {
-        return certProvider.getCertificateTrustStore(keyStorePassword, alias, true);
+        return certProvider.getCertificateTrustStore(CliUtils.readPassword(this.session, "Enter Keystore Password:"), alias, true);
     }
 
 }
