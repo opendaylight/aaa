@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a622d24_4bf52982",
+        "filename": "aaa-shiro/src/main/resources/shiro.ini",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2016-12-07T20:15:21Z",
+      "side": 1,
+      "message": "space here please.  Otherwise looks good to me!",
+      "revId": "152f9a3b7b40b1fff7cc6439013b92d882d9b137",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
