@@ -6,7 +6,7 @@
 
   <reference id="encryService" interface="org.opendaylight.aaa.encrypt.AAAEncryptionService"/>
 
-  <odl:clustered-app-config id="mdsalConfig"
+  <odl:clustered-app-config id="mdsalConfig" default-config-file-name="aaa-mdsal-config.xml"
         binding-class="org.opendaylight.yang.gen.v1.config.aaa.authn.mdsal.store.rev141031.MdsalConfig">
   </odl:clustered-app-config>
 

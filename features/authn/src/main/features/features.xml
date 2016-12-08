@@ -145,6 +145,7 @@
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
+        <configfile finalname="etc/idmtool">mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}/py/config</configfile>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-core/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/{{VERSION}}</bundle>
@@ -152,12 +153,11 @@
         <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/{{VERSION}}</bundle>
-        <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
 
         <!-- Federation -->
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-idpmapping/{{VERSION}}</bundle>
-        <bundle>mvn:org.glassfish/javax.json/1.0.4</bundle>
+        <bundle>mvn:org.glassfish/javax.json/{{VERSION}}</bundle>
 
         <!-- REST -->
         <feature>war</feature>
@@ -166,6 +166,7 @@
         <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
         <bundle>mvn:com.sun.jersey/jersey-client/{{VERSION}}</bundle>
 
+        <configfile finalname="/etc/opendaylight/datastore/initial/config/aaa-mdsal-config.xml">mvn:org.opendaylight.aaa/aaa-authn-mdsal-store-impl/{{VERSION}}/xml/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
