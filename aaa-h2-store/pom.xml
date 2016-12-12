@@ -84,7 +84,6 @@
                     <instructions>
                         <Import-Package>com.google.*,org.opendaylight.aaa.api.*,org.apache.felix.*,org.slf4j.*,org.opendaylight.*,org.osgi.*,org.apache.commons.lang3</Import-Package>
                         <Private-Package>org.h2.*</Private-Package>
-                        <Embed-Dependency>h2</Embed-Dependency>
                     </instructions>
                 </configuration>
             </plugin>
