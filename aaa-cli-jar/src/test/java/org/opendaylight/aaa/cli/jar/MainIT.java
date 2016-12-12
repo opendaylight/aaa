@@ -51,7 +51,8 @@ public class MainIT {
 
     private File findExecutableFatJAR() {
         File targetDirectory = new File(".", "target");
-        File[] jarFiles = targetDirectory.listFiles((dir, name) -> name.endsWith("jar-with-dependencies.jar"));
+        File[] jarFiles = targetDirectory.listFiles((dir, name) ->
+            name.startsWith("aaa-cli-jar-") && name.endsWith(".jar") && !name.contains("-javadoc"));
         assertThat(jarFiles).named("*jar-with-dependencies.jar files in " + targetDirectory).isNotNull();
         assertThat(jarFiles).named("*jar-with-dependencies.jar files in " + targetDirectory).hasLength(1);
         return jarFiles[0];
