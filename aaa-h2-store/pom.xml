@@ -15,22 +15,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>config-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>sal-binding-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>sal-binding-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>sal-common-util</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
@@ -50,6 +34,10 @@
         <dependency>
             <groupId>org.immutables</groupId>
             <artifactId>value</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
         </dependency>
 
         <!-- JDBC -->
@@ -74,6 +62,7 @@
             <artifactId>truth</artifactId>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -82,10 +71,32 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Import-Package>com.google.*,org.opendaylight.aaa.api.*,org.apache.felix.*,org.slf4j.*,org.opendaylight.*,org.osgi.*,org.apache.commons.lang3</Import-Package>
+                        <Import-Package>net.sf.ehcache.*,com.google.*,org.opendaylight.aaa.api.*,org.apache.felix.*,org.slf4j.*,org.osgi.*,org.apache.commons.lang3</Import-Package>
                         <Private-Package>org.h2.*</Private-Package>
                     </instructions>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                  <execution>
+                    <id>attach-artifacts</id>
+                    <goals>
+                      <goal>attach-artifact</goal>
+                    </goals>
+                    <phase>package</phase>
+                    <configuration>
+                      <artifacts>
+                        <artifact>
+                          <file>${project.build.directory}/classes/initial/tokens.cfg</file>
+                          <type>cfg</type>
+                          <classifier>config</classifier>
+                        </artifact>
+                      </artifacts>
+                    </configuration>
+                  </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
