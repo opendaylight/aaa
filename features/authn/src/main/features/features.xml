@@ -77,7 +77,6 @@
         <bundle>mvn:org.apache.shiro/shiro-web/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-store/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
 
@@ -104,7 +103,7 @@
         <bundle>mvn:org.glassfish/javax.json/{{VERSION}}</bundle>
 
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/aaa-authn-store/{{VERSION}}/cfg/config</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
     </feature>
@@ -247,7 +246,7 @@
         <bundle>mvn:org.glassfish/javax.json/{{VERSION}}</bundle>
 
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/aaa-authn-store/{{VERSION}}/cfg/config</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
     </feature>

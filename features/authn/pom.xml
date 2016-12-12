@@ -237,10 +237,6 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authn-store</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn-basic</artifactId>
         </dependency>
         <dependency>
@@ -261,12 +257,6 @@
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn</artifactId>
-            <type>cfg</type>
-            <classifier>config</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authn-store</artifactId>
             <type>cfg</type>
             <classifier>config</classifier>
         </dependency>
