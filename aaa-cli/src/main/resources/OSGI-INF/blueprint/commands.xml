@@ -34,6 +34,21 @@
                 <argument ref="KeyStoreConsoleProvider" />
             </action>
         </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.AddRole">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.AddDomain">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.AddUser">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
     </command-bundle>
 
 </blueprint>
