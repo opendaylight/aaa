@@ -36,6 +36,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
       <artifactId>org.apache.karaf.shell.console</artifactId>
       <version>${karaf.version}</version>
     </dependency>
+    <dependency>
+        <groupId>net.sf.ehcache</groupId>
+        <artifactId>ehcache</artifactId>
+    </dependency>
 
     <!-- Testing Dependencies -->
     <dependency>
