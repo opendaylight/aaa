@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.cli;
+package org.opendaylight.aaa.cli.dmstore;
 
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
@@ -15,6 +15,7 @@ import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
+import org.opendaylight.aaa.cli.utils.CliUtils;
 
 @Command(name = "change-user-pwd", scope = "aaa", description = "Change the user password.")
 
@@ -55,6 +56,6 @@ public class ChangeUserPassword extends OsgiCommandSupport {
                 return userName + "'s password has been changed";
             }
         }
-        return "User does not exist OR user name and passsword are not correct";
+        return CliUtils.LOGIN_FAILED_MESS;
     }
 }
