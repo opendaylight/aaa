@@ -64,6 +64,11 @@ public class Role {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public void setDomainid(String domainid) {
         this.domainid = domainid;
     }

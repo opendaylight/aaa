@@ -72,6 +72,11 @@ public class Domain {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     private boolean compareValues(Object a, Object b) {
         if (a == null && b != null)
             return false;
