@@ -10,28 +10,68 @@
 
     <command-bundle xmlns="http://karaf.apache.org/xmlns/shell/v1.1.0">
         <command>
-            <action class="org.opendaylight.aaa.cli.ChangeUserPassword">
+            <action class="org.opendaylight.aaa.cli.dmstore.ChangeUserPassword">
                 <argument ref="iIDMStore" />
             </action>
         </command>
         <command>
-            <action class="org.opendaylight.aaa.cli.GetODLSelfSignCert">
+            <action class="org.opendaylight.aaa.cli.cert.GetODLSelfSignCert">
                 <argument ref="KeyStoreConsoleProvider" />
             </action>
         </command>
         <command>
-            <action class="org.opendaylight.aaa.cli.GenerateCertReq">
+            <action class="org.opendaylight.aaa.cli.cert.GenerateCertReq">
                 <argument ref="KeyStoreConsoleProvider" />
             </action>
         </command>
         <command>
-            <action class="org.opendaylight.aaa.cli.GetTrustStoreCert">
+            <action class="org.opendaylight.aaa.cli.cert.GetTrustStoreCert">
                 <argument ref="KeyStoreConsoleProvider" />
             </action>
         </command>
         <command>
-            <action class="org.opendaylight.aaa.cli.GetCipherSuites">
+            <action class="org.opendaylight.aaa.cli.cert.GetCipherSuites">
                 <argument ref="KeyStoreConsoleProvider" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.AddRole">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.AddDomain">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.AddUser">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.AddGrant">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.RemoveGrant">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.RemoveUser">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.RemoveRole">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.RemoveDomain">
+                <argument ref="iIDMStore" />
             </action>
         </command>
     </command-bundle>

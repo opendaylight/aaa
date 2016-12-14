@@ -5,7 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.cli;
+package org.opendaylight.aaa.cli.utils;
 
 import org.apache.felix.service.command.CommandSession;
 import java.io.BufferedReader;
@@ -18,6 +18,8 @@ import java.io.InputStreamReader;
  *
  */
 public class CliUtils {
+
+    public static final String LOGIN_FAILED_MESS = "User does not exist OR user name and passsword are not correct";
 
     /**
      * Retrieve the password from the user

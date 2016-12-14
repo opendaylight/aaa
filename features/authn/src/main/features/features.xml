@@ -279,6 +279,7 @@
              version='${project.version}'>
         <feature version="${project.version}">odl-aaa-cert</feature>
         <feature version='${project.version}'>odl-aaa-api</feature>
+        <bundle>mvn:net.sf.ehcache/ehcache/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-cli/{{VERSION}}</bundle>
     </feature>
 </features>
