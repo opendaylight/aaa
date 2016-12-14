@@ -11,6 +11,7 @@ package org.opendaylight.aaa.cli;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.cli.utils.CliUtils;
 
 @Command(name = "gen-cert-req", scope = "aaa", description = "generate a certificate request for the opendaylight controller.")
 
