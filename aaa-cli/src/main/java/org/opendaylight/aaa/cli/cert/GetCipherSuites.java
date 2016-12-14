@@ -6,32 +6,31 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.cli;
+package org.opendaylight.aaa.cli.cert;
 
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 
-@Command(name = "get-odl-cert", scope = "aaa", description = "get self sign certificate for the opendaylight controller.")
+@Command(name = "get-cipher-suites", scope = "aaa", description = "Get the allowed cipher suites for TLS communication.")
 
 /**
- * GetODLSelfSignCert get the ODL key store self sign certificate.
+ * GetCipherSuites get the allowed cipher suites for TLS communication.
  *
  * @author mserngawy
  *
  */
-public class GetODLSelfSignCert extends OsgiCommandSupport{
+public class GetCipherSuites extends OsgiCommandSupport {
 
-    protected ICertificateManager certProvider;
+    protected volatile ICertificateManager certProvider;
 
-    public GetODLSelfSignCert(final ICertificateManager aaaCertProvider) {
+    public GetCipherSuites(final ICertificateManager aaaCertProvider) {
         this.certProvider = aaaCertProvider;
     }
 
     @Override
     protected Object doExecute() throws Exception {
-        final String pwd = CliUtils.readPassword(this.session, "Enter Keystore Password:");
-        return certProvider.getODLKeyStoreCertificate(pwd, true);
+        return certProvider.getCipherSuites();
     }
 
 }
