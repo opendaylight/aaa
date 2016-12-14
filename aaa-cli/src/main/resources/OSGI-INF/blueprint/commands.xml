@@ -10,6 +10,21 @@
 
     <command-bundle xmlns="http://karaf.apache.org/xmlns/shell/v1.1.0">
         <command>
+            <action class="org.opendaylight.aaa.cli.ListODLUsers">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.ListODLDomains">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.ListODLRoles">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
             <action class="org.opendaylight.aaa.cli.ChangeUserPassword">
                 <argument ref="iIDMStore" />
             </action>
