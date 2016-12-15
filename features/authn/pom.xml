@@ -9,20 +9,20 @@
     <parent>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>features-parent</artifactId>
-        <version>1.7.2-SNAPSHOT</version>
+        <version>1.7.2-Boron-SR2</version>
         <relativePath/>
     </parent>
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>features-aaa</artifactId>
-    <version>0.4.2-SNAPSHOT</version>
+    <version>0.4.2-Boron-SR2</version>
     <packaging>jar</packaging>
 
     <properties>
-        <config.version>0.5.2-SNAPSHOT</config.version>
-        <mdsal.version>2.1.2-SNAPSHOT</mdsal.version>
-        <controller.mdsal.version>1.4.2-SNAPSHOT</controller.mdsal.version>
-        <yangtools.version>1.0.2-SNAPSHOT</yangtools.version>
+        <config.version>0.5.2-Boron-SR2</config.version>
+        <mdsal.version>2.1.2-Boron-SR2</mdsal.version>
+        <controller.mdsal.version>1.4.2-Boron-SR2</controller.mdsal.version>
+        <yangtools.version>1.0.2-Boron-SR2</yangtools.version>
     </properties>
 
     <dependencyManagement>
@@ -38,12 +38,12 @@
             <dependency>
                 <groupId>org.opendaylight.aaa</groupId>
                 <artifactId>aaa-filterchain</artifactId>
-                <version>0.4.2-SNAPSHOT</version>
+                <version>0.4.2-Boron-SR2</version>
             </dependency>
             <dependency>
                 <groupId>org.opendaylight.aaa</groupId>
                 <artifactId>aaa-filterchain</artifactId>
-                <version>0.4.2-SNAPSHOT</version>
+                <version>0.4.2-Boron-SR2</version>
                 <type>cfg</type>
                 <classifier>config</classifier>
             </dependency>
