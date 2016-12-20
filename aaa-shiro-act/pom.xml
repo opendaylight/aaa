@@ -48,22 +48,6 @@
     </dependency>
   </dependencies>
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.felix</groupId>
-          <artifactId>maven-bundle-plugin</artifactId>
-          <version>${bundle.plugin.version}</version>
-          <extensions>true</extensions>
-          <configuration>
-            <instructions>
-              <Bundle-Name>${project.groupId}.${project.artifactId}</Bundle-Name>
-            </instructions>
-            <manifestLocation>${project.basedir}/META-INF</manifestLocation>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.felix</groupId>
@@ -71,13 +55,10 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
+            <Bundle-Name>${project.groupId}.${project.artifactId}</Bundle-Name>
             <Bundle-Activator>org.opendaylight.aaa.shiroact.Activator</Bundle-Activator>
           </instructions>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
       </plugin>
     </plugins>
   </build>
