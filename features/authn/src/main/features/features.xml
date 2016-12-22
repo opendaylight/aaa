@@ -17,7 +17,6 @@
         <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
         <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-api/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-credential-store-api/{{VERSION}}</bundle>
         <feature version='${yangtools.version}'>odl-yangtools-common</feature>
         <feature version='${mdsal.version}'>odl-mdsal-binding-base</feature>
     </feature>
