@@ -48,6 +48,7 @@ import org.slf4j.LoggerFactory;
  * @author liemmn
  *
  */
+@Deprecated
 public class ClaimAuthFilter implements Filter {
     private static final Logger LOG = LoggerFactory.getLogger(ClaimAuthFilter.class);
 
