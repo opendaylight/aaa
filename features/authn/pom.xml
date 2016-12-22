@@ -253,18 +253,10 @@
             <groupId>org.opendaylight.controller</groupId>
             <artifactId>sal-common-impl</artifactId>
         </dependency>
-
-        <!-- odl-aaa-sssd -->
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authn-sssd</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn-idpmapping</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-encrypt-service</artifactId>
@@ -275,7 +267,6 @@
             <type>xml</type>
             <classifier>config</classifier>
         </dependency>
-
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-cert</artifactId>
