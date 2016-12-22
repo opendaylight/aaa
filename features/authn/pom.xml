@@ -189,6 +189,10 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-credential-store-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
             <artifactId>authz-restconf-config</artifactId>
             <type>xml</type>
             <classifier>config</classifier>
@@ -248,10 +252,6 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authn-federation</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn</artifactId>
             <type>cfg</type>
             <classifier>config</classifier>
@@ -259,12 +259,6 @@
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn-federation</artifactId>
-            <type>cfg</type>
-            <classifier>config</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-h2-store</artifactId>
             <type>cfg</type>
             <classifier>config</classifier>
         </dependency>
