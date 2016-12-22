@@ -210,7 +210,6 @@
         </dependency>
 
         <!-- AuthN MD-SAL Cache dependencies -->
-
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn-mdsal-store-impl</artifactId>
@@ -257,10 +256,6 @@
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
             <artifactId>sal-common-impl</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authn-idpmapping</artifactId>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
