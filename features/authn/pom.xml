@@ -335,12 +335,6 @@
             <artifactId>sal-common-impl</artifactId>
         </dependency>
 
-        <!-- odl-aaa-sssd -->
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authn-sssd</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn-idpmapping</artifactId>

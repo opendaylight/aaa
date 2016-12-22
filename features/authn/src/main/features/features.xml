@@ -171,12 +171,6 @@
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
     </feature>
 
-    <feature name='odl-aaa-sssd-plugin' description='OpenDaylight :: AAA :: SSSD Federation Plugin'
-             version='${project.version}'>
-        <feature version='${project.version}'>odl-aaa-authn</feature>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-sssd/{{VERSION}}</bundle>
-    </feature>
-
     <feature name='odl-aaa-authn-cassandra-cluster' description='OpenDaylight :: AAA :: Authentication - Cassandra'
              version='${project.version}'>
         <feature version='${project.version}'>odl-aaa-api</feature>
