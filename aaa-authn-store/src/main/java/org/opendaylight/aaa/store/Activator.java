@@ -21,6 +21,7 @@ import org.osgi.service.cm.ManagedService;
  *
  * @author liemmn
  */
+@Deprecated
 public class Activator extends DependencyActivatorBase {
 
     private static final String TOKEN_PID = "org.opendaylight.aaa.tokens";
