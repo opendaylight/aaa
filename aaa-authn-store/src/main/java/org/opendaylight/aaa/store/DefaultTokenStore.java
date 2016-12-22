@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
  * @author liemmn
  *
  */
+@Deprecated
 public class DefaultTokenStore implements TokenStore, ManagedService {
     private static final Logger LOG = LoggerFactory.getLogger(DefaultTokenStore.class);
     private static final String TOKEN_STORE_CONFIG_ERR = "Token store configuration error";
