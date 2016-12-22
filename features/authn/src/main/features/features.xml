@@ -99,13 +99,11 @@
         <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/{{VERSION}}</bundle>
 
         <!-- Federation -->
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-idpmapping/{{VERSION}}</bundle>
         <bundle>mvn:org.glassfish/javax.json/{{VERSION}}</bundle>
 
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/aaa-authn-store/{{VERSION}}/cfg/config</configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
     </feature>
 
@@ -155,7 +153,6 @@
         <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
 
         <!-- Federation -->
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-idpmapping/{{VERSION}}</bundle>
         <bundle>mvn:org.glassfish/javax.json/1.0.4</bundle>
 
@@ -167,7 +164,6 @@
         <bundle>mvn:com.sun.jersey/jersey-client/{{VERSION}}</bundle>
 
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
     </feature>
 
@@ -242,13 +238,11 @@
         <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/{{VERSION}}</bundle>
 
         <!-- Federation -->
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-idpmapping/{{VERSION}}</bundle>
         <bundle>mvn:org.glassfish/javax.json/{{VERSION}}</bundle>
 
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/aaa-authn-store/{{VERSION}}/cfg/config</configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.federation.cfg">mvn:org.opendaylight.aaa/aaa-authn-federation/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
     </feature>
 
