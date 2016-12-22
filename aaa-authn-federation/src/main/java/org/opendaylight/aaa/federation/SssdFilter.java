@@ -18,6 +18,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+@Deprecated
 class SssdHeadersRequest extends HttpServletRequestWrapper {
     private static final String headerPrefix = "X-SSSD-";
 

@@ -27,6 +27,7 @@ import org.osgi.service.cm.ManagedService;
  * @author liemmn
  *
  */
+@Deprecated
 public class FederationConfiguration implements ManagedService {
     private static final String FEDERATION_CONFIG_ERR = "Error saving federation configuration";
 

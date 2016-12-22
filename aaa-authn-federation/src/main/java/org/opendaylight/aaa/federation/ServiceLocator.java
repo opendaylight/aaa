@@ -20,6 +20,7 @@ import org.opendaylight.aaa.api.TokenStore;
  * @author liemmn
  *
  */
+@Deprecated
 public class ServiceLocator {
 
     private static final ServiceLocator instance = new ServiceLocator();

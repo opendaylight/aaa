@@ -37,6 +37,7 @@ import org.opendaylight.aaa.api.Claim;
  * @author liemmn
  *
  */
+@Deprecated
 public class FederationEndpoint extends HttpServlet {
 
     private static final long serialVersionUID = -5553885846238987245L;
