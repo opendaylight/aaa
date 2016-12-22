@@ -1,0 +1,124 @@
+module aaa {
+    yang-version 1;
+    namespace "urn:opendaylight:params:xml:ns:yang:aaa";
+    prefix "aaa";
+
+    revision "2016-12-14" {
+        description "Initial revision of aaa model";
+    }
+
+    container authentication {
+
+        container domains {
+            list domains {
+                key domainid;
+                leaf domainid {
+                    type string;
+                }
+                leaf name {
+                    type string;
+                }
+                leaf description {
+                    type string;
+                }
+                leaf enabled {
+                    type boolean;
+                    default true;
+                }
+            }
+        }
+
+        container users {
+            list users {
+                key userid;
+                leaf userid {
+                    type string;
+                }
+                leaf name {
+                    type string;
+                }
+                leaf description {
+                    type string;
+                }
+                leaf enabled {
+                    type boolean;
+                }
+                leaf email {
+                    type string;
+                }
+                leaf password {
+                    type string;
+                }
+                leaf salt {
+                    type string;
+                }
+                leaf domainid {
+                    type string;
+                }
+            }
+        }
+
+        container roles {
+            list roles {
+                key roleid;
+                leaf roleid {
+                    type string;
+                }
+                leaf name {
+                    type string;
+                }
+                leaf description {
+                    type string;
+                }
+                leaf domainid {
+                    type string;
+                }
+            }
+        }
+
+        container grants {
+            list grants {
+                key grantid;
+                leaf grantid {
+                    type string;
+                }
+                leaf domainid {
+                    type string;
+                }
+                leaf userid {
+                    type string;
+                }
+                leaf roleid {
+                    type string;
+                }
+            }
+        }
+    }
+
+    container http-authorization {
+
+        container policies {
+            list policies {
+                key "resource";
+                leaf resource {
+                    type string;
+                    default "*";
+                }
+                list permissions { 
+                    leaf-list actions {
+                        type enumeration {
+                            enum get;
+                            enum put;
+                            enum post;
+                            enum patch;
+                            enum delete;
+                        }
+                    }
+                    leaf role {
+                        type string;
+                    }
+                }
+            }
+        }
+    }
+}
