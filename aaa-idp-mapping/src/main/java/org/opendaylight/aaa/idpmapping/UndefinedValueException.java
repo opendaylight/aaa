@@ -13,6 +13,7 @@ package org.opendaylight.aaa.idpmapping;
  * @author John Dennis &lt;jdennis@redhat.com&gt;
  */
 
+@Deprecated
 public class UndefinedValueException extends RuntimeException {
 
     private static final long serialVersionUID = -1607453931670834435L;

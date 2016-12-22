@@ -35,6 +35,7 @@ import javax.json.stream.JsonParser.Event;
  * @author John Dennis &lt;jdennis@redhat.com&gt;
  */
 
+@Deprecated
 public class IdpJson {
 
     public IdpJson() {

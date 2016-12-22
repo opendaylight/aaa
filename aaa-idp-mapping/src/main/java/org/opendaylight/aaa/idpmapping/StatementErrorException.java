@@ -14,6 +14,7 @@ package org.opendaylight.aaa.idpmapping;
  * @author John Dennis &lt;jdennis@redhat.com&gt;
  */
 
+@Deprecated
 public class StatementErrorException extends RuntimeException {
 
     private static final long serialVersionUID = 8312665727576018327L;
