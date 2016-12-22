@@ -19,12 +19,14 @@ module authorization-schema {
   //the naming will derive from the OSGi bundle name of the AuthZ requesting party.
 
   typedef service-type {
+    status deprecated;
     type string;
   }
 
   //Resource denotes the actual resource that is the subject of the AuthZ request.
 
   typedef resource-type {
+    status deprecated;
     type string;
     default "*";
 
@@ -39,12 +41,14 @@ module authorization-schema {
   //Role denotes the normalized role that is attributed to the AuthZ requestor, eg "admin"
 
   typedef role-type {
+    status deprecated;
     type string;
   }
 
   //Domain denotes the customer domain that is the attributed of the AuthZ requestor, eg cisco.com
 
   typedef domain-type {
+    status deprecated;
     type string;
   }
 
@@ -52,6 +56,7 @@ module authorization-schema {
   //TODO: Refactor as identities to allow for augmentation.
 
   typedef action-type {
+    status deprecated;
     type enumeration {
       enum put;
       enum commit;
@@ -68,6 +73,7 @@ module authorization-schema {
   }
 
   typedef authorization-response-type {
+    status deprecated;
     type enumeration {
         enum not-authorized { value 0; }
         enum authorized { value 1; }
@@ -75,6 +81,7 @@ module authorization-schema {
   }
 
   typedef authorization-duration-type {
+    status deprecated;
     type uint32;
   }
 
@@ -82,6 +89,7 @@ module authorization-schema {
   // Permissions will be set-up per application. NOTE: Group and role can be equivalent. do we need both?
 
   grouping authorization-grp {
+    status deprecated;
     list policies {
       key "service";
       leaf service {
@@ -107,6 +115,7 @@ module authorization-schema {
   // Following container provides the simple, non-domain specific AuthZ policy data-structure, dual keyed by service and action.
 
   container simple-authorization {
+    status deprecated;
     uses authorization-grp;
   }
 
@@ -116,6 +125,7 @@ module authorization-schema {
 
 
   container domain-authorization {
+    status deprecated;
     list domains {
       key "domain-name";
       leaf domain-name {
@@ -137,6 +147,7 @@ module authorization-schema {
 }
 
 container additional-domain-authz {
+  status deprecated;
   list domains {
     key "domain-name";
     leaf domain-name {
@@ -151,6 +162,7 @@ container additional-domain-authz {
   /* The following is the AuthZ RPC definition */
 
   rpc req-authorization {
+    status deprecated;
     description
       "Check Authorization for a given combination of action and role.
       A not-authorized  will be returned if unsuccessful.";
