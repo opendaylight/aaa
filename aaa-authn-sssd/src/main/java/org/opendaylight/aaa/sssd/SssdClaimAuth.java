@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author John Dennis &lt;jdennis@redhat.com&gt;
  */
+@Deprecated
 public class SssdClaimAuth implements ClaimAuth {
     private static final Logger LOG = LoggerFactory.getLogger(SssdClaimAuth.class);
 

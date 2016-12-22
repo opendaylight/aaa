@@ -13,6 +13,7 @@ import org.apache.felix.dm.DependencyManager;
 import org.opendaylight.aaa.api.ClaimAuth;
 import org.osgi.framework.BundleContext;
 
+@Deprecated
 public class Activator extends DependencyActivatorBase {
 
     @Override
