@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
-                 xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0">
+           xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0"
+           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0">
 
-  <bean id="H2Store" class="org.opendaylight.aaa.h2.persistence.H2Store">
+  <bean id="H2TokenStore" class="org.opendaylight.aaa.h2.persistence.H2TokenStore">
+    <cm:managed-properties persistent-id="org.opendaylight.aaa.tokens"
+                           update-strategy="component-managed"
+                           update-method="updateConfigParameter"/>
   </bean>
+
+  <bean id="H2Store" class="org.opendaylight.aaa.h2.persistence.H2Store" />
+
+  <service ref="H2TokenStore" interface="org.opendaylight.aaa.api.TokenStore" odl:type="default"/>
 
   <service ref="H2Store" interface="org.opendaylight.aaa.api.IIDMStore" odl:type="default"/>
 
