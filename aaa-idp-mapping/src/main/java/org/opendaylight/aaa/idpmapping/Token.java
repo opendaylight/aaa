@@ -41,6 +41,7 @@ enum TokenType {
  * @author John Dennis <jdennis@redhat.com>
  */
 
+@Deprecated
 class Token {
 
     /*

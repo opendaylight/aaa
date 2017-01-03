@@ -36,6 +36,7 @@ enum ProcessResult {
  * @author John Dennis &lt;jdennis@redhat.com&gt;
  */
 
+@Deprecated
 public class RuleProcessor {
     private static final Logger LOG = LoggerFactory.getLogger(RuleProcessor.class);
 

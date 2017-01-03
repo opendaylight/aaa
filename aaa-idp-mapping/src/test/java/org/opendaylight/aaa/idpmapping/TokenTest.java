@@ -15,8 +15,10 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class TokenTest {
 
     private final Map<String, Object> namespace = new HashMap<String, Object>() {
