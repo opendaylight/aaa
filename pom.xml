@@ -5,8 +5,7 @@
  This program and the accompanying materials are made available under the
  terms of the Eclipse Public License v1.0 which accompanies this distribution,
  and is available at http://www.eclipse.org/legal/epl-v10.html
--->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+--><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.opendaylight.odlparent</groupId>
@@ -39,7 +38,6 @@
     <module>aaa-authn-mdsal-store</module>
     <module>aaa-authz</module>
     <module>aaa-credential-store-api</module>
-    <module>aaa-shiro</module>
     <module>aaa-shiro-act</module>
     <module>aaa-h2-store</module>
     <module>aaa-cert</module>
@@ -51,6 +49,7 @@
     <module>features</module>
     <module>karaf</module>
     <module>parent</module>
+    <module>aaa-shiro</module>
   </modules>
 
   <build>
