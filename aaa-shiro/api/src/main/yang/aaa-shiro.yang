@@ -1,9 +1,232 @@
-module aaa-shiro {
+module aaa {
     yang-version 1;
-    namespace "urn:opendaylight:params:xml:ns:yang:aaa-shiro";
-    prefix "aaa-shiro";
+    namespace "urn:opendaylight:params:xml:ns:yang:aaa";
+    prefix "aaa";
 
-    revision "2015-01-05" {
-        description "Initial revision of aaa-shiro model";
+    revision "2016-12-14" {
+        description "Initial revision of aaa model";
+    }
+
+    grouping user {
+        leaf userid {
+            type string;
+        }
+        leaf name {
+            type string;
+        }
+        leaf description {
+            type string;
+        }
+        leaf enabled {
+            type boolean;
+        }
+        leaf email {
+            type string;
+        }
+        leaf password {
+            type string;
+        }
+        leaf salt {
+            type string;
+        }
+        leaf domainid {
+            type string;
+        }
+    }
+
+    grouping domain {
+        leaf domainid {
+            type string;
+        }
+        leaf name {
+            type string;
+        }
+        leaf description {
+            type string;
+        }
+        leaf enabled {
+            type boolean;
+            default true;
+        }
+    }
+
+    grouping role {
+        leaf roleid {
+            type string;
+        }
+        leaf name {
+            type string;
+        }
+        leaf description {
+            type string;
+        }
+        leaf domainid {
+            type string;
+        }
+    }
+
+    grouping grant {
+        leaf grantid {
+            type string;
+        }
+        leaf domainid {
+            type string;
+        }
+        leaf userid {
+            type string;
+        }
+        leaf roleid {
+            type string;
+        }
+    }
+
+    container authentication {
+
+        container domains {
+            list domains {
+                key domainid;
+                uses domain;
+            }
+        }
+
+        container users {
+            list users {
+                key userid;
+                uses user;
+            }
+        }    
+
+        container roles {
+            list roles {
+                key roleid;
+                uses role;
+            }
+        }
+
+        container grants {
+            list grants {
+                key grantid;
+                uses grant;
+            }
+        }
+    }
+
+    rpc add-user {
+        description "Add a user to the AAA MD-SAL datastore";
+
+        input {
+            uses user;
+        }
+
+        output {
+            leaf success {
+                type boolean;
+                default false;
+            }
+        }
+    }
+
+    rpc delete-user {
+        input {
+            leaf userid {
+                type string;
+            }
+        }
+        output {
+            leaf success {
+                type boolean;
+                default false;
+            }
+        }
+    }
+
+    rpc add-domain {
+        description "Add a domain to the AAA MD-SAL datastore";
+
+        input {
+            uses domain;
+        }
+
+        output {
+            leaf success {
+                type boolean;
+                default false;
+            }
+        }
+    }
+
+    rpc add-role {
+        description "Add a role to the AAA MD-SAL datastore";
+
+        input {
+            uses role;
+        }
+
+        output {
+            leaf success {
+                type boolean;
+                default false;
+            }
+        }
+    }
+
+    rpc add-grant {
+        description "Add a grant to the AAA MD-SAL datastore";
+
+        input {
+            uses grant;
+        }
+
+        output {
+            leaf success {
+                type boolean;
+                default false;
+            }
+        }
+    }
+
+    grouping http-permission {
+        leaf resource {
+            type string;
+            default "*";
+        }
+        list permissions { 
+            leaf-list actions {
+                type enumeration {
+                    enum get;
+                    enum put;
+                    enum post;
+                    enum patch;
+                    enum delete;
+                }
+            }
+            leaf role {
+                type string;
+            }
+        }
+    }
+
+    container http-authorization {
+
+        container policies {
+            list policies {
+                key "resource";
+                uses http-permission;
+            }
+        }
+    }
+
+    rpc add-policy {
+
+        input {
+            uses http-permission;
+        }
+
+        output {
+            leaf success {
+                type boolean;
+                default false;
+            }
+        }
     }
 }

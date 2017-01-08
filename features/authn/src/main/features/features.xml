@@ -72,7 +72,8 @@
         <bundle>wrap:mvn:org.apache.commons/commons-lang3/{{VERSION}}</bundle>
 
         <!-- AuthN -->
-        <bundle>mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-shiro-api/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-shiro-impl/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.shiro/shiro-core/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.shiro/shiro-web/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}</bundle>
@@ -128,7 +129,8 @@
         <bundle>wrap:mvn:org.json/json/{{VERSION}}</bundle>
 
         <!-- AuthN -->
-        <bundle>mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-shiro-api/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-shiro-impl/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.shiro/shiro-core/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.shiro/shiro-web/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-api/{{VERSION}}</bundle>
@@ -204,7 +206,8 @@
         <bundle>wrap:mvn:org.apache.commons/commons-lang3/{{VERSION}}</bundle>
 
         <!-- AuthN -->
-        <bundle>mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-shiro-api/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-shiro-impl/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.shiro/shiro-core/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.shiro/shiro-web/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}</bundle>

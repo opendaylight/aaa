@@ -33,7 +33,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <module>impl</module>
     <!--<module>karaf</module>
     <module>features</module>-->
-    <module>artifacts</module>
     <!--<module>cli</module>
     <module>it</module>-->
   </modules>

@@ -32,10 +32,11 @@
         <bundle>wrap:mvn:org.json/json/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.commons-beanutils/{{VERSION}}</bundle>
 
-        <bundle>mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-shiro-api/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-shiro-impl/{{VERSION}}</bundle>
 
         <!-- AAA configuration file -->
-        <configfile finalname="/etc/shiro.ini">mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}/cfg/configuration</configfile>
+        <configfile finalname="/etc/shiro.ini">mvn:org.opendaylight.aaa/aaa-shiro-impl/{{VERSION}}/cfg/configuration</configfile>
     </feature>
 
 </features>

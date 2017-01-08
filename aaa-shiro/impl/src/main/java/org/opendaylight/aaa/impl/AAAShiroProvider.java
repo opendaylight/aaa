@@ -15,10 +15,20 @@ public class AAAShiroProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
-    private final DataBroker dataBroker;
+    private static DataBroker dataBroker;
+
+    private static AAAShiroProvider INSTANCE;
 
     public AAAShiroProvider(final DataBroker dataBroker) {
         this.dataBroker = dataBroker;
+        INSTANCE = this;
+    }
+
+    public static AAAShiroProvider getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new AAAShiroProvider(null);
+        }
+        return INSTANCE;
     }
 
     /**
@@ -33,5 +43,9 @@ public class AAAShiroProvider {
      */
     public void close() {
         LOG.info("AAAShiroProvider Closed");
+    }
+
+    public DataBroker getDataBroker() {
+        return this.dataBroker;
     }
 }

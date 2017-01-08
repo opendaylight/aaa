@@ -52,7 +52,7 @@ public class AAAFilter extends ShiroFilter {
         // bundle loading, this passes an instance of itself along so that if
         // the
         // enable status changes, then AAAFilter enable status is changed.
-        setEnabled(ServiceProxy.getInstance().getEnabled(this));
+        setEnabled(true);
     }
 
     /*
