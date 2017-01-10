@@ -10,6 +10,7 @@ package org.opendaylight.controller.config.yang.config.aaa.cassandra.store;
 import org.opendaylight.controller.config.api.DependencyResolver;
 import org.osgi.framework.BundleContext;
 
+@Deprecated
 public class AAACassandraStoreModuleFactory extends org.opendaylight.controller.config.yang.config.aaa.cassandra.store.AbstractAAACassandraStoreModuleFactory {
     @Override
     public AAACassandraStoreModule instantiateModule(String instanceName, DependencyResolver dependencyResolver, AAACassandraStoreModule oldModule, AutoCloseable oldInstance, BundleContext bundleContext) {

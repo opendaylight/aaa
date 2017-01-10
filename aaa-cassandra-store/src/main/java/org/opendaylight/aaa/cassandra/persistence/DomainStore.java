@@ -13,10 +13,10 @@ package org.opendaylight.aaa.cassandra.persistence;
  * @author peter.mellquist@hp.com
  *
  */
-
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Domains;
 
+@Deprecated
 public class DomainStore extends AbstractStore<Domain,Domains>{
     public DomainStore(CassandraStore store) throws NoSuchMethodException {
        super(store,Domain.class,Domains.class,"setDomains","setDomainid");

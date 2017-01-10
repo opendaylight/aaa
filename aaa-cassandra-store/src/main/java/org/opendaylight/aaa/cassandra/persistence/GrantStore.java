@@ -13,10 +13,10 @@ package org.opendaylight.aaa.cassandra.persistence;
  * @author saichler@gmail.com
  *
  */
-
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Grants;
 
+@Deprecated
 public class GrantStore extends AbstractStore<Grant,Grants>{
     public GrantStore(CassandraStore store) throws NoSuchMethodException {
         super(store,Grant.class,Grants.class,"setGrants","setGrantid");

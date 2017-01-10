@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by saichler@gmail.com on 12/1/15.
  */
+@Deprecated
 public class CassandraConfig implements ManagedService {
 
     private static CassandraConfig instance = new CassandraConfig();

@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author saichler@gmail.com
  */
+@Deprecated
 public class CassandraStore implements IIDMStore{
 
     private static final Logger LOG = LoggerFactory.getLogger(CassandraStore.class);
