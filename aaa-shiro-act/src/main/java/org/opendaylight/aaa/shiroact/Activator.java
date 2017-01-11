@@ -41,7 +41,8 @@ public class Activator extends DependencyActivatorBase {
         LOG.debug(DEBUG_MESSAGE);
     }
 
-    @Override
+    @Overridels
+    
     public void init(BundleContext bc, DependencyManager dm) throws Exception {
         final String DEBUG_MESSAGE = "Initializing the aaa-shiro-act bundle";
         LOG.debug(DEBUG_MESSAGE);
