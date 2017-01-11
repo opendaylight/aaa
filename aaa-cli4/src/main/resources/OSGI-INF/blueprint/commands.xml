@@ -1,0 +1,94 @@
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+
+    <reference id="KeyStoreConsoleProvider" availability="mandatory"
+        activation="eager" interface="org.opendaylight.aaa.cert.api.ICertificateManager">
+    </reference>
+
+    <reference id="iIDMStore" interface="org.opendaylight.aaa.api.IIDMStore"
+        availability="optional" timeout="30000">
+    </reference>
+
+    <command-bundle xmlns="http://karaf.apache.org/xmlns/shell/v1.1.0">
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.ListODLUsers">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.ListODLDomains">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.ListODLRoles">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.ChangeUserPassword">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.cert.GetODLSelfSignCert">
+                <argument ref="KeyStoreConsoleProvider" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.cert.GenerateCertReq">
+                <argument ref="KeyStoreConsoleProvider" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.cert.GetTrustStoreCert">
+                <argument ref="KeyStoreConsoleProvider" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.cert.GetCipherSuites">
+                <argument ref="KeyStoreConsoleProvider" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.AddRole">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.AddDomain">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.AddUser">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.AddGrant">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.RemoveGrant">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.RemoveUser">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.RemoveRole">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.dmstore.RemoveDomain">
+                <argument ref="iIDMStore" />
+            </action>
+        </command>
+    </command-bundle>
+
+</blueprint>
