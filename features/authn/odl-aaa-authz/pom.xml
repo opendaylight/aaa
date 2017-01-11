@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.opendaylight.odlparent</groupId>
+        <artifactId>single-feature-parent</artifactId>
+        <version>1.8.0-SNAPSHOT</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>org.opendaylight.aaa</groupId>
+    <artifactId>odl-aaa-authz</artifactId>
+    <version>0.5.0-SNAPSHOT</version>
+    <packaging>feature</packaging>
+
+    <name>OpenDaylight :: AAA :: Authorization</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>odl-aaa-api</artifactId>
+            <version>0.5.0-SNAPSHOT</version>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.yangtools</groupId>
+            <artifactId>odl-yangtools-common</artifactId>
+            <version>1.1.0-SNAPSHOT</version>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.mdsal</groupId>
+            <artifactId>odl-mdsal-binding-base</artifactId>
+            <version>2.2.0-SNAPSHOT</version>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.controller</groupId>
+            <artifactId>odl-mdsal-broker</artifactId>
+            <version>1.5.0-SNAPSHOT</version>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.controller</groupId>
+            <artifactId>odl-config-core</artifactId>
+            <version>0.6.0-SNAPSHOT</version>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-authz-model</artifactId>
+            <version>0.5.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-authz-service</artifactId>
+            <version>0.5.0-SNAPSHOT</version>
+        </dependency>
+        <!-- TODO
+            <configfile
+                    finalname="/etc/opendaylight/karaf/08-authz-config.xml">mvn:org.opendaylight.aaa/authz-service-config/{{VERSION}}/xml/config</configfile>
+            <configfile
+                    finalname="/etc/opendaylight/karaf/09-rest-connector.xml">mvn:org.opendaylight.aaa/authz-restconf-config/{{VERSION}}/xml/config</configfile>
+        -->
+    </dependencies>
+    
+</project>
