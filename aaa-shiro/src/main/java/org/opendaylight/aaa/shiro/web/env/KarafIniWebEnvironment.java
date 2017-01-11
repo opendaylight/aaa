@@ -10,19 +10,14 @@ package org.opendaylight.aaa.shiro.web.env;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Collection;
 import org.apache.shiro.config.Ini;
-import org.apache.shiro.config.Ini.Section;
 import org.apache.shiro.web.env.IniWebEnvironment;
-import org.opendaylight.aaa.shiro.accounting.Accounter;
-import org.opendaylight.aaa.shiro.authorization.DefaultRBACRules;
-import org.opendaylight.aaa.shiro.authorization.RBACRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Identical to <code>IniWebEnvironment</code> except the Ini is loaded from
- * <code>$KARAF_HOME/etc/shiro.ini</code>.
+ * <code>${KARAF_HOME}/etc/shiro.ini</code>.
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  *
@@ -30,60 +25,34 @@ import org.slf4j.LoggerFactory;
 public class KarafIniWebEnvironment extends IniWebEnvironment {
 
     private static final Logger LOG = LoggerFactory.getLogger(KarafIniWebEnvironment.class);
-    public static final String DEFAULT_SHIRO_INI_FILE = "etc/shiro.ini";
-    public static final String SHIRO_FILE_PREFIX = "file:/";
+
+    /**
+     * The location of shiro.ini relative to ${karaf.home}
+     */
+    public static final String DEFAULT_SHIRO_INI_FILE = "etc" + File.separator + "shiro.ini";
+
+    /**
+     * The Shiro-specific prefix used to indicate file based Shiro configuration
+     */
+    public static final String SHIRO_FILE_PREFIX = "file:" + File.separator;
 
     public KarafIniWebEnvironment() {
+        LOG.info("Initializing the Web Environment using {}",
+                KarafIniWebEnvironment.class.getName());
     }
 
     @Override
     public void init() {
         // Initialize the Shiro environment from etc/shiro.ini then delegate to
         // the parent class
-        Ini ini;
+        final Ini ini;
         try {
             ini = createDefaultShiroIni();
-            // appendCustomIniRules(ini);
             setIni(ini);
-        } catch (FileNotFoundException e) {
-            final String ERROR_MESSAGE = "Could not find etc/shiro.ini";
-            LOG.error(ERROR_MESSAGE, e);
+        } catch (final FileNotFoundException e) {
+            LOG.error("Could not find etc/shiro.ini", e);
         }
         super.init();
-    }
-
-    /**
-     * A hook for installing custom default RBAC rules for security purposes.
-     *
-     * @param ini
-     */
-    private void appendCustomIniRules(final Ini ini) {
-        final String INSTALL_MESSAGE = "Installing the RBAC rule: %s";
-        Section urlSection = getOrCreateUrlSection(ini);
-        Collection<RBACRule> rbacRules = DefaultRBACRules.getInstance().getRBACRules();
-        for (RBACRule rbacRule : rbacRules) {
-            urlSection.put(rbacRule.getUrlPattern(), rbacRule.getRolesInShiroFormat());
-            Accounter.output(String.format(INSTALL_MESSAGE, rbacRule));
-        }
-    }
-
-    /**
-     * Extracts the url section of the Ini file, or creates one if it doesn't
-     * already exist
-     *
-     * @param ini
-     * @return
-     */
-    private Section getOrCreateUrlSection(final Ini ini) {
-        final String URL_SECTION_TITLE = "urls";
-        Section urlSection = ini.getSection(URL_SECTION_TITLE);
-        if (urlSection == null) {
-            LOG.debug("shiro.ini does not contain a [urls] section; creating one");
-            urlSection = ini.addSection(URL_SECTION_TITLE);
-        } else {
-            LOG.debug("shiro.ini contains a [urls] section; appending rules to existing");
-        }
-        return urlSection;
     }
 
     /**
@@ -103,8 +72,8 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
      * @return Ini loaded from <code>path</code>
      */
     static Ini createShiroIni(final String path) throws FileNotFoundException {
-        File f = new File(path);
-        Ini ini = new Ini();
+        final File f = new File(path);
+        final Ini ini = new Ini();
         final String fileBasedIniPath = createFileBasedIniPath(f.getAbsolutePath());
         ini.loadFromPath(fileBasedIniPath);
         return ini;
@@ -118,8 +87,8 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
      * @return <code>file:/$KARAF_HOME/etc/shiro.ini</code>
      */
     static String createFileBasedIniPath(final String path) {
-        String fileBasedIniPath = SHIRO_FILE_PREFIX + path;
-        LOG.debug(fileBasedIniPath);
+        final String fileBasedIniPath = SHIRO_FILE_PREFIX + path;
+        LOG.debug("Forming ini path: \"{}\"", fileBasedIniPath);
         return fileBasedIniPath;
     }
 }
