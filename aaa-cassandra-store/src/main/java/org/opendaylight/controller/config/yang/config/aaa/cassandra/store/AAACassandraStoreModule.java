@@ -20,6 +20,7 @@ import org.osgi.service.cm.ManagedService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Deprecated
 public class AAACassandraStoreModule extends org.opendaylight.controller.config.yang.config.aaa.cassandra.store.AbstractAAACassandraStoreModule implements AutoCloseable{
     private static final Logger LOG = LoggerFactory.getLogger(AAACassandraStoreModule.class);
     private BundleContext bundleContext = null;

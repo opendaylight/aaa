@@ -14,6 +14,7 @@ import java.util.List;
  * @author saichler@gmail.com
  *
  */
+@Deprecated
 public class AAATokens {
     private List<AAAToken> tokens = null;
 

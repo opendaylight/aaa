@@ -13,10 +13,10 @@ package org.opendaylight.aaa.cassandra.persistence;
  * @author saichler@gmail.com
  *
  */
-
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
 
+@Deprecated
 public class RoleStore extends AbstractStore<Role,Roles>{
     public RoleStore(CassandraStore store) throws NoSuchMethodException {
        super(store,Role.class,Roles.class,"setRoles","setRoleid");

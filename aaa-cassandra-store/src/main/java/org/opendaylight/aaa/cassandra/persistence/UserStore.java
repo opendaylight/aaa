@@ -13,10 +13,10 @@ package org.opendaylight.aaa.cassandra.persistence;
  * @author saichler@gmail.com
  *
  */
-
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
 
+@Deprecated
 public class UserStore extends AbstractStore<User,Users>{
     public UserStore(CassandraStore store) throws NoSuchMethodException {
         super(store,User.class, Users.class, "setUsers", "setUserid");

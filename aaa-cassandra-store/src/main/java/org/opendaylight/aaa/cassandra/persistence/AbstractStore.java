@@ -13,7 +13,6 @@ package org.opendaylight.aaa.cassandra.persistence;
  * @author saichler@gmail.com
  *
  */
-
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
@@ -31,6 +30,7 @@ import org.opendaylight.aaa.api.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Deprecated
 public abstract class AbstractStore<T,E> {
 
     private static final Logger LOG = LoggerFactory.getLogger(AbstractStore.class);

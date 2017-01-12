@@ -12,6 +12,7 @@ package org.opendaylight.aaa.cassandra.persistence;
  * @author saichler@gmail.com
  *
  */
+@Deprecated
 public class AAAToken {
     private String aaaToken = null;
     private Long experation = null;

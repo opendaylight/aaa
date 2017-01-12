@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author saichler@gmail.com
  */
+@Deprecated
 public class TokenStoreImpl extends AbstractStore<AAAToken,AAATokens> implements TokenStore{
     private static final Logger LOG = LoggerFactory.getLogger(TokenStoreImpl.class);
     private static final long TOKEN_EXPERATION = 86400000;
