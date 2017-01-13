@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_100c79ec",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/AaaCliAbstractCommand.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-01-13T02:39:43Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "1a622d24_fcf6f95b",
+      "revId": "fc03900ec482d27af2a8636f3f33f1ff99b7334a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_5c972dec",
         "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/AaaCliAbstractCommand.java",
         "patchSetId": 7
@@ -105,6 +123,30 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_106599b4",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/SessionsManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-01-13T02:39:43Z",
+      "side": 1,
+      "message": "The admin user will need to enter his credential (username and pwd) to use the aaa-cli commands. This class will keep the admin user credential  valid for certain time instead of keep enter the username and pwd with each command. Provide kind of usability.",
+      "parentUuid": "1a622d24_dc8a1dbe",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "fc03900ec482d27af2a8636f3f33f1ff99b7334a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_bc8761b4",
         "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/SessionsManager.java",
         "patchSetId": 7
@@ -116,6 +158,24 @@
       "writtenOn": "2017-01-12T20:06:47Z",
       "side": 1,
       "message": "\"cache\"",
+      "revId": "fc03900ec482d27af2a8636f3f33f1ff99b7334a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_3007f5cb",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/SessionsManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-01-13T02:39:43Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "1a622d24_bc8761b4",
       "revId": "fc03900ec482d27af2a8636f3f33f1ff99b7334a",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -185,6 +245,30 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_70568dcf",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/cert/GetODLSelfSignCert.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-01-13T02:39:43Z",
+      "side": 1,
+      "message": "that because changing the class package",
+      "parentUuid": "1a622d24_5cbe0d66",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 47
+      },
+      "revId": "fc03900ec482d27af2a8636f3f33f1ff99b7334a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_3cc351ee",
         "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/cert/GetTrustStoreCert.java",
         "patchSetId": 7
@@ -196,6 +280,30 @@
       "writtenOn": "2017-01-12T20:06:47Z",
       "side": 1,
       "message": "same comment as last",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 47
+      },
+      "revId": "fc03900ec482d27af2a8636f3f33f1ff99b7334a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_d06681ba",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/cert/GetTrustStoreCert.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-01-13T02:39:43Z",
+      "side": 1,
+      "message": "same",
+      "parentUuid": "1a622d24_3cc351ee",
       "range": {
         "startLine": 15,
         "startChar": 0,
