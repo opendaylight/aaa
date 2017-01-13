@@ -46,7 +46,6 @@
     <module>aaa-cli</module>
     <module>aaa-cli-jar</module>
     <module>aaa-filterchain</module>
-    <module>aaa-cassandra-store</module>
     <module>artifacts</module>
     <module>features</module>
     <module>karaf</module>

@@ -216,25 +216,6 @@
                 <classifier>features</classifier>
                 <type>xml</type>
             </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-cassandra-store</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-cassandra-store</artifactId>
-                <version>${project.version}</version>
-                <classifier>config</classifier>
-                <type>xml</type>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-cassandra-store</artifactId>
-                <version>${project.version}</version>
-                <classifier>config-1</classifier>
-                <type>cfg</type>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
