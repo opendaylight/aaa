@@ -130,46 +130,7 @@ In this case, we use the IdP token directly as an access token to access protect
 
 ### Authorization & Access Control
 
-Authorization is implemented via the aaa-authz modules, comprising of a yang based AuthZ policy schema, an MD-SAL AuthZ capable broker, an AuthZ
-service engine invoked by the broker and executing policies.
-
-NOTE: The Lithium release features a trail of Authz functionality, in particular longest string matching is not implemented.
-
-Initially the AuthZ functionality is only able to handle RestConf requests, and to do so the Restconf connector configuration must
- be explicitly modified as follows:
-
-    0. Compile or obtain the ODL distribution
-    1. Start karaf and install the odl-aaa-authz feature
-
-    Note: At this stage, with a default configuration, there is no MD-SAL data to test against. To test you can install the toaster service using feature:install odl-toaster
-
-Default authorization policies are loaded from the configuration subsystem (TODO: Provide a default set)
-They are accessible and editable via the restconf interface at:
-
-    http://<odl address>/restconf/configuration/authorization-schema:simple-authorization/
-
-The schema for policies is a list consisting of the following items:
-
-  * Service : The application service that is the initiator of the request triggering an authorization check, eg Restconf.
-  NOTE: The service field is currently not enforced, and a wildcard "*" is recommended.
-  * Action: The action that is being authorized. Maps to one of: { create; read; update; delete; execute; subscribe; any }
-  * Resource: The URI or Yang instance id of the resource, including wildcards (see examples below)
-  * Role: The AuthN derived user role
-
-Some examples of resources are:
-
-      Data : /operational/opendaylight-inventory:nodes/node/openflow:1/node-connector/openflow:1:1
-  
-      Wildcarded data: /configuration/opendaylight-inventory:nodes/node/*/node-connector/*
-  
-      RPC: /operations/example-ops:reboot
-  
-      Wildcarded RPC: /operations/example-ops:*
-  
-      Notification: /notifications/example-ops:startup
-
-
-*More on MD-SAL authorization later...*
+HTTP oriented authorization is implemented via the aaa-shiro module.  For more information, refer to the "urls" section in etc/shiro.ini.
 
 ### Accounting  
 

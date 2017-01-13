@@ -22,21 +22,6 @@
         <feature version='${mdsal.version}'>odl-mdsal-binding-base</feature>
     </feature>
 
-    <feature name='odl-aaa-authz' description='OpenDaylight :: AAA :: Authorization'
-        version='${project.version}'>
-        <feature version='${project.version}'>odl-aaa-api</feature>
-        <feature version='${yangtools.version}'>odl-yangtools-common</feature>
-        <feature version='${mdsal.version}'>odl-mdsal-binding-base</feature>
-        <feature version='${controller.mdsal.version}'>odl-mdsal-broker</feature>
-        <feature version='${config.version}'>odl-config-core</feature>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authz-model/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authz-service/{{VERSION}}</bundle>
-        <configfile
-            finalname="/etc/opendaylight/karaf/08-authz-config.xml">mvn:org.opendaylight.aaa/authz-service-config/{{VERSION}}/xml/config</configfile>
-        <configfile
-            finalname="/etc/opendaylight/karaf/09-rest-connector.xml">mvn:org.opendaylight.aaa/authz-restconf-config/{{VERSION}}/xml/config</configfile>
-    </feature>
-
     <feature name='odl-aaa-authn' description='OpenDaylight :: AAA :: Authentication - NO CLUSTER'
              version='${project.version}'>
         <feature version='${project.version}'>odl-aaa-api</feature>
