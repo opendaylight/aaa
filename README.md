@@ -173,4 +173,21 @@ Some examples of resources are:
 
 ### Accounting  
 
-*More on Accounting later...*
+Accounting is handled through the standard slf4j logging mechanisms used by the rest of OpenDaylight.  Thus, one can control logging verbosity through manipulating the log levels for individual packages and classes directly through the karaf shell, JMX, or etc/org.ops4j.pax.logging.cfg.  In normal operations, the default levels exposed do not provide much information about AAA services;  this is due to the fact that logging can severely degrade performance.
+
+Two noteworthy logging activities are:
+1) Enable debugging logging
+2) Enable successful/unsuccessful authentication attempts logging
+
+#### Enable Debugging Logging
+
+For debugging purposes (i.e., to enable maximum verbosity), issue the following command:
+
+karaf> log:set TRACE org.opendaylight.aaa
+
+#### Enable Successful/Unsuccessful Authentication Attempts Logging
+By default, successful/unsuccessful authentication attempts are NOT logged.  This is due to the fact that logging can severely decrease REST performance.  To enable logging of successful/unsuccessful REST attempts, issue the following command:
+
+karaf> log:set DEBUG org.opendaylight.aaa.shiro.filters.AuthenticationListener
+
+It is possible to add custom AuthenticationListener(s) to the Shiro based configuration, allowing different ways to listen for successful/unsuccessful authentication attempts.  Custom AuthenticationListener(s) must implement the org.apache.shiro.authc.AuthenticationListener interface.
