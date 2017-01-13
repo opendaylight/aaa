@@ -33,7 +33,6 @@
         <controller.mdsal.version>1.5.0-SNAPSHOT</controller.mdsal.version>
         <restconf.version>1.5.0-SNAPSHOT</restconf.version>
         <config.version>0.6.0-SNAPSHOT</config.version>
-        <config.authz.service.configfile>08-authz-config.xml</config.authz.service.configfile>
         <config.restconf.configfile>09-rest-connector.xml</config.restconf.configfile>
         <config.configfile.directory>etc/opendaylight/karaf</config.configfile.directory>
 
