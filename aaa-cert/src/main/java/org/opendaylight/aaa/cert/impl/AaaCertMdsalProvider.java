@@ -68,7 +68,7 @@ public class AaaCertMdsalProvider implements IAaaCertMdsalProvider {
     public SslData addSslDataKeystores(final String bundleName, final String odlKeystoreName, final String odlKeystorePwd,
             final String odlKeystoreAlias, final String odlKeystoreDname, final String odlKeystoreKeyAlg, final String odlKeystoreSignAlg,
             final int odlKeystoreKeysize, final int odlKeystoreValidity, final String trustKeystoreName, final String trustKeystorePwd,
-            final String[] cipherSuites) {
+            final String[] cipherSuites, final String tlsProtocols) {
         final OdlKeystore odlKeystore = keyStoresData.createOdlKeystore(odlKeystoreName, odlKeystoreAlias, odlKeystorePwd,
                     odlKeystoreDname, odlKeystoreSignAlg, odlKeystoreKeyAlg, odlKeystoreValidity, odlKeystoreKeysize, odlKeyTool);
         final TrustKeystore trustKeystore = keyStoresData.createTrustKeystore(trustKeystoreName, trustKeystorePwd, odlKeyTool);
@@ -79,16 +79,16 @@ public class AaaCertMdsalProvider implements IAaaCertMdsalProvider {
                 cipherSuitesList.add(cipherSuite);
             }
         }
-        return keyStoresData.addSslData(dataBroker, bundleName, odlKeystore, trustKeystore, cipherSuitesList);
+        return keyStoresData.addSslData(dataBroker, bundleName, odlKeystore, trustKeystore, cipherSuitesList, tlsProtocols);
     }
 
     @Override
     public SslData addSslDataKeystores(final String bundleName, final String odlKeystoreName, final String odlKeystorePwd,
             final String odlKeystoreAlias, final String odlKeystoreDname, final String trustKeystoreName, final String trustKeystorePwd,
-            final String[] cipherSuites) {
+            final String[] cipherSuites, final String tlsProtocols) {
         return addSslDataKeystores(bundleName, odlKeystoreName, odlKeystorePwd, odlKeystoreAlias, odlKeystoreDname,
                 KeyStoreConstant.DEFAULT_KEY_ALG, KeyStoreConstant.DEFAULT_SIGN_ALG, KeyStoreConstant.DEFAULT_KEY_SIZE,
-                KeyStoreConstant.DEFAULT_VALIDITY, trustKeystoreName, trustKeystorePwd, cipherSuites);
+                KeyStoreConstant.DEFAULT_VALIDITY, trustKeystoreName, trustKeystorePwd, cipherSuites, tlsProtocols);
     }
 
     @Override
@@ -195,7 +195,7 @@ public class AaaCertMdsalProvider implements IAaaCertMdsalProvider {
     @Override
     public SslData importSslDataKeystores(final String bundleName, final String odlKeystoreName, final String odlKeystorePwd,
             final String odlKeystoreAlias, final KeyStore odlKeyStore, final String trustKeystoreName, final String trustKeystorePwd,
-            final KeyStore trustKeyStore, final String[] cipherSuites) {
+            final KeyStore trustKeyStore, final String[] cipherSuites, final String tlsProtocols) {
         final OdlKeystore odlKeystore = keyStoresData.createOdlKeystore(odlKeystoreName, odlKeystoreAlias, odlKeystorePwd,
                                     odlKeyTool.convertKeystoreToBytes(odlKeyStore, odlKeystorePwd));
         final TrustKeystore trustKeystore = keyStoresData.createTrustKeystore(trustKeystoreName, trustKeystorePwd,
@@ -205,7 +205,7 @@ public class AaaCertMdsalProvider implements IAaaCertMdsalProvider {
             final CipherSuites cipherSuite = new CipherSuitesBuilder().setSuiteName(suit).build();
             cipherSuitesList.add(cipherSuite);
         }
-        return keyStoresData.addSslData(dataBroker, bundleName, odlKeystore, trustKeystore, cipherSuitesList);
+        return keyStoresData.addSslData(dataBroker, bundleName, odlKeystore, trustKeystore, cipherSuitesList, tlsProtocols);
     }
 
     @Override
@@ -228,4 +228,19 @@ public class AaaCertMdsalProvider implements IAaaCertMdsalProvider {
             MdsalUtils.initalizeDatastore(LogicalDatastoreType.CONFIGURATION, dataBroker, KeyStoresDataUtils.getKeystoresIid(), keyStoreData);
         }
     }
+
+    @Override
+    public String[] getTlsProtocols(final String bundleName) {
+        final SslData sslData = keyStoresData.getSslData(dataBroker, bundleName);
+        if (sslData != null) {
+            String tlsProtocols = sslData.getTlsProtocols();
+            if (tlsProtocols != null && !tlsProtocols.isEmpty()) {
+                // remove white spaces in tlsProtocols string
+                tlsProtocols = tlsProtocols.replace(" ", "");
+                return tlsProtocols.split(",");
+            }
+        }
+        return null;
+    }
+
 }
