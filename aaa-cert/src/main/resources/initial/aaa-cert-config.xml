@@ -11,6 +11,7 @@
     <key-alg>RSA</key-alg>
     <sign-alg>SHA1WithRSAEncryption</sign-alg>
     <keysize>1024</keysize>
+    <tls-protocols></tls-protocols>
     <cipher-suites>
       <suite-name />
     </cipher-suites>

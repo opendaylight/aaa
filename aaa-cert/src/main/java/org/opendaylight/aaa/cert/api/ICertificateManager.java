@@ -42,6 +42,13 @@ public interface ICertificateManager {
     String[] getCipherSuites();
 
     /**
+     * Get list of of the supported TLS protocols
+     *
+     * @return
+     */
+    String[] getTlsProtocols();
+
+    /**
      * Get certificate from the Trust keystore
      *
      * @param storePasswd Trust keystore password

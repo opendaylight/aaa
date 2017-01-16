@@ -106,4 +106,9 @@ public class CertificateManagerService implements ICertificateManager {
         }
         return serverContext;
     }
+
+    @Override
+    public String[] getTlsProtocols() {
+        return aaaCertProvider.getTlsProtocols();
+    }
 }

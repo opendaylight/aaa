@@ -8,7 +8,6 @@
 
 package org.opendaylight.aaa.cert.utils;
 
-import java.util.List;
 import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
 import org.opendaylight.aaa.cert.impl.ODLKeyTool;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
@@ -27,6 +26,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev1603
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * KeyStoresDataUtils manage the SslData operations add, delete and update
@@ -66,13 +67,14 @@ public class KeyStoresDataUtils {
     }
 
     public SslData addSslData(final DataBroker dataBroker, final String bundleName, final OdlKeystore odlKeystore,
-            final TrustKeystore trustKeystore, final List<CipherSuites> cipherSuites) {
+            final TrustKeystore trustKeystore, final List<CipherSuites> cipherSuites, final String tlsProtocols) {
         final SslDataKey sslDataKey = new SslDataKey(bundleName);
         final SslData sslData = new SslDataBuilder()
                             .setKey(sslDataKey)
                             .setOdlKeystore(encryptOdlKeyStore(odlKeystore))
                             .setTrustKeystore(encryptTrustKeystore(trustKeystore))
                             .setCipherSuites(cipherSuites)
+                            .setTlsProtocols(tlsProtocols)
                             .build();
 
         if (MdsalUtils.put(dataBroker, LogicalDatastoreType.CONFIGURATION, getSslDataIid(bundleName), sslData)) {

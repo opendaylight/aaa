@@ -136,6 +136,13 @@ public interface IAaaCertProvider {
     String[] getCipherSuites();
 
     /**
+     * Get list of of the supported TLS protocols
+     *
+     * @return TLS protocols
+     */
+    String[] getTlsProtocols();
+
+    /**
      * Get the Trust key store Data
      *
      * @return Trust Keystore Object

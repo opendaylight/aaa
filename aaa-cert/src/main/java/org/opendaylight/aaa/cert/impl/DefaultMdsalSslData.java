@@ -8,10 +8,6 @@
 
 package org.opendaylight.aaa.cert.impl;
 
-import java.security.KeyStore;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.opendaylight.aaa.cert.api.IAaaCertProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystore;
@@ -19,6 +15,10 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.ctlkeystore.CipherSuites;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.security.KeyStore;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * DefaultMdsalSslData Implements the default Mdsal SslData based on the configuration exist in the aaa-cert-config.xml
@@ -146,7 +146,7 @@ public class DefaultMdsalSslData implements IAaaCertProvider {
             return aaaCertMdsalProv.addSslDataKeystores(bundleName, ctlKeyStore.getName(), ctlKeyStore.getStorePassword(),
                     ctlKeyStore.getAlias(), ctlKeyStore.getDname(), ctlKeyStore.getKeyAlg(), ctlKeyStore.getSignAlg(),
                     ctlKeyStore.getKeysize(), ctlKeyStore.getValidity(), trustKeyStore.getName(), trustKeyStore.getStorePassword(),
-                    getCipherSuites(ctlKeyStore.getCipherSuites())) != null;
+                    getCipherSuites(ctlKeyStore.getCipherSuites()), ctlKeyStore.getTlsProtocols()) != null;
         }
         return true;
     }
@@ -158,4 +158,10 @@ public class DefaultMdsalSslData implements IAaaCertProvider {
         }
         return suites.toArray(new String[suites.size()]);
     }
+
+    @Override
+    public String[] getTlsProtocols() {
+        return aaaCertMdsalProv.getTlsProtocols(bundleName);
+    }
+
 }
