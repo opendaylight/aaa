@@ -66,13 +66,14 @@ public class KeyStoresDataUtils {
     }
 
     public SslData addSslData(final DataBroker dataBroker, final String bundleName, final OdlKeystore odlKeystore,
-            final TrustKeystore trustKeystore, final List<CipherSuites> cipherSuites) {
+            final TrustKeystore trustKeystore, final List<CipherSuites> cipherSuites, final String tlsProtocols) {
         final SslDataKey sslDataKey = new SslDataKey(bundleName);
         final SslData sslData = new SslDataBuilder()
                             .setKey(sslDataKey)
                             .setOdlKeystore(encryptOdlKeyStore(odlKeystore))
                             .setTrustKeystore(encryptTrustKeystore(trustKeystore))
                             .setCipherSuites(cipherSuites)
+                            .setTlsProtocols(tlsProtocols)
                             .build();
 
         if (MdsalUtils.put(dataBroker, LogicalDatastoreType.CONFIGURATION, getSslDataIid(bundleName), sslData)) {

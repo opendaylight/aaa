@@ -76,6 +76,10 @@ module aaa-cert {
                 description "the key size i.e: 1024";
                 type int32;
             }
+            leaf tls-protocols {
+                description "the TLS supported protocols SSLv2Hello,TLSv1.1,TLSv1.2";
+                type string;
+            }
             list cipher-suites {
                  leaf suite-name {
                      type string;
