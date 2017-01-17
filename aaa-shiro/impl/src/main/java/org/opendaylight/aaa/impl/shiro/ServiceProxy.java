@@ -36,13 +36,8 @@ import org.slf4j.LoggerFactory;
  * @see <code>org.opendaylight.aaa.shiro.filters.AAAFilter</code>
  */
 public class ServiceProxy {
-    private static final Logger LOG = LoggerFactory.getLogger(ServiceProxy.class);
 
-    /**
-     * AuthN and AuthZ are disabled by default to support workflows included in
-     * features such as <code>odl-restconf-noauth</code>
-     */
-    public static final boolean DEFAULT_AA_ENABLE_STATUS = false;
+    private static final Logger LOG = LoggerFactory.getLogger(ServiceProxy.class);
 
     private static ServiceProxy instance = new ServiceProxy();
     private volatile boolean enabled = false;
