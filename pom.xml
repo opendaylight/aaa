@@ -38,7 +38,6 @@
     <module>aaa-authn-mdsal-store</module>
     <module>aaa-authz</module>
     <module>aaa-credential-store-api</module>
-    <module>aaa-shiro-act</module>
     <module>aaa-h2-store</module>
     <module>aaa-cert</module>
     <module>aaa-cli</module>
@@ -49,6 +48,7 @@
     <module>karaf</module>
     <module>parent</module>
     <module>aaa-shiro</module>
+    <module>aaa-shiro-act</module>
   </modules>
 
   <build>
