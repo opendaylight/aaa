@@ -6,12 +6,13 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.cli;
+package org.opendaylight.aaa.cli.cert;
 
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.cli.utils.CliUtils;
 
 @Command(name = "get-node-cert", scope = "aaa", description = "get node certificate form the opendaylight trust keystore .")
 
