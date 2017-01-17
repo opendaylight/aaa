@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a622d24_c29d090c",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-01-17T16:53:53Z",
+      "side": 1,
+      "message": "use \u0026quot,\u0026quot",
+      "range": {
+        "startLine": 35,
+        "startChar": 119,
+        "endLine": 35,
+        "endChar": 120
+      },
+      "revId": "1fbce15c5ba952db794197a52d35cbcb895cd13d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_a2a28d48",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/api/IAaaCertMdsalProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-01-17T16:53:53Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 174,
+        "startChar": 119,
+        "endLine": 174,
+        "endChar": 120
+      },
+      "revId": "1fbce15c5ba952db794197a52d35cbcb895cd13d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_028b81c3",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertMdsalProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-01-17T16:53:53Z",
+      "side": 1,
+      "message": "\"final\" to keep in line with the style conventions of the rest of the class.",
+      "revId": "1fbce15c5ba952db794197a52d35cbcb895cd13d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_4291f9ef",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertMdsalProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-01-17T16:53:53Z",
+      "side": 1,
+      "message": "I think we should allow for whitespace between individual protocol names in this list.  I.e., \"tls1.1, tls1.2\".  Please do a trim on the resulting array.",
+      "range": {
+        "startLine": 238,
+        "startChar": 23,
+        "endLine": 238,
+        "endChar": 47
+      },
+      "revId": "1fbce15c5ba952db794197a52d35cbcb895cd13d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_228e7dd0",
+        "filename": "aaa-cert/src/main/resources/initial/aaa-cert-config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-01-17T16:53:53Z",
+      "side": 1,
+      "message": "Please be consistent with how you treat empty XML.  Below, you have \"\u003csuite-name /\u003e\" and here you have a different representation.  I don\u0027t care which one we use, but it should be consistent since this config is visible to the external user.",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 35
+      },
+      "revId": "1fbce15c5ba952db794197a52d35cbcb895cd13d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
