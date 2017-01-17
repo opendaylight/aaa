@@ -1,10 +1,6 @@
-## Welcome to the Opendaylight AAA Project!
+## Opendaylight AAA
 
-This project is aimed at providing a flexible, pluggable framework with out-of-the-box capabilities for:
-
-* *Authentication*:  Means to authenticate the identity of both human and machine users (direct or federated).
-* *Authorization*:  Means to authorize human or machine user access to resources including RPCs, notification subscriptions, and subsets of the datatree.
-* *Accounting*:  Means to record and access the records of human or machine user access to resources including RPCs, notifications, and subsets of the datatree
+This project is aimed at providing a flexible, pluggable framework with out-of-the-box capabilities for Authentication, Authorization and Accounting.
 
 ## Caveats
 The following caveats are applicable to the current AAA implementation:
@@ -17,8 +13,8 @@ The following caveats are applicable to the current AAA implementation:
 
 *Prerequisite:*  The followings are required for building AAA:
 
-- Maven 3
-- Java 7
+- Maven 3.3.9+
+- JDK8
 
 Get the code:
 
@@ -30,23 +26,13 @@ Build it:
 
 ### Installing
 
-AAA installs into an existing Opendaylight controller Karaf installation.  If you don't have an Opendaylight installation, please refer to this [page](https://wiki.opendaylight.org/view/OpenDaylight_Controller:Installation).
+AAA is automatically installed upon installation of odl-restconf.  If you are using AAA from a non-RESTCONF context, you can install the necessary javax.servlet.Filter(s) through the following command:
 
-Start the controller Karaf container:
-
-	bin/karaf
-
-Install AAA repository from the Karaf shell:
-
-	repo-add mvn:org.opendaylight.aaa/features-aaa/0.1.0-SNAPSHOT/xml/features
-
-Install AAA AuthN features:
-
-	feature:install odl-aaa-authn
+	feature:install odl-aaa-shiro
 
 ### Protecting your REST/RestConf resources
 
-Add the AAA `TokeAuthFilter` filter to your REST resource (RESTconf example):
+Add the AAA `AAAShiroFilter` filter to your REST resource (RESTconf example):
 
     <servlet>
         <servlet-name>JAXRSRestconf</servlet-name>
@@ -60,7 +46,7 @@ Add the AAA `TokeAuthFilter` filter to your REST resource (RESTconf example):
         <init-param>
             <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
             <param-value>
-                org.opendaylight.aaa.sts.TokenAuthFilter
+                org.opendaylight.aaa.shiro.filters.AAAShiroFilter
             </param-value>
         </init-param>
         
@@ -83,15 +69,6 @@ The access token can then be used to access protected resources on the controlle
 
     curl -s -H 'Authorization: Bearer d772d85e-34c7-3099-bea5-cfafd3c747cb' http://<controller>:<port>/restconf/operational/opendaylight-inventory:nodes
 
-The operational state of access tokens cached in the MD-SAL can also be obtained after enabling the restconf feature:
-
-    feature:install odl-aaa-all
-
-At the following URL
-
-    http://controller:8181/restconf/operational/aaa-authn-model:tokencache/
-
-
 ## Framework Overview
 
 ### Authentication
@@ -103,14 +80,6 @@ AAA supports 2 main authentication use-cases:  *direct* and *federated* authenti
 In this use-case, a user presents some credentials (e.g., username/password) directly to the Opendaylight (ODL) controller token endpoint `/oauth2/token` and receives an access token, which then can be used to access protected resources on the controller, similar to the example we saw in the Quickstart section: 
 
 ![](https://wiki.opendaylight.org/images/c/cc/Direct_authn.png)
-
-Here, the Opendaylight controller takes on 3 respective roles:
-
-- *Identity Provider*:  Authenticates a user given some credentials.
-- *Authorization Server*:  Determines what roles/permissions an authenticated user has.
-- *Resource Provider*:  Provides access to a given resource based on the user's roles/permissions.
-
-The built-in IdP for Opendaylight can be swapped out by a different implementation of the `org.opendaylight.aaa.api.CredentialAuth` API.
 
 #### Federated
 
@@ -130,48 +99,13 @@ In this case, we use the IdP token directly as an access token to access protect
 
 ### Authorization & Access Control
 
-Authorization is implemented via the aaa-authz modules, comprising of a yang based AuthZ policy schema, an MD-SAL AuthZ capable broker, an AuthZ
-service engine invoked by the broker and executing policies.
+Authorization is implemented via the aaa-shiro modules.  Currently, authorization is limited purely to RESTCONF (HTTP) and does not focus on MD-SAL.
 
-NOTE: The Lithium release features a trail of Authz functionality, in particular longest string matching is not implemented.
+More information on how to configure authorization can be found on the Apache Shiro website:
 
-Initially the AuthZ functionality is only able to handle RestConf requests, and to do so the Restconf connector configuration must
- be explicitly modified as follows:
+    http://shiro.apache.org/web.html
 
-    0. Compile or obtain the ODL distribution
-    1. Start karaf and install the odl-aaa-authz feature
-
-    Note: At this stage, with a default configuration, there is no MD-SAL data to test against. To test you can install the toaster service using feature:install odl-toaster
-
-Default authorization policies are loaded from the configuration subsystem (TODO: Provide a default set)
-They are accessible and editable via the restconf interface at:
-
-    http://<odl address>/restconf/configuration/authorization-schema:simple-authorization/
-
-The schema for policies is a list consisting of the following items:
-
-  * Service : The application service that is the initiator of the request triggering an authorization check, eg Restconf.
-  NOTE: The service field is currently not enforced, and a wildcard "*" is recommended.
-  * Action: The action that is being authorized. Maps to one of: { create; read; update; delete; execute; subscribe; any }
-  * Resource: The URI or Yang instance id of the resource, including wildcards (see examples below)
-  * Role: The AuthN derived user role
-
-Some examples of resources are:
-
-      Data : /operational/opendaylight-inventory:nodes/node/openflow:1/node-connector/openflow:1:1
-  
-      Wildcarded data: /configuration/opendaylight-inventory:nodes/node/*/node-connector/*
-  
-      RPC: /operations/example-ops:reboot
-  
-      Wildcarded RPC: /operations/example-ops:*
-  
-      Notification: /notifications/example-ops:startup
-
-
-*More on MD-SAL authorization later...*
-
-### Accounting  
+### Accounting
 
 Accounting is handled through the standard slf4j logging mechanisms used by the rest of OpenDaylight.  Thus, one can control logging verbosity through manipulating the log levels for individual packages and classes directly through the karaf shell, JMX, or etc/org.ops4j.pax.logging.cfg.  In normal operations, the default levels exposed do not provide much information about AAA services;  this is due to the fact that logging can severely degrade performance.
 
