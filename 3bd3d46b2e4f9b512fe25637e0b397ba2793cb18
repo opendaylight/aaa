@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_25f7a75a",
+        "filename": "aaa-shiro/.gitignore",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-01-17T19:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a622d24_221b1dcb",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 7
+      },
+      "revId": "3bd3d46b2e4f9b512fe25637e0b397ba2793cb18",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_0228a1e0",
         "filename": "aaa-shiro/artifacts/pom.xml",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-17T16:35:12Z",
       "side": 1,
       "message": "this one does not exist.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 18
+      },
+      "revId": "3bd3d46b2e4f9b512fe25637e0b397ba2793cb18",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_85979beb",
+        "filename": "aaa-shiro/artifacts/pom.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-01-17T19:24:11Z",
+      "side": 1,
+      "message": "Got rid of local artifacts and just using the top level one.",
+      "parentUuid": "1a622d24_0228a1e0",
       "range": {
         "startLine": 37,
         "startChar": 0,
