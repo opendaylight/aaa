@@ -11,7 +11,6 @@ package org.opendaylight.aaa.cert.impl;
 import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.opendaylight.aaa.cert.api.IAaaCertProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.TrustKeystore;
@@ -138,5 +137,16 @@ public class AaaCertProvider implements IAaaCertProvider {
             cipherSuites.stream().forEach(cs -> { suites.add(cs.getSuiteName()); });
         }
         return suites.toArray(new String[suites.size()]);
+    }
+
+    @Override
+    public String[] getTlsProtocols() {
+        String tlsProtocols = ctlKeyStore.getTlsProtocols();
+        if (tlsProtocols != null && !tlsProtocols.isEmpty()) {
+            // remove white spaces in tlsProtocols string
+            tlsProtocols = tlsProtocols.replace(" ", "");
+            return tlsProtocols.split(",");
+        }
+        return null;
     }
 }

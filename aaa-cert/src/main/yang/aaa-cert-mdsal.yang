@@ -101,6 +101,10 @@ module aaa-cert-mdsal {
             type string;
             mandatory true;
         }
+        leaf tls-protocols {
+            description "the TLS supported protocols (SSLv2Hello,TLSv1.1,TLSv1.2) the selected protocol should be seperated by ',' char";
+            type string;
+        }
         container odl-keystore {
             uses keystore;
         }
