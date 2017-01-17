@@ -90,6 +90,11 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>aaa-shiro-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-shiro</artifactId>
                 <version>${project.version}</version>
             </dependency>
