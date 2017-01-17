@@ -39,8 +39,8 @@ public class AuthNStore implements AutoCloseable, TokenStore {
 
     private static final Logger LOG = LoggerFactory.getLogger(AuthNStore.class);
     private DataBroker broker;
-    private static BigInteger timeToLive;
-    private static Integer timeToWait;
+    private BigInteger timeToLive;
+    private Integer timeToWait;
     private final ExecutorService deleteExpiredTokenThread = Executors.newFixedThreadPool(1);
     private final AAAEncryptionService dataEncrypter;
 
@@ -56,7 +56,6 @@ public class AuthNStore implements AutoCloseable, TokenStore {
     public void close() throws Exception {
         deleteExpiredTokenThread.shutdown();
         LOG.info("MD-SAL AAA Token Cache closed...");
-
     }
 
     @Override
