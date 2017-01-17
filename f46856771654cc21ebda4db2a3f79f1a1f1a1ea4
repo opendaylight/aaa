@@ -22,6 +22,30 @@
       "revId": "f46856771654cc21ebda4db2a3f79f1a1f1a1ea4",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_ce0d35ea",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-01-17T13:37:36Z",
+      "side": 1,
+      "message": "Missed this comment.  I will submit a follow up removing the trailing spaces for the entire README.",
+      "parentUuid": "1a622d24_ffe54109",
+      "range": {
+        "startLine": 174,
+        "startChar": 14,
+        "endLine": 174,
+        "endChar": 16
+      },
+      "revId": "f46856771654cc21ebda4db2a3f79f1a1f1a1ea4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
