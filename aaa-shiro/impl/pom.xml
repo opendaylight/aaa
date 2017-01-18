@@ -124,7 +124,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         <configuration>
           <instructions>
             <Web-ContextPath>/moon</Web-ContextPath>
-            <Bundle-Activator>org.opendaylight.aaa.shiro.Activator</Bundle-Activator>
             <Bundle-Name>${project.groupId}.${project.artifactId}</Bundle-Name>
           </instructions>
         </configuration>
