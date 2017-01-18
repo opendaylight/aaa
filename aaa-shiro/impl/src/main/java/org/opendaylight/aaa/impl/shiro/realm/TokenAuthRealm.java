@@ -74,7 +74,6 @@ public class TokenAuthRealm extends AuthorizingRealm {
     private static final Logger LOG = LoggerFactory.getLogger(TokenAuthRealm.class);
 
     public TokenAuthRealm() {
-        super();
         super.setName(TOKEN_AUTH_REALM_DEFAULT_NAME);
     }
 

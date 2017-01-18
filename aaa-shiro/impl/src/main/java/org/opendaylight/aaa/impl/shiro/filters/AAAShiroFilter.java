@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * This class is also responsible for delivering debug information; to enable these
  * debug statements, please issue the following in the karaf shell:
  *
- * <code>log:set debug org.opendaylight.aaa.shiro.filters.AAAShiroFilter</code>
+ * <code>log:set DEBUG org.opendaylight.aaa.shiro.filters.AAAShiroFilter</code>
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  * @see <code>javax.servlet.Filter</code>

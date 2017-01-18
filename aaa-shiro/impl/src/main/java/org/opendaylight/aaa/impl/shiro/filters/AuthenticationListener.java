@@ -31,16 +31,14 @@ public class AuthenticationListener implements org.apache.shiro.authc.Authentica
     @Override
     public void onSuccess(final AuthenticationToken authenticationToken, final AuthenticationInfo authenticationInfo) {
         if (LOG.isDebugEnabled()) {
-            final String successMessage = AuthenticationTokenUtils.generateSuccessfulAuthenticationMessage(authenticationToken);
-            LOG.debug(successMessage);
+            LOG.debug(AuthenticationTokenUtils.generateSuccessfulAuthenticationMessage(authenticationToken));
         }
     }
 
     @Override
     public void onFailure(final AuthenticationToken authenticationToken, final AuthenticationException e) {
         if (LOG.isDebugEnabled()) {
-            final String failureMessage = AuthenticationTokenUtils.generateUnsuccessfulAuthenticationMessage(authenticationToken);
-            LOG.debug(failureMessage);
+            LOG.debug(AuthenticationTokenUtils.generateUnsuccessfulAuthenticationMessage(authenticationToken));
         }
     }
 
