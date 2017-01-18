@@ -42,7 +42,6 @@ public class ODLHttpAuthenticationFilter extends BasicHttpAuthenticationFilter {
     protected static final String OPTIONS_HEADER = "OPTIONS";
 
     public ODLHttpAuthenticationFilter() {
-        super();
         LOG.info("Creating the ODLHttpAuthenticationFilter");
     }
 

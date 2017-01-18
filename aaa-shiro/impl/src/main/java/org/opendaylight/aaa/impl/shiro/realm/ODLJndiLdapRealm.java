@@ -116,9 +116,7 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
      * Adds debugging information surrounding creation of ODLJndiLdapRealm
      */
     public ODLJndiLdapRealm() {
-        super();
-        final String DEBUG_MESSAGE = "Creating ODLJndiLdapRealm";
-        LOG.debug(DEBUG_MESSAGE);
+        LOG.debug("Creating ODLJndiLdapRealm");
     }
 
     /*

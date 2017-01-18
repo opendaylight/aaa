@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * delivering debug information; to enable these debug statements, please issue
  * the following in the karaf shell:
  *
- * <code>log:set debug org.opendaylight.aaa.shiro.filters.AAAFilter</code>
+ * <code>log:set DEBUG org.opendaylight.aaa.shiro.filters.AAAFilter</code>
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  * @see <code>javax.servlet.Filter</code>
@@ -29,9 +29,7 @@ public class AAAFilter extends ShiroFilter {
     private static final Logger LOG = LoggerFactory.getLogger(AAAFilter.class);
 
     public AAAFilter() {
-        super();
-        final String DEBUG_MESSAGE = "Creating the AAAFilter";
-        LOG.debug(DEBUG_MESSAGE);
+        LOG.debug("Creating the AAAFilter");
     }
 
     /*
@@ -46,8 +44,7 @@ public class AAAFilter extends ShiroFilter {
     @Override
     public void init() throws Exception {
         super.init();
-        final String DEBUG_MESSAGE = "Initializing the AAAFilter";
-        LOG.debug(DEBUG_MESSAGE);
+        LOG.debug("Initializing the AAAFilter");
         // sets the filter to the startup value. Because of non-determinism in
         // bundle loading, this passes an instance of itself along so that if
         // the
@@ -64,9 +61,8 @@ public class AAAFilter extends ShiroFilter {
      * org.apache.shiro.web.servlet.OncePerRequestFilter#setEnabled(boolean)
      */
     @Override
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(final boolean enabled) {
         super.setEnabled(enabled);
-        final String DEBUG_MESSAGE = "Setting AAAFilter enabled to " + enabled;
-        LOG.debug(DEBUG_MESSAGE);
+        LOG.debug("Setting AAAFilter enabled to {}", enabled);
     }
 }

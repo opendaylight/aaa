@@ -66,8 +66,7 @@ public class ServiceProxy {
      */
     public synchronized void setEnabled(final boolean enabled) {
         this.enabled = enabled;
-        final String SERVICE_ENABLED_INFO_MESSAGE = "Setting ServiceProxy enabled to " + enabled;
-        LOG.info(SERVICE_ENABLED_INFO_MESSAGE);
+        LOG.info("Setting ServiceProxy enabled to {}", enabled);
         // check for null because of non-determinism in bundle load
         if (filter != null) {
             filter.setEnabled(enabled);
