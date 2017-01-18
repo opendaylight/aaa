@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a622d24_cc24180f",
+        "filename": "parent/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-01-18T12:48:22Z",
+      "side": 1,
+      "message": "Why does this segment still exists? Move required stuff to other segments and remove the rest of this.",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 22
+      },
+      "revId": "dc550a43392fc30e4990b8d461a40563df953e65",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
