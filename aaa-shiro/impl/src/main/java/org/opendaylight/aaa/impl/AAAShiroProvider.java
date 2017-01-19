@@ -11,14 +11,38 @@ import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Provider for AAA shiro implementation.
+ *
+ * @author Ryan Goulding (ryandgoulding@gmail.com)
+ */
 public class AAAShiroProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
-    private final DataBroker dataBroker;
+    private static AAAShiroProvider INSTANCE;
+    private DataBroker dataBroker;
 
+    /**
+     * Provider for this bundle.
+     *
+     * @param dataBroker injected from blueprint
+     */
     public AAAShiroProvider(final DataBroker dataBroker) {
         this.dataBroker = dataBroker;
+        INSTANCE = this;
+    }
+
+    /**
+     * Singleton extraction.
+     *
+     * @return the Provider
+     */
+    public static AAAShiroProvider getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new AAAShiroProvider(null);
+        }
+        return INSTANCE;
     }
 
     /**
@@ -33,5 +57,14 @@ public class AAAShiroProvider {
      */
     public void close() {
         LOG.info("AAAShiroProvider Closed");
+    }
+
+    /**
+     * Extract the data broker.
+     *
+     * @return the data broker
+     */
+    public DataBroker getDataBroker() {
+        return this.dataBroker;
     }
 }
