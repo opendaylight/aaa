@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Brocade Communications Systems, Inc. and others.  All rights reserved.
+ * Copyright (c) 2015 - 2017 Brocade Communications Systems, Inc. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
+import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
+import org.opendaylight.aaa.impl.shiro.principal.ODLPrincipalImpl;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -90,9 +90,9 @@ public class TokenAuthRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         final Object primaryPrincipal = principalCollection.getPrimaryPrincipal();
-        final ODLPrincipal odlPrincipal;
+        final ODLPrincipalImpl odlPrincipal;
         try {
-            odlPrincipal = (ODLPrincipal) primaryPrincipal;
+            odlPrincipal = (ODLPrincipalImpl) primaryPrincipal;
             return new SimpleAuthorizationInfo(odlPrincipal.getRoles());
         } catch(ClassCastException e) {
             LOG.error("Couldn't decode authorization request", e);
@@ -232,7 +232,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
                         if (auth != null) {
                             LOG.debug("Authentication attempt successful");
                             ServiceLocator.getInstance().getAuthenticationService().set(auth);
-                            final ODLPrincipal odlPrincipal = ODLPrincipal.createODLPrincipal(auth);
+                            final ODLPrincipal odlPrincipal = ODLPrincipalImpl.createODLPrincipal(auth);
                             return new SimpleAuthenticationInfo(odlPrincipal, password.toCharArray(),
                                     getName());
                         }
@@ -250,7 +250,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
         try {
             auth = validate(token);
             if (auth != null) {
-                final ODLPrincipal odlPrincipal = ODLPrincipal.createODLPrincipal(auth);
+                final ODLPrincipal odlPrincipal = ODLPrincipalImpl.createODLPrincipal(auth);
                 return new SimpleAuthenticationInfo(odlPrincipal, "", getName());
             }
         } catch (AuthenticationException e) {
@@ -300,69 +300,5 @@ public class TokenAuthRealm extends AuthorizingRealm {
         return new String(upt.getPassword());
     }
 
-    /**
-     * Since <code>TokenAuthRealm</code> is an <code>AuthorizingRealm</code>, it supports
-     * individual steps for authentication and authorization.  In ODL's existing <code>TokenAuth</code>
-     * mechanism, authentication and authorization are currently done in a single monolithic step.
-     * <code>ODLPrincipal</code> is abstracted as a DTO between the two steps.  It fulfills the
-     * responsibility of a <code>Principal</code>, since it contains identification information
-     * but no credential information.
-     *
-     * @author Ryan Goulding (ryandgoulding@gmail.com)
-     */
-    private static class ODLPrincipal {
 
-        private final String username;
-        private final String domain;
-        private final String userId;
-        private final Set<String> roles;
-
-        private ODLPrincipal(final String username, final String domain, final String userId, final Set<String> roles) {
-            this.username = username;
-            this.domain = domain;
-            this.userId = userId;
-            this.roles = roles;
-        }
-
-        /**
-         * A static factory method to create <code>ODLPrincipal</code> instances.
-         *
-         * @param username The authenticated user
-         * @param domain The domain <code>username</code> belongs to.
-         * @param userId The unique key for <code>username</code>
-         * @param roles The roles associated with <code>username</code>@<code>domain</code>
-         * @return A Principal for the given session;  essentially a DTO.
-         */
-        static ODLPrincipal createODLPrincipal(final String username, final String domain,
-                final String userId, final Set<String> roles) {
-
-            return new ODLPrincipal(username, domain, userId, roles);
-        }
-
-        /**
-         * A static factory method to create <code>ODLPrincipal</code> instances.
-         *
-         * @param auth Contains identifying information for the particular request.
-         * @return A Principal for the given session;  essentially a DTO.
-         */
-        static ODLPrincipal createODLPrincipal(final Authentication auth) {
-            return createODLPrincipal(auth.user(), auth.domain(), auth.userId(), auth.roles());
-        }
-
-        String getUsername() {
-            return this.username;
-        }
-
-        String getDomain() {
-            return this.domain;
-        }
-
-        String getUserId() {
-            return this.userId;
-        }
-
-        Set<String> getRoles() {
-            return this.roles;
-        }
-    }
 }
