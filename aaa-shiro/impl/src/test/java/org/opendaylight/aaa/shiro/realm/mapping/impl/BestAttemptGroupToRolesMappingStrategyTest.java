@@ -19,7 +19,7 @@ import org.junit.Test;
 import org.opendaylight.aaa.shiro.realm.mapping.api.GroupsToRolesMappingStrategy;
 
 /**
- * Test ODL's default groups->roles mapping strategy.
+ * Test ODL's default groups to roles mapping strategy.
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
