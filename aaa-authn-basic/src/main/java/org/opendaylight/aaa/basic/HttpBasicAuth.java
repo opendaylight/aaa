@@ -8,7 +8,7 @@
 
 package org.opendaylight.aaa.basic;
 
-import com.sun.jersey.core.util.Base64;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import org.opendaylight.aaa.AuthenticationBuilder;
@@ -74,7 +74,7 @@ public class HttpBasicAuth implements TokenAuth {
     }
 
     private static String[] extractCredentialArray(final String authHeader) {
-        return new String(Base64.base64Decode(authHeader.substring(BASIC_PREFIX.length())))
+        return new String(Base64.getDecoder().decode(authHeader.substring(BASIC_PREFIX.length())))
                 .split(AUTH_SEP);
     }
 

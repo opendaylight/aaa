@@ -30,9 +30,9 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.Base64;
 import java.util.Date;
 import javax.xml.bind.DatatypeConverter;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.asn1.x509.X509Name;
 import org.bouncycastle.jce.PKCS10CertificationRequest;
@@ -294,7 +294,7 @@ public class ODLKeyTool {
             final int sIdx = certificate.indexOf(KeyStoreConstant.END_CERTIFICATE);
             certificate = certificate.substring(fIdx, sIdx);
         }
-        final byte[] byteCert = Base64.decodeBase64(certificate);
+        final byte[] byteCert = Base64.getDecoder().decode(certificate);
         final InputStream inputStreamCert = new ByteArrayInputStream(byteCert);
         CertificateFactory certFactory;
         try {
