@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1485969856030
+Build-Jdk: 1.8.0_92
+Built-By: ryan
+Bundle-Description: OpenDaylight is leading the transformation to Open S
+ oftware Defined Networking (SDN). For more information, please see http
+ s://www.opendaylight.org
+Bundle-DocURL: https://www.opendaylight.org
+Bundle-License: https://www.eclipse.org/legal/epl-v10.html
+Bundle-ManifestVersion: 2
+Bundle-Name: aaa-encrypt-service
+Bundle-SymbolicName: org.opendaylight.aaa.encrypt-service
+Bundle-Vendor: OpenDaylight
+Bundle-Version: 0.5.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: org.opendaylight.aaa.encrypt;uses:="org.opendaylight.yan
+ g.gen.v1.config.aaa.authn.encrypt.service.config.rev160915";version="0.
+ 5.0",org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.conf
+ ig.rev160915;uses:="org.opendaylight.yangtools.concepts,org.opendayligh
+ t.yangtools.yang.binding,org.opendaylight.yangtools.yang.common";versio
+ n="0.5.0"
+Import-Package: javax.crypto,javax.crypto.spec,javax.xml.bind,org.openda
+ ylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915,or
+ g.opendaylight.yangtools.concepts;version="[1.1,2)",org.opendaylight.ya
+ ngtools.yang.binding;version="[0.10,1)",org.opendaylight.yangtools.yang
+ .common;version="[1.1,2)",org.slf4j;version="[1.7,2)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Tool: Bnd-3.0.0.201509101326

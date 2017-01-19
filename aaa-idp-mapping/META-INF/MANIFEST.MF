@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1485969869648
+Build-Jdk: 1.8.0_92
+Built-By: ryan
+Bundle-Activator: org.opendaylight.aaa.idpmapping.Activator
+Bundle-Description: OpenDaylight is leading the transformation to Open S
+ oftware Defined Networking (SDN). For more information, please see http
+ s://www.opendaylight.org
+Bundle-DocURL: https://www.opendaylight.org
+Bundle-License: https://www.eclipse.org/legal/epl-v10.html
+Bundle-ManifestVersion: 2
+Bundle-Name: aaa-authn-idpmapping
+Bundle-SymbolicName: org.opendaylight.aaa.authn-idpmapping
+Bundle-Vendor: OpenDaylight
+Bundle-Version: 0.5.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: org.opendaylight.aaa.idpmapping;uses:="org.apache.felix.
+ dm,org.osgi.framework";version="0.5.0"
+Import-Package: javax.json;version="[1.0,2)",javax.json.stream;version="
+ [1.0,2)",org.apache.felix.dm;version="[4.3,5)",org.osgi.framework;versi
+ on="[1.7,2)",org.slf4j;version="[1.7,2)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Tool: Bnd-3.0.0.201509101326

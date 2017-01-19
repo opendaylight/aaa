@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1485969863503
+Build-Jdk: 1.8.0_92
+Built-By: ryan
+Bundle-Activator: org.opendaylight.aaa.Activator
+Bundle-Description: OpenDaylight is leading the transformation to Open S
+ oftware Defined Networking (SDN). For more information, please see http
+ s://www.opendaylight.org
+Bundle-DocURL: https://www.opendaylight.org
+Bundle-License: https://www.eclipse.org/legal/epl-v10.html
+Bundle-ManifestVersion: 2
+Bundle-Name: aaa-authn
+Bundle-SymbolicName: org.opendaylight.aaa.authn
+Bundle-Vendor: OpenDaylight
+Bundle-Version: 0.5.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: org.opendaylight.aaa;uses:="com.google.common.collect,or
+ g.apache.felix.dm,org.opendaylight.aaa.api,org.osgi.framework,org.osgi.
+ service.cm";version="0.5.0"
+Import-Package: com.google.common.base;version="[18.0,19)",com.google.co
+ mmon.collect;version="[18.0,19)",org.apache.felix.dm;version="[4.3,5)",
+ org.opendaylight.aaa.api;version="[0.5,1)",org.osgi.framework;version="
+ [1.7,2)",org.osgi.service.cm;version="[1.5,2)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Tool: Bnd-3.0.0.201509101326
