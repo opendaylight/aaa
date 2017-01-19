@@ -32,6 +32,7 @@
         <bundle>wrap:mvn:org.json/json/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.commons-beanutils/{{VERSION}}</bundle>
 
+        <bundle>mvn:org.opendaylight.aaa/aaa-shiro-api/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}</bundle>
 
         <!-- AAA configuration file -->
