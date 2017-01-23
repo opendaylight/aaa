@@ -40,6 +40,11 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-shiro-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- odl-aaa-authn -->
         <dependency>
             <groupId>com.sun.jersey</groupId>
