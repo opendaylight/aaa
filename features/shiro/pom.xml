@@ -36,10 +36,6 @@
 
     <dependencies>
         <dependency>
-        <groupId>com.google.code.findbugs</groupId>
-        <artifactId>jsr305</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.opendaylight.aaa</groupId>
              <artifactId>features-aaa</artifactId>
              <classifier>features</classifier>
