@@ -24,7 +24,7 @@
         <bundle>mvn:org.apache.shiro/shiro-web/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.shiro/shiro-core/{{VERSION}}</bundle>
 
-        <bundle>wrap:mvn:com.google.code.findbugs/jsr305/{{VERSION}}</bundle>
+        <bundle>wrap:mvn:com.google.code.findbugs/annotations/{{VERSION}}</bundle>
         <bundle>wrap:mvn:commons-codec/commons-codec/{{VERSION}}</bundle>
         <bundle>wrap:mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.resourceserver/{{VERSION}}</bundle>
         <bundle>wrap:mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.authzserver/{{VERSION}}</bundle>
