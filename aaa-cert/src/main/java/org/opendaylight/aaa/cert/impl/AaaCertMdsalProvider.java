@@ -136,11 +136,16 @@ public class AaaCertMdsalProvider implements IAaaCertMdsalProvider {
     @Override
     public String[] getCipherSuites(final String bundleName) {
         final SslData sslData = keyStoresData.getSslData(dataBroker, bundleName);
-        final List<String> suites = new ArrayList<String>();
         if (sslData != null && sslData.getCipherSuites() != null && !sslData.getCipherSuites().isEmpty()) {
-           sslData.getCipherSuites().stream().forEach(cs -> { suites.add(cs.getSuiteName()); });
+            final List<String> suites = new ArrayList<String>();
+           sslData.getCipherSuites().stream().forEach(cs -> {
+               if (!cs.getSuiteName().isEmpty()) {
+                   suites.add(cs.getSuiteName());
+               }
+           });
+           return suites.toArray(new String[suites.size()]);
         }
-        return suites.toArray(new String[suites.size()]);
+        return null;
     }
 
     @Override
