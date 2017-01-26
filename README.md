@@ -97,11 +97,69 @@ In this case, we use the IdP token directly as an access token to access protect
 
 ### Authorization & Access Control
 
-Authorization is implemented via the aaa-shiro modules.  Currently, authorization is limited purely to RESTCONF (HTTP) and does not focus on MD-SAL.
+ODL supports two authorization engines at present, both of which are roughly similar in behavior.  Namely, the two authorization engines are the MDSALDynamicAuthorizationFilter(1) and the RolesAuthorizationFilter(2).  For several reasons explained further in this documentation, we STRONGLY encourage you to use the MDSALDyanmicAuthorizationFilter(1) approach over the RolesAuthorizationFilter(2).
+
+1) MDSALDyanmicAuthorizationFilter
+
+The MDSALDynamicAuthorizationFilter is a mechanism used to restrict access to partcular URL endpoint patterns.  Users may define a list of policies that are insertion-ordered.  Order matters for the list of policies, since the first matching policy is applied.  This choice was made to emulate behavior of the Apache Shiro RolesAuthorizationFilter.
+
+A policy is a key/value pair, where the key is a resource (i.e., a "url pattern") and the value is a list of permissions for the resource.  The following describes the various elements of a policy:
+
+resource:          The resource is a string url pattern as outlined by Apache Shiro.  For more information, see http://shiro.apache.org/web.html.
+description:       An optional description of the URL endpoint and why it is being secured.
+permissions list:  A list of permissions for a particular policy.  If more than one permission exists in the permissions list, the permissions are evaluted using logical "OR".
+
+A permission describes the prerequisites to perform HTTP operations on a particular endpoint.  The following describes the various elements of a permission:
+
+role:              The role required to access the target URL endpoint.
+actions list:      A leaf-list of HTTP permissions that are allowed for a Subject possessing the required role.
+
+---------
+Example:
+
+To limit access to the modules endpoint, issue the following:
+
+HTTP Operation:    put
+URL:               /restconf/config/aaa:http-authorization/policies
+Headers:
+    Content-Tye:       application/json
+    Accept:            application/json
+
+Body:
+
+{
+  "aaa:policies": {
+    "aaa:policies": [
+      {
+        "aaa:resource": "/restconf/modules/**",
+        "aaa:permissions": [
+          {
+            "aaa:role": "admin",
+            "aaa:actions": [
+              "get","post","put","patch","delete"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+--------
+The above example locks down access to the modules endpoint (and any URLS available past modules) to the "admin" role.  Thus, an attempt from the OOB admin user will succeed with 2XX HTTP status code, while an attempt from the OOB "user" user will fail with HTTP status code 401, as the "user" user is not granted the "admin" role.
+
+NOTE:  "aaa:resource" value starts with "/restconf".  Unlike the RolesAuthorizationFilter ("roles" in shiro.ini) which is relative to the ServletContext, The MDSALDyanmicAuthorizationFilter is relative to the Servlet Root (i.e., "/").  This is superior, as it is more specific and does not allow for ambiguity.
+
+2) shiro.ini urls section Authorization roles filter (i.e., "RolesAuthorizationFilter"). [DEPRECATED]
+
+Authorization is implemented via the aaa-shiro modules.  RolesAuthorizationFilter (roles filter) is limited purely to RESTCONF (HTTP) and does not focus on MD-SAL.
 
 More information on how to configure authorization can be found on the Apache Shiro website:
 
     http://shiro.apache.org/web.html
+
+NOTE:  Use of shiro.ini urls section to define roles requirements is discouraged!  This is due to the fact that shiro.ini changes are only recognized on servlet container startup.  Changes to shiro.ini are only honored upon restart.
+
+NOTE:  Use of shiro.ini urls section to define roles requirements is discouraged!  This is due to the fact that url patterns are matched relative to the servlet context.  This leaves room for ambiguity, since many endpoints may match (i.e., "/restconf/modules" and "/auth/modules" would both match a "/modules/**" rule).
 
 ### Accounting
 
