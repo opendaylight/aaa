@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_9d2656b9",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertMdsalProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-01-26T15:31:09Z",
+      "side": 1,
+      "message": "Indentation is wrong.",
+      "range": {
+        "startLine": 140,
+        "startChar": 12,
+        "endLine": 145,
+        "endChar": 14
+      },
+      "revId": "ec2d17052babbb5781f002c8228cf1e7c13d69e9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
