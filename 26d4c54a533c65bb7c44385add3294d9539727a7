@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fafc7978_11a08a42",
+        "filename": "aaa-shiro/api/src/main/yang/aaa.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-01-27T21:29:31Z",
+      "side": 1,
+      "message": "why u model two container inside each other? remove the policies one and keep the list.",
+      "range": {
+        "startLine": 35,
+        "startChar": 1,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "26d4c54a533c65bb7c44385add3294d9539727a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_4cf1dacc",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/AAAShiroProvider.java",
         "patchSetId": 5
@@ -49,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_9193daf9",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/AAAShiroProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-01-27T21:29:31Z",
+      "side": 1,
+      "message": "did u tried the static factory method to create instance ? check this\n\nhttps://wiki.opendaylight.org/view/Using_Blueprint#Using_a_static_factory_method",
+      "parentUuid": "fafc7978_f1b506ce",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 5
+      },
+      "revId": "26d4c54a533c65bb7c44385add3294d9539727a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_0c7cf21f",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/MDSALDynamicAuthorizationFilter.java",
         "patchSetId": 5
@@ -84,6 +131,30 @@
       "side": 1,
       "message": "I\u0027d prefer not doing that.  The model should be friendly to use, and reference the target name, so that it can be used easily from a NETCONF or RESTCONF perspective.  The issue with naming is directly related to the mdsal binding spec v1, and will be improved in Nitrogen.  I am going to keep the name for this.",
       "parentUuid": "fafc7978_0c7cf21f",
+      "range": {
+        "startLine": 99,
+        "startChar": 13,
+        "endLine": 99,
+        "endChar": 128
+      },
+      "revId": "26d4c54a533c65bb7c44385add3294d9539727a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_f1a4e658",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/MDSALDynamicAuthorizationFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-01-27T21:29:31Z",
+      "side": 1,
+      "message": "check my comment at yang model.",
+      "parentUuid": "fafc7978_b1941e38",
       "range": {
         "startLine": 99,
         "startChar": 13,
