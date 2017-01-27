@@ -131,12 +131,17 @@ public class AaaCertProvider implements IAaaCertProvider {
 
     @Override
     public String[] getCipherSuites() {
-        final List<String> suites = new ArrayList<String>();
         final List<CipherSuites> cipherSuites = ctlKeyStore.getCipherSuites();
         if ( cipherSuites != null && !cipherSuites.isEmpty()) {
-            cipherSuites.stream().forEach(cs -> { suites.add(cs.getSuiteName()); });
+            final List<String> suites = new ArrayList<String>();
+            cipherSuites.stream().forEach(cs -> {
+                if (!cs.getSuiteName().isEmpty()) {
+                    suites.add(cs.getSuiteName());
+                }
+            });
+            return suites.toArray(new String[suites.size()]);
         }
-        return suites.toArray(new String[suites.size()]);
+        return null;
     }
 
     @Override
