@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_4cf1dacc",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/AAAShiroProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-01-27T14:17:28Z",
+      "side": 1,
+      "message": "why you need to allow create instances of this class and at same time  use it as singleton object ?",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 5
+      },
+      "revId": "26d4c54a533c65bb7c44385add3294d9539727a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_0c7cf21f",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/MDSALDynamicAuthorizationFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-01-27T14:17:28Z",
+      "side": 1,
+      "message": "change the name in the yang model ex:PoliciesList and import this instead.",
+      "range": {
+        "startLine": 99,
+        "startChar": 13,
+        "endLine": 99,
+        "endChar": 128
+      },
+      "revId": "26d4c54a533c65bb7c44385add3294d9539727a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
