@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_d163a218",
+        "filename": "aaa-shiro/api/src/main/yang/aaa.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-01-27T21:36:35Z",
+      "side": 1,
+      "message": "No, it makes it easier hit from a RESTCONF DRAFT 02 perspective.",
+      "parentUuid": "fafc7978_11a08a42",
+      "range": {
+        "startLine": 35,
+        "startChar": 1,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "26d4c54a533c65bb7c44385add3294d9539727a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_4cf1dacc",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/AAAShiroProvider.java",
         "patchSetId": 5
