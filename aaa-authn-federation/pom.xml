@@ -91,7 +91,6 @@
                         <Web-ContextPath>/oauth2/federation</Web-ContextPath>
                         <Web-Connectors>federationConn</Web-Connectors>
                         <Bundle-Activator>org.opendaylight.aaa.federation.Activator</Bundle-Activator>
-                        <manifestLocation>${project.basedir}/META-INF</manifestLocation>
                     </instructions>
                 </configuration>
             </plugin>

@@ -93,7 +93,6 @@
                         </Import-Package>
                         <Web-ContextPath>/oauth2</Web-ContextPath>
                         <Bundle-Activator>org.opendaylight.aaa.sts.Activator</Bundle-Activator>
-                        <manifestLocation>${project.basedir}/META-INF</manifestLocation>
                     </instructions>
                 </configuration>
             </plugin>

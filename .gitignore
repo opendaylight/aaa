@@ -19,7 +19,6 @@
 # Generated stuff
 target/
 target-ide/
-META-INF/
 *.iml
 .DS_Store
 

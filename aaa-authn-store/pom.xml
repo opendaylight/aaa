@@ -60,7 +60,6 @@
                     <instructions>
                         <Bundle-Activator>org.opendaylight.aaa.store.Activator</Bundle-Activator>
                     </instructions>
-                    <manifestLocation>${project.basedir}/META-INF</manifestLocation>
                 </configuration>
             </plugin>
             <plugin>

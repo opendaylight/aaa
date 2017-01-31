@@ -85,7 +85,6 @@
                 <!-- override default version so we don't use bnd 2.3.0 when embedding sqlite -->
                 <extensions>true</extensions>
                 <configuration>
-                    <manifestLocation>${project.basedir}/META-INF</manifestLocation>
                 </configuration>
             </plugin>
         </plugins>

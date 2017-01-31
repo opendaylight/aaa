@@ -165,7 +165,6 @@
                         <!--<Web-Connectors>adminConn</Web-Connectors> -->
                         <!--Bundle-Activator>org.opendaylight.aaa.idm.Activator</Bundle-Activator-->
                     </instructions>
-                    <manifestLocation>${project.basedir}/META-INF</manifestLocation>
                 </configuration>
             </plugin>
         </plugins>
