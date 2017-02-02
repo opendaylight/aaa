@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_5779492e",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-02-02T17:37:05Z",
+      "side": 1,
+      "message": "Fine with me!",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 91
+      },
+      "revId": "f4ee83a7cb469754efd88946953e6c9db7f1f505",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_b776b53c",
+        "filename": "features/authn/odl-aaa-encryption-service/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-02-02T17:37:05Z",
+      "side": 1,
+      "message": "Please remove this in a follow up.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 4
+      },
+      "revId": "f4ee83a7cb469754efd88946953e6c9db7f1f505",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
