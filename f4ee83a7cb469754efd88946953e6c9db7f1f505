@@ -93,6 +93,30 @@
       "revId": "f4ee83a7cb469754efd88946953e6c9db7f1f505",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_f72b1de9",
+        "filename": "features/authn/odl-aaa-encryption-service/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 4540
+      },
+      "writtenOn": "2017-02-02T17:52:22Z",
+      "side": 1,
+      "message": "Yeah, I know, but I hadn\u0027t properly rebased with the latest feature POM clean-ups that were merged recently.",
+      "parentUuid": "fafc7978_37ff6569",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 4
+      },
+      "revId": "f4ee83a7cb469754efd88946953e6c9db7f1f505",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
