@@ -94,6 +94,30 @@
       "revId": "634060e7c1d036d3b1de26efcdd195d98b1a940e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_31749898",
+        "filename": "aaa-shiro/impl/src/main/resources/shiro.ini",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-02-02T01:05:00Z",
+      "side": 0,
+      "message": "Done.  So I moved this stuff back in as you suggested for now... I am working on a patch to initialize policies via configuration file.  I really can\u0027t believe that others haven\u0027t had this use case before... really seems like something \"generic\" applications would want.  As far as I can tell, it would also be useful for things like NETCONF (i.e., automatically self mount through network-topology model).  Probably belongs in MD-SAL, but I am not in the mood to fight getting it in there.  The plan is to push a AAA-specific mechanism for initializing AAA data for now.  Maybe we can revisit data initialization from a generic standpoint in Nitrogen.",
+      "parentUuid": "fafc7978_b1689ef6",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 57
+      },
+      "revId": "634060e7c1d036d3b1de26efcdd195d98b1a940e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
