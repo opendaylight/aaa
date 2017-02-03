@@ -50,6 +50,11 @@
             </action>
         </command>
         <command>
+            <action class="org.opendaylight.aaa.cli.cert.GetTlsProtocols">
+                <argument ref="KeyStoreConsoleProvider" />
+            </action>
+        </command>
+        <command>
             <action class="org.opendaylight.aaa.cli.dmstore.AddRole">
                 <argument ref="iIDMStore" />
             </action>
