@@ -41,7 +41,6 @@
     <module>aaa-h2-store</module>
     <module>aaa-cert</module>
     <module>aaa-cli</module>
-    <module>aaa-cli4</module>
     <module>aaa-cli-jar</module>
     <module>aaa-filterchain</module>
     <module>artifacts</module>

@@ -71,7 +71,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>aaa-cli4</artifactId>
+            <artifactId>aaa-cli</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
