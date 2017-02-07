@@ -66,6 +66,9 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
 
+        <!-- Cert -->
+        <feature version='${project.version}'>odl-aaa-cert</feature>
+
         <!--H2 Store -->
         <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}</bundle>
@@ -122,6 +125,9 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
         <feature version='${project.version}'>odl-aaa-encryption-service</feature>
+
+        <!-- Cert -->
+        <feature version='${project.version}'>odl-aaa-cert</feature>
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
