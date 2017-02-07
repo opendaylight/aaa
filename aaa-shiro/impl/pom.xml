@@ -56,6 +56,17 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
       <version>1.0.0</version>
     </dependency>
     <!-- end -->
+    <!-- KeystoneAuthRealm -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.jaxrs</groupId>
+      <artifactId>jackson-jaxrs-json-provider</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.opendaylight.aaa</groupId>
+        <artifactId>aaa-cert</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+    <!-- end -->
     <dependency>
       <groupId>org.opendaylight.aaa</groupId>
       <artifactId>aaa-authn-sts</artifactId>
