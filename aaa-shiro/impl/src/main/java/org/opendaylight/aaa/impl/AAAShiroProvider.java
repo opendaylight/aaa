@@ -7,6 +7,7 @@
  */
 package org.opendaylight.aaa.impl;
 
+import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,14 +23,16 @@ public class AAAShiroProvider {
 
     private static AAAShiroProvider INSTANCE;
     private DataBroker dataBroker;
+    private final ICertificateManager certificateManager;
 
     /**
      * Provider for this bundle.
      *
      * @param dataBroker injected from blueprint
      */
-    private AAAShiroProvider(final DataBroker dataBroker) {
+    private AAAShiroProvider(final DataBroker dataBroker, final ICertificateManager certificateManager) {
         this.dataBroker = dataBroker;
+        this.certificateManager = certificateManager;
     }
 
     /**
@@ -37,8 +40,9 @@ public class AAAShiroProvider {
      *
      * @return the Provider
      */
-    public static AAAShiroProvider newInstance(final DataBroker dataBroker) {
-        INSTANCE = new AAAShiroProvider(dataBroker);
+    public static AAAShiroProvider newInstance(final DataBroker dataBroker,
+                                               final ICertificateManager certificateManager) {
+        INSTANCE = new AAAShiroProvider(dataBroker, certificateManager);
         return INSTANCE;
     }
 
@@ -49,7 +53,7 @@ public class AAAShiroProvider {
      */
     public static AAAShiroProvider getInstance() {
         if (INSTANCE == null) {
-            newInstance(null);
+            newInstance(null, null);
         }
         return INSTANCE;
     }
@@ -75,5 +79,14 @@ public class AAAShiroProvider {
      */
     public DataBroker getDataBroker() {
         return this.dataBroker;
+    }
+
+    /**
+     * Extract the certificate manager.
+     *
+     * @return the certificate manager.
+     */
+    public ICertificateManager getCertificateManager() {
+        return certificateManager;
     }
 }
