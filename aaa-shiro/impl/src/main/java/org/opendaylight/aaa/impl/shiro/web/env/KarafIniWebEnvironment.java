@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.web.env;
+package org.opendaylight.aaa.impl.shiro.web.env;
 
 import java.io.File;
 import java.io.FileNotFoundException;

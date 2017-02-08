@@ -10,7 +10,7 @@ package org.opendaylight.aaa.shiroact;
 
 import org.apache.felix.dm.DependencyActivatorBase;
 import org.apache.felix.dm.DependencyManager;
-import org.opendaylight.aaa.shiro.ServiceProxy;
+import org.opendaylight.aaa.impl.shiro.ServiceProxy;
 import org.osgi.framework.BundleContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

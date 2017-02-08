@@ -5,8 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.shiro.moon;
-
+package org.opendaylight.aaa.impl.shiro.moon;
 
 import java.io.IOException;
 
@@ -22,6 +21,7 @@ public class MoonTokenEndpoint extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(MoonTokenEndpoint.class);
     private static final long serialVersionUID = 4980356362831585417L;
 
+    @Override
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws IOException {
         LOG.debug("MoonTokenEndpoint Servlet doPost");
     }

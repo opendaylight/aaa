@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.filters;
+package org.opendaylight.aaa.impl.shiro.filters;
 
 import com.google.common.base.Preconditions;
 import org.apache.shiro.authc.AuthenticationToken;

@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.web.env;
+package org.opendaylight.aaa.impl.shiro.web.env;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -20,6 +20,7 @@ import org.apache.shiro.config.Ini.Section;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.opendaylight.aaa.impl.shiro.web.env.KarafIniWebEnvironment;
 
 /**
  * @author Ryan Goulding (ryandgoulding@gmail.com)

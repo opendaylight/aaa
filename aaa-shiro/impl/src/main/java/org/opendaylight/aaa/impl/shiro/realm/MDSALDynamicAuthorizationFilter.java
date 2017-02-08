@@ -6,10 +6,10 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.realm;
+package org.opendaylight.aaa.impl.shiro.realm;
 
-import com.google.common.util.concurrent.CheckedFuture;
 import com.google.common.base.Optional;
+import com.google.common.util.concurrent.CheckedFuture;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import javax.servlet.ServletRequest;

@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.realm;
+package org.opendaylight.aaa.impl.shiro.realm;
 
 import com.google.common.base.Strings;
 
@@ -137,8 +137,8 @@ public class TokenAuthRealm extends AuthorizingRealm {
      * @return a map with the basic auth header
      */
     Map<String, List<String>> formHeadersWithToken(final String tokenAuthHeader) {
-        final Map<String, List<String>> headers = new HashMap<String, List<String>>();
-        final List<String> headerValue = new ArrayList<String>();
+        final Map<String, List<String>> headers = new HashMap<>();
+        final List<String> headerValue = new ArrayList<>();
         headerValue.add(tokenAuthHeader);
         headers.put(HttpBasicAuth.AUTH_HEADER, headerValue);
         return headers;

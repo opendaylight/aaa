@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.realm;
+package org.opendaylight.aaa.impl.shiro.realm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.junit.Test;
+import org.opendaylight.aaa.impl.shiro.realm.TokenAuthRealm;
 
 /**
  *
@@ -29,7 +30,7 @@ import org.junit.Test;
  */
 public class TokenAuthRealmTest extends TokenAuthRealm {
 
-    private TokenAuthRealm testRealm = new TokenAuthRealm();
+    private final TokenAuthRealm testRealm = new TokenAuthRealm();
 
     @Test
     public void testTokenAuthRealm() {
@@ -70,7 +71,7 @@ public class TokenAuthRealmTest extends TokenAuthRealm {
     public void testFormHeadersWithToken() {
         final String authHeader = getEncodedToken(getTokenAuthHeader(getUsernamePasswordDomainString(
                 "user1", "password", "sdn")));
-        final Map<String, List<String>> expectedHeaders = new HashMap<String, List<String>>();
+        final Map<String, List<String>> expectedHeaders = new HashMap<>();
         expectedHeaders.put("Authorization", Lists.newArrayList(authHeader));
         final Map<String, List<String>> actualHeaders = formHeadersWithToken(authHeader);
         List<String> value;
@@ -87,7 +88,7 @@ public class TokenAuthRealmTest extends TokenAuthRealm {
         final String domain = "basicDomain";
         final String authHeader = getTokenAuthHeader(getEncodedToken(getUsernamePasswordDomainString(
                 username, password, domain)));
-        final Map<String, List<String>> expectedHeaders = new HashMap<String, List<String>>();
+        final Map<String, List<String>> expectedHeaders = new HashMap<>();
         expectedHeaders.put("Authorization", Lists.newArrayList(authHeader));
         final Map<String, List<String>> actualHeaders = formHeaders(username, password, domain);
         List<String> value;

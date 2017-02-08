@@ -6,14 +6,15 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro;
+package org.opendaylight.aaa.impl.shiro;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.opendaylight.aaa.shiro.filters.AAAFilter;
+import org.opendaylight.aaa.impl.shiro.ServiceProxy;
+import org.opendaylight.aaa.impl.shiro.filters.AAAFilter;
 
 /**
  * @author Ryan Goulding (ryandgoulding@gmail.com)

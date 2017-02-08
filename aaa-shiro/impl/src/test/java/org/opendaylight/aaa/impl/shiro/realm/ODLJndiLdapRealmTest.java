@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.realm;
+package org.opendaylight.aaa.impl.shiro.realm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -35,6 +35,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.ldap.LdapContextFactory;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.junit.Test;
+import org.opendaylight.aaa.impl.shiro.realm.ODLJndiLdapRealm;
 
 /**
  * @author Ryan Goulding (ryandgoulding@gmail.com)
@@ -117,7 +118,7 @@ public class ODLJndiLdapRealmTest {
      */
         private static final long serialVersionUID = -1236759619455574475L;
 
-        Vector<String> collection = new Vector<String>();
+        Vector<String> collection = new Vector<>();
 
         public TestPrincipalCollection(String element) {
             collection.add(element);
@@ -135,7 +136,7 @@ public class ODLJndiLdapRealmTest {
 
         @Override
         public Set<String> asSet() {
-            HashSet<String> set = new HashSet<String>();
+            HashSet<String> set = new HashSet<>();
             set.addAll(collection);
             return set;
         }
@@ -210,7 +211,7 @@ public class ODLJndiLdapRealmTest {
     @Test
     public void testBuildAuthorizationInfo() {
         assertNull(ODLJndiLdapRealm.buildAuthorizationInfo(null));
-        Set<String> roleNames = new HashSet<String>();
+        Set<String> roleNames = new HashSet<>();
         roleNames.add("engineering");
         AuthorizationInfo authorizationInfo = ODLJndiLdapRealm.buildAuthorizationInfo(roleNames);
         assertNotNull(authorizationInfo);

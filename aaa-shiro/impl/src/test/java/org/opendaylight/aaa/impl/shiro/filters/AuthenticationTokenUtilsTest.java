@@ -6,14 +6,16 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.filters;
+package org.opendaylight.aaa.impl.shiro.filters;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.junit.Test;
-import org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils;
+import org.opendaylight.aaa.impl.shiro.filters.AuthenticationTokenUtils;
 
 /**
  * Tests authentication token output utilities.

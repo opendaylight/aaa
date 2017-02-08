@@ -6,14 +6,13 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.realm;
+package org.opendaylight.aaa.impl.shiro.realm;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
@@ -21,7 +20,6 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.LdapContext;
-
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -32,9 +30,9 @@ import org.apache.shiro.realm.ldap.LdapContextFactory;
 import org.apache.shiro.realm.ldap.LdapUtils;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.Nameable;
-import org.opendaylight.aaa.shiro.accounting.Accounter;
-import org.opendaylight.aaa.shiro.realm.mapping.api.GroupsToRolesMappingStrategy;
-import org.opendaylight.aaa.shiro.realm.mapping.impl.BestAttemptGroupToRolesMappingStrategy;
+import org.opendaylight.aaa.impl.shiro.accounting.Accounter;
+import org.opendaylight.aaa.impl.shiro.realm.mapping.api.GroupsToRolesMappingStrategy;
+import org.opendaylight.aaa.impl.shiro.realm.mapping.impl.BestAttemptGroupToRolesMappingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -250,7 +248,7 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
     protected Set<String> getRoleNamesForUser(final String username, final LdapContext ldapContext)
             throws NamingException {
 
-        final Set<String> roleNames = new LinkedHashSet<String>();
+        final Set<String> roleNames = new LinkedHashSet<>();
         final SearchControls searchControls = createSearchControls();
 
         LOG.debug("Asking the configured LDAP about which groups uid=\"{}\" belongs to using "

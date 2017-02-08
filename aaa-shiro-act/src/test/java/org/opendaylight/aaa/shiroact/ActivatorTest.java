@@ -11,7 +11,7 @@ package org.opendaylight.aaa.shiroact;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.opendaylight.aaa.shiro.ServiceProxy;
+import org.opendaylight.aaa.impl.shiro.ServiceProxy;
 
 public class ActivatorTest {
 

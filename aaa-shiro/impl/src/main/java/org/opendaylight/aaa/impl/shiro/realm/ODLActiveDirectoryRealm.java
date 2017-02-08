@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.realm;
+package org.opendaylight.aaa.impl.shiro.realm;
 
 import org.apache.shiro.realm.activedirectory.ActiveDirectoryRealm;
 import org.slf4j.Logger;

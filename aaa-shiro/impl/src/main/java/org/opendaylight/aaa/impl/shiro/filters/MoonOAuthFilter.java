@@ -5,7 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.shiro.filters;
+package org.opendaylight.aaa.impl.shiro.filters;
 
 import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 import static javax.servlet.http.HttpServletResponse.SC_CREATED;
@@ -35,7 +35,7 @@ import org.opendaylight.aaa.AuthenticationBuilder;
 import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.Claim;
-import org.opendaylight.aaa.shiro.moon.MoonPrincipal;
+import org.opendaylight.aaa.impl.shiro.moon.MoonPrincipal;
 import org.opendaylight.aaa.sts.OAuthRequest;
 import org.opendaylight.aaa.sts.ServiceLocator;
 import org.slf4j.Logger;
@@ -119,6 +119,7 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
         return false;
     }
 
+    @Override
     protected boolean executeLogin(final ServletRequest request, final ServletResponse response) throws Exception {
 
         final HttpServletRequest req;
