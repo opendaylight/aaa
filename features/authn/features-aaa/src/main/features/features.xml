@@ -67,7 +67,6 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
 
         <!--H2 Store -->
-        <bundle>mvn:org.osgi/org.osgi.enterprise/4.2.0</bundle>
         <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}</bundle>
 
