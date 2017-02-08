@@ -27,11 +27,6 @@
             <artifactId>aaa-authn</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.dependencymanager</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.immutables</groupId>
             <artifactId>value</artifactId>
         </dependency>
@@ -71,7 +66,28 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Import-Package>net.sf.ehcache.*,com.google.*,org.opendaylight.aaa.api.*,org.apache.felix.*,org.slf4j.*,org.osgi.*,org.apache.commons.lang3</Import-Package>
+                        <!-- The import exclusions (note the ! prefix) are required because H2's MANIFEST has Import-Package for them (but we don't use these) -->
+                        <Import-Package>
+                            !javax.naming,
+                            !javax.naming.spi,
+                            !javax.servlet,
+                            !javax.servlet.http,
+                            !javax.tools,
+                            !javax.transaction.xa,
+                            !org.apache.lucene.analysis,
+                            !org.apache.lucene.analysis.standard,
+                            !org.apache.lucene.document,
+                            !org.apache.lucene.index,
+                            !org.apache.lucene.queryParser,
+                            !org.apache.lucene.search,
+                            !org.apache.lucene.store,
+                            !org.apache.lucene.util,
+                            !com.vividsolutions.jts.geom,
+                            !com.vividsolutions.jts.io,
+                            !org.osgi.service.jdbc,
+                            !javax.annotation,
+                            !javax.naming,
+                            *</Import-Package>
                         <Private-Package>org.h2.*</Private-Package>
                     </instructions>
                 </configuration>
