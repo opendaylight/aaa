@@ -8,8 +8,6 @@
  -->
 <features name="odl-aaa-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
     <feature name="odl-aaa-authn" version="${project.version}">
-        <feature>war</feature>
-        <feature version="8.1.14.v20131031">jetty</feature>
         <configfile finalname="etc/idmtool">mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}/py/config
         </configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">
