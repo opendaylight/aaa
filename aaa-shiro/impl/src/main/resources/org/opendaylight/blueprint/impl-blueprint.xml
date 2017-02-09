@@ -16,7 +16,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     odl:type="default" />
 
   <bean id="provider"
-    class="org.opendaylight.aaa.AAAShiroProvider" factory-method="newInstance"
+    class="org.opendaylight.aaa.impl.AAAShiroProvider" factory-method="newInstance"
     init-method="init" destroy-method="close">
     <argument ref="dataBroker" />
   </bean>
