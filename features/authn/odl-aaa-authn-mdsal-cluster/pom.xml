@@ -216,9 +216,12 @@
         </dependency>
 
         <!-- REST -->
-        <!-- TODO
-            <feature>war</feature>
-        -->
+        <dependency>
+            <groupId>org.opendaylight.odlparent</groupId>
+            <artifactId>odl-karaf-feat-war</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
         <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-servlet</artifactId>
