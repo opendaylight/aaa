@@ -35,6 +35,7 @@ public class KeyStoreConstant {
     public static final int DEFAULT_VALIDITY = 365;
     public static final String END_CERTIFICATE = "-----END CERTIFICATE-----";
     public static final String END_CERTIFICATE_REQUEST = "-----END CERTIFICATE REQUEST-----";
+    public static final String TLS_PROTOCOL = "TLS";
     public static String KEY_STORE_PATH = "configuration" + File.separator + "ssl" + File.separator;
 
     public static boolean checkKeyStoreFile(final String fileName) {

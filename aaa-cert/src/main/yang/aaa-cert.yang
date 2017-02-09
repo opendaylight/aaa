@@ -11,16 +11,6 @@ module aaa-cert {
     namespace "urn:opendaylight:yang:aaa:cert";
     prefix aaa-cert;
 
-    import config {
-        prefix config;
-        revision-date 2013-04-05;
-    }
-
-    import opendaylight-md-sal-binding {
-        prefix md-sal-binding;
-        revision-date 2013-10-28;
-    }
-
     description
         "Service definition for aaa certificate";
 
@@ -32,72 +22,78 @@ module aaa-cert {
             "Initial revision.";
     }
 
-    identity aaa-cert {
-        base config:module-type;
-        config:java-name-prefix AaaCertProvider;
-    }
-
-    augment "/config:modules/config:module/config:configuration" {
-        case aaa-cert {
-            when "/config:modules/config:module/config:type = 'aaa-cert'";
-            container broker {
-                uses config:service-ref {
-                    refine type {
-                        mandatory true;
-                        config:required-identity md-sal-binding:binding-broker-osgi-registry;
-                    }
-                }
+    container aaa-cert-service-config {
+        leaf use-config {
+            description "Use the configuration data to create the keystores";
+            type boolean;
+            default false;
+        }
+        leaf use-mdsal {
+            description "Use Mdsal as Data store for the keystore and certificates";
+            type boolean;
+            default false;
+        }
+        leaf bundle-name {
+            description "bundle name of the default TLS config in MdsaL";
+            type string;
+        }
+        container ctlKeystore {
+            leaf name {
+                description "keystore name default is ctl";
+                type string;
             }
-            leaf useConfig {
-                description "Use the configuration data to create the keystores";
-                type boolean;
-                default false;
+            leaf alias {
+                description "key alias";
+                type string;
             }
-            container ctlKeystore {
-                leaf name {
-                    description "keystore name default is ctl";
-                    type string;
-                }
-                leaf alias {
-                    description "key alias";
-                    type string;
-                }
-                leaf storePassword {
-                    description "keystore password";
-                    type string;
-                }
-                leaf dname {
-                    description "X.500 Distinguished Names should be in the following formate
-                        CN=commonName
-                        OU=organizationUnit
-                        O=organizationName
-                        L=localityName
-                        S=stateName
-                        C=country";
-                    type string;
-                }
-                leaf validity {
-                    description "validity";
-                    type int32;
-                }
+            leaf store-password {
+                description "keystore password";
+                type string;
             }
-            container trustKeystore {
-                leaf name {
-                    description "keystore name default is truststore";
-                    type string;
-                }
-                leaf alias {
-                    description "key alias";
-                    type string;
-                }
-                leaf storePassword {
-                    description "keystore password";
-                    type string;
-                }
-                leaf certFile {
-                    description "path to CA certificate pem file";
-                    type string;
-                }
+            leaf dname {
+                description "X.500 Distinguished Names should be in the following formate
+                    CN=commonName
+                    OU=organizationUnit
+                    O=organizationName
+                    L=localityName
+                    S=stateName
+                    C=country";
+                type string;
+            }
+            leaf validity {
+                description "validity";
+                type int32;
+            }
+            leaf key-alg {
+                description "The supported key generation algorithms i.e: DSA or RSA";
+                type string;
+            }
+            leaf sign-alg {
+                description "The supported sign algorithmes i.e: SHA1withDSA or SHA1withRSA";
+                type string;
+            }
+            leaf keysize {
+                description "the key size i.e: 1024";
+                type int32;
+            }
+            leaf tls-protocols {
+                description "the TLS supported protocols SSLv2Hello,TLSv1.1,TLSv1.2";
+                type string;
+            }
+            list cipher-suites {
+                 leaf suite-name {
+                     type string;
+                 }
+            }
+        }
+        container trustKeystore {
+            leaf name {
+                description "keystore name default is truststore";
+                type string;
+            }
+            leaf store-password {
+                description "keystore password";
+                type string;
             }
         }
     }

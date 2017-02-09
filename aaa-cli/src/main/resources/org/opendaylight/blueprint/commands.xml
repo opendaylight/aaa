@@ -1,0 +1,30 @@
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+
+    <reference id="KeyStoreConsoleProvider" availability="mandatory"
+        activation="eager" interface="org.opendaylight.aaa.cert.api.ICertificateManager">
+    </reference>
+
+    <command-bundle xmlns="http://karaf.apache.org/xmlns/shell/v1.1.0">
+        <command>
+            <action class="org.opendaylight.aaa.cli.cert.GetODLSelfSignCert">
+                <argument ref="KeyStoreConsoleProvider" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.cert.GenerateCertReq">
+                <argument ref="KeyStoreConsoleProvider" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.cert.GetTrustStoreCert">
+                <argument ref="KeyStoreConsoleProvider" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.cert.GetCipherSuites">
+                <argument ref="KeyStoreConsoleProvider" />
+            </action>
+        </command>
+    </command-bundle>
+
+</blueprint>
