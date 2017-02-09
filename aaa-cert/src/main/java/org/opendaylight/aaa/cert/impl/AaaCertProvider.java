@@ -8,29 +8,13 @@
 
 package org.opendaylight.aaa.cert.impl;
 
-import com.google.common.util.concurrent.SettableFuture;
 import java.security.KeyStore;
-import java.util.concurrent.Future;
+import java.util.ArrayList;
+import java.util.List;
 import org.opendaylight.aaa.cert.api.IAaaCertProvider;
-import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
-import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.CtlKeystore;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.TrustKeystore;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.AaaCertRpcService;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertifcateInput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertifcateOutput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertifcateOutputBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateOutput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateOutputBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateReqOutput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateReqOutputBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetNodeCertifcateInput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertifcateInput;
-import org.opendaylight.yangtools.yang.common.RpcResult;
-import org.opendaylight.yangtools.yang.common.RpcResultBuilder;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystore;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.TrustKeystore;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.ctlkeystore.CipherSuites;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,184 +24,134 @@ import org.slf4j.LoggerFactory;
  * @author mserngawy
  *
  */
-public class AaaCertProvider implements AutoCloseable, IAaaCertProvider, BindingAwareProvider, AaaCertRpcService {
+public class AaaCertProvider implements IAaaCertProvider {
 
-    private final static Logger LOG = LoggerFactory.getLogger(AaaCertProvider.class);
-    private ServiceRegistration<AaaCertRpcService> aaaCertRpcServiceRegisteration;
-    private ServiceRegistration<IAaaCertProvider> aaaCertServiceRegisteration;
+    private static final Logger LOG = LoggerFactory.getLogger(AaaCertProvider.class);
+
     private final CtlKeystore ctlKeyStore;
     private final ODLKeyTool odlKeyTool;
     private final TrustKeystore trustKeyStore;
 
     public AaaCertProvider(final CtlKeystore ctlKeyStore, final TrustKeystore trustKeyStore) {
-        LOG.info("aaa Certificate Service Initalized");
         odlKeyTool = new ODLKeyTool();
         this.ctlKeyStore = ctlKeyStore;
         this.trustKeyStore = trustKeyStore;
+        LOG.info("aaa Certificate Service Initalized");
+    }
+
+    @Override
+    public TrustKeystore getTrustKeyStoreInfo() {
+        return trustKeyStore;
+    }
+
+    @Override
+    public CtlKeystore getOdlKeyStoreInfo() {
+        return ctlKeyStore;
     }
 
     @Override
     public boolean addCertificateODLKeyStore(final String storePasswd, final String alias, final String certificate) {
-        return odlKeyTool.addCertificate(ctlKeyStore.getName(), storePasswd, certificate, alias);
+        final KeyStore keyStore = odlKeyTool.addCertificate(odlKeyTool.loadKeyStore(ctlKeyStore.getName(), storePasswd), certificate, alias, true);
+        return odlKeyTool.exportKeystore(keyStore, storePasswd, ctlKeyStore.getName());
+    }
+
+    @Override
+    public boolean addCertificateODLKeyStore(final String alias, final String certificate) {
+        return addCertificateODLKeyStore(ctlKeyStore.getStorePassword(), alias, certificate);
     }
 
     @Override
     public boolean addCertificateTrustStore(final String storePasswd, final String alias, final String certificate) {
-        return odlKeyTool.addCertificate(trustKeyStore.getName(), storePasswd, certificate, alias);
+        final KeyStore keyStore = odlKeyTool.addCertificate(odlKeyTool.loadKeyStore(trustKeyStore.getName(), storePasswd), certificate, alias, true);
+        return odlKeyTool.exportKeystore(keyStore, storePasswd, trustKeyStore.getName());
     }
 
     @Override
-    public void close() throws Exception {
-        LOG.info("aaa Certificate Service Closed");
-        aaaCertServiceRegisteration.unregister();
-        aaaCertRpcServiceRegisteration.unregister();
-    }
-
-    public void createODLKeyStore() {
-        createODLKeyStore(ctlKeyStore.getName(),ctlKeyStore.getStorePassword(), ctlKeyStore.getAlias(),
-                  ctlKeyStore.getDname(), ctlKeyStore.getValidity());
+    public boolean addCertificateTrustStore(final String alias, final String certificate) {
+        return addCertificateTrustStore(trustKeyStore.getStorePassword(), alias, certificate);
     }
 
     @Override
-    public String createODLKeyStore(final String keyStore, final String storePasswd, final String alias,
-            final String dName, final int validity) {
-        ctlKeyStore.setAlias(alias);
-        ctlKeyStore.setDname(dName);
-        ctlKeyStore.setName(keyStore);
-        ctlKeyStore.setStorePassword(storePasswd);
-        ctlKeyStore.setValidity(validity);
-        if(odlKeyTool.createKeyStoreWithSelfSignCert(keyStore, storePasswd, dName, alias, validity)) {
-            return keyStore + " Keystore created.";
-        } else {
-            return "Failed to create keystore " + keyStore;
+    public boolean createKeyStores() {
+        if (!KeyStoreConstant.checkKeyStoreFile(ctlKeyStore.getName())) {
+            final KeyStore keyStore = odlKeyTool.createKeyStoreWithSelfSignCert(ctlKeyStore.getName(), ctlKeyStore.getStorePassword(), ctlKeyStore.getDname(),
+                    ctlKeyStore.getAlias(), ctlKeyStore.getValidity(), ctlKeyStore.getKeyAlg(), ctlKeyStore.getKeysize(), ctlKeyStore.getSignAlg());
+             if(!odlKeyTool.exportKeystore(keyStore, ctlKeyStore.getStorePassword(), ctlKeyStore.getName())) {
+                return false;
+             }
         }
-    }
-
-    public void createTrustKeyStore() {
-        odlKeyTool.createKeyStoreImportCert(trustKeyStore.getName(), trustKeyStore.getStorePassword(),
-                trustKeyStore.getCertFile(), trustKeyStore.getAlias());
-    }
-
-    @Override
-    public String createTrustKeyStore(final String keyStore, final String storePasswd, final String alias) {
-        trustKeyStore.setAlias(alias);
-        trustKeyStore.setName(keyStore);
-        trustKeyStore.setStorePassword(storePasswd);
-        if(odlKeyTool.createKeyStoreImportCert(keyStore, storePasswd, trustKeyStore.getCertFile(), alias)) {
-            return keyStore + " Keystore created.";
-        } else {
-            return "Failed to create keystore " + keyStore;
+        if (!KeyStoreConstant.checkKeyStoreFile(trustKeyStore.getName())) {
+            final KeyStore keyStore = odlKeyTool.createEmptyKeyStore(trustKeyStore.getStorePassword());
+            if (!odlKeyTool.exportKeystore(keyStore, trustKeyStore.getStorePassword(), trustKeyStore.getName()))
+                return false;
         }
+        return true;
     }
 
     @Override
-    public String genODLKeyStorCertificateReq(final String storePasswd, final String alias) {
-        return odlKeyTool.generateCertificateReq(ctlKeyStore.getName(), storePasswd,
-                     alias, KeyStoreConstant.DEFAULT_SIGN_ALG, true);
+    public String genODLKeyStoreCertificateReq(final String storePasswd, final boolean withTag) {
+        return odlKeyTool.generateCertificateReq(odlKeyTool.loadKeyStore(ctlKeyStore.getName(), storePasswd),
+                storePasswd, ctlKeyStore.getAlias(), ctlKeyStore.getSignAlg(), withTag);
     }
 
     @Override
-    public String getCertificateTrustStore(final String storePasswd, final String aliase) {
-        return odlKeyTool.getCertificate(trustKeyStore.getName(), storePasswd, aliase, true);
+    public String genODLKeyStoreCertificateReq(final boolean withTag) {
+        return genODLKeyStoreCertificateReq(ctlKeyStore.getStorePassword(), withTag);
     }
 
     @Override
-    public Future<RpcResult<GetNodeCertifcateOutput>> getNodeCertifcate(final GetNodeCertifcateInput input) {
-        final SettableFuture<RpcResult<GetNodeCertifcateOutput>> futureResult = SettableFuture.create();
-        final String cert = odlKeyTool.getCertificate(trustKeyStore.getName(), trustKeyStore.getStorePassword(),
-                                 input.getNodeAlias(), true);
-        if (cert != null) {
-            final GetNodeCertifcateOutput nodeCertOutput = new GetNodeCertifcateOutputBuilder()
-                                                        .setNodeCert(cert)
-                                                        .build();
-            futureResult.set(RpcResultBuilder.<GetNodeCertifcateOutput> success(nodeCertOutput).build());
-        } else {
-            futureResult.set(RpcResultBuilder.<GetNodeCertifcateOutput> failed().build());
-        }
-        return futureResult;
+    public String getCertificateTrustStore(final String storePasswd, final String aliase, final boolean withTag) {
+        return odlKeyTool.getCertificate(odlKeyTool.loadKeyStore(trustKeyStore.getName(), storePasswd), aliase, withTag);
     }
 
     @Override
-    public Future<RpcResult<GetODLCertificateOutput>> getODLCertificate() {
-        final SettableFuture<RpcResult<GetODLCertificateOutput>> futureResult = SettableFuture.create();
-        final String cert = odlKeyTool.getCertificate(ctlKeyStore.getName(), ctlKeyStore.getStorePassword(),
-                                 ctlKeyStore.getAlias(), true);
-        if (cert != null) {
-            final GetODLCertificateOutput odlCertOutput = new GetODLCertificateOutputBuilder()
-                                                        .setOdlCert(cert)
-                                                        .build();
-            futureResult.set(RpcResultBuilder.<GetODLCertificateOutput> success(odlCertOutput).build());
-        } else {
-            futureResult.set(RpcResultBuilder.<GetODLCertificateOutput> failed().build());
-        }
-        return futureResult;
+    public String getCertificateTrustStore(final String aliase, final boolean withTag) {
+        return getCertificateTrustStore(trustKeyStore.getStorePassword(), aliase, withTag);
     }
 
     @Override
-    public Future<RpcResult<GetODLCertificateReqOutput>> getODLCertificateReq() {
-        final SettableFuture<RpcResult<GetODLCertificateReqOutput>> futureResult = SettableFuture.create();
-        final String certReq = odlKeyTool.generateCertificateReq(ctlKeyStore.getName(), ctlKeyStore.getStorePassword(),
-                                 ctlKeyStore.getAlias(), KeyStoreConstant.DEFAULT_SIGN_ALG, true);
-        if (certReq != null) {
-            final GetODLCertificateReqOutput odlCertReqOutput = new GetODLCertificateReqOutputBuilder()
-                                                        .setOdlCertReq(certReq)
-                                                        .build();
-            futureResult.set(RpcResultBuilder.<GetODLCertificateReqOutput> success(odlCertReqOutput).build());
-        } else {
-            futureResult.set(RpcResultBuilder.<GetODLCertificateReqOutput> failed().build());
-        }
-        return futureResult;
+    public String getODLKeyStoreCertificate(final String storePasswd, final boolean withTag) {
+        return odlKeyTool.getCertificate(odlKeyTool.loadKeyStore(ctlKeyStore.getName(), storePasswd), ctlKeyStore.getAlias(), withTag);
     }
 
     @Override
-    public String getODLKeyStorCertificate(final String storePasswd, final String alias) {
-        return odlKeyTool.getCertificate(ctlKeyStore.getName(), storePasswd, alias, true);
+    public String getODLKeyStoreCertificate(final boolean withTag) {
+        return getODLKeyStoreCertificate(ctlKeyStore.getStorePassword(), withTag);
     }
 
     @Override
     public KeyStore getODLKeyStore() {
-        return odlKeyTool.getKeyStore(ctlKeyStore.getName(), ctlKeyStore.getStorePassword());
+        return odlKeyTool.loadKeyStore(ctlKeyStore.getName(), ctlKeyStore.getStorePassword());
     }
 
     @Override
     public KeyStore getTrustKeyStore() {
-        return odlKeyTool.getKeyStore(trustKeyStore.getName(), trustKeyStore.getStorePassword());
+        return odlKeyTool.loadKeyStore(trustKeyStore.getName(), trustKeyStore.getStorePassword());
     }
 
     @Override
-    public void onSessionInitiated(final ProviderContext session) {
-        LOG.info("aaa Certificate Service Session Initiated");
-        final BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
-        aaaCertServiceRegisteration = context.registerService(IAaaCertProvider.class, this, null);
-        aaaCertRpcServiceRegisteration = context.registerService(AaaCertRpcService.class, this, null);
-    }
-
-    @Override
-    public Future<RpcResult<Void>> setNodeCertifcate(final SetNodeCertifcateInput input) {
-        LOG.info("{} Certificate will be added to the trust keystore.", input.getNodeAlias());
-        final SettableFuture<RpcResult<Void>> futureResult = SettableFuture.create();
-        if (odlKeyTool.addCertificate(trustKeyStore.getName(), trustKeyStore.getStorePassword(),
-                input.getNodeCert(), input.getNodeAlias())) {
-            futureResult.set(RpcResultBuilder.<Void> success().build());
-        } else {
-            futureResult.set(RpcResultBuilder.<Void> failed().build());
+    public String[] getCipherSuites() {
+        final List<CipherSuites> cipherSuites = ctlKeyStore.getCipherSuites();
+        if ( cipherSuites != null && !cipherSuites.isEmpty()) {
+            final List<String> suites = new ArrayList<String>();
+            cipherSuites.stream().forEach(cs -> {
+                if (!cs.getSuiteName().isEmpty()) {
+                    suites.add(cs.getSuiteName());
+                }
+            });
+            return suites.toArray(new String[suites.size()]);
         }
-        return futureResult;
+        return null;
     }
 
     @Override
-    public Future<RpcResult<Void>> setODLCertifcate(final SetODLCertifcateInput input) {
-        LOG.info("Certificate will be add to ODL keystore.");
-        final SettableFuture<RpcResult<Void>> futureResult = SettableFuture.create();
-        //adding ca to the alias of signed certificate by Certificate Authority.
-        //can not have 2 certifciate under the same alias.
-        ctlKeyStore.setAlias("ca" + ctlKeyStore.getAlias());
-        if (odlKeyTool.addCertificate(ctlKeyStore.getName(), ctlKeyStore.getStorePassword(),
-                input.getOdlCert(), ctlKeyStore.getAlias())) {
-            futureResult.set(RpcResultBuilder.<Void> success().build());
-        } else {
-            futureResult.set(RpcResultBuilder.<Void> failed().build());
+    public String[] getTlsProtocols() {
+        String tlsProtocols = ctlKeyStore.getTlsProtocols();
+        if (tlsProtocols != null && !tlsProtocols.isEmpty()) {
+            // remove white spaces in tlsProtocols string
+            tlsProtocols = tlsProtocols.replace(" ", "");
+            return tlsProtocols.split(",");
         }
-        return futureResult;
+        return null;
     }
 }
