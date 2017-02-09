@@ -8,10 +8,9 @@
 
 package org.opendaylight.aaa.shiroact;
 
-import org.apache.felix.dm.DependencyActivatorBase;
-import org.apache.felix.dm.DependencyManager;
-import org.opendaylight.aaa.shiro.ServiceProxy;
+import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.opendaylight.aaa.shiro.ServiceProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,19 +29,18 @@ import org.slf4j.LoggerFactory;
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
-public class Activator extends DependencyActivatorBase {
+public class Activator implements BundleActivator {
 
     private static final Logger LOG = LoggerFactory.getLogger(Activator.class);
 
     @Override
-    public void destroy(BundleContext bc, DependencyManager dm)
-            throws Exception {
+    public void stop(BundleContext context) throws Exception {
         final String DEBUG_MESSAGE = "Destroying the aaa-shiro-act bundle";
         LOG.debug(DEBUG_MESSAGE);
     }
 
     @Override
-    public void init(BundleContext bc, DependencyManager dm) throws Exception {
+    public void start(BundleContext context) throws Exception {
         final String DEBUG_MESSAGE = "Initializing the aaa-shiro-act bundle";
         LOG.debug(DEBUG_MESSAGE);
         ServiceProxy.getInstance().setEnabled(true);

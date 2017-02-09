@@ -18,7 +18,7 @@ public class ActivatorTest {
     @Test
     public void testActivatorEnablesServiceProxy() throws Exception {
         // should toggle the ServiceProxy enable status to true
-        new Activator().init(null, null);;
+        new Activator().start(null);;
         assertTrue(ServiceProxy.getInstance().getEnabled(null));
     }
 
