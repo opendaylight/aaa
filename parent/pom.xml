@@ -44,9 +44,6 @@
 
         <config.authn.store.configfile>08-authn-config.xml</config.authn.store.configfile>
 
-        <!-- IdmLight -->
-        <h2.version>1.4.191</h2.version>
-
         <!-- Keystone plugin -->
         <httpclient.version>4.4</httpclient.version>
 
@@ -131,11 +128,6 @@
                 <groupId>org.apache.oltu.oauth2</groupId>
                 <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
                 <version>${oltu.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${h2.version}</version>
             </dependency>
 
             <!-- Test stuff -->
