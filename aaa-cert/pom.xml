@@ -8,15 +8,29 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <parent>
-    <groupId>org.opendaylight.aaa</groupId>
-    <artifactId>aaa-parent</artifactId>
-    <version>0.4.3-SNAPSHOT</version>
-    <relativePath>../parent/</relativePath>
+    <groupId>org.opendaylight.controller</groupId>
+    <artifactId>config-parent</artifactId>
+    <version>0.5.3-SNAPSHOT</version>
+    <relativePath/>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
+  <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-cert</artifactId>
+  <version>0.4.3-SNAPSHOT</version>
   <packaging>bundle</packaging>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.opendaylight.aaa</groupId>
+        <artifactId>aaa-artifacts</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -33,10 +47,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
         <groupId>org.bouncycastle</groupId>
         <artifactId>bcprov-jdk15on</artifactId>
     </dependency>
-    <dependency>
-        <groupId>commons-codec</groupId>
-        <artifactId>commons-codec</artifactId>
-    </dependency>
 
     <!-- Testing Dependencies -->
     <dependency>
@@ -46,7 +56,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
+      <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -77,6 +87,15 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
         <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Export-Package>
+              org.opendaylight.aaa.cert.api.*,
+              org.opendaylight.aaa.cert.impl.*,
+              org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.*
+            </Export-Package>
+          </instructions>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -91,7 +110,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <configuration>
               <artifacts>
                 <artifact>
-                  <file>${project.build.directory}/classes/initial/08-aaa-cert-config.xml</file>
+                  <file>${project.build.directory}/classes/initial/aaa-cert-config.xml</file>
                   <type>xml</type>
                   <classifier>config</classifier>
                 </artifact>
@@ -99,47 +118,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             </configuration>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.opendaylight.yangtools</groupId>
-        <artifactId>yang-maven-plugin</artifactId>
-        <version>${yangtools.version}</version>
-        <executions>
-          <execution>
-            <id>config</id>
-            <goals>
-              <goal>generate-sources</goal>
-            </goals>
-            <configuration>
-              <codeGenerators>
-                <generator>
-                <codeGeneratorClass>org.opendaylight.controller.config.yangjmxgenerator.plugin.JMXGenerator</codeGeneratorClass>
-                <outputBaseDir>${jmxGeneratorPath}</outputBaseDir>
-                <additionalConfiguration>
-                  <namespaceToPackage1>urn:opendaylight:params:xml:ns:yang:controller==org.opendaylight.controller.config.yang</namespaceToPackage1>
-                  </additionalConfiguration>
-                </generator>
-                <generator>
-                  <codeGeneratorClass>org.opendaylight.yangtools.maven.sal.api.gen.plugin.CodeGeneratorImpl</codeGeneratorClass>
-                  <outputBaseDir>${salGeneratorPath}</outputBaseDir>
-                </generator>
-              </codeGenerators>
-              <inspectDependencies>true</inspectDependencies>
-            </configuration>
-          </execution>
-        </executions>
-        <dependencies>
-          <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>yang-jmx-generator-plugin</artifactId>
-            <version>${config.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.opendaylight.mdsal</groupId>
-            <artifactId>maven-sal-api-gen-plugin</artifactId>
-            <version>${mdsal.model.version}</version>
-          </dependency>
-        </dependencies>
       </plugin>
     </plugins>
   </build>

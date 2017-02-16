@@ -85,10 +85,6 @@ module aaa-cert-mdsal {
             description "keystore file as Binary";
             type binary;
         }
-        list certificates {
-            description "list of certificates that exist in the keystore";
-            uses node-certificate;
-        }
     }
 
     grouping cipher-suite {
@@ -104,6 +100,10 @@ module aaa-cert-mdsal {
             description "bundle name";
             type string;
             mandatory true;
+        }
+        leaf tls-protocols {
+            description "the TLS supported protocols (SSLv2Hello,TLSv1.1,TLSv1.2) the selected protocol should be seperated by ',' char";
+            type string;
         }
         container odl-keystore {
             uses keystore;
@@ -124,24 +124,4 @@ module aaa-cert-mdsal {
             uses ssl-data;
         }
     }
-
-    identity aaa-cert-mdsal {
-        base config:module-type;
-        config:java-name-prefix AaaCertMdsalProvider;
-    }
-
-    augment "/config:modules/config:module/config:configuration" {
-        case aaa-cert-mdsal {
-            when "/config:modules/config:module/config:type = 'aaa-cert-mdsal'";
-            container aaa-broker {
-                uses config:service-ref {
-                    refine type {
-                        mandatory false;
-                        config:required-identity md-sal-binding:binding-broker-osgi-registry;
-                    }
-                }
-            }
-        }
-    }
-
 }

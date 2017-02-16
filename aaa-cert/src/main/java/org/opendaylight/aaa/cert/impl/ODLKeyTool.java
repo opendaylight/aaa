@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2016 Inocybe Technologies and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -9,6 +9,7 @@
 package org.opendaylight.aaa.cert.impl;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,11 +30,10 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.Base64;
 import java.util.Date;
-
 import javax.xml.bind.DatatypeConverter;
-
-import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.asn1.x509.X509Name;
 import org.bouncycastle.jce.PKCS10CertificationRequest;
 import org.bouncycastle.jce.X509Principal;
@@ -42,14 +42,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ODLKeyTool has the basic operation to manage the Java keyStores such as generate, add and delete certificates
+ * ODLKeyTool implements the basic operations that manage the Java keyStores such as create, generate, add and delete certificates.
  *
  * @author mserngawy
  *
  */
 public class ODLKeyTool {
 
-    private final static Logger LOG = LoggerFactory.getLogger(ODLKeyTool.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ODLKeyTool.class);
+
     private final String workingDir;
 
     protected ODLKeyTool() {
@@ -62,48 +63,85 @@ public class ODLKeyTool {
         KeyStoreConstant.createDir(workingDir);
     }
 
-    public boolean addCertificate(final String keyStoreName, final String keyStorePwd, final String certificate, final String alias) {
+    /**
+     * Add certificate to the given keystore
+     *
+     * @param keyStore java keystore object
+     * @param certificate to add as string
+     * @param alias of the certificate
+     * @param deleteOld true to delete the old certificate that has the same alias otherwise it will fail if there is a certificate has same given alias.
+     * @return the given Keystore containing the certificate otherwise return null.
+     */
+    public KeyStore addCertificate(final KeyStore keyStore, final String certificate, final String alias, final boolean deleteOld) {
         try {
             final X509Certificate newCert = getCertificate(certificate);
-            final KeyStore keyStore = KeyStore.getInstance("JKS");
-            final FileInputStream fInputStream = new FileInputStream(workingDir + keyStoreName);
-            keyStore.load(fInputStream, keyStorePwd.toCharArray());
-            if(keyStore.isCertificateEntry(alias)) {
+            if(keyStore.isCertificateEntry(alias) && deleteOld) {
                 keyStore.deleteEntry(alias);
             }
-            keyStore.setCertificateEntry(alias, newCert);
-            keyStore.store( new FileOutputStream(workingDir + keyStoreName), keyStorePwd.toCharArray());
-            LOG.info("Certificate {}  Added to keyStore {}", alias, keyStoreName);
-            return true;
-        } catch (CertificateException | KeyStoreException | NoSuchAlgorithmException | IOException e) {
-            LOG.error("failed to add certificate", e);
-            return false;
-        }
-    }
-
-    public boolean createKeyStoreImportCert(final String keyStoreName, final String keyStorePwd, final String certFile, final String alias) {
-        KeyStore trustKeyStore;
-        try {
-            trustKeyStore = KeyStore.getInstance("JKS");
-            trustKeyStore.load(null, keyStorePwd.toCharArray());
-            if(KeyStoreConstant.checkKeyStoreFile(certFile)) {
-                final String certificate = KeyStoreConstant.readFile(certFile);
-                final X509Certificate newCert = getCertificate(certificate);
-                trustKeyStore.setCertificateEntry(alias, newCert);
+            if (newCert != null ) {
+                keyStore.setCertificateEntry(alias, newCert);
+            } else {
+                LOG.warn("{} Not a valid certificate {}", alias, certificate);
+                return null;
             }
-            trustKeyStore.store( new FileOutputStream(workingDir + keyStoreName), keyStorePwd.toCharArray());
-            LOG.info("{} is created", keyStoreName);
-            return true;
-        } catch (KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
-            LOG.error("Failed to create keystore {}", keyStoreName, e);
-            return false;
+            return keyStore;
+        } catch (final KeyStoreException e) {
+            LOG.error("failed to add certificate", e);
+            return null;
         }
     }
 
-    public boolean createKeyStoreWithSelfSignCert(final String keyStoreName, final String keyStorePwd, final String dName, final String keyAlias, final int validity) {
+    /**
+     * Convert the given java keystore object to byte array
+     *
+     * @param keyStore object
+     * @param keystorePassword the password of the given keystore
+     * @return byte array
+     */
+    public byte[] convertKeystoreToBytes(final KeyStore keyStore, final String keystorePassword) {
+        final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
-            final KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(KeyStoreConstant.DEFAULT_KEY_ALG);
-            keyPairGenerator.initialize(KeyStoreConstant.DEFAULT_KEY_SIZE);
+            keyStore.store(byteArrayOutputStream, keystorePassword.toCharArray());
+        } catch (final KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
+            LOG.error("Fatal error convert keystore to bytes", e);
+        }
+        return byteArrayOutputStream.toByteArray();
+    }
+
+    /**
+     * Create a keystore that has self sign private/public keys using the default key algorithm (RSA), size (2048)
+     * and signing algorithm (SHA1WithRSAEncryption)
+     *
+     * @param keyStoreName the keystore name
+     * @param keystorePassword the keystore password
+     * @param dName the generated key's Dname
+     * @param keyAlias the private key alias
+     * @param validity the key validity
+     * @return keystore object
+     */
+    public KeyStore createKeyStoreWithSelfSignCert(final String keyStoreName, final String keystorePassword, final String dName, final String keyAlias, final int validity) {
+        return createKeyStoreWithSelfSignCert(keyStoreName, keystorePassword, dName, keyAlias, validity, KeyStoreConstant.DEFAULT_KEY_ALG,
+                KeyStoreConstant.DEFAULT_KEY_SIZE, KeyStoreConstant.DEFAULT_SIGN_ALG);
+    }
+
+    /**
+     * Create a keystore that has self sign private/public keys
+     *
+     * @param keyStoreName the keystore name
+     * @param keystorePassword the keystore password
+     * @param dName the generated key's Dname
+     * @param keyAlias the private key alias
+     * @param validity the key validity
+     * @param keyAlg the algorithm that will be used to generate the key
+     * @param keySize the key size
+     * @param signAlg the signing algorithm
+     * @return keystore object
+     */
+    public KeyStore createKeyStoreWithSelfSignCert(final String keyStoreName, final String keystorePassword, final String dName,
+            final String keyAlias, final int validity, final String keyAlg, final int keySize, final String signAlg) {
+        try {
+            final KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(keyAlg);
+            keyPairGenerator.initialize(keySize);
             final KeyPair keyPair = keyPairGenerator.generateKeyPair();
             final X509V3CertificateGenerator x509V3CertGen = new X509V3CertificateGenerator();
             x509V3CertGen.setSerialNumber(getSecureRandomeInt());
@@ -112,33 +150,76 @@ public class ODLKeyTool {
             x509V3CertGen.setNotAfter(new Date(System.currentTimeMillis() + (KeyStoreConstant.DAY_TIME * validity)));
             x509V3CertGen.setSubjectDN(new X509Principal(dName));
             x509V3CertGen.setPublicKey(keyPair.getPublic());
-            x509V3CertGen.setSignatureAlgorithm(KeyStoreConstant.DEFAULT_SIGN_ALG);
+            x509V3CertGen.setSignatureAlgorithm(signAlg);
             final X509Certificate x509Cert = x509V3CertGen.generateX509Certificate(keyPair.getPrivate());
             final KeyStore ctlKeyStore = KeyStore.getInstance("JKS");
-            ctlKeyStore.load(null, keyStorePwd.toCharArray());
-            ctlKeyStore.setKeyEntry(keyAlias, keyPair.getPrivate(), keyStorePwd.toCharArray(),
+            ctlKeyStore.load(null, keystorePassword.toCharArray());
+            ctlKeyStore.setKeyEntry(keyAlias, keyPair.getPrivate(), keystorePassword.toCharArray(),
                        new java.security.cert.Certificate[]{x509Cert});
-            final FileOutputStream fOutputStream = new FileOutputStream(workingDir + keyStoreName);
-            ctlKeyStore.store( fOutputStream, keyStorePwd.toCharArray());
             LOG.info("{} is created", keyStoreName);
-            return true;
+            return ctlKeyStore;
         }
-        catch (NoSuchAlgorithmException | InvalidKeyException | SecurityException | SignatureException | KeyStoreException | CertificateException | IOException e) {
-            LOG.error("Fatal error creating key", e);
+        catch (final NoSuchAlgorithmException | InvalidKeyException | SecurityException | SignatureException | KeyStoreException | CertificateException | IOException e) {
+            LOG.error("Fatal error creating keystore", e);
+            return null;
+        }
+    }
+
+    /**
+     * Create empty keystore does not has private or public key.
+     *
+     * @param keystorePassword the keystore password
+     * @return keystore object
+     */
+    public KeyStore createEmptyKeyStore(final String keystorePassword) {
+        try {
+            final KeyStore trustKeyStore = KeyStore.getInstance("JKS");
+            trustKeyStore.load(null, keystorePassword.toCharArray());
+            return trustKeyStore;
+        } catch (final KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
+            LOG.error("Failed to create trust keystore", e);
+            return null;
+        }
+    }
+
+    /**
+     * Export the given keystore as a file under the working directory
+     *
+     * @param keystore object
+     * @param keystorePassword the keystore password
+     * @param fileName of the keystore
+     * @return true if successes to export the keystore
+     */
+    public boolean exportKeystore(final KeyStore keystore, final String keystorePassword, final String fileName) {
+        if (keystore == null) {
+            return false;
+        }
+        try (final FileOutputStream fOutputStream = new FileOutputStream(workingDir + fileName)) {
+            keystore.store(fOutputStream, keystorePassword.toCharArray());
+            return true;
+        } catch (final KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
+            LOG.error("Fatal error export keystore", e);
             return false;
         }
     }
 
-    public String generateCertificateReq(final String keyStoreName, final String keyStorePwd, final String keyAlias, final String signAlg,
-                  final boolean withTag) {
+    /**
+     * Generate a certificate signing request based on the given keystore private/public key
+     *
+     * @param keyStore object
+     * @param keystorePassword the keystore password
+     * @param keyAlias Alias of the given keystore's private key.
+     * @param signAlg the signing algorithm
+     * @param withTag true to add the certificate request tag to the certificate request string.
+     * @return certificate request as string.
+     */
+    public String generateCertificateReq(final KeyStore keyStore, final String keystorePassword, final String keyAlias, final String signAlg,
+            final boolean withTag) {
         try {
-            final KeyStore ctlKeyStore = KeyStore.getInstance("JKS");
-            final FileInputStream fInputStream = new FileInputStream(workingDir + keyStoreName);
-            ctlKeyStore.load(fInputStream, keyStorePwd.toCharArray());
-            if (ctlKeyStore.containsAlias(keyAlias)) {
-                final X509Certificate odlCert = (X509Certificate)ctlKeyStore.getCertificate(keyAlias);
+            if (keyStore.containsAlias(keyAlias)) {
+                final X509Certificate odlCert = (X509Certificate)keyStore.getCertificate(keyAlias);
                 final PublicKey pubKey = odlCert.getPublicKey();
-                final PrivateKey privKey = (PrivateKey)ctlKeyStore.getKey(keyAlias, keyStorePwd.toCharArray());
+                final PrivateKey privKey = (PrivateKey)keyStore.getKey(keyAlias, keystorePassword.toCharArray());
                 final String subject = odlCert.getSubjectDN().getName();
                 final X509Name xname = new X509Name(subject);
                 final String signatureAlgorithm = signAlg;
@@ -156,46 +237,27 @@ public class ODLKeyTool {
                 }
                 return certReq;
             }
-            LOG.info("{} KeyStore does not contain alias {}", keyStoreName, keyAlias);
-            return null;
-        } catch (NoSuchAlgorithmException | CertificateException | IOException | KeyStoreException |
+            LOG.info("KeyStore does not contain alias {}", keyAlias);
+            return StringUtils.EMPTY;
+        } catch (final NoSuchAlgorithmException | KeyStoreException |
                  UnrecoverableKeyException | InvalidKeyException | NoSuchProviderException | SignatureException e) {
-            LOG.error("Failed to generate certificate request {}", e.getMessage());
-            return null;
+            LOG.error("Failed to generate certificate request", e);
+            return StringUtils.EMPTY;
         }
-    }
+}
 
-    private X509Certificate getCertificate(String certificate) {
-        if (certificate.isEmpty()) {
-            return null;
-        }
-
-        if (certificate.contains(KeyStoreConstant.BEGIN_CERTIFICATE)) {
-            final int fIdx = certificate.indexOf(KeyStoreConstant.BEGIN_CERTIFICATE) + KeyStoreConstant.BEGIN_CERTIFICATE.length();
-            final int sIdx = certificate.indexOf(KeyStoreConstant.END_CERTIFICATE);
-            certificate = certificate.substring(fIdx, sIdx);
-        }
-        final byte[] byteCert = Base64.decodeBase64(certificate);
-        final InputStream inputStreamCert = new ByteArrayInputStream(byteCert);
-        CertificateFactory certFactory;
+    /**
+     * Get a certificate as String based on the given alias
+     *
+     * @param keyStore keystore that has the certificate
+     * @param certAlias certificate alias
+     * @param withTag true to add the certificate tag to the certificate string.
+     * @return certificate as string.
+     */
+    public String getCertificate(final KeyStore keyStore, final String certAlias, final boolean withTag) {
         try {
-            certFactory = CertificateFactory.getInstance("X.509");
-            final X509Certificate newCert = (X509Certificate) certFactory.generateCertificate(inputStreamCert);
-            newCert.checkValidity();
-            return newCert;
-        } catch (final CertificateException e) {
-            LOG.error("Failed to get certificate {}", e.getMessage());
-            return null;
-        }
-    }
-
-    public String getCertificate(final String keyStoreName, final String keyStorePwd, final String certAlias, final boolean withTag) {
-        try {
-            final KeyStore ctlKeyStore = KeyStore.getInstance("JKS");
-            final FileInputStream fInputStream = new FileInputStream(workingDir + keyStoreName);
-            ctlKeyStore.load(fInputStream, keyStorePwd.toCharArray());
-            if (ctlKeyStore.containsAlias(certAlias)) {
-                final X509Certificate odlCert = (X509Certificate)ctlKeyStore.getCertificate(certAlias);
+            if (keyStore.containsAlias(certAlias)) {
+                final X509Certificate odlCert = (X509Certificate) keyStore.getCertificate(certAlias);
                 final String cert = DatatypeConverter.printBase64Binary(odlCert.getEncoded());
                 if (withTag) {
                     final StringBuilder sb = new StringBuilder();
@@ -208,29 +270,89 @@ public class ODLKeyTool {
                 }
                 return cert;
             }
-            LOG.info("{} KeyStore does not contain alias {}", keyStoreName, certAlias);
+            LOG.info("KeyStore does not contain alias {}", certAlias);
+            return StringUtils.EMPTY;
+        } catch (final CertificateException | KeyStoreException e) {
+            LOG.error("Failed to get Certificate", e);
+            return StringUtils.EMPTY;
+        }
+    }
+
+    /**
+     * Get a X509Certificate object based on given certificate string.
+     *
+     * @param certificate as string
+     * @return X509Certificate if the certificate string is not well formated will return null
+     */
+    private X509Certificate getCertificate(String certificate) {
+        if (certificate.isEmpty()) {
             return null;
-        } catch (NoSuchAlgorithmException | CertificateException | IOException | KeyStoreException e) {
-            LOG.error("Failed to get Certificate {}", e.getMessage());
+        }
+
+        if (certificate.contains(KeyStoreConstant.BEGIN_CERTIFICATE)) {
+            final int fIdx = certificate.indexOf(KeyStoreConstant.BEGIN_CERTIFICATE) + KeyStoreConstant.BEGIN_CERTIFICATE.length();
+            final int sIdx = certificate.indexOf(KeyStoreConstant.END_CERTIFICATE);
+            certificate = certificate.substring(fIdx, sIdx);
+        }
+        final byte[] byteCert = Base64.getDecoder().decode(certificate);
+        final InputStream inputStreamCert = new ByteArrayInputStream(byteCert);
+        CertificateFactory certFactory;
+        try {
+            certFactory = CertificateFactory.getInstance("X.509");
+            final X509Certificate newCert = (X509Certificate) certFactory.generateCertificate(inputStreamCert);
+            newCert.checkValidity();
+            return newCert;
+        } catch (final CertificateException e) {
+            LOG.error("Failed to get certificate", e);
             return null;
         }
     }
 
-    public KeyStore getKeyStore(final String keyStoreName, final String keyStorePwd) {
+    /**
+     * generate secure random number
+     *
+     * @return secure random number as BigInteger.
+     */
+    private BigInteger getSecureRandomeInt() {
+        final SecureRandom secureRandom = new SecureRandom();
+        final BigInteger bigInt = BigInteger.valueOf(secureRandom.nextInt());
+        return new BigInteger(1, bigInt.toByteArray());
+    }
+
+    /**
+     * Load the keystore object from the given byte array
+     *
+     * @param keyStoreBytes array of byte contain keystore object
+     * @param keystorePassword the keystore password
+     * @return keystore object otherwise return null if it fails to load.
+     */
+    public KeyStore loadKeyStore(final byte[] keyStoreBytes, final String keystorePassword) {
+        try {
+            final KeyStore keyStore = KeyStore.getInstance("JKS");
+            keyStore.load(new ByteArrayInputStream(keyStoreBytes), keystorePassword.toCharArray());
+            return keyStore;
+        } catch (final KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
+            LOG.error("Fatal error load keystore", e);
+            return null;
+        }
+    }
+
+    /**
+     * Load the keystore from the working directory
+     *
+     * @param keyStoreName keystore file name
+     * @param keystorePassword keystore password
+     * @return keystore object otherwise return null if it fails to load.
+     */
+    public KeyStore loadKeyStore(final String keyStoreName, final String keystorePassword) {
         try {
             final KeyStore keyStore = KeyStore.getInstance("JKS");
             final FileInputStream fInputStream = new FileInputStream(workingDir + keyStoreName);
-            keyStore.load(fInputStream, keyStorePwd.toCharArray());
+            keyStore.load(fInputStream, keystorePassword.toCharArray());
             return keyStore;
         } catch (NoSuchAlgorithmException | CertificateException | IOException | KeyStoreException e) {
             LOG.error("failed to get keystore {}", e.getMessage());
             return null;
         }
-    }
-
-    private BigInteger getSecureRandomeInt() {
-        final SecureRandom secureRandom = new SecureRandom();
-        final BigInteger bigInt = BigInteger.valueOf(secureRandom.nextInt());
-        return new BigInteger(1, bigInt.toByteArray());
     }
 }
