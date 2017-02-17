@@ -160,7 +160,26 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Import-Package>org.opendaylight.aaa.shiro.realm,org.apache.shiro.web.env,org.apache.shiro.authc,org.opendaylight.aaa.shiro.web.env,org.opendaylight.aaa.shiro.filters,org.opendaylight.aaa.filterchain.filters,javax.servlet.http,javax.ws.rs,javax.ws.rs.core,javax.xml.bind.annotation,org.apache.felix.dm,org.opendaylight.aaa,org.opendaylight.aaa.api.*,org.osgi.framework,org.slf4j,org.eclipse.jetty.servlets,com.sun.jersey.spi.container.servlet,com.google.*,org.opendaylight.*,org.osgi.util.tracker</Import-Package>
+                        <Import-Package>
+                            com.google.*,
+                            com.sun.jersey.spi.container.servlet,
+                            javax.servlet.http,
+                            javax.ws.rs,javax.ws.rs.core,
+                            javax.xml.bind.annotation,
+                            org.apache.felix.dm,
+                            org.apache.shiro.web.env,org.apache.shiro.authc,
+                            org.eclipse.jetty.servlets;version="[8.1,10)",
+                            org.opendaylight.*,
+                            org.opendaylight.aaa,
+                            org.opendaylight.aaa.api.*,
+                            org.opendaylight.aaa.filterchain.filters,
+                            org.opendaylight.aaa.shiro.filters,
+                            org.opendaylight.aaa.shiro.realm,
+                            org.opendaylight.aaa.shiro.web.env,
+                            org.osgi.framework,
+                            org.osgi.util.tracker
+                            org.slf4j,
+                        </Import-Package>
                         <Web-ContextPath>/auth</Web-ContextPath>
                         <!--<Web-Connectors>adminConn</Web-Connectors> -->
                         <!--Bundle-Activator>org.opendaylight.aaa.idm.Activator</Bundle-Activator-->
