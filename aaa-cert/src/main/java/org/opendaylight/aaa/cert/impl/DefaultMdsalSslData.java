@@ -11,8 +11,12 @@ package org.opendaylight.aaa.cert.impl;
 import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nonnull;
+
 import org.apache.commons.lang3.StringUtils;
 import org.opendaylight.aaa.cert.api.IAaaCertProvider;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslData;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.TrustKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.ctlkeystore.CipherSuites;
@@ -163,4 +167,17 @@ public class DefaultMdsalSslData implements IAaaCertProvider {
         return aaaCertMdsalProv.getTlsProtocols(bundleName);
     }
 
+    public void exportSslDataKeystores() {
+        aaaCertMdsalProv.exportSslDataKeystores(bundleName);
+    }
+
+    public boolean importSslDataKeystores(String odlKeystoreName, String odlKeystorePwd,
+            String odlKeystoreAlias, String trustKeystoreName, String trustKeystorePwd,
+            String[] cipherSuites, String tlsProtocols) {
+        final ODLKeyTool keyTool = new ODLKeyTool();
+        final KeyStore odlKeyStore = keyTool.loadKeyStore(odlKeystoreName, odlKeystorePwd);
+        final KeyStore trustKeyStore = keyTool.loadKeyStore(trustKeystoreName, trustKeystorePwd);
+        return aaaCertMdsalProv.importSslDataKeystores(bundleName, odlKeystoreName, odlKeystorePwd, odlKeystoreAlias,
+                odlKeyStore, trustKeystoreName, trustKeystorePwd, trustKeyStore, cipherSuites, tlsProtocols) != null;
+    }
 }
