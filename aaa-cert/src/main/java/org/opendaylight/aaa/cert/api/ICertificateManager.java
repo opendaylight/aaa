@@ -82,4 +82,28 @@ public interface ICertificateManager {
      * @return SSLContext object
      */
     SSLContext getServerContext();
+
+    /**
+     * Create SslData based on pre-established keystores for ODL and network nodes.
+     *
+     * @param odlKeystoreName odl Keystore Name
+     * @param odlKeystorePwd must be the same as the imported ODL keystore's password
+     * @param odlKeystoreAlias must be the same as the imported ODL keystore's certificate alias
+     * @param trustKeystoreName trust Keystore Name
+     * @param trustKeystorePwd must be the same as the imported Trust keystore's password
+     * @param cipherSuites cipher suites that will be used by the SSL connection
+     * @param tlsProtocols supported TLS protocols such as SSLv2Hello,TLSv1.1,TLSv1.2 protocols should be separated by ","
+     * @return true if succeed
+     */
+    boolean importSslDataKeystores(@Nonnull String odlKeystoreName, @Nonnull String odlKeystorePwd,
+                        @Nonnull String odlKeystoreAlias, @Nonnull String trustKeystoreName,
+                        @Nonnull String trustKeystorePwd, @Nonnull String[] cipherSuites,
+                                   @Nonnull String tlsProtocols);
+
+    /**
+     * Export the ODL keystore and Trust keystore to keystore files under configuration/ssl/ directory
+     *
+     */
+    void exportSslDataKeystores();
+
 }

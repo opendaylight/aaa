@@ -1,6 +1,6 @@
 <aaa-cert-service-config xmlns="urn:opendaylight:yang:aaa:cert">
-  <use-config>false</use-config>
-  <use-mdsal>false</use-mdsal>
+  <use-config>true</use-config>
+  <use-mdsal>true</use-mdsal>
   <bundle-name>opendaylight</bundle-name>
   <ctlKeystore>
     <name>ctl.jks</name>
