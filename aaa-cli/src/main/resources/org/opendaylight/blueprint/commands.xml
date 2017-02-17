@@ -55,6 +55,16 @@
             </action>
         </command>
         <command>
+            <action class="org.opendaylight.aaa.cli.cert.ExportDefaultKeystores">
+                <argument ref="KeyStoreConsoleProvider" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.aaa.cli.cert.ImportDefaultKeystores">
+                <argument ref="KeyStoreConsoleProvider" />
+            </action>
+        </command>
+        <command>
             <action class="org.opendaylight.aaa.cli.dmstore.AddRole">
                 <argument ref="iIDMStore" />
             </action>
