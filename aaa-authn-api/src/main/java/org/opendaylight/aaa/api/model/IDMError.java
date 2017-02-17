@@ -28,8 +28,7 @@ public class IDMError {
     private String details;
     private int code = 500;
 
-    public IDMError() {
-    };
+    public IDMError() {}
 
     public IDMError(int statusCode, String msg, String msgDetails) {
         code = statusCode;
@@ -44,6 +43,8 @@ public class IDMError {
     public void setMessage(String msg) {
         this.message = msg;
     }
+
+    public int getCode() { return this.code; }
 
     public String getDetails() {
         return details;

@@ -26,9 +26,12 @@ import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.idm.IdmLightApplication;
 import org.opendaylight.aaa.idm.IdmLightProxy;
+import org.opendaylight.aaa.idm.rest.datagetters.RoleDataGetter;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Optional;
 
 /**
  * REST application used to manipulate the H2 database roles table. The REST
@@ -43,6 +46,8 @@ import org.slf4j.LoggerFactory;
 public class RoleHandler {
     private static final Logger LOG = LoggerFactory.getLogger(RoleHandler.class);
 
+    private final RoleDataGetter roleGetter = new RoleDataGetter();
+
     /**
      * Extracts all roles.
      *
@@ -52,7 +57,7 @@ public class RoleHandler {
     @Produces("application/json")
     public Response getRoles() {
         LOG.info("get /roles");
-        Roles roles = null;
+        Roles roles;
         try {
             roles = AAAIDMLightModule.getStore().getRoles();
         } catch (IDMStoreException se) {
@@ -72,18 +77,19 @@ public class RoleHandler {
     @Produces("application/json")
     public Response getRole(@PathParam("id") String id) {
         LOG.info("get /roles/{}", id);
-        Role role = null;
 
-        try {
-            role = AAAIDMLightModule.getStore().readRole(id);
-        } catch (IDMStoreException se) {
-            return new IDMError(500, "internal error getting roles", se.getMessage()).response();
-        }
+        Optional<Role> role = roleGetter.get(id);
 
-        if (role == null) {
-            return new IDMError(404, "role not found id :" + id, "").response();
+        if (role.isPresent()) {
+            return Response.ok(role.get()).build();
         }
-        return Response.ok(role).build();
+        else {
+            IDMError theError = roleGetter.getError()
+                    .orElse(new IDMError(404,
+                            "role not found id : " + id,
+                            ""));
+            return Response.status(theError.getCode()).entity(theError).build();
+        }
     }
 
     /**
