@@ -153,6 +153,29 @@ public class CertificateManagerService implements ICertificateManager {
         return aaaCertProvider.getTlsProtocols();
     }
 
+    @Override
+    public boolean importSslDataKeystores(String odlKeystoreName, String odlKeystorePwd,
+            String odlKeystoreAlias, String trustKeystoreName, String trustKeystorePwd,
+            String[] cipherSuites, String tlsProtocols) {
+        DefaultMdsalSslData mdsalCertProvider = (DefaultMdsalSslData) aaaCertProvider;
+        if (mdsalCertProvider == null) {
+            LOG.debug("aaaCertProvider is not MD-Sal Certificate Provider");
+            return false;
+        }
+        return mdsalCertProvider.importSslDataKeystores(odlKeystoreName, odlKeystorePwd,
+                odlKeystoreAlias, trustKeystoreName, trustKeystorePwd, cipherSuites, tlsProtocols);
+    }
+
+    @Override
+    public void exportSslDataKeystores() {
+        DefaultMdsalSslData mdsalCertProvider = (DefaultMdsalSslData) aaaCertProvider;
+        if (mdsalCertProvider == null) {
+            LOG.debug("aaaCertProvider is not MD-Sal Certificate Provider");
+            return;
+        }
+        mdsalCertProvider.exportSslDataKeystores();
+    }
+
     private void updateCertManagerSrvConfig(String ctlPwd, String trustPwd) {
         try {
             LOG.debug("Update Certificate manager service config file");
