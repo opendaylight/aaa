@@ -150,7 +150,11 @@ public class AaaCertProvider implements IAaaCertProvider {
         if (tlsProtocols != null && !tlsProtocols.isEmpty()) {
             // remove white spaces in tlsProtocols string
             tlsProtocols = tlsProtocols.replace(" ", "");
-            return tlsProtocols.split(",");
+            if (tlsProtocols.contains(",")) {
+                return tlsProtocols.split(",");
+            } else {
+                return new String[] {tlsProtocols};
+            }
         }
         return null;
     }
