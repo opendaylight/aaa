@@ -15,7 +15,9 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -37,6 +39,7 @@ public class SimpleHttpRequest<T> {
     private MediaType mediaType;
     private Object entity;
     private Set<Class<?>> providers = new HashSet<>();
+    private Map<String, String> queryParams = new HashMap<>();
     private Class<T> outputType;
 
     private SimpleHttpRequest() {}
@@ -53,12 +56,21 @@ public class SimpleHttpRequest<T> {
                 HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
                 new HTTPSProperties(hostnameVerifier, sslContext));
         Client client = createClient(clientConfig);
-        WebResource webResource = client.resource(uri);
+        WebResource webResource = client.resource(uri)
+                .path(path);
+
+        // add the query params
+        queryParams.entrySet().forEach(e -> webResource.queryParam(e.getKey(),e.getValue()));
         if (outputType == Response.class) {
-            ClientResponse output = webResource.path(path).type(mediaType).method(method, ClientResponse.class, entity);
+            ClientResponse output = webResource
+                    .type(mediaType)
+                    .method(method, ClientResponse.class, entity);
             return outputType.cast(clientResponseToResponse(output));
-        } else {
-            return webResource.path(path).type(mediaType).method(method, outputType, entity);
+        }
+        else {
+            return webResource
+                    .type(mediaType)
+                    .method(method, outputType, entity);
         }
     }
 
@@ -185,6 +197,10 @@ public class SimpleHttpRequest<T> {
          */
         public Builder<T> provider(Class<?> provider) {
             request.providers.add(provider);
+            return this;
+        }
+        public Builder<T> addQueryParams(String theQueryParam, String theParamValue) {
+            request.queryParams.put(theQueryParam, theParamValue);
             return this;
         }
 
