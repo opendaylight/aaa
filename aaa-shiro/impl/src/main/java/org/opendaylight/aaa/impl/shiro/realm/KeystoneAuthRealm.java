@@ -11,30 +11,35 @@ package org.opendaylight.aaa.shiro.realm;
 import static org.opendaylight.aaa.impl.shiro.principal.ODLPrincipalImpl.createODLPrincipal;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
-import org.opendaylight.aaa.basic.HttpBasicAuth;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.impl.AAAShiroProvider;
 import org.opendaylight.aaa.impl.shiro.keystone.domain.KeystoneAuth;
+import org.opendaylight.aaa.impl.shiro.keystone.domain.KeystoneToken;
 import org.opendaylight.aaa.impl.shiro.realm.util.http.SimpleHttpRequest;
 import org.opendaylight.aaa.impl.shiro.realm.util.http.UntrustedSSL;
 import org.slf4j.Logger;
@@ -59,7 +64,19 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(final PrincipalCollection principalCollection) {
-        return null;
+        LOG.info("doGetAuthorizationInfo - Getting authZ data");
+
+        final Object primaryPrincipal = principalCollection.getPrimaryPrincipal();
+        final ODLPrincipal odlPrincipal;
+        try {
+            odlPrincipal = (ODLPrincipal) primaryPrincipal;
+            LOG.info("Read authz data. User: {}; Roles: {}", odlPrincipal.getUsername(), odlPrincipal.getRoles());
+            return new SimpleAuthorizationInfo(odlPrincipal.getRoles());
+        } catch (ClassCastException e ) {
+            LOG.error("Couldn't decode authorization request", e);
+        }
+
+        return new SimpleAuthorizationInfo();
     }
 
     @Override
@@ -86,7 +103,7 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
                 HttpsURLConnection.getDefaultHostnameVerifier() : UntrustedSSL.getHostnameVerifier();
 
         final KeystoneAuth keystoneAuth = new KeystoneAuth(username, password, domain);
-        SimpleHttpRequest<Response> httpRequest = SimpleHttpRequest.builder(Response.class)
+        SimpleHttpRequest httpRequest = SimpleHttpRequest.builder(KeystoneToken.class)
                 .uri(keystoneServerURI)
                 .path(AUTH_PATH)
                 .sslContext(sslContext)
@@ -110,8 +127,17 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
             return null;
         }
 
+        KeystoneToken theAnswer = (KeystoneToken) response.getEntity();
+        Set<String> theRoles = theAnswer.getToken().getRoles()
+                .stream()
+                .map(KeystoneToken
+                        .Token
+                        .Role::getName)
+                .collect(Collectors.toSet());
+        LOG.info("answer.token.roles.role: {}", theRoles);
+
         final String userId = username + USERNAME_DOMAIN_SEPARATOR + domain;
-        final ODLPrincipal odlPrincipal = createODLPrincipal(username, domain, userId, null);
+        final ODLPrincipal odlPrincipal = createODLPrincipal(username, domain, userId, theRoles);
         return new SimpleAuthenticationInfo(odlPrincipal, password.toCharArray(), getName());
     }
 
@@ -141,5 +167,4 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     public void setSslVerification(final boolean sslVerification) {
         this.sslVerification = sslVerification;
     }
-
 }
