@@ -24,14 +24,18 @@ public class KeystoneAuth {
 
     public static final class Auth {
         private final Identity identity;
+        private final Scope scope;
 
         private Auth(String username, String password, String domain) {
             this.identity = new Identity(username, password, domain);
+            this.scope = new Scope(domain);
         }
 
         public Identity getIdentity() {
             return identity;
         }
+
+        public Scope getScope() { return scope; }
 
         public static final class Identity {
             private final String[] methods;
@@ -98,6 +102,26 @@ public class KeystoneAuth {
                     }
                 }
 
+            }
+        }
+
+        public static final class Scope {
+            private final Domain domain;
+
+            public Scope(String domainId) {
+                domain = new Domain(domainId);
+            }
+
+            public Domain getDomain() { return domain;}
+
+            public static final class Domain {
+                private final String name;
+
+                public Domain(String theDomain) {
+                    name = theDomain;
+                }
+
+                public String getName() { return name; }
             }
         }
     }
