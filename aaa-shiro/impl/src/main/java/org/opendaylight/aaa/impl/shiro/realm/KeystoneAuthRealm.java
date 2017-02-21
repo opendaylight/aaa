@@ -11,29 +11,36 @@ package org.opendaylight.aaa.shiro.realm;
 import static org.opendaylight.aaa.impl.shiro.principal.ODLPrincipalImpl.createODLPrincipal;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.sun.jersey.api.client.UniformInterfaceException;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.impl.AAAShiroProvider;
 import org.opendaylight.aaa.impl.shiro.keystone.domain.KeystoneAuth;
+import org.opendaylight.aaa.impl.shiro.keystone.domain.KeystoneToken;
 import org.opendaylight.aaa.impl.shiro.realm.util.http.SimpleHttpRequest;
 import org.opendaylight.aaa.impl.shiro.realm.util.http.UntrustedSSL;
 import org.slf4j.Logger;
@@ -63,7 +70,15 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(final PrincipalCollection principalCollection) {
-        return null;
+        final Object primaryPrincipal = principalCollection.getPrimaryPrincipal();
+        final ODLPrincipal odlPrincipal;
+        try {
+            odlPrincipal = (ODLPrincipal) primaryPrincipal;
+            return new SimpleAuthorizationInfo(odlPrincipal.getRoles());
+        } catch (ClassCastException e ) {
+            LOG.error("Couldn't decode authorization request", e);
+        }
+        return new SimpleAuthorizationInfo();
     }
 
     @Override
@@ -97,7 +112,7 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
         }
 
         final KeystoneAuth keystoneAuth = new KeystoneAuth(username, password, domain);
-        SimpleHttpRequest<Response> httpRequest = SimpleHttpRequest.builder(Response.class)
+        SimpleHttpRequest<KeystoneToken> httpRequest = SimpleHttpRequest.builder(KeystoneToken.class)
                 .uri(serverUri)
                 .path(AUTH_PATH)
                 .sslContext(sslContext)
@@ -108,15 +123,25 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
                 .entity(keystoneAuth)
                 .build();
 
-        Response response = httpRequest.execute();
-
-        if (response.getStatus() != Response.Status.CREATED.getStatusCode()) {
-            LOG.debug("No account could be associated with the specified token, response: {}", response);
-            return null;
+        KeystoneToken theToken;
+        try {
+            theToken = httpRequest.execute();
+        } catch (UniformInterfaceException e) {
+            LOG.error("Unable to authenticate. User {}; Reason: {}",
+                    username,
+                    e.getMessage());
+            throw new AuthenticationException(UNABLE_TO_AUTHENTICATE, e);
         }
 
+        Set<String> theRoles = theToken.getToken().getRoles()
+                .stream()
+                .map(KeystoneToken
+                        .Token
+                        .Role::getName)
+                .collect(Collectors.toSet());
+
         final String userId = username + USERNAME_DOMAIN_SEPARATOR + domain;
-        final ODLPrincipal odlPrincipal = createODLPrincipal(username, domain, userId, null);
+        final ODLPrincipal odlPrincipal = createODLPrincipal(username, domain, userId, theRoles);
         return new SimpleAuthenticationInfo(odlPrincipal, password.toCharArray(), getName());
     }
 

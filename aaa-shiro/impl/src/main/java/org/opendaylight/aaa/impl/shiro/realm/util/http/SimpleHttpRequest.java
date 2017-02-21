@@ -55,10 +55,18 @@ public class SimpleHttpRequest<T> {
         Client client = Client.create(clientConfig);
         WebResource webResource = client.resource(uri);
         if (outputType == Response.class) {
-            ClientResponse output = webResource.path(path).type(mediaType).method(method, ClientResponse.class, entity);
+            ClientResponse output = webResource
+                    .path(path)
+                    .queryParam("nocatalog","true")
+                    .type(mediaType)
+                    .method(method, ClientResponse.class, entity);
             return outputType.cast(clientResponseToResponse(output));
         } else {
-            return webResource.path(path).type(mediaType).method(method, outputType, entity);
+            return webResource
+                    .path(path)
+                    .queryParam("nocatalog","true")
+                    .type(mediaType)
+                    .method(method, outputType, entity);
         }
     }
 
