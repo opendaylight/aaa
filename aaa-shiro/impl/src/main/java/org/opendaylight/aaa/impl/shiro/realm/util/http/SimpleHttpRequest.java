@@ -11,14 +11,19 @@ package org.opendaylight.aaa.impl.shiro.realm.util.http;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.UniformInterfaceException;
+import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -37,6 +42,7 @@ public class SimpleHttpRequest<T> {
     private MediaType mediaType;
     private Object entity;
     private Set<Class<?>> providers = new HashSet<>();
+    private Map<String, String> queryParams = new HashMap<>();
     private Class<T> outputType;
 
     private SimpleHttpRequest() {}
@@ -53,12 +59,25 @@ public class SimpleHttpRequest<T> {
                 HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
                 new HTTPSProperties(hostnameVerifier, sslContext));
         Client client = createClient(clientConfig);
-        WebResource webResource = client.resource(uri);
-        if (outputType == Response.class) {
-            ClientResponse output = webResource.path(path).type(mediaType).method(method, ClientResponse.class, entity);
-            return outputType.cast(clientResponseToResponse(output));
-        } else {
-            return webResource.path(path).type(mediaType).method(method, outputType, entity);
+        WebResource webResource = client.resource(uri)
+                .path(path);
+
+        // add the query params
+        queryParams.entrySet().forEach(queryParamEntry ->
+                webResource.queryParam(queryParamEntry.getKey(), queryParamEntry.getValue()));
+        try {
+            if (outputType == Response.class) {
+                    ClientResponse output = webResource
+                            .type(mediaType)
+                            .method(method, ClientResponse.class, entity);
+                    return outputType.cast(clientResponseToResponse(output));
+            } else {
+                return webResource
+                        .type(mediaType)
+                        .method(method, outputType, entity);
+            }
+        } catch (UniformInterfaceException | ClientHandlerException theException) {
+            throw new WebApplicationException(theException, Response.Status.UNAUTHORIZED);
         }
     }
 
@@ -185,6 +204,20 @@ public class SimpleHttpRequest<T> {
          */
         public Builder<T> provider(Class<?> provider) {
             request.providers.add(provider);
+            return this;
+        }
+
+        /**
+         * Add query parameters to the request. Can be called multiple times,
+         * to add multiple query parameters. Values are overwritten when assigned
+         * the same keys.
+         *
+         * @param theQueryParam the parameter name
+         * @param theParamValue the parameter value
+         * @return  self, the request builder
+         */
+        public Builder<T> addQueryParams(String theQueryParam, String theParamValue) {
+            request.queryParams.put(theQueryParam, theParamValue);
             return this;
         }
 

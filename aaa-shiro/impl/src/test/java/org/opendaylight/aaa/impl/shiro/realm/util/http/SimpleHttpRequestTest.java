@@ -11,15 +11,19 @@ package org.opendaylight.aaa.impl.shiro.realm.util.http;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
+
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
 import javax.ws.rs.core.MediaType;
@@ -30,6 +34,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Answers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.opendaylight.aaa.impl.shiro.keystone.domain.KeystoneToken;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SimpleHttpRequestTest {
@@ -39,6 +44,9 @@ public class SimpleHttpRequestTest {
 
     @Mock
     private ClientResponse clientResponse;
+
+    @Mock
+    KeystoneToken theToken;
 
     @Test
     public void execute() throws Exception {
@@ -74,6 +82,37 @@ public class SimpleHttpRequestTest {
 
         assertThat(response.getStatus(), is(200));
         assertThat(response.getMetadata(), is(headers));
+    }
+
+    @Test
+    public void keystoneTokenGetter() throws MalformedURLException, URISyntaxException {
+        URI uri = new URL("http://example.com").toURI();
+        String path = "path";
+
+        KeystoneToken.Token ksToken = new KeystoneToken.Token(Collections.emptyList());
+        when(theToken.getToken()).thenReturn(ksToken);
+
+        SimpleHttpRequest<KeystoneToken> request = SimpleHttpRequest.builder(KeystoneToken.class)
+                .uri(uri)
+                .path(path)
+                .sslContext(UntrustedSSL.getSSLContext())
+                .hostnameVerifier(UntrustedSSL.getHostnameVerifier())
+                .mediaType(MediaType.APPLICATION_JSON_TYPE)
+                .method("POST")
+                .entity("entity")
+                .addQueryParams("nocatalog", "true")
+                .build();
+        when(client
+                .resource(uri)
+                .path(path)
+                .type(MediaType.APPLICATION_JSON_TYPE)
+                .method("POST", KeystoneToken.class, "entity"))
+                .thenReturn(theToken);
+        SimpleHttpRequest<KeystoneToken> spiedRequest = spy(request);
+        doReturn(client).when(spiedRequest).createClient(any());
+        KeystoneToken response = spiedRequest.execute();
+        verify(spiedRequest).createClient(any());
+        assertThat(response.getToken().getRoles().size(), is(0));
     }
 
 }
