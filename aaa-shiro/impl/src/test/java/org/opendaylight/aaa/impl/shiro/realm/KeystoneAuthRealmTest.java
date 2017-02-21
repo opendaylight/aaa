@@ -12,7 +12,6 @@ package org.opendaylight.aaa.shiro.realm;
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.same;
@@ -24,15 +23,19 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,6 +47,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.impl.shiro.keystone.domain.KeystoneAuth;
+import org.opendaylight.aaa.impl.shiro.keystone.domain.KeystoneToken;
 import org.opendaylight.aaa.impl.shiro.realm.util.http.SimpleHttpRequest;
 import org.opendaylight.aaa.impl.shiro.realm.util.http.UntrustedSSL;
 
@@ -51,7 +55,7 @@ import org.opendaylight.aaa.impl.shiro.realm.util.http.UntrustedSSL;
 public class KeystoneAuthRealmTest {
 
     @Mock
-    private SimpleHttpRequest.Builder<Response> builder;
+    private SimpleHttpRequest.Builder<KeystoneToken> builder;
 
     @Mock
     private ICertificateManager certificateManager;
@@ -60,10 +64,10 @@ public class KeystoneAuthRealmTest {
     private SSLContext sslContext;
 
     @Mock
-    private SimpleHttpRequest<Response> httpRequest;
+    private SimpleHttpRequest<KeystoneToken> httpRequest;
 
     @Mock
-    private Response response;
+    private KeystoneToken response;
 
     @Captor
     private ArgumentCaptor<KeystoneAuth> keystoneAuthArgumentCaptor;
@@ -71,9 +75,13 @@ public class KeystoneAuthRealmTest {
     @Spy
     private KeystoneAuthRealm keystoneAuthRealm;
 
+    private KeystoneToken.Token ksToken;
+
     @Before
     public void setup() throws MalformedURLException, URISyntaxException {
         final String testUrl = "http://example.com";
+        // a token for a user without roles
+        ksToken = new KeystoneToken.Token(Collections.emptyList());
 
         when(certificateManager.getServerContext()).thenReturn(sslContext);
         when(builder.uri(new URL(testUrl).toURI())).thenReturn(builder);
@@ -85,12 +93,13 @@ public class KeystoneAuthRealmTest {
         when(builder.provider(JacksonJsonProvider.class)).thenReturn(builder);
         when(builder.entity(any())).thenReturn(builder);
         when(builder.build()).thenReturn(httpRequest);
+        when(builder.queryParams(any(String.class), any(String.class))).thenReturn(builder);
         when(httpRequest.execute()).thenReturn(response);
-        when(response.getStatus()).thenReturn(Response.Status.CREATED.getStatusCode());
+        when(response.getToken()).thenReturn(ksToken);
 
         keystoneAuthRealm.setUrl(testUrl);
         doReturn(certificateManager).when(keystoneAuthRealm).getCertificateManager();
-        doReturn(builder).when(keystoneAuthRealm).getHttpRequestBuilder(Response.class);
+        doReturn(builder).when(keystoneAuthRealm).getHttpRequestBuilder(KeystoneToken.class);
     }
 
     @Test
@@ -116,9 +125,27 @@ public class KeystoneAuthRealmTest {
     @Test
     public void doGetAuthenticationInfoNotAuthorized() throws Exception {
         UsernamePasswordToken token = new UsernamePasswordToken("user", "password");
-        when(response.getStatus()).thenReturn(Response.Status.UNAUTHORIZED.getStatusCode());
         AuthenticationInfo info = keystoneAuthRealm.doGetAuthenticationInfo(token);
-        assertThat(info, nullValue());
+        Assert.assertFalse(info.getPrincipals().isEmpty());
+        Assert.assertTrue(info.getPrincipals().asSet().size() == 1);
+        ODLPrincipal authData = (ODLPrincipal) info.getPrincipals().asList().get(0);
+        Assert.assertEquals(0, authData.getRoles().size());
+    }
+
+    @Test
+    public void doGetAuthenticationInfoAuthorized() throws Exception {
+        // update the response mock
+        List<KeystoneToken.Token.Role> theRoles = Stream.of("admin", "ninja", "death-star-commander")
+                .map(roleName -> new KeystoneToken.Token.Role(roleName, roleName)).collect(Collectors.toList());
+        ksToken = new KeystoneToken.Token(theRoles);
+        when(response.getToken()).thenReturn(ksToken);
+
+        UsernamePasswordToken token = new UsernamePasswordToken("user", "password");
+        AuthenticationInfo info = keystoneAuthRealm.doGetAuthenticationInfo(token);
+        Assert.assertFalse(info.getPrincipals().isEmpty());
+        Assert.assertTrue(info.getPrincipals().asSet().size() == 1);
+        ODLPrincipal authData = (ODLPrincipal) info.getPrincipals().asList().get(0);
+        Assert.assertEquals(3, authData.getRoles().size());
     }
 
     @Test
