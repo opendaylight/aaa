@@ -23,8 +23,8 @@ public class AAAEncryptServiceImplTest {
     private AAAEncryptionServiceImpl impl = null;
     private AaaEncryptServiceConfig module = mock(AaaEncryptServiceConfig.class);
 
-    private static final String ENCRYPT_KEY = "Test Key";
-    private static final String ENCRYPT_SALT = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16";
+    private static final String ENCRYPT_KEY = "";
+    private static final String ENCRYPT_SALT = "";
     private static final String ENCRYPTION_METHOD = "PBKDF2WithHmacSHA1";
     private static final String ENCRYPTION_TYPE = "AES";
     private static final int ENCRYPTION_ITERATION_COUNT = 32768;
