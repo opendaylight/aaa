@@ -16,6 +16,10 @@ module aaa-encrypt-service-config {
             description "Encryption key";
             type string;
         }
+        leaf password-length {
+            description "Encryption key password length";
+            type int32;
+        }
         leaf encrypt-salt {
             description "Encryption key salt";
             type string;
@@ -41,5 +45,4 @@ module aaa-encrypt-service-config {
             type string;
         }
     }
-
 }
