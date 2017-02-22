@@ -1,5 +1,5 @@
 <aaa-encrypt-service-config xmlns="config:aaa:authn:encrypt:service:config">
-    <encrypt-key>CHANGE_ME</encrypt-key>
+    <encrypt-key></encrypt-key>
     <encrypt-salt>0, 5, 0, 0, 7, 81, 0, 3, 0, 0, 0, 0, 0, 43, 0, 1</encrypt-salt>
     <encrypt-method>PBKDF2WithHmacSHA1</encrypt-method>
     <encrypt-type>AES</encrypt-type>

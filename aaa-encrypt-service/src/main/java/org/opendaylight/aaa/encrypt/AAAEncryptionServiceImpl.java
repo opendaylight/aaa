@@ -7,6 +7,8 @@
  */
 package org.opendaylight.aaa.encrypt;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -15,7 +17,6 @@ import java.security.spec.KeySpec;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -26,10 +27,22 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
-
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfigBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
 /*
  *  @author - Sharon Aicler (saichler@gmail.com)
@@ -37,31 +50,41 @@ import org.slf4j.LoggerFactory;
 public class AAAEncryptionServiceImpl implements AAAEncryptionService {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAEncryptionServiceImpl.class);
+    private final String DEFAULT_CONFIG_FILE_PATH = "etc" + File.separator + "opendaylight" + File.separator
+            + "datastore" + File.separator + "initial" + File.separator + "config" + File.separator + "aaa-encrypt-service-config.xml";
+    private final int pwdLenght = 12;
 
     private SecretKey key;
     private IvParameterSpec ivspec;
     private Cipher encryptCipher;
     private Cipher decryptCipher;
 
-    public AAAEncryptionServiceImpl(AaaEncryptServiceConfig module) {
+    public AAAEncryptionServiceImpl(AaaEncryptServiceConfig encrySrvConfig) {
         SecretKey tempKey = null;
         IvParameterSpec tempIvSpec = null;
-        final byte[] enryptionKeySalt = getEncryptionKeySalt(module.getEncryptSalt());
+        if (encrySrvConfig.getEncryptKey().isEmpty()) {
+            LOG.debug("Set the Encryption service password ");
+            String newPwd = RandomStringUtils.random(pwdLenght, true, true);
+            encrySrvConfig = new AaaEncryptServiceConfigBuilder(encrySrvConfig)
+                    .setEncryptKey(newPwd).build();
+            updateEncrySrvConfig(newPwd);
+        }
+        final byte[] enryptionKeySalt = getEncryptionKeySalt(encrySrvConfig.getEncryptSalt());
         try {
-            final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(module.getEncryptMethod());
-            final KeySpec spec = new PBEKeySpec(module.getEncryptKey().toCharArray(), enryptionKeySalt, module.getEncryptIterationCount(), module.getEncryptKeyLength());
+            final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(encrySrvConfig.getEncryptMethod());
+            final KeySpec spec = new PBEKeySpec(encrySrvConfig.getEncryptKey().toCharArray(), enryptionKeySalt,
+                        encrySrvConfig.getEncryptIterationCount(), encrySrvConfig.getEncryptKeyLength());
             tempKey = keyFactory.generateSecret(spec);
-            tempKey = new SecretKeySpec(tempKey.getEncoded(), module.getEncryptType());
+            tempKey = new SecretKeySpec(tempKey.getEncoded(), encrySrvConfig.getEncryptType());
             tempIvSpec = new IvParameterSpec(enryptionKeySalt);
         } catch(NoSuchAlgorithmException | InvalidKeySpecException e) {
             LOG.error("Failed to initialize secret key", e);
         }
-
         key = tempKey;
         ivspec = tempIvSpec;
         Cipher c = null;
         try {
-            c = Cipher.getInstance(module.getCipherTransforms());
+            c = Cipher.getInstance(encrySrvConfig.getCipherTransforms());
             c.init(Cipher.ENCRYPT_MODE, key, ivspec);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException | InvalidKeyException e) {
             LOG.error("Failed to create encrypt cipher.", e);
@@ -69,7 +92,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
         this.encryptCipher = c;
         c = null;
         try {
-            c = Cipher.getInstance(module.getCipherTransforms());
+            c = Cipher.getInstance(encrySrvConfig.getCipherTransforms());
             c.init(Cipher.DECRYPT_MODE, key, ivspec);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException | InvalidKeyException e) {
             LOG.error("Failed to create decrypt cipher.", e);
@@ -164,4 +187,22 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
         return salt;
     }
 
+    private void updateEncrySrvConfig(String newPwd) {
+        try {
+            LOG.debug("Update encryption service config file");
+            File configFile = new File(DEFAULT_CONFIG_FILE_PATH);
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse(configFile);
+            Node key = doc.getElementsByTagName("encrypt-key").item(0);
+            key.setTextContent(newPwd);
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File(DEFAULT_CONFIG_FILE_PATH));
+            transformer.transform(source, result);
+        } catch (ParserConfigurationException | TransformerException | SAXException | IOException e) {
+            LOG.error("Error while update encryption service config file ", e);
+        }
+    }
 }
