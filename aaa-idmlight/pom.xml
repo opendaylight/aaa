@@ -167,6 +167,7 @@
                             javax.servlet.http,
                             javax.ws.rs,javax.ws.rs.core,
                             javax.xml.bind.annotation,
+                            org.xml.sax,
                             org.apache.felix.dm,
                             org.apache.shiro.web.env,org.apache.shiro.authc,
                             org.eclipse.jetty.servlets;version="[8.1,10)",
