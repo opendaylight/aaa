@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_4f281e86",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneAuth.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-02-28T16:15:52Z",
+      "side": 1,
+      "message": "Will fix.",
+      "parentUuid": "fafc7978_f91a84c4",
+      "range": {
+        "startLine": 41,
+        "startChar": 44,
+        "endLine": 41,
+        "endChar": 54
+      },
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_9981b8c5",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-28T14:06:06Z",
       "side": 1,
       "message": "This is a poor naming convention as ODL has the notion of a default domain called \"sdn\".  To avoid possible confusion, please refactor this to DEFAULT_KEYSTONE_DOMAIN.",
+      "range": {
+        "startLine": 49,
+        "startChar": 32,
+        "endLine": 49,
+        "endChar": 46
+      },
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_2f2dda95",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-02-28T16:15:52Z",
+      "side": 1,
+      "message": "Will fix.",
+      "parentUuid": "fafc7978_9981b8c5",
       "range": {
         "startLine": 49,
         "startChar": 32,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_af3f0ab3",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-02-28T16:15:52Z",
+      "side": 1,
+      "message": "I did not worry about this at first as I did not care too much about some threads using old values of these variables and the setters should not be called frequently on the same realm instance. Anyway, I guess I should make volatile all the injected properties (url, ssl verification and domain)?",
+      "parentUuid": "fafc7978_194ca8c7",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 33
+      },
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_b900fc34",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-02-28T14:06:06Z",
       "side": 1,
       "message": "This should be just \"domain\".",
+      "range": {
+        "startLine": 58,
+        "startChar": 19,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_8f6cc6d1",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-02-28T16:15:52Z",
+      "side": 1,
+      "message": "Maybe this is confusing. The user in the token can be \u003cuser\u003e@\u003cdomain\u003e. If domain is not specified, a default domain is used. This default domain is configured in shiro.ini (the property name is defaultDomain) but also there might be ommitted. In such a case, DEFAULT_DOMAIN (\u003d\u0027Default\u0027) is used. So there is a configured default domain and also a DEFAULT KEYSTONE DOMAIN.",
+      "parentUuid": "fafc7978_b900fc34",
       "range": {
         "startLine": 58,
         "startChar": 19,
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_6f71a2a7",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-02-28T16:15:52Z",
+      "side": 1,
+      "message": "Will fix.",
+      "parentUuid": "fafc7978_39c36cee",
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_79b97478",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
         "patchSetId": 4
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_cf69aebf",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-02-28T16:15:52Z",
+      "side": 1,
+      "message": "Will fix.",
+      "parentUuid": "fafc7978_79b97478",
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_396a4cee",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
         "patchSetId": 4
@@ -139,6 +271,30 @@
       "writtenOn": "2017-02-28T14:06:06Z",
       "side": 1,
       "message": "typo.",
+      "range": {
+        "startLine": 134,
+        "startChar": 22,
+        "endLine": 134,
+        "endChar": 25
+      },
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_0f60d6cd",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-02-28T16:15:52Z",
+      "side": 1,
+      "message": "Will fix.",
+      "parentUuid": "fafc7978_396a4cee",
       "range": {
         "startLine": 134,
         "startChar": 22,
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_747059dc",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-02-28T16:15:52Z",
+      "side": 1,
+      "message": "I am overriding this method on the tests to return a mock.",
+      "parentUuid": "fafc7978_99425866",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 5
+      },
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_795df478",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
         "patchSetId": 4
@@ -185,6 +365,30 @@
       "writtenOn": "2017-02-28T14:06:06Z",
       "side": 1,
       "message": "Need synch locks for set/get.  This class can be mutated using multiple threads.",
+      "range": {
+        "startLine": 159,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 5
+      },
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_ef175243",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-02-28T16:15:52Z",
+      "side": 1,
+      "message": "Even if we only ever write to the variable in this method?",
+      "parentUuid": "fafc7978_795df478",
       "range": {
         "startLine": 159,
         "startChar": 4,
