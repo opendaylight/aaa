@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_d98a20be",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-02-28T16:37:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_fe00aaac",
+      "revId": "072e77bf1343f91986bdd8f8e369ddb131f1ba01",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_fbef1caf",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-02-28T10:58:31Z",
       "side": 1,
       "message": "I am going to try on my side, see if I get somewhere.",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 76
+      },
+      "revId": "072e77bf1343f91986bdd8f8e369ddb131f1ba01",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_b9875cb4",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-02-28T16:37:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_fbef1caf",
       "range": {
         "startLine": 60,
         "startChar": 8,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_59be3066",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-02-28T16:37:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_5e129609",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 33
+      },
+      "revId": "072e77bf1343f91986bdd8f8e369ddb131f1ba01",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_f9be04ad",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
         "patchSetId": 2
@@ -76,6 +142,30 @@
       "writtenOn": "2017-02-28T13:40:26Z",
       "side": 1,
       "message": "I think the idea is to use CachingRealm::getAvailablePrincipal",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 82
+      },
+      "revId": "072e77bf1343f91986bdd8f8e369ddb131f1ba01",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_1956682a",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-02-28T16:37:25Z",
+      "side": 1,
+      "message": "Attempts to get the principal from \u0027this\u0027 realm, otherwise falls back to the principalCollection.getPrimaryPrincipal().\n\nI\u0027ll be using your suggestion.",
+      "parentUuid": "fafc7978_f9be04ad",
       "range": {
         "startLine": 73,
         "startChar": 8,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_39388cee",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-02-28T16:37:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_db71780d",
+      "range": {
+        "startLine": 129,
+        "startChar": 17,
+        "endLine": 129,
+        "endChar": 44
+      },
+      "revId": "072e77bf1343f91986bdd8f8e369ddb131f1ba01",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_7b584c8a",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
         "patchSetId": 2
@@ -122,6 +236,30 @@
       "writtenOn": "2017-02-28T10:58:31Z",
       "side": 1,
       "message": "This parameter is specific to the Keystone API so it is wierd to add it to a broad purpose HTTP api. I think it is better to add this through the Builder.",
+      "range": {
+        "startLine": 67,
+        "startChar": 20,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "072e77bf1343f91986bdd8f8e369ddb131f1ba01",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_9939b8f4",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-02-28T16:37:25Z",
+      "side": 1,
+      "message": "Fine by me; I\u0027ll add that method to the builder.",
+      "parentUuid": "fafc7978_7b584c8a",
       "range": {
         "startLine": 67,
         "startChar": 20,
