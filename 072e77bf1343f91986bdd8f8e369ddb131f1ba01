@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "fafc7978_fe00aaac",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-02-28T12:05:02Z",
+      "side": 1,
+      "message": "Using @JsonIgnoreProperties(ignoreUnknown \u003d true) here has worked for me.",
+      "revId": "072e77bf1343f91986bdd8f8e369ddb131f1ba01",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_fbef1caf",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
         "patchSetId": 2
@@ -18,6 +35,29 @@
         "startChar": 8,
         "endLine": 60,
         "endChar": 76
+      },
+      "revId": "072e77bf1343f91986bdd8f8e369ddb131f1ba01",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_5e129609",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-02-28T12:05:02Z",
+      "side": 1,
+      "message": "This import can be removed.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 33
       },
       "revId": "072e77bf1343f91986bdd8f8e369ddb131f1ba01",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
