@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_f91a84c4",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneAuth.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-02-28T14:06:06Z",
+      "side": 1,
+      "message": "Extract a private static final constant over using a magic value.",
+      "range": {
+        "startLine": 41,
+        "startChar": 44,
+        "endLine": 41,
+        "endChar": 54
+      },
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_9981b8c5",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-02-28T14:06:06Z",
+      "side": 1,
+      "message": "This is a poor naming convention as ODL has the notion of a default domain called \"sdn\".  To avoid possible confusion, please refactor this to DEFAULT_KEYSTONE_DOMAIN.",
+      "range": {
+        "startLine": 49,
+        "startChar": 32,
+        "endLine": 49,
+        "endChar": 46
+      },
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_194ca8c7",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-02-28T14:06:06Z",
+      "side": 1,
+      "message": "Make this volatile.  KeystoneAuthRealm exposes a setUrl(String) method which could be called from multiple threads.",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 33
+      },
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_b900fc34",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-02-28T14:06:06Z",
+      "side": 1,
+      "message": "This should be just \"domain\".",
+      "range": {
+        "startLine": 58,
+        "startChar": 19,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_39c36cee",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-02-28T14:06:06Z",
+      "side": 1,
+      "message": "This could be final to stick with the convention used for other local variables.",
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_79b97478",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-02-28T14:06:06Z",
+      "side": 1,
+      "message": "Also could be final.",
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_396a4cee",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-02-28T14:06:06Z",
+      "side": 1,
+      "message": "typo.",
+      "range": {
+        "startLine": 134,
+        "startChar": 22,
+        "endLine": 134,
+        "endChar": 25
+      },
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_99425866",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-02-28T14:06:06Z",
+      "side": 1,
+      "message": "You only call this convenience method once.  Why not just inline the call to AAAShiroProvider.getInstance().getCertificateManager()?  Just a style comment, it isn\u0027t necessary to change this if you have plans to use it in other ways in the future...",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 5
+      },
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_795df478",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-02-28T14:06:06Z",
+      "side": 1,
+      "message": "Need synch locks for set/get.  This class can be mutated using multiple threads.",
+      "range": {
+        "startLine": 159,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 5
+      },
+      "revId": "1c257f7615b7254afb510964c918039535bf5de4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
