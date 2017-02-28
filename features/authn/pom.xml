@@ -25,12 +25,12 @@
         <module>features-aaa</module>
         <module>features4-aaa</module>
         <module>odl-aaa-api</module>
-        <module>odl-aaa-authn</module>
+<!--         <module>odl-aaa-authn</module> -->
         <module>odl-aaa-authn-mdsal-cluster</module>
         <module>odl-aaa-cert</module>
         <module>odl-aaa-cli</module>
         <module>odl-aaa-encryption-service</module>
-        <module>odl-aaa-sssd-plugin</module>
+<!--         <module>odl-aaa-sssd-plugin</module> -->
     </modules>
 
     <build>
