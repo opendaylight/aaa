@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_fbef1caf",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-02-28T10:58:31Z",
+      "side": 1,
+      "message": "I am going to try on my side, see if I get somewhere.",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 76
+      },
+      "revId": "072e77bf1343f91986bdd8f8e369ddb131f1ba01",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_db71780d",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-02-28T10:58:31Z",
+      "side": 1,
+      "message": "I explicitly chose not to handle exceptions here, I basically wanted to avoid handling jersey version specific exceptions. Since it is, after all, an unexpected runtime exception, the upper layer should be able to handle those anyway.",
+      "range": {
+        "startLine": 129,
+        "startChar": 17,
+        "endLine": 129,
+        "endChar": 44
+      },
+      "revId": "072e77bf1343f91986bdd8f8e369ddb131f1ba01",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_7b584c8a",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-02-28T10:58:31Z",
+      "side": 1,
+      "message": "This parameter is specific to the Keystone API so it is wierd to add it to a broad purpose HTTP api. I think it is better to add this through the Builder.",
+      "range": {
+        "startLine": 67,
+        "startChar": 20,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "072e77bf1343f91986bdd8f8e369ddb131f1ba01",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
