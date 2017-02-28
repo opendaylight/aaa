@@ -32,20 +32,20 @@
             <type>xml</type>
             <classifier>features</classifier>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>odl-aaa-authn</artifactId>
-            <version>${project.version}</version>
-            <type>xml</type>
-            <classifier>features</classifier>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>odl-aaa-authn-mdsal-cluster</artifactId>
-            <version>${project.version}</version>
-            <type>xml</type>
-            <classifier>features</classifier>
-        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>${project.groupId}</groupId> -->
+<!--             <artifactId>odl-aaa-authn</artifactId> -->
+<!--             <version>${project.version}</version> -->
+<!--             <type>xml</type> -->
+<!--             <classifier>features</classifier> -->
+<!--         </dependency> -->
+<!--         <dependency> -->
+<!--             <groupId>${project.groupId}</groupId> -->
+<!--             <artifactId>odl-aaa-authn-mdsal-cluster</artifactId> -->
+<!--             <version>${project.version}</version> -->
+<!--             <type>xml</type> -->
+<!--             <classifier>features</classifier> -->
+<!--         </dependency> -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>odl-aaa-cert</artifactId>
@@ -67,12 +67,12 @@
             <type>xml</type>
             <classifier>features</classifier>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>odl-aaa-sssd-plugin</artifactId>
-            <version>${project.version}</version>
-            <type>xml</type>
-            <classifier>features</classifier>
-        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>${project.groupId}</groupId> -->
+<!--             <artifactId>odl-aaa-sssd-plugin</artifactId> -->
+<!--             <version>${project.version}</version> -->
+<!--             <type>xml</type> -->
+<!--             <classifier>features</classifier> -->
+<!--         </dependency> -->
     </dependencies>
 </project>
