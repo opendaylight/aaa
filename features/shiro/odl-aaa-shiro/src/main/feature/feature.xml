@@ -11,5 +11,19 @@
         <!-- AAA configuration file -->
         <configfile finalname="/etc/shiro.ini">mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/cfg/configuration
         </configfile>
+        <configfile finalname="etc/idmtool">mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}/py/config
+        </configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">
+            mvn:org.opendaylight.aaa/aaa-authn/${project.version}/cfg/config
+        </configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">
+            mvn:org.opendaylight.aaa/aaa-h2-store/${project.version}/cfg/config
+        </configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">
+            mvn:org.opendaylight.aaa/aaa-filterchain/${project.version}/cfg/config
+        </configfile>
+        <configfile finalname="/etc/opendaylight/datastore/initial/config/aaa-mdsal-config.xml">
+            mvn:org.opendaylight.aaa/aaa-authn-mdsal-store-impl/${project.version}/xml/config
+        </configfile>
     </feature>
 </features>
