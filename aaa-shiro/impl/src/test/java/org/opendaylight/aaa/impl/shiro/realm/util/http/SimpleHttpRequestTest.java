@@ -10,10 +10,7 @@ package org.opendaylight.aaa.impl.shiro.realm.util.http;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.sun.jersey.api.client.Client;
@@ -53,11 +50,9 @@ public class SimpleHttpRequestTest {
         MultivaluedMap<String, String> headers = new MultivaluedMapImpl();
         headers.put("header1", Collections.singletonList("value1"));
         headers.put("header2", Collections.singletonList("value2"));
-        SimpleHttpRequest<Response> request = SimpleHttpRequest.builder(Response.class)
+        SimpleHttpRequest<Response> request = SimpleHttpRequest.builder(client, Response.class)
                 .uri(uri)
                 .path(path)
-                .sslContext(UntrustedSSL.getSSLContext())
-                .hostnameVerifier(UntrustedSSL.getHostnameVerifier())
                 .mediaType(MediaType.APPLICATION_JSON_TYPE)
                 .method("POST")
                 .entity("entity")
@@ -71,11 +66,8 @@ public class SimpleHttpRequestTest {
         when(clientResponse.getHeaders()).thenReturn(headers);
 
         SimpleHttpRequest<Response> spiedRequest = spy(request);
-        doReturn(client).when(spiedRequest).createClient(any());
 
         Response response = spiedRequest.execute();
-
-        verify(spiedRequest).createClient(any());
 
         assertThat(response.getStatus(), is(200));
         assertThat(response.getMetadata(), is(headers));
@@ -89,15 +81,13 @@ public class SimpleHttpRequestTest {
         KeystoneToken.Token ksToken = new KeystoneToken.Token();
         when(theToken.getToken()).thenReturn(ksToken);
 
-        SimpleHttpRequest<KeystoneToken> request = SimpleHttpRequest.builder(KeystoneToken.class)
+        SimpleHttpRequest<KeystoneToken> request = SimpleHttpRequest.builder(client, KeystoneToken.class)
                 .uri(uri)
                 .path(path)
-                .sslContext(UntrustedSSL.getSSLContext())
-                .hostnameVerifier(UntrustedSSL.getHostnameVerifier())
                 .mediaType(MediaType.APPLICATION_JSON_TYPE)
                 .method("POST")
                 .entity("entity")
-                .queryParams("nocatalog", "true")
+                .queryParam("nocatalog", "true")
                 .build();
         when(client.resource(uri)
                 .path(path)
@@ -105,9 +95,7 @@ public class SimpleHttpRequestTest {
                 .method("POST", KeystoneToken.class, "entity"))
                 .thenReturn(theToken);
         SimpleHttpRequest<KeystoneToken> spiedRequest = spy(request);
-        doReturn(client).when(spiedRequest).createClient(any());
         KeystoneToken response = spiedRequest.execute();
-        verify(spiedRequest).createClient(any());
         assertThat(response.getToken().getRoles().size(), is(0));
     }
 
