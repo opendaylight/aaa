@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -30,7 +30,7 @@ import org.opendaylight.aaa.SecureBlockingQueue.SecureData;
 import org.opendaylight.aaa.api.Authentication;
 
 public class SecureBlockingQueueTest {
-    private final int MAX_TASKS = 100;
+    private static final int MAX_TASKS = 100;
 
     @Before
     public void setup() {
@@ -53,7 +53,7 @@ public class SecureBlockingQueueTest {
 
     @Test
     public void testNormalThreadPoolExecutor() throws InterruptedException, ExecutionException {
-        BlockingQueue<Runnable> queue = new ArrayBlockingQueue<Runnable>(10);
+        BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(10);
         ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 10, 500, TimeUnit.MILLISECONDS,
                 queue);
         executor.prestartAllCoreThreads();
@@ -84,11 +84,13 @@ public class SecureBlockingQueueTest {
     public void testCollectionOps() throws InterruptedException, ExecutionException {
         BlockingQueue<String> queue = new SecureBlockingQueue<>(
                 new ArrayBlockingQueue<SecureData<String>>(6));
-        for (int i = 1; i <= 3; i++)
+        for (int i = 1; i <= 3; i++) {
             queue.add("User" + i);
+        }
         Iterator<String> it = queue.iterator();
-        while (it.hasNext())
+        while (it.hasNext()) {
             assertTrue(it.next().startsWith("User"));
+        }
         assertEquals(3, queue.toArray().length);
         List<String> actual = Arrays.asList(queue.toArray(new String[0]));
         assertEquals("User1", actual.iterator().next());
@@ -184,8 +186,7 @@ public class SecureBlockingQueueTest {
         public String call() {
             queue.remove();
             Authentication auth = AuthenticationManager.instance().get();
-            return (auth == null) ? null : auth.user();
+            return auth == null ? null : auth.user();
         }
     }
-
 }
