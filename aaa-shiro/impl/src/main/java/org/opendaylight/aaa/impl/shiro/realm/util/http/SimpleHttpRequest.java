@@ -12,39 +12,34 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.client.urlconnection.HTTPSProperties;
 import java.net.URI;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
 /**
- * Basic utility to do an HTTP request.
+ * Basic utility to do an HTTP request. See {@link
+ * SimpleHttpClient#requestBuilder(Class)} on how to obtain a request builder.
  *
  * @param <T> the return type of the request.
  */
 public class SimpleHttpRequest<T> {
+    private final Client client;
+    private final Class<T> outputType;
     private URI uri;
     private String path;
-    private SSLContext sslContext;
-    private HostnameVerifier hostnameVerifier;
     private String method;
     private MediaType mediaType;
     private Object entity;
-    private Set<Class<?>> providers = new HashSet<>();
     private Map<String, String> queryParams = new HashMap<>();
-    private Class<T> outputType;
 
-    private SimpleHttpRequest() {}
+    private SimpleHttpRequest(Client client, Class<T> outputType) {
+        this.client = client;
+        this.outputType = outputType;
+    }
 
     /**
      * Executes the http request.
@@ -52,55 +47,35 @@ public class SimpleHttpRequest<T> {
      * @return the result of the http request.
      */
     public T execute() {
-        ClientConfig clientConfig = new DefaultClientConfig();
-        clientConfig.getClasses().addAll(providers);
-        clientConfig.getProperties().put(
-                HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
-                new HTTPSProperties(hostnameVerifier, sslContext));
-        Client client = createClient(clientConfig);
-        WebResource webResource = client.resource(uri)
-                .path(path);
+        WebResource webResource = client.resource(uri).path(path);
 
         // add the query params
         queryParams.entrySet().forEach(queryParamEntry ->
                 webResource.queryParam(queryParamEntry.getKey(), queryParamEntry.getValue()));
+
         try {
             if (outputType == Response.class) {
-                ClientResponse output = webResource
-                        .type(mediaType)
-                        .method(method, ClientResponse.class, entity);
+                ClientResponse output = webResource.type(mediaType).method(method, ClientResponse.class, entity);
                 return outputType.cast(clientResponseToResponse(output));
             } else {
-                return webResource
-                        .type(mediaType)
-                        .method(method, outputType, entity);
+                return webResource.type(mediaType).method(method, outputType, entity);
             }
         } catch (UniformInterfaceException theException) {
-            throw new WebApplicationException(theException,
-                    clientResponseToResponse(theException.getResponse()));
+            throw new WebApplicationException(theException, clientResponseToResponse(theException.getResponse()));
         }
-    }
-
-    /**
-     * Used to obtain the client with a given config.
-     *
-     * @param config the config.
-     * @return the client.
-     */
-    protected Client createClient(ClientConfig config) {
-        return Client.create(config);
     }
 
     /**
      * Obtain a builder for SimpleHttpRequest.
      *
+     * @param client the client used when executing the request.
      * @param outputType the return type of the request.
      * @param <T> the return type of the request.
      *
      * @return the builder.
      */
-    public static <T> Builder<T> builder(Class<T> outputType) {
-        return new Builder<>(outputType);
+    static <T> Builder<T> builder(Client client, Class<T> outputType) {
+        return new Builder<>(client, outputType);
     }
 
     private static Response clientResponseToResponse(final ClientResponse clientResponse) {
@@ -113,9 +88,8 @@ public class SimpleHttpRequest<T> {
     public static class Builder<T> {
         private SimpleHttpRequest<T> request;
 
-        private Builder(Class<T> outputType) {
-            request = new SimpleHttpRequest<>();
-            request.outputType = outputType;
+        Builder(Client client, Class<T> outputType) {
+            request = new SimpleHttpRequest<>(client, outputType);
         }
 
         /**
@@ -137,28 +111,6 @@ public class SimpleHttpRequest<T> {
          */
         public Builder<T> path(String path) {
             request.path = path;
-            return this;
-        }
-
-        /**
-         * Sets the SSLContext to be used for SSL requests.
-         *
-         * @param sslContext the SSLContext.
-         * @return self, the request builder.
-         */
-        public Builder<T> sslContext(SSLContext sslContext) {
-            request.sslContext = sslContext;
-            return this;
-        }
-
-        /**
-         * Sets the hostname verifier the request is made with.
-         *
-         * @param hostnameVerifier the hortname verifier.
-         * @return self, the request builder.
-         */
-        public Builder<T> hostnameVerifier(HostnameVerifier hostnameVerifier) {
-            request.hostnameVerifier = hostnameVerifier;
             return this;
         }
 
@@ -196,18 +148,6 @@ public class SimpleHttpRequest<T> {
         }
 
         /**
-         * Sets a JAX-RS provider to use for this request. Can be called
-         * multiple times to add multiple providers.
-         *
-         * @param provider the provider.
-         * @return self, the request builder.
-         */
-        public Builder<T> provider(Class<?> provider) {
-            request.providers.add(provider);
-            return this;
-        }
-
-        /**
          * Add query parameters to the request. Can be called multiple times,
          * to add multiple query parameters. Values are overwritten when assigned
          * the same keys.
@@ -216,7 +156,7 @@ public class SimpleHttpRequest<T> {
          * @param theParamValue the parameter value
          * @return  self, the request builder
          */
-        public Builder<T> queryParams(String theQueryParam, String theParamValue) {
+        public Builder<T> queryParam(String theQueryParam, String theParamValue) {
             request.queryParams.put(theQueryParam, theParamValue);
             return this;
         }
