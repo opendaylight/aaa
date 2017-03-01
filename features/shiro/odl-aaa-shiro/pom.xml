@@ -24,7 +24,7 @@
     <packaging>feature</packaging>
 
     <!-- odl-aaa-shiro feature which combines all aspects of AAA into one feature -->
-    <name>OpenDaylight :: AAA :: Shiro</name>
+    <name>ODL :: aaa :: ${project.artifactId}</name>
 
     <dependencyManagement>
         <dependencies>

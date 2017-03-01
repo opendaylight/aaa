@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>aaa-h2-store</artifactId>
+    <name>ODL :: aaa :: ${project.artifactId}</name>
     <packaging>bundle</packaging>
 
     <dependencies>

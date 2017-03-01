@@ -20,6 +20,7 @@
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>aaa-artifacts</artifactId>
     <version>0.5.0-SNAPSHOT</version>
+    <name>ODL :: aaa :: ${project.artifactId}</name>
     <packaging>pom</packaging>
 
     <dependencyManagement>

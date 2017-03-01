@@ -23,7 +23,7 @@
     <version>0.5.0-SNAPSHOT</version>
     <packaging>feature</packaging>
 
-    <name>OpenDaylight :: AAA :: Authentication :: MD-SAL</name>
+    <name>ODL :: aaa :: ${project.artifactId}</name>
 
     <dependencyManagement>
         <dependencies>

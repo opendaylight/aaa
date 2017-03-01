@@ -13,6 +13,7 @@
   </parent>
 
   <artifactId>aaa-filterchain</artifactId>
+  <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>bundle</packaging>
 
   <dependencies>

@@ -14,6 +14,7 @@
     </parent>
 
     <artifactId>aaa-authn</artifactId>
+    <name>ODL :: aaa :: ${project.artifactId}</name>
     <packaging>bundle</packaging>
 
     <dependencies>

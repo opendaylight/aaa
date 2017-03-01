@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>aaa-authn-sssd</artifactId>
+  <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>bundle</packaging>
 
   <dependencies>
