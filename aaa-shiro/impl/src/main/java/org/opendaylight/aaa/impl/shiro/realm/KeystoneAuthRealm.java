@@ -11,11 +11,17 @@ package org.opendaylight.aaa.shiro.realm;
 import static org.opendaylight.aaa.impl.shiro.principal.ODLPrincipalImpl.createODLPrincipal;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.google.common.util.concurrent.UncheckedExecutionException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -34,13 +40,15 @@ import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.impl.AAAShiroProvider;
 import org.opendaylight.aaa.impl.shiro.keystone.domain.KeystoneAuth;
+import org.opendaylight.aaa.impl.shiro.realm.util.http.SimpleHttpClient;
 import org.opendaylight.aaa.impl.shiro.realm.util.http.SimpleHttpRequest;
 import org.opendaylight.aaa.impl.shiro.realm.util.http.UntrustedSSL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * KeystoneAuthRealm is a Shiro Realm that authenticates users from OpenStack Keystone.
+ * KeystoneAuthRealm is a Shiro Realm that authenticates users from
+ * OpenStack Keystone.
  */
 public class KeystoneAuthRealm extends AuthorizingRealm {
 
@@ -53,13 +61,14 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     private static final String UNABLE_TO_AUTHENTICATE = "{\"error\":\"Could not authenticate\"}";
     private static final String AUTH_PATH = "v3/auth/tokens";
 
+    private static final int CLIENT_EXPIRE_AFTER_ACCESS = 1;
+    private static final int CLIENT_EXPIRE_AFTER_WRITE = 10;
+
     private volatile URI serverUri = null;
     private volatile boolean sslVerification = true;
     private volatile String defaultDomain = DEFAULT_KEYSTONE_DOMAIN;
 
-    public KeystoneAuthRealm() {
-        setName("KeystoneAuthRealm");
-    }
+    private final LoadingCache<Boolean, SimpleHttpClient> clientCache = buildCache();
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(final PrincipalCollection principalCollection) {
@@ -68,9 +77,35 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(final AuthenticationToken authenticationToken) {
+        try {
+            final boolean hasSslVerification = getSslVerification();
+            final SimpleHttpClient client = clientCache.getUnchecked(hasSslVerification);
+            return doGetAuthenticationInfo(authenticationToken, client);
+        } catch (UncheckedExecutionException e) {
+            Throwable cause = e.getCause();
+            if (!Objects.isNull(cause) && cause instanceof AuthenticationException) {
+                throw (AuthenticationException) cause;
+            }
+            throw e;
+        }
+    }
+
+    /**
+     * As {@link #doGetAuthenticationInfo(AuthenticationToken)}
+     * but using the provided {@link SimpleHttpClient} to reach
+     * the Keystone server.
+     *
+     * @param authenticationToken see
+     *  {@link AuthorizingRealm#doGetAuthenticationInfo(AuthenticationToken)}
+     * @param client the {@link SimpleHttpClient} to use.
+     * @return see
+     *  {@link AuthorizingRealm#doGetAuthenticationInfo(AuthenticationToken)}
+     */
+    protected AuthenticationInfo doGetAuthenticationInfo(
+            final AuthenticationToken authenticationToken,
+            final SimpleHttpClient client) {
 
         final URI theServerUri = getServerUri();
-        final boolean hasSslVerification = getSslVerification();
         final String theDefaultDomain = getDefaultDomain();
 
         if (!(authenticationToken instanceof UsernamePasswordToken)) {
@@ -90,25 +125,12 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
         final String username = qualifiedUserArray.length > 0 ? qualifiedUserArray[0] : qualifiedUser;
         final String domain = qualifiedUserArray.length > 1 ? qualifiedUserArray[1] : theDefaultDomain;
 
-        final SSLContext sslContext;
-        final HostnameVerifier hostnameVerifier;
-        if (hasSslVerification) {
-            sslContext = getSecureSSLContext();
-            hostnameVerifier = HttpsURLConnection.getDefaultHostnameVerifier();
-        } else {
-            sslContext = UntrustedSSL.getSSLContext();
-            hostnameVerifier = UntrustedSSL.getHostnameVerifier();
-        }
-
         final KeystoneAuth keystoneAuth = new KeystoneAuth(username, password, domain);
-        final SimpleHttpRequest<Response> httpRequest = getHttpRequestBuilder(Response.class)
+        final SimpleHttpRequest<Response> httpRequest = client.requestBuilder(Response.class)
                 .uri(theServerUri)
                 .path(AUTH_PATH)
-                .sslContext(sslContext)
-                .hostnameVerifier(hostnameVerifier)
                 .method(HttpMethod.POST)
                 .mediaType(MediaType.APPLICATION_JSON_TYPE)
-                .provider(JacksonJsonProvider.class)
                 .entity(keystoneAuth)
                 .build();
 
@@ -124,34 +146,66 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
         return new SimpleAuthenticationInfo(odlPrincipal, password.toCharArray(), getName());
     }
 
-    private SSLContext getSecureSSLContext() {
-        final ICertificateManager certificateManager = getCertificateManager();
-        final SSLContext sslContext = certificateManager.getServerContext();
+    /**
+     * Used to build a cache of {@link SimpleHttpClient}. In practice, only one
+     * client instance is used at a time but SSL verification flag is used as
+     * key for convenience.
+     *
+     * @return the cache.
+     */
+    protected LoadingCache<Boolean, SimpleHttpClient> buildCache() {
+        return CacheBuilder.newBuilder()
+                .expireAfterAccess(CLIENT_EXPIRE_AFTER_ACCESS, TimeUnit.SECONDS)
+                .expireAfterWrite(CLIENT_EXPIRE_AFTER_WRITE, TimeUnit.SECONDS)
+                .build(new CacheLoader<Boolean, SimpleHttpClient>() {
+                    @Override
+                    public SimpleHttpClient load(Boolean withSslVerification) throws Exception {
+                        return getClient(
+                                withSslVerification,
+                                AAAShiroProvider.getInstance().getCertificateManager(),
+                                SimpleHttpClient.clientBuilder());
+                    }
+                });
+    }
+
+    /**
+     * Used to obtain a {@link SimpleHttpClient} that optionally performs SSL
+     * verification.
+     *
+     * @param withSslVerification if client should perform SSL verification.
+     * @param certificateManager used to obtain a secure SSL context.
+     * @param clientBuilder uset to build {@link SimpleHttpClient}.
+     * @return the {@link SimpleHttpClient}.
+     */
+    protected SimpleHttpClient getClient(
+            final boolean withSslVerification,
+            final ICertificateManager certificateManager,
+            final SimpleHttpClient.Builder clientBuilder) {
+        final SSLContext sslContext;
+        final HostnameVerifier hostnameVerifier;
+        if (withSslVerification) {
+            sslContext = getSecureSSLContext(certificateManager);
+            hostnameVerifier = HttpsURLConnection.getDefaultHostnameVerifier();
+        } else {
+            sslContext = UntrustedSSL.getSSLContext();
+            hostnameVerifier = UntrustedSSL.getHostnameVerifier();
+        }
+        return clientBuilder
+                .hostnameVerifier(hostnameVerifier)
+                .sslContext(sslContext)
+                .provider(JacksonJsonProvider.class)
+                .build();
+    }
+
+    private SSLContext getSecureSSLContext(final ICertificateManager certificateManager) {
+        final SSLContext sslContext = Optional.ofNullable(certificateManager)
+                .map(ICertificateManager::getServerContext)
+                .orElse(null);
         if (Objects.isNull(sslContext)) {
             LOG.error("Could not get a valid SSL context from certificate manager");
             throw new AuthenticationException(UNABLE_TO_AUTHENTICATE);
         }
         return sslContext;
-    }
-
-    /**
-     * Used to obtain the certificate that will provide an SSL context.
-     *
-     * @return the certificate manager.
-     */
-    protected ICertificateManager getCertificateManager() {
-        return AAAShiroProvider.getInstance().getCertificateManager();
-    }
-
-    /**
-     * Used to obtain an http request builder.
-     *
-     * @param outputType the output type of the request.
-     * @param <T> the output type of the request.
-     * @return the request builder.
-     */
-    protected <T> SimpleHttpRequest.Builder<T> getHttpRequestBuilder(Class<T> outputType) {
-        return SimpleHttpRequest.builder(outputType);
     }
 
     /**

@@ -16,7 +16,6 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -44,14 +43,12 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.impl.shiro.keystone.domain.KeystoneAuth;
+import org.opendaylight.aaa.impl.shiro.realm.util.http.SimpleHttpClient;
 import org.opendaylight.aaa.impl.shiro.realm.util.http.SimpleHttpRequest;
 import org.opendaylight.aaa.impl.shiro.realm.util.http.UntrustedSSL;
 
 @RunWith(MockitoJUnitRunner.class)
 public class KeystoneAuthRealmTest {
-
-    @Mock
-    private SimpleHttpRequest.Builder<Response> builder;
 
     @Mock
     private ICertificateManager certificateManager;
@@ -60,7 +57,16 @@ public class KeystoneAuthRealmTest {
     private SSLContext sslContext;
 
     @Mock
+    private SimpleHttpRequest.Builder<Response> requestBuilder;
+
+    @Mock
     private SimpleHttpRequest<Response> httpRequest;
+
+    @Mock
+    private SimpleHttpClient.Builder clientBuilder;
+
+    @Mock
+    private SimpleHttpClient client;
 
     @Mock
     private Response response;
@@ -76,28 +82,28 @@ public class KeystoneAuthRealmTest {
         final String testUrl = "http://example.com";
 
         when(certificateManager.getServerContext()).thenReturn(sslContext);
-        when(builder.uri(new URL(testUrl).toURI())).thenReturn(builder);
-        when(builder.path("v3/auth/tokens")).thenReturn(builder);
-        when(builder.sslContext(same(sslContext))).thenReturn(builder);
-        when(builder.hostnameVerifier(same(HttpsURLConnection.getDefaultHostnameVerifier()))).thenReturn(builder);
-        when(builder.method(HttpMethod.POST)).thenReturn(builder);
-        when(builder.mediaType(MediaType.APPLICATION_JSON_TYPE)).thenReturn(builder);
-        when(builder.provider(JacksonJsonProvider.class)).thenReturn(builder);
-        when(builder.entity(any())).thenReturn(builder);
-        when(builder.build()).thenReturn(httpRequest);
+        when(client.requestBuilder(Response.class)).thenReturn(requestBuilder);
+        when(clientBuilder.provider(JacksonJsonProvider.class)).thenReturn(clientBuilder);
+        when(clientBuilder.sslContext(any())).thenReturn(clientBuilder);
+        when(clientBuilder.hostnameVerifier(any())).thenReturn(clientBuilder);
+        when(clientBuilder.build()).thenReturn(client);
+        when(requestBuilder.uri(new URL(testUrl).toURI())).thenReturn(requestBuilder);
+        when(requestBuilder.path("v3/auth/tokens")).thenReturn(requestBuilder);
+        when(requestBuilder.method(HttpMethod.POST)).thenReturn(requestBuilder);
+        when(requestBuilder.mediaType(MediaType.APPLICATION_JSON_TYPE)).thenReturn(requestBuilder);
+        when(requestBuilder.entity(any())).thenReturn(requestBuilder);
+        when(requestBuilder.build()).thenReturn(httpRequest);
         when(httpRequest.execute()).thenReturn(response);
         when(response.getStatus()).thenReturn(Response.Status.CREATED.getStatusCode());
 
         keystoneAuthRealm.setUrl(testUrl);
-        doReturn(certificateManager).when(keystoneAuthRealm).getCertificateManager();
-        doReturn(builder).when(keystoneAuthRealm).getHttpRequestBuilder(Response.class);
     }
 
     @Test
     public void doGetAuthenticationInfo() throws Exception {
         UsernamePasswordToken token = new UsernamePasswordToken("user", "password");
-        final AuthenticationInfo info = keystoneAuthRealm.doGetAuthenticationInfo(token);
-        verify(builder).entity(keystoneAuthArgumentCaptor.capture());
+        final AuthenticationInfo info = keystoneAuthRealm.doGetAuthenticationInfo(token, client);
+        verify(requestBuilder).entity(keystoneAuthArgumentCaptor.capture());
         KeystoneAuth keystoneAuth = keystoneAuthArgumentCaptor.getValue();
         assertThat(keystoneAuth.getAuth().getIdentity().getMethods(), arrayContaining("password"));
         assertThat(keystoneAuth.getAuth().getIdentity().getPassword().getUser().getName(), is("user"));
@@ -117,26 +123,16 @@ public class KeystoneAuthRealmTest {
     public void doGetAuthenticationInfoNotAuthorized() throws Exception {
         UsernamePasswordToken token = new UsernamePasswordToken("user", "password");
         when(response.getStatus()).thenReturn(Response.Status.UNAUTHORIZED.getStatusCode());
-        AuthenticationInfo info = keystoneAuthRealm.doGetAuthenticationInfo(token);
+        AuthenticationInfo info = keystoneAuthRealm.doGetAuthenticationInfo(token, client);
         assertThat(info, nullValue());
-    }
-
-    @Test
-    public void doGetAuthenticationInfoNoSslVerification() throws Exception {
-        final UsernamePasswordToken token = new UsernamePasswordToken("user", "password");
-        keystoneAuthRealm.setSslVerification(false);
-        when(builder.sslContext(same(UntrustedSSL.getSSLContext()))).thenReturn(builder);
-        when(builder.hostnameVerifier(same(UntrustedSSL.getHostnameVerifier()))).thenReturn(builder);
-        AuthenticationInfo info = keystoneAuthRealm.doGetAuthenticationInfo(token);
-        assertThat(info, notNullValue());
     }
 
     @Test
     public void doGetAuthenticationInfoCustomDefaultDomain() throws Exception {
         UsernamePasswordToken token = new UsernamePasswordToken("user", "password");
         keystoneAuthRealm.setDefaultDomain("sdn");
-        AuthenticationInfo info = keystoneAuthRealm.doGetAuthenticationInfo(token);
-        verify(builder).entity(keystoneAuthArgumentCaptor.capture());
+        AuthenticationInfo info = keystoneAuthRealm.doGetAuthenticationInfo(token, client);
+        verify(requestBuilder).entity(keystoneAuthArgumentCaptor.capture());
         KeystoneAuth keystoneAuth = keystoneAuthArgumentCaptor.getValue();
         assertThat(keystoneAuth.getAuth().getIdentity().getPassword().getUser().getDomain().getName(),
                 is("sdn"));
@@ -149,8 +145,8 @@ public class KeystoneAuthRealmTest {
     @Test
     public void doGetAuthenticationInfoCustomDomain() throws Exception {
         UsernamePasswordToken token = new UsernamePasswordToken("user@sdn", "password");
-        AuthenticationInfo info = keystoneAuthRealm.doGetAuthenticationInfo(token);
-        verify(builder).entity(keystoneAuthArgumentCaptor.capture());
+        AuthenticationInfo info = keystoneAuthRealm.doGetAuthenticationInfo(token, client);
+        verify(requestBuilder).entity(keystoneAuthArgumentCaptor.capture());
         KeystoneAuth keystoneAuth = keystoneAuthArgumentCaptor.getValue();
         assertThat(keystoneAuth.getAuth().getIdentity().getPassword().getUser().getDomain().getName(),
                 is("sdn"));
@@ -172,7 +168,7 @@ public class KeystoneAuthRealmTest {
         UsernamePasswordToken token = new UsernamePasswordToken("user@sdn", "password");
         final String invalidUrl = "not_an_url";
         keystoneAuthRealm.setUrl(invalidUrl);
-        keystoneAuthRealm.doGetAuthenticationInfo(token);
+        keystoneAuthRealm.doGetAuthenticationInfo(token, client);
     }
 
     @Test(expected = AuthenticationException.class)
@@ -188,12 +184,26 @@ public class KeystoneAuthRealmTest {
                 return null;
             }
         };
-        keystoneAuthRealm.doGetAuthenticationInfo(token);
+        keystoneAuthRealm.doGetAuthenticationInfo(token, client);
     }
 
     @Test(expected = AuthenticationException.class)
     public void doGetAuthenticationInfoNullToken() throws Exception {
-        keystoneAuthRealm.doGetAuthenticationInfo(null);
+        keystoneAuthRealm.doGetAuthenticationInfo(null, client);
+    }
+
+    @Test
+    public void getClientTrusted() {
+        keystoneAuthRealm.getClient(true, certificateManager, clientBuilder);
+        verify(clientBuilder).hostnameVerifier(same(HttpsURLConnection.getDefaultHostnameVerifier()));
+        verify(clientBuilder).sslContext(same(sslContext));
+    }
+
+    @Test
+    public void getClientUnTrusted() {
+        keystoneAuthRealm.getClient(false, certificateManager, clientBuilder);
+        verify(clientBuilder).hostnameVerifier(same(UntrustedSSL.getHostnameVerifier()));
+        verify(clientBuilder).sslContext(same(UntrustedSSL.getSSLContext()));
     }
 
 }
