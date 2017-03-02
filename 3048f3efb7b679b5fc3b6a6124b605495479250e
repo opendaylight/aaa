@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_c9c35536",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-02T16:42:43Z",
+      "side": 1,
+      "message": "I disagree, this needs to be configurable.  From a certification standpoint, certain security standards do require minimum password lengths.  For example, CCP.  If you want, leave it for now since users can still manually add their own.  In general though, everything like this needs to have a knob.  I am going through a few of these certification efforts for brocade :/.",
+      "parentUuid": "fafc7978_c9199523",
+      "range": {
+        "startLine": 55,
+        "startChar": 22,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "3048f3efb7b679b5fc3b6a6124b605495479250e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_5dc1ea52",
         "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
         "patchSetId": 4
