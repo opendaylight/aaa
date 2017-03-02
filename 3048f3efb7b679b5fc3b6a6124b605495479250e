@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_c9199523",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-03-02T16:37:16Z",
+      "side": 1,
+      "message": "will fix the typo. no, it is generated randomly and we don\u0027t need the user change pwd length.",
+      "parentUuid": "fafc7978_1dec82f2",
+      "range": {
+        "startLine": 55,
+        "startChar": 22,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "3048f3efb7b679b5fc3b6a6124b605495479250e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_5dc1ea52",
         "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-02T03:20:45Z",
       "side": 1,
       "message": "Could this be null if the encrypt-key is not specified in XML?  I\u0027d say add a null check in case.",
+      "range": {
+        "startLine": 65,
+        "startChar": 27,
+        "endLine": 65,
+        "endChar": 42
+      },
+      "revId": "3048f3efb7b679b5fc3b6a6124b605495479250e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_a91411e9",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-03-02T16:37:16Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "fafc7978_5dc1ea52",
       "range": {
         "startLine": 65,
         "startChar": 27,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_09d71d25",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-03-02T16:37:16Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "fafc7978_bdb29603",
+      "range": {
+        "startLine": 66,
+        "startChar": 58,
+        "endLine": 66,
+        "endChar": 59
+      },
+      "revId": "3048f3efb7b679b5fc3b6a6124b605495479250e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_ddccba8b",
         "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-02T03:20:45Z",
       "side": 1,
       "message": "Technically with no XSD specified, a user could specify multiple \"\u003cencrypt-key /\u003e\" entries.  Better to loop...",
+      "range": {
+        "startLine": 198,
+        "startChar": 66,
+        "endLine": 198,
+        "endChar": 74
+      },
+      "revId": "3048f3efb7b679b5fc3b6a6124b605495479250e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_29ae6198",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-03-02T16:37:16Z",
+      "side": 1,
+      "message": "we use only one \u003cencrypt-key\u003e. not allow many.",
+      "parentUuid": "fafc7978_ddccba8b",
       "range": {
         "startLine": 198,
         "startChar": 66,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_89982d79",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-03-02T16:37:16Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "fafc7978_3dc6a668",
+      "range": {
+        "startLine": 207,
+        "startChar": 72,
+        "endLine": 207,
+        "endChar": 73
+      },
+      "revId": "3048f3efb7b679b5fc3b6a6124b605495479250e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_7da30eb2",
         "filename": "aaa-encrypt-service/src/main/resources/initial/aaa-encrypt-service-config.xml",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_e98e192d",
+        "filename": "aaa-encrypt-service/src/main/resources/initial/aaa-encrypt-service-config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-03-02T16:37:16Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "fafc7978_7da30eb2",
+      "range": {
+        "startLine": 2,
+        "startChar": 4,
+        "endLine": 2,
+        "endChar": 31
+      },
+      "revId": "3048f3efb7b679b5fc3b6a6124b605495479250e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_5da8ca8c",
         "filename": "aaa-encrypt-service/src/main/resources/initial/aaa-encrypt-service-config.xml",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2017-03-02T03:20:45Z",
       "side": 1,
       "message": "Seems like we should probably also have this randomly generated.",
+      "range": {
+        "startLine": 3,
+        "startChar": 4,
+        "endLine": 3,
+        "endChar": 81
+      },
+      "revId": "3048f3efb7b679b5fc3b6a6124b605495479250e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_697a2925",
+        "filename": "aaa-encrypt-service/src/main/resources/initial/aaa-encrypt-service-config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-03-02T16:37:16Z",
+      "side": 1,
+      "message": "hmm, okay",
+      "parentUuid": "fafc7978_5da8ca8c",
       "range": {
         "startLine": 3,
         "startChar": 4,
