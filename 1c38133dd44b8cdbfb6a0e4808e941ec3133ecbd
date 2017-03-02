@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_a2b9d17a",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneAuth.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-02T02:30:24Z",
+      "side": 1,
+      "message": "Although I realize we aren\u0027t serializing this class now, we may in the future.  We should probably go through all of our code base and ensure password fields are transient.  Not a big deal for this patch though.",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 44
+      },
+      "revId": "1c38133dd44b8cdbfb6a0e4808e941ec3133ecbd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_626a49ef",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealmTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-02T02:30:24Z",
+      "side": 1,
+      "message": "Extra newline which is not needed.  I am fine if this is fixed in a follow-up patch.",
+      "revId": "1c38133dd44b8cdbfb6a0e4808e941ec3133ecbd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
