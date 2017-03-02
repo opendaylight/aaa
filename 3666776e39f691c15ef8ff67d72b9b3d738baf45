@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_9d851209",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/CertificateManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-02T03:24:33Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 60,
+        "startChar": 22,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "3666776e39f691c15ef8ff67d72b9b3d738baf45",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_5d8f2a2a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/CertificateManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-02T03:24:33Z",
+      "side": 1,
+      "message": "This definitely could be null...",
+      "range": {
+        "startLine": 65,
+        "startChar": 54,
+        "endLine": 65,
+        "endChar": 72
+      },
+      "revId": "3666776e39f691c15ef8ff67d72b9b3d738baf45",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_7d8aee1b",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/CertificateManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-02T03:24:33Z",
+      "side": 1,
+      "message": "Could this be null?",
+      "range": {
+        "startLine": 65,
+        "startChar": 37,
+        "endLine": 65,
+        "endChar": 53
+      },
+      "revId": "3666776e39f691c15ef8ff67d72b9b3d738baf45",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_1d9ac26d",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/CertificateManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-02T03:24:33Z",
+      "side": 1,
+      "message": "Could this be null?",
+      "range": {
+        "startLine": 65,
+        "startChar": 16,
+        "endLine": 65,
+        "endChar": 36
+      },
+      "revId": "3666776e39f691c15ef8ff67d72b9b3d738baf45",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_fd96de4a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/CertificateManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-02T03:24:33Z",
+      "side": 1,
+      "message": "Dead space.",
+      "range": {
+        "startLine": 66,
+        "startChar": 49,
+        "endLine": 66,
+        "endChar": 50
+      },
+      "revId": "3666776e39f691c15ef8ff67d72b9b3d738baf45",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_dd7afa22",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/CertificateManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-02T03:24:33Z",
+      "side": 1,
+      "message": "Please create a constant, not a magic value.",
+      "range": {
+        "startLine": 160,
+        "startChar": 65,
+        "endLine": 160,
+        "endChar": 81
+      },
+      "revId": "3666776e39f691c15ef8ff67d72b9b3d738baf45",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_5d960a40",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/CertificateManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-02T03:24:33Z",
+      "side": 1,
+      "message": "Sketchy... we should be using a loop instead of relying on it being a certain element index.",
+      "range": {
+        "startLine": 161,
+        "startChar": 16,
+        "endLine": 161,
+        "endChar": 51
+      },
+      "revId": "3666776e39f691c15ef8ff67d72b9b3d738baf45",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_bd973639",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/CertificateManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-02T03:24:33Z",
+      "side": 1,
+      "message": "dead space.",
+      "range": {
+        "startLine": 172,
+        "startChar": 83,
+        "endLine": 172,
+        "endChar": 85
+      },
+      "revId": "3666776e39f691c15ef8ff67d72b9b3d738baf45",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_9d9cf25e",
+        "filename": "aaa-cert/src/main/resources/initial/aaa-cert-config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-02T03:24:33Z",
+      "side": 1,
+      "message": "Use \"\u003cstore-password /\u003e\" notation.",
+      "range": {
+        "startLine": 8,
+        "startChar": 4,
+        "endLine": 8,
+        "endChar": 37
+      },
+      "revId": "3666776e39f691c15ef8ff67d72b9b3d738baf45",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_fda41ea7",
+        "filename": "aaa-cert/src/main/resources/initial/aaa-cert-config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-02T03:24:33Z",
+      "side": 1,
+      "message": "Use \"\u003cstore-password /\u003e\" notation.",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 37
+      },
+      "revId": "3666776e39f691c15ef8ff67d72b9b3d738baf45",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
