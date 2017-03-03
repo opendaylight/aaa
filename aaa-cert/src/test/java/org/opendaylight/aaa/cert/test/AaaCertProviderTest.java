@@ -51,100 +51,89 @@ public class AaaCertProviderTest {
                                "2Q="+
                                KeyStoreConstant.END_CERTIFICATE;
 
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
+    @Test
+    public void testCertificate() throws InterruptedException, ExecutionException {
+        // Set up Tests
         KeyStoreConstant.KEY_STORE_PATH = "target" + File.separator + "test" + File.separator;
         String dName = "CN=ODL, OU=Dev, O=LinuxFoundation, L=QC Montreal, C=CA";
         Security.addProvider(new BouncyCastleProvider());
         ctlKeyStore = new CtlKeystoreBuilder()
-                            .setAlias("fooTest")
-                            .setDname(dName)
-                            .setName("ctlTest.jks")
-                            .setStorePassword("passWord")
-                            .setValidity(KeyStoreConstant.DEFAULT_VALIDITY)
-                            .setKeyAlg(KeyStoreConstant.DEFAULT_KEY_ALG)
-                            .setKeysize(KeyStoreConstant.DEFAULT_KEY_SIZE)
-                            .setSignAlg(KeyStoreConstant.DEFAULT_SIGN_ALG)
-                            .build();
+                .setAlias("fooTest")
+                .setDname(dName)
+                .setName("ctlTest.jks")
+                .setStorePassword("passWord")
+                .setValidity(KeyStoreConstant.DEFAULT_VALIDITY)
+                .setKeyAlg(KeyStoreConstant.DEFAULT_KEY_ALG)
+                .setKeysize(KeyStoreConstant.DEFAULT_KEY_SIZE)
+                .setSignAlg(KeyStoreConstant.DEFAULT_SIGN_ALG)
+                .build();
         trustKeyStore = new TrustKeystoreBuilder()
-                            .setName("trustTest.jks")
-                            .setStorePassword("passWord")
-                            .build();
+                .setName("trustTest.jks")
+                .setStorePassword("passWord")
+                .build();
         aaaCertProv = new AaaCertProvider(ctlKeyStore, trustKeyStore);
-    }
 
-    @Test
-    public void testGetOdlKeyStoreInfo() {
+        // getOldKeyStoreInfo
         final CtlKeystore ctl = aaaCertProv.getOdlKeyStoreInfo();
         assertNotNull(ctl);
         assertTrue(ctl.equals(ctlKeyStore));
-    }
 
-    @Test
-    public void testGetTrustKeyStoreInfo() {
+        // getTrustKeyStoreInfo
         final TrustKeystore trust = aaaCertProv.getTrustKeyStoreInfo();
         assertNotNull(trust);
         assertTrue(trust.equals(trustKeyStore));
-    }
 
-    @Test
-    public void testCreateKeystores() {
-        final boolean result = aaaCertProv.createKeyStores();
+        // createKeyStores
+        boolean result = aaaCertProv.createKeyStores();
         assertTrue(result);
         assertNotNull(aaaCertProv.getODLKeyStore());
         assertNotNull(aaaCertProv.getTrustKeyStore());
-    }
 
-    @Test
-    public void testODLCertificate() throws InterruptedException, ExecutionException {
-        // genCertificateReq test
+        // genODLCertificateReq
         String cert = aaaCertProv.genODLKeyStoreCertificateReq(true);
         assertTrue(cert != null && !cert.isEmpty());
         assertTrue(cert.contains(KeyStoreConstant.BEGIN_CERTIFICATE_REQUEST));
         cert = aaaCertProv.genODLKeyStoreCertificateReq(false);
         assertTrue(!cert.contains(KeyStoreConstant.BEGIN_CERTIFICATE_REQUEST));
 
-        // genCertificateReqWithPassword test
+        // genODLCertificateReqWithPassword
         cert = aaaCertProv.genODLKeyStoreCertificateReq(ctlKeyStore.getStorePassword(), true);
         assertTrue(cert != null && !cert.isEmpty());
         assertTrue(cert.contains(KeyStoreConstant.BEGIN_CERTIFICATE_REQUEST));
 
-        // getCertificate test
+        // getODLCertificate
         cert = aaaCertProv.getODLKeyStoreCertificate(true);
         assertTrue(cert != null && !cert.isEmpty());
         assertTrue(cert.contains(KeyStoreConstant.END_CERTIFICATE));
         cert = aaaCertProv.getODLKeyStoreCertificate(false);
         assertTrue(!cert.contains(KeyStoreConstant.END_CERTIFICATE));
 
-        // getCerticateWithPassword
+        // getODLCerticateWithPassword
         cert = aaaCertProv.getODLKeyStoreCertificate(ctlKeyStore.getStorePassword(), true);
         assertTrue(cert != null && !cert.isEmpty());
         assertTrue(cert.contains(KeyStoreConstant.END_CERTIFICATE));
 
-    }
-
-    @Test
-    public void testCertificateTrustStore() throws InterruptedException, ExecutionException {
-        // addCertificate
-        boolean result = aaaCertProv.addCertificateTrustStore(dummyAlias, dummyCert);
+        // addCertificateTrustStore
+        result = aaaCertProv.addCertificateTrustStore(dummyAlias, dummyCert);
         assertTrue(result);
-        String cert = aaaCertProv.getCertificateTrustStore(dummyAlias, true);
+        cert = aaaCertProv.getCertificateTrustStore(dummyAlias, true);
         assertTrue(cert != null && !cert.isEmpty());
 
-        // addCertificateWithPassword
+        // addCertificateTrustStoreWithPassword
         result = aaaCertProv.addCertificateTrustStore(trustKeyStore.getStorePassword(), dummyAlias, dummyCert);
         assertTrue(result);
         cert = aaaCertProv.getCertificateTrustStore(dummyAlias, true);
         assertTrue(cert != null && !cert.isEmpty());
 
-        // getCertificate
+        // getCertificateTrustStore
         cert = aaaCertProv.getCertificateTrustStore(dummyAlias, true);
         assertTrue(cert != null && !cert.isEmpty());
         cert = aaaCertProv.getCertificateTrustStore(dummyAlias, false);
         assertTrue(!cert.contains(KeyStoreConstant.END_CERTIFICATE));
 
-        // getCertificateWithPassword
+        // getCertificateWithPasswordTrusStore
         cert = aaaCertProv.getCertificateTrustStore(trustKeyStore.getStorePassword(), dummyAlias, true);
         assertTrue(cert != null && !cert.isEmpty());
+
     }
 }
