@@ -22,6 +22,30 @@
       "revId": "1ed7f357dbcd55e68b5340b9ee29fd911c194e59",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_eb33a6f3",
+        "filename": "parent/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-03-03T15:28:46Z",
+      "side": 1,
+      "message": "That was there originally :). Do you want me to remove other comments as well?",
+      "parentUuid": "fafc7978_b00f4d36",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 22
+      },
+      "revId": "1ed7f357dbcd55e68b5340b9ee29fd911c194e59",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
