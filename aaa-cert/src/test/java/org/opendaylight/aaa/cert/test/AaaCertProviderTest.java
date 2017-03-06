@@ -15,11 +15,11 @@ import java.io.File;
 import java.security.Security;
 import java.util.concurrent.ExecutionException;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opendaylight.aaa.cert.impl.AaaCertProvider;
 import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.OdlKeystoreBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystoreBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.TrustKeystore;
@@ -33,23 +33,8 @@ public class AaaCertProviderTest {
     private static CtlKeystore ctlKeyStore;
     private static TrustKeystore trustKeyStore;
 
-    private String dummyAlias = "fooAlias";
-    private String dummyCert = KeyStoreConstant.BEGIN_CERTIFICATE +
-                               "MIICKTCCAZKgAwIBAgIECMgzyzANBgkqhkiG9w0BAQUFADBZMQwwCgYDV" +
-                               "QQDDANPREwxDDAKBgNVBAsMA0RldjEYMBYGA1UECgwPTGludXhGb3VuZG" +
-                               "F0aW9uMRQwEgYDVQQHDAtRQyBNb250cmVhbDELMAkGA1UEBhMCQ0EwHhc" +
-                               "NMTcwMzAzMTYyMDA1WhcNMTgwMzAzMTYyMDA1WjBZMQwwCgYDVQQDDANP" +
-                               "REwxDDAKBgNVBAsMA0RldjEYMBYGA1UECgwPTGludXhGb3VuZGF0aW9uM" +
-                               "RQwEgYDVQQHDAtRQyBNb250cmVhbDELMAkGA1UEBhMCQ0EwgZ8wDQYJKo" +
-                               "ZIhvcNAQEBBQADgY0AMIGJAoGBAJrQxIfdU230tedhXnM25r3ht5UQ5Jo" +
-                               "G7+9H9b2WcrrkehJ++AZ2zq6SJDLVVnjgXh/YgFo3L6DOKnVTwnXUXGLk" +
-                               "NiJhqL2ndu49zI63CxQ2EjBR8tlD5HctNH4SKj1RqmYvt0H3LUZSBKH8Y" +
-                               "XGL0U0Qyxwe3flRh2Y6sMb3o47rAgMBAAEwDQYJKoZIhvcNAQEFBQADgY" +
-                               "EAVBWCNC+bbJftOTfpL3sL3YO+aQSmPt5ICgrz7wXDkzpf+0FwSqt+kiR" +
-                               "Wfw65RTgmn2hmYPh2QW4SaIN50ftLfUHgkf2zeMlodAQVYmBAd/woE3s7" +
-                               "fkSa9vQkUowgHAxW//7NOOTonnQPi2gH6ubaOCG4ZeXTwqHy47DGA0c8z" +
-                               "2Q="+
-                               KeyStoreConstant.END_CERTIFICATE;
+    private String dummyAlias = AaaCertProviderUtilsTest.dummyAlias;
+    private String dummyCert = AaaCertProviderUtilsTest.dummyCert;
 
     @Test
     public void testCertificate() throws InterruptedException, ExecutionException {
