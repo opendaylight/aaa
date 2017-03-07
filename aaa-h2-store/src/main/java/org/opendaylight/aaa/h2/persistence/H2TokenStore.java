@@ -41,7 +41,7 @@ public class H2TokenStore implements AutoCloseable, TokenStore {
     private int maxCachedTokensOnDisk = 100000;
     private long secondsToLive = 3600;
     private long secondsToIdle = 3600;
-    private Cache tokens;
+    private final Cache tokens;
 
     public H2TokenStore() {
         CacheManager cm = CacheManager.newInstance();
@@ -63,7 +63,7 @@ public class H2TokenStore implements AutoCloseable, TokenStore {
     @Override
     public Authentication get(String token) {
         Element elem = tokens.get(token);
-        return (Authentication) ((elem != null) ? elem.getObjectValue() : null);
+        return (Authentication) (elem != null ? elem.getObjectValue() : null);
     }
 
     @Override
@@ -82,6 +82,12 @@ public class H2TokenStore implements AutoCloseable, TokenStore {
     }
 
     public void updateConfigParameter(Map<String, Object> configParameters) {
+        if (configParameters == null) {
+            // org.apache.aries.blueprint.compendium.cm.CmManagedProperties
+            // sometimes calls this with null for some reason (by reflection)
+            return;
+        }
+
         LOG.debug("Tokens Config parameters received : {}", configParameters.entrySet());
         if (configParameters != null && !configParameters.isEmpty()) {
             try {

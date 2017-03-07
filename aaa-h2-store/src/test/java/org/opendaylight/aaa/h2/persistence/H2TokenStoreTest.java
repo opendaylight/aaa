@@ -18,25 +18,19 @@ import org.junit.Test;
 import org.opendaylight.aaa.AuthenticationBuilder;
 import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.Authentication;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * @author mserngawy
+ * Unit Test for H2TokenStore.
  *
+ * @author mserngawy
  */
-
 public class H2TokenStoreTest {
-    private static final Logger LOG = LoggerFactory.getLogger(H2TokenStoreTest.class);
+
     private final H2TokenStore h2TokenStore = new H2TokenStore();
 
     @After
-    public void teardown() {
-        try {
-            h2TokenStore.close();
-        } catch (Exception e) {
-            LOG.error("Error while closing H2 TokenStore", e);
-        }
+    public void teardown() throws Exception {
+        h2TokenStore.close();
     }
 
     @Test
@@ -56,6 +50,25 @@ public class H2TokenStoreTest {
         h2TokenStore.put(fooToken, auth);
         Thread.sleep(3000);
         assertNull(h2TokenStore.get(fooToken));
+    }
+
+    /**
+     * Non-regression for NPE.
+     *
+     * <code>java.lang.NullPointerException
+     *   at org.opendaylight.aaa.h2.persistence.H2TokenStore.updateConfigParameter(H2TokenStore.java:85)
+     *   at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)[:1.8.0_121]
+     *   at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)[:1.8.0_121]
+     *   at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)[:1.8.0_121]
+     *   at java.lang.reflect.Method.invoke(Method.java:498)[:1.8.0_121]
+     *   at org.apache.aries.blueprint.compendium.cm.CmManagedProperties.inject(CmManagedProperties.java:258)[13:org.apache.aries.blueprint.cm:1.0.8]
+     *   at org.apache.aries.blueprint.compendium.cm.CmManagedProperties.updated(CmManagedProperties.java:167)[13:org.apache.aries.blueprint.cm:1.0.8]
+     *   at org.apache.aries.blueprint.compendium.cm.CmManagedProperties.updated(CmManagedProperties.java:157)[13:org.apache.aries.blueprint.cm:1.0.8]
+     *   at org.apache.aries.blueprint.compendium.cm.ManagedObjectManager$ConfigurationWatcher$1.run(ManagedObjectManager.java:81)[13:org.apache.aries.blueprint.cm:1.0.8]</code>
+     */
+    @Test
+    public void updateConfigParameter_nullArg() {
+        h2TokenStore.updateConfigParameter(null);
     }
 
 }
