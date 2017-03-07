@@ -1,236 +1,212 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.opendaylight.odlparent</groupId>
+    <artifactId>odlparent</artifactId>
+    <version>1.8.0-SNAPSHOT</version>
+    <relativePath />
+  </parent>
+
+  <groupId>org.opendaylight.aaa</groupId>
+  <artifactId>aaa-parent</artifactId>
+  <version>0.5.0-SNAPSHOT</version>
+  <name>ODL :: aaa :: ${project.artifactId}</name>
+  <packaging>pom</packaging>
+
+  <prerequisites>
+    <maven>3.0.4</maven>
+  </prerequisites>
+
+  <properties>
+    <!-- Karaf -->
+    <karaf.branding.version>1.4.0-SNAPSHOT</karaf.branding.version>
+    <karaf.resources.version>1.8.0-SNAPSHOT</karaf.resources.version>
+
+    <!-- Local project version, needed for import -->
+    <aaa.version>${project.version}</aaa.version>
+    <parent-path>${basedir}</parent-path>
+
+    <!-- AuthZ -->
+    <yangtools.version>1.1.0-SNAPSHOT</yangtools.version>
+    <mdsal.version>2.2.0-SNAPSHOT</mdsal.version>
+    <mdsal.model.version>0.10.0-SNAPSHOT</mdsal.model.version>
+    <controller.mdsal.version>1.5.0-SNAPSHOT</controller.mdsal.version>
+    <restconf.version>1.5.0-SNAPSHOT</restconf.version>
+    <config.version>0.6.0-SNAPSHOT</config.version>
+    <config.restconf.configfile>09-rest-connector.xml</config.restconf.configfile>
+    <config.configfile.directory>etc/opendaylight/karaf</config.configfile.directory>
+
+    <!-- AuthN -->
+    <glassfish.json.version>1.0.4</glassfish.json.version>
+    <ehcache.version>2.8.3</ehcache.version>
+    <jta.version>1.1.1</jta.version>
+    <oltu.version>1.0.0</oltu.version>
+
+    <config.authn.store.configfile>08-authn-config.xml</config.authn.store.configfile>
+
+    <!-- Keystone plugin -->
+    <httpclient.version>4.4</httpclient.version>
+
+    <!-- Test -->
+    <javax.inject.version>1</javax.inject.version>
+    <servlet.tester.version>7.0.0.pre5</servlet.tester.version>
+    <features.test.version>1.8.0-SNAPSHOT</features.test.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- ODL -->
+      <dependency>
+        <groupId>org.opendaylight.aaa</groupId>
+        <artifactId>aaa-artifacts</artifactId>
+        <version>${aaa.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.yangtools</groupId>
+        <artifactId>yangtools-artifacts</artifactId>
+        <version>${yangtools.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.mdsal</groupId>
+        <artifactId>mdsal-artifacts</artifactId>
+        <version>${mdsal.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.mdsal.model</groupId>
+        <artifactId>mdsal-model-artifacts</artifactId>
+        <version>${mdsal.model.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.controller</groupId>
+        <artifactId>mdsal-artifacts</artifactId>
+        <version>${controller.mdsal.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.controller</groupId>
+        <artifactId>config-artifacts</artifactId>
+        <version>${config.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- Third-party -->
+      <dependency>
+        <groupId>org.glassfish</groupId>
+        <artifactId>javax.json</artifactId>
+        <version>${glassfish.json.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.metatype</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>net.sf.ehcache</groupId>
+        <artifactId>ehcache</artifactId>
+        <version>${ehcache.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.oltu.oauth2</groupId>
+        <artifactId>org.apache.oltu.oauth2.common</artifactId>
+        <version>${oltu.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.oltu.oauth2</groupId>
+        <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
+        <version>${oltu.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.oltu.oauth2</groupId>
+        <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
+        <version>${oltu.version}</version>
+      </dependency>
+
+      <!-- Test stuff -->
+      <dependency>
         <groupId>org.opendaylight.odlparent</groupId>
-        <artifactId>odlparent</artifactId>
-        <version>1.8.0-SNAPSHOT</version>
-        <relativePath/>
-    </parent>
+        <artifactId>features-test</artifactId>
+        <version>${features.test.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>javax.inject</groupId>
+        <artifactId>javax.inject</artifactId>
+        <version>${javax.inject.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>jetty-servlet-tester</artifactId>
+        <version>${servlet.tester.version}</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
-    <groupId>org.opendaylight.aaa</groupId>
-    <artifactId>aaa-parent</artifactId>
-    <version>0.5.0-SNAPSHOT</version>
-    <name>ODL :: aaa :: ${project.artifactId}</name>
-    <packaging>pom</packaging>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>org.opendaylight.aaa.*</include>
+          </includes>
+        </configuration>
+        <executions>
+          <execution>
+            <id>pre-test</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>post-test</id>
+            <goals>
+              <goal>report</goal>
+            </goals>
+            <phase>test</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
-    <prerequisites>
-        <maven>3.0.4</maven>
-    </prerequisites>
+  <url>https://wiki.opendaylight.org/view/AAA:Main</url>
+  <scm>
+    <connection>scm:git:ssh://git.opendaylight.org:29418/aaa.git</connection>
+    <developerConnection>scm:git:ssh://git.opendaylight.org:29418/aaa.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
 
-    <properties>
-        <!-- Karaf -->
-        <karaf.branding.version>1.4.0-SNAPSHOT</karaf.branding.version>
-        <karaf.resources.version>1.8.0-SNAPSHOT</karaf.resources.version>
-
-        <!-- Local project version, needed for import -->
-        <aaa.version>${project.version}</aaa.version>
-        <parent-path>${basedir}</parent-path>
-
-        <!-- AuthZ -->
-        <yangtools.version>1.1.0-SNAPSHOT</yangtools.version>
-        <mdsal.version>2.2.0-SNAPSHOT</mdsal.version>
-        <mdsal.model.version>0.10.0-SNAPSHOT</mdsal.model.version>
-        <controller.mdsal.version>1.5.0-SNAPSHOT</controller.mdsal.version>
-        <restconf.version>1.5.0-SNAPSHOT</restconf.version>
-        <config.version>0.6.0-SNAPSHOT</config.version>
-        <config.restconf.configfile>09-rest-connector.xml</config.restconf.configfile>
-        <config.configfile.directory>etc/opendaylight/karaf</config.configfile.directory>
-
-        <!-- AuthN -->
-        <glassfish.json.version>1.0.4</glassfish.json.version>
-        <ehcache.version>2.8.3</ehcache.version>
-        <jta.version>1.1.1</jta.version>
-        <oltu.version>1.0.0</oltu.version>
-
-        <config.authn.store.configfile>08-authn-config.xml</config.authn.store.configfile>
-
-        <!-- Keystone plugin -->
-        <httpclient.version>4.4</httpclient.version>
-
-        <!-- Test -->
-        <javax.inject.version>1</javax.inject.version>
-        <servlet.tester.version>7.0.0.pre5</servlet.tester.version>
-        <features.test.version>1.8.0-SNAPSHOT</features.test.version>
-    </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <!-- ODL -->
-            <dependency>
-                <groupId>org.opendaylight.aaa</groupId>
-                <artifactId>aaa-artifacts</artifactId>
-                <version>${aaa.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.opendaylight.yangtools</groupId>
-                <artifactId>yangtools-artifacts</artifactId>
-                <version>${yangtools.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.opendaylight.mdsal</groupId>
-                <artifactId>mdsal-artifacts</artifactId>
-                <version>${mdsal.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.opendaylight.mdsal.model</groupId>
-                <artifactId>mdsal-model-artifacts</artifactId>
-                <version>${mdsal.model.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.opendaylight.controller</groupId>
-                <artifactId>mdsal-artifacts</artifactId>
-                <version>${controller.mdsal.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.opendaylight.controller</groupId>
-                <artifactId>config-artifacts</artifactId>
-                <version>${config.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <!-- Third-party -->
-            <dependency>
-                <groupId>org.glassfish</groupId>
-                <artifactId>javax.json</artifactId>
-                <version>${glassfish.json.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>org.apache.felix.metatype</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>net.sf.ehcache</groupId>
-                <artifactId>ehcache</artifactId>
-                <version>${ehcache.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.oltu.oauth2</groupId>
-                <artifactId>org.apache.oltu.oauth2.common</artifactId>
-                <version>${oltu.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.oltu.oauth2</groupId>
-                <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
-                <version>${oltu.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.oltu.oauth2</groupId>
-                <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
-                <version>${oltu.version}</version>
-            </dependency>
-
-            <!-- Test stuff -->
-            <dependency>
-                <groupId>org.opendaylight.odlparent</groupId>
-                <artifactId>features-test</artifactId>
-                <version>${features.test.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax.inject</groupId>
-                <artifactId>javax.inject</artifactId>
-                <version>${javax.inject.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-              <groupId>org.mortbay.jetty</groupId>
-              <artifactId>jetty-servlet-tester</artifactId>
-              <version>${servlet.tester.version}</version>
-              <scope>test</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <configuration>
-                    <includes>
-                        <include>org.opendaylight.aaa.*</include>
-                    </includes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>pre-test</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>post-test</id>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                        <phase>test</phase>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <configuration>
-                    <propertyExpansion>checkstyle.violationSeverity=error</propertyExpansion>
-
-                    <configLocation>checkstyle-logging.xml</configLocation>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        <phase>process-sources</phase>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.opendaylight.yangtools</groupId>
-                        <artifactId>checkstyle-logging</artifactId>
-                        <version>${yangtools.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-        </plugins>
-    </build>
-
-    <url>https://wiki.opendaylight.org/view/AAA:Main</url>
-    <scm>
-        <connection>scm:git:ssh://git.opendaylight.org:29418/aaa.git</connection>
-        <developerConnection>scm:git:ssh://git.opendaylight.org:29418/aaa.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
-
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>${findbugs.maven.plugin.version}</version>
-                <configuration>
-                    <effort>Max</effort>
-                    <threshold>Low</threshold>
-                    <goal>site</goal>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jdepend-maven-plugin</artifactId>
-                <version>${jdepend.maven.plugin.version}</version>
-            </plugin>
-        </plugins>
-    </reporting>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>${findbugs.maven.plugin.version}</version>
+        <configuration>
+          <effort>Max</effort>
+          <threshold>Low</threshold>
+          <goal>site</goal>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jdepend-maven-plugin</artifactId>
+        <version>${jdepend.maven.plugin.version}</version>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>
