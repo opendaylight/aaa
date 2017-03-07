@@ -11,6 +11,7 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.config.CacheConfiguration;
+import org.eclipse.jdt.annotation.Nullable;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.TokenStore;
 import org.slf4j.Logger;
@@ -41,7 +42,7 @@ public class H2TokenStore implements AutoCloseable, TokenStore {
     private int maxCachedTokensOnDisk = 100000;
     private long secondsToLive = 3600;
     private long secondsToIdle = 3600;
-    private Cache tokens;
+    private final Cache tokens;
 
     public H2TokenStore() {
         CacheManager cm = CacheManager.newInstance();
@@ -63,7 +64,7 @@ public class H2TokenStore implements AutoCloseable, TokenStore {
     @Override
     public Authentication get(String token) {
         Element elem = tokens.get(token);
-        return (Authentication) ((elem != null) ? elem.getObjectValue() : null);
+        return (Authentication) (elem != null ? elem.getObjectValue() : null);
     }
 
     @Override
@@ -81,9 +82,9 @@ public class H2TokenStore implements AutoCloseable, TokenStore {
         return tokens.getCacheConfiguration().getTimeToLiveSeconds();
     }
 
-    public void updateConfigParameter(Map<String, Object> configParameters) {
-        LOG.debug("Tokens Config parameters received : {}", configParameters.entrySet());
+    public void updateConfigParameter(@Nullable Map<String, Object> configParameters) {
         if (configParameters != null && !configParameters.isEmpty()) {
+            LOG.debug("Tokens Config parameters received : {}", configParameters.entrySet());
             try {
                 for (Map.Entry<String, Object> paramEntry : configParameters.entrySet()) {
                     if (paramEntry.getKey().equalsIgnoreCase(MAX_CACHED_MEMORY)) {
