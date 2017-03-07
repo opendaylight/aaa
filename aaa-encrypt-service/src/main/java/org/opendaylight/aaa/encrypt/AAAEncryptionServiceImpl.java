@@ -38,14 +38,17 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAEncryptionServiceImpl.class);
 
-    private SecretKey key;
-    private IvParameterSpec ivspec;
-    private Cipher encryptCipher;
-    private Cipher decryptCipher;
+    private final SecretKey key;
+    private final IvParameterSpec ivspec;
+    private final Cipher encryptCipher;
+    private final Cipher decryptCipher;
 
     public AAAEncryptionServiceImpl(AaaEncryptServiceConfig module) {
         SecretKey tempKey = null;
         IvParameterSpec tempIvSpec = null;
+        if (module.getEncryptSalt() == null) {
+            throw new IllegalArgumentException("null encryptSalt in AaaEncryptServiceConfig: " + module.toString());
+        }
         final byte[] enryptionKeySalt = getEncryptionKeySalt(module.getEncryptSalt());
         try {
             final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(module.getEncryptMethod());
@@ -148,16 +151,16 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
         return encData;
     }
 
-    private byte[] getEncryptionKeySalt(String encryptSalt){
+    private byte[] getEncryptionKeySalt(String encryptSalt) {
         StringTokenizer tokens = new StringTokenizer(encryptSalt, ",");
         List<Byte> saltList = new ArrayList<>();
-        while(tokens.hasMoreTokens()){
+        while (tokens.hasMoreTokens()) {
             String by = tokens.nextToken();
             saltList.add(Byte.parseByte(by.trim()));
         }
         byte salt[] = new byte[saltList.size()];
-        int i=0;
-        for(Byte b:saltList){
+        int i = 0;
+        for (Byte b : saltList) {
             salt[i] = b;
             i++;
         }
