@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_c00b037b",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T14:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_5dc0a04f",
+      "range": {
+        "startLine": 133,
+        "startChar": 12,
+        "endLine": 133,
+        "endChar": 84
+      },
+      "revId": "f3c9eee1a718613c5cd719df605861e53db1ea17",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_bdb38c08",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-08T12:27:15Z",
       "side": 1,
       "message": "To my eyes is easier to have this on a single line. But your call.",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 38
+      },
+      "revId": "f3c9eee1a718613c5cd719df605861e53db1ea17",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_60317759",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T14:27:18Z",
+      "side": 1,
+      "message": "Took your advice, I guessed this way was easier to read, but apparently, it is not.\n\ngonna take the \u0027less lines\u0027 route.",
+      "parentUuid": "fafc7978_bdb38c08",
       "range": {
         "startLine": 138,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_a037df4b",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T14:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_9d9b2865",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 20
+      },
+      "revId": "f3c9eee1a718613c5cd719df605861e53db1ea17",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_7da484b9",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_e03c4731",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T14:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_7da484b9",
+      "range": {
+        "startLine": 79,
+        "startChar": 45,
+        "endLine": 79,
+        "endChar": 67
+      },
+      "revId": "f3c9eee1a718613c5cd719df605861e53db1ea17",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_fd97d445",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
         "patchSetId": 7
@@ -105,6 +201,30 @@
       "writtenOn": "2017-03-08T12:27:15Z",
       "side": 1,
       "message": "Better to use \"new WebApplicationException(theException, clientResponseToResponse(theException.getResponse()))\"",
+      "range": {
+        "startLine": 80,
+        "startChar": 22,
+        "endLine": 80,
+        "endChar": 90
+      },
+      "revId": "f3c9eee1a718613c5cd719df605861e53db1ea17",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_2043efaf",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T14:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_fd97d445",
       "range": {
         "startLine": 80,
         "startChar": 22,
