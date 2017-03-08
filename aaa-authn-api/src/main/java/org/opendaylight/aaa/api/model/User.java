@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -75,8 +75,8 @@ public class User {
         return password;
     }
 
-    public void setSalt(String s) {
-        this.salt = s;
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public String getSalt() {
@@ -99,16 +99,15 @@ public class User {
     @Override
     public boolean equals(Object obj) {
         User other = (User) obj;
-        if (other == null)
+        if (other == null) {
             return false;
-        if (compareValues(getName(), other.getName())
-                && compareValues(getEmail(), other.getEmail())
-                && compareValues(isEnabled(), other.isEnabled())
-                && compareValues(getPassword(), other.getPassword())
-                && compareValues(getSalt(), other.getSalt())
-                && compareValues(getUserid(), other.getUserid())
-                && compareValues(getDescription(), other.getDescription()))
+        }
+        if (compareValues(getName(), other.getName()) && compareValues(getEmail(), other.getEmail())
+                && compareValues(isEnabled(), other.isEnabled()) && compareValues(getPassword(), other.getPassword())
+                && compareValues(getSalt(), other.getSalt()) && compareValues(getUserid(), other.getUserid())
+                && compareValues(getDescription(), other.getDescription())) {
             return true;
+        }
         return false;
     }
 
@@ -117,15 +116,19 @@ public class User {
         return name;
     }
 
-    private boolean compareValues(Object a, Object b) {
-        if (a == null && b != null)
+    private boolean compareValues(Object c1, Object c2) {
+        if (c1 == null && c2 != null) {
             return false;
-        if (a != null && b == null)
+        }
+        if (c1 != null && c2 == null) {
             return false;
-        if (a == null && b == null)
+        }
+        if (c1 == null && c2 == null) {
             return true;
-        if (a.equals(b))
+        }
+        if (c1.equals(c2)) {
             return true;
+        }
         return false;
     }
 }

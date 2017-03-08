@@ -14,8 +14,8 @@ public class IDMStoreException extends Exception {
 
     private static final long serialVersionUID = -7534127680943957878L;
 
-    public IDMStoreException(Exception e) {
-        super(e);
+    public IDMStoreException(Exception exception) {
+        super(exception);
     }
 
     public IDMStoreException(String msg) {

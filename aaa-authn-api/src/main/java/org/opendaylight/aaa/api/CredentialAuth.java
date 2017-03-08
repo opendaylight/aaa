@@ -20,9 +20,9 @@ public interface CredentialAuth<T extends Credentials> {
      *
      * @param cred
      *            credentials
+     * @return authenticated claim
      * @throws AuthenticationException
      *             if failed authentication
-     * @return authenticated claim
      */
     Claim authenticate(T cred) throws AuthenticationException;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Cisco Systems, Inc. and others.  All rights reserved.
+ * Copyright (c) 2015, 2017 Cisco Systems, Inc. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -8,6 +8,7 @@
 package org.opendaylight.aaa.api;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 import javax.xml.bind.DatatypeConverter;
@@ -15,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Calculate SHA256.
+ *
  * @author Sharon Aicler (saichler@cisco.com)
  */
 public class SHA256Calculator {
@@ -34,11 +37,11 @@ public class SHA256Calculator {
         return salt.toString();
     }
 
-    public static String getSHA256(byte data[], String salt) {
-        byte SALT[] = salt.getBytes();
-        byte temp[] = new byte[data.length + SALT.length];
+    public static String getSHA256(byte[] data, String salt) {
+        byte[] saltBytes = salt.getBytes();
+        byte[] temp = new byte[data.length + saltBytes.length];
         System.arraycopy(data, 0, temp, 0, data.length);
-        System.arraycopy(SALT, 0, temp, data.length, SALT.length);
+        System.arraycopy(saltBytes, 0, temp, data.length, saltBytes.length);
 
         if (md == null) {
             try {
@@ -46,8 +49,8 @@ public class SHA256Calculator {
                 if (md == null) {
                     try {
                         md = MessageDigest.getInstance("SHA-256");
-                    } catch (Exception err) {
-                        LOG.error("Error calculating SHA-256 for SALT", err);
+                    } catch (NoSuchAlgorithmException e) {
+                        LOG.error("Error calculating SHA-256 for SALT", e);
                     }
                 }
             } finally {
@@ -55,7 +58,7 @@ public class SHA256Calculator {
             }
         }
 
-        byte by[] = null;
+        byte[] by = null;
 
         try {
             writeLock.lock();
@@ -64,7 +67,7 @@ public class SHA256Calculator {
         } finally {
             writeLock.unlock();
         }
-        //Make sure the outcome hash does not contain special characters
+        // Make sure the outcome hash does not contain special characters
         return DatatypeConverter.printBase64Binary(by);
     }
 
