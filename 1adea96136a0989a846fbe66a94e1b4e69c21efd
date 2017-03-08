@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_d392bf55",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-03-08T15:51:32Z",
+      "side": 1,
+      "message": "Sorry I did not see this before. I would replace the method name to something inline with the other methods (param or queryParam instead of addQueryParam, as there is provider instead of addProvider).",
+      "range": {
+        "startLine": 126,
+        "startChar": 17,
+        "endLine": 126,
+        "endChar": 31
+      },
+      "revId": "1adea96136a0989a846fbe66a94e1b4e69c21efd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_33f06bc8",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-03-08T15:51:32Z",
+      "side": 1,
+      "message": "I am not sure if UNABLE_TO_AUTHENTICATE is the appropriate message and \u0027error\u0027 the correct log level. In the most common case, 401? Unauthorized, the authentication was done without error, simply the credentials were wrong. Also UNABLE_TO_AUTHENTICATE is a json and I think simple text may offer more readibility for a log. I can suggest somehting similar to the original log, or maybe \u0027info\u0027 or \u0027warn\u0027 log levels. But I have a feeling invalid credentials should only be logged when enabled, thus my preference for \u0027debug\u0027 level.",
+      "range": {
+        "startLine": 133,
+        "startChar": 22,
+        "endLine": 133,
+        "endChar": 44
+      },
+      "revId": "1adea96136a0989a846fbe66a94e1b4e69c21efd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
