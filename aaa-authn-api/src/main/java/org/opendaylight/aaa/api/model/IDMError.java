@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -29,7 +29,7 @@ public class IDMError {
     private int code = 500;
 
     public IDMError() {
-    };
+    }
 
     public IDMError(int statusCode, String msg, String msgDetails) {
         code = statusCode;
@@ -57,5 +57,4 @@ public class IDMError {
         LOG.error("error: {} details: {} status: {}", this.message, this.details, code);
         return Response.status(this.code).entity(this).build();
     }
-
 }

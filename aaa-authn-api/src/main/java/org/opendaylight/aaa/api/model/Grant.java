@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -63,24 +63,29 @@ public class Grant {
     @Override
     public boolean equals(Object obj) {
         Grant other = (Grant) obj;
-        if (other == null)
+        if (other == null) {
             return false;
-        if (compareValues(getDomainid(), other.getDomainid())
-                && compareValues(getRoleid(), other.getRoleid())
-                && compareValues(getUserid(), other.getUserid()))
+        }
+        if (compareValues(getDomainid(), other.getDomainid()) && compareValues(getRoleid(), other.getRoleid())
+                && compareValues(getUserid(), other.getUserid())) {
             return true;
+        }
         return false;
     }
 
-    private boolean compareValues(Object a, Object b) {
-        if (a == null && b != null)
+    private boolean compareValues(Object c1, Object c2) {
+        if (c1 == null && c2 != null) {
             return false;
-        if (a != null && b == null)
+        }
+        if (c1 != null && c2 == null) {
             return false;
-        if (a == null && b == null)
+        }
+        if (c1 == null && c2 == null) {
             return true;
-        if (a.equals(b))
+        }
+        if (c1.equals(c2)) {
             return true;
+        }
         return false;
     }
 }
