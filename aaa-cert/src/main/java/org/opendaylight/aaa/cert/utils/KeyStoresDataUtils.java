@@ -210,7 +210,7 @@ public class KeyStoresDataUtils {
         return MdsalUtils.delete(dataBroker, LogicalDatastoreType.CONFIGURATION, sslDataIid);
     }
 
-    public boolean updateSslData(final DataBroker dataBroker, final SslData sslData) {
+    public boolean ``(final DataBroker dataBroker, final SslData sslData) {
         final InstanceIdentifier<SslData> sslDataIid = getSslDataIid(sslData.getBundleName());
         return MdsalUtils.merge(dataBroker, LogicalDatastoreType.CONFIGURATION, sslDataIid, encryptSslData(sslData));
     }
