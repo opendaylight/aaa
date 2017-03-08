@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_50f6c85d",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneAuth.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T13:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_f9d88ff0",
+      "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_19059345",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneAuth.java",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-03-07T17:15:58Z",
       "side": 1,
       "message": "Is METHOD_PASSWORD the default password?",
+      "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_b098d41c",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneAuth.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T13:36:18Z",
+      "side": 1,
+      "message": "no, it\u0027s the type of authentication we\u0027ll be performing against keystone (password / token) .",
+      "parentUuid": "fafc7978_19059345",
       "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_d0a11847",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneAuth.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T13:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_59e43bab",
+      "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_592efba5",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-03-07T17:15:58Z",
       "side": 1,
       "message": "Is this default constructor intentional?",
+      "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_5d7a6088",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T13:36:18Z",
+      "side": 1,
+      "message": "Afraid so; since there are more constructors defined, a default constructor needs to be explicitly defined. \n\nAnd the other constructors are necessary so I can unit test this.",
+      "parentUuid": "fafc7978_592efba5",
       "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_b0661428",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T13:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_3929779b",
+      "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_991b4380",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2017-03-07T17:15:58Z",
       "side": 1,
       "message": "White space before curly brace.",
+      "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_906950fb",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T13:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_991b4380",
       "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_cb7049a6",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T13:36:18Z",
+      "side": 1,
+      "message": "Afraid so; since there are more constructors defined, a default constructor needs to be explicitly defined. \n\nAnd the other constructors are necessary so I can unit test this.",
+      "parentUuid": "fafc7978_791e5f71",
+      "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_d9114b5e",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
         "patchSetId": 6
@@ -132,6 +258,24 @@
       "writtenOn": "2017-03-07T17:15:58Z",
       "side": 1,
       "message": "It shouldn\u0027t be inlined.",
+      "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_b04d749c",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T13:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_d9114b5e",
       "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_507b68bd",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T13:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_b914474d",
+      "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_5980bb8a",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
         "patchSetId": 6
@@ -166,6 +328,24 @@
       "writtenOn": "2017-03-07T17:15:58Z",
       "side": 1,
       "message": "This will not pass checkstyle verification once activated. Replace \"e \" by \"ex)\" or somthing similar.",
+      "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_903790fe",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T13:36:18Z",
+      "side": 1,
+      "message": "Done; that rule cannot be very popular, given the little it brings to the table, btw",
+      "parentUuid": "fafc7978_5980bb8a",
       "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_f03a5ce5",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T13:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_397b37bf",
+      "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_bc0b9522",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
         "patchSetId": 6
@@ -200,6 +398,24 @@
       "writtenOn": "2017-03-07T17:15:58Z",
       "side": 1,
       "message": "Can we capture a more specific Exception?\nChange \"e\" by \"ex\" to comply with checkstyle.",
+      "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_6b331df6",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T13:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_bc0b9522",
       "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_4b173945",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T13:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_1c16214c",
+      "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_fc107d4f",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
         "patchSetId": 6
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_0b3891d1",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T13:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_fc107d4f",
+      "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_9c29718c",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
         "patchSetId": 6
@@ -251,6 +503,24 @@
       "writtenOn": "2017-03-07T17:15:58Z",
       "side": 1,
       "message": "Separation between methods.",
+      "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_ab77c59e",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-08T13:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_9c29718c",
       "revId": "1ae48c08bc3fdfb7879cc0fe89f7b04c8f756c78",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
