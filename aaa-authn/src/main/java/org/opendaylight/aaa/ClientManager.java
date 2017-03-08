@@ -27,13 +27,15 @@ import org.osgi.service.cm.ManagedService;
  */
 public class ClientManager implements ClientService, ManagedService {
     static final String CLIENTS = "authorizedClients";
-    private static final String CLIENTS_FORMAT_ERR = "Clients are space-delimited in the form of <client_id>:<client_secret>";
+    private static final String CLIENTS_FORMAT_ERR =
+            "Clients are space-delimited in the form of <client_id>:<client_secret>";
     private static final String UNAUTHORIZED_CLIENT_ERR = "Unauthorized client";
 
     // Defaults (needed only for non-Karaf deployments)
-    static final Dictionary<String, String> defaults = new Hashtable<>();
+    protected static final Dictionary<String, String> DEFAULTS = new Hashtable<>();
+
     static {
-        defaults.put(CLIENTS, "dlux:secrete");
+        DEFAULTS.put(CLIENTS, "dlux:secrete");
     }
 
     private final Map<String, String> clients = new ConcurrentHashMap<>();
@@ -43,8 +45,8 @@ public class ClientManager implements ClientService, ManagedService {
     }
 
     // Called by DM when all required dependencies are satisfied.
-    void init(Component c) throws ConfigurationException {
-        reconfig(defaults);
+    void init(Component component) throws ConfigurationException {
+        reconfig(DEFAULTS);
     }
 
     @Override
@@ -61,21 +63,22 @@ public class ClientManager implements ClientService, ManagedService {
     @Override
     public void updated(Dictionary<String, ?> props) throws ConfigurationException {
         if (props == null) {
-            props = defaults;
+            props = DEFAULTS;
         }
         reconfig(props);
     }
 
     // Reconfigure the client map...
-    private void reconfig(@SuppressWarnings("rawtypes") Dictionary props)
+    @SuppressWarnings({"rawtypes","checkstyle:IllegalCatch"})
+    private void reconfig(Dictionary props)
             throws ConfigurationException {
         try {
             String authorizedClients = (String) props.get(CLIENTS);
             Map<String, String> newClients = new HashMap<>();
             if (authorizedClients != null) {
                 for (String client : authorizedClients.split(" ")) {
-                    String[] aClient = client.split(":");
-                    newClients.put(aClient[0], aClient[1]);
+                    String[] splitClient = client.split(":");
+                    newClients.put(splitClient[0], splitClient[1]);
                 }
             }
             clients.clear();
@@ -84,5 +87,4 @@ public class ClientManager implements ClientService, ManagedService {
             throw new ConfigurationException(null, CLIENTS_FORMAT_ERR);
         }
     }
-
 }

@@ -35,9 +35,9 @@ public class Activator extends DependencyActivatorBase {
         ClientManager cm = new ClientManager();
         manager.add(createComponent().setInterface(new String[] { ClientService.class.getName() },
                 null).setImplementation(cm));
-        context.registerService(ManagedService.class.getName(), cm, addPid(ClientManager.defaults));
+        context.registerService(ManagedService.class.getName(), cm, addPid(ClientManager.DEFAULTS));
         context.registerService(ManagedService.class.getName(), AuthenticationManager.instance(),
-                addPid(AuthenticationManager.defaults));
+                addPid(AuthenticationManager.DEFAULTS));
     }
 
     @Override

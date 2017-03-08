@@ -42,8 +42,26 @@ public class SecureBlockingQueue<T> implements BlockingQueue<T> {
     }
 
     @Override
+    public boolean remove(Object object) {
+        Iterator<SecureData<T>> it = queue.iterator();
+        while (it.hasNext()) {
+            SecureData<T> sd = it.next();
+            if (sd.data.equals(object)) {
+                return queue.remove(sd);
+            }
+        }
+        return false;
+    }
+
+
+    @Override
     public T poll() {
         return setAuth(queue.poll());
+    }
+
+    @Override
+    public T poll(long timeout, TimeUnit unit) throws InterruptedException {
+        return setAuth(queue.poll(timeout, unit));
     }
 
     @Override
@@ -95,28 +113,28 @@ public class SecureBlockingQueue<T> implements BlockingQueue<T> {
 
     @SuppressWarnings("hiding")
     @Override
-    public <T> T[] toArray(T[] a) {
-        return toData().toArray(a);
+    public <T> T[] toArray(T[] array) {
+        return toData().toArray(array);
     }
 
     @Override
-    public boolean containsAll(Collection<?> c) {
-        return toData().containsAll(c);
+    public boolean containsAll(Collection<?> collection) {
+        return toData().containsAll(collection);
     }
 
     @Override
-    public boolean addAll(Collection<? extends T> c) {
-        return queue.addAll(fromData(c));
+    public boolean addAll(Collection<? extends T> collection) {
+        return queue.addAll(fromData(collection));
     }
 
     @Override
-    public boolean removeAll(Collection<?> c) {
-        return queue.removeAll(fromData(c));
+    public boolean removeAll(Collection<?> collection) {
+        return queue.removeAll(fromData(collection));
     }
 
     @Override
-    public boolean retainAll(Collection<?> c) {
-        return queue.retainAll(fromData(c));
+    public boolean retainAll(Collection<?> collection) {
+        return queue.retainAll(fromData(collection));
     }
 
     @Override
@@ -125,23 +143,23 @@ public class SecureBlockingQueue<T> implements BlockingQueue<T> {
     }
 
     @Override
-    public boolean add(T e) {
-        return queue.add(new SecureData<>(e));
+    public boolean add(T element) {
+        return queue.add(new SecureData<>(element));
     }
 
     @Override
-    public boolean offer(T e) {
-        return queue.offer(new SecureData<>(e));
+    public boolean offer(T element) {
+        return queue.offer(new SecureData<>(element));
     }
 
     @Override
-    public void put(T e) throws InterruptedException {
-        queue.put(new SecureData<T>(e));
+    public boolean offer(T element, long timeout, TimeUnit unit) throws InterruptedException {
+        return queue.offer(new SecureData<>(element), timeout, unit);
     }
 
     @Override
-    public boolean offer(T e, long timeout, TimeUnit unit) throws InterruptedException {
-        return queue.offer(new SecureData<>(e), timeout, unit);
+    public void put(T element) throws InterruptedException {
+        queue.put(new SecureData<>(element));
     }
 
     @Override
@@ -150,33 +168,16 @@ public class SecureBlockingQueue<T> implements BlockingQueue<T> {
     }
 
     @Override
-    public T poll(long timeout, TimeUnit unit) throws InterruptedException {
-        return setAuth(queue.poll(timeout, unit));
-    }
-
-    @Override
     public int remainingCapacity() {
         return queue.remainingCapacity();
     }
 
     @Override
-    public boolean remove(Object o) {
+    public boolean contains(Object object) {
         Iterator<SecureData<T>> it = queue.iterator();
         while (it.hasNext()) {
             SecureData<T> sd = it.next();
-            if (sd.data.equals(o)) {
-                return queue.remove(sd);
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean contains(Object o) {
-        Iterator<SecureData<T>> it = queue.iterator();
-        while (it.hasNext()) {
-            SecureData<T> sd = it.next();
-            if (sd.data.equals(o)) {
+            if (sd.data.equals(object)) {
                 return true;
             }
         }
@@ -184,32 +185,32 @@ public class SecureBlockingQueue<T> implements BlockingQueue<T> {
     }
 
     @Override
-    public int drainTo(Collection<? super T> c) {
+    public int drainTo(Collection<? super T> collection) {
         Collection<SecureData<T>> sd = new ArrayList<>();
-        int n = queue.drainTo(sd);
-        c.addAll(toData(sd));
-        return n;
+        int number = queue.drainTo(sd);
+        collection.addAll(toData(sd));
+        return number;
     }
 
     @Override
-    public int drainTo(Collection<? super T> c, int maxElements) {
+    public int drainTo(Collection<? super T> collection, int maxElements) {
         Collection<SecureData<T>> sd = new ArrayList<>();
-        int n = queue.drainTo(sd, maxElements);
-        c.addAll(toData(sd));
-        return n;
+        int number = queue.drainTo(sd, maxElements);
+        collection.addAll(toData(sd));
+        return number;
     }
 
     // Rehydrate security context
-    private T setAuth(SecureData<T> i) {
-        AuthenticationManager.instance().set(i.auth);
-        return i.data;
+    private T setAuth(SecureData<T> secureData) {
+        AuthenticationManager.instance().set(secureData.auth);
+        return secureData.data;
     }
 
     // Construct secure data collection from a plain old data collection
     @SuppressWarnings("unchecked")
-    private Collection<SecureData<T>> fromData(Collection<?> c) {
-        Collection<SecureData<T>> sd = new ArrayList<>(c.size());
-        for (Object d : c) {
+    private Collection<SecureData<T>> fromData(Collection<?> collection) {
+        Collection<SecureData<T>> sd = new ArrayList<>(collection.size());
+        for (Object d : collection) {
             sd.add((SecureData<T>) new SecureData<>(d));
         }
         return sd;
@@ -218,7 +219,7 @@ public class SecureBlockingQueue<T> implements BlockingQueue<T> {
     // Extract the data portion out from the secure data
     @SuppressWarnings("unchecked")
     private Collection<T> toData() {
-        return toData(Arrays.<SecureData<T>> asList(queue.toArray(new SecureData[0])));
+        return toData(Arrays.<SecureData<T>>asList(queue.toArray(new SecureData[0])));
     }
 
     // Extract the data portion out from the secure data
@@ -243,11 +244,11 @@ public class SecureBlockingQueue<T> implements BlockingQueue<T> {
 
         @SuppressWarnings("rawtypes")
         @Override
-        public boolean equals(Object o) {
-            if (o == null) {
+        public boolean equals(Object object) {
+            if (object == null) {
                 return false;
             }
-            return (o instanceof SecureData) ? data.equals(((SecureData) o).data) : false;
+            return object instanceof SecureData ? data.equals(((SecureData) object).data) : false;
         }
 
         @Override

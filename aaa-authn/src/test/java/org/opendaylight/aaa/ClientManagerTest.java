@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -18,35 +18,35 @@ import org.opendaylight.aaa.api.AuthenticationException;
 import org.osgi.service.cm.ConfigurationException;
 
 /**
- *
+ * ClientManager test suite.
  * @author liemmn
  *
  */
 public class ClientManagerTest {
-    private static final ClientManager cm = new ClientManager();
+    private static final ClientManager CLIENT_MANAGER = new ClientManager();
 
     @Before
     public void setup() throws ConfigurationException {
-        cm.init(null);
+        CLIENT_MANAGER.init(null);
     }
 
     @Test
     public void testValidate() {
-        cm.validate("dlux", "secrete");
+        CLIENT_MANAGER.validate("dlux", "secrete");
     }
 
     @Test(expected = AuthenticationException.class)
     public void testFailValidate() {
-        cm.validate("dlux", "what?");
+        CLIENT_MANAGER.validate("dlux", "what?");
     }
 
     @Test
     public void testUpdate() throws ConfigurationException {
         Dictionary<String, String> configs = new Hashtable<>();
         configs.put(ClientManager.CLIENTS, "aws:amazon dlux:xxx");
-        cm.updated(configs);
-        cm.validate("aws", "amazon");
-        cm.validate("dlux", "xxx");
+        CLIENT_MANAGER.updated(configs);
+        CLIENT_MANAGER.validate("aws", "amazon");
+        CLIENT_MANAGER.validate("dlux", "xxx");
     }
 
     @Test
@@ -54,14 +54,14 @@ public class ClientManagerTest {
         Dictionary<String, String> configs = new Hashtable<>();
         configs.put(ClientManager.CLIENTS, "aws:amazon dlux");
         try {
-            cm.updated(configs);
+            CLIENT_MANAGER.updated(configs);
             fail("Shoulda failed updating bad configuration");
         } catch (ConfigurationException ce) {
             // Expected
         }
-        cm.validate("dlux", "secrete");
+        CLIENT_MANAGER.validate("dlux", "secrete");
         try {
-            cm.validate("aws", "amazon");
+            CLIENT_MANAGER.validate("aws", "amazon");
             fail("Shoulda failed updating bad configuration");
         } catch (AuthenticationException ae) {
             // Expected

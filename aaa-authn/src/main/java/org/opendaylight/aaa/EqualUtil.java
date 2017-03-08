@@ -10,37 +10,37 @@ package org.opendaylight.aaa;
 
 /**
  * Simple class to aide in implementing equals.
- * <p>
  *
+ * <p>
  * <em>Arrays are not handled by this class</em>. This is because the
  * <code>Arrays.equals</code> methods should be used for array fields.
  */
 public final class EqualUtil {
 
-    private EqualUtil () {
+    private EqualUtil() {
     }
 
-    public static boolean areEqual(boolean aThis, boolean aThat) {
-        return aThis == aThat;
+    public static boolean areEqual(boolean c1, boolean c2) {
+        return c1 == c2;
     }
 
-    public static boolean areEqual(char aThis, char aThat) {
-        return aThis == aThat;
+    public static boolean areEqual(char c1, char c2) {
+        return c1 == c2;
     }
 
-    public static boolean areEqual(long aThis, long aThat) {
-        return aThis == aThat;
+    public static boolean areEqual(long c1, long c2) {
+        return c1 == c2;
     }
 
-    public static boolean areEqual(float aThis, float aThat) {
-        return Float.floatToIntBits(aThis) == Float.floatToIntBits(aThat);
+    public static boolean areEqual(float c1, float c2) {
+        return Float.floatToIntBits(c1) == Float.floatToIntBits(c2);
     }
 
-    public static boolean areEqual(double aThis, double aThat) {
-        return Double.doubleToLongBits(aThis) == Double.doubleToLongBits(aThat);
+    public static boolean areEqual(double c1, double c2) {
+        return Double.doubleToLongBits(c1) == Double.doubleToLongBits(c2);
     }
 
-    public static boolean areEqual(Object aThis, Object aThat) {
-        return aThis == null ? aThat == null : aThis.equals(aThat);
+    public static boolean areEqual(Object c1, Object c2) {
+        return c1 == null ? c2 == null : c1.equals(c2);
     }
 }
