@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_5dc0a04f",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-03-08T12:27:15Z",
+      "side": 1,
+      "message": "There might be a semantic difference between throwing an exception or returning null:\n- Authentication exception: Unable to authenticate (for example, keystone connection unsuccesful)\n- Unauthorized, return null: username or password is wrong.\n\nSo, i would consider returning null on WebApplicationException and let any other unexpected runtime exception to be wrapped as an AuhtenticationException by the callee. \n\nIn any case I think it would be cool to keep the original log here (replacing response, by exception).",
+      "range": {
+        "startLine": 133,
+        "startChar": 12,
+        "endLine": 133,
+        "endChar": 84
+      },
+      "revId": "f3c9eee1a718613c5cd719df605861e53db1ea17",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_bdb38c08",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-03-08T12:27:15Z",
+      "side": 1,
+      "message": "To my eyes is easier to have this on a single line. But your call.",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 38
+      },
+      "revId": "f3c9eee1a718613c5cd719df605861e53db1ea17",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_9d9b2865",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-03-08T12:27:15Z",
+      "side": 1,
+      "message": "I notice that we are using more indentation that was used in the original source (8 spaces vs 4 spaces)",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 20
+      },
+      "revId": "f3c9eee1a718613c5cd719df605861e53db1ea17",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_7da484b9",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-03-08T12:27:15Z",
+      "side": 1,
+      "message": "I would only handle UniformInterfaceException as WebApplicationException. ClientHandlerException are more related to internal errors processing the request or response, not explicit errors from server.",
+      "range": {
+        "startLine": 79,
+        "startChar": 45,
+        "endLine": 79,
+        "endChar": 67
+      },
+      "revId": "f3c9eee1a718613c5cd719df605861e53db1ea17",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_fd97d445",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6230
+      },
+      "writtenOn": "2017-03-08T12:27:15Z",
+      "side": 1,
+      "message": "Better to use \"new WebApplicationException(theException, clientResponseToResponse(theException.getResponse()))\"",
+      "range": {
+        "startLine": 80,
+        "startChar": 22,
+        "endLine": 80,
+        "endChar": 90
+      },
+      "revId": "f3c9eee1a718613c5cd719df605861e53db1ea17",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
