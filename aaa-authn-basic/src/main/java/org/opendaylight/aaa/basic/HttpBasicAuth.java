@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -27,13 +27,16 @@ import org.slf4j.LoggerFactory;
  * backward compatible authenticator, but usage of this authenticator or HTTP
  * Basic Authentication is highly discouraged due to its vulnerability.
  *
+ * <p>
  * To obtain a token using the HttpBasicAuth Strategy, add a header to your HTTP
  * request in the form:
  * <code>Authorization: Basic BASE_64_ENCODED_CREDENTIALS</code>
  *
+ * <p>
  * Where <code>BASE_64_ENCODED_CREDENTIALS</code> is the base 64 encoded value
  * of the user's credentials in the following form: <code>user:password</code>
  *
+ * <p>
  * For example, assuming the user is "admin" and the password is "admin":
  * <code>Authorization: Basic YWRtaW46YWRtaW4=</code>
  *
@@ -52,12 +55,12 @@ public class HttpBasicAuth implements TokenAuth {
     public static final String DEFAULT_DOMAIN = "sdn";
 
     /**
-     * username and password
+     * username and password.
      */
     private static final int NUM_HEADER_CREDS = 2;
 
     /**
-     * username, password and domain
+     * username, password and domain.
      */
     private static final int NUM_TOKEN_CREDS = 3;
 
@@ -66,7 +69,7 @@ public class HttpBasicAuth implements TokenAuth {
     volatile CredentialAuth<PasswordCredentials> credentialAuth;
 
     private static boolean checkAuthHeaderFormat(final String authHeader) {
-        return (authHeader != null && authHeader.startsWith(BASIC_PREFIX));
+        return authHeader != null && authHeader.startsWith(BASIC_PREFIX);
     }
 
     private static String extractAuthHeader(final Map<String, List<String>> headers) {
@@ -79,11 +82,11 @@ public class HttpBasicAuth implements TokenAuth {
     }
 
     private static boolean verifyCredentialArray(final String[] creds) {
-        return (creds != null && creds.length == NUM_HEADER_CREDS);
+        return creds != null && creds.length == NUM_HEADER_CREDS;
     }
 
     private static String[] addDomainToCredentialArray(final String[] creds) {
-        String newCredentialArray[] = new String[NUM_TOKEN_CREDS];
+        String[] newCredentialArray = new String[NUM_TOKEN_CREDS];
         System.arraycopy(creds, 0, newCredentialArray, 0, creds.length);
         newCredentialArray[2] = DEFAULT_DOMAIN;
         return newCredentialArray;
@@ -125,5 +128,4 @@ public class HttpBasicAuth implements TokenAuth {
         }
         return null;
     }
-
 }
