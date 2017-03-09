@@ -30,18 +30,19 @@ import org.osgi.service.cm.ConfigurationException;
 public class DefaultTokenStoreTest {
     private static final String FOO_TOKEN = "foo_token";
     private final DefaultTokenStore dts = new DefaultTokenStore();
-    private static final Dictionary<String, String> config = new Hashtable<>();
+    private static final Dictionary<String, String> CONFIG = new Hashtable<>();
+
     static {
-        config.put(MAX_CACHED_MEMORY, Long.toString(3));
-        config.put(MAX_CACHED_DISK, Long.toString(3));
-        config.put(SECS_TO_IDLE, Long.toString(1));
-        config.put(SECS_TO_LIVE, Long.toString(1));
+        CONFIG.put(MAX_CACHED_MEMORY, Long.toString(3));
+        CONFIG.put(MAX_CACHED_DISK, Long.toString(3));
+        CONFIG.put(SECS_TO_IDLE, Long.toString(1));
+        CONFIG.put(SECS_TO_LIVE, Long.toString(1));
     }
 
     @Before
     public void setup() throws ConfigurationException {
         dts.init(mock(Component.class));
-        dts.updated(config);
+        dts.updated(CONFIG);
     }
 
     @After
@@ -62,5 +63,4 @@ public class DefaultTokenStoreTest {
         Thread.sleep(1200);
         assertNull(dts.get(FOO_TOKEN));
     }
-
 }
