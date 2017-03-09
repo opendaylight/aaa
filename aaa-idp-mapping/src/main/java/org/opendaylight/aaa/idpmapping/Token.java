@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Red Hat, Inc.  All rights reserved.
+ * Copyright (c) 2014, 2017 Red Hat, Inc.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -13,36 +13,35 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-enum TokenStorageType {
-    UNKNOWN, CONSTANT, VARIABLE
-}
-
-enum TokenType {
-    STRING, // java String
-    ARRAY, // java List
-    MAP, // java Map
-    INTEGER, // java Long
-    BOOLEAN, // java Boolean
-    NULL, // java null
-    REAL, // java Double
-    UNKNOWN, // undefined
-}
-
 /**
  * Rule statements can contain variables or constants, this class encapsulates
  * those values, enforces type handling and supports reading and writing of
  * those values.
  *
+ * <p>
  * Technically at the syntactic level these are not tokens. A token would have
  * finer granularity such as identifier, operator, etc. I just couldn't think of
  * a better name for how they're used here and thought token was a reasonable
  * compromise as a name.
  *
- * @author John Dennis <jdennis@redhat.com>
+ *  @author John Dennis &lt;jdennis@redhat.com&gt;
  */
-
 @Deprecated
 class Token {
+    enum TokenStorageType {
+        UNKNOWN, CONSTANT, VARIABLE
+    }
+
+    enum TokenType {
+        STRING, // java String
+        ARRAY, // java List
+        MAP, // java Map
+        INTEGER, // java Long
+        BOOLEAN, // java Boolean
+        NULL, // java null
+        REAL, // java Double
+        UNKNOWN, // undefined
+    }
 
     /*
      * Regexp to identify a variable beginning with $ Supports array notation,
@@ -184,13 +183,15 @@ class Token {
                     } catch (NumberFormatException e) {
                         throw new InvalidTypeException(
                                 String.format(
-                                        "variable '%s' is an array indexed by '%s', however the index cannot be converted to an integer",
+                                        "variable '%s' is an array indexed by '%s',"
+                                        + " however the index cannot be converted to an integer",
                                         this.name, index, e));
                     }
                 } else {
                     throw new InvalidTypeException(
                             String.format(
-                                    "variable '%s' is an array indexed by '%s', however the index must be an integer or string not %s",
+                                    "variable '%s' is an array indexed by '%s',"
+                                    + " however the index must be an integer or string not %s",
                                     this.name, index, index.getClass().getSimpleName()));
                 }
 
@@ -199,7 +200,8 @@ class Token {
                 } catch (IndexOutOfBoundsException e) {
                     throw new UndefinedValueException(
                             String.format(
-                                    "variable '%s' is an array of size %d indexed by '%s', however the index is out of bounds",
+                                    "variable '%s' is an array of size %d indexed by '%s',"
+                                    + " however the index is out of bounds",
                                     this.name, list.size(), idx, e));
                 }
             } else if (base instanceof Map) {
@@ -272,13 +274,15 @@ class Token {
                     } catch (NumberFormatException e) {
                         throw new InvalidTypeException(
                                 String.format(
-                                        "variable '%s' is an array indexed by '%s', however the index cannot be converted to an integer",
+                                        "variable '%s' is an array indexed by '%s',"
+                                        + " however the index cannot be converted to an integer",
                                         this.name, index, e));
                     }
                 } else {
                     throw new InvalidTypeException(
                             String.format(
-                                    "variable '%s' is an array indexed by '%s', however the index must be an integer or string not %s",
+                                    "variable '%s' is an array indexed by '%s',"
+                                    + " however the index must be an integer or string not %s",
                                     this.name, index, index.getClass().getSimpleName()));
                 }
 
@@ -287,7 +291,8 @@ class Token {
                 } catch (IndexOutOfBoundsException e) {
                     throw new UndefinedValueException(
                             String.format(
-                                    "variable '%s' is an array of size %d indexed by '%s', however the index is out of bounds",
+                                    "variable '%s' is an array of size %d indexed by '%s',"
+                                    + " however the index is out of bounds",
                                     this.name, list.size(), idx, e));
                 }
             } else if (base instanceof Map) {

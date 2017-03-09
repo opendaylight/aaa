@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Red Hat, Inc.  All rights reserved.
+ * Copyright (c) 2014, 2017 Red Hat, Inc.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -22,12 +22,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.opendaylight.aaa.idpmapping.Token.TokenStorageType;
+import org.opendaylight.aaa.idpmapping.Token.TokenType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-enum ProcessResult {
-    RULE_FAIL, RULE_SUCCESS, BLOCK_CONTINUE, STATEMENT_CONTINUE
-}
 
 /**
  * Evaluate a set of rules against an assertion from an external Identity
@@ -38,10 +36,16 @@ enum ProcessResult {
 
 @Deprecated
 public class RuleProcessor {
+
+    public enum ProcessResult {
+        RULE_FAIL, RULE_SUCCESS, BLOCK_CONTINUE, STATEMENT_CONTINUE
+    }
+
     private static final Logger LOG = LoggerFactory.getLogger(RuleProcessor.class);
 
     public String ruleIdFormat = "<rule [${rule_number}:\"${rule_name}\"]>";
-    public String statementIdFormat = "<rule [${rule_number}:\"${rule_name}\"] block [${block_number}:\"${block_name}\"] statement ${statement_number}>";
+    public String statementIdFormat = "<rule [${rule_number}:\"${rule_name}\"] "
+            + "block [${block_number}:\"${block_name}\"] " + "statement ${statement_number}>";
 
     /*
      * Reserved variables
@@ -70,8 +74,7 @@ public class RuleProcessor {
         rules = loadJson;
     }
 
-    public RuleProcessor(Path rulesIn, Map<String, Map<String, Object>> mappings)
-            throws IOException {
+    public RuleProcessor(Path rulesIn, Map<String, Map<String, Object>> mappings) throws IOException {
         this.mappings = mappings;
         IdpJson json = new IdpJson();
         @SuppressWarnings("unchecked")
@@ -96,7 +99,7 @@ public class RuleProcessor {
      */
 
     private Map<String, String> regexpGroupMap(String pattern, Matcher matcher) {
-        Map<String, String> groupMap = new HashMap<String, String>();
+        Map<String, String> groupMap = new HashMap<>();
         Matcher groupMatcher = REGEXP_NAMED_GROUP_RE.matcher(pattern);
 
         while (groupMatcher.find()) {
@@ -107,7 +110,7 @@ public class RuleProcessor {
         return groupMap;
     }
 
-    static public String join(List<Object> list, String conjunction) {
+    public static String join(List<Object> list, String conjunction) {
         StringBuilder sb = new StringBuilder();
         boolean first = true;
         for (Object item : list) {
@@ -122,7 +125,7 @@ public class RuleProcessor {
     }
 
     private List<String> regexpGroupList(Matcher matcher) {
-        List<String> groupList = new ArrayList<String>(matcher.groupCount() + 1);
+        List<String> groupList = new ArrayList<>(matcher.groupCount() + 1);
         groupList.add(0, matcher.group(0));
         for (int i = 1; i < matcher.groupCount() + 1; i++) {
             groupList.add(i, matcher.group(i));
@@ -165,8 +168,6 @@ public class RuleProcessor {
             sw.write('{');
             for (Map.Entry<String, Object> entry : map.entrySet()) {
                 String key = entry.getKey();
-                Object value = entry.getValue();
-
                 if (first) {
                     first = false;
                 } else {
@@ -175,8 +176,8 @@ public class RuleProcessor {
 
                 objToStringItem(sw, key);
                 sw.write(": ");
+                Object value = entry.getValue();
                 objToStringItem(sw, value);
-
             }
             sw.write('}');
         } else if (obj instanceof Long) {
@@ -188,10 +189,9 @@ public class RuleProcessor {
         } else if (obj instanceof Double) {
             sw.write(((Double) obj).toString());
         } else {
-            throw new IllegalStateException(
-                    String.format(
-                            "unsupported data type, must be String, Long, Double, Boolean, List, Map, or null, not %s",
-                            obj.getClass().getSimpleName()));
+            throw new IllegalStateException(String.format(
+                    "unsupported data type, must be String, Long, Double, Boolean, List, Map, or null, not %s",
+                    obj.getClass().getSimpleName()));
         }
     }
 
@@ -200,23 +200,23 @@ public class RuleProcessor {
         if (obj instanceof String) {
             return obj; // immutable
         } else if (obj instanceof List) {
-            List<Object> new_list = new ArrayList<Object>();
+            List<Object> newList = new ArrayList<>();
             @SuppressWarnings("unchecked")
             List<Object> list = (List<Object>) obj;
             for (Object item : list) {
-                new_list.add(deepCopy(item));
+                newList.add(deepCopy(item));
             }
-            return new_list;
+            return newList;
         } else if (obj instanceof Map) {
-            Map<String, Object> new_map = new LinkedHashMap<String, Object>();
+            Map<String, Object> newMap = new LinkedHashMap<>();
             @SuppressWarnings("unchecked")
             Map<String, Object> map = (Map<String, Object>) obj;
             for (Map.Entry<String, Object> entry : map.entrySet()) {
                 String key = entry.getKey(); // immutable
                 Object value = entry.getValue();
-                new_map.put(key, deepCopy(value));
+                newMap.put(key, deepCopy(value));
             }
-            return new_map;
+            return newMap;
         } else if (obj instanceof Long) {
             return obj; // immutable
         } else if (obj instanceof Boolean) {
@@ -226,10 +226,9 @@ public class RuleProcessor {
         } else if (obj instanceof Double) {
             return obj; // immutable
         } else {
-            throw new IllegalStateException(
-                    String.format(
-                            "unsupported data type, must be String, Long, Double, Boolean, List, Map, or null, not %s",
-                            obj.getClass().getSimpleName()));
+            throw new IllegalStateException(String.format(
+                    "unsupported data type, must be String, Long, Double, Boolean, List, Map, or null, not %s",
+                    obj.getClass().getSimpleName()));
         }
     }
 
@@ -263,15 +262,15 @@ public class RuleProcessor {
 
     Map<String, Object> getMapping(Map<String, Object> namespace, Map<String, Object> rule) {
         Map<String, Object> mapping = null;
-        String mappingName = null;
+        String mappingName;
 
         try {
             @SuppressWarnings("unchecked")
             Map<String, Object> map = (Map<String, Object>) rule.get("mapping");
             mapping = map;
         } catch (java.lang.ClassCastException e) {
-            throw new InvalidRuleException(String.format(
-                    "%s rule defines 'mapping' but it is not a Map", this.ruleId(namespace), e));
+            throw new InvalidRuleException(
+                    String.format("%s rule defines 'mapping' but it is not a Map", this.ruleId(namespace), e));
         }
         if (mapping != null) {
             return mapping;
@@ -279,27 +278,25 @@ public class RuleProcessor {
         try {
             mappingName = (String) rule.get("mapping_name");
         } catch (java.lang.ClassCastException e) {
-            throw new InvalidRuleException(String.format(
-                    "%s rule defines 'mapping_name' but it is not a string",
-                    this.ruleId(namespace), e));
+            throw new InvalidRuleException(
+                    String.format("%s rule defines 'mapping_name' but it is not a string", this.ruleId(namespace), e));
         }
         if (mappingName == null) {
             throw new InvalidRuleException(String.format(
-                    "%s rule does not define mapping nor mapping_name unable to load mapping",
-                    this.ruleId(namespace)));
+                    "%s rule does not define mapping nor mapping_name unable to load mapping", this.ruleId(namespace)));
         }
         mapping = this.mappings.get(mappingName);
         if (mapping == null) {
             throw new InvalidRuleException(
-                    String.format(
-                            "%s rule specifies mapping_name '%s' but a mapping by that name does not exist, unable to load mapping",
-                            this.ruleId(namespace)));
+                    String.format("%s rule specifies mapping_name '%s' but a mapping by that name does not exist,"
+                            + " unable to load mapping", this.ruleId(namespace)));
         }
-        LOG.debug(String.format("using named mapping '%s' from rule %s mapping=%s", mappingName,
-                this.ruleId(namespace), mapping));
+        LOG.debug(String.format("using named mapping '%s' from rule %s mapping=%s", mappingName, this.ruleId(namespace),
+                mapping));
         return mapping;
     }
 
+    @SuppressWarnings("checkstyle:IllegalCatch")
     private String getVerb(List<Object> statement) {
         Token verb;
 
@@ -310,30 +307,29 @@ public class RuleProcessor {
         try {
             verb = new Token(statement.get(0), null);
         } catch (Exception e) {
-            throw new InvalidRuleException(String.format(
-                    "statement first member (i.e. verb) error %s", e));
+            throw new InvalidRuleException(String.format("statement first member (i.e. verb) error %s", e));
         }
 
         if (verb.type != TokenType.STRING) {
-            throw new InvalidRuleException(String.format(
-                    "statement first member (i.e. verb) must be a string, not %s", verb.type));
+            throw new InvalidRuleException(
+                    String.format("statement first member (i.e. verb) must be a string, not %s", verb.type));
         }
 
-        return (verb.getStringValue()).toLowerCase();
+        return verb.getStringValue().toLowerCase();
     }
 
-    private Token getToken(String verb, List<Object> statement, int index,
-            Map<String, Object> namespace, Set<TokenStorageType> storageTypes,
-            Set<TokenType> tokenTypes) {
+    @SuppressWarnings("checkstyle:IllegalCatch")
+    private Token getToken(String verb, List<Object> statement, int index, Map<String, Object> namespace,
+            Set<TokenStorageType> storageTypes, Set<TokenType> tokenTypes) {
         Object item;
         Token token;
 
         try {
             item = statement.get(index);
         } catch (IndexOutOfBoundsException e) {
-            throw new InvalidRuleException(String.format(
-                    "verb '%s' requires at least %d items but only %d are available.", verb,
-                    index + 1, statement.size(), e));
+            throw new InvalidRuleException(
+                    String.format("verb '%s' requires at least %d items but only %d are available.", verb, index + 1,
+                            statement.size(), e));
         }
 
         try {
@@ -345,8 +341,7 @@ public class RuleProcessor {
         if (storageTypes != null) {
             if (!storageTypes.contains(token.storageType)) {
                 throw new InvalidTypeException(
-                        String.format(
-                                "verb '%s' requires parameter #%d to have storage types %s not %s. statement=%s",
+                        String.format("verb '%s' requires parameter #%d to have storage types %s not %s. statement=%s",
                                 verb, index, storageTypes, statement));
             }
         }
@@ -355,26 +350,27 @@ public class RuleProcessor {
             token.load(); // Note, Token.load() sets the Token.type
 
             if (!tokenTypes.contains(token.type)) {
-                throw new InvalidTypeException(String.format(
-                        "verb '%s' requires parameter #%d to have types %s, not %s. statement=%s",
-                        verb, index, tokenTypes, statement));
+                throw new InvalidTypeException(
+                        String.format("verb '%s' requires parameter #%d to have types %s, not %s. statement=%s", verb,
+                                index, tokenTypes, statement));
             }
         }
 
         return token;
     }
 
-    private Token getParameter(String verb, List<Object> statement, int index,
-            Map<String, Object> namespace, Set<TokenType> tokenTypes) {
+    @SuppressWarnings("checkstyle:IllegalCatch")
+    private Token getParameter(String verb, List<Object> statement, int index, Map<String, Object> namespace,
+            Set<TokenType> tokenTypes) {
         Object item;
         Token token;
 
         try {
             item = statement.get(index);
         } catch (IndexOutOfBoundsException e) {
-            throw new InvalidRuleException(String.format(
-                    "verb '%s' requires at least %d items but only %d are available.", verb,
-                    index + 1, statement.size(), e));
+            throw new InvalidRuleException(
+                    String.format("verb '%s' requires at least %d items but only %d are available.", verb, index + 1,
+                            statement.size(), e));
         }
 
         try {
@@ -392,51 +388,50 @@ public class RuleProcessor {
                 // OK if not yet defined
             }
             if (!tokenTypes.contains(token.type)) {
-                throw new InvalidTypeException(String.format(
-                        "verb '%s' requires parameter #%d to have types %s, not %s. statement=%s",
-                        verb, index, tokenTypes, item.getClass().getSimpleName(), statement));
+                throw new InvalidTypeException(
+                        String.format("verb '%s' requires parameter #%d to have types %s, not %s. statement=%s", verb,
+                                index, tokenTypes, item.getClass().getSimpleName(), statement));
             }
         }
 
         return token;
     }
 
-    private Object getRawParameter(String verb, List<Object> statement, int index,
-            Set<TokenType> tokenTypes) {
+    private Object getRawParameter(String verb, List<Object> statement, int index, Set<TokenType> tokenTypes) {
         Object item;
 
         try {
             item = statement.get(index);
         } catch (IndexOutOfBoundsException e) {
-            throw new InvalidRuleException(String.format(
-                    "verb '%s' requires at least %d items but only %d are available.", verb,
-                    index + 1, statement.size(), e));
+            throw new InvalidRuleException(
+                    String.format("verb '%s' requires at least %d items but only %d are available.", verb, index + 1,
+                            statement.size(), e));
         }
 
         if (tokenTypes != null) {
             TokenType itemType = Token.classify(item);
 
             if (!tokenTypes.contains(itemType)) {
-                throw new InvalidTypeException(String.format(
-                        "verb '%s' requires parameter #%d to have types %s, not %s. statement=%s",
-                        verb, index, tokenTypes, statement));
+                throw new InvalidTypeException(
+                        String.format("verb '%s' requires parameter #%d to have types %s, not %s. statement=%s", verb,
+                                index, tokenTypes, statement));
             }
         }
 
         return item;
     }
 
-    private Token getVariable(String verb, List<Object> statement, int index,
-            Map<String, Object> namespace) {
+    @SuppressWarnings("checkstyle:IllegalCatch")
+    private Token getVariable(String verb, List<Object> statement, int index, Map<String, Object> namespace) {
         Object item;
         Token token;
 
         try {
             item = statement.get(index);
         } catch (IndexOutOfBoundsException e) {
-            throw new InvalidRuleException(String.format(
-                    "verb '%s' requires at least %d items but only %d are available.", verb,
-                    index + 1, statement.size(), e));
+            throw new InvalidRuleException(
+                    String.format("verb '%s' requires at least %d items but only %d are available.", verb, index + 1,
+                            statement.size(), e));
         }
 
         try {
@@ -446,14 +441,15 @@ public class RuleProcessor {
         }
 
         if (token.storageType != TokenStorageType.VARIABLE) {
-            throw new InvalidTypeException(String.format(
-                    "verb '%s' requires parameter #%d to be a variable not %s. statement=%s", verb,
-                    index, token.storageType, statement));
+            throw new InvalidTypeException(
+                    String.format("verb '%s' requires parameter #%d to be a variable not %s. statement=%s", verb, index,
+                            token.storageType, statement));
         }
 
         return token;
     }
 
+    @SuppressWarnings("checkstyle:IllegalCatch")
     public Map<String, Object> process(String assertionJson) {
         ProcessResult result;
         IdpJson json = new IdpJson();
@@ -463,18 +459,18 @@ public class RuleProcessor {
         this.success = true;
 
         for (int ruleNumber = 0; ruleNumber < this.rules.size(); ruleNumber++) {
-            Map<String, Object> namespace = new HashMap<String, Object>();
-            Map<String, Object> rule = (Map<String, Object>) this.rules.get(ruleNumber);
+            Map<String, Object> namespace = new HashMap<>();
             namespace.put(RULE_NUMBER, Long.valueOf(ruleNumber));
             namespace.put(RULE_NAME, "");
             namespace.put(ASSERTION, deepCopy(assertion));
 
+            Map<String, Object> rule = this.rules.get(ruleNumber);
             result = processRule(namespace, rule);
 
             if (result == ProcessResult.RULE_SUCCESS) {
-                Map<String, Object> mapped = new LinkedHashMap<String, Object>();
+                Map<String, Object> mapped = new LinkedHashMap<>();
                 Map<String, Object> mapping = getMapping(namespace, rule);
-                for (Map.Entry<String, Object> entry : ((Map<String, Object>) mapping).entrySet()) {
+                for (Map.Entry<String, Object> entry : mapping.entrySet()) {
                     String key = entry.getKey();
                     Object value = entry.getValue();
                     Object newValue = null;
@@ -482,9 +478,8 @@ public class RuleProcessor {
                         Token token = new Token(value, namespace);
                         newValue = token.get();
                     } catch (Exception e) {
-                        throw new InvalidRuleException(String.format(
-                                "%s unable to get value for mapping %s=%s, %s", ruleId(namespace),
-                                key, value, e), e);
+                        throw new InvalidRuleException(String.format("%s unable to get value for mapping %s=%s, %s",
+                                ruleId(namespace), key, value, e), e);
                     }
                     mapped.put(key, newValue);
                 }
@@ -503,7 +498,7 @@ public class RuleProcessor {
 
         }
         for (int blockNumber = 0; blockNumber < statementBlocks.size(); blockNumber++) {
-            List<List<Object>> block = (List<List<Object>>) statementBlocks.get(blockNumber);
+            List<List<Object>> block = statementBlocks.get(blockNumber);
             namespace.put(BLOCK_NUMBER, Long.valueOf(blockNumber));
             namespace.put(BLOCK_NAME, "");
 
@@ -513,8 +508,7 @@ public class RuleProcessor {
             } else if (result == ProcessResult.BLOCK_CONTINUE) {
                 continue;
             } else {
-                throw new IllegalStateException(String.format("%s unexpected statement result: %s",
-                        result));
+                throw new IllegalStateException(String.format("%s unexpected statement result: %s", result));
             }
         }
         if (EnumSet.of(ProcessResult.RULE_SUCCESS, ProcessResult.BLOCK_CONTINUE).contains(result)) {
@@ -524,27 +518,27 @@ public class RuleProcessor {
         }
     }
 
+    @SuppressWarnings("checkstyle:IllegalCatch")
     private ProcessResult processBlock(Map<String, Object> namespace, List<List<Object>> block) {
         ProcessResult result = ProcessResult.STATEMENT_CONTINUE;
 
         for (int statementNumber = 0; statementNumber < block.size(); statementNumber++) {
-            List<Object> statement = (List<Object>) block.get(statementNumber);
+            List<Object> statement = block.get(statementNumber);
             namespace.put(STATEMENT_NUMBER, Long.valueOf(statementNumber));
 
             try {
                 result = processStatement(namespace, statement);
             } catch (Exception e) {
-                throw new IllegalStateException(String.format("%s statement=%s %s",
-                        statementId(namespace), statement, e), e);
+                throw new IllegalStateException(
+                        String.format("%s statement=%s %s", statementId(namespace), statement, e), e);
             }
-            if (EnumSet.of(ProcessResult.BLOCK_CONTINUE, ProcessResult.RULE_SUCCESS,
-                    ProcessResult.RULE_FAIL).contains(result)) {
+            if (EnumSet.of(ProcessResult.BLOCK_CONTINUE, ProcessResult.RULE_SUCCESS, ProcessResult.RULE_FAIL)
+                    .contains(result)) {
                 break;
             } else if (result == ProcessResult.STATEMENT_CONTINUE) {
                 continue;
             } else {
-                throw new IllegalStateException(String.format("%s unexpected statement result: %s",
-                        result));
+                throw new IllegalStateException(String.format("%s unexpected statement result: %s", result));
             }
         }
         if (result == ProcessResult.STATEMENT_CONTINUE) {
@@ -558,58 +552,57 @@ public class RuleProcessor {
         String verb = getVerb(statement);
 
         switch (verb) {
-        case "set":
-            result = verbSet(verb, namespace, statement);
-            break;
-        case "length":
-            result = verbLength(verb, namespace, statement);
-            break;
-        case "interpolate":
-            result = verbInterpolate(verb, namespace, statement);
-            break;
-        case "append":
-            result = verbAppend(verb, namespace, statement);
-            break;
-        case "unique":
-            result = verbUnique(verb, namespace, statement);
-            break;
-        case "split":
-            result = verbSplit(verb, namespace, statement);
-            break;
-        case "join":
-            result = verbJoin(verb, namespace, statement);
-            break;
-        case "lower":
-            result = verbLower(verb, namespace, statement);
-            break;
-        case "upper":
-            result = verbUpper(verb, namespace, statement);
-            break;
-        case "in":
-            result = verbIn(verb, namespace, statement);
-            break;
-        case "not_in":
-            result = verbNotIn(verb, namespace, statement);
-            break;
-        case "compare":
-            result = verbCompare(verb, namespace, statement);
-            break;
-        case "regexp":
-            result = verbRegexp(verb, namespace, statement);
-            break;
-        case "regexp_replace":
-            result = verbRegexpReplace(verb, namespace, statement);
-            break;
-        case "exit":
-            result = verbExit(verb, namespace, statement);
-            break;
-        case "continue":
-            result = verbContinue(verb, namespace, statement);
-            break;
-        default:
-            throw new InvalidRuleException(String.format("unknown verb '%s'", verb));
+            case "set":
+                result = verbSet(verb, namespace, statement);
+                break;
+            case "length":
+                result = verbLength(verb, namespace, statement);
+                break;
+            case "interpolate":
+                result = verbInterpolate(verb, namespace, statement);
+                break;
+            case "append":
+                result = verbAppend(verb, namespace, statement);
+                break;
+            case "unique":
+                result = verbUnique(verb, namespace, statement);
+                break;
+            case "split":
+                result = verbSplit(verb, namespace, statement);
+                break;
+            case "join":
+                result = verbJoin(verb, namespace, statement);
+                break;
+            case "lower":
+                result = verbLower(verb, namespace, statement);
+                break;
+            case "upper":
+                result = verbUpper(verb, namespace, statement);
+                break;
+            case "in":
+                result = verbIn(verb, namespace, statement);
+                break;
+            case "not_in":
+                result = verbNotIn(verb, namespace, statement);
+                break;
+            case "compare":
+                result = verbCompare(verb, namespace, statement);
+                break;
+            case "regexp":
+                result = verbRegexp(verb, namespace, statement);
+                break;
+            case "regexp_replace":
+                result = verbRegexpReplace(verb, namespace, statement);
+                break;
+            case "exit":
+                result = verbExit(verb, namespace, statement);
+                break;
+            case "continue":
+                result = verbContinue(verb, namespace, statement);
+                break;
+            default:
+                throw new InvalidRuleException(String.format("unknown verb '%s'", verb));
         }
-
         return result;
     }
 
@@ -621,50 +614,47 @@ public class RuleProcessor {
         this.success = true;
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(String.format("%s verb='%s' success=%s variable: %s=%s",
-                    statementId(namespace), verb, this.success, variable, variable.get()));
+            LOG.debug(String.format("%s verb='%s' success=%s variable: %s=%s", statementId(namespace), verb,
+                    this.success, variable, variable.get()));
         }
         return ProcessResult.STATEMENT_CONTINUE;
     }
 
-    private ProcessResult verbLength(String verb, Map<String, Object> namespace,
-            List<Object> statement) {
+    private ProcessResult verbLength(String verb, Map<String, Object> namespace, List<Object> statement) {
         Token variable = getVariable(verb, statement, 1, namespace);
         Token parameter = getParameter(verb, statement, 2, namespace,
                 EnumSet.of(TokenType.ARRAY, TokenType.MAP, TokenType.STRING));
         long length;
 
         switch (parameter.type) {
-        case ARRAY: {
-            length = parameter.getListValue().size();
-        }
-            break;
-        case MAP: {
-            length = parameter.getMapValue().size();
-        }
-            break;
-        case STRING: {
-            length = parameter.getStringValue().length();
-        }
-            break;
-        default:
-            throw new IllegalStateException(String.format("unexpected token type: %s",
-                    parameter.type));
+            case ARRAY: {
+                length = parameter.getListValue().size();
+            }
+                break;
+            case MAP: {
+                length = parameter.getMapValue().size();
+            }
+                break;
+            case STRING: {
+                length = parameter.getStringValue().length();
+            }
+                break;
+            default:
+                throw new IllegalStateException(String.format("unexpected token type: %s", parameter.type));
         }
 
         variable.set(length);
         this.success = true;
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(String.format("%s verb='%s' success=%s variable: %s=%s parameter=%s",
-                    statementId(namespace), verb, this.success, variable, variable.get(),
-                    parameter.getObjectValue()));
+            LOG.debug(String.format("%s verb='%s' success=%s variable: %s=%s parameter=%s", statementId(namespace),
+                    verb, this.success, variable, variable.get(), parameter.getObjectValue()));
         }
         return ProcessResult.STATEMENT_CONTINUE;
     }
 
-    private ProcessResult verbInterpolate(String verb, Map<String, Object> namespace,
-            List<Object> statement) {
+    @SuppressWarnings("checkstyle:IllegalCatch")
+    private ProcessResult verbInterpolate(String verb, Map<String, Object> namespace, List<Object> statement) {
         Token variable = getVariable(verb, statement, 1, namespace);
         String string = (String) getRawParameter(verb, statement, 2, EnumSet.of(TokenType.STRING));
         String newValue = null;
@@ -672,52 +662,49 @@ public class RuleProcessor {
         try {
             newValue = substituteVariables(string, namespace);
         } catch (Exception e) {
-            throw new InvalidValueException(String.format(
-                    "verb '%s' failed, variable='%s' string='%s': %s", verb, variable, string, e));
+            throw new InvalidValueException(
+                    String.format("verb '%s' failed, variable='%s' string='%s': %s", verb, variable, string, e));
         }
         variable.set(newValue);
         this.success = true;
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(String.format("%s verb='%s' success=%s variable: %s=%s string='%s'",
-                    statementId(namespace), verb, this.success, variable, variable.get(), string));
+            LOG.debug(String.format("%s verb='%s' success=%s variable: %s=%s string='%s'", statementId(namespace), verb,
+                    this.success, variable, variable.get(), string));
         }
 
         return ProcessResult.STATEMENT_CONTINUE;
     }
 
-    private ProcessResult verbAppend(String verb, Map<String, Object> namespace,
-            List<Object> statement) {
-        Token variable = getToken(verb, statement, 1, namespace,
-                EnumSet.of(TokenStorageType.VARIABLE), EnumSet.of(TokenType.ARRAY));
+    @SuppressWarnings("checkstyle:IllegalCatch")
+    private ProcessResult verbAppend(String verb, Map<String, Object> namespace, List<Object> statement) {
+        Token variable = getToken(verb, statement, 1, namespace, EnumSet.of(TokenStorageType.VARIABLE),
+                EnumSet.of(TokenType.ARRAY));
         Token item = getParameter(verb, statement, 2, namespace, null);
 
         try {
             List<Object> list = variable.getListValue();
             list.add(item.getObjectValue());
         } catch (Exception e) {
-            throw new InvalidValueException(String.format(
-                    "verb '%s' failed, variable='%s' item='%s': %s", verb,
+            throw new InvalidValueException(String.format("verb '%s' failed, variable='%s' item='%s': %s", verb,
                     variable.getObjectValue(), item.getObjectValue(), e));
         }
         this.success = true;
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(String.format("%s verb='%s' success=%s variable: %s=%s item=%s",
-                    statementId(namespace), verb, this.success, variable, variable.get(),
-                    item.getObjectValue()));
+            LOG.debug(String.format("%s verb='%s' success=%s variable: %s=%s item=%s", statementId(namespace), verb,
+                    this.success, variable, variable.get(), item.getObjectValue()));
         }
 
         return ProcessResult.STATEMENT_CONTINUE;
     }
 
-    private ProcessResult verbUnique(String verb, Map<String, Object> namespace,
-            List<Object> statement) {
+    private ProcessResult verbUnique(String verb, Map<String, Object> namespace, List<Object> statement) {
         Token variable = getVariable(verb, statement, 1, namespace);
         Token array = getParameter(verb, statement, 2, namespace, EnumSet.of(TokenType.ARRAY));
 
-        List<Object> newValue = new ArrayList<Object>();
-        Set<Object> seen = new HashSet<Object>();
+        List<Object> newValue = new ArrayList<>();
+        Set<Object> seen = new HashSet<>();
 
         for (Object member : array.getListValue()) {
             if (seen.contains(member)) {
@@ -732,16 +719,15 @@ public class RuleProcessor {
         this.success = true;
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(String.format("%s verb='%s' success=%s variable: %s=%s array=%s",
-                    statementId(namespace), verb, this.success, variable, variable.get(),
-                    array.getObjectValue()));
+            LOG.debug(String.format("%s verb='%s' success=%s variable: %s=%s array=%s", statementId(namespace), verb,
+                    this.success, variable, variable.get(), array.getObjectValue()));
         }
 
         return ProcessResult.STATEMENT_CONTINUE;
     }
 
-    private ProcessResult verbSplit(String verb, Map<String, Object> namespace,
-            List<Object> statement) {
+    @SuppressWarnings("checkstyle:IllegalCatch")
+    private ProcessResult verbSplit(String verb, Map<String, Object> namespace, List<Object> statement) {
         Token variable = getVariable(verb, statement, 1, namespace);
         Token string = getParameter(verb, statement, 2, namespace, EnumSet.of(TokenType.STRING));
         Token pattern = getParameter(verb, statement, 3, namespace, EnumSet.of(TokenType.STRING));
@@ -752,16 +738,13 @@ public class RuleProcessor {
         try {
             regexp = Pattern.compile(pattern.getStringValue());
         } catch (Exception e) {
-            throw new InvalidValueException(String.format(
-                    "verb '%s' failed, bad regular expression pattern '%s', %s", verb,
-                    pattern.getObjectValue(), e));
+            throw new InvalidValueException(String.format("verb '%s' failed, bad regular expression pattern '%s', %s",
+                    verb, pattern.getObjectValue(), e));
         }
         try {
-            newValue = new ArrayList<String>(
-                    Arrays.asList(regexp.split((String) string.getStringValue())));
+            newValue = new ArrayList<>(Arrays.asList(regexp.split(string.getStringValue())));
         } catch (Exception e) {
-            throw new InvalidValueException(String.format(
-                    "verb '%s' failed, string='%s' pattern='%s', %s", verb,
+            throw new InvalidValueException(String.format("verb '%s' failed, string='%s' pattern='%s', %s", verb,
                     string.getObjectValue(), pattern.getObjectValue(), e));
         }
 
@@ -769,28 +752,25 @@ public class RuleProcessor {
         this.success = true;
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(String.format(
-                    "%s verb='%s' success=%s variable: %s=%s string='%s' pattern='%s'",
-                    statementId(namespace), verb, this.success, variable, variable.get(),
-                    string.getObjectValue(), pattern.getObjectValue()));
+            LOG.debug(String.format("%s verb='%s' success=%s variable: %s=%s string='%s' pattern='%s'",
+                    statementId(namespace), verb, this.success, variable, variable.get(), string.getObjectValue(),
+                    pattern.getObjectValue()));
         }
 
         return ProcessResult.STATEMENT_CONTINUE;
     }
 
-    private ProcessResult verbJoin(String verb, Map<String, Object> namespace,
-            List<Object> statement) {
+    @SuppressWarnings("checkstyle:IllegalCatch")
+    private ProcessResult verbJoin(String verb, Map<String, Object> namespace, List<Object> statement) {
         Token variable = getVariable(verb, statement, 1, namespace);
         Token array = getParameter(verb, statement, 2, namespace, EnumSet.of(TokenType.ARRAY));
-        Token conjunction = getParameter(verb, statement, 3, namespace,
-                EnumSet.of(TokenType.STRING));
+        Token conjunction = getParameter(verb, statement, 3, namespace, EnumSet.of(TokenType.STRING));
         String newValue;
 
         try {
             newValue = join(array.getListValue(), conjunction.getStringValue());
         } catch (Exception e) {
-            throw new InvalidValueException(String.format(
-                    "verb '%s' failed, array=%s conjunction='%s', %s", verb,
+            throw new InvalidValueException(String.format("verb '%s' failed, array=%s conjunction='%s', %s", verb,
                     array.getObjectValue(), conjunction.getObjectValue(), e));
         }
 
@@ -798,151 +778,146 @@ public class RuleProcessor {
         this.success = true;
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(String.format(
-                    "%s verb='%s' success=%s variable: %s=%s array='%s' conjunction='%s'",
-                    statementId(namespace), verb, this.success, variable, variable.get(),
-                    array.getObjectValue(), conjunction.getObjectValue()));
+            LOG.debug(String.format("%s verb='%s' success=%s variable: %s=%s array='%s' conjunction='%s'",
+                    statementId(namespace), verb, this.success, variable, variable.get(), array.getObjectValue(),
+                    conjunction.getObjectValue()));
         }
 
         return ProcessResult.STATEMENT_CONTINUE;
     }
 
-    private ProcessResult verbLower(String verb, Map<String, Object> namespace,
-            List<Object> statement) {
+    @SuppressWarnings("checkstyle:IllegalCatch")
+    private ProcessResult verbLower(String verb, Map<String, Object> namespace, List<Object> statement) {
         Token variable = getVariable(verb, statement, 1, namespace);
         Token parameter = getParameter(verb, statement, 2, namespace,
                 EnumSet.of(TokenType.STRING, TokenType.ARRAY, TokenType.MAP));
 
         try {
             switch (parameter.type) {
-            case STRING: {
-                String oldValue = parameter.getStringValue();
-                String newValue;
-                newValue = oldValue.toLowerCase();
-                variable.set(newValue);
-            }
-                break;
-            case ARRAY: {
-                List<Object> oldValue = parameter.getListValue();
-                List<Object> newValue = new ArrayList<Object>(oldValue.size());
-                String oldItem;
-                String newItem;
+                case STRING: {
+                    String oldValue = parameter.getStringValue();
+                    String newValue;
+                    newValue = oldValue.toLowerCase();
+                    variable.set(newValue);
+                }
+                    break;
+                case ARRAY: {
+                    List<Object> oldValue = parameter.getListValue();
+                    List<Object> newValue = new ArrayList<>(oldValue.size());
+                    String oldItem;
+                    String newItem;
 
-                for (Object item : oldValue) {
-                    try {
-                        oldItem = (String) item;
-                    } catch (ClassCastException e) {
-                        throw new InvalidValueException(String.format(
-                                "verb '%s' failed, array item (%s) is not a string, array=%s",
-                                verb, item, parameter.getObjectValue(), e));
+                    for (Object item : oldValue) {
+                        try {
+                            oldItem = (String) item;
+                        } catch (ClassCastException e) {
+                            throw new InvalidValueException(
+                                    String.format("verb '%s' failed, array item (%s)"
+                                            + "is not a string, array=%s", verb, item,
+                                            parameter.getObjectValue(), e));
+                        }
+                        newItem = oldItem.toLowerCase();
+                        newValue.add(newItem);
                     }
-                    newItem = oldItem.toLowerCase();
-                    newValue.add(newItem);
+                    variable.set(newValue);
                 }
-                variable.set(newValue);
-            }
-                break;
-            case MAP: {
-                Map<String, Object> oldValue = parameter.getMapValue();
-                Map<String, Object> newValue = new LinkedHashMap<String, Object>(oldValue.size());
+                    break;
+                case MAP: {
+                    Map<String, Object> oldValue = parameter.getMapValue();
+                    Map<String, Object> newValue = new LinkedHashMap<>(oldValue.size());
 
-                for (Map.Entry<String, Object> entry : oldValue.entrySet()) {
-                    String oldKey;
-                    String newKey;
-                    Object value = entry.getValue();
+                    for (Map.Entry<String, Object> entry : oldValue.entrySet()) {
+                        String oldKey;
+                        String newKey;
+                        Object value = entry.getValue();
 
-                    oldKey = entry.getKey();
-                    newKey = oldKey.toLowerCase();
-                    newValue.put(newKey, value);
+                        oldKey = entry.getKey();
+                        newKey = oldKey.toLowerCase();
+                        newValue.put(newKey, value);
+                    }
+                    variable.set(newValue);
                 }
-                variable.set(newValue);
-            }
-                break;
-            default:
-                throw new IllegalStateException(String.format("unexpected token type: %s",
-                        parameter.type));
+                    break;
+                default:
+                    throw new IllegalStateException(String.format("unexpected token type: %s", parameter.type));
             }
         } catch (Exception e) {
-            throw new InvalidValueException(String.format(
-                    "verb '%s' failed, variable='%s' parameter='%s': %s", verb, variable,
-                    parameter.getObjectValue(), e), e);
+            throw new InvalidValueException(String.format("verb '%s' failed, variable='%s' parameter='%s': %s", verb,
+                    variable, parameter.getObjectValue(), e), e);
         }
         this.success = true;
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(String.format("%s verb='%s' success=%s variable: %s=%s parameter=%s",
-                    statementId(namespace), verb, this.success, variable, variable.get(),
-                    parameter.getObjectValue()));
+            LOG.debug(String.format("%s verb='%s' success=%s variable: %s=%s parameter=%s", statementId(namespace),
+                    verb, this.success, variable, variable.get(), parameter.getObjectValue()));
         }
         return ProcessResult.STATEMENT_CONTINUE;
     }
 
-    private ProcessResult verbUpper(String verb, Map<String, Object> namespace,
-            List<Object> statement) {
+    @SuppressWarnings("checkstyle:IllegalCatch")
+    private ProcessResult verbUpper(String verb, Map<String, Object> namespace, List<Object> statement) {
         Token variable = getVariable(verb, statement, 1, namespace);
         Token parameter = getParameter(verb, statement, 2, namespace,
                 EnumSet.of(TokenType.STRING, TokenType.ARRAY, TokenType.MAP));
 
         try {
             switch (parameter.type) {
-            case STRING: {
-                String oldValue = parameter.getStringValue();
-                String newValue;
-                newValue = oldValue.toUpperCase();
-                variable.set(newValue);
-            }
-                break;
-            case ARRAY: {
-                List<Object> oldValue = parameter.getListValue();
-                List<Object> newValue = new ArrayList<Object>(oldValue.size());
-                String oldItem;
-                String newItem;
+                case STRING: {
+                    String oldValue = parameter.getStringValue();
+                    String newValue;
+                    newValue = oldValue.toUpperCase();
+                    variable.set(newValue);
+                }
+                    break;
+                case ARRAY: {
+                    List<Object> oldValue = parameter.getListValue();
+                    List<Object> newValue = new ArrayList<>(oldValue.size());
+                    String oldItem;
+                    String newItem;
 
-                for (Object item : oldValue) {
-                    try {
-                        oldItem = (String) item;
-                    } catch (ClassCastException e) {
-                        throw new InvalidValueException(String.format(
-                                "verb '%s' failed, array item (%s) is not a string, array=%s",
-                                verb, item, parameter.getObjectValue(), e));
+                    for (Object item : oldValue) {
+                        try {
+                            oldItem = (String) item;
+                        } catch (ClassCastException e) {
+                            throw new InvalidValueException(
+                                    String.format("verb '%s' failed, array item (%s)"
+                                            + " is not a string, array=%s", verb, item,
+                                            parameter.getObjectValue(), e));
+                        }
+                        newItem = oldItem.toUpperCase();
+                        newValue.add(newItem);
                     }
-                    newItem = oldItem.toUpperCase();
-                    newValue.add(newItem);
+                    variable.set(newValue);
                 }
-                variable.set(newValue);
-            }
-                break;
-            case MAP: {
-                Map<String, Object> oldValue = parameter.getMapValue();
-                Map<String, Object> newValue = new LinkedHashMap<String, Object>(oldValue.size());
+                    break;
+                case MAP: {
+                    Map<String, Object> oldValue = parameter.getMapValue();
+                    Map<String, Object> newValue = new LinkedHashMap<>(oldValue.size());
 
-                for (Map.Entry<String, Object> entry : oldValue.entrySet()) {
-                    String oldKey;
-                    String newKey;
-                    Object value = entry.getValue();
+                    for (Map.Entry<String, Object> entry : oldValue.entrySet()) {
+                        String oldKey;
+                        String newKey;
+                        Object value = entry.getValue();
 
-                    oldKey = entry.getKey();
-                    newKey = oldKey.toUpperCase();
-                    newValue.put(newKey, value);
+                        oldKey = entry.getKey();
+                        newKey = oldKey.toUpperCase();
+                        newValue.put(newKey, value);
+                    }
+                    variable.set(newValue);
                 }
-                variable.set(newValue);
-            }
-                break;
-            default:
-                throw new IllegalStateException(String.format("unexpected token type: %s",
-                        parameter.type));
+                    break;
+                default:
+                    throw new IllegalStateException(String.format("unexpected token type: %s", parameter.type));
             }
         } catch (Exception e) {
-            throw new InvalidValueException(String.format(
-                    "verb '%s' failed, variable='%s' parameter='%s': %s", verb, variable,
-                    parameter.getObjectValue(), e), e);
+            throw new InvalidValueException(String.format("verb '%s' failed, variable='%s' parameter='%s': %s", verb,
+                    variable, parameter.getObjectValue(), e), e);
         }
         this.success = true;
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(String.format("%s verb='%s' success=%s variable: %s=%s parameter=%s",
-                    statementId(namespace), verb, this.success, variable, variable.get(),
-                    parameter.getObjectValue()));
+            LOG.debug(String.format("%s verb='%s' success=%s variable: %s=%s parameter=%s", statementId(namespace),
+                    verb, this.success, variable, variable.get(), parameter.getObjectValue()));
         }
         return ProcessResult.STATEMENT_CONTINUE;
     }
@@ -953,86 +928,79 @@ public class RuleProcessor {
                 EnumSet.of(TokenType.ARRAY, TokenType.MAP, TokenType.STRING));
 
         switch (collection.type) {
-        case ARRAY: {
-            this.success = collection.getListValue().contains(member.getObjectValue());
-        }
-            break;
-        case MAP: {
-            if (member.type != TokenType.STRING) {
-                throw new InvalidTypeException(String.format(
-                        "verb '%s' requires parameter #1 to be a %swhen parameter #2 is a %s",
-                        TokenType.STRING, collection.type));
+            case ARRAY: {
+                this.success = collection.getListValue().contains(member.getObjectValue());
             }
-            this.success = collection.getMapValue().containsKey(member.getObjectValue());
-        }
-            break;
-        case STRING: {
-            if (member.type != TokenType.STRING) {
-                throw new InvalidTypeException(String.format(
-                        "verb '%s' requires parameter #1 to be a %swhen parameter #2 is a %s",
-                        TokenType.STRING, collection.type));
+                break;
+            case MAP: {
+                if (member.type != TokenType.STRING) {
+                    throw new InvalidTypeException(
+                            String.format("verb '%s' requires parameter #1 to be a %swhen parameter #2 is a %s",
+                                    TokenType.STRING, collection.type));
+                }
+                this.success = collection.getMapValue().containsKey(member.getObjectValue());
             }
-            this.success = (collection.getStringValue()).contains(member.getStringValue());
-        }
-            break;
-        default:
-            throw new IllegalStateException(String.format("unexpected token type: %s",
-                    collection.type));
+                break;
+            case STRING: {
+                if (member.type != TokenType.STRING) {
+                    throw new InvalidTypeException(
+                            String.format("verb '%s' requires parameter #1 to be a %swhen parameter #2 is a %s",
+                                    TokenType.STRING, collection.type));
+                }
+                this.success = collection.getStringValue().contains(member.getStringValue());
+            }
+                break;
+            default:
+                throw new IllegalStateException(String.format("unexpected token type: %s", collection.type));
         }
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(String.format("%s verb='%s' success=%s member=%s collection=%s",
-                    statementId(namespace), verb, this.success, member.getObjectValue(),
-                    collection.getObjectValue()));
+            LOG.debug(String.format("%s verb='%s' success=%s member=%s collection=%s", statementId(namespace), verb,
+                    this.success, member.getObjectValue(), collection.getObjectValue()));
         }
         return ProcessResult.STATEMENT_CONTINUE;
     }
 
-    private ProcessResult verbNotIn(String verb, Map<String, Object> namespace,
-            List<Object> statement) {
+    private ProcessResult verbNotIn(String verb, Map<String, Object> namespace, List<Object> statement) {
         Token member = getParameter(verb, statement, 1, namespace, null);
         Token collection = getParameter(verb, statement, 2, namespace,
                 EnumSet.of(TokenType.ARRAY, TokenType.MAP, TokenType.STRING));
 
         switch (collection.type) {
-        case ARRAY: {
-            this.success = !collection.getListValue().contains(member.getObjectValue());
-        }
-            break;
-        case MAP: {
-            if (member.type != TokenType.STRING) {
-                throw new InvalidTypeException(String.format(
-                        "verb '%s' requires parameter #1 to be a %swhen parameter #2 is a %s",
-                        TokenType.STRING, collection.type));
+            case ARRAY: {
+                this.success = !collection.getListValue().contains(member.getObjectValue());
             }
-            this.success = !collection.getMapValue().containsKey(member.getObjectValue());
-        }
-            break;
-        case STRING: {
-            if (member.type != TokenType.STRING) {
-                throw new InvalidTypeException(String.format(
-                        "verb '%s' requires parameter #1 to be a %swhen parameter #2 is a %s",
-                        TokenType.STRING, collection.type));
+                break;
+            case MAP: {
+                if (member.type != TokenType.STRING) {
+                    throw new InvalidTypeException(
+                            String.format("verb '%s' requires parameter #1 to be a %swhen parameter #2 is a %s",
+                                    TokenType.STRING, collection.type));
+                }
+                this.success = !collection.getMapValue().containsKey(member.getObjectValue());
             }
-            this.success = !(collection.getStringValue()).contains(member.getStringValue());
+                break;
+            case STRING: {
+                if (member.type != TokenType.STRING) {
+                    throw new InvalidTypeException(
+                            String.format("verb '%s' requires parameter #1 to be a %swhen parameter #2 is a %s",
+                                    TokenType.STRING, collection.type));
+                }
+                this.success = !collection.getStringValue().contains(member.getStringValue());
+            }
+                break;
+            default:
+                throw new IllegalStateException(String.format("unexpected token type: %s", collection.type));
         }
-            break;
-        default:
-            throw new IllegalStateException(String.format("unexpected token type: %s",
-                    collection.type));
-        }
-
         if (LOG.isDebugEnabled()) {
-            LOG.debug(String.format("%s verb='%s' success=%s member=%s collection=%s",
-                    statementId(namespace), verb, this.success, member.getObjectValue(),
-                    collection.getObjectValue()));
+            LOG.debug(String.format("%s verb='%s' success=%s member=%s collection=%s", statementId(namespace), verb,
+                    this.success, member.getObjectValue(), collection.getObjectValue()));
         }
 
         return ProcessResult.STATEMENT_CONTINUE;
     }
 
-    private ProcessResult verbCompare(String verb, Map<String, Object> namespace,
-            List<Object> statement) {
+    private ProcessResult verbCompare(String verb, Map<String, Object> namespace, List<Object> statement) {
         Token left = getParameter(verb, statement, 1, namespace, null);
         Token op = getParameter(verb, statement, 2, namespace, EnumSet.of(TokenType.STRING));
         Token right = getParameter(verb, statement, 3, namespace, null);
@@ -1042,158 +1010,154 @@ public class RuleProcessor {
         boolean result;
 
         if (left.type != right.type) {
-            throw new InvalidTypeException(String.format(
-                    "verb '%s' both items must have the same type left is %s and right is %s",
-                    verb, left.type, right.type));
+            throw new InvalidTypeException(
+                    String.format("verb '%s' both items must have the same type left is %s and right is %s", verb,
+                            left.type, right.type));
         } else {
             tokenType = left.type;
         }
 
         switch (opValue) {
-        case "==":
-        case "!=": {
-            switch (tokenType) {
-            case STRING: {
-                String leftValue = left.getStringValue();
-                String rightValue = right.getStringValue();
-                result = leftValue.equals(rightValue);
+            case "==":
+            case "!=": {
+                switch (tokenType) {
+                    case STRING: {
+                        String leftValue = left.getStringValue();
+                        String rightValue = right.getStringValue();
+                        result = leftValue.equals(rightValue);
+                    }
+                    break;
+                    case INTEGER: {
+                        Long leftValue = left.getLongValue();
+                        Long rightValue = right.getLongValue();
+                        result = leftValue.equals(rightValue);
+                    }
+                    break;
+                    case REAL: {
+                        Double leftValue = left.getDoubleValue();
+                        Double rightValue = right.getDoubleValue();
+                        result = leftValue.equals(rightValue);
+                    }
+                    break;
+                    case ARRAY: {
+                        List<Object> leftValue = left.getListValue();
+                        List<Object> rightValue = right.getListValue();
+                        result = leftValue.equals(rightValue);
+                    }
+                    break;
+                    case MAP: {
+                        Map<String, Object> leftValue = left.getMapValue();
+                        Map<String, Object> rightValue = right.getMapValue();
+                        result = leftValue.equals(rightValue);
+                    }
+                    break;
+                    case BOOLEAN: {
+                        Boolean leftValue = left.getBooleanValue();
+                        Boolean rightValue = right.getBooleanValue();
+                        result = leftValue.equals(rightValue);
+                    }
+                    break;
+                    case NULL: {
+                        result = left.getNullValue() == right.getNullValue();
+                    }
+                    break;
+                    default: {
+                        throw new IllegalStateException(String.format("unexpected token type: %s", tokenType));
+                    }
+                }
+                if (opValue.equals("!=")) { // negate the sense of the test
+                    result = !result;
+                }
             }
                 break;
-            case INTEGER: {
-                Long leftValue = left.getLongValue();
-                Long rightValue = right.getLongValue();
-                result = leftValue.equals(rightValue);
+            case "<":
+            case ">=": {
+                switch (tokenType) {
+                    case STRING: {
+                        String leftValue = left.getStringValue();
+                        String rightValue = right.getStringValue();
+                        result = leftValue.compareTo(rightValue) < 0;
+                    }
+                        break;
+                    case INTEGER: {
+                        Long leftValue = left.getLongValue();
+                        Long rightValue = right.getLongValue();
+                        result = leftValue < rightValue;
+                    }
+                        break;
+                    case REAL: {
+                        Double leftValue = left.getDoubleValue();
+                        Double rightValue = right.getDoubleValue();
+                        result = leftValue < rightValue;
+                    }
+                break;
+                    case ARRAY:
+                    case MAP:
+                    case BOOLEAN:
+                    case NULL: {
+                        throw new InvalidRuleException(String.format(invalidOp, opValue, tokenType));
+                    }
+                    default: {
+                        throw new IllegalStateException(String.format("unexpected token type: %s", tokenType));
+                    }
+                }
+                if (opValue.equals(">=")) { // negate the sense of the test
+                    result = !result;
+                }
             }
                 break;
-            case REAL: {
-                Double leftValue = left.getDoubleValue();
-                Double rightValue = right.getDoubleValue();
-                result = leftValue.equals(rightValue);
-            }
+            case ">":
+            case "<=": {
+                switch (tokenType) {
+                    case STRING: {
+                        String leftValue = left.getStringValue();
+                        String rightValue = right.getStringValue();
+                        result = leftValue.compareTo(rightValue) > 0;
+                    }
                 break;
-            case ARRAY: {
-                List<Object> leftValue = left.getListValue();
-                List<Object> rightValue = right.getListValue();
-                result = leftValue.equals(rightValue);
-            }
+                    case INTEGER: {
+                        Long leftValue = left.getLongValue();
+                        Long rightValue = right.getLongValue();
+                        result = leftValue > rightValue;
+                    }
                 break;
-            case MAP: {
-                Map<String, Object> leftValue = left.getMapValue();
-                Map<String, Object> rightValue = right.getMapValue();
-                result = leftValue.equals(rightValue);
-            }
+                    case REAL: {
+                        Double leftValue = left.getDoubleValue();
+                        Double rightValue = right.getDoubleValue();
+                        result = leftValue > rightValue;
+                    }
                 break;
-            case BOOLEAN: {
-                Boolean leftValue = left.getBooleanValue();
-                Boolean rightValue = right.getBooleanValue();
-                result = leftValue.equals(rightValue);
-            }
-                break;
-            case NULL: {
-                result = (left.getNullValue() == right.getNullValue());
+                    case ARRAY:
+                    case MAP:
+                    case BOOLEAN:
+                    case NULL: {
+                        throw new InvalidRuleException(String.format(invalidOp, opValue, tokenType));
+                    }
+                    default: {
+                        throw new IllegalStateException(String.format("unexpected token type: %s", tokenType));
+                    }
+                }
+                if (opValue.equals("<=")) { // negate the sense of the test
+                    result = !result;
+                }
             }
                 break;
             default: {
-                throw new IllegalStateException(String.format("unexpected token type: %s",
-                        tokenType));
+                throw new InvalidRuleException(
+                    String.format("verb '%s' has unknown comparison operator '%s'", verb, op.getObjectValue()));
             }
-            }
-            if (opValue.equals("!=")) { // negate the sense of the test
-                result = !result;
-            }
-        }
-            break;
-        case "<":
-        case ">=": {
-            switch (tokenType) {
-            case STRING: {
-                String leftValue = left.getStringValue();
-                String rightValue = right.getStringValue();
-                result = leftValue.compareTo(rightValue) < 0;
-            }
-                break;
-            case INTEGER: {
-                Long leftValue = left.getLongValue();
-                Long rightValue = right.getLongValue();
-                result = leftValue < rightValue;
-            }
-                break;
-            case REAL: {
-                Double leftValue = left.getDoubleValue();
-                Double rightValue = right.getDoubleValue();
-                result = leftValue < rightValue;
-            }
-                break;
-            case ARRAY:
-            case MAP:
-            case BOOLEAN:
-            case NULL: {
-                throw new InvalidRuleException(String.format(invalidOp, opValue, tokenType));
-            }
-            default: {
-                throw new IllegalStateException(String.format("unexpected token type: %s",
-                        tokenType));
-            }
-            }
-            if (opValue.equals(">=")) { // negate the sense of the test
-                result = !result;
-            }
-        }
-            break;
-        case ">":
-        case "<=": {
-            switch (tokenType) {
-            case STRING: {
-                String leftValue = left.getStringValue();
-                String rightValue = right.getStringValue();
-                result = leftValue.compareTo(rightValue) > 0;
-            }
-                break;
-            case INTEGER: {
-                Long leftValue = left.getLongValue();
-                Long rightValue = right.getLongValue();
-                result = leftValue > rightValue;
-            }
-                break;
-            case REAL: {
-                Double leftValue = left.getDoubleValue();
-                Double rightValue = right.getDoubleValue();
-                result = leftValue > rightValue;
-            }
-                break;
-            case ARRAY:
-            case MAP:
-            case BOOLEAN:
-            case NULL: {
-                throw new InvalidRuleException(String.format(invalidOp, opValue, tokenType));
-            }
-            default: {
-                throw new IllegalStateException(String.format("unexpected token type: %s",
-                        tokenType));
-            }
-            }
-            if (opValue.equals("<=")) { // negate the sense of the test
-                result = !result;
-            }
-        }
-            break;
-        default: {
-            throw new InvalidRuleException(String.format(
-                    "verb '%s' has unknown comparison operator '%s'", verb, op.getObjectValue()));
-        }
         }
         this.success = result;
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(String.format("%s verb='%s' success=%s left=%s op='%s' right=%s",
-                    statementId(namespace), verb, this.success, left.getObjectValue(),
-                    op.getObjectValue(), right.getObjectValue()));
+            LOG.debug(String.format("%s verb='%s' success=%s left=%s op='%s' right=%s", statementId(namespace), verb,
+                    this.success, left.getObjectValue(), op.getObjectValue(), right.getObjectValue()));
         }
         return ProcessResult.STATEMENT_CONTINUE;
     }
 
-    private ProcessResult verbRegexp(String verb, Map<String, Object> namespace,
-            List<Object> statement) {
+    @SuppressWarnings("checkstyle:IllegalCatch")
+    private ProcessResult verbRegexp(String verb, Map<String, Object> namespace, List<Object> statement) {
         Token string = getParameter(verb, statement, 1, namespace, EnumSet.of(TokenType.STRING));
         Token pattern = getParameter(verb, statement, 2, namespace, EnumSet.of(TokenType.STRING));
 
@@ -1203,9 +1167,8 @@ public class RuleProcessor {
         try {
             regexp = Pattern.compile(pattern.getStringValue());
         } catch (Exception e) {
-            throw new InvalidValueException(String.format(
-                    "verb '%s' failed, bad regular expression pattern '%s', %s", verb,
-                    pattern.getObjectValue(), e));
+            throw new InvalidValueException(String.format("verb '%s' failed, bad regular expression pattern '%s', %s",
+                    verb, pattern.getObjectValue(), e));
         }
         matcher = regexp.matcher(string.getStringValue());
 
@@ -1215,29 +1178,25 @@ public class RuleProcessor {
             namespace.put(REGEXP_MAP_VARIABLE, regexpGroupMap(pattern.getStringValue(), matcher));
         } else {
             this.success = false;
-            namespace.put(REGEXP_ARRAY_VARIABLE, new ArrayList<Object>());
+            namespace.put(REGEXP_ARRAY_VARIABLE, new ArrayList<>());
             namespace.put(REGEXP_MAP_VARIABLE, new HashMap<String, Object>());
         }
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(String.format(
-                    "%s verb='%s' success=%s string='%s' pattern='%s' %s=%s %s=%s",
-                    statementId(namespace), verb, this.success, string.getObjectValue(),
-                    pattern.getObjectValue(), REGEXP_ARRAY_VARIABLE,
-                    namespace.get(REGEXP_ARRAY_VARIABLE), REGEXP_MAP_VARIABLE,
+            LOG.debug(String.format("%s verb='%s' success=%s string='%s' pattern='%s' %s=%s %s=%s",
+                    statementId(namespace), verb, this.success, string.getObjectValue(), pattern.getObjectValue(),
+                    REGEXP_ARRAY_VARIABLE, namespace.get(REGEXP_ARRAY_VARIABLE), REGEXP_MAP_VARIABLE,
                     namespace.get(REGEXP_MAP_VARIABLE)));
         }
 
         return ProcessResult.STATEMENT_CONTINUE;
     }
 
-    private ProcessResult verbRegexpReplace(String verb, Map<String, Object> namespace,
-            List<Object> statement) {
-        Token variable = getVariable(verb, statement, 1, namespace);
+    @SuppressWarnings("checkstyle:IllegalCatch")
+    private ProcessResult verbRegexpReplace(String verb, Map<String, Object> namespace, List<Object> statement) {
         Token string = getParameter(verb, statement, 2, namespace, EnumSet.of(TokenType.STRING));
         Token pattern = getParameter(verb, statement, 3, namespace, EnumSet.of(TokenType.STRING));
-        Token replacement = getParameter(verb, statement, 4, namespace,
-                EnumSet.of(TokenType.STRING));
+        Token replacement = getParameter(verb, statement, 4, namespace, EnumSet.of(TokenType.STRING));
 
         Pattern regexp;
         Matcher matcher;
@@ -1246,36 +1205,32 @@ public class RuleProcessor {
         try {
             regexp = Pattern.compile(pattern.getStringValue());
         } catch (Exception e) {
-            throw new InvalidValueException(String.format(
-                    "verb '%s' failed, bad regular expression pattern '%s', %s", verb,
-                    pattern.getObjectValue(), e));
+            throw new InvalidValueException(String.format("verb '%s' failed, bad regular expression pattern '%s', %s",
+                    verb, pattern.getObjectValue(), e));
         }
         matcher = regexp.matcher(string.getStringValue());
 
         newValue = matcher.replaceAll(replacement.getStringValue());
+        Token variable = getVariable(verb, statement, 1, namespace);
         variable.set(newValue);
         this.success = true;
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(String.format(
-                    "%s verb='%s' success=%s variable: %s=%s string='%s' pattern='%s' replacement='%s'",
-                    statementId(namespace), verb, this.success, variable, variable.get(),
-                    string.getObjectValue(), pattern.getObjectValue(), replacement.getObjectValue()));
+            LOG.debug(String.format("%s verb='%s' success=%s variable: %s=%s string='%s' pattern='%s' replacement='%s'",
+                    statementId(namespace), verb, this.success, variable, variable.get(), string.getObjectValue(),
+                    pattern.getObjectValue(), replacement.getObjectValue()));
         }
 
         return ProcessResult.STATEMENT_CONTINUE;
     }
 
-    private ProcessResult verbExit(String verb, Map<String, Object> namespace,
-            List<Object> statement) {
+    private ProcessResult verbExit(String verb, Map<String, Object> namespace, List<Object> statement) {
         ProcessResult statementResult = ProcessResult.STATEMENT_CONTINUE;
 
-        Token exitStatusParam = getParameter(verb, statement, 1, namespace,
-                EnumSet.of(TokenType.STRING));
-        Token criteriaParam = getParameter(verb, statement, 2, namespace,
-                EnumSet.of(TokenType.STRING));
-        String exitStatus = (exitStatusParam.getStringValue()).toLowerCase();
-        String criteria = (criteriaParam.getStringValue()).toLowerCase();
+        Token exitStatusParam = getParameter(verb, statement, 1, namespace, EnumSet.of(TokenType.STRING));
+        Token criteriaParam = getParameter(verb, statement, 2, namespace, EnumSet.of(TokenType.STRING));
+        String exitStatus = exitStatusParam.getStringValue().toLowerCase();
+        String criteria = criteriaParam.getStringValue().toLowerCase();
         ProcessResult result;
         boolean doExit;
 
@@ -1284,8 +1239,7 @@ public class RuleProcessor {
         } else if (exitStatus.equals("rule_fails")) {
             result = ProcessResult.RULE_FAIL;
         } else {
-            throw new InvalidRuleException(String.format("verb='%s' unknown exit status '%s'",
-                    verb, exitStatus));
+            throw new InvalidRuleException(String.format("verb='%s' unknown exit status '%s'", verb, exitStatus));
         }
 
         if (criteria.equals("if_success")) {
@@ -1305,8 +1259,7 @@ public class RuleProcessor {
         } else if (criteria.equals("never")) {
             doExit = false;
         } else {
-            throw new InvalidRuleException(String.format("verb='%s' unknown exit criteria '%s'",
-                    verb, criteria));
+            throw new InvalidRuleException(String.format("verb='%s' unknown exit criteria '%s'", verb, criteria));
         }
 
         if (doExit) {
@@ -1314,21 +1267,17 @@ public class RuleProcessor {
         }
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(String.format(
-                    "%s verb='%s' success=%s status=%s criteria=%s exiting=%s result=%s",
-                    statementId(namespace), verb, this.success, exitStatus, criteria, doExit,
-                    statementResult));
+            LOG.debug(String.format("%s verb='%s' success=%s status=%s criteria=%s exiting=%s result=%s",
+                    statementId(namespace), verb, this.success, exitStatus, criteria, doExit, statementResult));
         }
 
         return statementResult;
     }
 
-    private ProcessResult verbContinue(String verb, Map<String, Object> namespace,
-            List<Object> statement) {
+    private ProcessResult verbContinue(String verb, Map<String, Object> namespace, List<Object> statement) {
         ProcessResult statementResult = ProcessResult.STATEMENT_CONTINUE;
-        Token criteriaParam = getParameter(verb, statement, 1, namespace,
-                EnumSet.of(TokenType.STRING));
-        String criteria = (criteriaParam.getStringValue()).toLowerCase();
+        Token criteriaParam = getParameter(verb, statement, 1, namespace, EnumSet.of(TokenType.STRING));
+        String criteria = criteriaParam.getStringValue().toLowerCase();
         boolean doContinue;
 
         if (criteria.equals("if_success")) {
@@ -1348,8 +1297,7 @@ public class RuleProcessor {
         } else if (criteria.equals("never")) {
             doContinue = false;
         } else {
-            throw new InvalidRuleException(String.format(
-                    "verb='%s' unknown continue criteria '%s'", verb, criteria));
+            throw new InvalidRuleException(String.format("verb='%s' unknown continue criteria '%s'", verb, criteria));
         }
 
         if (doContinue) {
@@ -1357,13 +1305,10 @@ public class RuleProcessor {
         }
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(String.format(
-                    "%s verb='%s' success=%s criteria=%s continuing=%s result=%s",
-                    statementId(namespace), verb, this.success, criteria, doContinue,
-                    statementResult));
+            LOG.debug(String.format("%s verb='%s' success=%s criteria=%s continuing=%s result=%s",
+                    statementId(namespace), verb, this.success, criteria, doContinue, statementResult));
         }
 
         return statementResult;
     }
-
 }

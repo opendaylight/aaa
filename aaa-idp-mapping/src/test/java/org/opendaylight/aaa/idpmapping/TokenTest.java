@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Red Hat, Inc.  All rights reserved.
+ * Copyright (c) 2016, 2017 Red Hat, Inc.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.opendaylight.aaa.idpmapping.Token.TokenStorageType;
+import org.opendaylight.aaa.idpmapping.Token.TokenType;
 
 @Ignore
 public class TokenTest {
@@ -30,9 +32,9 @@ public class TokenTest {
             });
         }
     };
-    private Object input = "$foo1[0]";
-    private Token token = new Token(input, namespace);
-    private Token mapToken = new Token(namespace, namespace);
+    private final Object input = "$foo1[0]";
+    private final Token token = new Token(input, namespace);
+    private final Token mapToken = new Token(namespace, namespace);
 
     @Test
     public void testToken() {

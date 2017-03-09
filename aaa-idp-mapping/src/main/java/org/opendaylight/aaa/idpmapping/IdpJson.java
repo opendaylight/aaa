@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Red Hat, Inc.  All rights reserved.
+ * Copyright (c) 2014, 2017 Red Hat, Inc.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -69,51 +69,48 @@ public class IdpJson {
      */
     private Object loadJsonItem(JsonParser parser, Event event) {
         switch (event) {
-        case START_OBJECT: {
-            return loadJsonObject(parser, event);
-        }
-        case START_ARRAY: {
-            return loadJsonArray(parser, event);
-        }
-        case VALUE_NULL: {
-            return null;
-        }
-        case VALUE_NUMBER: {
-            if (parser.isIntegralNumber()) {
-                return parser.getLong();
-            } else {
-                return parser.getBigDecimal().doubleValue();
+            case START_OBJECT: {
+                return loadJsonObject(parser, event);
             }
-        }
-        case VALUE_STRING: {
-            return parser.getString();
-        }
-        case VALUE_TRUE: {
-            return Boolean.TRUE;
-        }
-        case VALUE_FALSE: {
-            return Boolean.FALSE;
-        }
-        default: {
-            JsonLocation location = parser.getLocation();
-            throw new IllegalStateException(String.format(
-                    "unknown JSON parsing event %s, location(line=%d column=%d offset=%d)", event,
-                    location.getLineNumber(), location.getColumnNumber(),
-                    location.getStreamOffset()));
-        }
+            case START_ARRAY: {
+                return loadJsonArray(parser, event);
+            }
+            case VALUE_NULL: {
+                return null;
+            }
+            case VALUE_NUMBER: {
+                if (parser.isIntegralNumber()) {
+                    return parser.getLong();
+                } else {
+                    return parser.getBigDecimal().doubleValue();
+                }
+            }
+            case VALUE_STRING: {
+                return parser.getString();
+            }
+            case VALUE_TRUE: {
+                return Boolean.TRUE;
+            }
+            case VALUE_FALSE: {
+                return Boolean.FALSE;
+            }
+            default: {
+                JsonLocation location = parser.getLocation();
+                throw new IllegalStateException(
+                        String.format("unknown JSON parsing event %s, location(line=%d column=%d offset=%d)", event,
+                                location.getLineNumber(), location.getColumnNumber(), location.getStreamOffset()));
+            }
         }
     }
 
     private List<Object> loadJsonArray(JsonParser parser, Event event) {
-        List<Object> list = new ArrayList<Object>();
+        List<Object> list = new ArrayList<>();
 
         if (event != Event.START_ARRAY) {
             JsonLocation location = parser.getLocation();
-            throw new IllegalStateException(
-                    String.format(
-                            "expected JSON parsing event to be START_ARRAY, not %s location(line=%d column=%d offset=%d)",
-                            event, location.getLineNumber(), location.getColumnNumber(),
-                            location.getStreamOffset()));
+            throw new IllegalStateException(String.format(
+                    "expected JSON parsing event to be START_ARRAY, not %s location(line=%d column=%d offset=%d)",
+                    event, location.getLineNumber(), location.getColumnNumber(), location.getStreamOffset()));
         }
         event = parser.next(); // consume START_ARRAY
         while (event != Event.END_ARRAY) {
@@ -127,12 +124,11 @@ public class IdpJson {
     }
 
     private Map<String, Object> loadJsonObject(JsonParser parser, Event event) {
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        Map<String, Object> map = new LinkedHashMap<>();
 
         if (event != Event.START_OBJECT) {
             JsonLocation location = parser.getLocation();
-            throw new IllegalStateException(String.format(
-                    "expected JSON parsing event to be START_OBJECT, not %s, ",
+            throw new IllegalStateException(String.format("expected JSON parsing event to be START_OBJECT, not %s, ",
                     "location(line=%d column=%d offset=%d)", event, location.getLineNumber(),
                     location.getColumnNumber(), location.getStreamOffset()));
         }
@@ -148,11 +144,9 @@ public class IdpJson {
                 map.put(key, value);
             } else {
                 JsonLocation location = parser.getLocation();
-                throw new IllegalStateException(
-                        String.format(
-                                "expected JSON parsing event to be KEY_NAME, not %s, location(line=%d column=%d offset=%d)",
-                                event, location.getLineNumber(), location.getColumnNumber(),
-                                location.getStreamOffset()));
+                throw new IllegalStateException(String.format(
+                        "expected JSON parsing event to be KEY_NAME, not %s, location(line=%d column=%d offset=%d)",
+                        event, location.getLineNumber(), location.getColumnNumber(), location.getStreamOffset()));
 
             }
             event = parser.next(); // next key or END_OBJECT
@@ -161,7 +155,7 @@ public class IdpJson {
     }
 
     public String dumpJson(Object obj) {
-        Map<String, Object> properties = new HashMap<String, Object>(1);
+        Map<String, Object> properties = new HashMap<>(1);
         properties.put(JsonGenerator.PRETTY_PRINTING, true);
         JsonGeneratorFactory generatorFactory = Json.createGeneratorFactory(properties);
         StringWriter stringWriter = new StringWriter();
@@ -195,10 +189,9 @@ public class IdpJson {
         } else if (obj instanceof Double) {
             generator.write(((Double) obj).doubleValue());
         } else {
-            throw new IllegalStateException(
-                    String.format(
-                            "unsupported data type, must be String, Long, Double, Boolean, List, Map, or null, not %s",
-                            obj.getClass().getSimpleName()));
+            throw new IllegalStateException(String.format(
+                    "unsupported data type, must be String, Long, Double, Boolean, List, Map, or null, not %s",
+                    obj.getClass().getSimpleName()));
         }
     }
 
@@ -237,13 +230,11 @@ public class IdpJson {
             } else if (obj instanceof Double) {
                 generator.write(key, ((Double) obj).doubleValue());
             } else {
-                throw new IllegalStateException(
-                        String.format(
-                                "unsupported data type, must be String, Long, Double, Boolean, List, Map, or null, not %s",
-                                obj.getClass().getSimpleName()));
+                throw new IllegalStateException(String.format(
+                        "unsupported data type, must be String, Long, Double, Boolean, List, Map, or null, not %s",
+                        obj.getClass().getSimpleName()));
             }
         }
         generator.writeEnd();
     }
-
 }

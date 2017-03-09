@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Red Hat, Inc.  All rights reserved.
+ * Copyright (c) 2016, 2017 Red Hat, Inc.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -26,6 +26,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.opendaylight.aaa.idpmapping.RuleProcessor.ProcessResult;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.api.support.membermodification.MemberMatcher;
 import org.powermock.api.support.membermodification.MemberModifier;
@@ -48,7 +49,7 @@ public class RuleProcessorTest {
 
     @Test
     public void testJoin() {
-        List<Object> list = new ArrayList<Object>();
+        List<Object> list = new ArrayList<>();
         list.add("str1");
         list.add("str2");
         list.add("str3");
@@ -102,14 +103,7 @@ public class RuleProcessorTest {
 
     @Test
     public void testProcess() throws Exception {
-        String json = " {\"rules\":[" + "{\"Name\":\"user\", \"Id\":1},"
-                + "{\"Name\":\"Admin\", \"Id\":2}]} ";
-        Map<String, Object> mapping = new HashMap<String, Object>() {
-            {
-                put("Name", "Admin");
-            }
-        };
-        List<Map<String, Object>> internalRules = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> internalRules = new ArrayList<>();
         Map<String, Object> internalRule = new HashMap<String, Object>() {
             {
                 put("Name", "Admin");
@@ -124,9 +118,15 @@ public class RuleProcessorTest {
                 ProcessResult.RULE_SUCCESS);
         PowerMockito.suppress(MemberMatcher.method(RuleProcessor.class, "getMapping", Map.class,
                 Map.class));
+        Map<String, Object> mapping = new HashMap<String, Object>() {
+            {
+                put("Name", "Admin");
+            }
+        };
         when(ruleProcess.getMapping(any(Map.class), any(Map.class))).thenReturn(mapping);
+        String json = " {\"rules\":[" + "{\"Name\":\"user\", \"Id\":1},"
+                + "{\"Name\":\"Admin\", \"Id\":2}]} ";
         Whitebox.invokeMethod(ruleProcess, "process", json);
         verify(ruleProcess, times(3)).getMapping(any(Map.class), any(Map.class));
     }
-
 }
