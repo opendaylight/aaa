@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_911b0f80",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IIDMStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-09T00:57:10Z",
+      "side": 1,
+      "message": "Not the most descriptive comment ever ;) but I\u0027ll accept it for now.",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "d178e7da0c44caff00676077cba16060be6486d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
