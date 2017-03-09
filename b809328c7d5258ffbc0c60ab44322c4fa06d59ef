@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_71c2ebe9",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-09T00:12:50Z",
+      "side": 1,
+      "message": "If you initialize roles in the declaration (line 39) then you don\u0027t need to do \"this();\".  Actually, you may not even want to expose both constructors.  Is there a case where there should be a token with no roles?",
+      "range": {
+        "startLine": 46,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 19
+      },
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_d1b5977e",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-09T00:12:50Z",
+      "side": 1,
+      "message": "This should be called addRoles, not setRoles",
+      "range": {
+        "startLine": 50,
+        "startChar": 20,
+        "endLine": 50,
+        "endChar": 28
+      },
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_b1b8d375",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-09T00:12:50Z",
+      "side": 1,
+      "message": "Please remove dead space.",
+      "range": {
+        "startLine": 76,
+        "startChar": 48,
+        "endLine": 76,
+        "endChar": 49
+      },
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_11b39f98",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-09T00:12:50Z",
+      "side": 1,
+      "message": "Please move these magic Strings to constants.",
+      "range": {
+        "startLine": 126,
+        "startChar": 29,
+        "endLine": 126,
+        "endChar": 40
+      },
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_f1ad3b32",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-09T00:12:50Z",
+      "side": 1,
+      "message": "Usually we just use \"e\", but that is just a stylistic nit.",
+      "range": {
+        "startLine": 132,
+        "startChar": 40,
+        "endLine": 132,
+        "endChar": 52
+      },
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_51a9a722",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-09T00:12:50Z",
+      "side": 1,
+      "message": "Please remove the space here.",
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_31a4e349",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequestTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-09T00:12:50Z",
+      "side": 1,
+      "message": "Please remove the extra space.",
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_91666f28",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequestTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-09T00:12:50Z",
+      "side": 1,
+      "message": "Please remove the extra space.",
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_d16c770a",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequestTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-03-09T00:12:50Z",
+      "side": 1,
+      "message": "Strange looking... please keep \"client.resouce(uri)\" on the same line then do new lines for the rest.",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 30
+      },
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
