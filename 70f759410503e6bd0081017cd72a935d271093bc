@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_986debce",
+        "filename": "aaa-cert/src/test/java/org/opendaylight/aaa/cert/test/KeyStoresDataUtilsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-03-09T18:24:37Z",
+      "side": 1,
+      "message": "final",
+      "revId": "70f759410503e6bd0081017cd72a935d271093bc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_787007a4",
+        "filename": "aaa-cert/src/test/java/org/opendaylight/aaa/cert/test/KeyStoresDataUtilsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-03-09T18:24:37Z",
+      "side": 1,
+      "message": "final",
+      "revId": "70f759410503e6bd0081017cd72a935d271093bc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_587703a0",
+        "filename": "aaa-cert/src/test/java/org/opendaylight/aaa/cert/test/KeyStoresDataUtilsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-03-09T18:24:37Z",
+      "side": 1,
+      "message": "plz move this to before setup method, it should not affect the test",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 106,
+        "endChar": 98
+      },
+      "revId": "70f759410503e6bd0081017cd72a935d271093bc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_78592734",
+        "filename": "aaa-cert/src/test/java/org/opendaylight/aaa/cert/test/KeyStoresDataUtilsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-03-09T18:24:37Z",
+      "side": 1,
+      "message": "you should also test if it equal the encryptedBytes",
+      "range": {
+        "startLine": 122,
+        "startChar": 8,
+        "endLine": 122,
+        "endChar": 59
+      },
+      "revId": "70f759410503e6bd0081017cd72a935d271093bc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_d843f33f",
+        "filename": "aaa-cert/src/test/java/org/opendaylight/aaa/cert/test/KeyStoresDataUtilsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-03-09T18:24:37Z",
+      "side": 1,
+      "message": "test if the bundle name is the same",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 37
+      },
+      "revId": "70f759410503e6bd0081017cd72a935d271093bc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_b83eefb5",
+        "filename": "aaa-cert/src/test/java/org/opendaylight/aaa/cert/test/KeyStoresDataUtilsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-03-09T18:24:37Z",
+      "side": 1,
+      "message": "same as above and for all tests, check if the return object has an expected value not just null.",
+      "range": {
+        "startLine": 131,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 41
+      },
+      "revId": "70f759410503e6bd0081017cd72a935d271093bc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
