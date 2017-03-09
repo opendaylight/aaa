@@ -32,7 +32,7 @@ public class Activator extends DependencyActivatorBase {
         manager.add(createComponent().setInterface(new String[] { TokenStore.class.getName() },
                 null).setImplementation(ts));
         context.registerService(ManagedService.class.getName(), ts,
-                addPid(DefaultTokenStore.defaults));
+                addPid(DefaultTokenStore.DEFAULTS));
     }
 
     @Override
