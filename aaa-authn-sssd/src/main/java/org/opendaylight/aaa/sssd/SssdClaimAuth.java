@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -8,6 +8,7 @@
 
 package org.opendaylight.aaa.sssd;
 
+import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,9 +42,9 @@ public class SssdClaimAuth implements ClaimAuth {
     private RuleProcessor ruleProcessor = null;
 
     // Called by DM when all required dependencies are satisfied.
-    void init(Component c) {
+    void init(Component componet) {
         LOG.info("Initializing SSSD Plugin");
-        Map<String, Object> properties = new HashMap<String, Object>(1);
+        Map<String, Object> properties = new HashMap<>(1);
         properties.put(JsonGenerator.PRETTY_PRINTING, true);
         generatorFactory = Json.createGeneratorFactory(properties);
 
@@ -56,16 +57,16 @@ public class SssdClaimAuth implements ClaimAuth {
         Path mappingRulesPath = Paths.get(mappingRulesFile);
 
         if (!Files.exists(mappingRulesPath)) {
-            LOG.warn(String.format("mapping rules file (%s) "
-                    + "does not exist, SssdClaimAuth will be disabled", mappingRulesFile));
+            LOG.warn(String.format("mapping rules file (%s) " + "does not exist, SssdClaimAuth will be disabled",
+                    mappingRulesFile));
             return;
         }
 
         try {
             ruleProcessor = new RuleProcessor(mappingRulesPath, null);
-        } catch (Exception e) {
-            LOG.error(String.format("mapping rules file (%s) "
-                    + "could not be loaded, SssdClaimAuth will be disabled. " + "error = %s",
+        } catch (IOException e) {
+            LOG.error(String.format(
+                    "mapping rules file (%s) " + "could not be loaded, SssdClaimAuth will be disabled. " + "error = %s",
                     mappingRulesFile, e));
         }
     }
@@ -74,6 +75,7 @@ public class SssdClaimAuth implements ClaimAuth {
      * Transform a Map of assertions into a {@link Claim} via a set of mapping
      * rules.
      *
+     * <p>
      * A set of mapping rules have been previously loaded. the incoming
      * assertion is converted to a JSON document and presented to the
      * {@link RuleProcessor}. If the RuleProcessor can successfully transform
@@ -82,25 +84,27 @@ public class SssdClaimAuth implements ClaimAuth {
      * should return one or more of the following which will be used to populate
      * the Claim.
      *
-     * <dl>
      * <dt>ClientId</dt>
      * <dd>A string.
      *
-     * @see org.opendaylight.aaa.api.Claim#clientId() </dd>
+     * @see org.opendaylight.aaa.api.Claim#clientId()</dd>
      *
-     *      <dt>UserId</dt> <dd>A string.
-     * @see org.opendaylight.aaa.api.Claim#userId() </dd>
+     *      <dt>UserId</dt>
+     *      <dd>A string.
+     * @see org.opendaylight.aaa.api.Claim#userId()</dd>
      *
-     *      <dt>User</dt> <dd>A string.
-     * @see org.opendaylight.aaa.api.Claim#user() </dd>
+     *      <dt>User</dt>
+     *      <dd>A string.
+     * @see org.opendaylight.aaa.api.Claim#user()</dd>
      *
-     *      <dt>Domain</dt> <dd>A string.
-     * @see org.opendaylight.aaa.api.Claim#domain() </dd>
+     *      <dt>Domain</dt>
+     *      <dd>A string.
+     * @see org.opendaylight.aaa.api.Claim#domain()</dd>
      *
-     *      <dt>Roles</dt> <dd>An array of strings.
-     * @see org.opendaylight.aaa.api.Claim#roles() </dd>
+     *      <dt>Roles</dt>
+     *      <dd>An array of strings.
+     * @see org.opendaylight.aaa.api.Claim#roles()</dd>
      *
-     *      </dl>
      *
      * @param assertion
      *            A Map of name/value assertions provided by an external IdP
@@ -110,7 +114,6 @@ public class SssdClaimAuth implements ClaimAuth {
     @Override
     public Claim transform(Map<String, Object> assertion) {
         String assertionJson;
-        Map<String, Object> mapped;
         assertionJson = claimToJson(assertion);
 
         if (ruleProcessor == null) {
@@ -121,7 +124,7 @@ public class SssdClaimAuth implements ClaimAuth {
         if (LOG.isDebugEnabled()) {
             LOG.debug("assertionJson=\n{}", assertionJson);
         }
-
+        Map<String, Object> mapped;
         mapped = ruleProcessor.process(assertionJson);
         if (mapped == null) {
             if (LOG.isDebugEnabled()) {
@@ -166,6 +169,7 @@ public class SssdClaimAuth implements ClaimAuth {
     /**
      * Convert a Claim Map into a JSON object.
      *
+     * <p>
      * Given a Map of name/value pairs convert it into a JSON object and return
      * it as a string. This is not a general purpose routine used to convert any
      * Map into JSON because a claim has the restriction that each value must be
@@ -179,7 +183,6 @@ public class SssdClaimAuth implements ClaimAuth {
      * <li>Boolean</li>
      * <li>null</li>
      * </ul>
-     *
      * See also {@link ClaimAuth}.
      *
      * @param claim
@@ -210,8 +213,8 @@ public class SssdClaimAuth implements ClaimAuth {
             } else if (value == null) {
                 generator.write(name, JsonValue.NULL);
             } else {
-                LOG.warn(String.format("ignoring claim unsupported value type "
-                        + "entry %s has type %s", name, value.getClass().getSimpleName()));
+                LOG.warn(String.format("ignoring claim unsupported value type " + "entry %s has type %s", name,
+                        value.getClass().getSimpleName()));
             }
         }
         generator.writeEnd();
