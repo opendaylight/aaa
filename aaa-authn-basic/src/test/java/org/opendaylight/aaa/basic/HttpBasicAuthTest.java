@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -72,7 +72,7 @@ public class HttpBasicAuthTest {
     }
 
     @Test(expected = AuthenticationException.class)
-    public void testValidateBadPasswordNoDOMAIN() throws UnsupportedEncodingException {
+    public void testValidateBadPasswordNoDomain() throws UnsupportedEncodingException {
         String data = USERNAME + ":bozo";
         Map<String, List<String>> headers = new HashMap<>();
         headers.put("Authorization",
