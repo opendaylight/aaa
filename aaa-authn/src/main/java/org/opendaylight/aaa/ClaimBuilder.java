@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -27,7 +27,7 @@ import org.opendaylight.aaa.api.Claim;
 public class ClaimBuilder {
     private String userId = "";
     private String user = "";
-    private Set<String> roles = new LinkedHashSet<>();
+    private final Set<String> roles = new LinkedHashSet<>();
     private String clientId = "";
     private String domain = "";
 
@@ -92,7 +92,7 @@ public class ClaimBuilder {
             userId = base.userId;
             user = base.user;
             domain = base.domain;
-            roles = ImmutableSet.<String> builder().addAll(base.roles).build();
+            roles = ImmutableSet.<String>builder().addAll(base.roles).build();
 
             if (userId.isEmpty() || user.isEmpty() || roles.isEmpty() || roles.contains("")) {
                 throw new IllegalStateException(
@@ -126,15 +126,17 @@ public class ClaimBuilder {
         }
 
         @Override
-        public boolean equals(Object o) {
-            if (this == o)
+        public boolean equals(Object object) {
+            if (this == object) {
                 return true;
-            if (!(o instanceof Claim))
+            }
+            if (!(object instanceof Claim)) {
                 return false;
-            Claim a = (Claim) o;
-            return areEqual(roles, a.roles()) && areEqual(domain, a.domain())
-                    && areEqual(userId, a.userId()) && areEqual(user, a.user())
-                    && areEqual(clientId, a.clientId());
+            }
+            Claim claim = (Claim) object;
+            return areEqual(roles, claim.roles()) && areEqual(domain, claim.domain())
+                    && areEqual(userId, claim.userId()) && areEqual(user, claim.user())
+                    && areEqual(clientId, claim.clientId());
         }
 
         @Override

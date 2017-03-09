@@ -22,23 +22,24 @@ import org.osgi.service.cm.ManagedService;
 public class AuthenticationManager implements AuthenticationService, ManagedService {
     private static final String AUTH_ENABLED_ERR = "Error setting authEnabled";
 
-    static final String AUTH_ENABLED = "authEnabled";
-    static final Dictionary<String, String> defaults = new Hashtable<>();
+    protected static final String AUTH_ENABLED = "authEnabled";
+    protected static final Dictionary<String, String> DEFAULTS = new Hashtable<>();
+
     static {
-        defaults.put(AUTH_ENABLED, Boolean.FALSE.toString());
+        DEFAULTS.put(AUTH_ENABLED, Boolean.FALSE.toString());
     }
 
     // In non-Karaf environments, authEnabled is set to false by default
     private static volatile boolean authEnabled = false;
 
-    private static final AuthenticationManager am = new AuthenticationManager();
+    private static final AuthenticationManager AUTHENTICATION_MANAGER = new AuthenticationManager();
     private final ThreadLocal<Authentication> auth = new InheritableThreadLocal<>();
 
     private AuthenticationManager() {
     }
 
     static AuthenticationManager instance() {
-        return am;
+        return AUTHENTICATION_MANAGER;
     }
 
     @Override
@@ -47,8 +48,8 @@ public class AuthenticationManager implements AuthenticationService, ManagedServ
     }
 
     @Override
-    public void set(Authentication a) {
-        auth.set(a);
+    public void set(Authentication authentication) {
+        auth.set(authentication);
     }
 
     @Override

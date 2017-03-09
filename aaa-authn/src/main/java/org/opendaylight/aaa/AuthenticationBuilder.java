@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -18,7 +18,8 @@ import org.opendaylight.aaa.api.Claim;
 /**
  * A builder for the authentication context.
  *
- * The expiration defaults to 0.
+ * <p>
+ * The expiration DEFAULTS to 0.
  *
  * @author liemmn
  *
@@ -26,7 +27,7 @@ import org.opendaylight.aaa.api.Claim;
 public class AuthenticationBuilder {
 
     private long expiration = 0L;
-    private Claim claim;
+    private final Claim claim;
 
     public AuthenticationBuilder(Claim claim) {
         this.claim = claim;
@@ -90,17 +91,19 @@ public class AuthenticationBuilder {
         }
 
         @Override
-        public boolean equals(Object o) {
-            if (this == o) {
+        public boolean equals(Object object) {
+            if (this == object) {
                 return true;
             }
-            if (!(o instanceof Authentication)) {
+            if (!(object instanceof Authentication)) {
                 return false;
             }
-            Authentication a = (Authentication) o;
-            return areEqual(expiration, a.expiration()) && areEqual(claim.roles(), a.roles())
-                    && areEqual(claim.domain(), a.domain()) && areEqual(claim.userId(), a.userId())
-                    && areEqual(claim.user(), a.user()) && areEqual(claim.clientId(), a.clientId());
+            Authentication authentication = (Authentication) object;
+            return areEqual(expiration, authentication.expiration()) && areEqual(claim.roles(), authentication.roles())
+                    && areEqual(claim.domain(), authentication.domain())
+                    && areEqual(claim.userId(), authentication.userId())
+                    && areEqual(claim.user(), authentication.user())
+                    && areEqual(claim.clientId(), authentication.clientId());
         }
 
         @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -62,15 +62,16 @@ public class PasswordCredentialBuilder {
         }
 
         @Override
-        public boolean equals(Object o) {
-            if (this == o) {
+        public boolean equals(Object object) {
+            if (this == object) {
                 return true;
             }
-            if (!(o instanceof PasswordCredentials)) {
+            if (!(object instanceof PasswordCredentials)) {
                 return false;
             }
-            PasswordCredentials p = (PasswordCredentials) o;
-            return areEqual(username, p.username()) && areEqual(password, p.password());
+            PasswordCredentials passwordCredentials = (PasswordCredentials) object;
+            return areEqual(username, passwordCredentials.username())
+                    && areEqual(password, passwordCredentials.password());
         }
 
         @Override
