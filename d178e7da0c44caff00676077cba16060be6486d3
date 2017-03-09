@@ -22,6 +22,30 @@
       "revId": "d178e7da0c44caff00676077cba16060be6486d3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_c79e7506",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/IIDMStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-03-09T06:47:07Z",
+      "side": 1,
+      "message": "Just to pass the checkstyle\u0027s rules :)",
+      "parentUuid": "fafc7978_911b0f80",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "d178e7da0c44caff00676077cba16060be6486d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
