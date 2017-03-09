@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_e23c4731",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-09T13:19:48Z",
+      "side": 1,
+      "message": "Yes, there can be a user without roles. \n\nI understand that I can have a user without roles having just the constructor that receives a list as parameter - passing it an empty list. \n\nBut if I do so, the default constructor (without arguments) will not be generated, and the KeystoneToken object cannot be deserialized from the json.\n\nSo I guess it all comes down to the chained constructor - I can follow your advice, it might be easier to read the code.",
+      "parentUuid": "fafc7978_71c2ebe9",
+      "range": {
+        "startLine": 46,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 19
+      },
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_d1b5977e",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-09T00:12:50Z",
       "side": 1,
       "message": "This should be called addRoles, not setRoles",
+      "range": {
+        "startLine": 50,
+        "startChar": 20,
+        "endLine": 50,
+        "endChar": 28
+      },
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_4248b3cb",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneToken.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-09T13:19:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_d1b5977e",
       "range": {
         "startLine": 50,
         "startChar": 20,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_02fb4b79",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-09T13:19:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_b1b8d375",
+      "range": {
+        "startLine": 76,
+        "startChar": 48,
+        "endLine": 76,
+        "endChar": 49
+      },
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_11b39f98",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-09T00:12:50Z",
       "side": 1,
       "message": "Please move these magic Strings to constants.",
+      "range": {
+        "startLine": 126,
+        "startChar": 29,
+        "endLine": 126,
+        "endChar": 40
+      },
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_a2e99fb8",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-09T13:19:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_11b39f98",
       "range": {
         "startLine": 126,
         "startChar": 29,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_a2ea3f71",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-09T13:19:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_f1ad3b32",
+      "range": {
+        "startLine": 132,
+        "startChar": 40,
+        "endLine": 132,
+        "endChar": 52
+      },
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_51a9a722",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
         "patchSetId": 9
@@ -128,6 +248,24 @@
       "writtenOn": "2017-03-09T00:12:50Z",
       "side": 1,
       "message": "Please remove the space here.",
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_e2f56783",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-09T13:19:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_51a9a722",
       "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_42f1d393",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequestTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-09T13:19:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_31a4e349",
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_91666f28",
         "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequestTest.java",
         "patchSetId": 9
@@ -168,6 +324,47 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_22ec8fba",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequestTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-09T13:19:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_91666f28",
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_44c0c04f",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequestTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-09T13:19:48Z",
+      "side": 1,
+      "message": "this parameter is actually not used at all.",
+      "range": {
+        "startLine": 103,
+        "startChar": 42,
+        "endLine": 103,
+        "endChar": 48
+      },
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_d16c770a",
         "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequestTest.java",
         "patchSetId": 9
@@ -179,6 +376,30 @@
       "writtenOn": "2017-03-09T00:12:50Z",
       "side": 1,
       "message": "Strange looking... please keep \"client.resouce(uri)\" on the same line then do new lines for the rest.",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 30
+      },
+      "revId": "b809328c7d5258ffbc0c60ab44322c4fa06d59ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_822e1bf9",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequestTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-03-09T13:19:48Z",
+      "side": 1,
+      "message": "Looks like in the other previously defined test, in lines 67-68. \n\nChanged both of them to suit your recommendation.",
+      "parentUuid": "fafc7978_d16c770a",
       "range": {
         "startLine": 106,
         "startChar": 16,
