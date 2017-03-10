@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_e1a6fba9",
+        "filename": "aaa-cert/src/test/java/org/opendaylight/aaa/cert/test/MdsalUtilsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-03-10T20:40:01Z",
+      "side": 1,
+      "message": "can we have better name? something like chkFuture",
+      "range": {
+        "startLine": 81,
+        "startChar": 71,
+        "endLine": 81,
+        "endChar": 74
+      },
+      "revId": "78dd555edd2ffc15105a20cfa207f6fa14567145",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_41b9c7ca",
+        "filename": "aaa-cert/src/test/java/org/opendaylight/aaa/cert/test/MdsalUtilsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-03-10T20:40:01Z",
+      "side": 1,
+      "message": "same better name readOnlyTransaction",
+      "range": {
+        "startLine": 84,
+        "startChar": 34,
+        "endLine": 84,
+        "endChar": 37
+      },
+      "revId": "78dd555edd2ffc15105a20cfa207f6fa14567145",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
