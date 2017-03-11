@@ -26,7 +26,7 @@ import org.opendaylight.aaa.api.TokenStore;
  */
 public class ServiceLocator {
 
-    private static final ServiceLocator instance = new ServiceLocator();
+    private static final ServiceLocator INSTANCE = new ServiceLocator();
 
     protected volatile List<TokenAuth> tokenAuthCollection = new Vector<>();
 
@@ -44,27 +44,27 @@ public class ServiceLocator {
     }
 
     public static ServiceLocator getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     /**
      * Called through reflection by the sts activator.
      *
      * @see org.opendaylight.aaa.sts.Activator
-     * @param ta
+     * @param tokenAuth tokenAuth service.
      */
-    protected void tokenAuthAdded(TokenAuth ta) {
-        this.tokenAuthCollection.add(ta);
+    protected void tokenAuthAdded(TokenAuth tokenAuth) {
+        this.tokenAuthCollection.add(tokenAuth);
     }
 
     /**
      * Called through reflection by the sts activator.
      *
      * @see org.opendaylight.aaa.sts.Activator
-     * @param ta
+     * @param tokenAuth token auth service.
      */
-    protected void tokenAuthRemoved(TokenAuth ta) {
-        this.tokenAuthCollection.remove(ta);
+    protected void tokenAuthRemoved(TokenAuth tokenAuth) {
+        this.tokenAuthCollection.remove(tokenAuth);
     }
 
     protected void tokenStoreAdded(TokenStore ts) {

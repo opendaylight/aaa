@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -67,6 +67,7 @@ public class TokenEndpoint extends HttpServlet {
     }
 
     @Override
+    @SuppressWarnings("checkstyle:IllegalCatch")
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             if (req.getServletPath().equals(TOKEN_GRANT_ENDPOINT)) {
@@ -185,11 +186,11 @@ public class TokenEndpoint extends HttpServlet {
                 clientId).build()).setExpiration(tokenExpiration()).build();
         ServiceLocator.getInstance().getTokenStore().put(token, auth);
 
-        OAuthResponse r = OAuthASResponse.tokenResponse(SC_CREATED).setAccessToken(token)
+        OAuthResponse response = OAuthASResponse.tokenResponse(SC_CREATED).setAccessToken(token)
                                          .setTokenType(TokenType.BEARER.toString())
                                          .setExpiresIn(Long.toString(auth.expiration()))
                                          .buildJSONMessage();
-        write(resp, r);
+        write(resp, response);
     }
 
     // Token expiration
@@ -200,42 +201,42 @@ public class TokenEndpoint extends HttpServlet {
     // Emit an error OAuthResponse with the given HTTP code
     private void error(HttpServletResponse resp, int httpCode, String error) {
         try {
-            OAuthResponse r = OAuthResponse.errorResponse(httpCode).setError(error)
+            OAuthResponse response = OAuthResponse.errorResponse(httpCode).setError(error)
                                            .buildJSONMessage();
-            write(resp, r);
-        } catch (Exception e1) {
+            write(resp, response);
+        } catch (IOException | OAuthSystemException e) {
             // Nothing to do here
         }
     }
 
     // Emit an error OAuthResponse for the given OAuth-related exception
-    private void error(HttpServletResponse resp, OAuthProblemException e) {
+    private void error(HttpServletResponse resp, OAuthProblemException exception) {
         try {
-            OAuthResponse r = OAuthResponse.errorResponse(SC_BAD_REQUEST).error(e)
+            OAuthResponse response = OAuthResponse.errorResponse(SC_BAD_REQUEST).error(exception)
                                            .buildJSONMessage();
-            write(resp, r);
-        } catch (Exception e1) {
+            write(resp, response);
+        } catch (IOException | OAuthSystemException e) {
             // Nothing to do here
         }
     }
 
     // Emit an error OAuthResponse for the given generic exception
-    private void error(HttpServletResponse resp, Exception e) {
+    private void error(HttpServletResponse resp, Exception exception) {
         try {
-            OAuthResponse r = OAuthResponse.errorResponse(SC_INTERNAL_SERVER_ERROR)
-                                           .setError(e.getClass().getName())
-                                           .setErrorDescription(e.getMessage()).buildJSONMessage();
-            write(resp, r);
-        } catch (Exception e1) {
+            OAuthResponse response = OAuthResponse.errorResponse(SC_INTERNAL_SERVER_ERROR)
+                                           .setError(exception.getClass().getName())
+                                           .setErrorDescription(exception.getMessage()).buildJSONMessage();
+            write(resp, response);
+        } catch (IOException | OAuthSystemException e) {
             // Nothing to do here
         }
     }
 
     // Write out an OAuthResponse
-    private void write(HttpServletResponse resp, OAuthResponse r) throws IOException {
-        resp.setStatus(r.getResponseStatus());
+    private void write(HttpServletResponse resp, OAuthResponse response) throws IOException {
+        resp.setStatus(response.getResponseStatus());
         PrintWriter pw = resp.getWriter();
-        pw.print(r.getBody());
+        pw.print(response.getBody());
         pw.flush();
         pw.close();
     }
