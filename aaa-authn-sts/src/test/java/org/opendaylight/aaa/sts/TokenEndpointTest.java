@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -45,29 +45,31 @@ import org.opendaylight.aaa.api.TokenStore;
 public class TokenEndpointTest {
     private static final long TOKEN_TIMEOUT_SECS = 10;
     private static final String CONTEXT = "/oauth2";
-    private static final String DIRECT_AUTH = "grant_type=password&username=admin&password=admin&scope=pepsi&client_id=dlux&client_secret=secrete";
+    private static final String DIRECT_AUTH =
+            "grant_type=password&username=admin&password=admin&scope=pepsi&client_id=dlux&client_secret=secrete";
     private static final String REFRESH_TOKEN = "grant_type=refresh_token&refresh_token=whateverisgood&scope=pepsi";
 
-    private static final Claim claim = new ClaimBuilder().setUser("bob").setUserId("1234")
+    private static final Claim CLAIM = new ClaimBuilder().setUser("bob").setUserId("1234")
+
                                                          .addRole("admin").build();
-    private final static ServletTester server = new ServletTester();
+    private static final ServletTester SERVER = new ServletTester();
 
     @BeforeClass
     public static void init() throws Exception {
-        // Set up server
-        server.setContextPath(CONTEXT);
+        // Set up SERVER
+        SERVER.setContextPath(CONTEXT);
 
         // Add our servlet under test
-        server.addServlet(TokenEndpoint.class, "/revoke");
-        server.addServlet(TokenEndpoint.class, "/token");
+        SERVER.addServlet(TokenEndpoint.class, "/revoke");
+        SERVER.addServlet(TokenEndpoint.class, "/token");
 
         // Let's do dis
-        server.start();
+        SERVER.start();
     }
 
     @AfterClass
     public static void shutdown() throws Exception {
-        server.stop();
+        SERVER.stop();
     }
 
     @Before
@@ -92,7 +94,7 @@ public class TokenEndpointTest {
         req.setVersion("HTTP/1.0");
 
         HttpTester resp = new HttpTester();
-        resp.parse(server.getResponses(req.generate()));
+        resp.parse(SERVER.getResponses(req.generate()));
         assertEquals(401, resp.getStatus());
     }
 
@@ -100,7 +102,7 @@ public class TokenEndpointTest {
     public void testCreateTokenWithPassword() throws Exception {
         when(
                 ServiceLocator.getInstance().getCredentialAuth()
-                              .authenticate(any(PasswordCredentials.class))).thenReturn(claim);
+                              .authenticate(any(PasswordCredentials.class))).thenReturn(CLAIM);
 
         HttpTester req = new HttpTester();
         req.setMethod("POST");
@@ -110,7 +112,7 @@ public class TokenEndpointTest {
         req.setVersion("HTTP/1.0");
 
         HttpTester resp = new HttpTester();
-        resp.parse(server.getResponses(req.generate()));
+        resp.parse(SERVER.getResponses(req.generate()));
         assertEquals(201, resp.getStatus());
         assertTrue(resp.getContent().contains("expires_in\":10"));
         assertTrue(resp.getContent().contains("Bearer"));
@@ -119,7 +121,7 @@ public class TokenEndpointTest {
     @Test
     public void testCreateTokenWithRefreshToken() throws Exception {
         when(ServiceLocator.getInstance().getTokenStore().get(anyString())).thenReturn(
-                new AuthenticationBuilder(claim).build());
+                new AuthenticationBuilder(CLAIM).build());
         when(ServiceLocator.getInstance().getIdmService().listRoles(anyString(), anyString())).thenReturn(
                 Arrays.asList("admin", "user"));
 
@@ -131,7 +133,7 @@ public class TokenEndpointTest {
         req.setVersion("HTTP/1.0");
 
         HttpTester resp = new HttpTester();
-        resp.parse(server.getResponses(req.generate()));
+        resp.parse(SERVER.getResponses(req.generate()));
         assertEquals(201, resp.getStatus());
         assertTrue(resp.getContent().contains("expires_in\":10"));
         assertTrue(resp.getContent().contains("Bearer"));
@@ -150,7 +152,7 @@ public class TokenEndpointTest {
         req.setVersion("HTTP/1.0");
 
         HttpTester resp = new HttpTester();
-        resp.parse(server.getResponses(req.generate()));
+        resp.parse(SERVER.getResponses(req.generate()));
         assertEquals(204, resp.getStatus());
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -125,7 +125,8 @@ public class Activator extends DependencyActivatorBase {
                         new Function<TokenAuth, Void>() {
                             @Override
                             public Void apply(TokenAuth tokenAuth) {
-                                final List<TokenAuth> tokenAuthCollection = (List<TokenAuth>) Lists.newArrayList(tokenAuth);
+                                final List<TokenAuth> tokenAuthCollection = (List<TokenAuth>) Lists
+                                        .newArrayList(tokenAuth);
                                 ServiceLocator.getInstance().setTokenAuthCollection(
                                         tokenAuthCollection);
                                 return null;
@@ -166,13 +167,14 @@ public class Activator extends DependencyActivatorBase {
     /**
      * Wrapper for AAA generic service loading.
      *
-     * @param <S>
+     * @param <S> service
      */
+    @SuppressWarnings("checkstyle:IllegalCatch")
     static final class AAAServiceTrackerCustomizer<S> implements ServiceTrackerCustomizer<S, S> {
 
         private Function<S, Void> callback;
 
-        public AAAServiceTrackerCustomizer(final Function<S, Void> callback) {
+        AAAServiceTrackerCustomizer(final Function<S, Void> callback) {
             this.callback = callback;
         }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -29,6 +29,7 @@ import org.opendaylight.aaa.api.TokenAuth;
 /**
  * A token-based authentication filter for resource providers.
  *
+ * <p>
  * Deprecated: Use <code>AAAFilter</code> instead.
  *
  * @author liemmn
@@ -37,9 +38,9 @@ import org.opendaylight.aaa.api.TokenAuth;
 @Deprecated
 public class TokenAuthFilter implements ContainerRequestFilter {
 
-    private final String OPTIONS = "OPTIONS";
-    private final String ACCESS_CONTROL_REQUEST_HEADERS = "Access-Control-Request-Headers";
-    private final String AUTHORIZATION = "authorization";
+    private static final String OPTIONS = "OPTIONS";
+    private static final String ACCESS_CONTROL_REQUEST_HEADERS = "Access-Control-Request-Headers";
+    private static final String AUTHORIZATION = "authorization";
 
     @Context
     private HttpServletRequest httpRequest;
@@ -64,8 +65,7 @@ public class TokenAuthFilter implements ContainerRequestFilter {
             Map<String, List<String>> headers = request.getRequestHeaders();
 
             // Go through and invoke other TokenAuth first...
-            List<TokenAuth> tokenAuthCollection = ServiceLocator.getInstance()
-                                                                .getTokenAuthCollection();
+            List<TokenAuth> tokenAuthCollection = ServiceLocator.getInstance().getTokenAuthCollection();
             for (TokenAuth ta : tokenAuthCollection) {
                 try {
                     Authentication auth = ta.validate(headers);
@@ -80,8 +80,7 @@ public class TokenAuthFilter implements ContainerRequestFilter {
 
             // OK, last chance to validate token...
             try {
-                OAuthAccessResourceRequest or = new OAuthAccessResourceRequest(httpRequest,
-                        ParameterStyle.HEADER);
+                OAuthAccessResourceRequest or = new OAuthAccessResourceRequest(httpRequest, ParameterStyle.HEADER);
                 validate(or.getAccessToken());
             } catch (OAuthSystemException | OAuthProblemException e) {
                 throw unauthorized();
@@ -127,22 +126,21 @@ public class TokenAuthFilter implements ContainerRequestFilter {
     }
 
     // Houston, we got a problem!
-    private static final WebApplicationException unauthorized() {
+    private static WebApplicationException unauthorized() {
         ServiceLocator.getInstance().getAuthenticationService().clear();
         return new UnauthorizedException();
     }
 
-    // A custom 401 web exception that handles http basic response as well
+    // A custom 401 web exception that handles http basic RESPONSE as well
     static final class UnauthorizedException extends WebApplicationException {
         private static final long serialVersionUID = -1732363804773027793L;
         static final String WWW_AUTHENTICATE = "WWW-Authenticate";
         static final Object OPENDAYLIGHT = "Basic realm=\"opendaylight\"";
-        private static final Response response = Response.status(Status.UNAUTHORIZED)
-                                                         .header(WWW_AUTHENTICATE, OPENDAYLIGHT)
-                                                         .build();
+        private static final Response RESPONSE = Response.status(Status.UNAUTHORIZED)
+                .header(WWW_AUTHENTICATE, OPENDAYLIGHT).build();
 
-        public UnauthorizedException() {
-            super(response);
+        UnauthorizedException() {
+            super(RESPONSE);
         }
     }
 }
