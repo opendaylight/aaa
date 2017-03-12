@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Brocade Communications Systems, Inc. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Brocade Communications Systems, Inc. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -9,14 +9,12 @@
 package org.opendaylight.aaa.filterchain.filters;
 
 import java.io.IOException;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * whether a Filter is reached/traversed, he or she can use this class to produce
  * some basic karaf log output.
  *
+ *<p>
  * This functionality is particularly useful when developing new Filter(s);  for
  * example, you can sandwich the newly created filter in between filter1 and filter2
  * to ensure that the chain is traversed correctly and in order.
@@ -35,6 +34,7 @@ import org.slf4j.LoggerFactory;
 public class TestFilter1 implements Filter {
 
     private static final Logger LOG = LoggerFactory.getLogger(TestFilter1.class);
+
     @Override
     public void destroy() {
     }
@@ -50,5 +50,4 @@ public class TestFilter1 implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
-
 }
