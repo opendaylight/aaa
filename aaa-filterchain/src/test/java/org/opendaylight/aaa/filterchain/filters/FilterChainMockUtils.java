@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Brocade Communications Systems, Inc. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Brocade Communications Systems, Inc. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -15,7 +15,6 @@ import static org.mockito.Mockito.mock;
 import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -29,16 +28,17 @@ import javax.servlet.ServletResponse;
  */
 public class FilterChainMockUtils {
     /**
-     * Creates a mock <code>Filter</code> which adds ingress output to callStack, calls doFilter, then
-     * adds egress output to the callStack.
+     * Creates a mock <code>Filter</code> which adds ingress output to
+     * callStack, calls doFilter, then adds egress output to the callStack.
      *
-     * @param name The name of the filter
-     * @param callStack Just a list of String events
+     * @param name
+     *            The name of the filter
+     * @param callStack
+     *            Just a list of String events
      * @return The mocked up filter
-     * @throws IOException
-     * @throws ServletException
      */
-    private static Filter createMockFilter(final String name, final List<String> callStack) throws IOException, ServletException {
+    private static Filter createMockFilter(final String name, final List<String> callStack)
+            throws IOException, ServletException {
         final Filter testFilter = mock(Filter.class);
         doAnswer(invocationOnMock -> {
             callStack.add(name + " ingress");
@@ -56,7 +56,8 @@ public class FilterChainMockUtils {
     /**
      * Forms the expected call stack, which is really just an event listing.
      *
-     * @param size the number of filters used to create the call stack
+     * @param size
+     *            the number of filters used to create the call stack
      * @return A list of String events
      */
     static List<String> formExpectedCallStack(final int size) {
@@ -73,16 +74,15 @@ public class FilterChainMockUtils {
     /**
      * Creates a filter chain test case.
      *
-     * @param size The number of links for the test case
+     * @param size
+     *            The number of links for the test case
      * @return the test case
-     * @throws IOException
-     * @throws ServletException
      */
     static TestFilterDTO createFilterChain(final int size) throws IOException, ServletException {
         final List<Filter> filters = new Vector<>();
         final List<String> callBack = new Vector<>();
         for (int i = 0; i < size; i++) {
-            final Filter filter = createMockFilter(String.format("filter%d",i), callBack);
+            final Filter filter = createMockFilter(String.format("filter%d", i), callBack);
             filters.add(filter);
         }
 
@@ -90,13 +90,13 @@ public class FilterChainMockUtils {
     }
 
     /**
-     * A holder class for the tuple <code>(filters,callStack)</code>
+     * A holder class for the tuple <code>(filters,callStack)</code>.
      */
     static final class TestFilterDTO {
         private List<Filter> filters;
         private List<String> callStack;
 
-        public TestFilterDTO(final List<Filter> filters, final List<String> callStack) {
+        TestFilterDTO(final List<Filter> filters, final List<String> callStack) {
             this.filters = filters;
             this.callStack = callStack;
         }
@@ -104,6 +104,7 @@ public class FilterChainMockUtils {
         public List<Filter> getFilters() {
             return filters;
         }
+
         public List<String> getCallStack() {
             return callStack;
         }

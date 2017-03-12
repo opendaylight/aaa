@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * Activator for <code>aaa-filterchain</code>, a bundle which provides the ability
  * to inject custom <code>Filter</code>(s) in front of servlets.
  *
+ * <p>
  * This class is also responsible for offering contextual <code>DEBUG</code>
  * level clues concerning the activation of the <code>aaa-filterchain</code> bundle.
  * To enable these debug messages, issue the following command in the karaf
@@ -49,5 +50,4 @@ public class Activator extends DependencyActivatorBase {
                 CustomFilterAdapterConfiguration.getInstance(),
                 CustomFilterAdapterConfiguration.getInstance().getDefaultProperties());
     }
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Brocade Communications Systems, Inc. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Brocade Communications Systems, Inc. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -8,7 +8,9 @@
 
 package org.opendaylight.aaa.filterchain.filters;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
@@ -18,7 +20,6 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -26,10 +27,11 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-
 import org.junit.Test;
 
 /**
+ * Custom Filter Adapter Test Suite.
+ *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 public class CustomFilterAdapterTest {
@@ -43,13 +45,12 @@ public class CustomFilterAdapterTest {
         final CustomFilterAdapter customFilterAdapter = new CustomFilterAdapter();
         final FilterChainMockUtils.TestFilterDTO testFilterDTO = FilterChainMockUtils.createFilterChain(3);
         customFilterAdapter.updateInjectedFilters(testFilterDTO.getFilters());
-        final boolean[] existingFilterChainEncountered = {false};
+        final boolean[] existingFilterChainEncountered = { false };
         doAnswer(invocationOnMock -> {
             existingFilterChainEncountered[0] = true;
             return null;
         }).when(filterChain).doFilter(any(), any());
-        customFilterAdapter.doFilter(servletRequest, servletResponse,
-                filterChain);
+        customFilterAdapter.doFilter(servletRequest, servletResponse, filterChain);
         assertTrue(existingFilterChainEncountered[0]);
         customFilterAdapter.destroy();
     }
@@ -77,7 +78,7 @@ public class CustomFilterAdapterTest {
             }
 
             @Override
-            public String getInitParameter(String s) {
+            public String getInitParameter(String string) {
                 return null;
             }
 
@@ -124,13 +125,12 @@ public class CustomFilterAdapterTest {
         }
         customFilterAdapter.updateInjectedFilters(injectedFilters);
         customFilterAdapter.doFilter(servletRequest, servletResponse, filterChain);
-        final boolean[] existingFilterChainEncountered = {false};
+        final boolean[] existingFilterChainEncountered = { false };
         doAnswer(invocationOnMock -> {
             existingFilterChainEncountered[0] = true;
             return null;
         }).when(filterChain).doFilter(any(), any());
-        customFilterAdapter.doFilter(servletRequest, servletResponse,
-                filterChain);
+        customFilterAdapter.doFilter(servletRequest, servletResponse, filterChain);
         assertTrue(existingFilterChainEncountered[0]);
         for (Filter filter : injectedFilters) {
             filter.destroy();
