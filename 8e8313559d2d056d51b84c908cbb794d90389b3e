@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_525eb477",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/keystone/domain/KeystoneAuth.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-03-13T14:42:08Z",
+      "side": 1,
+      "message": "Why not having one Domain class ? and plz explain your thoughts about having nested inner classes ?",
+      "range": {
+        "startLine": 121,
+        "startChar": 11,
+        "endLine": 131,
+        "endChar": 13
+      },
+      "revId": "8e8313559d2d056d51b84c908cbb794d90389b3e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
