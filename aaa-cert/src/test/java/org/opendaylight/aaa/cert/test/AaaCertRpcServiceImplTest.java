@@ -11,7 +11,7 @@ package org.opendaylight.aaa.cert.test;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.opendaylight.aaa.cert.impl.AaaCertMdsalProvider;
+import org.opendaylight.aaa.cert.impl.AaaCertRpcServiceImpl;
 import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
 import org.opendaylight.aaa.cert.impl.ODLKeyTool;
 import org.opendaylight.aaa.cert.utils.KeyStoresDataUtils;
@@ -23,23 +23,25 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev1603
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.OdlKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.OdlKeystoreBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.TrustKeystore;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.AaaCertServiceConfig;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.*;
+import org.opendaylight.yangtools.yang.common.RpcResult;
 
 import java.io.File;
-import java.security.KeyStore;
 import java.security.Security;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Future;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.opendaylight.aaa.cert.test.TestUtils.mockDataBroker;
 
-public class AaaCertMdsalProviderTest {
+public class AaaCertRpcServiceImplTest {
     private static final String alias = TestUtils.dummyAlias;
     private static final String bundleName = "opendaylight";
     private static final String certificate = TestUtils.dummyCert;
@@ -52,9 +54,10 @@ public class AaaCertMdsalProviderTest {
     private static final String testPath = "target" + File.separator + "test" + File.separator;
     private static final String trustName = "trustTest.jks";
     private static AAAEncryptionService aaaEncryptionService;
-    private static AaaCertMdsalProvider aaaCertMdsalProvider;
     private static SslData signedSslData;
     private static SslData unsignedSslData;
+    private static AaaCertRpcServiceImpl aaaCertRpcService;
+    private static AaaCertServiceConfig aaaCertServiceConfig;
 
     static {
         Security.addProvider(new BouncyCastleProvider());
@@ -109,109 +112,62 @@ public class AaaCertMdsalProviderTest {
         when(aaaEncryptionServiceInit.decrypt(isA(String.class))).thenReturn(password);
         aaaEncryptionService = aaaEncryptionServiceInit;
 
+        final AaaCertServiceConfig aaaCertServiceConfigInit = mock(AaaCertServiceConfig.class);
+        when(aaaCertServiceConfigInit.isUseConfig()).thenReturn(true);
+        when(aaaCertServiceConfigInit.isUseMdsal()).thenReturn(true);
+        aaaCertServiceConfig = aaaCertServiceConfigInit;
+
         // Create class
-        aaaCertMdsalProvider = new AaaCertMdsalProvider(mockDataBroker(signedSslData), aaaEncryptionService);
-        assertNotNull(aaaCertMdsalProvider);
+        aaaCertRpcService = new AaaCertRpcServiceImpl(aaaCertServiceConfig, mockDataBroker(signedSslData), aaaEncryptionService);
+        assertNotNull(aaaCertRpcService);
     }
 
     @Test
-    public void addSslDataKeystoresTest() throws Exception {
-        SslData result = new AaaCertMdsalProvider(mockDataBroker(signedSslData), aaaEncryptionService).addSslDataKeystores(bundleName, odlName, password,
-        alias, dName, trustName, password, cipherSuitesArray , protocol);
-        assertTrue(result.getOdlKeystore().getDname() == dName);
-        assertTrue(result.getOdlKeystore().getName() == odlName);
-        assertTrue(result.getTrustKeystore().getName() == trustName);
+    public void getNodeCertifcateTest() throws Exception {
+        final GetNodeCertifcateInput nodeCertifcateInput = mock(GetNodeCertifcateInput.class);
+        when(nodeCertifcateInput.getNodeAlias()).thenReturn(alias);
+        Future<RpcResult<GetNodeCertifcateOutput>> result = aaaCertRpcService.getNodeCertifcate(nodeCertifcateInput);
+        assertTrue(result.get().isSuccessful());
+        final String cert = result.get().getResult().getNodeCert();
+        assertTrue(cert != null && !cert.isEmpty());
+        assertTrue(!cert.contains(KeyStoreConstant.END_CERTIFICATE));
     }
 
     @Test
-    public void genODLKeyStoreCertificateReqTest() {
-        String result = aaaCertMdsalProvider.genODLKeyStoreCertificateReq(bundleName, true);
-        assertTrue(result != null && !result.isEmpty());
-        assertTrue(result.contains(KeyStoreConstant.END_CERTIFICATE_REQUEST));
-        result = aaaCertMdsalProvider.genODLKeyStoreCertificateReq(bundleName, false);
-        assertTrue(!result.contains(KeyStoreConstant.END_CERTIFICATE_REQUEST));
+    public void setODLCertifcateTest() throws Exception {
+        final SetODLCertifcateInput input = mock(SetODLCertifcateInput.class);
+        when(input.getOdlCertAlias()).thenReturn(alias);
+        when(input.getOdlCert()).thenReturn(certificate);
+        Future<RpcResult<Void>> result = new AaaCertRpcServiceImpl(aaaCertServiceConfig, mockDataBroker(unsignedSslData),
+                aaaEncryptionService).setODLCertifcate(input);
+        assertTrue(result.get().isSuccessful());
     }
 
     @Test
-    public void getCipherSuitesTest() {
-        String[] result = aaaCertMdsalProvider.getCipherSuites(bundleName);
-        assertTrue(Arrays.equals(result, cipherSuitesArray));
+    public void getODLCertificateTest() throws Exception {
+        Future<RpcResult<GetODLCertificateOutput>> result = aaaCertRpcService.getODLCertificate();
+        assertTrue(result.get().isSuccessful());
+        final String cert = result.get().getResult().getOdlCert();
+        assertTrue(cert != null && !cert.isEmpty());
+        assertTrue(!cert.contains(KeyStoreConstant.END_CERTIFICATE));
     }
 
     @Test
-    public void getODLKeyStoreTest() {
-        KeyStore result = aaaCertMdsalProvider.getODLKeyStore(bundleName);
-        assertNotNull(result);
+    public void getODLCertificateReq() throws Exception {
+        Future<RpcResult<GetODLCertificateReqOutput>> result = aaaCertRpcService.getODLCertificateReq();
+        assertTrue(result.get().isSuccessful());
+        final String cert = result.get().getResult().getOdlCertReq();
+        assertTrue(cert != null && !cert.isEmpty());
+        assertTrue(!cert.contains(KeyStoreConstant.END_CERTIFICATE_REQUEST));
     }
 
     @Test
-    public void getODLStoreCertificateTest() {
-        String result = aaaCertMdsalProvider.getODLStoreCertificate(bundleName, true);
-        assertTrue(result != null && !result.isEmpty());
-        assertTrue(result.contains(KeyStoreConstant.END_CERTIFICATE));
-        result = aaaCertMdsalProvider.getODLStoreCertificate(bundleName, false);
-        assertTrue(!result.contains(KeyStoreConstant.END_CERTIFICATE));
-    }
-
-    @Test
-    public void getSslDataTest() {
-        SslData result = aaaCertMdsalProvider.getSslData(bundleName);
-        assertTrue(result.equals(signedSslData));
-    }
-
-    @Test
-    public void getTrustKeyStoreTest() {
-        KeyStore result = aaaCertMdsalProvider.getTrustKeyStore(bundleName);
-        assertNotNull(result);
-    }
-
-    @Test
-    public void getTrustStoreCertificateTest() {
-        String result = aaaCertMdsalProvider.getTrustStoreCertificate(bundleName, alias,true);
-        assertTrue(result != null && !result.isEmpty());
-        assertTrue(result.contains(KeyStoreConstant.END_CERTIFICATE));
-        result = aaaCertMdsalProvider.getTrustStoreCertificate(bundleName, alias, false);
-        assertTrue(!result.contains(KeyStoreConstant.END_CERTIFICATE));
-    }
-
-    @Test
-    public void importSslDataKeystoresTest() {
-        SslData result = aaaCertMdsalProvider.importSslDataKeystores(bundleName, odlName, password, alias, aaaCertMdsalProvider.getODLKeyStore(bundleName),
-                trustName, password, aaaCertMdsalProvider.getTrustKeyStore(bundleName), cipherSuitesArray, protocol);
-        assertTrue(result.getOdlKeystore().getKeystoreFile().length == signedSslData.getOdlKeystore().getKeystoreFile().length);
-    }
-
-    @Test
-    public void removeSslDataTest() {
-        Boolean result = aaaCertMdsalProvider.removeSslData(bundleName);
-        assertTrue(result);
-    }
-
-    @Test
-    public void updateSslDataTest() {
-        SslData result = aaaCertMdsalProvider.updateSslData(signedSslData);
-        assertTrue(result.equals(signedSslData));
-    }
-
-    @Test
-    public void getTlsProtocolsTest() {
-        String[] result = aaaCertMdsalProvider.getTlsProtocols(bundleName);
-        assertNotNull(result);
-        assertTrue(result.length == 1);
-        assertTrue(result[0] == protocol);
-    }
-
-    @Test
-    public void addTrustNodeCertificateTest() throws Exception {
-        Boolean result = new AaaCertMdsalProvider(mockDataBroker(unsignedSslData), aaaEncryptionService)
-                .addTrustNodeCertificate(bundleName, alias, certificate);
-        assertTrue(result);
-    }
-
-    @Test
-    public void addODLStoreSignedCertificate() throws Exception {
-        Boolean result = new AaaCertMdsalProvider(mockDataBroker(unsignedSslData), aaaEncryptionService)
-                .addODLStoreSignedCertificate(bundleName, alias, certificate);
-        assertTrue(result);
+    public void setNodeCertifcate() throws Exception {
+        final SetNodeCertifcateInput input = mock(SetNodeCertifcateInput.class);
+        when(input.getNodeAlias()).thenReturn(alias);
+        when(input.getNodeCert()).thenReturn(certificate);
+        Future<RpcResult<Void>> result = new AaaCertRpcServiceImpl(aaaCertServiceConfig, mockDataBroker(unsignedSslData),
+                aaaEncryptionService).setNodeCertifcate(input);
+        assertTrue(result.get().isSuccessful());
     }
 }

@@ -7,11 +7,24 @@
  */
 package org.opendaylight.aaa.cert.test;
 
+import com.google.common.base.Optional;
+import com.google.common.util.concurrent.CheckedFuture;
 import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
+import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
+import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
+import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
+import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslData;
+import org.opendaylight.yangtools.yang.binding.DataObject;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
- * Utilities for test, the certicate needs to be update yearly.
- * last update: 8 march 2017
+ * Utilities for test, the certicate needs to be updated yearly.
+ * Last update: 8 march 2017
  */
 
 public class TestUtils {
@@ -32,4 +45,24 @@ public class TestUtils {
             "fkSa9vQkUowgHAxW//7NOOTonnQPi2gH6ubaOCG4ZeXTwqHy47DGA0c8z" +
             "2Q="+
             KeyStoreConstant.END_CERTIFICATE;
+
+    public static DataBroker mockDataBroker(SslData sslData) throws Exception {
+        final Optional<DataObject> dataObjectOptional = mock(Optional.class);
+        when(dataObjectOptional.get()).thenReturn(sslData);
+        when(dataObjectOptional.isPresent()).thenReturn(true);
+        final CheckedFuture<Optional<DataObject>, ReadFailedException> checkReadFuture = mock(CheckedFuture.class);
+        when(checkReadFuture.checkedGet()).thenReturn(dataObjectOptional);
+        when(checkReadFuture.get()).thenReturn(dataObjectOptional);
+        final ReadOnlyTransaction readOnlyTransaction = mock(ReadOnlyTransaction.class);
+        when(readOnlyTransaction.read(any(), any())).thenReturn(checkReadFuture);
+
+        final CheckedFuture<Void, TransactionCommitFailedException> checkWriteFuture = mock(CheckedFuture.class);
+        final WriteTransaction writeTransaction = mock(WriteTransaction.class);
+        when(writeTransaction.submit()).thenReturn(checkWriteFuture);
+
+        final DataBroker dataBrokerInit = mock(DataBroker.class);
+        when(dataBrokerInit.newReadOnlyTransaction()).thenReturn(readOnlyTransaction);
+        when(dataBrokerInit.newWriteOnlyTransaction()).thenReturn(writeTransaction);
+        return dataBrokerInit;
+    }
 }
