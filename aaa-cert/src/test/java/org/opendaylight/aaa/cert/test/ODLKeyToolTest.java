@@ -24,7 +24,7 @@ public class ODLKeyToolTest {
 
     private static ODLKeyTool odlKeyTool;
     private static KeyStore fooKeystore;
-    private static String passwd = "Password";
+    private static String passwds = "Password";
     private static String alias = "FooTest";
 
     static {
@@ -37,16 +37,16 @@ public class ODLKeyToolTest {
         final String dName = "CN=ODL, OU=Dev, O=LinuxFoundation, L=QC Montreal, C=CA";
         final String keyStore = "fooTest.jks";
         odlKeyTool = new ODLKeyTool(testPath);
-        fooKeystore = odlKeyTool.createKeyStoreWithSelfSignCert(keyStore, passwd, dName, alias,
+        fooKeystore = odlKeyTool.createKeyStoreWithSelfSignCert(keyStore, passwds, dName, alias,
                 KeyStoreConstant.DEFAULT_VALIDITY);
         assertNotNull(fooKeystore);
     }
 
     @Test
     public void testConvertKeystoreToBytes() {
-        byte[] keyStoreBytes = odlKeyTool.convertKeystoreToBytes(fooKeystore, passwd);
+        byte[] keyStoreBytes = odlKeyTool.convertKeystoreToBytes(fooKeystore, passwds);
         assertTrue(keyStoreBytes != null && keyStoreBytes.length > 0);
-        fooKeystore = odlKeyTool.loadKeyStore(keyStoreBytes, passwd);
+        fooKeystore = odlKeyTool.loadKeyStore(keyStoreBytes, passwds);
         assertNotNull(fooKeystore);
     }
 
@@ -60,19 +60,19 @@ public class ODLKeyToolTest {
 
     @Test
     public void testGenerateCertificateReq() {
-        String certReq = odlKeyTool.generateCertificateReq(fooKeystore, passwd, alias, KeyStoreConstant.DEFAULT_SIGN_ALG, true);
+        String certReq = odlKeyTool.generateCertificateReq(fooKeystore, passwds, alias, KeyStoreConstant.DEFAULT_SIGN_ALG, true);
         assertTrue(certReq != null && !certReq.isEmpty());
         assertTrue(certReq.contains(KeyStoreConstant.BEGIN_CERTIFICATE_REQUEST));
-        certReq = odlKeyTool.generateCertificateReq(fooKeystore, passwd, alias, KeyStoreConstant.DEFAULT_SIGN_ALG, false);
+        certReq = odlKeyTool.generateCertificateReq(fooKeystore, passwds, alias, KeyStoreConstant.DEFAULT_SIGN_ALG, false);
         assertTrue(!certReq.contains(KeyStoreConstant.BEGIN_CERTIFICATE_REQUEST));
     }
 
     @Test
     public void testExportKeystore() {
         final String keystoreName = "export.jks";
-        final boolean result = odlKeyTool.exportKeystore(fooKeystore, passwd, keystoreName);
+        final boolean result = odlKeyTool.exportKeystore(fooKeystore, passwds, keystoreName);
         assertTrue(result);
-        final KeyStore exportKS = odlKeyTool.loadKeyStore(keystoreName, passwd);
+        final KeyStore exportKS = odlKeyTool.loadKeyStore(keystoreName, passwds);
         assertNotNull(exportKS);
     }
 }
