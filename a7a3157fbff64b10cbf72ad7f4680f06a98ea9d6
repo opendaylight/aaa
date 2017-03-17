@@ -46,6 +46,30 @@
       "revId": "a7a3157fbff64b10cbf72ad7f4680f06a98ea9d6",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_77f8e649",
+        "filename": "aaa-authn-store/src/main/java/org/opendaylight/aaa/store/DefaultTokenStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-03-17T22:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc7978_d7e8b218",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 48
+      },
+      "revId": "a7a3157fbff64b10cbf72ad7f4680f06a98ea9d6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
