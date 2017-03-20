@@ -364,8 +364,8 @@ public class UserHandler {
     private static String getProvidedFieldTooLongMessage(final String fieldName,
             final int maxFieldLength) {
 
-        return String.format("The provided {} field is too long.  " +
-                             "The max length is {}.", fieldName, maxFieldLength);
+        return String.format("The provided %s field is too long.  " +
+                             "The max length is %s.", fieldName, maxFieldLength);
     }
 
     /**
@@ -386,6 +386,6 @@ public class UserHandler {
      * @return true if input field bigger than the MAX_FIELD_LEN
      */
     private boolean checkInputFieldLength(final String inputField) {
-        return inputField != null && (inputField.length() > IdmLightApplication.MAX_FIELD_LEN);
+        return inputField != null && inputField.length() > IdmLightApplication.MAX_FIELD_LEN;
     }
 }
