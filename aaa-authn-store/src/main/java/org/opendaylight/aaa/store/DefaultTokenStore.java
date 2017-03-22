@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -48,16 +48,17 @@ public class DefaultTokenStore implements TokenStore, ManagedService {
     static final String SECS_TO_IDLE = "secondsToIdle";
 
     // Defaults (needed only for non-Karaf deployments)
-    static final Dictionary<String, String> defaults = new Hashtable<>();
+    protected static final Dictionary<String, String> DEFAULTS = new Hashtable<>();
+
     static {
-        defaults.put(MAX_CACHED_MEMORY, Long.toString(10000));
-        defaults.put(MAX_CACHED_DISK, Long.toString(1000000));
-        defaults.put(SECS_TO_IDLE, Long.toString(3600));
-        defaults.put(SECS_TO_LIVE, Long.toString(3600));
+        DEFAULTS.put(MAX_CACHED_MEMORY, Long.toString(10000));
+        DEFAULTS.put(MAX_CACHED_DISK, Long.toString(1000000));
+        DEFAULTS.put(SECS_TO_IDLE, Long.toString(3600));
+        DEFAULTS.put(SECS_TO_LIVE, Long.toString(3600));
     }
 
     // Token cache lock
-    private static final ReentrantLock cacheLock = new ReentrantLock();
+    private static final ReentrantLock CACHELOCK = new ReentrantLock();
 
     // Token cache
     private Cache tokens;
@@ -67,7 +68,7 @@ public class DefaultTokenStore implements TokenStore, ManagedService {
     }
 
     // Called by DM when all required dependencies are satisfied.
-    void init(Component c) {
+    void init(Component component) {
         File ehcache = new File(EHCACHE_XML);
         CacheManager cm;
         if (ehcache.exists()) {
@@ -76,22 +77,18 @@ public class DefaultTokenStore implements TokenStore, ManagedService {
             LOG.info("Initialized token store with custom cache config");
         } else {
             cm = CacheManager.getInstance();
-            tokens = new Cache(
-                    new CacheConfiguration(TOKEN_CACHE,
-                            Integer.parseInt(defaults.get(MAX_CACHED_MEMORY))).maxEntriesLocalDisk(
-                            Integer.parseInt(defaults.get(MAX_CACHED_DISK)))
-                                                                              .timeToLiveSeconds(
-                                                                                      Long.parseLong(defaults.get(SECS_TO_LIVE)))
-                                                                              .timeToIdleSeconds(
-                                                                                      Long.parseLong(defaults.get(SECS_TO_IDLE))));
+            tokens = new Cache(new CacheConfiguration(TOKEN_CACHE, Integer.parseInt(DEFAULTS.get(MAX_CACHED_MEMORY)))
+                    .maxEntriesLocalDisk(Integer.parseInt(DEFAULTS.get(MAX_CACHED_DISK)))
+                    .timeToLiveSeconds(Long.parseLong(DEFAULTS.get(SECS_TO_LIVE)))
+                    .timeToIdleSeconds(Long.parseLong(DEFAULTS.get(SECS_TO_IDLE))));
             cm.addCache(tokens);
             LOG.info("Initialized token store with default cache config");
         }
         cm.setName(TOKEN_CACHE_MANAGER);
 
         // JMX for cache management
-        MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-        ManagementService.registerMBeans(cm, mBeanServer, false, false, false, true);
+        MBeanServer managementBeanServer = ManagementFactory.getPlatformMBeanServer();
+        ManagementService.registerMBeans(cm, managementBeanServer, false, false, false, true);
     }
 
     // Called on shutdown
@@ -103,7 +100,7 @@ public class DefaultTokenStore implements TokenStore, ManagedService {
     @Override
     public Authentication get(String token) {
         Element elem = tokens.get(token);
-        return (Authentication) ((elem != null) ? elem.getObjectValue() : null);
+        return (Authentication) (elem != null ? elem.getObjectValue() : null);
     }
 
     @Override
@@ -122,34 +119,27 @@ public class DefaultTokenStore implements TokenStore, ManagedService {
     }
 
     @Override
-    public void updated(@SuppressWarnings("rawtypes") Dictionary props)
-            throws ConfigurationException {
+    public void updated(@SuppressWarnings("rawtypes") Dictionary props) throws ConfigurationException {
         LOG.info("Updating token store configuration...");
         if (props == null) {
-            // Someone deleted the configuration, use defaults
-            props = defaults;
+            // Someone deleted the configuration, use DEFAULTS
+            props = DEFAULTS;
         }
         reconfig(props);
     }
 
     // Refresh cache configuration...
-    private void reconfig(@SuppressWarnings("rawtypes") Dictionary props)
-            throws ConfigurationException {
-        cacheLock.lock();
-        try {
-            long secsToIdle = Long.parseLong(props.get(SECS_TO_IDLE).toString());
-            long secsToLive = Long.parseLong(props.get(SECS_TO_LIVE).toString());
-            int maxMem = Integer.parseInt(props.get(MAX_CACHED_MEMORY).toString());
-            int maxDisk = Integer.parseInt(props.get(MAX_CACHED_DISK).toString());
-            CacheConfiguration config = tokens.getCacheConfiguration();
-            config.setTimeToIdleSeconds(secsToIdle);
-            config.setTimeToLiveSeconds(secsToLive);
-            config.maxEntriesLocalHeap(maxMem);
-            config.maxEntriesLocalDisk(maxDisk);
-        } catch (Throwable t) {
-            throw new ConfigurationException(null, TOKEN_STORE_CONFIG_ERR, t);
-        } finally {
-            cacheLock.unlock();
-        }
+    private void reconfig(@SuppressWarnings("rawtypes") Dictionary props) throws ConfigurationException {
+        CACHELOCK.lock();
+        long secsToIdle = Long.parseLong(props.get(SECS_TO_IDLE).toString());
+        long secsToLive = Long.parseLong(props.get(SECS_TO_LIVE).toString());
+        int maxMem = Integer.parseInt(props.get(MAX_CACHED_MEMORY).toString());
+        int maxDisk = Integer.parseInt(props.get(MAX_CACHED_DISK).toString());
+        CacheConfiguration config = tokens.getCacheConfiguration();
+        config.setTimeToIdleSeconds(secsToIdle);
+        config.setTimeToLiveSeconds(secsToLive);
+        config.maxEntriesLocalHeap(maxMem);
+        config.maxEntriesLocalDisk(maxDisk);
+        CACHELOCK.unlock();
     }
 }
