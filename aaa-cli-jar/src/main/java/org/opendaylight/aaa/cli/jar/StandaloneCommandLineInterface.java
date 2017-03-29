@@ -54,11 +54,11 @@ public class StandaloneCommandLineInterface {
         Preconditions.checkNotNull(userIdWithoutDomain, "userIdWithoutDomain == null");
         List<User> users = identityStore.getUsers(userIdWithoutDomain, DOMAIN).getUsers();
         if (users.isEmpty()) {
-			return false;
-		}
+            return false;
+        }
         if (users.size() > 1) {
-			throw new IDMStoreException("More than 1 user found: " + userIdWithoutDomain);
-		}
+            throw new IDMStoreException("More than 1 user found: " + userIdWithoutDomain);
+        }
         User user = users.get(0);
         user.setPassword(newPassword);
         identityStore.updateUser(user);

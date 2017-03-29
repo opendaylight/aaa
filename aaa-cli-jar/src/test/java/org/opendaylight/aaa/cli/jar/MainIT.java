@@ -41,7 +41,7 @@ public class MainIT {
                 "--nu",
                 "vorburger",
                 "-p",
-                "nosecret" )
+                "nosecret")
                 .inheritIO()
                 // NO .redirectErrorStream(true)
                 .start();
