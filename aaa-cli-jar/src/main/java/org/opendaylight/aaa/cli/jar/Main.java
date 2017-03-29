@@ -59,6 +59,20 @@ public class Main extends AbstractMain {
     }
 
     @Override
+    protected int deleteUsers(List<String> userNames) throws IDMStoreException {
+        for (int i = 0; i < userNames.size(); i++) {
+            String userName = userNames.get(i);
+            if (cli.deleteUser(userName)) {
+                System.out.print("User deleted");
+            } else {
+                System.err.println("User does not exist: " + userName);
+                return RETURN_ILLEGAL_ARGUMENTS;
+            }
+        }
+        return 0;
+    }
+
+    @Override
     protected int addNewUsers(List<String> userNames, List<String> passwords, boolean areAdmins) throws IDMStoreException {
         for (int i = 0; i < userNames.size(); i++) {
             String userName = userNames.get(i);

@@ -31,6 +31,9 @@ public class MainIntegrationTest {
         assertThat(new Main()
                 .parseArguments(new String[] { "-X", "--dbd", DIR, "-cu", "newuser", "-p", "newpass" }))
                 .isEqualTo(0);
+        assertThat(new Main()
+                .parseArguments(new String[] { "-X", "--dbd", DIR, "-du", "newuser" }))
+                .isEqualTo(0);
     }
 
 }

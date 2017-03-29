@@ -47,6 +47,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
       <groupId>org.opendaylight.aaa</groupId>
       <artifactId>aaa-authn-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
+
     <!-- Note that com.h2database:h2 is already shaded into aaa-h2-store -->
 
     <!-- Now for the FAT JAR we need to fix up some <scope>provided to be <scope>compile -->

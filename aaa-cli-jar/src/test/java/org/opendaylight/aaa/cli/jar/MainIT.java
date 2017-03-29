@@ -10,6 +10,10 @@ package org.opendaylight.aaa.cli.jar;
 import static com.google.common.truth.Truth.assertThat;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.Test;
 
 /**
@@ -28,20 +32,27 @@ public class MainIT {
     @Test
     public void integrationTestBuildJAR() throws Exception {
         FilesUtils.delete(DIR);
-
-        // If Output piping to LOG instead of inheritIO() etc. is needed, then
-        // consider using https://github.com/vorburger/MariaDB4j/tree/master/mariaDB4j-core/src/main/java/ch/vorburger/exec
-        Process process = new ProcessBuilder(
-                findJava().getAbsolutePath(),
-                "-jar",
-                findExecutableFatJAR().getAbsolutePath(),
-                "--dbd",
-                DIR,
-                "-a",
+        runFatJAR("-a",
                 "--nu",
                 "vorburger",
                 "-p",
-                "nosecret" )
+                "nosecret");
+        runFatJAR("--du",
+                "vorburger");
+    }
+
+    private void runFatJAR(String... arguments) throws IOException, InterruptedException {
+        List<String> fullArguments = new ArrayList<>(Arrays.asList(
+            findJava().getAbsolutePath(),
+            "-jar",
+            findExecutableFatJAR().getAbsolutePath(),
+            "--dbd",
+            DIR));
+        fullArguments.addAll(Arrays.asList(arguments));
+
+        // If Output piping to LOG instead of inheritIO() etc. is needed, then
+        // consider using https://github.com/vorburger/MariaDB4j/tree/master/mariaDB4j-core/src/main/java/ch/vorburger/exec
+        Process process = new ProcessBuilder(fullArguments)
                 .inheritIO()
                 // NO .redirectErrorStream(true)
                 .start();
