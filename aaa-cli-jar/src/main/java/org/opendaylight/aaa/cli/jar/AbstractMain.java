@@ -120,7 +120,7 @@ public abstract class AbstractMain {
 
     private OptionParser getOptionParser() {
         return new OptionParser() { {
-                acceptsAll(asList(OPTION_HELP, "?" ), "Show help").forHelp();
+                acceptsAll(asList(OPTION_HELP, "?"), "Show help").forHelp();
                 accepts(OPTION_DB_DIR, "databaseDirectory").withRequiredArg().ofType(File.class)
                         .defaultsTo(new File(".")).describedAs("path");
                 acceptsAll(asList(OPTION_LIST_USERS, "listUsers"), "List all existing users");
@@ -155,7 +155,8 @@ public abstract class AbstractMain {
 
     protected abstract int resetPasswords(List<String> userNames, List<String> passwords) throws IDMStoreException;
 
-    protected abstract int addNewUsers(List<String> userNames, List<String> passwords, boolean areAdmins) throws IDMStoreException;
+    protected abstract int addNewUsers(List<String> userNames, List<String> passwords, boolean areAdmins)
+            throws IDMStoreException;
 
     protected abstract int deleteUsers(List<String> userNames) throws IDMStoreException;
 

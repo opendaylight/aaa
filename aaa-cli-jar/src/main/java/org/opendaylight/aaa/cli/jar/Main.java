@@ -73,13 +73,14 @@ public class Main extends AbstractMain {
     }
 
     @Override
-    protected int addNewUsers(List<String> userNames, List<String> passwords, boolean areAdmins) throws IDMStoreException {
+    protected int addNewUsers(List<String> userNames, List<String> passwords, boolean areAdmins)
+            throws IDMStoreException {
         for (int i = 0; i < userNames.size(); i++) {
             String userName = userNames.get(i);
             String newPassword = passwords.get(i);
             cli.createNewUser(userName, newPassword, areAdmins);
             System.out.print("New user created");
-            if (areAdmins){
+            if (areAdmins) {
                 System.out.print(", as admin");
             }
             System.out.println(": " + userName);

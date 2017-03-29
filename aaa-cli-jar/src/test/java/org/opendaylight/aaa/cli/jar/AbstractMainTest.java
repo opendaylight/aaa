@@ -102,7 +102,8 @@ public class AbstractMainTest {
         AbstractMain main = Mockito.spy(AbstractMain.class);
         assertThat(main.parseArguments(new String[] { "-X", "-nu", "user", "-p", "newpass" })).isEqualTo(0);
         Mockito.verify(main).setDbDirectory(new File("."));
-        Mockito.verify(main).addNewUsers(Collections.singletonList("user"), Collections.singletonList("newpass"), false);
+        Mockito.verify(main).addNewUsers(
+                Collections.singletonList("user"), Collections.singletonList("newpass"), false);
     }
 
     @Test
