@@ -36,12 +36,16 @@ public class StandaloneCommandLineInterfaceTest {
     }
 
     @Test
-    public void testCreateNewUserAndSetPassword() throws Exception {
+    public void testCreateNewUserAndSetPasswordAndDelete() throws Exception {
+        assertThat(cli.getAllUserNames()).hasSize(0);
         cli.createNewUser("test", "testpassword", false);
         assertThat(cli.getAllUserNames()).hasSize(1);
         assertThat(cli.getAllUserNames().get(0)).isEqualTo("test");
 
         assertThat(cli.resetPassword("test", "anothertestpassword")).isTrue();
+
+        assertThat(cli.deleteUser("test")).isTrue();
+        assertThat(cli.getAllUserNames()).hasSize(0);
     }
 
     @Test

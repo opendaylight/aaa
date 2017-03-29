@@ -144,4 +144,11 @@ public class AbstractMainTest {
                         .isEqualTo(-5);
     }
 
+    @Test
+    public void deleteSingleUser() throws Exception {
+        AbstractMain main = Mockito.spy(AbstractMain.class);
+        assertThat(main.parseArguments(new String[] { "-X", "-du", "duser" })).isEqualTo(0);
+        Mockito.verify(main).setDbDirectory(new File("."));
+        Mockito.verify(main).deleteUsers(Collections.singletonList("duser"));
+    }
 }
