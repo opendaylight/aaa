@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Cisco Systems, Inc. and others.  All rights reserved.
+ * Copyright (c) 2015, 2017 Cisco Systems, Inc. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -39,9 +39,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Identity Management MDSAL Store.
+ *
  * @author Sharon Aicler - saichler@cisco.com
  *
  */
+@SuppressWarnings("checkstyle:AbbreviationAsWordInName")
 public class IDMMDSALStore {
 
     private static final Logger LOG = LoggerFactory.getLogger(IDMMDSALStore.class);
@@ -51,27 +54,30 @@ public class IDMMDSALStore {
         this.dataBroker = dataBroker;
     }
 
-    public static final String getString(String aValue, String bValue) {
-        if (aValue != null)
-            return aValue;
-        return bValue;
+    public static final String getString(String stringValueA, String stringValueB) {
+        if (stringValueA != null) {
+            return stringValueA;
+        }
+        return stringValueB;
     }
 
-    public static final Boolean getBoolean(Boolean aValue, Boolean bValue) {
-        if (aValue != null)
-            return aValue;
-        return bValue;
+    public static final Boolean getBoolean(Boolean booleanValueA, Boolean booleanValueB) {
+        if (booleanValueA != null) {
+            return booleanValueA;
+        }
+        return booleanValueB;
     }
 
     public static boolean waitForSubmit(CheckedFuture<Void, TransactionCommitFailedException> submit) {
         // This can happen only when testing
-        if (submit == null)
+        if (submit == null) {
             return false;
+        }
         while (!submit.isDone() && !submit.isCancelled()) {
             try {
                 Thread.sleep(1000);
-            } catch (Exception err) {
-                LOG.error("Interrupted", err);
+            } catch (InterruptedException e) {
+                LOG.error("Interrupted", e);
             }
         }
         return submit.isCancelled();
@@ -82,17 +88,17 @@ public class IDMMDSALStore {
         Preconditions.checkNotNull(domain);
         Preconditions.checkNotNull(domain.getName());
         Preconditions.checkNotNull(domain.isEnabled());
-        DomainBuilder b = new DomainBuilder();
-        b.setDescription(domain.getDescription());
-        b.setDomainid(domain.getName());
-        b.setEnabled(domain.isEnabled());
-        b.setName(domain.getName());
-        b.setKey(new DomainKey(b.getName()));
-        domain = b.build();
-        InstanceIdentifier<Domain> ID = InstanceIdentifier.create(Authentication.class).child(
-                Domain.class, new DomainKey(domain.getDomainid()));
+        DomainBuilder domainBuilder = new DomainBuilder();
+        domainBuilder.setDescription(domain.getDescription());
+        domainBuilder.setDomainid(domain.getName());
+        domainBuilder.setEnabled(domain.isEnabled());
+        domainBuilder.setName(domain.getName());
+        domainBuilder.setKey(new DomainKey(domainBuilder.getName()));
+        domain = domainBuilder.build();
+        InstanceIdentifier<Domain> domainId = InstanceIdentifier.create(Authentication.class).child(Domain.class,
+                new DomainKey(domain.getDomainid()));
         WriteTransaction wrt = dataBroker.newWriteOnlyTransaction();
-        wrt.put(LogicalDatastoreType.CONFIGURATION, ID, domain, true);
+        wrt.put(LogicalDatastoreType.CONFIGURATION, domainId, domain, true);
         CheckedFuture<Void, TransactionCommitFailedException> submit = wrt.submit();
         if (!waitForSubmit(submit)) {
             return domain;
@@ -103,11 +109,11 @@ public class IDMMDSALStore {
 
     public Domain readDomain(String domainid) {
         Preconditions.checkNotNull(domainid);
-        InstanceIdentifier<Domain> ID = InstanceIdentifier.create(Authentication.class).child(
-                Domain.class, new DomainKey(domainid));
+        InstanceIdentifier<Domain> domainId = InstanceIdentifier.create(Authentication.class).child(Domain.class,
+                new DomainKey(domainid));
         ReadOnlyTransaction rot = dataBroker.newReadOnlyTransaction();
-        CheckedFuture<Optional<Domain>, ReadFailedException> read = rot.read(
-                LogicalDatastoreType.CONFIGURATION, ID);
+        CheckedFuture<Optional<Domain>, ReadFailedException> read = rot.read(LogicalDatastoreType.CONFIGURATION,
+                domainId);
         if (read == null) {
             LOG.error("Failed to read domain from data store");
             return null;
@@ -120,11 +126,13 @@ public class IDMMDSALStore {
             return null;
         }
 
-        if (optional == null)
+        if (optional == null) {
             return null;
+        }
 
-        if (!optional.isPresent())
+        if (!optional.isPresent()) {
             return null;
+        }
 
         return optional.get();
     }
@@ -136,10 +144,10 @@ public class IDMMDSALStore {
             LOG.error("Failed to delete domain from data store, unknown domain");
             return null;
         }
-        InstanceIdentifier<Domain> ID = InstanceIdentifier.create(Authentication.class).child(
-                Domain.class, new DomainKey(domainid));
+        InstanceIdentifier<Domain> domainId = InstanceIdentifier.create(Authentication.class).child(Domain.class,
+                new DomainKey(domainid));
         WriteTransaction wrt = dataBroker.newWriteOnlyTransaction();
-        wrt.delete(LogicalDatastoreType.CONFIGURATION, ID);
+        wrt.delete(LogicalDatastoreType.CONFIGURATION, domainId);
         wrt.submit();
         return domain;
     }
@@ -148,30 +156,32 @@ public class IDMMDSALStore {
         Preconditions.checkNotNull(domain);
         Preconditions.checkNotNull(domain.getDomainid());
         Domain existing = readDomain(domain.getDomainid());
-        DomainBuilder b = new DomainBuilder();
-        b.setDescription(getString(domain.getDescription(), existing.getDescription()));
-        b.setName(existing.getName());
-        b.setEnabled(getBoolean(domain.isEnabled(), existing.isEnabled()));
-        return writeDomain(b.build());
+        DomainBuilder domainBuilder = new DomainBuilder();
+        domainBuilder.setDescription(getString(domain.getDescription(), existing.getDescription()));
+        domainBuilder.setName(existing.getName());
+        domainBuilder.setEnabled(getBoolean(domain.isEnabled(), existing.isEnabled()));
+        return writeDomain(domainBuilder.build());
     }
 
     public List<Domain> getAllDomains() {
         InstanceIdentifier<Authentication> id = InstanceIdentifier.create(Authentication.class);
         ReadOnlyTransaction rot = dataBroker.newReadOnlyTransaction();
-        CheckedFuture<Optional<Authentication>, ReadFailedException> read = rot.read(
-                LogicalDatastoreType.CONFIGURATION, id);
-        if (read == null)
+        CheckedFuture<Optional<Authentication>, ReadFailedException> read = rot.read(LogicalDatastoreType.CONFIGURATION,
+                id);
+        if (read == null) {
             return null;
+        }
 
         try {
-            if (read.get() == null)
+            if (read.get() == null) {
                 return null;
+            }
             if (read.get().isPresent()) {
                 Authentication auth = read.get().get();
                 return auth.getDomain();
             }
-        } catch (Exception err) {
-            LOG.error("Failed to read domains", err);
+        } catch (ExecutionException | InterruptedException e) {
+            LOG.error("Failed to read domains", e);
         }
         return null;
     }
@@ -179,20 +189,22 @@ public class IDMMDSALStore {
     public List<Role> getAllRoles() {
         InstanceIdentifier<Authentication> id = InstanceIdentifier.create(Authentication.class);
         ReadOnlyTransaction rot = dataBroker.newReadOnlyTransaction();
-        CheckedFuture<Optional<Authentication>, ReadFailedException> read = rot.read(
-                LogicalDatastoreType.CONFIGURATION, id);
-        if (read == null)
+        CheckedFuture<Optional<Authentication>, ReadFailedException> read = rot.read(LogicalDatastoreType.CONFIGURATION,
+                id);
+        if (read == null) {
             return null;
+        }
 
         try {
-            if (read.get() == null)
+            if (read.get() == null) {
                 return null;
+            }
             if (read.get().isPresent()) {
                 Authentication auth = read.get().get();
                 return auth.getRole();
             }
-        } catch (Exception err) {
-            LOG.error("Failed to read domains", err);
+        } catch (ExecutionException | InterruptedException e) {
+            LOG.error("Failed to read domains", e);
         }
         return null;
     }
@@ -200,20 +212,22 @@ public class IDMMDSALStore {
     public List<User> getAllUsers() {
         InstanceIdentifier<Authentication> id = InstanceIdentifier.create(Authentication.class);
         ReadOnlyTransaction rot = dataBroker.newReadOnlyTransaction();
-        CheckedFuture<Optional<Authentication>, ReadFailedException> read = rot.read(
-                LogicalDatastoreType.CONFIGURATION, id);
-        if (read == null)
+        CheckedFuture<Optional<Authentication>, ReadFailedException> read = rot.read(LogicalDatastoreType.CONFIGURATION,
+                id);
+        if (read == null) {
             return null;
+        }
 
         try {
-            if (read.get() == null)
+            if (read.get() == null) {
                 return null;
+            }
             if (read.get().isPresent()) {
                 Authentication auth = read.get().get();
                 return auth.getUser();
             }
-        } catch (Exception err) {
-            LOG.error("Failed to read domains", err);
+        } catch (ExecutionException | InterruptedException e) {
+            LOG.error("Failed to read domains", e);
         }
         return null;
     }
@@ -221,20 +235,22 @@ public class IDMMDSALStore {
     public List<Grant> getAllGrants() {
         InstanceIdentifier<Authentication> id = InstanceIdentifier.create(Authentication.class);
         ReadOnlyTransaction rot = dataBroker.newReadOnlyTransaction();
-        CheckedFuture<Optional<Authentication>, ReadFailedException> read = rot.read(
-                LogicalDatastoreType.CONFIGURATION, id);
-        if (read == null)
+        CheckedFuture<Optional<Authentication>, ReadFailedException> read = rot.read(LogicalDatastoreType.CONFIGURATION,
+                id);
+        if (read == null) {
             return null;
+        }
 
         try {
-            if (read.get() == null)
+            if (read.get() == null) {
                 return null;
+            }
             if (read.get().isPresent()) {
                 Authentication auth = read.get().get();
                 return auth.getGrant();
             }
-        } catch (Exception err) {
-            LOG.error("Failed to read domains", err);
+        } catch (ExecutionException | InterruptedException e) {
+            LOG.error("Failed to read domains", e);
         }
         return null;
     }
@@ -245,17 +261,17 @@ public class IDMMDSALStore {
         Preconditions.checkNotNull(role.getName());
         Preconditions.checkNotNull(role.getDomainid());
         Preconditions.checkNotNull(readDomain(role.getDomainid()));
-        RoleBuilder b = new RoleBuilder();
-        b.setDescription(role.getDescription());
-        b.setRoleid(IDMStoreUtil.createRoleid(role.getName(), role.getDomainid()));
-        b.setKey(new RoleKey(b.getRoleid()));
-        b.setName(role.getName());
-        b.setDomainid(role.getDomainid());
-        role = b.build();
-        InstanceIdentifier<Role> ID = InstanceIdentifier.create(Authentication.class).child(
-                Role.class, new RoleKey(role.getRoleid()));
+        RoleBuilder roleBuilder = new RoleBuilder();
+        roleBuilder.setDescription(role.getDescription());
+        roleBuilder.setRoleid(IDMStoreUtil.createRoleid(role.getName(), role.getDomainid()));
+        roleBuilder.setKey(new RoleKey(roleBuilder.getRoleid()));
+        roleBuilder.setName(role.getName());
+        roleBuilder.setDomainid(role.getDomainid());
+        role = roleBuilder.build();
+        InstanceIdentifier<Role> roleId = InstanceIdentifier.create(Authentication.class).child(Role.class,
+                new RoleKey(role.getRoleid()));
         WriteTransaction wrt = dataBroker.newWriteOnlyTransaction();
-        wrt.put(LogicalDatastoreType.CONFIGURATION, ID, role, true);
+        wrt.put(LogicalDatastoreType.CONFIGURATION, roleId, role, true);
         CheckedFuture<Void, TransactionCommitFailedException> submit = wrt.submit();
         if (!waitForSubmit(submit)) {
             return role;
@@ -266,11 +282,10 @@ public class IDMMDSALStore {
 
     public Role readRole(String roleid) {
         Preconditions.checkNotNull(roleid);
-        InstanceIdentifier<Role> ID = InstanceIdentifier.create(Authentication.class).child(
-                Role.class, new RoleKey(roleid));
+        InstanceIdentifier<Role> roleId = InstanceIdentifier.create(Authentication.class).child(Role.class,
+                new RoleKey(roleid));
         ReadOnlyTransaction rot = dataBroker.newReadOnlyTransaction();
-        CheckedFuture<Optional<Role>, ReadFailedException> read = rot.read(
-                LogicalDatastoreType.CONFIGURATION, ID);
+        CheckedFuture<Optional<Role>, ReadFailedException> read = rot.read(LogicalDatastoreType.CONFIGURATION, roleId);
         if (read == null) {
             LOG.error("Failed to read role from data store");
             return null;
@@ -283,11 +298,13 @@ public class IDMMDSALStore {
             return null;
         }
 
-        if (optional == null)
+        if (optional == null) {
             return null;
+        }
 
-        if (!optional.isPresent())
+        if (!optional.isPresent()) {
             return null;
+        }
 
         return optional.get();
     }
@@ -299,10 +316,10 @@ public class IDMMDSALStore {
             LOG.error("Failed to delete role from data store, unknown role");
             return null;
         }
-        InstanceIdentifier<Role> ID = InstanceIdentifier.create(Authentication.class).child(
-                Role.class, new RoleKey(roleid));
+        InstanceIdentifier<Role> roleId = InstanceIdentifier.create(Authentication.class).child(Role.class,
+                new RoleKey(roleid));
         WriteTransaction wrt = dataBroker.newWriteOnlyTransaction();
-        wrt.delete(LogicalDatastoreType.CONFIGURATION, ID);
+        wrt.delete(LogicalDatastoreType.CONFIGURATION, roleId);
         wrt.submit();
         return role;
     }
@@ -311,11 +328,11 @@ public class IDMMDSALStore {
         Preconditions.checkNotNull(role);
         Preconditions.checkNotNull(role.getRoleid());
         Role existing = readRole(role.getRoleid());
-        RoleBuilder b = new RoleBuilder();
-        b.setDescription(getString(role.getDescription(), existing.getDescription()));
-        b.setName(existing.getName());
-        b.setDomainid(existing.getDomainid());
-        return writeRole(b.build());
+        RoleBuilder roleBuilder = new RoleBuilder();
+        roleBuilder.setDescription(getString(role.getDescription(), existing.getDescription()));
+        roleBuilder.setName(existing.getName());
+        roleBuilder.setDomainid(existing.getDomainid());
+        return writeRole(roleBuilder.build());
     }
 
     // User methods
@@ -324,25 +341,25 @@ public class IDMMDSALStore {
         Preconditions.checkNotNull(user.getName());
         Preconditions.checkNotNull(user.getDomainid());
         Preconditions.checkNotNull(readDomain(user.getDomainid()));
-        UserBuilder b = new UserBuilder();
+        UserBuilder userBuilder = new UserBuilder();
         if (user.getSalt() == null) {
-            b.setSalt(SHA256Calculator.generateSALT());
+            userBuilder.setSalt(SHA256Calculator.generateSALT());
         } else {
-            b.setSalt(user.getSalt());
+            userBuilder.setSalt(user.getSalt());
         }
-        b.setUserid(IDMStoreUtil.createUserid(user.getName(), user.getDomainid()));
-        b.setDescription(user.getDescription());
-        b.setDomainid(user.getDomainid());
-        b.setEmail(user.getEmail());
-        b.setEnabled(user.isEnabled());
-        b.setKey(new UserKey(b.getUserid()));
-        b.setName(user.getName());
-        b.setPassword(SHA256Calculator.getSHA256(user.getPassword(), b.getSalt()));
-        user = b.build();
-        InstanceIdentifier<User> ID = InstanceIdentifier.create(Authentication.class).child(
-                User.class, new UserKey(user.getUserid()));
+        userBuilder.setUserid(IDMStoreUtil.createUserid(user.getName(), user.getDomainid()));
+        userBuilder.setDescription(user.getDescription());
+        userBuilder.setDomainid(user.getDomainid());
+        userBuilder.setEmail(user.getEmail());
+        userBuilder.setEnabled(user.isEnabled());
+        userBuilder.setKey(new UserKey(userBuilder.getUserid()));
+        userBuilder.setName(user.getName());
+        userBuilder.setPassword(SHA256Calculator.getSHA256(user.getPassword(), userBuilder.getSalt()));
+        user = userBuilder.build();
+        InstanceIdentifier<User> userId = InstanceIdentifier.create(Authentication.class).child(User.class,
+                new UserKey(user.getUserid()));
         WriteTransaction wrt = dataBroker.newWriteOnlyTransaction();
-        wrt.put(LogicalDatastoreType.CONFIGURATION, ID, user, true);
+        wrt.put(LogicalDatastoreType.CONFIGURATION, userId, user, true);
         CheckedFuture<Void, TransactionCommitFailedException> submit = wrt.submit();
         if (!waitForSubmit(submit)) {
             return user;
@@ -353,11 +370,10 @@ public class IDMMDSALStore {
 
     public User readUser(String userid) {
         Preconditions.checkNotNull(userid);
-        InstanceIdentifier<User> ID = InstanceIdentifier.create(Authentication.class).child(
-                User.class, new UserKey(userid));
+        InstanceIdentifier<User> userId = InstanceIdentifier.create(Authentication.class).child(User.class,
+                new UserKey(userid));
         ReadOnlyTransaction rot = dataBroker.newReadOnlyTransaction();
-        CheckedFuture<Optional<User>, ReadFailedException> read = rot.read(
-                LogicalDatastoreType.CONFIGURATION, ID);
+        CheckedFuture<Optional<User>, ReadFailedException> read = rot.read(LogicalDatastoreType.CONFIGURATION, userId);
         if (read == null) {
             LOG.error("Failed to read user from data store");
             return null;
@@ -370,11 +386,13 @@ public class IDMMDSALStore {
             return null;
         }
 
-        if (optional == null)
+        if (optional == null) {
             return null;
+        }
 
-        if (!optional.isPresent())
+        if (!optional.isPresent()) {
             return null;
+        }
 
         return optional.get();
     }
@@ -386,10 +404,10 @@ public class IDMMDSALStore {
             LOG.error("Failed to delete user from data store, unknown user");
             return null;
         }
-        InstanceIdentifier<User> ID = InstanceIdentifier.create(Authentication.class).child(
-                User.class, new UserKey(userid));
+        InstanceIdentifier<User> userId = InstanceIdentifier.create(Authentication.class).child(User.class,
+                new UserKey(userid));
         WriteTransaction wrt = dataBroker.newWriteOnlyTransaction();
-        wrt.delete(LogicalDatastoreType.CONFIGURATION, ID);
+        wrt.delete(LogicalDatastoreType.CONFIGURATION, userId);
         wrt.submit();
         return user;
     }
@@ -398,15 +416,15 @@ public class IDMMDSALStore {
         Preconditions.checkNotNull(user);
         Preconditions.checkNotNull(user.getUserid());
         User existing = readUser(user.getUserid());
-        UserBuilder b = new UserBuilder();
-        b.setName(existing.getName());
-        b.setDomainid(existing.getDomainid());
-        b.setDescription(getString(user.getDescription(), existing.getDescription()));
-        b.setEmail(getString(user.getEmail(), existing.getEmail()));
-        b.setEnabled(getBoolean(user.isEnabled(), existing.isEnabled()));
-        b.setPassword(getString(user.getPassword(), existing.getPassword()));
-        b.setSalt(getString(user.getSalt(), existing.getSalt()));
-        return writeUser(b.build());
+        UserBuilder userBuilder = new UserBuilder();
+        userBuilder.setName(existing.getName());
+        userBuilder.setDomainid(existing.getDomainid());
+        userBuilder.setDescription(getString(user.getDescription(), existing.getDescription()));
+        userBuilder.setEmail(getString(user.getEmail(), existing.getEmail()));
+        userBuilder.setEnabled(getBoolean(user.isEnabled(), existing.isEnabled()));
+        userBuilder.setPassword(getString(user.getPassword(), existing.getPassword()));
+        userBuilder.setSalt(getString(user.getSalt(), existing.getSalt()));
+        return writeUser(userBuilder.build());
     }
 
     // Grant methods
@@ -418,18 +436,17 @@ public class IDMMDSALStore {
         Preconditions.checkNotNull(readDomain(grant.getDomainid()));
         Preconditions.checkNotNull(readUser(grant.getUserid()));
         Preconditions.checkNotNull(readRole(grant.getRoleid()));
-        GrantBuilder b = new GrantBuilder();
-        b.setDomainid(grant.getDomainid());
-        b.setRoleid(grant.getRoleid());
-        b.setUserid(grant.getUserid());
-        b.setGrantid(IDMStoreUtil.createGrantid(grant.getUserid(), grant.getDomainid(),
-                grant.getRoleid()));
-        b.setKey(new GrantKey(b.getGrantid()));
-        grant = b.build();
-        InstanceIdentifier<Grant> ID = InstanceIdentifier.create(Authentication.class).child(
-                Grant.class, new GrantKey(grant.getGrantid()));
+        GrantBuilder grantBuilder = new GrantBuilder();
+        grantBuilder.setDomainid(grant.getDomainid());
+        grantBuilder.setRoleid(grant.getRoleid());
+        grantBuilder.setUserid(grant.getUserid());
+        grantBuilder.setGrantid(IDMStoreUtil.createGrantid(grant.getUserid(), grant.getDomainid(), grant.getRoleid()));
+        grantBuilder.setKey(new GrantKey(grantBuilder.getGrantid()));
+        grant = grantBuilder.build();
+        InstanceIdentifier<Grant> grantId = InstanceIdentifier.create(Authentication.class).child(Grant.class,
+                new GrantKey(grant.getGrantid()));
         WriteTransaction wrt = dataBroker.newWriteOnlyTransaction();
-        wrt.put(LogicalDatastoreType.CONFIGURATION, ID, grant, true);
+        wrt.put(LogicalDatastoreType.CONFIGURATION, grantId, grant, true);
         CheckedFuture<Void, TransactionCommitFailedException> submit = wrt.submit();
         if (!waitForSubmit(submit)) {
             return grant;
@@ -440,11 +457,11 @@ public class IDMMDSALStore {
 
     public Grant readGrant(String grantid) {
         Preconditions.checkNotNull(grantid);
-        InstanceIdentifier<Grant> ID = InstanceIdentifier.create(Authentication.class).child(
-                Grant.class, new GrantKey(grantid));
+        InstanceIdentifier<Grant> grantId = InstanceIdentifier.create(Authentication.class).child(Grant.class,
+                new GrantKey(grantid));
         ReadOnlyTransaction rot = dataBroker.newReadOnlyTransaction();
-        CheckedFuture<Optional<Grant>, ReadFailedException> read = rot.read(
-                LogicalDatastoreType.CONFIGURATION, ID);
+        CheckedFuture<Optional<Grant>, ReadFailedException> read = rot.read(LogicalDatastoreType.CONFIGURATION,
+                grantId);
         if (read == null) {
             LOG.error("Failed to read grant from data store");
             return null;
@@ -457,11 +474,13 @@ public class IDMMDSALStore {
             return null;
         }
 
-        if (optional == null)
+        if (optional == null) {
             return null;
+        }
 
-        if (!optional.isPresent())
+        if (!optional.isPresent()) {
             return null;
+        }
 
         return optional.get();
     }
@@ -473,10 +492,10 @@ public class IDMMDSALStore {
             LOG.error("Failed to delete grant from data store, unknown grant");
             return null;
         }
-        InstanceIdentifier<Grant> ID = InstanceIdentifier.create(Authentication.class).child(
-                Grant.class, new GrantKey(grantid));
+        InstanceIdentifier<Grant> grantId = InstanceIdentifier.create(Authentication.class).child(Grant.class,
+                new GrantKey(grantid));
         WriteTransaction wrt = dataBroker.newWriteOnlyTransaction();
-        wrt.delete(LogicalDatastoreType.CONFIGURATION, ID);
+        wrt.delete(LogicalDatastoreType.CONFIGURATION, grantId);
         wrt.submit();
         return grant;
     }

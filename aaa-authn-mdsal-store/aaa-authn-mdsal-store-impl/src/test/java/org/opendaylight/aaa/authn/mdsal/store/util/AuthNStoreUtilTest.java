@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Cisco Systems, Inc. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Cisco Systems, Inc. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -26,9 +26,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @RunWith(PowerMockRunner.class)
 public class AuthNStoreUtilTest {
 
-    private String token = "foo_token_test";
-    private String userId = "123";
-    private Long expire = new Long(365);
+    private final String token = "foo_token_test";
+    private final String userId = "123";
+    private final Long expire = new Long(365);
     @Mock
     private Authentication auth;
     @Mock
@@ -73,7 +73,7 @@ public class AuthNStoreUtilTest {
         claimsBuilder.setClientId("123");
         claimsBuilder.setDomain("foo_domain");
         claimsBuilder.setKey(claimsKey);
-        List<String> roles = new ArrayList<String>();
+        List<String> roles = new ArrayList<>();
         roles.add("foo_role");
         claimsBuilder.setRoles(roles);
         claimsBuilder.setToken(token);
@@ -84,5 +84,4 @@ public class AuthNStoreUtilTest {
         assertTrue(AuthNStoreUtil.convertClaimToAuthentication(null, expire) == null);
         assertNotNull(AuthNStoreUtil.convertClaimToAuthentication(fooClaims, expire));
     }
-
 }
