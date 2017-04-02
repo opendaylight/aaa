@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Cisco Systems, Inc. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Cisco Systems, Inc. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -10,6 +10,7 @@ package org.opendaylight.aaa.authn.mdsal.store;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 import com.google.common.base.Optional;
 import com.google.common.util.concurrent.CheckedFuture;
 import java.util.concurrent.ExecutionException;
@@ -108,20 +109,20 @@ public class IDMStoreTestUtil {
         grantbuilder.setDomainid(createdomain().getDomainid());
         grantbuilder.setRoleid(createrole().getRoleid());
         grantbuilder.setUserid(createuser().getUserid());
-        grantbuilder.setGrantid(IDMStoreUtil.createGrantid(grantbuilder.getUserid(),
-                grantbuilder.getDomainid(), grantbuilder.getRoleid()));
+        grantbuilder.setGrantid(IDMStoreUtil.createGrantid(grantbuilder.getUserid(), grantbuilder.getDomainid(),
+                grantbuilder.getRoleid()));
         grantbuilder.setKey(new GrantKey(grantbuilder.getGrantid()));
         /* End of Grant builder */
         return grantbuilder.build();
     }
 
     /* InstanceIdentifier for Grant instance grant */
-    public InstanceIdentifier<Grant> grantID = InstanceIdentifier.create(Authentication.class)
-                                                                 .child(Grant.class,
-                                                                         creategrant().getKey());
+    public InstanceIdentifier<Grant> grantID = InstanceIdentifier.create(Authentication.class).child(Grant.class,
+            creategrant().getKey());
 
     /* Mokito DataBroker method for grant Data Object */
-    public void addMokitoForgrant() throws NoSuchMethodException, SecurityException, InterruptedException, ExecutionException {
+    public void addMokitoForgrant()
+            throws NoSuchMethodException, SecurityException, InterruptedException, ExecutionException {
         CheckedFuture<Optional<Grant>, ReadFailedException> read = mock(CheckedFuture.class);
         DataBrokerReadMocker.getMocker(rot).addWhen("read",
                 new Object[] { LogicalDatastoreType.CONFIGURATION, grantID }, read);
@@ -132,14 +133,12 @@ public class IDMStoreTestUtil {
     }
 
     /* InstanceIdentifier for Domain instance domain */
-    public InstanceIdentifier<Domain> domainID = InstanceIdentifier.create(Authentication.class)
-                                                                   .child(Domain.class,
-                                                                           new DomainKey(
-                                                                                   new String(
-                                                                                           "SETNAME")));
+    public InstanceIdentifier<Domain> domainID = InstanceIdentifier.create(Authentication.class).child(Domain.class,
+            new DomainKey(new String("SETNAME")));
 
     /* Mokito DataBroker method for domain Data Object */
-    public void addMokitoFordomain() throws NoSuchMethodException, SecurityException, InterruptedException, ExecutionException {
+    public void addMokitoFordomain()
+            throws NoSuchMethodException, SecurityException, InterruptedException, ExecutionException {
         CheckedFuture<Optional<Domain>, ReadFailedException> read = mock(CheckedFuture.class);
         DataBrokerReadMocker.getMocker(rot).addWhen("read",
                 new Object[] { LogicalDatastoreType.CONFIGURATION, domainID }, read);
@@ -150,14 +149,15 @@ public class IDMStoreTestUtil {
     }
 
     /* InstanceIdentifier for Role instance role */
-    public InstanceIdentifier<Role> roleID = InstanceIdentifier.create(Authentication.class).child(
-            Role.class, createrole().getKey());
+    public InstanceIdentifier<Role> roleID = InstanceIdentifier.create(Authentication.class).child(Role.class,
+            createrole().getKey());
 
     /* Mokito DataBroker method for role Data Object */
-    public void addMokitoForrole() throws NoSuchMethodException, SecurityException, InterruptedException, ExecutionException {
+    public void addMokitoForrole()
+            throws NoSuchMethodException, SecurityException, InterruptedException, ExecutionException {
         CheckedFuture<Optional<Role>, ReadFailedException> read = mock(CheckedFuture.class);
-        DataBrokerReadMocker.getMocker(rot).addWhen("read",
-                new Object[] { LogicalDatastoreType.CONFIGURATION, roleID }, read);
+        DataBrokerReadMocker.getMocker(rot).addWhen("read", new Object[] { LogicalDatastoreType.CONFIGURATION, roleID },
+                read);
         Optional<Role> optional = mock(Optional.class);
         when(read.get()).thenReturn(optional);
         when(optional.get()).thenReturn(role);
@@ -165,14 +165,15 @@ public class IDMStoreTestUtil {
     }
 
     /* InstanceIdentifier for User instance user */
-    public InstanceIdentifier<User> userID = InstanceIdentifier.create(Authentication.class).child(
-            User.class, createuser().getKey());
+    public InstanceIdentifier<User> userID = InstanceIdentifier.create(Authentication.class).child(User.class,
+            createuser().getKey());
 
     /* Mokito DataBroker method for user Data Object */
-    public void addMokitoForuser() throws NoSuchMethodException, SecurityException, InterruptedException, ExecutionException {
+    public void addMokitoForuser()
+            throws NoSuchMethodException, SecurityException, InterruptedException, ExecutionException {
         CheckedFuture<Optional<User>, ReadFailedException> read = mock(CheckedFuture.class);
-        DataBrokerReadMocker.getMocker(rot).addWhen("read",
-                new Object[] { LogicalDatastoreType.CONFIGURATION, userID }, read);
+        DataBrokerReadMocker.getMocker(rot).addWhen("read", new Object[] { LogicalDatastoreType.CONFIGURATION, userID },
+                read);
         Optional<User> optional = mock(Optional.class);
         when(read.get()).thenReturn(optional);
         when(optional.get()).thenReturn(user);
