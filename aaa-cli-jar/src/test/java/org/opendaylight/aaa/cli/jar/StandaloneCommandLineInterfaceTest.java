@@ -37,7 +37,7 @@ public class StandaloneCommandLineInterfaceTest {
 
     @Test
     public void testCreateNewUserAndSetPasswordAndDelete() throws Exception {
-        assertThat(cli.getAllUserNames()).hasSize(0);
+        assertThat(cli.getAllUserNames()).isEmpty();
         cli.createNewUser("test", "testpassword", false);
         assertThat(cli.getAllUserNames()).hasSize(1);
         assertThat(cli.getAllUserNames().get(0)).isEqualTo("test");
@@ -46,6 +46,13 @@ public class StandaloneCommandLineInterfaceTest {
 
         assertThat(cli.deleteUser("test")).isTrue();
         assertThat(cli.getAllUserNames()).hasSize(0);
+    }
+
+    @Test // https://bugs.opendaylight.org/show_bug.cgi?id=8157
+    public void testCreateDeleteReCreateUserBug8157() throws Exception {
+        cli.createNewUser("test", "testpassword", false);
+        assertThat(cli.deleteUser("test")).isTrue();
+        cli.createNewUser("test", "testpassword", false);
     }
 
     @Test

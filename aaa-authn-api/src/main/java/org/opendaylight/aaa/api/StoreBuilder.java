@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Grant;
+import org.opendaylight.aaa.api.model.Grants;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.User;
 import org.slf4j.Logger;
@@ -192,6 +193,15 @@ public class StoreBuilder {
             roleIDs = getRoleIDs(domainID, Arrays.asList("user"));
         }
         return createUser(domainID, userName, password, roleIDs);
+    }
+
+    public boolean deleteUser(String domainID, String userName) throws IDMStoreException {
+        String userID = IDMStoreUtil.createUserid(userName, domainID);
+        Grants grants = store.getGrants(userID); // NOT store.getGrants(domainID, userName)
+        for (Grant grant : grants.getGrants()) {
+            store.deleteGrant(grant.getGrantid());
+        }
+        return store.deleteUser(userID) != null;
     }
 
     private void createGrant(String domainID, String userID, String roleID) throws IDMStoreException {

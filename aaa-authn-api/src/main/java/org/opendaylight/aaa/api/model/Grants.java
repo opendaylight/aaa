@@ -5,16 +5,13 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.api.model;
 
 /**
+ * Grants.
  *
  * @author peter.mellquist@hp.com
- *
  */
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "grants")
 public class Grants {
-    private List<Grant> grants = new ArrayList<Grant>();
+    private List<Grant> grants = new ArrayList<>();
 
     public void setGrants(List<Grant> grants) {
         this.grants = grants;
@@ -30,6 +27,11 @@ public class Grants {
 
     public List<Grant> getGrants() {
         return grants;
+    }
+
+    @Override
+    public String toString() {
+        return "Grants" + grants.toString();
     }
 
 }

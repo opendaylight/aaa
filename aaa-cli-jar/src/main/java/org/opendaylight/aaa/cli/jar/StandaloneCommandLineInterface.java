@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.opendaylight.aaa.api.IDMStoreException;
-import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.api.model.User;
@@ -83,7 +82,6 @@ public class StandaloneCommandLineInterface {
 
     public boolean deleteUser(String userIdWithoutDomain) throws IDMStoreException {
         Preconditions.checkNotNull(userIdWithoutDomain, "userIdWithoutDomain == null");
-        String userID = IDMStoreUtil.createUserid(userIdWithoutDomain, DOMAIN);
-        return identityStore.deleteUser(userID) != null;
+        return storeBuilder.deleteUser(DOMAIN, userIdWithoutDomain);
     }
 }
