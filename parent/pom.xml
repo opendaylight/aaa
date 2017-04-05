@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>odlparent</artifactId>
-        <version>1.7.3-SNAPSHOT</version>
+        <version>1.7.3-Boron-SR3</version>
         <relativePath/>
     </parent>
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>aaa-parent</artifactId>
-    <version>0.4.3-SNAPSHOT</version>
+    <version>0.4.3-Boron-SR3</version>
     <packaging>pom</packaging>
     <prerequisites>
         <maven>3.0.4</maven>
@@ -19,22 +19,22 @@
 
     <properties>
         <!-- Karaf -->
-        <karaf.branding.version>1.3.3-SNAPSHOT</karaf.branding.version>
-        <karaf.resources.version>1.7.3-SNAPSHOT</karaf.resources.version>
+        <karaf.branding.version>1.3.3-Boron-SR3</karaf.branding.version>
+        <karaf.resources.version>1.7.3-Boron-SR3</karaf.resources.version>
 
         <!-- Local project version, needed for import -->
         <aaa.version>${project.version}</aaa.version>
         <parent-path>${basedir}</parent-path>
 
         <!-- AuthZ -->
-        <yangtools.version>1.0.3-SNAPSHOT</yangtools.version>
+        <yangtools.version>1.0.3-Boron-SR3</yangtools.version>
         <jmxGeneratorPath>src/main/yang-gen-config</jmxGeneratorPath>
         <salGeneratorPath>src/main/yang-gen-sal</salGeneratorPath>
-        <mdsal.version>2.1.3-SNAPSHOT</mdsal.version>
-        <mdsal.model.version>0.9.3-SNAPSHOT</mdsal.model.version>
-        <controller.mdsal.version>1.4.3-SNAPSHOT</controller.mdsal.version>
-        <restconf.version>1.4.3-SNAPSHOT</restconf.version>
-        <config.version>0.5.3-SNAPSHOT</config.version>
+        <mdsal.version>2.1.3-Boron-SR3</mdsal.version>
+        <mdsal.model.version>0.9.3-Boron-SR3</mdsal.model.version>
+        <controller.mdsal.version>1.4.3-Boron-SR3</controller.mdsal.version>
+        <restconf.version>1.4.3-Boron-SR3</restconf.version>
+        <config.version>0.5.3-Boron-SR3</config.version>
         <config.authz.service.configfile>08-authz-config.xml</config.authz.service.configfile>
         <config.restconf.configfile>09-rest-connector.xml</config.restconf.configfile>
         <config.configfile.directory>etc/opendaylight/karaf</config.configfile.directory>
@@ -56,7 +56,7 @@
         <!-- Test -->
         <javax.inject.version>1</javax.inject.version>
         <servlet.tester.version>7.0.0.pre5</servlet.tester.version>
-        <features.test.version>1.7.3-SNAPSHOT</features.test.version>
+        <features.test.version>1.7.3-Boron-SR3</features.test.version>
         <!-- Cassandra -->
         <metrics-core.version>3.0.2</metrics-core.version>
         <cassandra.version>2.1.9</cassandra.version>
