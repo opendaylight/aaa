@@ -12,7 +12,7 @@
   <parent>
     <groupId>org.opendaylight.odlparent</groupId>
     <artifactId>odlparent-lite</artifactId>
-    <version>1.7.3-SNAPSHOT</version>
+    <version>1.7.4-SNAPSHOT</version>
     <relativePath />
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -20,7 +20,7 @@
   <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-authn-mdsal-store</artifactId>
   <name>${project.artifactId}</name>
-  <version>0.4.3-SNAPSHOT</version>
+  <version>0.4.4-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <modules>
