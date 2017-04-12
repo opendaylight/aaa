@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da01753e_5ae4d20c",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/AuthNStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-04-12T17:37:29Z",
+      "side": 1,
+      "message": "I try to stick to just checkstyle changes, but you are right.",
+      "parentUuid": "da01753e_882c594c",
+      "revId": "ce5225758c75da2ac5b8ef771200908df7d78e35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da01753e_c8266168",
         "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-04-05T19:45:06Z",
       "side": 1,
       "message": "why? can we not fix that\u0027s causing this violation?",
+      "revId": "ce5225758c75da2ac5b8ef771200908df7d78e35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_dabf22cf",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMMDSALStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-04-12T17:37:29Z",
+      "side": 1,
+      "message": "I thought to change this in a later patch, but now it is done.",
+      "parentUuid": "da01753e_c8266168",
       "revId": "ce5225758c75da2ac5b8ef771200908df7d78e35",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "da01753e_3ab58eee",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMObject2MDSAL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-04-12T17:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da01753e_2800cda9",
+      "revId": "ce5225758c75da2ac5b8ef771200908df7d78e35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da01753e_a82b1d2f",
         "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMObject2MDSAL.java",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-04-05T19:45:06Z",
       "side": 1,
       "message": "final",
+      "revId": "ce5225758c75da2ac5b8ef771200908df7d78e35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_9ac59a5d",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMObject2MDSAL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-04-12T17:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da01753e_a82b1d2f",
       "revId": "ce5225758c75da2ac5b8ef771200908df7d78e35",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "da01753e_ba9fbe5e",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMObject2MDSAL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-04-12T17:37:29Z",
+      "side": 1,
+      "message": "What do you mean?",
+      "parentUuid": "da01753e_e81c0516",
+      "revId": "ce5225758c75da2ac5b8ef771200908df7d78e35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da01753e_28172def",
         "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMObject2MDSAL.java",
         "patchSetId": 2
@@ -115,6 +205,24 @@
       "writtenOn": "2017-04-05T19:45:06Z",
       "side": 1,
       "message": "NOK, for me... the error handling in this and following methods is all wrong IMHO, and I would use the opportunity of this change to do it right.  catch (Exception e) { return null } seems all wrong to me - and I doubt callers of these methods handle return null correctly anyway, so it would probably just lead to NullPointerException later?  Personally  I think I would remove all of this, have toMDSALObject \u0026 fromMDSALObject not do throws Exception but something clearer, what it can actually really throw if any, like e.g. ReflectiveOperationException if that\u0027s what\u0027s it\u0027s for, or even a new custom exception?  Or actually, probably best, all this seems to be called (only) from IDMStore, which has \"throws IDMStoreException\" everywhere, so the Right Thing to do would be rethrow as that, where needed..",
+      "revId": "ce5225758c75da2ac5b8ef771200908df7d78e35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_7a95563f",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMObject2MDSAL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-04-12T17:37:29Z",
+      "side": 1,
+      "message": "I\u0027ll do this in a later change as I wrote on the commit message.",
+      "parentUuid": "da01753e_28172def",
       "revId": "ce5225758c75da2ac5b8ef771200908df7d78e35",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -251,6 +359,24 @@
       "writtenOn": "2017-04-05T19:45:06Z",
       "side": 1,
       "message": "Indentity or Identity? ;-)",
+      "revId": "ce5225758c75da2ac5b8ef771200908df7d78e35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_9a9c7a6b",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-04-12T17:37:29Z",
+      "side": 1,
+      "message": "Identity :)",
+      "parentUuid": "da01753e_68bf75d1",
       "revId": "ce5225758c75da2ac5b8ef771200908df7d78e35",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
