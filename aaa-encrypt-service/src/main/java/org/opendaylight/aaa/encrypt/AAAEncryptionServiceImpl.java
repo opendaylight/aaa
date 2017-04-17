@@ -15,11 +15,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.List;
 import java.util.Random;
-import java.util.StringTokenizer;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -39,6 +36,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.opendaylight.aaa.encrypt.MdsalUtils;
+import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfigBuilder;
 import org.slf4j.Logger;
@@ -61,7 +61,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     private final Cipher encryptCipher;
     private final Cipher decryptCipher;
 
-    public AAAEncryptionServiceImpl(AaaEncryptServiceConfig encrySrvConfig) {
+    public AAAEncryptionServiceImpl(AaaEncryptServiceConfig encrySrvConfig, final DataBroker dataBroker) {
         SecretKey tempKey = null;
         IvParameterSpec tempIvSpec = null;
         if (encrySrvConfig.getEncryptSalt() == null) {
@@ -78,6 +78,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
                     .setEncryptKey(newPwd)
                     .setEncryptSalt(encodedSalt).build();
             updateEncrySrvConfig(newPwd, encodedSalt);
+            initializeConfigDataTree(encrySrvConfig, dataBroker);
         }
         final byte[] enryptionKeySalt = Base64.getDecoder().decode(encrySrvConfig.getEncryptSalt());
         try {
@@ -117,7 +118,6 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             LOG.warn("Encryption Key is NULL, will not encrypt data.");
             return data;
         }
-
         try {
             synchronized(encryptCipher) {
                 byte[] cryptobytes = encryptCipher.doFinal(data.getBytes());
@@ -127,7 +127,6 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
         } catch (IllegalBlockSizeException | BadPaddingException e) {
             LOG.error("Failed to encrypt data.", e);
         }
-
         return data;
     }
 
@@ -137,7 +136,6 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             LOG.warn("String {} was not decrypted.", encData);
             return encData;
         }
-
         try{
             byte[] cryptobytes = DatatypeConverter.parseBase64Binary(encData);
             byte[] clearbytes = decryptCipher.doFinal(cryptobytes);
@@ -155,7 +153,6 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             LOG.warn("Encryption Key is NULL, will not encrypt data.");
             return data;
         }
-
         try {
             synchronized(encryptCipher) {
                 return encryptCipher.doFinal(data);
@@ -172,7 +169,6 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             LOG.warn("encData is null.");
             return encData;
         }
-
         try {
             return decryptCipher.doFinal(encData);
         } catch (IllegalBlockSizeException | BadPaddingException e){
@@ -207,4 +203,12 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             LOG.error("Error while updating the encryption service config file", e);
         }
     }
+
+    private void initializeConfigDataTree(final AaaEncryptServiceConfig encrySrvConfig, final DataBroker dataBroker) {
+        if (MdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION, MdsalUtils.getEncryptionSrvConfigIid()) == null) {
+            MdsalUtils.initalizeDatastore(LogicalDatastoreType.CONFIGURATION, dataBroker, MdsalUtils.getEncryptionSrvConfigIid(),
+                        encrySrvConfig);
+        }
+    }
+
 }
