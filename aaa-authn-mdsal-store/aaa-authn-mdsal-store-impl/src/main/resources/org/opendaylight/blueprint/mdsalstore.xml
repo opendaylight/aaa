@@ -16,7 +16,7 @@
     <argument ref="mdsalConfig"/>
   </bean>
 
-  <bean id="mdsalStore" class="org.opendaylight.aaa.authn.mdsal.store.IDMMDSALStore">
+  <bean id="mdsalStore" class="org.opendaylight.aaa.authn.mdsal.store.IdManagementMdsaLStore">
     <argument ref="dataBroker"/>
   </bean>
 
