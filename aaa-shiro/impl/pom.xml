@@ -149,6 +149,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
           <instructions>
             <Web-ContextPath>/moon</Web-ContextPath>
             <Bundle-Name>${project.groupId}.${project.artifactId}</Bundle-Name>
+            <Import-Package>*</Import-Package>
           </instructions>
         </configuration>
       </plugin>
