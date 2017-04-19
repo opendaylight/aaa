@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da01753e_56612f38",
+        "filename": "aaa-shiro/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2017-04-19T19:00:42Z",
+      "side": 1,
+      "message": "Why was this file moved from the impl bundle? It needs to be in the impl bundle to get picked up at runtime.",
+      "revId": "c3cb35860a8a7ebb73beae5a24b7317c1022acf2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
