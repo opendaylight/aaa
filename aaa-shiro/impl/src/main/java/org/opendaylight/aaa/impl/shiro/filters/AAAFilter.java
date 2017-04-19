@@ -9,6 +9,7 @@
 package org.opendaylight.aaa.shiro.filters;
 
 import org.apache.shiro.web.servlet.ShiroFilter;
+import org.opendaylight.aaa.api.AAAService;
 import org.opendaylight.aaa.shiro.ServiceProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * @see <code>javax.servlet.Filter</code>
  * @see <code>org.apache.shiro.web.servlet.ShiroFilter</code>
  */
-public class AAAFilter extends ShiroFilter {
+public class AAAFilter extends ShiroFilter implements AAAService {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAFilter.class);
 
