@@ -26,4 +26,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="certManager" />
   </bean>
 
+  <bean id="aaa" class="org.opendaylight.aaa.shiro.filters.AAAFilter" />
+  <service ref="aaa" interface="org.opendaylight.aaa.api.AAAService" />
+
 </blueprint>
