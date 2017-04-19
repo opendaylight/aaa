@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da01753e_ef184277",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2017-04-19T19:36:44Z",
+      "side": 1,
+      "message": "This will only import that package. You shouldn\u0027t need to specify \u003cImport-Package\u003e - let the plugin do it. I think the problem is that you\u0027re missing a dependency for aaa-shiro-api. Not sure how it even compiles...",
+      "revId": "6593f247f68116a7a686c0c6946ff3096bcf1479",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
