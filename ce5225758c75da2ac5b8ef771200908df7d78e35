@@ -194,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "da01753e_d11b6ec8",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMObject2MDSAL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2017-04-19T10:16:44Z",
+      "side": 1,
+      "message": "I meant to include the Method m that is failing, something like this, but forget about it, it\u0027s not important:\n\nLOG.error(\"No such method: {}\", m, e);",
+      "parentUuid": "da01753e_ba9fbe5e",
+      "revId": "ce5225758c75da2ac5b8ef771200908df7d78e35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da01753e_28172def",
         "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMObject2MDSAL.java",
         "patchSetId": 2
@@ -223,6 +241,24 @@
       "side": 1,
       "message": "I\u0027ll do this in a later change as I wrote on the commit message.",
       "parentUuid": "da01753e_28172def",
+      "revId": "ce5225758c75da2ac5b8ef771200908df7d78e35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_317abaf1",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/IDMObject2MDSAL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2017-04-19T10:16:44Z",
+      "side": 1,
+      "message": "OK, sure",
+      "parentUuid": "da01753e_7a95563f",
       "revId": "ce5225758c75da2ac5b8ef771200908df7d78e35",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
