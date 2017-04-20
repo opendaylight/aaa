@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da01753e_74fee239",
+        "filename": "aaa-shiro/api/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-04-20T12:47:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da01753e_45b68efb",
+      "revId": "dea14b7b534f0f7ad9b3c434dba0e3c424ac2ad9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da01753e_e5bea2d3",
         "filename": "aaa-shiro/impl/pom.xml",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-04-19T22:32:36Z",
       "side": 1,
       "message": "You don\u0027t need this. * is the default.",
+      "revId": "dea14b7b534f0f7ad9b3c434dba0e3c424ac2ad9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_d4fd0e3c",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-04-20T12:47:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da01753e_e5bea2d3",
       "revId": "dea14b7b534f0f7ad9b3c434dba0e3c424ac2ad9",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
