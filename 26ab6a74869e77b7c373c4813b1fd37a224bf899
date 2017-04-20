@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da01753e_ad2b2181",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-04-20T14:16:08Z",
+      "side": 1,
+      "message": "final",
+      "revId": "26ab6a74869e77b7c373c4813b1fd37a224bf899",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_0d218d9f",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/util/http/SimpleHttpRequest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-04-20T14:16:08Z",
+      "side": 1,
+      "message": "final",
+      "revId": "26ab6a74869e77b7c373c4813b1fd37a224bf899",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
