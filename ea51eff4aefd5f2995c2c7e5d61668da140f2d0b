@@ -22,6 +22,30 @@
       "revId": "ea51eff4aefd5f2995c2c7e5d61668da140f2d0b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_5d365ae8",
+        "filename": "aaa-shiro/impl/src/main/resources/shiro.ini",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-04-21T11:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da01753e_67b10d8f",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 43
+      },
+      "revId": "ea51eff4aefd5f2995c2c7e5d61668da140f2d0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
