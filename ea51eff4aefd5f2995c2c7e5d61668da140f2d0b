@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da01753e_67b10d8f",
+        "filename": "aaa-shiro/impl/src/main/resources/shiro.ini",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 6419
+      },
+      "writtenOn": "2017-04-21T09:35:52Z",
+      "side": 1,
+      "message": "I think the current text explains better what is the purpuse of this parameter. \n\nI like the fact that you added \u0027Optional\u0027 though. \n\nShould we also refer what is the hardcoded \u0027default\u0027 in the code - used if this optional is not set?",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 43
+      },
+      "revId": "ea51eff4aefd5f2995c2c7e5d61668da140f2d0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
