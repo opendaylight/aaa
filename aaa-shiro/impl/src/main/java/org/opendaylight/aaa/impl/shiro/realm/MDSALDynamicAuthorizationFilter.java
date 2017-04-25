@@ -49,10 +49,11 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
     public static Optional<HttpAuthorization> getHttpAuthzContainer(final DataBroker dataBroker)
             throws ExecutionException, InterruptedException {
 
-        final ReadOnlyTransaction ro = dataBroker.newReadOnlyTransaction();
-        final CheckedFuture<Optional<HttpAuthorization>, ReadFailedException> result =
-                ro.read(LogicalDatastoreType.CONFIGURATION, AUTHZ_CONTAINER_IID);
-        return result.get();
+        try (ReadOnlyTransaction ro = dataBroker.newReadOnlyTransaction()) {
+            final CheckedFuture<Optional<HttpAuthorization>, ReadFailedException> result =
+                    ro.read(LogicalDatastoreType.CONFIGURATION, AUTHZ_CONTAINER_IID);
+            return result.get();
+        }
     }
 
     @Override
