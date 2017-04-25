@@ -6,10 +6,11 @@
  terms of the Eclipse Public License v1.0 which accompanies this distribution,
  and is available at http://www.eclipse.org/legal/epl-v10.html
  -->
-<features name="odl-aaa-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+<features name="odl-aaa-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.4.0">
     <feature name="odl-aaa-encryption-service" version="${project.version}">
         <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-encrypt-service-config.xml">
             mvn:org.opendaylight.aaa/aaa-encrypt-service/${project.version}/xml/config
         </configfile>
+        <feature version="1.6.0-SNAPSHOT" dependency="true">odl-mdsal-broker</feature>
     </feature>
 </features>
