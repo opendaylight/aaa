@@ -144,14 +144,11 @@ public class MdsalUtils {
      */
     public static <D extends org.opendaylight.yangtools.yang.binding.DataObject> D read(
             final DataBroker dataBroker, final LogicalDatastoreType store, final InstanceIdentifier<D> path)  {
-        D result = null;
-        final ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction();
-        Optional<D> optionalDataObject;
-        final CheckedFuture<Optional<D>, ReadFailedException> future = transaction.read(store, path);
-        try {
-            optionalDataObject = future.checkedGet();
+        try (ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction()) {
+            final CheckedFuture<Optional<D>, ReadFailedException> future = transaction.read(store, path);
+            Optional<D> optionalDataObject = future.checkedGet();
             if (optionalDataObject.isPresent()) {
-                result = optionalDataObject.get();
+                return optionalDataObject.get();
             } else {
                 LOG.debug("{}: Failed to read {}",
                         Thread.currentThread().getStackTrace()[1], path);
@@ -159,7 +156,6 @@ public class MdsalUtils {
         } catch (final ReadFailedException e) {
             LOG.warn("Failed to read {} ", path, e);
         }
-        transaction.close();
-        return result;
+        return null;
     }
 }
