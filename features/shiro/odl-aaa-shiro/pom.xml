@@ -125,5 +125,12 @@
             <type>cfg</type>
             <classifier>configuration</classifier>
         </dependency>
+
+        <!-- add in standard jetty servlets bundle which exposes all sorts of useful filters
+             that can be added in front of RESTCONF. -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlets</artifactId>
+        </dependency>
     </dependencies>
 </project>
