@@ -8,7 +8,11 @@
 package org.opendaylight.aaa.impl;
 
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.controller.config.api.osgi.WaitingServiceTracker;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.mdsal.binding.generator.api.ClassLoadingStrategy;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +46,15 @@ public class AAAShiroProvider {
      */
     public static AAAShiroProvider newInstance(final DataBroker dataBroker,
                                                final ICertificateManager certificateManager) {
+
+        // because the ClassLoadingStrategy Service is advertised by the config manager,
+        // we need to use a WaitingServiceTracker to make sure it is good to go.
+        final BundleContext bundleContext =
+                FrameworkUtil.getBundle(AAAShiroProvider.class).getBundleContext();
+        final WaitingServiceTracker<ClassLoadingStrategy> clsWaitingServiceTracker =
+                WaitingServiceTracker.create(ClassLoadingStrategy.class, bundleContext);
+        clsWaitingServiceTracker.waitForService(WaitingServiceTracker.FIVE_MINUTES);
+
         INSTANCE = new AAAShiroProvider(dataBroker, certificateManager);
         return INSTANCE;
     }
