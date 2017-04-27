@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.impl.shiro.principal.ODLPrincipalImpl;
 import org.apache.shiro.authc.AuthenticationException;
@@ -262,12 +263,17 @@ public class TokenAuthRealm extends AuthorizingRealm {
     }
 
     private Authentication validate(final String token) {
-        Authentication auth = ServiceLocator.getInstance().getTokenStore().get(token);
+        final ServiceLocator locator = ServiceLocator.getInstance();
+        final TokenStore tokenStore = locator.getTokenStore();
+        if (tokenStore == null) {
+            throw new AuthenticationException("Token store not available, could not validate the token " + token);
+        }
+
+        final Authentication auth = tokenStore.get(token);
         if (auth == null) {
             throw new AuthenticationException("Could not validate the token " + token);
-        } else {
-            ServiceLocator.getInstance().getAuthenticationService().set(auth);
         }
+        locator.getAuthenticationService().set(auth);
         return auth;
     }
 
