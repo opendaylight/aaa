@@ -26,28 +26,41 @@ public class MoonPrincipal {
     private final String userId;
     private final ImmutableSet<String> roles;
     private final String token;
-
+    private String authzAction;
+    private String authzObject;
 
     public MoonPrincipal(final String username, final String domain, final String userId,
-            final Set<String> roles, final String token) {
+            final Set<String> roles, final String token, String authzAction, String authzObject) {
 
         this.username = username;
         this.domain = domain;
         this.userId = userId;
         this.roles = ImmutableSet.copyOf(roles);
         this.token = token;
+        this.authzAction = authzAction;
+        this.authzObject = authzObject;
     }
 
+    /**
     public MoonPrincipal createODLPrincipal(final String username, final String domain,
             final String userId, final Set<String> roles, final String token) {
 
         return new MoonPrincipal(username, domain, userId, roles,token);
     }
+    **/
 
     public Claim principalToClaim () {
         return new MoonClaim("", this.getUserId(), this.getUsername(), this.getDomain(), this.getRoles());
     }
 
+    public void setAction(String authzAction) {
+        this.authzAction = authzAction;
+    }
+
+    public void setObject(String authzObject) {
+        this.authzObject = authzObject;
+    }
+    
     public String getUsername() {
         return this.username;
     }
@@ -66,6 +79,11 @@ public class MoonPrincipal {
 
     public String getToken(){
         return this.token;
+    }
+    
+    public String toString() {
+        return "clientId:" + " " + "," + "userId:" + this.getUserId() + "," + "userName:" + this.getUsername()
+                + "," + "domain:" + this.getDomain() + "," + "roles:" + this.getRoles() + "," + "authzObject:" + this.authzObject + "," + "authzAction:" + this.authzAction;
     }
 
     public class MoonClaim implements Claim, Serializable {

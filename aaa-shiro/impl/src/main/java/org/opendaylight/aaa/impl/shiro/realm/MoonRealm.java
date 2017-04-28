@@ -48,6 +48,9 @@ public class MoonRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(final PrincipalCollection principalCollection) {
+    	LOG.info("MoonRealm: doGetAuthorizationInfo");
+        MoonPrincipal princ = (MoonPrincipal) principalCollection.getPrimaryPrincipal();
+        LOG.info(princ.toString());
         return null;
     }
 
@@ -129,7 +132,7 @@ public class MoonRealm extends AuthorizingRealm {
                         LOG.debug("Unable to cast role as String, skipping {}", jsonArray.get(i), e);
                     }
                 }
-                return new MoonPrincipal(username,domain,userID,userRoles,token);
+                return new MoonPrincipal(username,domain,userID,userRoles,token,"",webResource.getURI().getPath());
             }
         } catch (final JSONException e) {
             throw new IllegalStateException("Authentication Error : " + object.getJSONObject("error").getString("title"));

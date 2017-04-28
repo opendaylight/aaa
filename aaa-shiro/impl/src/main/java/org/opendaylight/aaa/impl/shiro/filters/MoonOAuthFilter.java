@@ -148,6 +148,9 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
                 try {
                     final Subject subject = getSubject(request, response);
                     subject.login(token);
+                    MoonPrincipal principal = (MoonPrincipal)subject.getPrincipal();
+                    principal.setAction(req.getMethod());
+                    subject.hasRole("");
                     return onLoginSuccess(token, subject, request, response);
                 } catch (final AuthenticationException e) {
                     return onLoginFailure(token, e, request, response);
