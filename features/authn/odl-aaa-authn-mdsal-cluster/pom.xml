@@ -174,7 +174,7 @@
             <artifactId>aaa-idmlight</artifactId>
         </dependency>
         <dependency>
-            <!-- finalname="etc/idmtool" -->
+            <!-- finalname="bin/idmtool" -->
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-idmlight</artifactId>
             <version>${project.version}</version>

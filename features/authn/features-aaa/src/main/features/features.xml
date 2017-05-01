@@ -75,7 +75,7 @@
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
-        <configfile finalname="etc/idmtool">mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}/py/config</configfile>
+        <configfile finalname="bin/idmtool">mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}/py/config</configfile>
 
         <bundle>mvn:com.fasterxml.jackson.core/jackson-core/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/{{VERSION}}</bundle>
@@ -131,7 +131,7 @@
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
-        <configfile finalname="etc/idmtool">mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}/py/config</configfile>
+        <configfile finalname="bin/idmtool">mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}/py/config</configfile>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-core/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/{{VERSION}}</bundle>

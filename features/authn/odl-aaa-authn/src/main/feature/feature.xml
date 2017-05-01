@@ -8,7 +8,7 @@
  -->
 <features name="odl-aaa-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
     <feature name="odl-aaa-authn" version="${project.version}">
-        <configfile finalname="etc/idmtool">mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}/py/config
+        <configfile finalname="bin/idmtool">mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}/py/config
         </configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">
             mvn:org.opendaylight.aaa/aaa-authn/${project.version}/cfg/config
