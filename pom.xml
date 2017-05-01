@@ -28,7 +28,6 @@
     <module>aaa-authn-api</module>
     <module>aaa-encrypt-service</module>
     <module>aaa-authn</module>
-    <module>aaa-idp-mapping</module>
     <module>aaa-authn-sts</module>
     <module>aaa-authn-store</module>
     <module>aaa-authn-federation</module>
