@@ -47,7 +47,7 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
             InstanceIdentifier.builder(HttpAuthorization.class).build();
 
     public static Optional<HttpAuthorization> getHttpAuthzContainer(final DataBroker dataBroker)
-            throws ExecutionException, InterruptedException {
+            throws ExecutionException, InterruptedException, ReadFailedException {
 
         try (ReadOnlyTransaction ro = dataBroker.newReadOnlyTransaction()) {
             final CheckedFuture<Optional<HttpAuthorization>, ReadFailedException> result =
@@ -76,6 +76,10 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
         } catch(ExecutionException | InterruptedException e) {
             // Something went completely wrong trying to read the authz container.  Deny access.
             LOG.debug("Error accessing the Http Authz Container", e);
+            return false;
+        } catch(final ReadFailedException e) {
+            // The MDSAL read attempt failed.  fail-closed to prevent unauthorized access
+            LOG.warn("MDSAL attempt to read Http Authz Container failed, disallowing access", e);
             return false;
         }
 
