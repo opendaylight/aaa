@@ -42,7 +42,7 @@ public abstract class IdmLightConfig {
      * Either absolute or relative to KARAF_HOME.
      */
     @Default public String getDbDirectory() {
-        return ".";
+        return "./data";
     }
 
     /**

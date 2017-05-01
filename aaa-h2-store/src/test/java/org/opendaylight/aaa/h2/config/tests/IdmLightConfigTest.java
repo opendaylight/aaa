@@ -24,7 +24,7 @@ public class IdmLightConfigTest {
     public void testDefaults() {
         IdmLightConfig config = new IdmLightConfigBuilder().build();
         assertThat(config.getDbDriver()).isEqualTo("org.h2.Driver");
-        assertThat(config.getDbConnectionString()).isEqualTo("jdbc:h2:./idmlight.db");
+        assertThat(config.getDbConnectionString()).isEqualTo("jdbc:h2:./data/idmlight.db");
         assertThat(config.getDbUser()).isEqualTo("foo");
         assertThat(config.getDbPwd()).isEqualTo("bar");
         assertThat(config.getDbValidTimeOut()).isEqualTo(3);
