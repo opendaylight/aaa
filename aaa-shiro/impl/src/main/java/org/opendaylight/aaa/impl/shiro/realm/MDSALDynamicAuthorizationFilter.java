@@ -59,12 +59,23 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
     @Override
     public boolean isAccessAllowed(final ServletRequest request, final ServletResponse response,
                                    final Object mappedValue) {
-        return isAccessAllowed(request, response, mappedValue, AAAShiroProvider.getInstance().getDataBroker());
+        final DataBroker dataBroker = AAAShiroProvider.getInstance().getDataBroker();
+        return isAccessAllowed(request, response, mappedValue, dataBroker);
     }
 
     public boolean isAccessAllowed(final ServletRequest request, final ServletResponse response,
                                    final Object mappedValue, final DataBroker dataBroker) {
 
+        // FIXME:  Remove this check when Bug 7793 is resolved.
+        // Bug 7793: shiro.ini needs to die
+        // shiro instantiates this Filter as part of the web container initialization, but has
+        // no way of passing the DataBroker reference.  Thus, the dependency cannot be expressed
+        // easily.  Hitherto, the Filter may be instantiated prior to the DataBroker actually being
+        // made available.  For now, just fail out (deny access) until the DataBroker becomes
+        // available (injected via Blueprint in AAAShiroProvider.newInstance(DataBroker))
+        if (dataBroker == null) {
+            return false;
+        }
         final Subject subject = getSubject(request, response);
         final HttpServletRequest httpServletRequest = (HttpServletRequest)request;
         final String requestURI = httpServletRequest.getRequestURI();
