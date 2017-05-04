@@ -192,9 +192,10 @@ public class UserHandler {
         }
 
         // The "email" field is optional and defaults to "".
-        final String userEmail = user.getEmail();
+        String userEmail = user.getEmail();
         if (userEmail == null) {
             user.setEmail(DEFAULT_EMAIL);
+            userEmail = DEFAULT_EMAIL;
         }
         if (userEmail.length() > IdmLightApplication.MAX_FIELD_LEN) {
             return providedFieldTooLong("email", IdmLightApplication.MAX_FIELD_LEN);
