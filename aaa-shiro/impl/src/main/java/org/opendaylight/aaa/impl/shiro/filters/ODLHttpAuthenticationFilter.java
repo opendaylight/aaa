@@ -20,8 +20,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extends <code>BasicHttpAuthenticationFilter</code> to include ability to
- * authenticate OAuth2 tokens, which is needed for backwards compatibility with
- * <code>TokenAuthFilter</code>.
+ * authenticate OAuth2 tokens.
  *
  * This behavior is enabled by default for backwards compatibility. To disable
  * OAuth2 functionality, just comment out the following line from the
