@@ -31,7 +31,6 @@
     <module>aaa-idp-mapping</module>
     <module>aaa-authn-sts</module>
     <module>aaa-authn-store</module>
-    <module>aaa-authn-sssd</module>
     <module>aaa-authn-basic</module>
     <module>aaa-idmlight</module>
     <module>aaa-authn-mdsal-store</module>
