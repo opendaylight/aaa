@@ -121,6 +121,15 @@ public class DomainHandler {
     public Response createDomain(@Context UriInfo info, Domain domain) {
         LOG.info("Post /domains");
         try {
+            // Bug 8382:  domain id is an implementation detail and isn't specifiable
+            if (domain.getDomainid() != null) {
+                final String errorMessage =
+                        "do not specify domainId, it will be assigned automatically for you";
+                LOG.debug(errorMessage);
+                final IDMError idmError = new IDMError();
+                idmError.setMessage(errorMessage);
+                return Response.status(400).entity(idmError).build();
+            }
             if (domain.isEnabled() == null) {
                 domain.setEnabled(false);
             }
@@ -223,6 +232,17 @@ public class DomainHandler {
     public Response createGrant(@Context UriInfo info, @PathParam("did") String domainId,
             @PathParam("uid") String userId, Grant grant) {
         LOG.info("Post /domains/{}/users/{}/roles", domainId, userId);
+
+        // Bug 8382:  grant id is an implementation detail and isn't specifiable
+        if (grant.getGrantid() != null) {
+            final String errorMessage =
+                    "do not specify grantId, it will be assigned automatically for you";
+            LOG.debug(errorMessage);
+            final IDMError idmError = new IDMError();
+            idmError.setMessage(errorMessage);
+            return Response.status(400).entity(idmError).build();
+        }
+
         Domain domain = null;
         User user = null;
         Role role = null;

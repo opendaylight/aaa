@@ -91,5 +91,16 @@ public class RoleHandlerTest extends HandlerTest{
             assertEquals(404, resp.getStatus());
             assertTrue(resp.getEntity(IDMError.class).getMessage().contains("role id not found"));
         }
+
+        // Bug 8382:  if a role id is specified, 400 is returned
+        roleData = new HashMap<String, String>();
+        roleData.put("name","role1");
+        roleData.put("description","test Role");
+        roleData.put("domainid","0");
+        roleData.put("roleid", "roleid");
+        clientResponse = resource().path("/v1/roles").
+                type(MediaType.APPLICATION_JSON).
+                post(ClientResponse.class, roleData);
+        assertEquals(400, clientResponse.getStatus());
     }
 }
