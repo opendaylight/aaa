@@ -52,7 +52,6 @@ public class DomainHandlerTest extends HandlerTest{
         Map<String, String> domainData = new HashMap<String, String>();
         domainData.put("name","dom1");
         domainData.put("description","test dom");
-        domainData.put("domainid","1");
         domainData.put("enabled","true");
         ClientResponse clientResponse = resource().path("/v1/domains").type(MediaType.APPLICATION_JSON).post(ClientResponse.class, domainData);
         assertEquals(201, clientResponse.getStatus());
@@ -126,5 +125,25 @@ public class DomainHandlerTest extends HandlerTest{
             assertEquals(404, resp.getStatus());
             assertTrue(resp.getEntity(IDMError.class).getMessage().contains("Not found! Domain id"));
         }
+
+        // Bug 8382:  if a domain id is specified, 400 is returned
+        domainData = new HashMap<>();
+        domainData.put("name","dom1");
+        domainData.put("description","test dom");
+        domainData.put("domainid","dom1");
+        domainData.put("enabled","true");
+        clientResponse = resource().path("/v1/domains").
+                type(MediaType.APPLICATION_JSON).
+                post(ClientResponse.class, domainData);
+        assertEquals(400, clientResponse.getStatus());
+
+        // Bug 8382:  if a grant id is specified, 400 is returned
+        grantData = new HashMap<>();
+        grantData.put("roleid","1");
+        grantData.put("grantid", "grantid");
+        clientResponse = resource().path("/v1/domains/1/users/0/roles").
+                type(MediaType.APPLICATION_JSON).
+                post(ClientResponse.class, grantData);
+        assertEquals(400, clientResponse.getStatus());
     }
 }

@@ -156,6 +156,16 @@ public class UserHandler {
     public Response createUser(@Context UriInfo info, User user) {
         LOG.info("POST /auth/v1/users  (create a user with the specified payload");
 
+        // Bug 8382:  user id is an implementation detail and isn't specifiable
+        if (user.getUserid() != null) {
+            final String errorMessage =
+                    "do not specify userId, it will be assigned automatically for you";
+            LOG.debug(errorMessage);
+            final IDMError idmError = new IDMError();
+            idmError.setMessage(errorMessage);
+            return Response.status(400).entity(idmError).build();
+        }
+
         // The "enabled" field is optional, and defaults to true.
         if (user.isEnabled() == null) {
             user.setEnabled(true);

@@ -91,6 +91,20 @@ public class UserHandlerTest extends HandlerTest {
             assertEquals(404, resp.getStatus());
             assertTrue(resp.getEntity(IDMError.class).getMessage().contains("Couldn't find user"));
         }
+
+        // Bug 8382:  if a user id is specified, 400 is returned
+        usrData = new HashMap<String, String>();
+        usrData.put("name","usr1");
+        usrData.put("description","test user");
+        usrData.put("enabled","true");
+        usrData.put("email","user1@usr.org");
+        usrData.put("password","ChangeZbadPa$$w0rd");
+        usrData.put("userid", "userid");
+        usrData.put("domainid","0");
+        clientResponse = resource().path("/v1/users").
+                type(MediaType.APPLICATION_JSON).
+                post(ClientResponse.class, usrData);
+        assertEquals(400, clientResponse.getStatus());
     }
 
 }
