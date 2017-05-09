@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.opendaylight.aaa.api.TokenStore;
+import org.opendaylight.aaa.api.shiro.principal.ODLAuthorizingRealm;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.impl.shiro.principal.ODLPrincipalImpl;
 import org.apache.shiro.authc.AuthenticationException;
@@ -41,7 +42,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
-public class TokenAuthRealm extends AuthorizingRealm {
+public class TokenAuthRealm extends ODLAuthorizingRealm {
 
     private static final String USERNAME_DOMAIN_SEPARATOR = "@";
 
