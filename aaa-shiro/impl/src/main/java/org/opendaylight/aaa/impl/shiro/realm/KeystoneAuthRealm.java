@@ -39,6 +39,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.opendaylight.aaa.api.shiro.realm.ODLAuthorizingRealm;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.impl.AAAShiroProvider;
@@ -54,7 +55,7 @@ import org.slf4j.LoggerFactory;
  * KeystoneAuthRealm is a Shiro Realm that authenticates users from
  * OpenStack Keystone.
  */
-public class KeystoneAuthRealm extends AuthorizingRealm {
+public class KeystoneAuthRealm extends ODLAuthorizingRealm {
 
     private static final Logger LOG = LoggerFactory.getLogger(KeystoneAuthRealm.class);
 
