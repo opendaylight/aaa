@@ -39,9 +39,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
-public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
+public class MdsalDynamicAuthorizationFilter extends AuthorizationFilter {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MDSALDynamicAuthorizationFilter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MdsalDynamicAuthorizationFilter.class);
 
     private static final InstanceIdentifier<HttpAuthorization> AUTHZ_CONTAINER_IID =
             InstanceIdentifier.builder(HttpAuthorization.class).build();
