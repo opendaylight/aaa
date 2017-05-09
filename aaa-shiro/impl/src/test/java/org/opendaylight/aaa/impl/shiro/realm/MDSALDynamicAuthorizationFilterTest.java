@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import org.apache.shiro.subject.Subject;
 import org.junit.Test;
-import org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
@@ -85,7 +84,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         // Test Setup:
         //
         // Ensure that the base isAccessAllowed(...) method calls the static helper method.
-        final MDSALDynamicAuthorizationFilter filter = mock(MDSALDynamicAuthorizationFilter.class);
+        final MdsalDynamicAuthorizationFilter filter = mock(MdsalDynamicAuthorizationFilter.class);
         when(filter.isAccessAllowed(any(), any(), any(), any())).thenReturn(true);
         when(filter.isAccessAllowed(any(), any(), any())).thenCallRealMethod();
         assertTrue(filter.isAccessAllowed(null, null, null));
@@ -101,7 +100,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         // Ensure that data can be extracted appropriately.
         final DataBroker dataBroker = getTestData();
         final Optional<HttpAuthorization> httpAuthorizationOptional =
-                MDSALDynamicAuthorizationFilter.getHttpAuthzContainer(dataBroker);
+                org.opendaylight.aaa.shiro.realm.MdsalDynamicAuthorizationFilter.getHttpAuthzContainer(dataBroker);
 
         assertNotNull(httpAuthorizationOptional);
         final HttpAuthorization authz = httpAuthorizationOptional.get();
@@ -114,7 +113,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         //
         // Test Setup: No rules are added to the HttpAuthorization container.  Open access should be allowed.
         final Subject subject = mock(Subject.class);
-        final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
+        final MdsalDynamicAuthorizationFilter filter = new MdsalDynamicAuthorizationFilter() {
             @Override
             protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
                 return subject;
@@ -156,7 +155,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         // is instructed to return an immediateFailedCheckedFuture, to emulate an error in reading
         // the Data Store.
         final Subject subject = mock(Subject.class);
-        final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
+        final MdsalDynamicAuthorizationFilter filter = new MdsalDynamicAuthorizationFilter() {
             @Override
             protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
                 return subject;
@@ -191,7 +190,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         // All other Methods are considered unauthorized.
         final Subject subject = mock(Subject.class);
         final DataBroker dataBroker = getTestData();
-        final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
+        final org.opendaylight.aaa.shiro.realm.MdsalDynamicAuthorizationFilter filter = new MdsalDynamicAuthorizationFilter() {
             @Override
             protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
                 return subject;
@@ -291,7 +290,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(dataBroker.newReadOnlyTransaction()).thenReturn(rot);
 
         final Subject subject = mock(Subject.class);
-        final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
+        final MdsalDynamicAuthorizationFilter filter = new MdsalDynamicAuthorizationFilter() {
             @Override
             protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
                 return subject;
@@ -378,7 +377,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(dataBroker.newReadOnlyTransaction()).thenReturn(rot);
 
         final Subject subject = mock(Subject.class);
-        final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
+        final org.opendaylight.aaa.shiro.realm.MdsalDynamicAuthorizationFilter filter = new org.opendaylight.aaa.shiro.realm.MdsalDynamicAuthorizationFilter() {
             @Override
             protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
                 return subject;
