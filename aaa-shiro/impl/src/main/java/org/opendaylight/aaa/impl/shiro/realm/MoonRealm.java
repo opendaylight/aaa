@@ -31,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONString;
 import org.json.JSONTokener;
+import org.opendaylight.aaa.api.shiro.principal.ODLAuthorizingRealm;
 import org.opendaylight.aaa.shiro.moon.MoonPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +40,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Alioune BA alioune.ba@orange.com
  */
-public class MoonRealm extends AuthorizingRealm {
+public class MoonRealm extends ODLAuthorizingRealm {
 
     private static final Logger LOG = LoggerFactory.getLogger(MoonRealm.class);
 
