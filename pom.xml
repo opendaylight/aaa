@@ -20,10 +20,6 @@
   <packaging>pom</packaging>
   <name>aaa</name> <!-- Used by Sonar to set project name -->
 
-  <prerequisites>
-    <maven>3.1.1</maven>
-  </prerequisites>
-
   <modules>
     <module>aaa-authn-api</module>
     <module>aaa-encrypt-service</module>

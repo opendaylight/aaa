@@ -15,10 +15,6 @@
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>pom</packaging>
 
-  <prerequisites>
-    <maven>3.0.4</maven>
-  </prerequisites>
-
   <properties>
     <!-- Karaf -->
     <karaf.branding.version>1.4.0-SNAPSHOT</karaf.branding.version>
