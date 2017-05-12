@@ -112,11 +112,6 @@
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-credential-store-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-idmlight</artifactId>
                 <version>${project.version}</version>
             </dependency>
