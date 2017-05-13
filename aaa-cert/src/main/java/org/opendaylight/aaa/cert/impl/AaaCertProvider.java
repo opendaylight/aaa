@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2015, 2017 Inocybe Technologies. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -19,7 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * AaaCertProvider use to manage the certificates manipulation operations add, revoke and update
+ * AaaCertProvider use to manage the certificates manipulation operations add,
+ * revoke and update.
  *
  * @author mserngawy
  *
@@ -51,7 +52,8 @@ public class AaaCertProvider implements IAaaCertProvider {
 
     @Override
     public boolean addCertificateODLKeyStore(final String storePasswd, final String alias, final String certificate) {
-        final KeyStore keyStore = odlKeyTool.addCertificate(odlKeyTool.loadKeyStore(ctlKeyStore.getName(), storePasswd), certificate, alias, true);
+        final KeyStore keyStore = odlKeyTool.addCertificate(odlKeyTool.loadKeyStore(ctlKeyStore.getName(), storePasswd),
+                certificate, alias, true);
         return odlKeyTool.exportKeystore(keyStore, storePasswd, ctlKeyStore.getName());
     }
 
@@ -62,7 +64,8 @@ public class AaaCertProvider implements IAaaCertProvider {
 
     @Override
     public boolean addCertificateTrustStore(final String storePasswd, final String alias, final String certificate) {
-        final KeyStore keyStore = odlKeyTool.addCertificate(odlKeyTool.loadKeyStore(trustKeyStore.getName(), storePasswd), certificate, alias, true);
+        final KeyStore keyStore = odlKeyTool.addCertificate(
+                odlKeyTool.loadKeyStore(trustKeyStore.getName(), storePasswd), certificate, alias, true);
         return odlKeyTool.exportKeystore(keyStore, storePasswd, trustKeyStore.getName());
     }
 
@@ -74,16 +77,19 @@ public class AaaCertProvider implements IAaaCertProvider {
     @Override
     public boolean createKeyStores() {
         if (!KeyStoreConstant.checkKeyStoreFile(ctlKeyStore.getName())) {
-            final KeyStore keyStore = odlKeyTool.createKeyStoreWithSelfSignCert(ctlKeyStore.getName(), ctlKeyStore.getStorePassword(), ctlKeyStore.getDname(),
-                    ctlKeyStore.getAlias(), ctlKeyStore.getValidity(), ctlKeyStore.getKeyAlg(), ctlKeyStore.getKeysize(), ctlKeyStore.getSignAlg());
-             if(!odlKeyTool.exportKeystore(keyStore, ctlKeyStore.getStorePassword(), ctlKeyStore.getName())) {
+            final KeyStore keyStore = odlKeyTool.createKeyStoreWithSelfSignCert(ctlKeyStore.getName(),
+                    ctlKeyStore.getStorePassword(), ctlKeyStore.getDname(), ctlKeyStore.getAlias(),
+                    ctlKeyStore.getValidity(), ctlKeyStore.getKeyAlg(), ctlKeyStore.getKeysize(),
+                    ctlKeyStore.getSignAlg());
+            if (!odlKeyTool.exportKeystore(keyStore, ctlKeyStore.getStorePassword(), ctlKeyStore.getName())) {
                 return false;
-             }
+            }
         }
         if (!KeyStoreConstant.checkKeyStoreFile(trustKeyStore.getName())) {
             final KeyStore keyStore = odlKeyTool.createEmptyKeyStore(trustKeyStore.getStorePassword());
-            if (!odlKeyTool.exportKeystore(keyStore, trustKeyStore.getStorePassword(), trustKeyStore.getName()))
+            if (!odlKeyTool.exportKeystore(keyStore, trustKeyStore.getStorePassword(), trustKeyStore.getName())) {
                 return false;
+            }
         }
         return true;
     }
@@ -101,7 +107,8 @@ public class AaaCertProvider implements IAaaCertProvider {
 
     @Override
     public String getCertificateTrustStore(final String storePasswd, final String aliase, final boolean withTag) {
-        return odlKeyTool.getCertificate(odlKeyTool.loadKeyStore(trustKeyStore.getName(), storePasswd), aliase, withTag);
+        return odlKeyTool.getCertificate(odlKeyTool.loadKeyStore(trustKeyStore.getName(), storePasswd), aliase,
+                withTag);
     }
 
     @Override
@@ -111,7 +118,8 @@ public class AaaCertProvider implements IAaaCertProvider {
 
     @Override
     public String getODLKeyStoreCertificate(final String storePasswd, final boolean withTag) {
-        return odlKeyTool.getCertificate(odlKeyTool.loadKeyStore(ctlKeyStore.getName(), storePasswd), ctlKeyStore.getAlias(), withTag);
+        return odlKeyTool.getCertificate(odlKeyTool.loadKeyStore(ctlKeyStore.getName(), storePasswd),
+                ctlKeyStore.getAlias(), withTag);
     }
 
     @Override
@@ -132,8 +140,8 @@ public class AaaCertProvider implements IAaaCertProvider {
     @Override
     public String[] getCipherSuites() {
         final List<CipherSuites> cipherSuites = ctlKeyStore.getCipherSuites();
-        if ( cipherSuites != null && !cipherSuites.isEmpty()) {
-            final List<String> suites = new ArrayList<String>();
+        if (cipherSuites != null && !cipherSuites.isEmpty()) {
+            final List<String> suites = new ArrayList<>();
             cipherSuites.stream().forEach(cs -> {
                 if (!cs.getSuiteName().isEmpty()) {
                     suites.add(cs.getSuiteName());
@@ -153,7 +161,7 @@ public class AaaCertProvider implements IAaaCertProvider {
             if (tlsProtocols.contains(",")) {
                 return tlsProtocols.split(",");
             } else {
-                return new String[] {tlsProtocols};
+                return new String[] { tlsProtocols };
             }
         }
         return null;
