@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -46,53 +46,60 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
- * CertificateManagerService implements ICertificateManager and work as adapter to which AaaCertProvider is used.
+ * CertificateManagerService implements ICertificateManager and work as adapter
+ * to which AaaCertProvider is used.
  *
  * @author mserngawy
  *
  */
 public class CertificateManagerService implements ICertificateManager {
 
-    private final static Logger LOG = LoggerFactory.getLogger(CertificateManagerService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CertificateManagerService.class);
 
-    private final String DEFAULT_CONFIG_FILE_PATH = "etc" + File.separator + "opendaylight" + File.separator
-            + "datastore" + File.separator + "initial" + File.separator + "config" + File.separator + "aaa-cert-config.xml";
-    private final int pwdLength = 12;
+    private static final String DEFAULT_CONFIG_FILE_PATH = "etc" + File.separator + "opendaylight" + File.separator
+            + "datastore" + File.separator + "initial" + File.separator + "config" + File.separator
+            + "aaa-cert-config.xml";
+    private static final int PWD_LENGTH = 12;
     private final IAaaCertProvider aaaCertProvider;
 
-    public CertificateManagerService(AaaCertServiceConfig aaaCertServiceConfig, final DataBroker dataBroker, final AAAEncryptionService encryptionSrv) {
-        if(aaaCertServiceConfig == null) {
-            throw new IllegalArgumentException("Certificate Manager service configuration is null: " + aaaCertServiceConfig.toString());
+    public CertificateManagerService(AaaCertServiceConfig aaaCertServiceConfig, final DataBroker dataBroker,
+            final AAAEncryptionService encryptionSrv) {
+        if (aaaCertServiceConfig == null) {
+            throw new IllegalArgumentException(
+                    "Certificate Manager service configuration is null: " + aaaCertServiceConfig.toString());
         }
         if (aaaCertServiceConfig.isUseConfig()) {
-            if (aaaCertServiceConfig.getCtlKeystore() != null && aaaCertServiceConfig.getCtlKeystore().getStorePassword() != null
+            if (aaaCertServiceConfig.getCtlKeystore() != null
+                    && aaaCertServiceConfig.getCtlKeystore().getStorePassword() != null
                     && aaaCertServiceConfig.getCtlKeystore().getStorePassword().isEmpty()) {
                 LOG.debug("Set keystores password");
-                final String ctlPwd = RandomStringUtils.random(pwdLength, true, true);
-                final String trustPwd = RandomStringUtils.random(pwdLength, true, true);
+                final String ctlPwd = RandomStringUtils.random(PWD_LENGTH, true, true);
+                final String trustPwd = RandomStringUtils.random(PWD_LENGTH, true, true);
                 updateCertManagerSrvConfig(ctlPwd, trustPwd);
                 final CtlKeystore ctlKeystore = new CtlKeystoreBuilder(aaaCertServiceConfig.getCtlKeystore())
                         .setStorePassword(ctlPwd).build();
                 final TrustKeystore trustKeystore = new TrustKeystoreBuilder(aaaCertServiceConfig.getTrustKeystore())
                         .setStorePassword(trustPwd).build();
-                aaaCertServiceConfig = new AaaCertServiceConfigBuilder(aaaCertServiceConfig)
-                        .setCtlKeystore(ctlKeystore)
-                        .setTrustKeystore(trustKeystore)
-                        .build();
+                aaaCertServiceConfig = new AaaCertServiceConfigBuilder(aaaCertServiceConfig).setCtlKeystore(ctlKeystore)
+                        .setTrustKeystore(trustKeystore).build();
             }
             if (aaaCertServiceConfig.isUseMdsal()) {
-                aaaCertProvider = new DefaultMdsalSslData(new AaaCertMdsalProvider(dataBroker, encryptionSrv), aaaCertServiceConfig.getBundleName(),
-                        aaaCertServiceConfig.getCtlKeystore(), aaaCertServiceConfig.getTrustKeystore());
+                aaaCertProvider = new DefaultMdsalSslData(new AaaCertMdsalProvider(dataBroker, encryptionSrv),
+                        aaaCertServiceConfig.getBundleName(), aaaCertServiceConfig.getCtlKeystore(),
+                        aaaCertServiceConfig.getTrustKeystore());
                 LOG.debug("Using default mdsal SslData as aaaCertProvider");
             } else {
-                aaaCertProvider = new AaaCertProvider(aaaCertServiceConfig.getCtlKeystore(), aaaCertServiceConfig.getTrustKeystore());
+                aaaCertProvider = new AaaCertProvider(aaaCertServiceConfig.getCtlKeystore(),
+                        aaaCertServiceConfig.getTrustKeystore());
                 LOG.debug("Using default keystore files as aaaCertProvider");
             }
             aaaCertProvider.createKeyStores();
             LOG.info("Certificate Manager service has been initialized");
         } else {
             aaaCertProvider = null;
-            LOG.info("Certificate Manager service has not been initialized, change the initial aaa-cert-config data and restart Opendaylight");
+            LOG.info(
+                    "Certificate Manager service has not been initialized,"
+                    + " change the initial aaa-cert-config data and restart Opendaylight");
         }
     }
 
@@ -128,21 +135,22 @@ public class CertificateManagerService implements ICertificateManager {
 
     @Override
     public SSLContext getServerContext() {
-        String algorithm = Security
-                .getProperty("ssl.KeyManagerFactory.algorithm");
+        String algorithm = Security.getProperty("ssl.KeyManagerFactory.algorithm");
         if (algorithm == null) {
             algorithm = "SunX509";
         }
         SSLContext serverContext = null;
         try {
             KeyManagerFactory kmf = KeyManagerFactory.getInstance(algorithm);
-            kmf.init(aaaCertProvider.getODLKeyStore(), aaaCertProvider.getOdlKeyStoreInfo().getStorePassword().toCharArray());
+            kmf.init(aaaCertProvider.getODLKeyStore(),
+                    aaaCertProvider.getOdlKeyStoreInfo().getStorePassword().toCharArray());
             TrustManagerFactory tmf = TrustManagerFactory.getInstance(algorithm);
             tmf.init(aaaCertProvider.getTrustKeyStore());
 
             serverContext = SSLContext.getInstance(KeyStoreConstant.TLS_PROTOCOL);
             serverContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
-        } catch (final NoSuchAlgorithmException | UnrecoverableKeyException | KeyStoreException | KeyManagementException  e) {
+        } catch (final NoSuchAlgorithmException | UnrecoverableKeyException | KeyStoreException
+                | KeyManagementException e) {
             LOG.error("Error while creating SSLContext ", e);
         }
         return serverContext;
@@ -154,16 +162,15 @@ public class CertificateManagerService implements ICertificateManager {
     }
 
     @Override
-    public boolean importSslDataKeystores(String odlKeystoreName, String odlKeystorePwd,
-            String odlKeystoreAlias, String trustKeystoreName, String trustKeystorePwd,
-            String[] cipherSuites, String tlsProtocols) {
+    public boolean importSslDataKeystores(String odlKeystoreName, String odlKeystorePwd, String odlKeystoreAlias,
+            String trustKeystoreName, String trustKeystorePwd, String[] cipherSuites, String tlsProtocols) {
         DefaultMdsalSslData mdsalCertProvider = (DefaultMdsalSslData) aaaCertProvider;
         if (mdsalCertProvider == null) {
             LOG.debug("aaaCertProvider is not MD-Sal Certificate Provider");
             return false;
         }
-        return mdsalCertProvider.importSslDataKeystores(odlKeystoreName, odlKeystorePwd,
-                odlKeystoreAlias, trustKeystoreName, trustKeystorePwd, cipherSuites, tlsProtocols);
+        return mdsalCertProvider.importSslDataKeystores(odlKeystoreName, odlKeystorePwd, odlKeystoreAlias,
+                trustKeystoreName, trustKeystorePwd, cipherSuites, tlsProtocols);
     }
 
     @Override
@@ -192,8 +199,7 @@ public class CertificateManagerService implements ICertificateManager {
                     final Node nd = ndList.item(i);
                     if (nd.getParentNode() != null && nd.getParentNode().getNodeName().equals(ctlStoreTag)) {
                         nd.setTextContent(ctlPwd);
-                    }
-                    else if (nd.getParentNode() != null && nd.getParentNode().getNodeName().equals(trustStoreTag)) {
+                    } else if (nd.getParentNode() != null && nd.getParentNode().getNodeName().equals(trustStoreTag)) {
                         nd.setTextContent(trustPwd);
                     }
                 }
@@ -209,5 +215,4 @@ public class CertificateManagerService implements ICertificateManager {
             LOG.error("Error while updating Certificate manager service config file", e);
         }
     }
-
 }
