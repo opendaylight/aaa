@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -42,7 +42,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ODLKeyTool implements the basic operations that manage the Java keyStores such as create, generate, add and delete certificates.
+ * ODLKeyTool implements the basic operations that manage the Java keyStores
+ * such as create, generate, add and delete certificates.
  *
  * @author mserngawy
  *
@@ -64,21 +65,29 @@ public class ODLKeyTool {
     }
 
     /**
-     * Add certificate to the given keystore
+     * Add certificate to the given keystore.
      *
-     * @param keyStore java keystore object
-     * @param certificate to add as string
-     * @param alias of the certificate
-     * @param deleteOld true to delete the old certificate that has the same alias otherwise it will fail if there is a certificate has same given alias.
-     * @return the given Keystore containing the certificate otherwise return null.
+     * @param keyStore
+     *            java keystore object
+     * @param certificate
+     *            to add as string
+     * @param alias
+     *            of the certificate
+     * @param deleteOld
+     *            true to delete the old certificate that has the same alias
+     *            otherwise it will fail if there is a certificate has same
+     *            given alias.
+     * @return the given Keystore containing the certificate otherwise return
+     *         null.
      */
-    public KeyStore addCertificate(final KeyStore keyStore, final String certificate, final String alias, final boolean deleteOld) {
+    public KeyStore addCertificate(final KeyStore keyStore, final String certificate, final String alias,
+            final boolean deleteOld) {
         try {
             final X509Certificate newCert = getCertificate(certificate);
-            if(keyStore.isCertificateEntry(alias) && deleteOld) {
+            if (keyStore.isCertificateEntry(alias) && deleteOld) {
                 keyStore.deleteEntry(alias);
             }
-            if (newCert != null ) {
+            if (newCert != null) {
                 keyStore.setCertificateEntry(alias, newCert);
             } else {
                 LOG.warn("{} Not a valid certificate {}", alias, certificate);
@@ -92,10 +101,12 @@ public class ODLKeyTool {
     }
 
     /**
-     * Convert the given java keystore object to byte array
+     * Convert the given java keystore object to byte array.
      *
-     * @param keyStore object
-     * @param keystorePassword the password of the given keystore
+     * @param keyStore
+     *            object
+     * @param keystorePassword
+     *            the password of the given keystore
      * @return byte array
      */
     public byte[] convertKeystoreToBytes(final KeyStore keyStore, final String keystorePassword) {
@@ -109,57 +120,73 @@ public class ODLKeyTool {
     }
 
     /**
-     * Create a keystore that has self sign private/public keys using the default key algorithm (RSA), size (2048)
-     * and signing algorithm (SHA1WithRSAEncryption)
+     * Create a keystore that has self sign private/public keys using the
+     * default key algorithm (RSA), size (2048) and signing algorithm
+     * (SHA1WithRSAEncryption).
      *
-     * @param keyStoreName the keystore name
-     * @param keystorePassword the keystore password
-     * @param dName the generated key's Dname
-     * @param keyAlias the private key alias
-     * @param validity the key validity
+     * @param keyStoreName
+     *            the keystore name
+     * @param keystorePassword
+     *            the keystore password
+     * @param name
+     *            the generated key's Dname
+     * @param keyAlias
+     *            the private key alias
+     * @param validity
+     *            the key validity
      * @return keystore object
      */
-    public KeyStore createKeyStoreWithSelfSignCert(final String keyStoreName, final String keystorePassword, final String dName, final String keyAlias, final int validity) {
-        return createKeyStoreWithSelfSignCert(keyStoreName, keystorePassword, dName, keyAlias, validity, KeyStoreConstant.DEFAULT_KEY_ALG,
-                KeyStoreConstant.DEFAULT_KEY_SIZE, KeyStoreConstant.DEFAULT_SIGN_ALG);
+    public KeyStore createKeyStoreWithSelfSignCert(final String keyStoreName, final String keystorePassword,
+            final String name, final String keyAlias, final int validity) {
+        return createKeyStoreWithSelfSignCert(keyStoreName, keystorePassword, name, keyAlias, validity,
+                KeyStoreConstant.DEFAULT_KEY_ALG, KeyStoreConstant.DEFAULT_KEY_SIZE, KeyStoreConstant.DEFAULT_SIGN_ALG);
     }
 
     /**
-     * Create a keystore that has self sign private/public keys
+     * Create a keystore that has self sign private/public keys.
      *
-     * @param keyStoreName the keystore name
-     * @param keystorePassword the keystore password
-     * @param dName the generated key's Dname
-     * @param keyAlias the private key alias
-     * @param validity the key validity
-     * @param keyAlg the algorithm that will be used to generate the key
-     * @param keySize the key size
-     * @param signAlg the signing algorithm
+     * @param keyStoreName
+     *            the keystore name
+     * @param keystorePassword
+     *            the keystore password
+     * @param name
+     *            the generated key's Dname
+     * @param keyAlias
+     *            the private key alias
+     * @param validity
+     *            the key validity
+     * @param keyAlg
+     *            the algorithm that will be used to generate the key
+     * @param keySize
+     *            the key size
+     * @param signAlg
+     *            the signing algorithm
      * @return keystore object
      */
-    public KeyStore createKeyStoreWithSelfSignCert(final String keyStoreName, final String keystorePassword, final String dName,
-            final String keyAlias, final int validity, final String keyAlg, final int keySize, final String signAlg) {
+    public KeyStore createKeyStoreWithSelfSignCert(final String keyStoreName, final String keystorePassword,
+            final String name, final String keyAlias, final int validity, final String keyAlg, final int keySize,
+            final String signAlg) {
         try {
             final KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(keyAlg);
             keyPairGenerator.initialize(keySize);
             final KeyPair keyPair = keyPairGenerator.generateKeyPair();
             final X509V3CertificateGenerator x509V3CertGen = new X509V3CertificateGenerator();
             x509V3CertGen.setSerialNumber(getSecureRandomeInt());
-            x509V3CertGen.setIssuerDN(new X509Principal(dName));
+            x509V3CertGen.setIssuerDN(new X509Principal(name));
             x509V3CertGen.setNotBefore(new Date(System.currentTimeMillis()));
-            x509V3CertGen.setNotAfter(new Date(System.currentTimeMillis() + (KeyStoreConstant.DAY_TIME * validity)));
-            x509V3CertGen.setSubjectDN(new X509Principal(dName));
+            x509V3CertGen.setNotAfter(new Date(System.currentTimeMillis() + KeyStoreConstant.DAY_TIME * validity));
+            x509V3CertGen.setSubjectDN(new X509Principal(name));
             x509V3CertGen.setPublicKey(keyPair.getPublic());
             x509V3CertGen.setSignatureAlgorithm(signAlg);
             final X509Certificate x509Cert = x509V3CertGen.generateX509Certificate(keyPair.getPrivate());
             final KeyStore ctlKeyStore = KeyStore.getInstance("JKS");
             ctlKeyStore.load(null, keystorePassword.toCharArray());
             ctlKeyStore.setKeyEntry(keyAlias, keyPair.getPrivate(), keystorePassword.toCharArray(),
-                       new java.security.cert.Certificate[]{x509Cert});
+                    new java.security.cert.Certificate[] { x509Cert });
             LOG.info("{} is created", keyStoreName);
             return ctlKeyStore;
-        }
-        catch (final NoSuchAlgorithmException | InvalidKeyException | SecurityException | SignatureException | KeyStoreException | CertificateException | IOException e) {
+        } catch (final NoSuchAlgorithmException | InvalidKeyException | SecurityException | SignatureException
+                | KeyStoreException | CertificateException | IOException e) {
             LOG.error("Fatal error creating keystore", e);
             return null;
         }
@@ -168,7 +195,8 @@ public class ODLKeyTool {
     /**
      * Create empty keystore does not has private or public key.
      *
-     * @param keystorePassword the keystore password
+     * @param keystorePassword
+     *            the keystore password
      * @return keystore object
      */
     public KeyStore createEmptyKeyStore(final String keystorePassword) {
@@ -183,18 +211,21 @@ public class ODLKeyTool {
     }
 
     /**
-     * Export the given keystore as a file under the working directory
+     * Export the given keystore as a file under the working directory.
      *
-     * @param keystore object
-     * @param keystorePassword the keystore password
-     * @param fileName of the keystore
+     * @param keystore
+     *            object
+     * @param keystorePassword
+     *            the keystore password
+     * @param fileName
+     *            of the keystore
      * @return true if successes to export the keystore
      */
     public boolean exportKeystore(final KeyStore keystore, final String keystorePassword, final String fileName) {
         if (keystore == null) {
             return false;
         }
-        try (final FileOutputStream fOutputStream = new FileOutputStream(workingDir + fileName)) {
+        try (FileOutputStream fOutputStream = new FileOutputStream(workingDir + fileName)) {
             keystore.store(fOutputStream, keystorePassword.toCharArray());
             return true;
         } catch (final KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
@@ -204,27 +235,34 @@ public class ODLKeyTool {
     }
 
     /**
-     * Generate a certificate signing request based on the given keystore private/public key
+     * Generate a certificate signing request based on the given keystore
+     * private/public key.
      *
-     * @param keyStore object
-     * @param keystorePassword the keystore password
-     * @param keyAlias Alias of the given keystore's private key.
-     * @param signAlg the signing algorithm
-     * @param withTag true to add the certificate request tag to the certificate request string.
+     * @param keyStore
+     *            object
+     * @param keystorePassword
+     *            the keystore password
+     * @param keyAlias
+     *            Alias of the given keystore's private key.
+     * @param signAlg
+     *            the signing algorithm
+     * @param withTag
+     *            true to add the certificate request tag to the certificate
+     *            request string.
      * @return certificate request as string.
      */
-    public String generateCertificateReq(final KeyStore keyStore, final String keystorePassword, final String keyAlias, final String signAlg,
-            final boolean withTag) {
+    public String generateCertificateReq(final KeyStore keyStore, final String keystorePassword, final String keyAlias,
+            final String signAlg, final boolean withTag) {
         try {
             if (keyStore.containsAlias(keyAlias)) {
-                final X509Certificate odlCert = (X509Certificate)keyStore.getCertificate(keyAlias);
+                final X509Certificate odlCert = (X509Certificate) keyStore.getCertificate(keyAlias);
                 final PublicKey pubKey = odlCert.getPublicKey();
-                final PrivateKey privKey = (PrivateKey)keyStore.getKey(keyAlias, keystorePassword.toCharArray());
+                final PrivateKey privKey = (PrivateKey) keyStore.getKey(keyAlias, keystorePassword.toCharArray());
                 final String subject = odlCert.getSubjectDN().getName();
                 final X509Name xname = new X509Name(subject);
                 final String signatureAlgorithm = signAlg;
-                final PKCS10CertificationRequest csr =
-                        new PKCS10CertificationRequest(signatureAlgorithm, xname, pubKey, null, privKey);
+                final PKCS10CertificationRequest csr = new PKCS10CertificationRequest(signatureAlgorithm, xname, pubKey,
+                        null, privKey);
                 final String certReq = DatatypeConverter.printBase64Binary(csr.getEncoded());
                 if (withTag) {
                     final StringBuilder sb = new StringBuilder();
@@ -239,19 +277,22 @@ public class ODLKeyTool {
             }
             LOG.info("KeyStore does not contain alias {}", keyAlias);
             return StringUtils.EMPTY;
-        } catch (final NoSuchAlgorithmException | KeyStoreException |
-                 UnrecoverableKeyException | InvalidKeyException | NoSuchProviderException | SignatureException e) {
+        } catch (final NoSuchAlgorithmException | KeyStoreException | UnrecoverableKeyException | InvalidKeyException
+                | NoSuchProviderException | SignatureException e) {
             LOG.error("Failed to generate certificate request", e);
             return StringUtils.EMPTY;
         }
-}
+    }
 
     /**
-     * Get a certificate as String based on the given alias
+     * Get a certificate as String based on the given alias.
      *
-     * @param keyStore keystore that has the certificate
-     * @param certAlias certificate alias
-     * @param withTag true to add the certificate tag to the certificate string.
+     * @param keyStore
+     *            keystore that has the certificate
+     * @param certAlias
+     *            certificate alias
+     * @param withTag
+     *            true to add the certificate tag to the certificate string.
      * @return certificate as string.
      */
     public String getCertificate(final KeyStore keyStore, final String certAlias, final boolean withTag) {
@@ -281,8 +322,10 @@ public class ODLKeyTool {
     /**
      * Get a X509Certificate object based on given certificate string.
      *
-     * @param certificate as string
-     * @return X509Certificate if the certificate string is not well formated will return null
+     * @param certificate
+     *            as string
+     * @return X509Certificate if the certificate string is not well formated
+     *         will return null
      */
     private X509Certificate getCertificate(String certificate) {
         if (certificate.isEmpty()) {
@@ -290,7 +333,8 @@ public class ODLKeyTool {
         }
 
         if (certificate.contains(KeyStoreConstant.BEGIN_CERTIFICATE)) {
-            final int fIdx = certificate.indexOf(KeyStoreConstant.BEGIN_CERTIFICATE) + KeyStoreConstant.BEGIN_CERTIFICATE.length();
+            final int fIdx = certificate.indexOf(KeyStoreConstant.BEGIN_CERTIFICATE)
+                    + KeyStoreConstant.BEGIN_CERTIFICATE.length();
             final int sIdx = certificate.indexOf(KeyStoreConstant.END_CERTIFICATE);
             certificate = certificate.substring(fIdx, sIdx);
         }
@@ -309,7 +353,7 @@ public class ODLKeyTool {
     }
 
     /**
-     * generate secure random number
+     * generate secure random number.
      *
      * @return secure random number as BigInteger.
      */
@@ -320,10 +364,12 @@ public class ODLKeyTool {
     }
 
     /**
-     * Load the keystore object from the given byte array
+     * Load the keystore object from the given byte array.
      *
-     * @param keyStoreBytes array of byte contain keystore object
-     * @param keystorePassword the keystore password
+     * @param keyStoreBytes
+     *            array of byte contain keystore object
+     * @param keystorePassword
+     *            the keystore password
      * @return keystore object otherwise return null if it fails to load.
      */
     public KeyStore loadKeyStore(final byte[] keyStoreBytes, final String keystorePassword) {
@@ -338,10 +384,12 @@ public class ODLKeyTool {
     }
 
     /**
-     * Load the keystore from the working directory
+     * Load the keystore from the working directory.
      *
-     * @param keyStoreName keystore file name
-     * @param keystorePassword keystore password
+     * @param keyStoreName
+     *            keystore file name
+     * @param keystorePassword
+     *            keystore password
      * @return keystore object otherwise return null if it fails to load.
      */
     public KeyStore loadKeyStore(final String keyStoreName, final String keystorePassword) {

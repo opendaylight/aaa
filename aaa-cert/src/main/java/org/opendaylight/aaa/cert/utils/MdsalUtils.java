@@ -8,6 +8,10 @@
 
 package org.opendaylight.aaa.cert.utils;
 
+import com.google.common.base.Optional;
+import com.google.common.util.concurrent.CheckedFuture;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
@@ -18,11 +22,6 @@ import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Optional;
-import com.google.common.util.concurrent.CheckedFuture;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
 
 /**
  * MdsalUtils manages all the mdsal data operation delete, merger, put and read.
@@ -58,7 +57,7 @@ public class MdsalUtils {
     }
 
     /**
-     * initialize the data tree for the given InstanceIdentifier type
+     * initialize the data tree for the given InstanceIdentifier type.
      *
      * @param type data store type
      * @param dataBroker Mdsal data Broker
@@ -96,7 +95,8 @@ public class MdsalUtils {
      * @return the result of the request
      */
     public static <D extends org.opendaylight.yangtools.yang.binding.DataObject> boolean merge(
-            final DataBroker dataBroker, final LogicalDatastoreType logicalDatastoreType, final InstanceIdentifier<D> path, final D data) {
+            final DataBroker dataBroker, final LogicalDatastoreType logicalDatastoreType,
+            final InstanceIdentifier<D> path, final D data) {
         boolean result = false;
         final WriteTransaction transaction = dataBroker.newWriteOnlyTransaction();
         transaction.merge(logicalDatastoreType, path, data, true);
@@ -120,7 +120,8 @@ public class MdsalUtils {
      * @return the result of the request
      */
     public static <D extends org.opendaylight.yangtools.yang.binding.DataObject> boolean put(
-            final DataBroker dataBroker, final LogicalDatastoreType logicalDatastoreType, final InstanceIdentifier<D> path, final D data)  {
+            final DataBroker dataBroker, final LogicalDatastoreType logicalDatastoreType,
+            final InstanceIdentifier<D> path, final D data) {
         boolean result = false;
         final WriteTransaction transaction = dataBroker.newWriteOnlyTransaction();
         transaction.put(logicalDatastoreType, path, data, true);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -60,10 +60,12 @@ public class ODLKeyToolTest {
 
     @Test
     public void testGenerateCertificateReq() {
-        String certReq = odlKeyTool.generateCertificateReq(fooKeystore, passwd, alias, KeyStoreConstant.DEFAULT_SIGN_ALG, true);
+        String certReq = odlKeyTool.generateCertificateReq(fooKeystore, passwd, alias,
+                KeyStoreConstant.DEFAULT_SIGN_ALG, true);
         assertTrue(certReq != null && !certReq.isEmpty());
         assertTrue(certReq.contains(KeyStoreConstant.BEGIN_CERTIFICATE_REQUEST));
-        certReq = odlKeyTool.generateCertificateReq(fooKeystore, passwd, alias, KeyStoreConstant.DEFAULT_SIGN_ALG, false);
+        certReq = odlKeyTool.generateCertificateReq(fooKeystore, passwd, alias, KeyStoreConstant.DEFAULT_SIGN_ALG,
+                false);
         assertTrue(!certReq.contains(KeyStoreConstant.BEGIN_CERTIFICATE_REQUEST));
     }
 
