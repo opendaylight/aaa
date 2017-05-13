@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -13,32 +13,27 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
 
 public class KeyStoreUtilisTest {
 
-    private final String fileName = "foo.pem";
-    private final String txt = "test save text";
-
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-        KeyStoreConstant.KEY_STORE_PATH = "target" + File.separator + "test" + File.separator;
-    }
+    private static final String FILE_NAME = "foo.pem";
+    private static final String TXT = "test save text";
+    private static final String KEYSTORE_PATH = "target" + File.separator + "test" + File.separator;
 
     @Test
     public void testKeyStoreUtils() {
-        final String path = KeyStoreConstant.createDir(KeyStoreConstant.KEY_STORE_PATH);
+        final String path = KeyStoreConstant.createDir(KEYSTORE_PATH);
         assertTrue(!path.isEmpty());
         final File dir = new File(path);
         assertTrue(dir.exists());
         //Test save file
-        assertTrue(KeyStoreConstant.saveCert(fileName, txt));
+        assertTrue(KeyStoreConstant.saveCert(FILE_NAME, TXT));
         //Test check file
-        assertTrue(KeyStoreConstant.checkKeyStoreFile(fileName));
+        assertTrue(KeyStoreConstant.checkKeyStoreFile(FILE_NAME));
         //Test read file
-        final String readTxt = KeyStoreConstant.readFile(fileName);
-        assertEquals(txt, readTxt);
+        final String readTxt = KeyStoreConstant.readFile(FILE_NAME);
+        assertEquals(TXT, readTxt);
     }
 }
