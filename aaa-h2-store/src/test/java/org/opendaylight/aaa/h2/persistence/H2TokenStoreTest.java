@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -36,10 +36,8 @@ public class H2TokenStoreTest {
     @Test
     public void testTokenStore() throws InterruptedException {
         final String fooToken = "foo_token";
-        Authentication auth = new AuthenticationBuilder(new ClaimBuilder()
-                                                            .setUser("foo")
-                                                            .setUserId("1234")
-                                                            .addRole("admin").build()).build();
+        Authentication auth = new AuthenticationBuilder(
+                new ClaimBuilder().setUser("foo").setUserId("1234").addRole("admin").build()).build();
         h2TokenStore.put(fooToken, auth);
         assertEquals(auth, h2TokenStore.get(fooToken));
         h2TokenStore.delete(fooToken);
@@ -61,14 +59,17 @@ public class H2TokenStoreTest {
      *   at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)[:1.8.0_121]
      *   at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)[:1.8.0_121]
      *   at java.lang.reflect.Method.invoke(Method.java:498)[:1.8.0_121]
-     *   at org.apache.aries.blueprint.compendium.cm.CmManagedProperties.inject(CmManagedProperties.java:258)[13:org.apache.aries.blueprint.cm:1.0.8]
-     *   at org.apache.aries.blueprint.compendium.cm.CmManagedProperties.updated(CmManagedProperties.java:167)[13:org.apache.aries.blueprint.cm:1.0.8]
-     *   at org.apache.aries.blueprint.compendium.cm.CmManagedProperties.updated(CmManagedProperties.java:157)[13:org.apache.aries.blueprint.cm:1.0.8]
-     *   at org.apache.aries.blueprint.compendium.cm.ManagedObjectManager$ConfigurationWatcher$1.run(ManagedObjectManager.java:81)[13:org.apache.aries.blueprint.cm:1.0.8]</code>
+     *   at org.apache.aries.blueprint.compendium.cm.CmManagedProperties
+     *   .inject(CmManagedProperties.java:258)[13:org.apache.aries.blueprint.cm:1.0.8]
+     *   at org.apache.aries.blueprint.compendium.cm.CmManagedProperties
+     *   .updated(CmManagedProperties.java:167)[13:org.apache.aries.blueprint.cm:1.0.8]
+     *   at org.apache.aries.blueprint.compendium.cm.CmManagedProperties
+     *   .updated(CmManagedProperties.java:157)[13:org.apache.aries.blueprint.cm:1.0.8]
+     *   at org.apache.aries.blueprint.compendium.cm.ManagedObjectManager$ConfigurationWatcher$1
+     *   .run(ManagedObjectManager.java:81)[13:org.apache.aries.blueprint.cm:1.0.8]</code>
      */
     @Test
     public void updateConfigParameter_nullArg() {
         h2TokenStore.updateConfigParameter(null);
     }
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2016 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Store for users.
  *
  * @author peter.mellquist@hp.com
  *
@@ -33,14 +34,14 @@ import org.slf4j.LoggerFactory;
 public class UserStore extends AbstractStore<User> {
     private static final Logger LOG = LoggerFactory.getLogger(UserStore.class);
 
-    protected final static String SQL_ID = "userid";
-    protected final static String SQL_DOMAIN_ID = "domainid";
-    protected final static String SQL_NAME = "name";
-    protected final static String SQL_EMAIL = "email";
-    protected final static String SQL_PASSWORD = "password";
-    protected final static String SQL_DESCR = "description";
-    protected final static String SQL_ENABLED = "enabled";
-    protected final static String SQL_SALT = "salt";
+    protected static final String SQL_ID = "userid";
+    protected static final String SQL_DOMAIN_ID = "domainid";
+    protected static final String SQL_NAME = "name";
+    protected static final String SQL_EMAIL = "email";
+    protected static final String SQL_PASSWORD = "password";
+    protected static final String SQL_DESCR = "description";
+    protected static final String SQL_ENABLED = "enabled";
+    protected static final String SQL_SALT = "salt";
     private static final String TABLE_NAME = "USERS";
 
     protected UserStore(ConnectionProvider dbConnectionFactory) {
@@ -49,14 +50,10 @@ public class UserStore extends AbstractStore<User> {
 
     @Override
     protected String getTableCreationStatement() {
-        return "CREATE TABLE users "
-                + "(userid    VARCHAR(128) PRIMARY KEY,"
-                + "name       VARCHAR(128)      NOT NULL, "
-                + "domainid   VARCHAR(128)      NOT NULL, "
-                + "email      VARCHAR(128)      NOT NULL, "
-                + "password   VARCHAR(128)      NOT NULL, "
-                + "description VARCHAR(128)     NOT NULL, "
-                + "salt        VARCHAR(15)      NOT NULL, "
+        return "CREATE TABLE users " + "(userid    VARCHAR(128) PRIMARY KEY,"
+                + "name       VARCHAR(128)      NOT NULL, " + "domainid   VARCHAR(128)      NOT NULL, "
+                + "email      VARCHAR(128)      NOT NULL, " + "password   VARCHAR(128)      NOT NULL, "
+                + "description VARCHAR(128)     NOT NULL, " + "salt        VARCHAR(15)      NOT NULL, "
                 + "enabled     INTEGER          NOT NULL)";
     }
 
@@ -90,7 +87,7 @@ public class UserStore extends AbstractStore<User> {
 
         Users users = new Users();
         try (Connection conn = dbConnect();
-             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM USERS WHERE userid = ? ")) {
+                PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM USERS WHERE userid = ? ")) {
             pstmt.setString(1, IDMStoreUtil.createUserid(username, domain));
             LOG.debug("query string: {}", pstmt.toString());
             users.setUsers(listFromStatement(pstmt));
@@ -102,7 +99,7 @@ public class UserStore extends AbstractStore<User> {
 
     protected User getUser(String id) throws StoreException {
         try (Connection conn = dbConnect();
-             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM USERS WHERE userid = ? ")) {
+                PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM USERS WHERE userid = ? ")) {
             pstmt.setString(1, id);
             LOG.debug("query string: {}", pstmt.toString());
             return firstFromStatement(pstmt);
@@ -117,9 +114,10 @@ public class UserStore extends AbstractStore<User> {
         Preconditions.checkNotNull(user.getDomainid());
 
         user.setSalt(SHA256Calculator.generateSALT());
-        String query = "insert into users (userid,domainid,name,email,password,description,enabled,salt) values(?,?,?,?,?,?,?,?)";
-        try (Connection conn = dbConnect();
-             PreparedStatement statement = conn.prepareStatement(query)) {
+        String query =
+                "insert into users"
+                + " (userid,domainid,name,email,password,description,enabled,salt) values(?,?,?,?,?,?,?,?)";
+        try (Connection conn = dbConnect(); PreparedStatement statement = conn.prepareStatement(query)) {
             user.setUserid(IDMStoreUtil.createUserid(user.getName(), user.getDomainid()));
             statement.setString(1, user.getUserid());
             statement.setString(2, user.getDomainid());
@@ -159,7 +157,8 @@ public class UserStore extends AbstractStore<User> {
             savedUser.setEmail(user.getEmail());
         }
         if (user.getPassword() != null) {
-            // If a new salt is provided, use it.  Otherwise, derive salt from existing.
+            // If a new salt is provided, use it. Otherwise, derive salt from
+            // existing.
             String salt = user.getSalt();
             if (salt == null) {
                 salt = savedUser.getSalt();
@@ -168,8 +167,7 @@ public class UserStore extends AbstractStore<User> {
         }
 
         String query = "UPDATE users SET email = ?, password = ?, description = ?, enabled = ? WHERE userid = ?";
-        try (Connection conn = dbConnect();
-             PreparedStatement statement = conn.prepareStatement(query)) {
+        try (Connection conn = dbConnect(); PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, savedUser.getEmail());
             statement.setString(2, savedUser.getPassword());
             statement.setString(3, savedUser.getDescription());
@@ -191,8 +189,7 @@ public class UserStore extends AbstractStore<User> {
         }
 
         String query = String.format("DELETE FROM USERS WHERE userid = '%s'", userid);
-        try (Connection conn = dbConnect();
-             Statement statement = conn.createStatement()) {
+        try (Connection conn = dbConnect(); Statement statement = conn.createStatement()) {
             int deleteCount = statement.executeUpdate(query);
             LOG.debug("deleted {} records", deleteCount);
             return savedUser;
