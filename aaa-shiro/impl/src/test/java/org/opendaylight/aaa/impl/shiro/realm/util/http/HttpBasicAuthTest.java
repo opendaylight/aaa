@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.basic;
+package org.opendaylight.aaa.impl.shiro.realm.util.http;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -19,6 +19,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.opendaylight.aaa.ClaimBuilder;
@@ -26,6 +27,7 @@ import org.opendaylight.aaa.PasswordCredentialBuilder;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.CredentialAuth;
+import org.opendaylight.aaa.impl.shiro.realm.util.http.HttpBasicAuth;
 
 public class HttpBasicAuthTest {
     private static final String USERNAME = "admin";

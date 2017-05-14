@@ -63,7 +63,6 @@
         <bundle>mvn:org.apache.shiro/shiro-web/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
 
         <!-- Cert -->
@@ -122,7 +121,6 @@
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-api/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-store-impl/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
         <feature version='${project.version}'>odl-aaa-encryption-service</feature>
 
