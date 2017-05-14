@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -36,7 +36,9 @@ import org.slf4j.LoggerFactory;
  * REST application used to manipulate the H2 database users table. The REST
  * endpoint is <code>/auth/v1/users</code>.
  *
- * A wrapper script called <code>idmtool</code> is provided to manipulate AAA data.
+ * <p>
+ * A wrapper script called <code>idmtool</code> is provided to manipulate AAA
+ * data.
  *
  * @author peter.mellquist@hp.com
  * @author Ryan Goulding (ryandgoulding@gmail.com)
@@ -51,7 +53,7 @@ public class UserHandler {
      * endpoint without a password, the default password is assigned to the
      * user.
      */
-    private final static String DEFAULT_PWD = "changeme";
+    private static final String DEFAULT_PWD = "changeme";
 
     /**
      * When an HTTP GET is performed on <code>/auth/v1/users</code>, the
@@ -108,8 +110,10 @@ public class UserHandler {
      * Extracts the user represented by <code>id</code>. The password and salt
      * fields are redacted for security reasons.
      *
-     * @param id the unique id of representing the user account
-     * @return A response with the user information, or internal error if one occurs
+     * @param id
+     *            the unique id of representing the user account
+     * @return A response with the user information, or internal error if one
+     *         occurs
      */
     @GET
     @Path("/{id}")
@@ -143,11 +147,14 @@ public class UserHandler {
      * <code>password</code>: <code>changeme</code> <code>enabled</code>:
      * <code>true</code>
      *
+     * <p>
      * If a password is not provided, please ensure you change the default
      * password ASAP for security reasons!
      *
-     * @param info passed from Jersey
-     * @param user the user defined in the JSON payload
+     * @param info
+     *            passed from Jersey
+     * @param user
+     *            the user defined in the JSON payload
      * @return A response stating success or failure of user creation
      */
     @POST
@@ -156,10 +163,9 @@ public class UserHandler {
     public Response createUser(@Context UriInfo info, User user) {
         LOG.info("POST /auth/v1/users  (create a user with the specified payload");
 
-        // Bug 8382:  user id is an implementation detail and isn't specifiable
+        // Bug 8382: user id is an implementation detail and isn't specifiable
         if (user.getUserid() != null) {
-            final String errorMessage =
-                    "do not specify userId, it will be assigned automatically for you";
+            final String errorMessage = "do not specify userId, it will be assigned automatically for you";
             LOG.debug(errorMessage);
             final IDMError idmError = new IDMError();
             idmError.setMessage(errorMessage);
@@ -212,7 +218,7 @@ public class UserHandler {
         }
         // TODO add a check on email format here.
 
-        // The "password" field is optional and defautls to "changeme".
+        // The "password" field is optional and defaults to "changeme".
         final String userPassword = user.getPassword();
         if (userPassword == null) {
             user.setPassword(DEFAULT_PWD);
@@ -239,9 +245,12 @@ public class UserHandler {
     /**
      * REST endpoint to update a user account.
      *
-     * @param info passed from Jersey
-     * @param user the user defined in the JSON payload
-     * @param id the unique id for the user that will be updated
+     * @param info
+     *            passed from Jersey
+     * @param user
+     *            the user defined in the JSON payload
+     * @param id
+     *            the unique id for the user that will be updated
      * @return A response stating success or failure of the user update
      */
     @PUT
@@ -293,8 +302,10 @@ public class UserHandler {
     /**
      * REST endpoint to delete a user account.
      *
-     * @param info passed from Jersey
-     * @param id the unique id of the user which is being deleted
+     * @param info
+     *            passed from Jersey
+     * @param id
+     *            the unique id of the user which is being deleted
      * @return A response stating success or failure of user deletion
      */
     @DELETE
@@ -306,10 +317,8 @@ public class UserHandler {
             final User user = AAAIDMLightModule.getStore().deleteUser(id);
 
             if (user == null) {
-                return new IDMError(404,
-                        String.format("Error deleting user.  " +
-                                      "Couldn't find user with id %s", id),
-                                      "").response();
+                return new IDMError(404, String.format("Error deleting user.  " + "Couldn't find user with id %s", id),
+                        "").response();
             }
         } catch (IDMStoreException se) {
             return internalError("deleting", se);
@@ -323,67 +332,70 @@ public class UserHandler {
     /**
      * Creates a <code>Response</code> related to an internal server error.
      *
-     * @param verbal such as "creating", "deleting", "updating"
-     * @param e The exception, which is propagated in the response
+     * @param verbal
+     *            such as "creating", "deleting", "updating"
+     * @param ex
+     *            The exception, which is propagated in the response
      * @return A response containing internal error with specific reasoning
      */
-    private Response internalError(final String verbal, final Exception e) {
-        LOG.error("There was an internal error {} the user", verbal, e);
-        return new IDMError(500,
-                String.format("There was an internal error %s the user", verbal),
-                e.getMessage()).response();
+    private Response internalError(final String verbal, final Exception ex) {
+        LOG.error("There was an internal error {} the user", verbal, ex);
+        return new IDMError(500, String.format("There was an internal error %s the user", verbal), ex.getMessage())
+                .response();
     }
 
     /**
      * Creates a <code>Response</code> related to the user not providing a
      * required field.
      *
-     * @param fieldName the name of the field which is missing
+     * @param fieldName
+     *            the name of the field which is missing
      * @return A response explaining that the request is missing a field
      */
     private Response missingRequiredField(final String fieldName) {
 
         return new IDMError(400,
-                String.format("%s is required to create the user account.  " +
-                              "Please provide a %s in your payload.", fieldName, fieldName),
-                              "").response();
+                String.format("%s is required to create the user account.  " + "Please provide a %s in your payload.",
+                        fieldName, fieldName),
+                "").response();
     }
 
     /**
      * Creates a <code>Response</code> related to the user providing a field
      * that is too long.
      *
-     * @param fieldName the name of the field that is too long
-     * @param maxFieldLength the maximum length of <code>fieldName</code>
+     * @param fieldName
+     *            the name of the field that is too long
+     * @param maxFieldLength
+     *            the maximum length of <code>fieldName</code>
      * @return A response containing the bad field and the maximum field length
      */
     private Response providedFieldTooLong(final String fieldName, final int maxFieldLength) {
-
-        return new IDMError(400,
-                getProvidedFieldTooLongMessage(fieldName, maxFieldLength),
-                "").response();
+        return new IDMError(400, getProvidedFieldTooLongMessage(fieldName, maxFieldLength), "").response();
     }
 
     /**
      * Creates the client-facing message related to the user providing a field
      * that is too long.
      *
-     * @param fieldName the name of the field that is too long
-     * @param maxFieldLength the maximum length of <code>fieldName</code>
-     * @return
+     * @param fieldName
+     *            the name of the field that is too long
+     * @param maxFieldLength
+     *            the maximum length of <code>fieldName</code>
+     * @return a response containing the too long field and its length
      */
-    private static String getProvidedFieldTooLongMessage(final String fieldName,
-            final int maxFieldLength) {
+    private static String getProvidedFieldTooLongMessage(final String fieldName, final int maxFieldLength) {
 
-        return String.format("The provided %s field is too long.  " +
-                             "The max length is %s.", fieldName, maxFieldLength);
+        return String.format("The provided %s field is too long.  " + "The max length is %s.", fieldName,
+                maxFieldLength);
     }
 
     /**
      * Prepares a user account for output by redacting the appropriate fields.
      * This method side-effects the <code>user</code> parameter.
      *
-     * @param user the user account which will have fields redacted
+     * @param user
+     *            the user account which will have fields redacted
      */
     private static void redactUserPasswordInfo(final User user) {
         user.setPassword(REDACTED_PASSWORD);
@@ -391,9 +403,10 @@ public class UserHandler {
     }
 
     /**
-     * Validate the input field length
+     * Validate the input field length.
      *
      * @param inputField
+     *            the field to check
      * @return true if input field bigger than the MAX_FIELD_LEN
      */
     private boolean checkInputFieldLength(final String inputField) {

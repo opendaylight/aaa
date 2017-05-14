@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -10,7 +10,6 @@ package org.opendaylight.aaa.idm.rest.test;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.Domain;
@@ -42,7 +41,7 @@ public class IDMTestStore implements IIDMStore {
 
     @Override
     public Domain readDomain(String domainid) throws IDMStoreException {
-        for(Domain dom : domains)  {
+        for (Domain dom : domains) {
             if (dom.getDomainid().equals(domainid)) {
                 return dom;
             }
@@ -52,7 +51,7 @@ public class IDMTestStore implements IIDMStore {
 
     @Override
     public Domain deleteDomain(String domainid) throws IDMStoreException {
-        for(Domain dom : domains)  {
+        for (Domain dom : domains) {
             if (dom.getDomainid().equals(domainid)) {
                 domains.remove(dom);
                 return dom;
@@ -63,7 +62,7 @@ public class IDMTestStore implements IIDMStore {
 
     @Override
     public Domain updateDomain(Domain domain) throws IDMStoreException {
-        for(Domain dom : domains)  {
+        for (Domain dom : domains) {
             if (dom.getDomainid().equals(domain.getDomainid())) {
                 domains.remove(dom);
                 domains.add(domain);
@@ -75,7 +74,7 @@ public class IDMTestStore implements IIDMStore {
 
     @Override
     public Domains getDomains() throws IDMStoreException {
-        Domains doms =  new Domains();
+        Domains doms = new Domains();
         doms.setDomains(domains);
         return doms;
     }
@@ -136,7 +135,7 @@ public class IDMTestStore implements IIDMStore {
 
     @Override
     public User readUser(String userid) throws IDMStoreException {
-        for(User usr : users) {
+        for (User usr : users) {
             if (usr.getUserid().equals(userid)) {
                 return usr;
             }
@@ -146,7 +145,7 @@ public class IDMTestStore implements IIDMStore {
 
     @Override
     public User deleteUser(String userid) throws IDMStoreException {
-        for(User usr : users) {
+        for (User usr : users) {
             if (usr.getUserid().equals(userid)) {
                 users.remove(usr);
                 return usr;
@@ -157,7 +156,7 @@ public class IDMTestStore implements IIDMStore {
 
     @Override
     public User updateUser(User user) throws IDMStoreException {
-        for(User usr : users) {
+        for (User usr : users) {
             if (usr.getUserid().equals(user.getUserid())) {
                 users.remove(usr);
                 users.add(user);
@@ -179,20 +178,21 @@ public class IDMTestStore implements IIDMStore {
         Users usrs = new Users();
         User user = null;
         Domain domain = null;
-        for(User usr : users) {
+        for (User usr : users) {
             if (usr.getName().equals(username)) {
                 user = usr;
                 break;
             }
         }
-        for(Domain dom : domains) {
+        for (Domain dom : domains) {
             if (dom.getDomainid().equals(domainId)) {
                 domain = dom;
                 break;
             }
         }
-        if (user == null || domain == null)
+        if (user == null || domain == null) {
             return usrs;
+        }
         for (Grant grant : grants) {
             if (grant.getUserid().equals(user.getUserid()) && grant.getDomainid().equals(domain.getDomainid())) {
                 List<User> usrList = new ArrayList<User>();
@@ -215,6 +215,17 @@ public class IDMTestStore implements IIDMStore {
     public Grant readGrant(String grantid) throws IDMStoreException {
         for (Grant grant : grants) {
             if (grant.getGrantid().equals(grantid)) {
+                return grant;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Grant readGrant(String domainid, String userid, String roleid) throws IDMStoreException {
+        for (Grant grant : grants) {
+            if (grant.getDomainid().equals(domainid) && grant.getUserid().equals(userid)
+                    && grant.getRoleid().equals(roleid)) {
                 return grant;
             }
         }
@@ -256,16 +267,6 @@ public class IDMTestStore implements IIDMStore {
         }
         usrGrants.setGrants(usrGrant);
         return usrGrants;
-    }
-
-    @Override
-    public Grant readGrant(String domainid, String userid, String roleid) throws IDMStoreException {
-        for (Grant grant : grants) {
-            if (grant.getDomainid().equals(domainid) && grant.getUserid().equals(userid) && grant.getRoleid().equals(roleid)) {
-                return grant;
-            }
-        }
-        return null;
     }
 
     @Override
