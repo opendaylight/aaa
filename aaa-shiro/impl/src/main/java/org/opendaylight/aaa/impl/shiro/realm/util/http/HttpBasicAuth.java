@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.basic;
+package org.opendaylight.aaa.impl.shiro.realm.util.http;
 
 import java.util.Base64;
 import java.util.List;
