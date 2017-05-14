@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -29,11 +29,8 @@ public class ChangeUserPassword extends OsgiCommandSupport {
 
     protected IIDMStore identityStore;
 
-    @Option(name = "-user",
-            aliases = { "--userName" },
-            description = "The user name",
-            required = true,
-            multiValued = false)
+    @Option(name = "-user", aliases = {
+            "--userName" }, description = "The user name", required = true, multiValued = false)
     private String userName = "";
 
     public ChangeUserPassword(final IIDMStore identityStore) {
@@ -43,7 +40,7 @@ public class ChangeUserPassword extends OsgiCommandSupport {
     @Override
     protected Object doExecute() throws Exception {
         if (identityStore == null) {
-           return "Failed to access the users data store";
+            return "Failed to access the users data store";
         }
         final String currentPwd = CliUtils.readPassword(this.session, "Enter current password:");
         final String newPwd = CliUtils.readPassword(this.session, "Enter new password:");

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -10,7 +10,6 @@ package org.opendaylight.aaa.cli.dmstore;
 
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
-import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
@@ -24,11 +23,8 @@ import org.opendaylight.aaa.cli.utils.DataStoreUtils;
  */
 public class RemoveDomain extends AaaCliAbstractCommand {
 
-    @Option(name = "-name",
-            aliases = { "--domainName" },
-            description = "The domain name",
-            required = true,
-            multiValued = false)
+    @Option(name = "-name", aliases = {
+            "--domainName" }, description = "The domain name", required = true, multiValued = false)
     private String domainName = "";
 
     public RemoveDomain(final IIDMStore identityStore) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -14,12 +14,14 @@ import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 
 /**
+ * Base class for all CLI commands.
+ *
  * @author mserngawy
  *
  */
 public abstract class AaaCliAbstractCommand extends OsgiCommandSupport {
 
-    private volatile static String authUser = null;
+    private static volatile String authUser = null;
     protected final IIDMStore identityStore;
 
     public AaaCliAbstractCommand(final IIDMStore identityStore) {
@@ -33,7 +35,7 @@ public abstract class AaaCliAbstractCommand extends OsgiCommandSupport {
             final String userName = CliUtils.readPassword(super.session, "Enter Username:");
             final String passwd = CliUtils.readPassword(super.session, "Enter Password:");
             final User usr = DataStoreUtils.isAdminUser(identityStore, userName, passwd);
-            if(usr != null) {
+            if (usr != null) {
                 authUser = userName;
                 SessionsManager.getInstance().addUserSession(userName, usr);
             }
