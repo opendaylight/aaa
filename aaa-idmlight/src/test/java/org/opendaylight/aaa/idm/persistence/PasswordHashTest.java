@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Cisco Systems, Inc. and others.  All rights reserved.
+ * Copyright (c) 2015, 2017 Cisco Systems, Inc. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -11,7 +11,6 @@ package org.opendaylight.aaa.idm.persistence;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -34,7 +33,7 @@ import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLi
 public class PasswordHashTest {
 
     @Before
-    public void before() throws IDMStoreException{
+    public void before() throws IDMStoreException {
         IIDMStore store = Mockito.mock(IIDMStore.class);
         AAAIDMLightModule.setStore(store);
         Domain domain = new Domain();
@@ -42,36 +41,37 @@ public class PasswordHashTest {
         domain.setDomainid("sdn");
 
         Mockito.when(store.readDomain("sdn")).thenReturn(domain);
-        Creds c = new Creds();
-        Users users = new Users();
+        Creds creds = new Creds();
+
         User user = new User();
         user.setName("admin");
-        user.setUserid(c.username());
+        user.setUserid(creds.username());
         user.setDomainid("sdn");
         user.setSalt("ABCD");
-        user.setPassword(SHA256Calculator.getSHA256(c.password(),user.getSalt()));
+        user.setPassword(SHA256Calculator.getSHA256(creds.password(), user.getSalt()));
         List<User> lu = new LinkedList<>();
         lu.add(user);
+        Users users = new Users();
         users.setUsers(lu);
 
-        Grants grants = new Grants();
         Grant grant = new Grant();
-        List<Grant> g = new ArrayList<>();
-        g.add(grant);
+        List<Grant> listOfGrants = new ArrayList<>();
+        listOfGrants.add(grant);
         grant.setDomainid("sdn");
         grant.setRoleid("admin");
         grant.setUserid("admin");
-        grants.setGrants(g);
+        Grants grants = new Grants();
+        grants.setGrants(listOfGrants);
         Role role = new Role();
         role.setRoleid("admin");
         role.setName("admin");
         Mockito.when(store.readRole("admin")).thenReturn(role);
-        Mockito.when(store.getUsers(c.username(), c.domain())).thenReturn(users);
-        Mockito.when(store.getGrants(c.domain(), c.username())).thenReturn(grants);
+        Mockito.when(store.getUsers(creds.username(), creds.domain())).thenReturn(users);
+        Mockito.when(store.getGrants(creds.domain(), creds.username())).thenReturn(grants);
     }
 
     @Test
-    public void testPasswordHash(){
+    public void testPasswordHash() {
         IdmLightProxy proxy = new IdmLightProxy();
         proxy.authenticate(new Creds());
     }
@@ -81,10 +81,12 @@ public class PasswordHashTest {
         public String username() {
             return "admin";
         }
+
         @Override
         public String password() {
             return "admin";
         }
+
         @Override
         public String domain() {
             return "sdn";
