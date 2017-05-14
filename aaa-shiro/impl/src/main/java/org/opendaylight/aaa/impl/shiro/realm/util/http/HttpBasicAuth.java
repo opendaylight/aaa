@@ -6,8 +6,9 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.basic;
+package org.opendaylight.aaa.impl.shiro.realm.util.http;
 
+import com.google.common.collect.Lists;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.TokenAuth;
+import org.opendaylight.aaa.sts.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +47,8 @@ import org.slf4j.LoggerFactory;
  */
 public class HttpBasicAuth implements TokenAuth {
 
+    private static final Logger LOG = LoggerFactory.getLogger(HttpBasicAuth.class);
+
     public static final String AUTH_HEADER = "Authorization";
 
     public static final String AUTH_SEP = ":";
@@ -64,9 +68,11 @@ public class HttpBasicAuth implements TokenAuth {
      */
     private static final int NUM_TOKEN_CREDS = 3;
 
-    private static final Logger LOG = LoggerFactory.getLogger(HttpBasicAuth.class);
-
     volatile CredentialAuth<PasswordCredentials> credentialAuth;
+
+    public HttpBasicAuth() {
+        ServiceLocator.getInstance().setTokenAuthCollection(Lists.newArrayList(this));
+    }
 
     private static boolean checkAuthHeaderFormat(final String authHeader) {
         return authHeader != null && authHeader.startsWith(BASIC_PREFIX);

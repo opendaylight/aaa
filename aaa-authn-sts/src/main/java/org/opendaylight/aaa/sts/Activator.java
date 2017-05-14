@@ -70,10 +70,6 @@ public class Activator extends DependencyActivatorBase {
                                                                    .setRequired(false)
                                                                    .setCallbacks(CLAIM_AUTH_ADDED,
                                                                            CLAIM_AUTH_REMOVED))
-                                     .add(createServiceDependency().setService(TokenAuth.class)
-                                                                   .setRequired(false)
-                                                                   .setCallbacks(TOKEN_AUTH_ADDED,
-                                                                           TOKEN_AUTH_REMOVED))
                                      .add(createServiceDependency().setService(TokenStore.class)
                                                                    .setRequired(true)
                                                                    .setCallbacks(TOKEN_STORE_ADDED,
