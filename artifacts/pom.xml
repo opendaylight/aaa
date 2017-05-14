@@ -89,18 +89,6 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-authn-store</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-authn-store</artifactId>
-                <version>${project.version}</version>
-                <type>cfg</type>
-                <classifier>config</classifier>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-authn-sts</artifactId>
                 <version>${project.version}</version>
             </dependency>
