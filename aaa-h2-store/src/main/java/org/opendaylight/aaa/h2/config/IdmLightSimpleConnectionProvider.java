@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Red Hat, Inc. and others. All rights reserved.
+ * Copyright (c) 2016, 2017 Red Hat, Inc. and others. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -9,10 +9,12 @@ package org.opendaylight.aaa.h2.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import org.opendaylight.aaa.h2.persistence.StoreException;
 
 /**
- * Simple Provider of JDBC Connections, based on an {@link IdmLightConfig} and {@link DriverManager}.
+ * Simple Provider of JDBC Connections, based on an {@link IdmLightConfig} and
+ * {@link DriverManager}.
  *
  * @author Michael Vorburger
  */
@@ -30,13 +32,12 @@ public class IdmLightSimpleConnectionProvider implements ConnectionProvider {
     public Connection getConnection() throws StoreException {
         try {
             if (existingConnection == null || existingConnection.isClosed()) {
-                existingConnection = DriverManager.getConnection(config.getDbConnectionString(), config.getDbUser(), config.getDbPwd());
+                existingConnection = DriverManager.getConnection(config.getDbConnectionString(), config.getDbUser(),
+                        config.getDbPwd());
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new StoreException("Cannot connect to database server", e);
         }
-
         return existingConnection;
     }
-
 }
