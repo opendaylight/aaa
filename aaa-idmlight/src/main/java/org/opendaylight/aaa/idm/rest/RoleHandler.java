@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -34,7 +34,9 @@ import org.slf4j.LoggerFactory;
  * REST application used to manipulate the H2 database roles table. The REST
  * endpoint is <code>/auth/v1/roles</code>.
  *
- * A wrapper script called <code>idmtool</code> is provided to manipulate AAA data.
+ * <p>
+ * A wrapper script called <code>idmtool</code> is provided to manipulate AAA
+ * data.
  *
  * @author peter.mellquist@hp.com
  * @author Ryan Goulding (ryandgoulding@gmail.com)
@@ -46,7 +48,8 @@ public class RoleHandler {
     /**
      * Extracts all roles.
      *
-     * @return A response with all roles in the H2 database, or internal error if one is encountered
+     * @return A response with all roles in the H2 database, or internal error
+     *         if one is encountered
      */
     @GET
     @Produces("application/json")
@@ -55,17 +58,20 @@ public class RoleHandler {
         Roles roles = null;
         try {
             roles = AAAIDMLightModule.getStore().getRoles();
-        } catch (IDMStoreException se) {
-            return new IDMError(500, "internal error getting roles", se.getMessage()).response();
+        } catch (IDMStoreException e) {
+            LOG.error("Internal error getting the roles", e);
+            return new IDMError(500, "internal error getting roles", e.getMessage()).response();
         }
         return Response.ok(roles).build();
     }
 
     /**
-     * Extract a specific role identified by <code>id</code>
+     * Extract a specific role identified by <code>id</code>.
      *
-     * @param id the String id for the role
-     * @return A response with the role identified by <code>id</code>, or internal error if one is encountered
+     * @param id
+     *            the String id for the role
+     * @return A response with the role identified by <code>id</code>, or
+     *         internal error if one is encountered
      */
     @GET
     @Path("/{id}")
@@ -76,12 +82,13 @@ public class RoleHandler {
 
         try {
             role = AAAIDMLightModule.getStore().readRole(id);
-        } catch (IDMStoreException se) {
-            return new IDMError(500, "internal error getting roles", se.getMessage()).response();
+        } catch (IDMStoreException e) {
+            LOG.error("Internal error getting the role", e);
+            return new IDMError(500, "internal error getting roles", e.getMessage()).response();
         }
 
         if (role == null) {
-            return new IDMError(404, "role not found id :" + id, "").response();
+            return new IDMError(404, "role not found id:" + id, "").response();
         }
         return Response.ok(role).build();
     }
@@ -89,9 +96,12 @@ public class RoleHandler {
     /**
      * Creates a role.
      *
-     * @param info passed from Jersey
-     * @param role the role JSON payload
-     * @return A response stating success or failure of role creation, or internal error if one is encountered
+     * @param info
+     *            passed from Jersey
+     * @param role
+     *            the role JSON payload
+     * @return A response stating success or failure of role creation, or
+     *         internal error if one is encountered
      */
     @POST
     @Consumes("application/json")
@@ -100,10 +110,10 @@ public class RoleHandler {
         LOG.info("Post /roles");
         try {
 
-            // Bug 8382:  role id is an implementation detail and isn't specifiable
+            // Bug 8382: role id is an implementation detail and isn't
+            // specifiable
             if (role.getRoleid() != null) {
-                final String errorMessage =
-                        "do not specify roleId, it will be assigned automatically for you";
+                final String errorMessage = "do not specify roleId, it will be assigned automatically for you";
                 LOG.debug(errorMessage);
                 final IDMError idmError = new IDMError();
                 idmError.setMessage(errorMessage);
@@ -115,43 +125,46 @@ public class RoleHandler {
             if (role.getName() == null) {
                 return new IDMError(404, "name must be defined on role create", "").response();
             } else if (role.getName().length() > IdmLightApplication.MAX_FIELD_LEN) {
-                return new IDMError(400, "role name max length is :"
-                        + IdmLightApplication.MAX_FIELD_LEN, "").response();
+                return new IDMError(400, "role name max length is :" + IdmLightApplication.MAX_FIELD_LEN, "")
+                        .response();
             }
 
             // domain
             if (role.getDomainid() == null) {
-                return new IDMError(404,
-                        "The role's domain must be defined on role when creating a role.", "")
+                return new IDMError(404, "The role's domain must be defined on role when creating a role.", "")
                         .response();
             } else if (role.getDomainid().length() > IdmLightApplication.MAX_FIELD_LEN) {
-                return new IDMError(400, "role domain max length is :"
-                        + IdmLightApplication.MAX_FIELD_LEN, "").response();
+                return new IDMError(400, "role domain max length is :" + IdmLightApplication.MAX_FIELD_LEN, "")
+                        .response();
             }
 
             // description
             if (role.getDescription() == null) {
                 role.setDescription("");
             } else if (role.getDescription().length() > IdmLightApplication.MAX_FIELD_LEN) {
-                return new IDMError(400, "role description max length is :"
-                        + IdmLightApplication.MAX_FIELD_LEN, "").response();
+                return new IDMError(400, "role description max length is :" + IdmLightApplication.MAX_FIELD_LEN, "")
+                        .response();
             }
 
             role = AAAIDMLightModule.getStore().writeRole(role);
-        } catch (IDMStoreException se) {
-            return new IDMError(500, "internal error creating role", se.getMessage()).response();
+        } catch (IDMStoreException e) {
+            LOG.error("Internal error creating role", e);
+            return new IDMError(500, "internal error creating role", e.getMessage()).response();
         }
-
         return Response.status(201).entity(role).build();
     }
 
     /**
      * Updates a specific role identified by <code>id</code>.
      *
-     * @param info passed from Jersey
-     * @param role the role JSON payload
-     * @param id the String id for the role
-     * @return A response stating success or failure of role update, or internal error if one occurs
+     * @param info
+     *            passed from Jersey
+     * @param role
+     *            the role JSON payload
+     * @param id
+     *            the String id for the role
+     * @return A response stating success or failure of role update, or internal
+     *         error if one occurs
      */
     @PUT
     @Path("/{id}")
@@ -165,17 +178,16 @@ public class RoleHandler {
 
             // name
             // TODO: names should be unique
-            if ((role.getName() != null)
-                    && (role.getName().length() > IdmLightApplication.MAX_FIELD_LEN)) {
-                return new IDMError(400, "role name max length is :"
-                        + IdmLightApplication.MAX_FIELD_LEN, "").response();
+            if ((role.getName() != null) && (role.getName().length() > IdmLightApplication.MAX_FIELD_LEN)) {
+                return new IDMError(400, "role name max length is :" + IdmLightApplication.MAX_FIELD_LEN, "")
+                        .response();
             }
 
             // description
             if ((role.getDescription() != null)
                     && (role.getDescription().length() > IdmLightApplication.MAX_FIELD_LEN)) {
-                return new IDMError(400, "role description max length is :"
-                        + IdmLightApplication.MAX_FIELD_LEN, "").response();
+                return new IDMError(400, "role description max length is :" + IdmLightApplication.MAX_FIELD_LEN, "")
+                        .response();
             }
 
             role = AAAIDMLightModule.getStore().updateRole(role);
@@ -184,17 +196,21 @@ public class RoleHandler {
             }
             IdmLightProxy.clearClaimCache();
             return Response.status(200).entity(role).build();
-        } catch (IDMStoreException se) {
-            return new IDMError(500, "internal error putting role", se.getMessage()).response();
+        } catch (IDMStoreException e) {
+            LOG.error("Internal error putting role", e);
+            return new IDMError(500, "internal error putting role", e.getMessage()).response();
         }
     }
 
     /**
      * Delete a role.
      *
-     * @param info passed from Jersey
-     * @param id the String id for the role
-     * @return A response stating success or failure of user deletion, or internal error if one occurs
+     * @param info
+     *            passed from Jersey
+     * @param id
+     *            the String id for the role
+     * @return A response stating success or failure of user deletion, or
+     *         internal error if one occurs
      */
     @DELETE
     @Path("/{id}")
@@ -206,11 +222,11 @@ public class RoleHandler {
             if (role == null) {
                 return new IDMError(404, "role id not found :" + id, "").response();
             }
-        } catch (IDMStoreException se) {
-            return new IDMError(500, "internal error deleting role", se.getMessage()).response();
+        } catch (IDMStoreException e) {
+            LOG.error("Internal error deleting role", e);
+            return new IDMError(500, "internal error deleting role", e.getMessage()).response();
         }
         IdmLightProxy.clearClaimCache();
         return Response.status(204).build();
     }
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -12,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import java.util.HashMap;
@@ -23,22 +24,22 @@ import org.opendaylight.aaa.api.model.Domains;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.Roles;
 
-public class DomainHandlerTest extends HandlerTest{
+public class DomainHandlerTest extends HandlerTest {
 
     @Test
     public void testDomainHandler() {
-        //check default domains
+        // check default domains
         Domains domains = resource().path("/v1/domains").get(Domains.class);
         assertNotNull(domains);
         assertEquals(1, domains.getDomains().size());
         assertTrue(domains.getDomains().get(0).getName().equals("sdn"));
 
-        //check existing domain
+        // check existing domain
         Domain domain = resource().path("/v1/domains/0").get(Domain.class);
         assertNotNull(domain);
         assertTrue(domain.getName().equals("sdn"));
 
-        //check not exist domain
+        // check not exist domain
         try {
             resource().path("/v1/domains/5").get(IDMError.class);
             fail("Should failed with 404!");
@@ -50,15 +51,17 @@ public class DomainHandlerTest extends HandlerTest{
 
         // check create domain
         Map<String, String> domainData = new HashMap<String, String>();
-        domainData.put("name","dom1");
-        domainData.put("description","test dom");
-        domainData.put("enabled","true");
-        ClientResponse clientResponse = resource().path("/v1/domains").type(MediaType.APPLICATION_JSON).post(ClientResponse.class, domainData);
+        domainData.put("name", "dom1");
+        domainData.put("description", "test dom");
+        domainData.put("enabled", "true");
+        ClientResponse clientResponse = resource().path("/v1/domains").type(MediaType.APPLICATION_JSON)
+                .post(ClientResponse.class, domainData);
         assertEquals(201, clientResponse.getStatus());
 
         // check update domain data
-        domainData.put("name","dom1Update");
-        clientResponse = resource().path("/v1/domains/1").type(MediaType.APPLICATION_JSON).put(ClientResponse.class, domainData);
+        domainData.put("name", "dom1Update");
+        clientResponse = resource().path("/v1/domains/1").type(MediaType.APPLICATION_JSON).put(ClientResponse.class,
+                domainData);
         assertEquals(200, clientResponse.getStatus());
         domain = resource().path("/v1/domains/1").get(Domain.class);
         assertNotNull(domain);
@@ -66,28 +69,33 @@ public class DomainHandlerTest extends HandlerTest{
 
         // check create grant
         Map<String, String> grantData = new HashMap<String, String>();
-        grantData.put("roleid","1");
-        clientResponse = resource().path("/v1/domains/1/users/0/roles").type(MediaType.APPLICATION_JSON).post(ClientResponse.class, grantData);
+        grantData.put("roleid", "1");
+        clientResponse = resource().path("/v1/domains/1/users/0/roles").type(MediaType.APPLICATION_JSON)
+                .post(ClientResponse.class, grantData);
         assertEquals(201, clientResponse.getStatus());
 
         // check create existing grant
-        clientResponse = resource().path("/v1/domains/1/users/0/roles").type(MediaType.APPLICATION_JSON).post(ClientResponse.class, grantData);
+        clientResponse = resource().path("/v1/domains/1/users/0/roles").type(MediaType.APPLICATION_JSON)
+                .post(ClientResponse.class, grantData);
         assertEquals(403, clientResponse.getStatus());
 
         // check create grant with invalid domain id
-        clientResponse = resource().path("/v1/domains/5/users/0/roles").type(MediaType.APPLICATION_JSON).post(ClientResponse.class, grantData);
+        clientResponse = resource().path("/v1/domains/5/users/0/roles").type(MediaType.APPLICATION_JSON)
+                .post(ClientResponse.class, grantData);
         assertEquals(404, clientResponse.getStatus());
 
         // check validate user (admin)
         Map<String, String> usrPwdData = new HashMap<String, String>();
-        usrPwdData.put("username","admin");
-        usrPwdData.put("userpwd","admin");
-        clientResponse = resource().path("/v1/domains/0/users/roles").type(MediaType.APPLICATION_JSON).post(ClientResponse.class, usrPwdData);
+        usrPwdData.put("username", "admin");
+        usrPwdData.put("userpwd", "admin");
+        clientResponse = resource().path("/v1/domains/0/users/roles").type(MediaType.APPLICATION_JSON)
+                .post(ClientResponse.class, usrPwdData);
         assertEquals(200, clientResponse.getStatus());
 
         // check validate user (admin) with wrong password
-        usrPwdData.put("userpwd","1234");
-        clientResponse = resource().path("/v1/domains/0/users/roles").type(MediaType.APPLICATION_JSON).post(ClientResponse.class, usrPwdData);
+        usrPwdData.put("userpwd", "1234");
+        clientResponse = resource().path("/v1/domains/0/users/roles").type(MediaType.APPLICATION_JSON)
+                .post(ClientResponse.class, usrPwdData);
         assertEquals(401, clientResponse.getStatus());
 
         // check get user (admin) roles
@@ -126,24 +134,22 @@ public class DomainHandlerTest extends HandlerTest{
             assertTrue(resp.getEntity(IDMError.class).getMessage().contains("Not found! Domain id"));
         }
 
-        // Bug 8382:  if a domain id is specified, 400 is returned
+        // Bug 8382: if a domain id is specified, 400 is returned
         domainData = new HashMap<>();
-        domainData.put("name","dom1");
-        domainData.put("description","test dom");
-        domainData.put("domainid","dom1");
-        domainData.put("enabled","true");
-        clientResponse = resource().path("/v1/domains").
-                type(MediaType.APPLICATION_JSON).
-                post(ClientResponse.class, domainData);
+        domainData.put("name", "dom1");
+        domainData.put("description", "test dom");
+        domainData.put("domainid", "dom1");
+        domainData.put("enabled", "true");
+        clientResponse = resource().path("/v1/domains").type(MediaType.APPLICATION_JSON).post(ClientResponse.class,
+                domainData);
         assertEquals(400, clientResponse.getStatus());
 
-        // Bug 8382:  if a grant id is specified, 400 is returned
+        // Bug 8382: if a grant id is specified, 400 is returned
         grantData = new HashMap<>();
-        grantData.put("roleid","1");
+        grantData.put("roleid", "1");
         grantData.put("grantid", "grantid");
-        clientResponse = resource().path("/v1/domains/1/users/0/roles").
-                type(MediaType.APPLICATION_JSON).
-                post(ClientResponse.class, grantData);
+        clientResponse = resource().path("/v1/domains/1/users/0/roles").type(MediaType.APPLICATION_JSON)
+                .post(ClientResponse.class, grantData);
         assertEquals(400, clientResponse.getStatus());
     }
 }
