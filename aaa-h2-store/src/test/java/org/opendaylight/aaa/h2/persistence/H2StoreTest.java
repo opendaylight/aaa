@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Cisco Systems, Inc. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Cisco Systems, Inc. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -29,25 +29,25 @@ public class H2StoreTest {
 
     @BeforeClass
     public static void start() {
-        File f = new File("idmlight.db.mv.db");
-        if (f.exists()) {
-            f.delete();
+        File file = new File("idmlight.db.mv.db");
+        if (file.exists()) {
+            file.delete();
         }
-        f = new File("idmlight.db.trace.db");
-        if (f.exists()) {
-            f.delete();
+        file = new File("idmlight.db.trace.db");
+        if (file.exists()) {
+            file.delete();
         }
     }
 
     @AfterClass
     public static void end() {
-        File f = new File("idmlight.db.mv.db");
-        if (f.exists()) {
-            f.delete();
+        File file = new File("idmlight.db.mv.db");
+        if (file.exists()) {
+            file.delete();
         }
-        f = new File("idmlight.db.trace.db");
-        if (f.exists()) {
-            f.delete();
+        file = new File("idmlight.db.trace.db");
+        if (file.exists()) {
+            file.delete();
         }
     }
 
@@ -69,13 +69,13 @@ public class H2StoreTest {
 
     @Test
     public void testCreateDefaultDomain() throws StoreException {
-        Domain d = new Domain();
-        Assert.assertEquals(true, d != null);
+        Domain domain = new Domain();
+        Assert.assertEquals(true, domain != null);
         DomainStore ds = new DomainStore(new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().build()));
-        d.setName(IIDMStore.DEFAULT_DOMAIN);
-        d.setEnabled(true);
-        d = ds.createDomain(d);
-        Assert.assertEquals(true, d != null);
+        domain.setName(IIDMStore.DEFAULT_DOMAIN);
+        domain.setEnabled(true);
+        domain = ds.createDomain(domain);
+        Assert.assertEquals(true, domain != null);
     }
 
     @Test
@@ -92,18 +92,18 @@ public class H2StoreTest {
 
     @Test
     public void testCreateGrant() throws StoreException {
-        Domain d = h2Store.createDomain("sdn", true);
+        Domain domain = h2Store.createDomain("sdn", true);
         Role role = h2Store.createRole("temp", "temp domain", "Temp Testing role");
         User user = h2Store.createUser("test", "pass", "domain", "desc", "email", true, "SALT");
-        Grant g = h2Store.createGrant(d.getDomainid(), user.getUserid(), role.getRoleid());
-        Assert.assertEquals(true, g != null);
+        Grant grant = h2Store.createGrant(domain.getDomainid(), user.getUserid(), role.getRoleid());
+        Assert.assertEquals(true, grant != null);
     }
 
     @Test
     public void testUpdatingUserEmail() throws StoreException {
         UserStore us = new UserStore(new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().build()));
-        Domain d = h2Store.createDomain("sdn", true);
-        User user = h2Store.createUser("test", "pass", d.getDomainid(), "desc", "email", true, "SALT");
+        Domain domain = h2Store.createDomain("sdn", true);
+        User user = h2Store.createUser("test", "pass", domain.getDomainid(), "desc", "email", true, "SALT");
 
         user.setName("test");
         user = us.putUser(user);
@@ -114,7 +114,7 @@ public class H2StoreTest {
 
         user = new User();
         user.setName("test");
-        user.setDomainid(d.getDomainid());
+        user.setDomainid(domain.getDomainid());
         user = us.getUser(IDMStoreUtil.createUserid(user.getName(), user.getDomainid()));
 
         Assert.assertEquals("Test@Test.com", user.getEmail());

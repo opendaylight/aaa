@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2016 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Store for roles.
  *
  * @author peter.mellquist@hp.com
  *
@@ -32,10 +33,10 @@ import org.slf4j.LoggerFactory;
 public class RoleStore extends AbstractStore<Role> {
     private static final Logger LOG = LoggerFactory.getLogger(RoleStore.class);
 
-    protected final static String SQL_ID = "roleid";
-    protected final static String SQL_DOMAIN_ID = "domainid";
-    protected final static String SQL_NAME = "name";
-    protected final static String SQL_DESCR = "description";
+    protected static final String SQL_ID = "roleid";
+    protected static final String SQL_DOMAIN_ID = "domainid";
+    protected static final String SQL_NAME = "name";
+    protected static final String SQL_DESCR = "description";
     private static final String TABLE_NAME = "ROLES";
 
     protected RoleStore(ConnectionProvider dbConnectionFactory) {
@@ -44,10 +45,8 @@ public class RoleStore extends AbstractStore<Role> {
 
     @Override
     protected String getTableCreationStatement() {
-        return "CREATE TABLE ROLES "
-                + "(roleid     VARCHAR(128)   PRIMARY KEY,"
-                + "name        VARCHAR(128)   NOT NULL, "
-                + "domainid    VARCHAR(128)   NOT NULL, "
+        return "CREATE TABLE ROLES " + "(roleid     VARCHAR(128)   PRIMARY KEY,"
+                + "name        VARCHAR(128)   NOT NULL, " + "domainid    VARCHAR(128)   NOT NULL, "
                 + "description VARCHAR(128)      NOT NULL)";
     }
 
@@ -74,8 +73,7 @@ public class RoleStore extends AbstractStore<Role> {
 
     protected Role getRole(String id) throws StoreException {
         try (Connection conn = dbConnect();
-             PreparedStatement pstmt = conn
-                     .prepareStatement("SELECT * FROM ROLES WHERE roleid = ? ")) {
+                PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ROLES WHERE roleid = ? ")) {
             pstmt.setString(1, id);
             LOG.debug("query string: {}", pstmt.toString());
             return firstFromStatement(pstmt);
@@ -89,8 +87,7 @@ public class RoleStore extends AbstractStore<Role> {
         Preconditions.checkNotNull(role.getName());
         Preconditions.checkNotNull(role.getDomainid());
         String query = "insert into roles (roleid,domainid,name,description) values(?,?,?,?)";
-        try (Connection conn = dbConnect();
-             PreparedStatement statement = conn.prepareStatement(query)) {
+        try (Connection conn = dbConnect(); PreparedStatement statement = conn.prepareStatement(query)) {
             role.setRoleid(IDMStoreUtil.createRoleid(role.getName(), role.getDomainid()));
             statement.setString(1, role.getRoleid());
             statement.setString(2, role.getDomainid());
@@ -121,8 +118,7 @@ public class RoleStore extends AbstractStore<Role> {
         }
 
         String query = "UPDATE roles SET description = ? WHERE roleid = ?";
-        try (Connection conn = dbConnect();
-             PreparedStatement statement = conn.prepareStatement(query)) {
+        try (Connection conn = dbConnect(); PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, savedRole.getDescription());
             statement.setString(2, savedRole.getRoleid());
             statement.executeUpdate();
@@ -141,8 +137,7 @@ public class RoleStore extends AbstractStore<Role> {
         }
 
         String query = String.format("DELETE FROM ROLES WHERE roleid = '%s'", roleid);
-        try (Connection conn = dbConnect();
-             Statement statement = conn.createStatement()) {
+        try (Connection conn = dbConnect(); Statement statement = conn.createStatement()) {
             int deleteCount = statement.executeUpdate(query);
             LOG.debug("deleted {} records", deleteCount);
             return savedRole;

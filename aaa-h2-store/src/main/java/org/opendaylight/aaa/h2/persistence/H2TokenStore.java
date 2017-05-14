@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -7,6 +7,8 @@
  */
 package org.opendaylight.aaa.h2.persistence;
 
+import java.util.Map;
+import java.util.concurrent.locks.ReentrantLock;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
@@ -17,26 +19,25 @@ import org.opendaylight.aaa.api.TokenStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-import java.util.concurrent.locks.ReentrantLock;
-
 /**
+ * Class handling the storage of tokens.
+ *
  * @author mserngawy
  *
  */
 public class H2TokenStore implements AutoCloseable, TokenStore {
 
     private static final Logger LOG = LoggerFactory.getLogger(H2TokenStore.class);
-    private static final ReentrantLock cacheLock = new ReentrantLock();
+    private static final ReentrantLock CACHE_LOCK = new ReentrantLock();
 
-    private final String TOKEN_CACHE_MANAGER = "org.opendaylight.aaa";
-    private final String TOKEN_CACHE = "tokens";
-    private final String MAX_CACHED_MEMORY = "maxCachedTokensInMemory";
-    private final String MAX_CACHED_DISK = "maxCachedTokensOnDisk";
-    private final String SECS_TO_IDLE = "secondsToIdle";
-    //Public for test purpose.
-    public final String SECS_TO_LIVE = "secondsToLive";
+    private static final String TOKEN_CACHE_MANAGER = "org.opendaylight.aaa";
+    private static final String TOKEN_CACHE = "tokens";
+    private static final String MAX_CACHED_MEMORY = "maxCachedTokensInMemory";
+    private static final String MAX_CACHED_DISK = "maxCachedTokensOnDisk";
+    private static final String SECS_TO_IDLE = "secondsToIdle";
 
+    // Public for test purpose.
+    public static final String SECS_TO_LIVE = "secondsToLive";
 
     private int maxCachedTokensInMemory = 10000;
     private int maxCachedTokensOnDisk = 100000;
@@ -46,10 +47,9 @@ public class H2TokenStore implements AutoCloseable, TokenStore {
 
     public H2TokenStore() {
         CacheManager cm = CacheManager.newInstance();
-        tokens = new Cache( new CacheConfiguration(TOKEN_CACHE, maxCachedTokensInMemory)
-                                    .maxEntriesLocalDisk(maxCachedTokensOnDisk)
-                                    .timeToLiveSeconds(secondsToLive)
-                                    .timeToIdleSeconds(secondsToIdle));
+        tokens = new Cache(
+                new CacheConfiguration(TOKEN_CACHE, maxCachedTokensInMemory).maxEntriesLocalDisk(maxCachedTokensOnDisk)
+                        .timeToLiveSeconds(secondsToLive).timeToIdleSeconds(secondsToIdle));
         cm.addCache(tokens);
         cm.setName(TOKEN_CACHE_MANAGER);
         LOG.info("Initialized token store with default cache config");
@@ -85,33 +85,27 @@ public class H2TokenStore implements AutoCloseable, TokenStore {
     public void updateConfigParameter(@Nullable Map<String, Object> configParameters) {
         if (configParameters != null && !configParameters.isEmpty()) {
             LOG.debug("Tokens Config parameters received : {}", configParameters.entrySet());
-            try {
-                for (Map.Entry<String, Object> paramEntry : configParameters.entrySet()) {
-                    if (paramEntry.getKey().equalsIgnoreCase(MAX_CACHED_MEMORY)) {
-                        maxCachedTokensInMemory = Integer.parseInt((String)paramEntry.getValue());
-                    }
-                    else if (paramEntry.getKey().equalsIgnoreCase(MAX_CACHED_DISK)) {
-                        maxCachedTokensOnDisk = Integer.parseInt((String)paramEntry.getValue());
-                    }
-                    else if (paramEntry.getKey().equalsIgnoreCase(SECS_TO_LIVE)) {
-                        secondsToLive = Long.parseLong((String)paramEntry.getValue());
-                    }
-                    else if (paramEntry.getKey().equalsIgnoreCase(SECS_TO_IDLE)) {
-                        secondsToIdle = Long.parseLong((String)paramEntry.getValue());
-                    }
+            for (Map.Entry<String, Object> paramEntry : configParameters.entrySet()) {
+                if (paramEntry.getKey().equalsIgnoreCase(MAX_CACHED_MEMORY)) {
+                    maxCachedTokensInMemory = Integer.parseInt((String) paramEntry.getValue());
+                } else if (paramEntry.getKey().equalsIgnoreCase(MAX_CACHED_DISK)) {
+                    maxCachedTokensOnDisk = Integer.parseInt((String) paramEntry.getValue());
+                } else if (paramEntry.getKey().equalsIgnoreCase(SECS_TO_LIVE)) {
+                    secondsToLive = Long.parseLong((String) paramEntry.getValue());
+                } else if (paramEntry.getKey().equalsIgnoreCase(SECS_TO_IDLE)) {
+                    secondsToIdle = Long.parseLong((String) paramEntry.getValue());
                 }
-                cacheLock.lock();
+            }
+            CACHE_LOCK.lock();
+            try {
                 CacheConfiguration config = tokens.getCacheConfiguration();
                 config.setTimeToIdleSeconds(secondsToIdle);
                 config.setTimeToLiveSeconds(secondsToLive);
                 config.maxEntriesLocalHeap(maxCachedTokensInMemory);
                 config.maxEntriesLocalDisk(maxCachedTokensOnDisk);
-            } catch(Exception e) {
-                LOG.error("Token store configuration error ", e);
             } finally {
-                cacheLock.unlock();
+                CACHE_LOCK.unlock();
             }
         }
     }
-
 }

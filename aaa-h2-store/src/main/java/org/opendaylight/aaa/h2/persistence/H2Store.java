@@ -226,6 +226,11 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
+    public Grant readGrant(String domainid, String userid, String roleid) throws IDMStoreException {
+        return readGrant(IDMStoreUtil.createGrantid(userid, domainid, roleid));
+    }
+
+    @Override
     public Grant deleteGrant(String grantid) throws IDMStoreException {
         try {
             return grantStore.deleteGrant(grantid);
@@ -255,46 +260,41 @@ public class H2Store implements IIDMStore {
         }
     }
 
-    @Override
-    public Grant readGrant(String domainid, String userid, String roleid) throws IDMStoreException {
-        return readGrant(IDMStoreUtil.createGrantid(userid, domainid, roleid));
-    }
-
     public Domain createDomain(String domainName, boolean enable) throws StoreException {
-        Domain d = new Domain();
-        d.setName(domainName);
-        d.setEnabled(enable);
-        return domainStore.createDomain(d);
+        Domain domain = new Domain();
+        domain.setName(domainName);
+        domain.setEnabled(enable);
+        return domainStore.createDomain(domain);
     }
 
     public User createUser(String name, String password, String domain, String description,
-            String email, boolean enabled, String SALT) throws StoreException {
-        User u = new User();
-        u.setName(name);
-        u.setDomainid(domain);
-        u.setDescription(description);
-        u.setEmail(email);
-        u.setEnabled(enabled);
-        u.setPassword(password);
-        u.setSalt(SALT);
-        return userStore.createUser(u);
+            String email, boolean enabled, String salt) throws StoreException {
+        User user = new User();
+        user.setName(name);
+        user.setDomainid(domain);
+        user.setDescription(description);
+        user.setEmail(email);
+        user.setEnabled(enabled);
+        user.setPassword(password);
+        user.setSalt(salt);
+        return userStore.createUser(user);
     }
 
     public Role createRole(String name, String domain, String description)
             throws StoreException {
-        Role r = new Role();
-        r.setDescription(description);
-        r.setName(name);
-        r.setDomainid(domain);
-        return roleStore.createRole(r);
+        Role role = new Role();
+        role.setDescription(description);
+        role.setName(name);
+        role.setDomainid(domain);
+        return roleStore.createRole(role);
     }
 
     public Grant createGrant(String domain, String user, String role) throws StoreException {
-        Grant g = new Grant();
-        g.setDomainid(domain);
-        g.setRoleid(role);
-        g.setUserid(user);
-        return grantStore.createGrant(g);
+        Grant grant = new Grant();
+        grant.setDomainid(domain);
+        grant.setRoleid(role);
+        grant.setUserid(user);
+        return grantStore.createGrant(grant);
     }
 
     @Override

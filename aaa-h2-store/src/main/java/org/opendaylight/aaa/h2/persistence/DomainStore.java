@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2016 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Domain store.
  *
  * @author peter.mellquist@hp.com
  *
@@ -31,10 +32,10 @@ import org.slf4j.LoggerFactory;
 public class DomainStore extends AbstractStore<Domain> {
     private static final Logger LOG = LoggerFactory.getLogger(DomainStore.class);
 
-    protected final static String SQL_ID = "domainid";
-    protected final static String SQL_NAME = "name";
-    protected final static String SQL_DESCR = "description";
-    protected final static String SQL_ENABLED = "enabled";
+    protected static final String SQL_ID = "domainid";
+    protected static final String SQL_NAME = "name";
+    protected static final String SQL_DESCR = "description";
+    protected static final String SQL_ENABLED = "enabled";
     private static final String TABLE_NAME = "DOMAINS";
 
     protected DomainStore(ConnectionProvider dbConnectionFactory) {

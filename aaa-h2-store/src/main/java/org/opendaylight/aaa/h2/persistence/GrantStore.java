@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2016 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Grant store.
  *
  * @author peter.mellquist@hp.com
  *
@@ -30,10 +31,10 @@ import org.slf4j.LoggerFactory;
 public class GrantStore extends AbstractStore<Grant> {
     private static final Logger LOG = LoggerFactory.getLogger(GrantStore.class);
 
-    protected final static String SQL_ID = "grantid";
-    protected final static String SQL_TENANTID = "domainid";
-    protected final static String SQL_USERID = "userid";
-    protected final static String SQL_ROLEID = "roleid";
+    protected static final String SQL_ID = "grantid";
+    protected static final String SQL_TENANTID = "domainid";
+    protected static final String SQL_USERID = "userid";
+    protected static final String SQL_ROLEID = "roleid";
     private static final String TABLE_NAME = "GRANTS";
 
     protected GrantStore(ConnectionProvider dbConnectionFactory) {
@@ -73,8 +74,8 @@ public class GrantStore extends AbstractStore<Grant> {
             pstmt.setString(2, uid);
             LOG.debug("query string: {}", pstmt.toString());
             grants.setGrants(listFromStatement(pstmt));
-        } catch (SQLException s) {
-            throw new StoreException("SQL Exception : " + s);
+        } catch (SQLException e) {
+            throw new StoreException("SQL Exception", e);
         }
         return grants;
     }
@@ -86,8 +87,8 @@ public class GrantStore extends AbstractStore<Grant> {
             pstmt.setString(1, userid);
             LOG.debug("query string: {}", pstmt.toString());
             grants.setGrants(listFromStatement(pstmt));
-        } catch (SQLException s) {
-            throw new StoreException("SQL Exception : " + s);
+        } catch (SQLException e) {
+            throw new StoreException("SQL Exception", e);
         }
         return grants;
     }
@@ -98,8 +99,8 @@ public class GrantStore extends AbstractStore<Grant> {
             pstmt.setString(1, id);
             LOG.debug("query string: ", pstmt.toString());
             return firstFromStatement(pstmt);
-        } catch (SQLException s) {
-            throw new StoreException("SQL Exception : " + s);
+        } catch (SQLException e) {
+            throw new StoreException("SQL Exception", e);
         }
     }
 
@@ -112,8 +113,8 @@ public class GrantStore extends AbstractStore<Grant> {
             pstmt.setString(3, rid);
             LOG.debug("query string: {}", pstmt.toString());
             return firstFromStatement(pstmt);
-        } catch (SQLException s) {
-            throw new StoreException("SQL Exception : " + s);
+        } catch (SQLException e) {
+            throw new StoreException("SQL Exception", e);
         }
     }
 
@@ -135,8 +136,8 @@ public class GrantStore extends AbstractStore<Grant> {
             grant.setGrantid(IDMStoreUtil.createGrantid(grant.getUserid(), grant.getDomainid(),
                     grant.getRoleid()));
             return grant;
-        } catch (SQLException s) {
-            throw new StoreException("SQL Exception : " + s);
+        } catch (SQLException e) {
+            throw new StoreException("SQL Exception", e);
         }
     }
 
@@ -153,8 +154,8 @@ public class GrantStore extends AbstractStore<Grant> {
             int deleteCount = statement.executeUpdate(query);
             LOG.debug("deleted {} records", deleteCount);
             return savedGrant;
-        } catch (SQLException s) {
-            throw new StoreException("SQL Exception : " + s);
+        } catch (SQLException e) {
+            throw new StoreException("SQL Exception", e);
         }
     }
 }

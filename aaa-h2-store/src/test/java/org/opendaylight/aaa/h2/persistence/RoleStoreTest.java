@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -8,20 +8,20 @@
 
 package org.opendaylight.aaa.h2.persistence;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.h2.config.ConnectionProvider;
-import org.opendaylight.aaa.h2.persistence.RoleStore;
 
 public class RoleStoreTest {
 
@@ -29,7 +29,7 @@ public class RoleStoreTest {
 
     private final ConnectionProvider connectionFactoryMock = () -> connectionMock;
 
-    private final RoleStore RoleStoreUnderTest = new RoleStore(connectionFactoryMock);
+    private final RoleStore roleStoreUnderTest = new RoleStore(connectionFactoryMock);
 
     @Test
     public void getRolesTest() throws SQLException, Exception {
@@ -49,12 +49,11 @@ public class RoleStoreTest {
         Mockito.when(stmtMock.executeQuery(anyString())).thenReturn(rsMock);
 
         // Run Test
-        Roles roles = RoleStoreUnderTest.getRoles();
+        Roles roles = roleStoreUnderTest.getRoles();
 
         // Verify
         assertTrue(roles.getRoles().size() == 1);
         verify(stmtMock).close();
-
     }
 
     public ResultSet getMockedResultSet() throws SQLException {
