@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -12,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import java.util.HashMap;
@@ -23,12 +24,11 @@ import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
 
-
-public class RoleHandlerTest extends HandlerTest{
+public class RoleHandlerTest extends HandlerTest {
 
     @Test
     public void testRoleHandler() {
-        //check default roles
+        // check default roles
         Roles roles = resource().path("/v1/roles").get(Roles.class);
         assertNotNull(roles);
         List<Role> roleList = roles.getRoles();
@@ -37,12 +37,12 @@ public class RoleHandlerTest extends HandlerTest{
             assertTrue(role.getName().equals("admin") || role.getName().equals("user"));
         }
 
-        //check existing role
+        // check existing role
         Role role = resource().path("/v1/roles/0").get(Role.class);
         assertNotNull(role);
         assertTrue(role.getName().equals("admin"));
 
-        //check not exist Role
+        // check not exist Role
         try {
             resource().path("/v1/roles/5").get(IDMError.class);
             fail("Should failed with 404!");
@@ -54,16 +54,18 @@ public class RoleHandlerTest extends HandlerTest{
 
         // check create Role
         Map<String, String> roleData = new HashMap<String, String>();
-        roleData.put("name","role1");
-        roleData.put("description","test Role");
-        roleData.put("domainid","0");
-        ClientResponse clientResponse = resource().path("/v1/roles").type(MediaType.APPLICATION_JSON).post(ClientResponse.class, roleData);
+        roleData.put("name", "role1");
+        roleData.put("description", "test Role");
+        roleData.put("domainid", "0");
+        ClientResponse clientResponse = resource().path("/v1/roles").type(MediaType.APPLICATION_JSON)
+                .post(ClientResponse.class, roleData);
         assertEquals(201, clientResponse.getStatus());
 
         // check create Role missing name data
         roleData.remove("name");
         try {
-            clientResponse = resource().path("/v1/roles").type(MediaType.APPLICATION_JSON).post(ClientResponse.class, roleData);
+            clientResponse = resource().path("/v1/roles").type(MediaType.APPLICATION_JSON).post(ClientResponse.class,
+                    roleData);
             assertEquals(404, clientResponse.getStatus());
         } catch (UniformInterfaceException e) {
             ClientResponse resp = e.getResponse();
@@ -71,8 +73,9 @@ public class RoleHandlerTest extends HandlerTest{
         }
 
         // check update Role data
-        roleData.put("name","role1Update");
-        clientResponse = resource().path("/v1/roles/2").type(MediaType.APPLICATION_JSON).put(ClientResponse.class, roleData);
+        roleData.put("name", "role1Update");
+        clientResponse = resource().path("/v1/roles/2").type(MediaType.APPLICATION_JSON).put(ClientResponse.class,
+                roleData);
         assertEquals(200, clientResponse.getStatus());
         role = resource().path("/v1/roles/2").get(Role.class);
         assertNotNull(role);
@@ -92,15 +95,14 @@ public class RoleHandlerTest extends HandlerTest{
             assertTrue(resp.getEntity(IDMError.class).getMessage().contains("role id not found"));
         }
 
-        // Bug 8382:  if a role id is specified, 400 is returned
+        // Bug 8382: if a role id is specified, 400 is returned
         roleData = new HashMap<String, String>();
-        roleData.put("name","role1");
-        roleData.put("description","test Role");
-        roleData.put("domainid","0");
+        roleData.put("name", "role1");
+        roleData.put("description", "test Role");
+        roleData.put("domainid", "0");
         roleData.put("roleid", "roleid");
-        clientResponse = resource().path("/v1/roles").
-                type(MediaType.APPLICATION_JSON).
-                post(ClientResponse.class, roleData);
+        clientResponse = resource().path("/v1/roles").type(MediaType.APPLICATION_JSON).post(ClientResponse.class,
+                roleData);
         assertEquals(400, clientResponse.getStatus());
     }
 }
