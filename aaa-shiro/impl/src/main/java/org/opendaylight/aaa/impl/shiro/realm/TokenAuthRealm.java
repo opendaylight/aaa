@@ -29,7 +29,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.TokenAuth;
-import org.opendaylight.aaa.basic.HttpBasicAuth;
+import org.opendaylight.aaa.impl.shiro.realm.util.http.HttpBasicAuth;
 import org.opendaylight.aaa.sts.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

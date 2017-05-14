@@ -171,10 +171,6 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authn-basic</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-idmlight</artifactId>
         </dependency>
         <dependency>
