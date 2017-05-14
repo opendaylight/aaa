@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Cisco Systems, Inc. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Cisco Systems, Inc. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -36,7 +36,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.opendaylight.aaa.encrypt.MdsalUtils;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
@@ -53,8 +52,9 @@ import org.xml.sax.SAXException;
 public class AAAEncryptionServiceImpl implements AAAEncryptionService {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAEncryptionServiceImpl.class);
-    private final String DEFAULT_CONFIG_FILE_PATH = "etc" + File.separator + "opendaylight" + File.separator
-            + "datastore" + File.separator + "initial" + File.separator + "config" + File.separator + "aaa-encrypt-service-config.xml";
+    private static final String DEFAULT_CONFIG_FILE_PATH = "etc" + File.separator + "opendaylight" + File.separator
+            + "datastore" + File.separator + "initial" + File.separator + "config" + File.separator
+            + "aaa-encrypt-service-config.xml";
 
     private final SecretKey key;
     private final IvParameterSpec ivspec;
@@ -65,7 +65,8 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
         SecretKey tempKey = null;
         IvParameterSpec tempIvSpec = null;
         if (encrySrvConfig.getEncryptSalt() == null) {
-            throw new IllegalArgumentException("null encryptSalt in AaaEncryptServiceConfig: " + encrySrvConfig.toString());
+            throw new IllegalArgumentException(
+                    "null encryptSalt in AaaEncryptServiceConfig: " + encrySrvConfig.toString());
         }
         if (encrySrvConfig.getEncryptKey() != null && encrySrvConfig.getEncryptKey().isEmpty()) {
             LOG.debug("Set the Encryption service password and encrypt salt");
@@ -74,8 +75,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             byte[] salt = new byte[16];
             random.nextBytes(salt);
             String encodedSalt = Base64.getEncoder().encodeToString(salt);
-            encrySrvConfig = new AaaEncryptServiceConfigBuilder(encrySrvConfig)
-                    .setEncryptKey(newPwd)
+            encrySrvConfig = new AaaEncryptServiceConfigBuilder(encrySrvConfig).setEncryptKey(newPwd)
                     .setEncryptSalt(encodedSalt).build();
             updateEncrySrvConfig(newPwd, encodedSalt);
             initializeConfigDataTree(encrySrvConfig, dataBroker);
@@ -84,45 +84,66 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
         try {
             final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(encrySrvConfig.getEncryptMethod());
             final KeySpec spec = new PBEKeySpec(encrySrvConfig.getEncryptKey().toCharArray(), enryptionKeySalt,
-                        encrySrvConfig.getEncryptIterationCount(), encrySrvConfig.getEncryptKeyLength());
+                    encrySrvConfig.getEncryptIterationCount(), encrySrvConfig.getEncryptKeyLength());
             tempKey = keyFactory.generateSecret(spec);
             tempKey = new SecretKeySpec(tempKey.getEncoded(), encrySrvConfig.getEncryptType());
             tempIvSpec = new IvParameterSpec(enryptionKeySalt);
-        } catch(NoSuchAlgorithmException | InvalidKeySpecException e) {
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             LOG.error("Failed to initialize secret key", e);
         }
         key = tempKey;
         ivspec = tempIvSpec;
-        Cipher c = null;
+        Cipher cipher = null;
         try {
-            c = Cipher.getInstance(encrySrvConfig.getCipherTransforms());
-            c.init(Cipher.ENCRYPT_MODE, key, ivspec);
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException | InvalidKeyException e) {
+            cipher = Cipher.getInstance(encrySrvConfig.getCipherTransforms());
+            cipher.init(Cipher.ENCRYPT_MODE, key, ivspec);
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException
+                | InvalidKeyException e) {
             LOG.error("Failed to create encrypt cipher.", e);
         }
-        this.encryptCipher = c;
-        c = null;
+        this.encryptCipher = cipher;
+        cipher = null;
         try {
-            c = Cipher.getInstance(encrySrvConfig.getCipherTransforms());
-            c.init(Cipher.DECRYPT_MODE, key, ivspec);
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException | InvalidKeyException e) {
+            cipher = Cipher.getInstance(encrySrvConfig.getCipherTransforms());
+            cipher.init(Cipher.DECRYPT_MODE, key, ivspec);
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException
+                | InvalidKeyException e) {
             LOG.error("Failed to create decrypt cipher.", e);
         }
-        this.decryptCipher = c;
+        this.decryptCipher = cipher;
     }
 
     @Override
     public String encrypt(String data) {
-        //We could not instantiate the encryption key, hence no encryption or decryption will be done.
+        // We could not instantiate the encryption key, hence no encryption or
+        // decryption will be done.
         if (key == null) {
             LOG.warn("Encryption Key is NULL, will not encrypt data.");
             return data;
         }
         try {
-            synchronized(encryptCipher) {
+            synchronized (encryptCipher) {
                 byte[] cryptobytes = encryptCipher.doFinal(data.getBytes());
                 String cryptostring = DatatypeConverter.printBase64Binary(cryptobytes);
                 return cryptostring;
+            }
+        } catch (IllegalBlockSizeException | BadPaddingException e) {
+            LOG.error("Failed to encrypt data.", e);
+        }
+        return data;
+    }
+
+    @Override
+    public byte[] encrypt(byte[] data) {
+        // We could not instantiate the encryption key, hence no encryption or
+        // decryption will be done.
+        if (key == null) {
+            LOG.warn("Encryption Key is NULL, will not encrypt data.");
+            return data;
+        }
+        try {
+            synchronized (encryptCipher) {
+                return encryptCipher.doFinal(data);
             }
         } catch (IllegalBlockSizeException | BadPaddingException e) {
             LOG.error("Failed to encrypt data.", e);
@@ -136,31 +157,14 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             LOG.warn("String {} was not decrypted.", encData);
             return encData;
         }
-        try{
+        try {
             byte[] cryptobytes = DatatypeConverter.parseBase64Binary(encData);
             byte[] clearbytes = decryptCipher.doFinal(cryptobytes);
             return new String(clearbytes);
-        } catch (IllegalBlockSizeException | BadPaddingException e){
+        } catch (IllegalBlockSizeException | BadPaddingException e) {
             LOG.error("Failed to decrypt encoded data", e);
         }
         return encData;
-    }
-
-    @Override
-    public byte[] encrypt(byte[] data) {
-        //We could not instantiate the encryption key, hence no encryption or decryption will be done.
-        if (key == null) {
-            LOG.warn("Encryption Key is NULL, will not encrypt data.");
-            return data;
-        }
-        try {
-            synchronized(encryptCipher) {
-                return encryptCipher.doFinal(data);
-            }
-        } catch (IllegalBlockSizeException | BadPaddingException e) {
-            LOG.error("Failed to encrypt data.", e);
-        }
-        return data;
     }
 
     @Override
@@ -171,7 +175,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
         }
         try {
             return decryptCipher.doFinal(encData);
-        } catch (IllegalBlockSizeException | BadPaddingException e){
+        } catch (IllegalBlockSizeException | BadPaddingException e) {
             LOG.error("Failed to decrypt encoded data", e);
         }
         return encData;
@@ -205,10 +209,10 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     }
 
     private void initializeConfigDataTree(final AaaEncryptServiceConfig encrySrvConfig, final DataBroker dataBroker) {
-        if (MdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION, MdsalUtils.getEncryptionSrvConfigIid()) == null) {
-            MdsalUtils.initalizeDatastore(LogicalDatastoreType.CONFIGURATION, dataBroker, MdsalUtils.getEncryptionSrvConfigIid(),
-                        encrySrvConfig);
+        if (MdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION,
+                MdsalUtils.getEncryptionSrvConfigIid()) == null) {
+            MdsalUtils.initalizeDatastore(LogicalDatastoreType.CONFIGURATION, dataBroker,
+                    MdsalUtils.getEncryptionSrvConfigIid(), encrySrvConfig);
         }
     }
-
 }

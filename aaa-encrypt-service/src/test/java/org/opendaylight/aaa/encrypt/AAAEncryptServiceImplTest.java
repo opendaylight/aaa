@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Cisco Systems, Inc. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Cisco Systems, Inc. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -35,26 +35,21 @@ public class AAAEncryptServiceImplTest {
     private DataBroker dataBroker = mock(DataBroker.class);
 
     @Before
-    public void setup(){
+    public void setup() {
         AaaEncryptServiceConfig module = new AaaEncryptServiceConfigBuilder()
-                .setCipherTransforms("AES/CBC/PKCS5Padding")
-                .setEncryptIterationCount(32768)
-                .setEncryptKey("")
-                .setEncryptKeyLength(128)
-                .setEncryptMethod("PBKDF2WithHmacSHA1")
-                .setEncryptSalt("")
-                .setEncryptType("AES")
-                .setPasswordLength(12)
-                .build();
+                .setCipherTransforms("AES/CBC/PKCS5Padding").setEncryptIterationCount(32768).setEncryptKey("")
+                .setEncryptKeyLength(128).setEncryptMethod("PBKDF2WithHmacSHA1").setEncryptSalt("")
+                .setEncryptType("AES").setPasswordLength(12).build();
 
         PowerMockito.mockStatic(MdsalUtils.class);
-        PowerMockito.when(MdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION,
-                MdsalUtils.getEncryptionSrvConfigIid())).thenReturn(module);
+        PowerMockito.when(
+                MdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION, MdsalUtils.getEncryptionSrvConfigIid()))
+                .thenReturn(module);
         impl = new AAAEncryptionServiceImpl(module, dataBroker);
     }
 
     @Test
-    public void testShortString(){
+    public void testShortString() {
         String before = "shortone";
         String encrypt = impl.encrypt(before);
         Assert.assertNotEquals(before, encrypt);
@@ -63,7 +58,7 @@ public class AAAEncryptServiceImplTest {
     }
 
     @Test
-    public void testLongString(){
+    public void testLongString() {
         String before = "This is a very long string to encrypt for testing 1...2...3";
         String encrypt = impl.encrypt(before);
         Assert.assertNotEquals(before, encrypt);

@@ -37,7 +37,7 @@ public class MdsalUtils {
     }
 
     /**
-     * initialize the data tree for the given InstanceIdentifier type
+     * initialize the data tree for the given InstanceIdentifier type.
      *
      * @param type data store type
      * @param dataBroker Mdsal data Broker
