@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -12,7 +12,6 @@ import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.Domain;
-import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.slf4j.Logger;
@@ -28,18 +27,12 @@ public class AddDomain extends AaaCliAbstractCommand {
 
     private static final Logger LOG = LoggerFactory.getLogger(AddDomain.class);
 
-    @Option(name = "-name",
-            aliases = { "--domainName" },
-            description = "The domain name",
-            required = true,
-            multiValued = false)
+    @Option(name = "-name", aliases = {
+            "--domainName" }, description = "The domain name", required = true, multiValued = false)
     private String domainName = "";
 
-    @Option(name = "-desc",
-            aliases = { "--domainDescription" },
-            description = "The domain Description",
-            required = true,
-            multiValued = false)
+    @Option(name = "-desc", aliases = {
+            "--domainDescription" }, description = "The domain Description", required = true, multiValued = false)
     private String domainDesc = "";
 
     public AddDomain(final IIDMStore identityStore) {
@@ -61,5 +54,4 @@ public class AddDomain extends AaaCliAbstractCommand {
         }
         return null;
     }
-
 }

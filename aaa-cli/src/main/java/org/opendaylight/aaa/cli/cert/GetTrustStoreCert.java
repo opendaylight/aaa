@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -14,23 +14,23 @@ import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 
-@Command(name = "get-node-cert", scope = "aaa", description = "get node certificate form the opendaylight trust keystore .")
+@Command(name = "get-node-cert", scope = "aaa",
+    description = "get node certificate form the opendaylight trust keystore .")
 
 /**
- * GetTrustStoreCert get a certain certificate stored in the trust key store using the its alias
+ * GetTrustStoreCert get a certain certificate stored in the trust key store
+ * using the its alias
  *
  * @author mserngawy
  *
  */
-public class GetTrustStoreCert  extends OsgiCommandSupport{
+public class GetTrustStoreCert extends OsgiCommandSupport {
 
     protected ICertificateManager certProvider;
 
-    @Option(name = "-alias",
-            aliases = { "--alias" },
+    @Option(name = "-alias", aliases = {"--alias" },
             description = "The alias.\n-alias / --should be the node certificate alias",
-            required = true,
-            multiValued = false)
+            required = true, multiValued = false)
     private String alias = "";
 
     public GetTrustStoreCert(final ICertificateManager aaaCertProvider) {
@@ -42,5 +42,4 @@ public class GetTrustStoreCert  extends OsgiCommandSupport{
         final String pwd = CliUtils.readPassword(this.session, "Enter Keystore Password:");
         return certProvider.getCertificateTrustStore(pwd, alias, true);
     }
-
 }

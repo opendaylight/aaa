@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -7,9 +7,9 @@
  */
 package org.opendaylight.aaa.cli.utils;
 
-import org.apache.felix.service.command.CommandSession;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import org.apache.felix.service.command.CommandSession;
 
 /**
  * CliUtils has helper methods for CLI bundle.
@@ -22,12 +22,15 @@ public class CliUtils {
     public static final String LOGIN_FAILED_MESS = "User does not exist OR user name and passsword are not correct";
 
     /**
-     * Retrieve the password from the user
+     * Retrieve the password from the user.
      *
-     * @param session command line session
-     * @param pwdPrintStr label for enter password
+     * @param session
+     *            command line session
+     * @param pwdPrintStr
+     *            label for enter password
      * @return the new written password
      * @throws Exception
+     *             exception reading the password
      */
     public static String readPassword(final CommandSession session, final String pwdPrintStr) throws Exception {
         session.getConsole().println(pwdPrintStr);
