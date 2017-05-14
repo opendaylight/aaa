@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -8,13 +8,16 @@
 
 package org.opendaylight.aaa.cli.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.cli.SessionsManager;
 
 /**
+ * Test for Session Manager.
+ *
  * @author mserngawy
  *
  */
@@ -34,5 +37,4 @@ public class SessionsManagerTest {
         assertNotNull(authUsr);
         assertEquals(usr, authUsr);
     }
-
 }

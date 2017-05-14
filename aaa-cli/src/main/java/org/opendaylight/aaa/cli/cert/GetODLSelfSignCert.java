@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -13,7 +13,8 @@ import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 
-@Command(name = "get-odl-cert", scope = "aaa", description = "get self sign certificate for the opendaylight controller.")
+@Command(name = "get-odl-cert", scope = "aaa",
+    description = "get self sign certificate for the opendaylight controller.")
 
 /**
  * GetODLSelfSignCert get the ODL key store self sign certificate.
@@ -21,7 +22,7 @@ import org.opendaylight.aaa.cli.utils.CliUtils;
  * @author mserngawy
  *
  */
-public class GetODLSelfSignCert extends OsgiCommandSupport{
+public class GetODLSelfSignCert extends OsgiCommandSupport {
 
     protected ICertificateManager certProvider;
 
@@ -34,5 +35,4 @@ public class GetODLSelfSignCert extends OsgiCommandSupport{
         final String pwd = CliUtils.readPassword(this.session, "Enter Keystore Password:");
         return certProvider.getODLKeyStoreCertificate(pwd, true);
     }
-
 }
