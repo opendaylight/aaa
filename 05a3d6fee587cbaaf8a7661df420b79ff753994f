@@ -22,6 +22,30 @@
       "revId": "05a3d6fee587cbaaf8a7661df420b79ff753994f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba068154_fbbaeadf",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-05-15T22:01:25Z",
+      "side": 1,
+      "message": "Sorry for that, I didn\u0027t know what dName stood for. Changed it to distinguishedName, since checkstyle does not allow dName.",
+      "parentUuid": "ba068154_48dece40",
+      "range": {
+        "startLine": 167,
+        "startChar": 25,
+        "endLine": 167,
+        "endChar": 29
+      },
+      "revId": "05a3d6fee587cbaaf8a7661df420b79ff753994f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }

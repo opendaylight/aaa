@@ -22,6 +22,30 @@
       "revId": "db8f4eda4dba15a467f4832ce4dd3a6857e4ae0d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba068154_bb1a2215",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/utils/KeyStoresDataUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-05-15T22:01:25Z",
+      "side": 0,
+      "message": "You\u0027re right, Checkstyle does not complain about that, it is just the IDE auto-formatting. I just avoid creating a temporary variable which is going to be returned in the next statement. Anyway, I have formatted the statement to keep it aligned.",
+      "parentUuid": "ba068154_48b52eed",
+      "range": {
+        "startLine": 118,
+        "startChar": 40,
+        "endLine": 128,
+        "endChar": 45
+      },
+      "revId": "db8f4eda4dba15a467f4832ce4dd3a6857e4ae0d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
