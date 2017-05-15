@@ -22,6 +22,30 @@
       "revId": "ce3e3054ba4c36fb7ae8e45a5596132161105c03",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba068154_08616639",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-05-15T18:25:17Z",
+      "side": 1,
+      "message": "You are right, we should use \"e\" as in other places, but in this case (exception as method parameter), checkstyle does not allow such a sort name, that\u0027s why I had to change it.",
+      "parentUuid": "ba068154_08b7a6d9",
+      "range": {
+        "startLine": 341,
+        "startChar": 72,
+        "endLine": 341,
+        "endChar": 74
+      },
+      "revId": "ce3e3054ba4c36fb7ae8e45a5596132161105c03",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
