@@ -22,6 +22,30 @@
       "revId": "db8f4eda4dba15a467f4832ce4dd3a6857e4ae0d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba068154_db79e694",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/SessionsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-05-15T21:17:04Z",
+      "side": 0,
+      "message": "I have added a check using Objects.requireNonNull to check if the userName is null and throw the appropriate exception.",
+      "parentUuid": "ba068154_e8a6a2c0",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 9
+      },
+      "revId": "db8f4eda4dba15a467f4832ce4dd3a6857e4ae0d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
