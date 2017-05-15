@@ -142,6 +142,9 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         <extensions>true</extensions>
         <configuration>
           <instructions>
+            <Export-Package>
+              org.opendaylight.aaa.impl.shiro.*
+            </Export-Package>
             <Web-ContextPath>/moon</Web-ContextPath>
             <Bundle-Name>${project.groupId}.${project.artifactId}</Bundle-Name>
           </instructions>

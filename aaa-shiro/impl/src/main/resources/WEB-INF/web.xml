@@ -5,7 +5,7 @@
 
     <servlet>
         <servlet-name>MOON</servlet-name>
-        <servlet-class>org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint</servlet-class>
+        <servlet-class>org.opendaylight.aaa.impl.shiro.moon.MoonTokenEndpoint</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
@@ -29,7 +29,7 @@
     <!-- Shiro Filter -->
     <context-param>
       <param-name>shiroEnvironmentClass</param-name>
-      <param-value>org.opendaylight.aaa.shiro.web.env.KarafIniWebEnvironment</param-value>
+      <param-value>org.opendaylight.aaa.impl.shiro.web.env.KarafIniWebEnvironment</param-value>
     </context-param>
 
     <listener>
@@ -38,7 +38,7 @@
 
     <filter>
         <filter-name>ShiroFilter</filter-name>
-        <filter-class>org.opendaylight.aaa.shiro.filters.AAAShiroFilter</filter-class>
+        <filter-class>org.opendaylight.aaa.impl.shiro.filters.AAAShiroFilter</filter-class>
     </filter>
 
     <filter-mapping>

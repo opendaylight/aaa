@@ -35,6 +35,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.ldap.LdapContextFactory;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.junit.Test;
+import org.opendaylight.aaa.impl.shiro.realm.ODLJndiLdapRealm;
 
 /**
  * @author Ryan Goulding (ryandgoulding@gmail.com)

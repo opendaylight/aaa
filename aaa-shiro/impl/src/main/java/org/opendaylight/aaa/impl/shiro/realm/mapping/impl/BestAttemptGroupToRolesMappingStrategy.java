@@ -6,15 +6,14 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.realm.mapping.impl;
+package org.opendaylight.aaa.impl.shiro.realm.mapping.impl;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-import org.opendaylight.aaa.shiro.realm.mapping.api.GroupsToRolesMappingStrategy;
+import org.opendaylight.aaa.impl.shiro.realm.mapping.api.GroupsToRolesMappingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

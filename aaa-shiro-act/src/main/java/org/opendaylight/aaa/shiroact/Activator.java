@@ -8,9 +8,9 @@
 
 package org.opendaylight.aaa.shiroact;
 
+import org.opendaylight.aaa.impl.shiro.ServiceProxy;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.opendaylight.aaa.shiro.ServiceProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

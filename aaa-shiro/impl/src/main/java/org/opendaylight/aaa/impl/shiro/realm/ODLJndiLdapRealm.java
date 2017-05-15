@@ -6,14 +6,13 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.realm;
+package org.opendaylight.aaa.impl.shiro.realm;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
@@ -21,7 +20,6 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.LdapContext;
-
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -32,9 +30,9 @@ import org.apache.shiro.realm.ldap.LdapContextFactory;
 import org.apache.shiro.realm.ldap.LdapUtils;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.Nameable;
-import org.opendaylight.aaa.shiro.accounting.Accounter;
-import org.opendaylight.aaa.shiro.realm.mapping.api.GroupsToRolesMappingStrategy;
-import org.opendaylight.aaa.shiro.realm.mapping.impl.BestAttemptGroupToRolesMappingStrategy;
+import org.opendaylight.aaa.impl.shiro.accounting.Accounter;
+import org.opendaylight.aaa.impl.shiro.realm.mapping.api.GroupsToRolesMappingStrategy;
+import org.opendaylight.aaa.impl.shiro.realm.mapping.impl.BestAttemptGroupToRolesMappingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -190,7 +188,7 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
      *             the PrincipalCollection contains an element that is not in
      *             username/password form (i.e., X.509 certificate)
      */
-    protected String getUsername(final PrincipalCollection principals) throws ClassCastException {
+    public String getUsername(final PrincipalCollection principals) throws ClassCastException {
 
         if (null == principals) {
             return null;
@@ -210,7 +208,7 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
      * @see org.apache.shiro.realm.ldap.JndiLdapRealm#queryForAuthorizationInfo(org.apache.shiro.subject.PrincipalCollection, org.apache.shiro.realm.ldap.LdapContextFactory)
      */
     @Override
-    protected AuthorizationInfo queryForAuthorizationInfo(PrincipalCollection principals,
+    public AuthorizationInfo queryForAuthorizationInfo(PrincipalCollection principals,
             LdapContextFactory ldapContextFactory) throws NamingException {
 
         AuthorizationInfo authorizationInfo = null;
@@ -247,7 +245,7 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
      * @return A set of roles
      * @throws NamingException If the ldap search fails
      */
-    protected Set<String> getRoleNamesForUser(final String username, final LdapContext ldapContext)
+    public Set<String> getRoleNamesForUser(final String username, final LdapContext ldapContext)
             throws NamingException {
 
         final Set<String> roleNames = new LinkedHashSet<String>();
@@ -310,7 +308,7 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
      *
      * @return A generic set of search controls for LDAP scoped to subtree
      */
-    protected static SearchControls createSearchControls() {
+    public static SearchControls createSearchControls() {
         SearchControls searchControls = new SearchControls();
         searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
         return searchControls;

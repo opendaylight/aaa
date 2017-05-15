@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.realm.mapping.api;
+package org.opendaylight.aaa.impl.shiro.realm.mapping.api;
 
 import java.util.Collection;
 import java.util.Map;

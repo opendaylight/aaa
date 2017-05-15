@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.filters;
+package org.opendaylight.aaa.impl.shiro.filters;
 
 import com.google.common.base.Preconditions;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -22,18 +22,18 @@ public class AuthenticationTokenUtils {
     /**
      * default value used in messaging when the "user" field is unparsable from the HTTP REST request
      */
-    static final String DEFAULT_USERNAME = "an unknown user";
+    public static final String DEFAULT_USERNAME = "an unknown user";
 
     /**
      * default value used in messaging when the "user" field is not present in the HTTP REST request, implying
      * a different implementation of <code>AuthenticationToken</code> such as <code>CasToken</code>.
      */
-    static final String DEFAULT_TOKEN = "an un-parsable token type";
+    public static final String DEFAULT_TOKEN = "an un-parsable token type";
 
     /**
      * default value used in messaging when the "host" field cannot be determined.
      */
-    static final String DEFAULT_HOSTNAME = "an unknown host";
+    public static final String DEFAULT_HOSTNAME = "an unknown host";
 
     private AuthenticationTokenUtils() {
         // private to prevent instantiation
