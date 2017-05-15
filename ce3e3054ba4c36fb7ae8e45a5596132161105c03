@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba068154_08b7a6d9",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/UserHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-05-15T17:41:33Z",
+      "side": 1,
+      "message": "this is kind of confusing how we naming the Exception variable, sometimes \"se\" or \"ex\". I believe all the Exception variable name should be defined as \"e\" in order to make it same in all classes.",
+      "range": {
+        "startLine": 341,
+        "startChar": 72,
+        "endLine": 341,
+        "endChar": 74
+      },
+      "revId": "ce3e3054ba4c36fb7ae8e45a5596132161105c03",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
