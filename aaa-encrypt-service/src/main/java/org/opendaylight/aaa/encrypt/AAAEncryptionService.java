@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Cisco Systems, Inc. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Cisco Systems, Inc. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -13,11 +13,11 @@ package org.opendaylight.aaa.encrypt;
 
 public interface AAAEncryptionService {
 
-    public String encrypt(String data);
+    String encrypt(String data);
 
-    public String decrypt(String encData);
+    byte[] encrypt(byte[] data);
 
-    public byte[] encrypt(byte[] data);
+    String decrypt(String encData);
 
-    public byte[] decrypt(byte[] encData);
+    byte[] decrypt(byte[] encData);
 }
