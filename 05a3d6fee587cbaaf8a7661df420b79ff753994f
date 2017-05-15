@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba068154_48dece40",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-05-15T17:20:29Z",
+      "side": 1,
+      "message": "dName is stand for Distinguished Name not just name. so please make it \nas distinguishedName or just keep it dName as before. may u can also update the @param description.",
+      "range": {
+        "startLine": 167,
+        "startChar": 25,
+        "endLine": 167,
+        "endChar": 29
+      },
+      "revId": "05a3d6fee587cbaaf8a7661df420b79ff753994f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
