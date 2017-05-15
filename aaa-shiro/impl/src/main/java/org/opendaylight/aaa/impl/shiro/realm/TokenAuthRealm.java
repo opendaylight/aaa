@@ -6,17 +6,13 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.realm;
+package org.opendaylight.aaa.impl.shiro.realm;
 
 import com.google.common.base.Strings;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.opendaylight.aaa.api.TokenStore;
-import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
-import org.opendaylight.aaa.impl.shiro.principal.ODLPrincipalImpl;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -29,7 +25,10 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.TokenAuth;
+import org.opendaylight.aaa.api.TokenStore;
+import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.basic.HttpBasicAuth;
+import org.opendaylight.aaa.impl.shiro.principal.ODLPrincipalImpl;
 import org.opendaylight.aaa.sts.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,7 +88,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
      * .shiro.subject.PrincipalCollection)
      */
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+    public AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         final Object primaryPrincipal = principalCollection.getPrimaryPrincipal();
         final ODLPrincipal odlPrincipal;
         try {
@@ -109,7 +108,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
      * @param domain The request domain
      * @return <code>username:password:domain</code>
      */
-    static String getUsernamePasswordDomainString(final String username, final String password,
+    protected static String getUsernamePasswordDomainString(final String username, final String password,
             final String domain) {
         return username + HttpBasicAuth.AUTH_SEP + password  + HttpBasicAuth.AUTH_SEP + domain;
     }
@@ -119,7 +118,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
      * @param credentialToken
      * @return Base64 encoded token
      */
-    static String getEncodedToken(final String credentialToken) {
+    protected static String getEncodedToken(final String credentialToken) {
         return Base64.encodeToString(credentialToken.getBytes());
     }
 
@@ -128,7 +127,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
      * @param encodedToken
      * @return Basic <code>encodedToken</code>
      */
-    static String getTokenAuthHeader(final String encodedToken) {
+    protected static String getTokenAuthHeader(final String encodedToken) {
         return HttpBasicAuth.BASIC_PREFIX + encodedToken;
     }
 
@@ -137,7 +136,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
      * @param tokenAuthHeader
      * @return a map with the basic auth header
      */
-    Map<String, List<String>> formHeadersWithToken(final String tokenAuthHeader) {
+    protected Map<String, List<String>> formHeadersWithToken(final String tokenAuthHeader) {
         final Map<String, List<String>> headers = new HashMap<String, List<String>>();
         final List<String> headerValue = new ArrayList<String>();
         headerValue.add(tokenAuthHeader);
@@ -154,7 +153,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
      * @param domain Domain from the request
      * @return input map for <code>TokenAuth.validate()</code>
      */
-    Map<String, List<String>> formHeaders(final String username, final String password,
+    protected Map<String, List<String>> formHeaders(final String username, final String password,
             final String domain) {
         String usernamePasswordToken = getUsernamePasswordDomainString(username, password, domain);
         String encodedToken = getEncodedToken(usernamePasswordToken);
@@ -167,7 +166,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
      *
      * @return
      */
-    boolean isTokenAuthAvailable() {
+    public boolean isTokenAuthAvailable() {
         return ServiceLocator.getInstance().getAuthenticationService() != null;
     }
 
@@ -182,7 +181,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
      * .apache.shiro.authc.AuthenticationToken)
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
+    public AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
             throws AuthenticationException {
 
         String username = "";
@@ -285,7 +284,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
      * @throws ClassCastException
      * @throws NullPointerException
      */
-    static String extractUsername(final AuthenticationToken authenticationToken)
+    protected static String extractUsername(final AuthenticationToken authenticationToken)
             throws ClassCastException, NullPointerException {
 
         return (String) authenticationToken.getPrincipal();
@@ -299,7 +298,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
      * @throws ClassCastException
      * @throws NullPointerException
      */
-    static String extractPassword(final AuthenticationToken authenticationToken)
+    protected static String extractPassword(final AuthenticationToken authenticationToken)
             throws ClassCastException, NullPointerException {
 
         final UsernamePasswordToken upt = (UsernamePasswordToken) authenticationToken;

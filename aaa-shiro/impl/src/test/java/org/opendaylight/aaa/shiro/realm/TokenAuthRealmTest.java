@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.junit.Test;
+import org.opendaylight.aaa.impl.shiro.realm.TokenAuthRealm;
 
 /**
  *

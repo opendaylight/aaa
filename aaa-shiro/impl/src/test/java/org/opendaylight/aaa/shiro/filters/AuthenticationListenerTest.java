@@ -8,18 +8,16 @@
 
 package org.opendaylight.aaa.shiro.filters;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
-
 import java.util.List;
-
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.junit.Test;
+import org.opendaylight.aaa.impl.shiro.filters.AuthenticationListener;
 import org.opendaylight.aaa.shiro.TestAppender;
-import org.opendaylight.aaa.shiro.filters.AuthenticationListener;
 
 /**
  * Test AuthenticationListener, which is responsible for logging Accounting events.

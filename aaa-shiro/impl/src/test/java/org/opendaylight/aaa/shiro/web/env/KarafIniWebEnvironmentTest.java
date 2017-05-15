@@ -20,6 +20,7 @@ import org.apache.shiro.config.Ini.Section;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.opendaylight.aaa.impl.shiro.web.env.KarafIniWebEnvironment;
 
 /**
  * @author Ryan Goulding (ryandgoulding@gmail.com)

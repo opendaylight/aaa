@@ -13,7 +13,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.opendaylight.aaa.shiro.filters.AAAFilter;
+import org.opendaylight.aaa.impl.shiro.ServiceProxy;
+import org.opendaylight.aaa.impl.shiro.filters.AAAFilter;
 
 /**
  * @author Ryan Goulding (ryandgoulding@gmail.com)

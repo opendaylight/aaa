@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.web.env;
+package org.opendaylight.aaa.impl.shiro.web.env;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,7 +34,7 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
     /**
      * The Shiro-specific prefix used to indicate file based Shiro configuration
      */
-    static final String SHIRO_FILE_PREFIX = "file:" + File.separator;
+    public static final String SHIRO_FILE_PREFIX = "file:" + File.separator;
 
     public KarafIniWebEnvironment() {
         LOG.info("Initializing the Web Environment using {}",
@@ -71,7 +71,7 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
      *            <code>$KARAF_HOME</code>
      * @return Ini loaded from <code>path</code>
      */
-    static Ini createShiroIni(final String path) throws FileNotFoundException {
+    public static Ini createShiroIni(final String path) throws FileNotFoundException {
         final File f = new File(path);
         final Ini ini = new Ini();
         final String fileBasedIniPath = createFileBasedIniPath(f.getAbsolutePath());
@@ -87,7 +87,7 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
      *            <code>$KARAF_HOME</code>
      * @return <code>file:/$KARAF_HOME/etc/shiro.ini</code>
      */
-    static String createFileBasedIniPath(final String path) {
+    public static String createFileBasedIniPath(final String path) {
         return SHIRO_FILE_PREFIX + path;
     }
 }

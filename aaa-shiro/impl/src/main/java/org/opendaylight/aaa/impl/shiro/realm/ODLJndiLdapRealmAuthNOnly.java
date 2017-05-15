@@ -6,13 +6,13 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.realm;
+package org.opendaylight.aaa.impl.shiro.realm;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.realm.ldap.JndiLdapRealm;
-import org.opendaylight.aaa.shiro.accounting.Accounter;
+import org.opendaylight.aaa.impl.shiro.accounting.Accounter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

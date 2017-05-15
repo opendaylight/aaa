@@ -8,18 +8,17 @@
 
 package org.opendaylight.aaa.shiroact;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.opendaylight.aaa.shiro.ServiceProxy;
+import org.opendaylight.aaa.impl.shiro.ServiceProxy;
 
 public class ActivatorTest {
 
     @Test
     public void testActivatorEnablesServiceProxy() throws Exception {
         // should toggle the ServiceProxy enable status to true
-        new Activator().start(null);;
+        new Activator().start(null);
         assertTrue(ServiceProxy.getInstance().getEnabled(null));
     }
-
 }

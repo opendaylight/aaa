@@ -8,7 +8,8 @@
 
 package org.opendaylight.aaa.shiro.realm.mapping.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -16,7 +17,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import org.junit.Test;
-import org.opendaylight.aaa.shiro.realm.mapping.api.GroupsToRolesMappingStrategy;
+import org.opendaylight.aaa.impl.shiro.realm.mapping.api.GroupsToRolesMappingStrategy;
+import org.opendaylight.aaa.impl.shiro.realm.mapping.impl.BestAttemptGroupToRolesMappingStrategy;
 
 /**
  * Test ODL's default groups to roles mapping strategy.

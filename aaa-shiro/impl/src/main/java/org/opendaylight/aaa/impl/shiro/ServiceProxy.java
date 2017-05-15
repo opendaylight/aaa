@@ -6,9 +6,9 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro;
+package org.opendaylight.aaa.impl.shiro;
 
-import org.opendaylight.aaa.shiro.filters.AAAFilter;
+import org.opendaylight.aaa.impl.shiro.filters.AAAFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
