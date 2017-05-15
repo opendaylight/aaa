@@ -129,6 +129,11 @@ delete_grant.add_argument('userid', help='username@sdn', nargs=1)
 delete_grant.add_argument('roleid', help='role@sdn', nargs=1)
 delete_grant.set_defaults(func=delete_grant)
 
+# OAuth2 Token retrieval
+get_oauth2_token = subparsers.add_parser('get-oauth2-token', help='get an OAuth2 token')
+get_oauth2_token.add_argument('scope', help='the domain for the token scope', nargs=1)
+get_oauth2_token.set_defaults(func=get_oauth2_token)
+
 def process_result(r):
     ''' Generic method to print result of a REST call '''
     print ''
@@ -171,10 +176,22 @@ def get_request(user, password, url, description, outputResult=True):
             handle_exception(e)
         sys.exit(1)
 
-def post_request(user, password, url, description, payload, params):
+def post_request(user, password, url, description, payload, headers):
     print description
     try:
-        r = requests.post(url, auth=(user,password), data=payload, headers=params, verify=verifyCertificates)
+        r = requests.post(url, auth=(user,password), data=payload, headers=headers, verify=verifyCertificates)
+        process_result(r)
+    except requests.exceptions.ConnectionError as e:
+        handle_exception(e)
+
+def post_request_unauthenticated(url, description, payload, headers, params=''):
+    '''
+    Variation of POST without basic authentication
+    '''
+
+    print description
+    try:
+        r = requests.post(url, data=payload, headers=headers, verify=verifyCertificates,params=params)
         process_result(r)
     except requests.exceptions.ConnectionError as e:
         handle_exception(e)
@@ -210,7 +227,7 @@ def add_user(user, password, newUser):
     new_password = poll_new_password()
     description = 'add_user({})'.format(user)
     url = target_host + 'auth/v1/users'
-    payload =  {'name':newUser, 'password':new_password, 'description':'', "domainid":"sdn", 'userid':'{}@sdn'.format(newUser), 'email':''}
+    payload =  {'name':newUser, 'password':new_password, 'description':'', "domainid":"sdn", 'email':''}
     jsonpayload = json.dumps(payload)
     headers={'Content-Type':'application/json'}
     post_request(user, password, url, description, jsonpayload, headers)
@@ -273,6 +290,15 @@ def delete_grant(user, password, userid, roleid):
     description = 'delete_grant(userid={},roleid={})'.format(userid, roleid)
     delete_request(user, password, url, description)
 
+def get_oauth2_token(user, password, scope):
+    url = target_host + 'oauth2/token'
+    print url
+    description = 'get_oauth2_token(scope={})'.format(scope)
+    params = 'grant_type=password&username={}&password={}&scope={}'.format(user, password, scope)
+    payload = {}
+    headers = {'Content-Type':'application/x-www-form-urlencoded'}
+    post_request_unauthenticated(url, description, payload, headers, params)
+
 args = parser.parse_args()
 command = args.func.prog.split()[1:]
 
@@ -319,4 +345,5 @@ if "add-role" in command:
     add_role(user, password, args.role[0])
 if "delete-grant" in command:
     delete_grant(user, password, args.userid[0], args.roleid[0])
-
+if "get-oauth2-token" in command:
+    get_oauth2_token(user, password, args.scope[0])
