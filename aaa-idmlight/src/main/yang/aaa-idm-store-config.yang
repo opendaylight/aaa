@@ -1,0 +1,33 @@
+module aaa-idm-store-config {
+
+    yang-version 1;
+    namespace "config:aaa:idm:store:config";
+    prefix "aaa-idm-store-config";
+
+    description
+        "This module contains the base config for Idm stores.";
+
+    revision "2017-05-17" {
+        description
+            "Initial revision.";
+    }
+
+    container idm-config {
+        leaf default-store {
+            description "";
+            type string;
+            default "h2";
+        }
+        leaf timeToLive {
+            description "Time to live for tokens. When set to 0 = never expire";
+             type uint64;
+             default 360000;
+         }
+         leaf timeToWait {
+             description "Time to wait for future from data store. 10 by default = never expire";
+             type uint16;
+             default 10;
+         }
+    }
+
+}

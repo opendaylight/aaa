@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 public class AAAIDMLightModule {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAIDMLightModule.class);
-    private BundleContext bundleContext = null;
     private static volatile IIDMStore store = null;
 
     public AAAIDMLightModule(IIDMStore iidmStore) {
@@ -27,10 +26,6 @@ public class AAAIDMLightModule {
         } catch (IDMStoreException e) {
             LOG.error("Failed to initialize data in store", e);
         }
-    }
-
-    public void setBundleContext(BundleContext b){
-        this.bundleContext = b;
     }
 
     public static final IIDMStore getStore(){
