@@ -69,13 +69,13 @@
         <!-- Cert -->
         <feature version='${project.version}'>odl-aaa-cert</feature>
 
-        <!--H2 Store -->
+        <!-- H2 Store -->
         <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}</bundle>
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
         <configfile finalname="bin/idmtool">mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}/py/config</configfile>
+        <configfile finalname="/etc/opendaylight/datastore/initial/config/idm-config.xml">mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}/xml/config</configfile>
 
         <bundle>mvn:com.fasterxml.jackson.core/jackson-core/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/{{VERSION}}</bundle>
@@ -86,69 +86,6 @@
         <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/{{VERSION}}</bundle>
         <bundle>mvn:org.glassfish/javax.json/{{VERSION}}</bundle>
 
-        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}/cfg/config</configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
-    </feature>
-
-    <feature name='odl-aaa-authn-mdsal-cluster' description='OpenDaylight :: AAA :: Authentication :: MD-SAL'
-             version='${project.version}'>
-
-        <!-- MD-SAL -->
-        <feature version='${yangtools.version}'>odl-yangtools-common</feature>
-        <feature version='${mdsal.version}'>odl-mdsal-binding-base</feature>
-        <feature version='${controller.mdsal.version}'>odl-mdsal-broker</feature>
-        <feature version='${config.version}'>odl-config-core</feature>
-
-
-        <!-- OSGi -->
-        <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/{{VERSION}}</bundle>
-        <bundle>mvn:org.apache.felix/org.apache.felix.metatype/{{VERSION}}</bundle>
-
-        <!-- OAuth -->
-        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.common/{{VERSION}}</bundle>
-        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.authzserver/{{VERSION}}</bundle>
-        <bundle>mvn:org.apache.oltu.oauth2/org.apache.oltu.oauth2.resourceserver/{{VERSION}}</bundle>
-        <bundle>mvn:commons-codec/commons-codec/1.8</bundle>
-        <bundle>wrap:mvn:org.json/json/{{VERSION}}</bundle>
-
-        <!-- AuthN -->
-        <bundle>mvn:org.opendaylight.aaa/aaa-shiro-api/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}</bundle>
-        <bundle>mvn:org.apache.shiro/shiro-core/{{VERSION}}</bundle>
-        <bundle>mvn:org.apache.shiro/shiro-web/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-api/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-api/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-store-impl/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
-        <feature version='${project.version}'>odl-aaa-encryption-service</feature>
-
-        <!-- Cert -->
-        <feature version='${project.version}'>odl-aaa-cert</feature>
-
-        <!-- IDMLight -->
-        <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
-        <configfile finalname="bin/idmtool">mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}/py/config</configfile>
-        <bundle>mvn:com.fasterxml.jackson.core/jackson-core/{{VERSION}}</bundle>
-        <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/{{VERSION}}</bundle>
-        <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/{{VERSION}}</bundle>
-        <bundle>mvn:com.fasterxml.jackson.datatype/jackson-datatype-json-org/{{VERSION}}</bundle>
-        <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/{{VERSION}}</bundle>
-        <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/{{VERSION}}</bundle>
-        <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/{{VERSION}}</bundle>
-        <bundle>mvn:org.glassfish/javax.json/{{VERSION}}</bundle>
-
-        <!-- REST -->
-        <feature>war</feature>
-        <bundle>mvn:com.sun.jersey/jersey-servlet/{{VERSION}}</bundle>
-        <bundle>mvn:com.sun.jersey/jersey-core/{{VERSION}}</bundle>
-        <bundle>mvn:com.sun.jersey/jersey-server/{{VERSION}}</bundle>
-        <bundle>mvn:com.sun.jersey/jersey-client/{{VERSION}}</bundle>
-
-        <configfile finalname="/etc/opendaylight/datastore/initial/config/aaa-mdsal-config.xml">mvn:org.opendaylight.aaa/aaa-authn-mdsal-store-impl/{{VERSION}}/xml/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
     </feature>

@@ -1,0 +1,41 @@
+module aaa-idm-store-config {
+
+    yang-version 1;
+    namespace "config:aaa:idm:store:config";
+    prefix "aaa-idm-store-config";
+
+    description
+        "This module contains the base config for Idm stores.";
+
+    revision "2017-05-17" {
+        description
+            "Initial revision.";
+    }
+
+    container idm-config {
+        leaf default-store {
+            description "Available data store types.";
+            type enumeration {
+                enum h2-data-store {
+                    description "H2 DataStore (Default).";
+                    value 0;
+                }
+                enum mdsal-data-store {
+                    description "Mdsal DataStore.";
+                    value 1;
+                }
+            }
+        }
+        leaf time-to-live {
+            description "Time to live for tokens.";
+             type uint64;
+             default 36000;
+         }
+         leaf time-to-wait {
+             description "Time to wait for future from data store.";
+             type uint64;
+             default 3600;
+         }
+    }
+
+}
