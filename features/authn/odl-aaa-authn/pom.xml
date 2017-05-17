@@ -192,11 +192,6 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-h2-store</artifactId>
-        </dependency>
-
         <!-- IDMLight -->
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
@@ -208,6 +203,13 @@
             <artifactId>aaa-idmlight</artifactId>
             <version>${project.version}</version>
             <type>py</type>
+            <classifier>config</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-idmlight</artifactId>
+            <version>${project.version}</version>
+            <type>xml</type>
             <classifier>config</classifier>
         </dependency>
 
@@ -249,13 +251,6 @@
             <!-- finalname="/etc/org.opendaylight.aaa.authn.cfg" -->
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn</artifactId>
-            <type>cfg</type>
-            <classifier>config</classifier>
-        </dependency>
-        <dependency>
-            <!-- finalname="/etc/org.opendaylight.aaa.tokens.cfg" -->
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-h2-store</artifactId>
             <type>cfg</type>
             <classifier>config</classifier>
         </dependency>
