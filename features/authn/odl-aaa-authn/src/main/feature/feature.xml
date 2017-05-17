@@ -13,8 +13,8 @@
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">
             mvn:org.opendaylight.aaa/aaa-authn/${project.version}/cfg/config
         </configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">
-            mvn:org.opendaylight.aaa/aaa-h2-store/${project.version}/cfg/config
+        <configfile finalname="/etc/opendaylight/datastore/initial/config/idm-config.xml">
+            mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}/xml/config
         </configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">
             mvn:org.opendaylight.aaa/aaa-filterchain/${project.version}/cfg/config
