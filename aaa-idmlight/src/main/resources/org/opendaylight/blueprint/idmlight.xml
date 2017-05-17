@@ -2,15 +2,24 @@
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
                  xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0">
 
+  <reference id="dataBroker" interface="org.opendaylight.controller.md.sal.binding.api.DataBroker"/>
+
+  <reference id="encryService" interface="org.opendaylight.aaa.encrypt.AAAEncryptionService"/>
+
+  <odl:clustered-app-config id="idmConfig" default-config-file-name="idm-config.xml"
+        binding-class="org.opendaylight.yang.gen.v1.config.aaa.idm.store.config.rev170517.IdmConfig">
+  </odl:clustered-app-config>
+
   <bean id="IdmLightProxy" class="org.opendaylight.aaa.idm.IdmLightProxy">
   </bean>
 
   <service ref="IdmLightProxy" interface="org.opendaylight.aaa.api.IdMService" odl:type="default"/>
   <service ref="IdmLightProxy" interface="org.opendaylight.aaa.api.CredentialAuth" odl:type="default"/>
 
-  <reference id="IIDMStore" interface="org.opendaylight.aaa.api.IIDMStore"/>
-  <bean id="AAAIDMLightModule" class="org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule" init-method="initializeStore">
-      <argument ref="IIDMStore"/>
+  <bean id="AAAIDMLight" class="org.opendaylight.aaa.idm.AaaIdmLight">
+      <argument ref="idmConfig"/>
+      <argument ref="dataBroker"/>
+      <argument ref="encryService"/>
   </bean>
 
 </blueprint>

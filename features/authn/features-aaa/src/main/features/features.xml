@@ -69,13 +69,14 @@
         <!-- Cert -->
         <feature version='${project.version}'>odl-aaa-cert</feature>
 
-        <!--H2 Store -->
+<!--         H2 Store -->
         <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}</bundle>
+<!--         <bundle>mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}</bundle> -->
 
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
         <configfile finalname="bin/idmtool">mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}/py/config</configfile>
+        <configfile finalname="/etc/opendaylight/datastore/initial/config/idm-config.xml">mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}/xml/config</configfile>
 
         <bundle>mvn:com.fasterxml.jackson.core/jackson-core/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/{{VERSION}}</bundle>
@@ -87,7 +88,7 @@
         <bundle>mvn:org.glassfish/javax.json/{{VERSION}}</bundle>
 
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}/cfg/config</configfile>
+<!--         <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}/cfg/config</configfile> -->
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
     </feature>
 
