@@ -26,7 +26,7 @@ import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.idm.IdmLightApplication;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule;
+import org.opendaylight.aaa.idm.AaaIdmLight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +54,7 @@ public class RoleHandler {
         LOG.info("get /roles");
         Roles roles = null;
         try {
-            roles = AAAIDMLightModule.getStore().getRoles();
+            roles = AaaIdmLight.getStore().getRoles();
         } catch (IDMStoreException se) {
             return new IDMError(500, "internal error getting roles", se.getMessage()).response();
         }
@@ -75,7 +75,7 @@ public class RoleHandler {
         Role role = null;
 
         try {
-            role = AAAIDMLightModule.getStore().readRole(id);
+            role = AaaIdmLight.getStore().readRole(id);
         } catch (IDMStoreException se) {
             return new IDMError(500, "internal error getting roles", se.getMessage()).response();
         }
@@ -137,7 +137,7 @@ public class RoleHandler {
                         + IdmLightApplication.MAX_FIELD_LEN, "").response();
             }
 
-            role = AAAIDMLightModule.getStore().writeRole(role);
+            role = AaaIdmLight.getStore().writeRole(role);
         } catch (IDMStoreException se) {
             return new IDMError(500, "internal error creating role", se.getMessage()).response();
         }
@@ -178,7 +178,7 @@ public class RoleHandler {
                         + IdmLightApplication.MAX_FIELD_LEN, "").response();
             }
 
-            role = AAAIDMLightModule.getStore().updateRole(role);
+            role = AaaIdmLight.getStore().updateRole(role);
             if (role == null) {
                 return new IDMError(404, "role id not found :" + id, "").response();
             }
@@ -202,7 +202,7 @@ public class RoleHandler {
         LOG.info("Delete /roles/{}", id);
 
         try {
-            Role role = AAAIDMLightModule.getStore().deleteRole(id);
+            Role role = AaaIdmLight.getStore().deleteRole(id);
             if (role == null) {
                 return new IDMError(404, "role id not found :" + id, "").response();
             }
