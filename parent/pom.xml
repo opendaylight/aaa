@@ -5,13 +5,13 @@
   <parent>
     <groupId>org.opendaylight.odlparent</groupId>
     <artifactId>odlparent</artifactId>
-    <version>1.8.0-SNAPSHOT</version>
+    <version>1.8.0-Carbon</version>
     <relativePath />
   </parent>
 
   <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-parent</artifactId>
-  <version>0.5.0-SNAPSHOT</version>
+  <version>0.5.0-Carbon</version>
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>pom</packaging>
 
@@ -21,20 +21,20 @@
 
   <properties>
     <!-- Karaf -->
-    <karaf.branding.version>1.4.0-SNAPSHOT</karaf.branding.version>
-    <karaf.resources.version>1.8.0-SNAPSHOT</karaf.resources.version>
+    <karaf.branding.version>1.4.0-Carbon</karaf.branding.version>
+    <karaf.resources.version>1.8.0-Carbon</karaf.resources.version>
 
     <!-- Local project version, needed for import -->
     <aaa.version>${project.version}</aaa.version>
     <parent-path>${basedir}</parent-path>
 
     <!-- AuthZ -->
-    <yangtools.version>1.1.0-SNAPSHOT</yangtools.version>
-    <mdsal.version>2.2.0-SNAPSHOT</mdsal.version>
-    <mdsal.model.version>0.10.0-SNAPSHOT</mdsal.model.version>
-    <controller.mdsal.version>1.5.0-SNAPSHOT</controller.mdsal.version>
-    <restconf.version>1.5.0-SNAPSHOT</restconf.version>
-    <config.version>0.6.0-SNAPSHOT</config.version>
+    <yangtools.version>1.1.0-Carbon</yangtools.version>
+    <mdsal.version>2.2.0-Carbon</mdsal.version>
+    <mdsal.model.version>0.10.0-Carbon</mdsal.model.version>
+    <controller.mdsal.version>1.5.0-Carbon</controller.mdsal.version>
+    <restconf.version>1.5.0-Carbon</restconf.version>
+    <config.version>0.6.0-Carbon</config.version>
     <config.restconf.configfile>09-rest-connector.xml</config.restconf.configfile>
     <config.configfile.directory>etc/opendaylight/karaf</config.configfile.directory>
 
@@ -52,7 +52,7 @@
     <!-- Test -->
     <javax.inject.version>1</javax.inject.version>
     <servlet.tester.version>7.0.0.pre5</servlet.tester.version>
-    <features.test.version>1.8.0-SNAPSHOT</features.test.version>
+    <features.test.version>1.8.0-Carbon</features.test.version>
   </properties>
 
   <dependencyManagement>
