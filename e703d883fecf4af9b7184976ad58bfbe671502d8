@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7af0899e_78bbce72",
+        "filename": "aaa-shiro/api/src/main/java/org/opendaylight/aaa/api/shiro/realm/ODLAuthorizingRealm.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-05-24T14:17:22Z",
+      "side": 1,
+      "message": "Will do",
+      "parentUuid": "ba068154_646f84c6",
+      "revId": "e703d883fecf4af9b7184976ad58bfbe671502d8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba068154_04a158f8",
         "filename": "aaa-shiro/api/src/main/java/org/opendaylight/aaa/api/shiro/realm/ODLAuthorizingRealm.java",
         "patchSetId": 6
@@ -59,6 +77,30 @@
     },
     {
       "key": {
+        "uuid": "7af0899e_18aa8a19",
+        "filename": "aaa-shiro/api/src/main/java/org/opendaylight/aaa/api/shiro/realm/ODLAuthorizingRealm.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-05-24T14:17:22Z",
+      "side": 1,
+      "message": "This is a placeholder for now.  It essentially allows us forwards compatibility to define Realms as we see fit.  I figured this is the right time to make this refactor.",
+      "parentUuid": "ba068154_e40374b6",
+      "range": {
+        "startLine": 16,
+        "startChar": 22,
+        "endLine": 16,
+        "endChar": 41
+      },
+      "revId": "e703d883fecf4af9b7184976ad58bfbe671502d8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba068154_047af887",
         "filename": "aaa-shiro/api/src/main/yang/aaa.yang",
         "patchSetId": 6
@@ -70,6 +112,24 @@
       "writtenOn": "2017-05-12T16:10:35Z",
       "side": 1,
       "message": "Please add descriptions for each element below.",
+      "revId": "e703d883fecf4af9b7184976ad58bfbe671502d8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7af0899e_f8a69e52",
+        "filename": "aaa-shiro/api/src/main/yang/aaa.yang",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-05-24T14:17:22Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "ba068154_047af887",
       "revId": "e703d883fecf4af9b7184976ad58bfbe671502d8",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
