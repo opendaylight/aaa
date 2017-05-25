@@ -10,7 +10,6 @@ package org.opendaylight.aaa.shiro.web.env;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.IniSecurityManagerFactory;
@@ -83,8 +82,8 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
         LOG.debug("Attempting an ini load from the file: \"{}\"", fileBasedIniPath);
         ini.loadFromPath(fileBasedIniPath);
 
-        Factory<SecurityManager> factory = new IniSecurityManagerFactory(ini);
-        SecurityManager securityManager = factory.getInstance();
+        final Factory<SecurityManager> factory = new IniSecurityManagerFactory(ini);
+        final SecurityManager securityManager = factory.getInstance();
         SecurityUtils.setSecurityManager(securityManager);
 
         return ini;
