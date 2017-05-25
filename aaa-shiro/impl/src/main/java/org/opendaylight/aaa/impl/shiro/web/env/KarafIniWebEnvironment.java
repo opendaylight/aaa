@@ -10,7 +10,12 @@ package org.opendaylight.aaa.shiro.web.env;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.config.Ini;
+import org.apache.shiro.config.IniSecurityManagerFactory;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.util.Factory;
 import org.apache.shiro.web.env.IniWebEnvironment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,6 +82,11 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
         final String fileBasedIniPath = createFileBasedIniPath(f.getAbsolutePath());
         LOG.debug("Attempting an ini load from the file: \"{}\"", fileBasedIniPath);
         ini.loadFromPath(fileBasedIniPath);
+
+        Factory<SecurityManager> factory = new IniSecurityManagerFactory(ini);
+        SecurityManager securityManager = factory.getInstance();
+        SecurityUtils.setSecurityManager(securityManager);
+
         return ini;
     }
 
