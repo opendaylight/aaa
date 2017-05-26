@@ -14,13 +14,13 @@
     <parent>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>feature-repo-parent</artifactId>
-        <version>1.8.1-SNAPSHOT</version>
+        <version>1.8.2-SNAPSHOT</version>
         <relativePath/>
     </parent>
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>features4-aaa</artifactId>
-    <version>0.5.1-SNAPSHOT</version>
+    <version>0.5.2-SNAPSHOT</version>
     <name>ODL :: aaa :: ${project.artifactId}</name>
     <packaging>feature</packaging>
 
