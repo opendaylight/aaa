@@ -99,6 +99,17 @@ public class RoleHandler {
     public Response createRole(@Context UriInfo info, Role role) {
         LOG.info("Post /roles");
         try {
+
+            // Bug 8382:  role id is an implementation detail and isn't specifiable
+            if (role.getRoleid() != null) {
+                final String errorMessage =
+                        "do not specify roleId, it will be assigned automatically for you";
+                LOG.debug(errorMessage);
+                final IDMError idmError = new IDMError();
+                idmError.setMessage(errorMessage);
+                return Response.status(400).entity(idmError).build();
+            }
+
             // TODO: role names should be unique!
             // name
             if (role.getName() == null) {
