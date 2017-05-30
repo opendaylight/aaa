@@ -246,7 +246,7 @@ def list_roles(user, password):
 def add_role(user, password, role):
     url = target_host + 'auth/v1/roles'
     description = 'add_role({})'.format(role)
-    payload = {"roleid":'{}@sdn'.format(role), 'name':role, 'description':'', 'domainid':'sdn'}
+    payload = {'name':role, 'description':'', 'domainid':'sdn'}
     data = json.dumps(payload)
     headers={'Content-Type':'application/json'}
     post_request(user, password, url, description, data, headers)
@@ -258,7 +258,7 @@ def delete_role(user, password, roleid):
 
 def add_grant(user, password, userid, roleid):
     description = 'add_grant(userid={},roleid={})'.format(userid, roleid)
-    payload = {"roleid":roleid, "userid":userid, "grantid":'{}@{}@{}'.format(userid, roleid, "sdn"), "domainid":"sdn"}
+    payload = {"roleid":roleid, "userid":userid, "domainid":"sdn"}
     url = target_host + 'auth/v1/domains/sdn/users/{}/roles'.format(userid)
     data=json.dumps(payload)
     headers={'Content-Type':'application/json'}
