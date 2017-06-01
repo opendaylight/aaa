@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.sts;
+package org.opendaylight.aaa.impl.shiro.oauth2;
 
 import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 import static javax.servlet.http.HttpServletResponse.SC_CREATED;
@@ -41,6 +41,7 @@ import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.PasswordCredentials;
+import org.opendaylight.aaa.sts.ServiceLocator;
 
 /**
  * Secure Token Service (STS) endpoint.
@@ -48,16 +49,16 @@ import org.opendaylight.aaa.api.PasswordCredentials;
  * @author liemmn
  *
  */
-public class TokenEndpoint extends HttpServlet {
+public class OAuth2TokenServlet extends HttpServlet {
     private static final long serialVersionUID = 8272453849539659999L;
 
     private static final String DOMAIN_SCOPE_REQUIRED = "Domain scope required";
     private static final String NOT_IMPLEMENTED = "not_implemented";
     private static final String UNAUTHORIZED = "unauthorized";
 
-    static final String TOKEN_GRANT_ENDPOINT = "/token";
-    static final String TOKEN_REVOKE_ENDPOINT = "/revoke";
-    static final String TOKEN_VALIDATE_ENDPOINT = "/validate";
+    static final String TOKEN_GRANT_ENDPOINT = "/oauth2/token";
+    static final String TOKEN_REVOKE_ENDPOINT = "/oauth2/revoke";
+    static final String TOKEN_VALIDATE_ENDPOINT = "/oauth2/validate";
 
     private transient OAuthIssuer oi;
 

@@ -48,7 +48,7 @@ public class ServiceLocator {
     }
 
     /**
-     * Called through reflection by the sts activator.
+     * Called through reflection by the oauth2 activator.
      *
      * @see org.opendaylight.aaa.sts.Activator
      * @param tokenAuth tokenAuth service.
@@ -58,7 +58,7 @@ public class ServiceLocator {
     }
 
     /**
-     * Called through reflection by the sts activator.
+     * Called through reflection by the oauth2 activator.
      *
      * @see org.opendaylight.aaa.sts.Activator
      * @param tokenAuth token auth service.

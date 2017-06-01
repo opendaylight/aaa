@@ -6,23 +6,24 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.sts;
+package org.opendaylight.aaa.impl.shiro.oauth2;
 
 import javax.servlet.http.HttpServletRequest;
 import org.apache.oltu.oauth2.common.OAuth;
 import org.apache.oltu.oauth2.common.validators.AbstractValidator;
 
 /**
- * A refresh token validator that does not enforce client identification.
+ * A password validator that does not enforce client identification.
  *
  * @author liemmn
  *
  */
-public class AnonymousRefreshTokenValidator extends AbstractValidator<HttpServletRequest> {
+public class AnonymousPasswordValidator extends AbstractValidator<HttpServletRequest> {
 
-    public AnonymousRefreshTokenValidator() {
+    public AnonymousPasswordValidator() {
         requiredParams.add(OAuth.OAUTH_GRANT_TYPE);
-        requiredParams.add(OAuth.OAUTH_REFRESH_TOKEN);
+        requiredParams.add(OAuth.OAUTH_USERNAME);
+        requiredParams.add(OAuth.OAUTH_PASSWORD);
 
         enforceClientAuthentication = false;
     }

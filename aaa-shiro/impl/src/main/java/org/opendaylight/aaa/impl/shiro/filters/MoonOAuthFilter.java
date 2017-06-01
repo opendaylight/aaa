@@ -36,7 +36,7 @@ import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.shiro.moon.MoonPrincipal;
-import org.opendaylight.aaa.sts.OAuthRequest;
+import org.opendaylight.aaa.impl.shiro.oauth2.OAuthRequest;
 import org.opendaylight.aaa.sts.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

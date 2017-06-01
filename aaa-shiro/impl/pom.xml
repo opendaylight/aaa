@@ -132,6 +132,17 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
       <artifactId>logback-classic</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.sun.jersey.jersey-test-framework</groupId>
+      <artifactId>jersey-test-framework-grizzly2</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mortbay.jetty</groupId>
+      <artifactId>jetty-servlet-tester</artifactId>
+      <version>7.0.0.pre5</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -142,8 +153,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Web-ContextPath>/moon</Web-ContextPath>
             <Bundle-Name>${project.groupId}.${project.artifactId}</Bundle-Name>
+            <Web-ContextPath>/</Web-ContextPath>
           </instructions>
         </configuration>
       </plugin>

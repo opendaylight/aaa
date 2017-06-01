@@ -6,9 +6,8 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.sts;
+package org.opendaylight.aaa.impl.shiro.oauth2;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
@@ -16,12 +15,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.mortbay.jetty.testing.HttpTester;
 import org.mortbay.jetty.testing.ServletTester;
 import org.opendaylight.aaa.AuthenticationBuilder;
@@ -34,6 +28,7 @@ import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
+import org.opendaylight.aaa.sts.ServiceLocator;
 
 /**
  * A unit test for token endpoint.
@@ -42,7 +37,7 @@ import org.opendaylight.aaa.api.TokenStore;
  *
  */
 @Ignore
-public class TokenEndpointTest {
+public class OAuth2TokenServletTest {
     private static final long TOKEN_TIMEOUT_SECS = 10;
     private static final String CONTEXT = "/oauth2";
     private static final String DIRECT_AUTH =
@@ -60,8 +55,8 @@ public class TokenEndpointTest {
         SERVER.setContextPath(CONTEXT);
 
         // Add our servlet under test
-        SERVER.addServlet(TokenEndpoint.class, "/revoke");
-        SERVER.addServlet(TokenEndpoint.class, "/token");
+        SERVER.addServlet(OAuth2TokenServlet.class, "/revoke");
+        SERVER.addServlet(OAuth2TokenServlet.class, "/token");
 
         // Let's do dis
         SERVER.start();
@@ -90,12 +85,12 @@ public class TokenEndpointTest {
         req.setMethod("POST");
         req.setHeader("Content-Type", "application/x-www-form-urlencoded");
         req.setContent(DIRECT_AUTH);
-        req.setURI(CONTEXT + TokenEndpoint.TOKEN_GRANT_ENDPOINT);
+        req.setURI(CONTEXT + OAuth2TokenServlet.TOKEN_GRANT_ENDPOINT);
         req.setVersion("HTTP/1.0");
 
         HttpTester resp = new HttpTester();
         resp.parse(SERVER.getResponses(req.generate()));
-        assertEquals(401, resp.getStatus());
+        Assert.assertEquals(401, resp.getStatus());
     }
 
     @Test
@@ -108,12 +103,12 @@ public class TokenEndpointTest {
         req.setMethod("POST");
         req.setHeader("Content-Type", "application/x-www-form-urlencoded");
         req.setContent(DIRECT_AUTH);
-        req.setURI(CONTEXT + TokenEndpoint.TOKEN_GRANT_ENDPOINT);
+        req.setURI(CONTEXT + OAuth2TokenServlet.TOKEN_GRANT_ENDPOINT);
         req.setVersion("HTTP/1.0");
 
         HttpTester resp = new HttpTester();
         resp.parse(SERVER.getResponses(req.generate()));
-        assertEquals(201, resp.getStatus());
+        Assert.assertEquals(201, resp.getStatus());
         assertTrue(resp.getContent().contains("expires_in\":10"));
         assertTrue(resp.getContent().contains("Bearer"));
     }
@@ -129,12 +124,12 @@ public class TokenEndpointTest {
         req.setMethod("POST");
         req.setHeader("Content-Type", "application/x-www-form-urlencoded");
         req.setContent(REFRESH_TOKEN);
-        req.setURI(CONTEXT + TokenEndpoint.TOKEN_GRANT_ENDPOINT);
+        req.setURI(CONTEXT + OAuth2TokenServlet.TOKEN_GRANT_ENDPOINT);
         req.setVersion("HTTP/1.0");
 
         HttpTester resp = new HttpTester();
         resp.parse(SERVER.getResponses(req.generate()));
-        assertEquals(201, resp.getStatus());
+        Assert.assertEquals(201, resp.getStatus());
         assertTrue(resp.getContent().contains("expires_in\":10"));
         assertTrue(resp.getContent().contains("Bearer"));
     }
@@ -148,12 +143,12 @@ public class TokenEndpointTest {
         req.setMethod("POST");
         req.setHeader("Content-Type", "application/x-www-form-urlencoded");
         req.setContent("token_to_be_deleted");
-        req.setURI(CONTEXT + TokenEndpoint.TOKEN_REVOKE_ENDPOINT);
+        req.setURI(CONTEXT + OAuth2TokenServlet.TOKEN_REVOKE_ENDPOINT);
         req.setVersion("HTTP/1.0");
 
         HttpTester resp = new HttpTester();
         resp.parse(SERVER.getResponses(req.generate()));
-        assertEquals(204, resp.getStatus());
+        Assert.assertEquals(204, resp.getStatus());
     }
 
     @SuppressWarnings("unchecked")

@@ -3,6 +3,9 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
     version="3.0">
 
+    <!--
+    OPNFV Moon Project related endpoints
+    -->
     <servlet>
         <servlet-name>MOON</servlet-name>
         <servlet-class>org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint</servlet-class>
@@ -11,19 +14,19 @@
 
     <servlet-mapping>
         <servlet-name>MOON</servlet-name>
-        <url-pattern>/token</url-pattern>
+        <url-pattern>/moon/token</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MOON</servlet-name>
-        <url-pattern>/revoke</url-pattern>
+        <url-pattern>/moon/revoke</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MOON</servlet-name>
-        <url-pattern>/validate</url-pattern>
+        <url-pattern>/moon/validate</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MOON</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/moon/*</url-pattern>
     </servlet-mapping>
 
     <!-- Shiro Filter -->
@@ -43,6 +46,27 @@
 
     <filter-mapping>
         <filter-name>ShiroFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/moon/*</url-pattern>
     </filter-mapping>
+
+    <!--
+    OAuth2TokenServlet is responsible for serving OAuth2 tokens to clients.
+    -->
+    <servlet>
+        <servlet-name>OAuth2TokenServlet</servlet-name>
+        <servlet-class>org.opendaylight.aaa.impl.shiro.oauth2.OAuth2TokenServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OAuth2TokenServlet</servlet-name>
+        <url-pattern>/oauth2/token</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OAuth2TokenServlet</servlet-name>
+        <url-pattern>/oauth2/revoke</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OAuth2TokenServlet</servlet-name>
+        <url-pattern>/oauth2/validate</url-pattern>
+    </servlet-mapping>
 </web-app>
