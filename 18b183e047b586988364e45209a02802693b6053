@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "3afa9182_38e2ded5",
+        "filename": "aaa-idmlight/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-01T15:11:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3afa9182_ccf844c7",
+      "revId": "18b183e047b586988364e45209a02802693b6053",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_18dba21c",
+        "filename": "aaa-idmlight/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-01T15:11:00Z",
+      "side": 1,
+      "message": "Can we remove this line?",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 42
+      },
+      "revId": "18b183e047b586988364e45209a02802693b6053",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3afa9182_acf5f8cc",
         "filename": "aaa-idmlight/pom.xml",
         "patchSetId": 2
@@ -30,6 +71,30 @@
       "writtenOn": "2017-05-31T21:47:04Z",
       "side": 1,
       "message": "same",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 32
+      },
+      "revId": "18b183e047b586988364e45209a02802693b6053",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_98e792e4",
+        "filename": "aaa-idmlight/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-01T15:11:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3afa9182_acf5f8cc",
       "range": {
         "startLine": 77,
         "startChar": 8,
@@ -65,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "3afa9182_78ec66c8",
+        "filename": "aaa-idmlight/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-01T15:11:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3afa9182_0c036cb9",
+      "range": {
+        "startLine": 113,
+        "startChar": 6,
+        "endLine": 113,
+        "endChar": 37
+      },
+      "revId": "18b183e047b586988364e45209a02802693b6053",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3afa9182_4c2c544b",
         "filename": "aaa-idmlight/pom.xml",
         "patchSetId": 2
@@ -76,6 +165,24 @@
       "writtenOn": "2017-05-31T21:47:04Z",
       "side": 1,
       "message": "same",
+      "revId": "18b183e047b586988364e45209a02802693b6053",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_d8d0faf9",
+        "filename": "aaa-idmlight/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-01T15:11:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3afa9182_4c2c544b",
       "revId": "18b183e047b586988364e45209a02802693b6053",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -116,6 +223,30 @@
       "writtenOn": "2017-05-31T21:47:04Z",
       "side": 1,
       "message": "weird indentation",
+      "range": {
+        "startLine": 31,
+        "startChar": 24,
+        "endLine": 31,
+        "endChar": 76
+      },
+      "revId": "18b183e047b586988364e45209a02802693b6053",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_f8d7b6eb",
+        "filename": "aaa-idmlight/src/test/java/org/opendaylight/aaa/idm/rest/test/HandlerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-01T15:11:00Z",
+      "side": 1,
+      "message": "It is the IDE doing this automatic formatting. I\u0027ll fix it.",
+      "parentUuid": "3afa9182_2c3108a3",
       "range": {
         "startLine": 31,
         "startChar": 24,
