@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -7,7 +7,8 @@
  */
 package org.opendaylight.aaa.cli.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,6 +24,8 @@ import org.powermock.api.support.membermodification.MemberModifier;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
+ * Base class for all the Test Cases testing the CLI commands.
+ *
  * @author mserngawy
  *
  */
@@ -31,7 +34,7 @@ public class AaaCliAbstractCommandTest {
 
     class TestAaaCliAbstractCommand extends AaaCliAbstractCommand {
 
-        public TestAaaCliAbstractCommand(IIDMStore identityStore) {
+        TestAaaCliAbstractCommand(IIDMStore identityStore) {
             super(identityStore);
         }
 
@@ -41,19 +44,21 @@ public class AaaCliAbstractCommandTest {
         }
     }
 
-    private static final String authUserName = "foo";
+    private static final String AUTH_USER_NAME = "foo";
     final User usr = new User();
-    @Mock private TestAaaCliAbstractCommand testCmd;
+    @Mock
+    private TestAaaCliAbstractCommand testCmd;
 
     @Before
     public void setUp() throws Exception {
         testCmd = PowerMockito.mock(TestAaaCliAbstractCommand.class, Mockito.CALLS_REAL_METHODS);
-        MemberModifier.field(TestAaaCliAbstractCommand.class, "authUser").set(testCmd, authUserName);
-        SessionsManager sessionMngr = SessionsManager.getInstance();
+        MemberModifier.field(TestAaaCliAbstractCommand.class, "authUser").set(testCmd, AUTH_USER_NAME);
+
         final String usrName = "foo";
         usr.setName(usrName);
         usr.setDomainid("fooDomain");
         usr.setPassword("fooPwd");
+        SessionsManager sessionMngr = SessionsManager.getInstance();
         sessionMngr.addUserSession(usrName, usr);
     }
 
@@ -63,5 +68,4 @@ public class AaaCliAbstractCommandTest {
         assertNotNull(authUsr);
         assertEquals(authUsr, usr);
     }
-
 }

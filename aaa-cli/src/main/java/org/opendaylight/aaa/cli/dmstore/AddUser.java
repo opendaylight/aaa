@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -89,7 +89,8 @@ public class AddUser extends AaaCliAbstractCommand {
             if (roleName != null && !roleName.isEmpty()) {
                 final String roleId = DataStoreUtils.getRoleId(identityStore, roleName);
                 if (roleId == null) {
-                    return "User " + userName + " has been created, User Id is " + usr.getUserid() + ", Role does not exist";
+                    return "User " + userName + " has been created, User Id is " + usr.getUserid()
+                            + ", Role does not exist";
                 }
                 Grant grant = new Grant();
                 grant.setDomainid(domainId);
