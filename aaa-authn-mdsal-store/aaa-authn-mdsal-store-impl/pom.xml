@@ -79,6 +79,10 @@
       <artifactId>powermock-module-junit4</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-shiro</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

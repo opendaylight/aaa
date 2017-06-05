@@ -7,7 +7,13 @@
  */
 package org.opendaylight.aaa.impl;
 
+import org.opendaylight.aaa.api.AuthenticationService;
+import org.opendaylight.aaa.api.ClientService;
+import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.AuthenticationManager;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.ClientManager;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +39,15 @@ public class AAAShiroProvider {
     private AAAShiroProvider(final DataBroker dataBroker, final ICertificateManager certificateManager) {
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
+        /*
+        final AuthenticationService authService = new AuthenticationManager();
+        ServiceLocator.getInstance().setAuthenticationService(authService);
+        final ClientService clientService = new ClientManager();
+        ServiceLocator.getInstance().setClientService(clientService);
+        final CredentialAuth credentialAuth = new IdmLightProxy();
+        ServiceLocator.getInstance().setCredentialAuth(credentialAuth);
+        ServiceLocator.getInstance().set
+                */
     }
 
     /**
