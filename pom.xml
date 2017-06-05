@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2016 Brocade Communications Systems, Inc. and others. All rights reserved.
+ Copyright (c) 2016-2017 Brocade Communications Systems, Inc. and others. All rights reserved.
 
  This program and the accompanying materials are made available under the
  terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -23,9 +23,6 @@
   <modules>
     <module>aaa-authn-api</module>
     <module>aaa-encrypt-service</module>
-    <module>aaa-authn</module>
-    <module>aaa-authn-sts</module>
-    <module>aaa-authn-basic</module>
     <module>aaa-idmlight</module>
     <module>aaa-authn-mdsal-store</module>
     <module>aaa-shiro-act</module>

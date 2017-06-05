@@ -14,12 +14,10 @@ import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.oltu.oauth2.as.response.OAuthASResponse;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
@@ -31,13 +29,13 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
-import org.opendaylight.aaa.AuthenticationBuilder;
-import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.shiro.moon.MoonPrincipal;
 import org.opendaylight.aaa.impl.shiro.oauth2.OAuthRequest;
-import org.opendaylight.aaa.sts.ServiceLocator;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.AuthenticationBuilder;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.ClaimBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

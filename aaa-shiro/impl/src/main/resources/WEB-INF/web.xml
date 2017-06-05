@@ -3,15 +3,25 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
     version="3.0">
 
-    <!--
-    OPNFV Moon Project related endpoints
-    -->
+
+    <!-- Shiro initialization common to both endpoints -->
+    <context-param>
+        <param-name>shiroEnvironmentClass</param-name>
+        <param-value>org.opendaylight.aaa.shiro.web.env.KarafIniWebEnvironment</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+    </listener>
+
+
+
+    <!-- OPNFV Moon Project related endpoints -->
     <servlet>
         <servlet-name>MOON</servlet-name>
         <servlet-class>org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>MOON</servlet-name>
         <url-pattern>/moon/token</url-pattern>
@@ -29,29 +39,22 @@
         <url-pattern>/moon/*</url-pattern>
     </servlet-mapping>
 
-    <!-- Shiro Filter -->
-    <context-param>
-      <param-name>shiroEnvironmentClass</param-name>
-      <param-value>org.opendaylight.aaa.shiro.web.env.KarafIniWebEnvironment</param-value>
-    </context-param>
-
-    <listener>
-        <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
-    </listener>
-
+    <!-- Filters for moon endpoints -->
     <filter>
         <filter-name>ShiroFilter</filter-name>
         <filter-class>org.opendaylight.aaa.shiro.filters.AAAShiroFilter</filter-class>
     </filter>
-
+    <!-- Only require creds for the moon endpoints;  the OAuth2 endpoint was originally designed to take authentication
+    details through payload instead. -->
     <filter-mapping>
         <filter-name>ShiroFilter</filter-name>
         <url-pattern>/moon/*</url-pattern>
     </filter-mapping>
 
-    <!--
-    OAuth2TokenServlet is responsible for serving OAuth2 tokens to clients.
-    -->
+
+
+
+    <!-- OAuth2TokenServlet is responsible for serving OAuth2 tokens to clients. -->
     <servlet>
         <servlet-name>OAuth2TokenServlet</servlet-name>
         <servlet-class>org.opendaylight.aaa.impl.shiro.oauth2.OAuth2TokenServlet</servlet-class>
