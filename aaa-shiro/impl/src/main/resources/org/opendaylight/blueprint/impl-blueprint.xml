@@ -19,11 +19,26 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     interface="org.opendaylight.aaa.cert.api.ICertificateManager"
     odl:type="default-certificate-manager" />
 
+  <reference id="credentialAuth"
+             interface="org.opendaylight.aaa.api.CredentialAuth"
+             odl:type="default" />
+
+  <reference id="idmStore"
+             interface="org.opendaylight.aaa.api.IIDMStore"
+             odl:type="default" />
+
+  <reference id="h2TokenStore"
+             interface="org.opendaylight.aaa.api.TokenStore"
+             odl:type="default" />
+
   <bean id="provider"
     class="org.opendaylight.aaa.impl.AAAShiroProvider" factory-method="newInstance"
     init-method="init" destroy-method="close">
     <argument ref="dataBroker" />
     <argument ref="certManager" />
+    <argument ref="credentialAuth" />
+    <argument ref="idmStore" />
+    <argument ref="h2TokenStore" />
   </bean>
 
   <bean id="aaa" class="org.opendaylight.aaa.shiro.filters.AAAFilter" />

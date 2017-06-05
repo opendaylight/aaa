@@ -34,14 +34,14 @@ import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.OAuthResponse;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.apache.oltu.oauth2.common.message.types.TokenType;
-import org.opendaylight.aaa.AuthenticationBuilder;
-import org.opendaylight.aaa.ClaimBuilder;
-import org.opendaylight.aaa.PasswordCredentialBuilder;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.AuthenticationBuilder;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.ClaimBuilder;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.PasswordCredentialBuilder;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.PasswordCredentials;
-import org.opendaylight.aaa.sts.ServiceLocator;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
 
 /**
  * Secure Token Service (STS) endpoint.

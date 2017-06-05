@@ -41,22 +41,12 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-authn</artifactId>
                 <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-authn</artifactId>
-                <version>${project.version}</version>
                 <type>cfg</type>
                 <classifier>config</classifier>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-authn-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-authn-basic</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -103,11 +93,6 @@
                 <version>${project.version}</version>
                 <type>cfg</type>
                 <classifier>config</classifier>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-authn-sts</artifactId>
-                <version>${project.version}</version>
             </dependency>
 
             <dependency>

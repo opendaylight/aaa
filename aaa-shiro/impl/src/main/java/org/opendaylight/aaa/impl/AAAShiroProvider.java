@@ -7,10 +7,18 @@
  */
 package org.opendaylight.aaa.impl;
 
+import com.google.common.collect.Lists;
+import org.opendaylight.aaa.api.*;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.AuthenticationManager;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.ClientManager;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.HttpBasicAuth;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * Provider for AAA shiro implementation.
@@ -30,9 +38,30 @@ public class AAAShiroProvider {
      *
      * @param dataBroker injected from blueprint
      */
-    private AAAShiroProvider(final DataBroker dataBroker, final ICertificateManager certificateManager) {
+    private AAAShiroProvider(final DataBroker dataBroker, final ICertificateManager certificateManager,
+                             final CredentialAuth<PasswordCredentials> credentialAuth,
+                             final IIDMStore iidmStore, final TokenStore tokenStore) {
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
+
+        final AuthenticationService authService = new AuthenticationManager();
+        ServiceLocator.getInstance().setAuthenticationService(authService);
+        final ClientService clientService = new ClientManager();
+        ServiceLocator.getInstance().setClientService(clientService);
+        try {
+            new StoreBuilder(iidmStore).init();
+        } catch (final IDMStoreException e) {
+            LOG.error("Error initializing store");
+        }
+
+        ServiceLocator.getInstance().setCredentialAuth(credentialAuth);
+        final IdMService idmService = new IdMServiceImpl(iidmStore);
+        ServiceLocator.getInstance().setIdmService(idmService);
+        final TokenAuth tokenAuth = new HttpBasicAuth();
+
+        final List<TokenAuth> tokenAuthList = Lists.newArrayList(tokenAuth);
+        ServiceLocator.getInstance().setTokenAuthCollection(tokenAuthList);
+        ServiceLocator.getInstance().setTokenStore(tokenStore);
     }
 
     /**
@@ -41,8 +70,10 @@ public class AAAShiroProvider {
      * @return the Provider
      */
     public static AAAShiroProvider newInstance(final DataBroker dataBroker,
-                                               final ICertificateManager certificateManager) {
-        INSTANCE = new AAAShiroProvider(dataBroker, certificateManager);
+                                               final ICertificateManager certificateManager,
+                                               final CredentialAuth<PasswordCredentials> credentialAuth,
+                                               final IIDMStore iidmStore, final TokenStore tokenStore) {
+        INSTANCE = new AAAShiroProvider(dataBroker, certificateManager, credentialAuth, iidmStore, tokenStore);
         return INSTANCE;
     }
 
@@ -53,7 +84,7 @@ public class AAAShiroProvider {
      */
     public static AAAShiroProvider getInstance() {
         if (INSTANCE == null) {
-            newInstance(null, null);
+            newInstance(null, null, null, null, null);
         }
         return INSTANCE;
     }
