@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.junit.Test;
+import org.opendaylight.aaa.shiro.realm.TokenAuthRealm;
 
 /**
  *
@@ -99,7 +100,7 @@ public class TokenAuthRealmTest extends TokenAuthRealm {
 
     @Test
     public void testIsTokenAuthAvailable() {
-        assertFalse(testRealm.isTokenAuthAvailable());
+        assertTrue(testRealm.isTokenAuthAvailable());
     }
 
     @Test(expected = org.apache.shiro.authc.AuthenticationException.class)

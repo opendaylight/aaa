@@ -24,16 +24,17 @@
       <artifactId>aaa-authn-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.opendaylight.aaa</groupId>
-      <artifactId>aaa-authn</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.immutables</groupId>
       <artifactId>value</artifactId>
     </dependency>
     <dependency>
       <groupId>net.sf.ehcache</groupId>
       <artifactId>ehcache</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
     </dependency>
 
     <!-- JDBC -->
@@ -56,6 +57,11 @@
     <dependency>
       <groupId>com.google.truth</groupId>
       <artifactId>truth</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-shiro</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
