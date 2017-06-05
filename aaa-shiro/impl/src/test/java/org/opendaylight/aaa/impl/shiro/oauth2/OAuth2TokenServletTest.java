@@ -15,11 +15,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import org.junit.*;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mortbay.jetty.testing.HttpTester;
 import org.mortbay.jetty.testing.ServletTester;
-import org.opendaylight.aaa.AuthenticationBuilder;
-import org.opendaylight.aaa.ClaimBuilder;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.ClientService;
@@ -28,7 +32,9 @@ import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
-import org.opendaylight.aaa.sts.ServiceLocator;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.AuthenticationBuilder;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.ClaimBuilder;
 
 /**
  * A unit test for token endpoint.

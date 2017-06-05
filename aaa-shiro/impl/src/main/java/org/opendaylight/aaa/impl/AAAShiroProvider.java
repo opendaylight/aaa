@@ -7,7 +7,22 @@
  */
 package org.opendaylight.aaa.impl;
 
+import com.google.common.collect.Lists;
+import java.util.List;
+import org.opendaylight.aaa.api.AuthenticationService;
+import org.opendaylight.aaa.api.ClientService;
+import org.opendaylight.aaa.api.CredentialAuth;
+import org.opendaylight.aaa.api.IIDMStore;
+import org.opendaylight.aaa.api.IdMService;
+import org.opendaylight.aaa.api.IdMServiceImpl;
+import org.opendaylight.aaa.api.PasswordCredentials;
+import org.opendaylight.aaa.api.TokenAuth;
+import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.AuthenticationManager;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.ClientManager;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.HttpBasicAuth;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,19 +45,64 @@ public class AAAShiroProvider {
      *
      * @param dataBroker injected from blueprint
      */
-    private AAAShiroProvider(final DataBroker dataBroker, final ICertificateManager certificateManager) {
+    private AAAShiroProvider(final DataBroker dataBroker, final ICertificateManager certificateManager,
+                             final CredentialAuth<PasswordCredentials> credentialAuth,
+                             final IIDMStore iidmStore, final TokenStore tokenStore) {
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
+
+        this.initializeServices(credentialAuth, iidmStore, tokenStore);
+    }
+
+    /**
+     * Initialize AAA Services.  This method will evolve over time as ServiceLocator is refactored/removed.
+     *
+     * @param credentialAuth wired via blueprint
+     * @param iidmStore wired via blueprint
+     * @param tokenStore wired via blueprint
+     */
+    private void initializeServices(final CredentialAuth<PasswordCredentials> credentialAuth,
+                                    final IIDMStore iidmStore, final TokenStore tokenStore) {
+
+
+        final AuthenticationService authService = new AuthenticationManager();
+        ServiceLocator.getInstance().setAuthenticationService(authService);
+
+
+        final ClientService clientService = new ClientManager();
+        ServiceLocator.getInstance().setClientService(clientService);
+
+
+        final IdMService idmService = new IdMServiceImpl(iidmStore);
+        ServiceLocator.getInstance().setIdmService(idmService);
+
+
+        ServiceLocator.getInstance().setCredentialAuth(credentialAuth);
+
+
+        final TokenAuth tokenAuth = new HttpBasicAuth();
+        final List<TokenAuth> tokenAuthList = Lists.newArrayList(tokenAuth);
+        ServiceLocator.getInstance().setTokenAuthCollection(tokenAuthList);
+
+
+        ServiceLocator.getInstance().setTokenStore(tokenStore);
     }
 
     /**
      * Singleton creation
      *
+     * @param dataBroker The DataBroker
+     * @param certificateManager the certificate manager
+     * @param credentialAuth The CredentialAuth
+     * @param iidmStore The IDM store
+     * @param tokenStore The token store
      * @return the Provider
      */
     public static AAAShiroProvider newInstance(final DataBroker dataBroker,
-                                               final ICertificateManager certificateManager) {
-        INSTANCE = new AAAShiroProvider(dataBroker, certificateManager);
+                                               final ICertificateManager certificateManager,
+                                               final CredentialAuth<PasswordCredentials> credentialAuth,
+                                               final IIDMStore iidmStore, final TokenStore tokenStore) {
+        INSTANCE = new AAAShiroProvider(dataBroker, certificateManager, credentialAuth, iidmStore, tokenStore);
         return INSTANCE;
     }
 
@@ -53,7 +113,7 @@ public class AAAShiroProvider {
      */
     public static AAAShiroProvider getInstance() {
         if (INSTANCE == null) {
-            newInstance(null, null);
+            newInstance(null, null, null, null, null);
         }
         return INSTANCE;
     }
