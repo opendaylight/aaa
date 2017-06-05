@@ -24,7 +24,7 @@
 
     <feature name='odl-aaa-authn' description='OpenDaylight :: AAA :: Authentication - NO CLUSTER'
              version='${project.version}'>
-        <feature version='${project.version}'>odl-aaa-api</feature>
+
 
         <!-- MD-SAL -->
         <feature version='${yangtools.version}'>odl-yangtools-common</feature>
@@ -57,13 +57,7 @@
         <bundle>wrap:mvn:org.apache.commons/commons-lang3/{{VERSION}}</bundle>
 
         <!-- AuthN -->
-        <bundle>mvn:org.opendaylight.aaa/aaa-shiro-api/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}</bundle>
-        <bundle>mvn:org.apache.shiro/shiro-core/{{VERSION}}</bundle>
-        <bundle>mvn:org.apache.shiro/shiro-web/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
+        <feature version='${project.version}'>odl-aaa-api</feature>
         <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
 
         <!-- Cert -->
@@ -73,10 +67,14 @@
         <bundle>wrap:mvn:com.h2database/h2/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}</bundle>
 
+        <!-- TODO: remove these bundle dependencies once we collapse into a single feature repository -->
+        <bundle>mvn:org.apache.shiro/shiro-core/{{VERSION}}</bundle>
+        <bundle>mvn:org.apache.shiro/shiro-web/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-shiro-api/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}</bundle>
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
         <configfile finalname="bin/idmtool">mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}/py/config</configfile>
-
         <bundle>mvn:com.fasterxml.jackson.core/jackson-core/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/{{VERSION}}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/{{VERSION}}</bundle>
@@ -86,7 +84,7 @@
         <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/{{VERSION}}</bundle>
         <bundle>mvn:org.glassfish/javax.json/{{VERSION}}</bundle>
 
-        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.tokens.cfg">mvn:org.opendaylight.aaa/aaa-h2-store/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
     </feature>
@@ -118,17 +116,19 @@
         <bundle>mvn:org.apache.shiro/shiro-core/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.shiro/shiro-web/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-api/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-sts/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-api/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-authn-mdsal-store-impl/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-authn-basic/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
         <feature version='${project.version}'>odl-aaa-encryption-service</feature>
 
         <!-- Cert -->
         <feature version='${project.version}'>odl-aaa-cert</feature>
 
+        <!-- TODO: remove these bundle dependencies once we collapse into a single feature repository -->
+        <bundle>mvn:org.apache.shiro/shiro-core/{{VERSION}}</bundle>
+        <bundle>mvn:org.apache.shiro/shiro-web/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-shiro-api/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}</bundle>
         <!-- IDMLight -->
         <bundle>mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}</bundle>
         <configfile finalname="bin/idmtool">mvn:org.opendaylight.aaa/aaa-idmlight/{{VERSION}}/py/config</configfile>
@@ -149,7 +149,7 @@
         <bundle>mvn:com.sun.jersey/jersey-client/{{VERSION}}</bundle>
 
         <configfile finalname="/etc/opendaylight/datastore/initial/config/aaa-mdsal-config.xml">mvn:org.opendaylight.aaa/aaa-authn-mdsal-store-impl/{{VERSION}}/xml/config</configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/{{VERSION}}/cfg/config</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}/cfg/config</configfile>
     </feature>
 
