@@ -29,8 +29,8 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.TokenAuth;
-import org.opendaylight.aaa.basic.HttpBasicAuth;
-import org.opendaylight.aaa.sts.ServiceLocator;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.HttpBasicAuth;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -219,28 +219,26 @@ public class TokenAuthRealm extends AuthorizingRealm {
         // if the password is empty, this is an OAuth2 request, not a Basic HTTP
         // Auth request
         if (!Strings.isNullOrEmpty(password)) {
-            if (ServiceLocator.getInstance().getAuthenticationService().isAuthEnabled()) {
-                Map<String, List<String>> headers = formHeaders(username, password, domain);
-                // iterate over <code>TokenAuth</code> implementations and
-                // attempt to
-                // authentication with each one
-                final List<TokenAuth> tokenAuthCollection = ServiceLocator.getInstance()
-                        .getTokenAuthCollection();
-                for (TokenAuth ta : tokenAuthCollection) {
-                    try {
-                        LOG.debug("Authentication attempt using {}", ta.getClass().getName());
-                        final Authentication auth = ta.validate(headers);
-                        if (auth != null) {
-                            LOG.debug("Authentication attempt successful");
-                            ServiceLocator.getInstance().getAuthenticationService().set(auth);
-                            final ODLPrincipal odlPrincipal = ODLPrincipalImpl.createODLPrincipal(auth);
-                            return new SimpleAuthenticationInfo(odlPrincipal, password.toCharArray(),
-                                    getName());
-                        }
-                    } catch (AuthenticationException ae) {
-                        LOG.debug("Authentication attempt unsuccessful");
-                        throw new AuthenticationException(UNABLE_TO_AUTHENTICATE, ae);
+            Map<String, List<String>> headers = formHeaders(username, password, domain);
+            // iterate over <code>TokenAuth</code> implementations and
+            // attempt to
+            // authentication with each one
+            final List<TokenAuth> tokenAuthCollection = ServiceLocator.getInstance()
+                    .getTokenAuthCollection();
+            for (TokenAuth ta : tokenAuthCollection) {
+                try {
+                    LOG.debug("Authentication attempt using {}", ta.getClass().getName());
+                    final Authentication auth = ta.validate(headers);
+                    if (auth != null) {
+                        LOG.debug("Authentication attempt successful");
+                        ServiceLocator.getInstance().getAuthenticationService().set(auth);
+                        final ODLPrincipal odlPrincipal = ODLPrincipalImpl.createODLPrincipal(auth);
+                        return new SimpleAuthenticationInfo(odlPrincipal, password.toCharArray(),
+                                getName());
                     }
+                } catch (AuthenticationException ae) {
+                    LOG.debug("Authentication attempt unsuccessful");
+                    throw new AuthenticationException(UNABLE_TO_AUTHENTICATE, ae);
                 }
             }
         }

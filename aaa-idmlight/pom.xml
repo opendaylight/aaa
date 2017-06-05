@@ -43,10 +43,6 @@
     </dependency>
     <dependency>
       <groupId>org.opendaylight.aaa</groupId>
-      <artifactId>aaa-authn</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.aaa</groupId>
       <artifactId>aaa-filterchain</artifactId>
     </dependency>
     <dependency>
@@ -167,6 +163,8 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
+            <!-- TODO: once we collapse idmlight bundle into aaa-shiro, this can be removed
+                 Maintaining this list is time consuming, annoying, and really not good practice anyway. -->
             <Import-Package>
               com.google.*,
               com.sun.jersey.spi.container.servlet,
@@ -177,17 +175,21 @@
               org.apache.felix.dm,
               org.apache.shiro.web.env,org.apache.shiro.authc,
               org.eclipse.jetty.servlets;version="[8.1,10)",
-              org.opendaylight.aaa,
+              org.opendaylight.aaa.*,
               org.opendaylight.aaa.api.*,
               org.opendaylight.aaa.filterchain.filters,
               org.opendaylight.aaa.shiro.filters,
               org.opendaylight.aaa.shiro.realm,
               org.opendaylight.aaa.shiro.web.env,
+              org.opendaylight.aaa.impl.shiro.*,
+              org.opendaylight.aaa.impl.shiro.tokenauthrealm.*,
+              org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.*,
               org.opendaylight.*,
               org.osgi.framework,
               org.osgi.util.tracker,
               org.slf4j,
             </Import-Package>
+            <!-- The idmlight REST endpoints are located relative to /auth from the ServletContext root. -->
             <Web-ContextPath>/auth</Web-ContextPath>
           </instructions>
         </configuration>
