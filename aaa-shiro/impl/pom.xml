@@ -69,16 +69,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     </dependency>
     <!-- end -->
     <dependency>
-      <groupId>org.opendaylight.aaa</groupId>
-      <artifactId>aaa-authn-sts</artifactId>
-      <version>0.6.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.aaa</groupId>
-      <artifactId>aaa-authn-basic</artifactId>
-      <version>0.6.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
       <groupId>org.apache.shiro</groupId>
       <artifactId>shiro-core</artifactId>
     </dependency>
@@ -104,6 +94,21 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.core</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.compendium</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.dependencymanager</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <!-- Testing Dependencies -->
@@ -155,6 +160,15 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
           <instructions>
             <Bundle-Name>${project.groupId}.${project.artifactId}</Bundle-Name>
             <Web-ContextPath>/</Web-ContextPath>
+            <Export-Package>
+              org.opendaylight.aaa.impl.shiro,
+              org.opendaylight.aaa.impl.shiro.tokenauthrealm,
+              org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth,
+              org.opendaylight.aaa.shiro,
+              org.opendaylight.aaa.shiro.filters,
+              org.opendaylight.aaa.shiro.realm,
+              org.opendaylight.aaa.shiro.web.env
+            </Export-Package>
           </instructions>
         </configuration>
       </plugin>
@@ -170,10 +184,17 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             </goals>
             <configuration>
               <artifacts>
+                <!-- attach shiro.ini as an artifact -->
                 <artifact>
                   <file>${project.build.directory}/classes/shiro.ini</file>
                   <type>cfg</type>
                   <classifier>configuration</classifier>
+                </artifact>
+                <!-- attach authn.cfg as an artifact -->
+                <artifact>
+                  <file>${project.build.directory}/classes/authn.cfg</file>
+                  <type>cfg</type>
+                  <classifier>config</classifier>
                 </artifact>
               </artifacts>
             </configuration>
