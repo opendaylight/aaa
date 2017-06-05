@@ -31,13 +31,13 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
-import org.opendaylight.aaa.AuthenticationBuilder;
-import org.opendaylight.aaa.ClaimBuilder;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.AuthenticationBuilder;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.ClaimBuilder;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.shiro.moon.MoonPrincipal;
 import org.opendaylight.aaa.impl.shiro.oauth2.OAuthRequest;
-import org.opendaylight.aaa.sts.ServiceLocator;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

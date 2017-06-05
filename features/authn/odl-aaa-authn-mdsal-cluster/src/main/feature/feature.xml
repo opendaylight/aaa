@@ -10,7 +10,7 @@
     <feature name="odl-aaa-authn-mdsal-cluster" version="${project.version}">
         <configfile finalname="bin/idmtool">mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}/py/config</configfile>
         <configfile finalname="/etc/opendaylight/datastore/initial/config/aaa-mdsal-config.xml">mvn:org.opendaylight.aaa/aaa-authn-mdsal-store-impl/${project.version}/xml/config</configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-authn/${project.version}/cfg/config</configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/cfg/config</configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">mvn:org.opendaylight.aaa/aaa-filterchain/${project.version}/cfg/config</configfile>
     </feature>
 </features>
