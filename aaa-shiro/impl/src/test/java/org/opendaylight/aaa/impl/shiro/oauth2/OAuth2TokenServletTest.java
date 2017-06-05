@@ -18,8 +18,8 @@ import java.util.Arrays;
 import org.junit.*;
 import org.mortbay.jetty.testing.HttpTester;
 import org.mortbay.jetty.testing.ServletTester;
-import org.opendaylight.aaa.AuthenticationBuilder;
-import org.opendaylight.aaa.ClaimBuilder;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.AuthenticationBuilder;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.ClaimBuilder;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.ClientService;
@@ -28,7 +28,7 @@ import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
-import org.opendaylight.aaa.sts.ServiceLocator;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
 
 /**
  * A unit test for token endpoint.
