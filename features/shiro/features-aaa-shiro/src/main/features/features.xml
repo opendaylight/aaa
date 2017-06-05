@@ -17,12 +17,15 @@
         <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.felix/org.apache.felix.metatype/{{VERSION}}</bundle>
 
-        <!-- Existing AAA infrastructure -->
-        <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
-        <feature version='${project.version}'>odl-aaa-authn</feature>
-
         <bundle>mvn:org.apache.shiro/shiro-web/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.shiro/shiro-core/{{VERSION}}</bundle>
+
+        <!-- Existing AAA infrastructure -->
+        <bundle>mvn:org.opendaylight.aaa/aaa-filterchain/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-shiro-api/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}</bundle>
+        <feature version='${project.version}'>odl-aaa-authn</feature>
+
 
         <bundle>wrap:mvn:com.google.code.findbugs/annotations/{{VERSION}}</bundle>
         <bundle>wrap:mvn:commons-codec/commons-codec/{{VERSION}}</bundle>
@@ -32,12 +35,14 @@
         <bundle>wrap:mvn:org.json/json/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.commons-beanutils/{{VERSION}}</bundle>
 
-        <bundle>mvn:org.opendaylight.aaa/aaa-shiro-api/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}</bundle>
+
 
         <!-- KeystoneAuthRealm -->
         <feature version='${project.version}'>odl-aaa-cert</feature>
         <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/{{VERSION}}</bundle>
+
+
+
 
         <!-- AAA configuration file -->
         <configfile finalname="/etc/shiro.ini">mvn:org.opendaylight.aaa/aaa-shiro/{{VERSION}}/cfg/configuration</configfile>
