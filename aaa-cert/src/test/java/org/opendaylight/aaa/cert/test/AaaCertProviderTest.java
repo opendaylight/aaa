@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Inocybe Technologies. and others.  All rights reserved.
+ * Copyright (c) 2016, 2017 Inocybe Technologies. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -11,11 +11,9 @@ package org.opendaylight.aaa.cert.test;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.File;
 import java.security.Security;
 import java.util.concurrent.ExecutionException;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opendaylight.aaa.cert.impl.AaaCertProvider;
@@ -33,18 +31,17 @@ public class AaaCertProviderTest {
     private static CtlKeystore ctlKeyStore;
     private static TrustKeystore trustKeyStore;
 
-    private String dummyAlias = TestUtils.dummyAlias;
-    private String dummyCert = TestUtils.dummyCert;
+    private final String dummyAlias = TestUtils.dummyAlias;
+    private final String dummyCert = TestUtils.dummyCert;
 
     @Test
     public void testCertificate() throws InterruptedException, ExecutionException {
         // Set up Tests
-        KeyStoreConstant.KEY_STORE_PATH = "target" + File.separator + "test" + File.separator;
-        String dName = "CN=ODL, OU=Dev, O=LinuxFoundation, L=QC Montreal, C=CA";
+        String name = "CN=ODL, OU=Dev, O=LinuxFoundation, L=QC Montreal, C=CA";
         Security.addProvider(new BouncyCastleProvider());
         ctlKeyStore = new CtlKeystoreBuilder()
                 .setAlias("fooTest")
-                .setDname(dName)
+                .setDname(name)
                 .setName("ctlTest.jks")
                 .setStorePassword("passWord")
                 .setValidity(KeyStoreConstant.DEFAULT_VALIDITY)
@@ -119,6 +116,5 @@ public class AaaCertProviderTest {
         // getCertificateWithPasswordTrusStore
         cert = aaaCertProv.getCertificateTrustStore(trustKeyStore.getStorePassword(), dummyAlias, true);
         assertTrue(cert != null && !cert.isEmpty());
-
     }
 }
