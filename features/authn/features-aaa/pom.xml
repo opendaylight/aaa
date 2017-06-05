@@ -147,10 +147,6 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authn</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-shiro</artifactId>
         </dependency>
         <dependency>
@@ -167,14 +163,6 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authn-sts</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authn-basic</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-idmlight</artifactId>
         </dependency>
         <dependency>
@@ -186,7 +174,7 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authn</artifactId>
+            <artifactId>aaa-shiro</artifactId>
             <type>cfg</type>
             <classifier>config</classifier>
         </dependency>
