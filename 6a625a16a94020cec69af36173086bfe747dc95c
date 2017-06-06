@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3afa9182_165b6088",
+        "filename": "aaa-idmlight/src/main/resources/org/opendaylight/blueprint/idmlight.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-06-06T16:52:40Z",
+      "side": 1,
+      "message": "Gotcha, missed that the other day when doing cleanup.",
+      "parentUuid": "3afa9182_363c9c2f",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 103
+      },
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3afa9182_f6469422",
         "filename": "aaa-idmlight/src/main/yang/aaa-idm-store-config.yang",
         "patchSetId": 7
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "yes we will do that. The idea is to allow the end user switch between H2 and Md-Sal (I believe we cannot just replace H2 ppl will complain).",
       "parentUuid": "3afa9182_f6469422",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 9
+      },
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_f65fb470",
+        "filename": "aaa-idmlight/src/main/yang/aaa-idm-store-config.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-06-06T16:52:40Z",
+      "side": 1,
+      "message": "Totally agreed.  I meant that this will be exposed via RESTCONF, and that we should lock down the url-pattern(s) to some sort of service role so not just anyone can jump in and swap the store.",
+      "parentUuid": "3afa9182_d61278b3",
       "range": {
         "startLine": 16,
         "startChar": 8,
