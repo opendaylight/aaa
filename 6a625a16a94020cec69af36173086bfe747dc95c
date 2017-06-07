@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "3afa9182_3a7c7a20",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/IdmLightProxy.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-06-07T16:45:14Z",
+      "side": 1,
+      "message": "okay",
+      "parentUuid": "3afa9182_ca792b95",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3afa9182_8a48c35c",
         "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/IdmLightProxy.java",
         "patchSetId": 7
@@ -81,6 +99,24 @@
       "writtenOn": "2017-06-07T09:40:30Z",
       "side": 1,
       "message": "This should be caught by the checkstyle plugin once you rebase the patch. final should be after static",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_9a948e38",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/GrantStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-06-07T16:45:14Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "3afa9182_aa62dfd5",
       "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -621,6 +657,30 @@
       "writtenOn": "2017-06-07T14:25:34Z",
       "side": 1,
       "message": "We could do that temporarily as a stopgap, but it really should live inside initial data for the MDSALDynamicAuthorizationFilter.  shiro.ini will eventually be replaced by configuration through clustered-app-config-- it poses several issues to OSGi lifecycle.",
+      "parentUuid": "3afa9182_44a09290",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 9
+      },
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_fab032df",
+        "filename": "aaa-idmlight/src/main/yang/aaa-idm-store-config.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-06-07T16:45:14Z",
+      "side": 1,
+      "message": "no, it is not in shiro.ini. Initial config file is idm-config.xml has the default values. We need to combine all the config files into one file.",
       "parentUuid": "3afa9182_44a09290",
       "range": {
         "startLine": 16,
