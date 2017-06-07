@@ -2,6 +2,448 @@
   "comments": [
     {
       "key": {
+        "uuid": "3afa9182_2aac2fa0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "typo",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_ca792b95",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/IdmLightProxy.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "We can take advantage of this change to remove this useless assignments.",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_8a48c35c",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/IdmLightProxy.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "we take advantage of this change to replace this size() by isEmpty()",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_0aba13de",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/DomainStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "Static before final",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_aa62dfd5",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/GrantStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "This should be caught by the checkstyle plugin once you rebase the patch. final should be after static",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_aaf13fcf",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/GrantStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "We should wrap the exception: throw new StoreException(\"SQL Exception\", s);",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_8aee03eb",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/GrantStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "We should wrap the exception: throw new StoreException(\"SQL Exception\", s);",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_eaba27e0",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/GrantStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "The same",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_cabf6bcf",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/GrantStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "We should wrap the exception: throw new StoreException(\"SQL Exception\", s);",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_2ab54fee",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/GrantStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "We should wrap the exception: throw new StoreException(\"SQL Exception\", s);",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_3f5bcf55",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/H2TokenStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "This variable should be static",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_9f580358",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/H2TokenStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "This variable should be static",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_2a6f0fc7",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/IdmLightSimpleConnectionProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "This unchecked exception should be caught by the checkstyle plugin once you rebase the patch.\nWe should replace Exception by SQLException.",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_df31eb0c",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/RoleStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "The above modifiers should be \"static final\". This will be caught by the checkstyle\nplugin once you rebase the patch.",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_aa1dbf68",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/RoleStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "We should wrap the exception: throw new StoreException(\"SQL Exception\", s);",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_8a1a836c",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/RoleStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "We should wrap the exception: throw new StoreException(\"SQL Exception\", s);",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_2a21cf9f",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/RoleStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "The same.",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_0a2693b7",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/RoleStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "The same.",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_0a9fb353",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/UserStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "Final after static. I just thought this might be already resolved in the patch enforcing the checkstyle",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_6acab750",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/UserStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "Wrap exception",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_4ac7fb45",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/UserStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "the same",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_aac49f40",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/UserStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "the same",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_8ac1e330",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/UserStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "the same",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_eadd0716",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/h2/UserStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "the same",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_caa64bc1",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/mdsal/MdsalStoreUtil.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "We might add a private constructor to avoid instantiating this utility class.",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_aa4bff57",
+        "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/store/mdsal/MdsalTokenStore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we check if claims is null?",
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3afa9182_b63c0c95",
         "filename": "aaa-idmlight/src/main/resources/org/opendaylight/blueprint/idmlight.xml",
         "patchSetId": 7
@@ -132,6 +574,30 @@
       "side": 1,
       "message": "Totally agreed.  I meant that this will be exposed via RESTCONF, and that we should lock down the url-pattern(s) to some sort of service role so not just anyone can jump in and swap the store.",
       "parentUuid": "3afa9182_d61278b3",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 9
+      },
+      "revId": "6a625a16a94020cec69af36173086bfe747dc95c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_44a09290",
+        "filename": "aaa-idmlight/src/main/yang/aaa-idm-store-config.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-06-07T09:40:30Z",
+      "side": 1,
+      "message": "Do you mean by modifying the default shiro.ini, right?",
+      "parentUuid": "3afa9182_f65fb470",
       "range": {
         "startLine": 16,
         "startChar": 8,
