@@ -161,6 +161,8 @@
         <feature version='${controller.mdsal.version}'>odl-mdsal-broker</feature>
         <feature version='${config.version}'>odl-config-core</feature>
 
+        <bundle>mvn:org.bouncycastle/bcprov-jdk15on/{{VERSION}}</bundle>
+        <bundle>mvn:org.bouncycastle/bcpkix-jdk15on/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.aaa/aaa-encrypt-service/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-encrypt-service-config.xml">mvn:org.opendaylight.aaa/aaa-encrypt-service/{{VERSION}}/xml/config</configfile>
     </feature>
