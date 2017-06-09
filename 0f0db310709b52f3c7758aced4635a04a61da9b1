@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3afa9182_cc2016fa",
+        "filename": "aaa-idmlight/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-06-09T21:00:23Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "3afa9182_b7a7d44e",
+      "range": {
+        "startLine": 23,
+        "startChar": 21,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "0f0db310709b52f3c7758aced4635a04a61da9b1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3afa9182_1764e820",
         "filename": "aaa-idmlight/pom.xml",
         "patchSetId": 8
@@ -117,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "3afa9182_6c23e205",
+        "filename": "aaa-idmlight/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-06-09T21:00:23Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "3afa9182_977738d4",
+      "range": {
+        "startLine": 142,
+        "startChar": 68,
+        "endLine": 142,
+        "endChar": 75
+      },
+      "revId": "0f0db310709b52f3c7758aced4635a04a61da9b1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3afa9182_d781c090",
         "filename": "aaa-idmlight/src/main/java/org/opendaylight/aaa/idm/rest/DomainHandler.java",
         "patchSetId": 8
@@ -174,6 +222,30 @@
       "writtenOn": "2017-06-09T14:32:24Z",
       "side": 1,
       "message": "remove this instead of commenting it out",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 30
+      },
+      "revId": "0f0db310709b52f3c7758aced4635a04a61da9b1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afa9182_0c7a1ef1",
+        "filename": "features/authn/features-aaa/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-06-09T21:00:23Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "3afa9182_972578c4",
       "range": {
         "startLine": 200,
         "startChar": 0,
