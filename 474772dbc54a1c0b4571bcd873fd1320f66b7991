@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1af78d9a_c5cdbe88",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/PKIUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 6995
+      },
+      "writtenOn": "2017-06-12T19:18:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1af78d9a_9f3663e6",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "474772dbc54a1c0b4571bcd873fd1320f66b7991",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1af78d9a_9fab03d6",
         "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/PKIUtil.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-12T13:45:02Z",
       "side": 1,
       "message": "can u explain this number and please define it as variable",
+      "range": {
+        "startLine": 93,
+        "startChar": 97,
+        "endLine": 93,
+        "endChar": 100
+      },
+      "revId": "474772dbc54a1c0b4571bcd873fd1320f66b7991",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_a5ca326c",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/PKIUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6995
+      },
+      "writtenOn": "2017-06-12T19:18:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1af78d9a_9fab03d6",
       "range": {
         "startLine": 93,
         "startChar": 97,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1af78d9a_85b456f3",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/PKIUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6995
+      },
+      "writtenOn": "2017-06-12T19:18:29Z",
+      "side": 1,
+      "message": "These are standard variable names used in algorithm. Pls take a look at http://www.herongyang.com/Cryptography/DSA-Introduction-What-Is-DSA-Digital-Signature-Algorithm.html .",
+      "parentUuid": "1af78d9a_1f527313",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 38
+      },
+      "revId": "474772dbc54a1c0b4571bcd873fd1320f66b7991",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1af78d9a_bfdcff75",
         "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/PKIUtil.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-12T13:45:02Z",
       "side": 1,
       "message": "dataOutputStream is better",
+      "range": {
+        "startLine": 154,
+        "startChar": 29,
+        "endLine": 154,
+        "endChar": 33
+      },
+      "revId": "474772dbc54a1c0b4571bcd873fd1320f66b7991",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_05c86673",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/PKIUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 6995
+      },
+      "writtenOn": "2017-06-12T19:18:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1af78d9a_bfdcff75",
       "range": {
         "startLine": 154,
         "startChar": 29,
