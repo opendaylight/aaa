@@ -24,8 +24,8 @@ import org.opendaylight.aaa.api.model.Grants;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
+import org.opendaylight.aaa.idm.AaaIdmLight;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule;
 
 /*
  * @Author - Sharon Aicler (saichler@cisco.com)
@@ -35,7 +35,7 @@ public class PasswordHashTest {
     @Before
     public void before() throws IDMStoreException {
         IIDMStore store = Mockito.mock(IIDMStore.class);
-        AAAIDMLightModule.setStore(store);
+        AaaIdmLight.setStore(store);
         Domain domain = new Domain();
         domain.setName("sdn");
         domain.setDomainid("sdn");

@@ -33,8 +33,8 @@ import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.UserPwd;
 import org.opendaylight.aaa.api.model.Users;
+import org.opendaylight.aaa.idm.AaaIdmLight;
 import org.opendaylight.aaa.idm.IdmLightProxy;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,9 +65,9 @@ public class DomainHandler {
         LOG.info("Get /domains");
         Domains domains = null;
         try {
-            domains = AAAIDMLightModule.getStore().getDomains();
+            domains = AaaIdmLight.getStore().getDomains();
         } catch (IDMStoreException e) {
-            LOG.error("StoreException", e);
+            LOG.error("StoreException: ", e);
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting domains");
             idmerror.setDetails(e.getMessage());
@@ -90,9 +90,9 @@ public class DomainHandler {
         LOG.info("Get /domains/{}", domainId);
         Domain domain = null;
         try {
-            domain = AAAIDMLightModule.getStore().readDomain(domainId);
+            domain = AaaIdmLight.getStore().readDomain(domainId);
         } catch (IDMStoreException e) {
-            LOG.error("StoreException", e);
+            LOG.error("StoreException: ", e);
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting domain");
             idmerror.setDetails(e.getMessage());
@@ -143,9 +143,9 @@ public class DomainHandler {
             if (domain.getDescription() == null) {
                 domain.setDescription("");
             }
-            domain = AAAIDMLightModule.getStore().writeDomain(domain);
+            domain = AaaIdmLight.getStore().writeDomain(domain);
         } catch (IDMStoreException e) {
-            LOG.error("StoreException", e);
+            LOG.error("StoreException: ", e);
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error creating domain");
             idmerror.setDetails(e.getMessage());
@@ -173,7 +173,7 @@ public class DomainHandler {
         LOG.info("Put /domains/{}", domainId);
         try {
             domain.setDomainid(domainId);
-            domain = AAAIDMLightModule.getStore().updateDomain(domain);
+            domain = AaaIdmLight.getStore().updateDomain(domain);
             if (domain == null) {
                 IDMError idmerror = new IDMError();
                 idmerror.setMessage("Not found! Domain id:" + domainId);
@@ -205,7 +205,7 @@ public class DomainHandler {
         LOG.info("Delete /domains/{}", domainId);
 
         try {
-            Domain domain = AAAIDMLightModule.getStore().deleteDomain(domainId);
+            Domain domain = AaaIdmLight.getStore().deleteDomain(domainId);
             if (domain == null) {
                 IDMError idmerror = new IDMError();
                 idmerror.setMessage("Not found! Domain id:" + domainId);
@@ -262,9 +262,9 @@ public class DomainHandler {
 
         // validate domain id
         try {
-            domain = AAAIDMLightModule.getStore().readDomain(domainId);
+            domain = AaaIdmLight.getStore().readDomain(domainId);
         } catch (IDMStoreException e) {
-            LOG.error("StoreException", e);
+            LOG.error("StoreException: ", e);
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting domain");
             idmerror.setDetails(e.getMessage());
@@ -278,9 +278,9 @@ public class DomainHandler {
         grant.setDomainid(domainId);
 
         try {
-            user = AAAIDMLightModule.getStore().readUser(userId);
+            user = AaaIdmLight.getStore().readUser(userId);
         } catch (IDMStoreException e) {
-            LOG.error("StoreException", e);
+            LOG.error("StoreException: ", e);
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting user");
             idmerror.setDetails(e.getMessage());
@@ -303,9 +303,9 @@ public class DomainHandler {
             return Response.status(404).entity(idmerror).build();
         }
         try {
-            role = AAAIDMLightModule.getStore().readRole(roleId);
+            role = AaaIdmLight.getStore().readRole(roleId);
         } catch (IDMStoreException e) {
-            LOG.error("StoreException", e);
+            LOG.error("StoreException: ", e);
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting role");
             idmerror.setDetails(e.getMessage());
@@ -319,7 +319,7 @@ public class DomainHandler {
 
         // see if grant already exists for this
         try {
-            Grant existingGrant = AAAIDMLightModule.getStore().readGrant(domainId, userId, roleId);
+            Grant existingGrant = AaaIdmLight.getStore().readGrant(domainId, userId, roleId);
             if (existingGrant != null) {
                 IDMError idmerror = new IDMError();
                 idmerror.setMessage("Grant already exists for did:" + domainId + " uid:" + userId + " rid:" + roleId);
@@ -335,7 +335,7 @@ public class DomainHandler {
 
         // create grant
         try {
-            grant = AAAIDMLightModule.getStore().writeGrant(grant);
+            grant = AaaIdmLight.getStore().writeGrant(grant);
         } catch (IDMStoreException e) {
             LOG.error("StoreException: ", e);
             IDMError idmerror = new IDMError();
@@ -370,12 +370,12 @@ public class DomainHandler {
         List<Role> roleList = new ArrayList<>();
 
         try {
-            domain = AAAIDMLightModule.getStore().readDomain(domainId);
-        } catch (IDMStoreException se) {
-            LOG.error("StoreException: ", se);
+            domain = AaaIdmLight.getStore().readDomain(domainId);
+        } catch (IDMStoreException e) {
+            LOG.error("StoreException: ", e);
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting domain");
-            idmerror.setDetails(se.getMessage());
+            idmerror.setDetails(e.getMessage());
             return Response.status(500).entity(idmerror).build();
         }
         if (domain == null) {
@@ -400,7 +400,7 @@ public class DomainHandler {
 
         // find userid for user
         try {
-            Users users = AAAIDMLightModule.getStore().getUsers(username, domainId);
+            Users users = AaaIdmLight.getStore().getUsers(username, domainId);
             List<User> userList = users.getUsers();
             if (userList.size() == 0) {
                 IDMError idmerror = new IDMError();
@@ -419,11 +419,11 @@ public class DomainHandler {
             claim.setUsername(username);
             claim.setUserid(user.getUserid());
             try {
-                Grants grants = AAAIDMLightModule.getStore().getGrants(domainId, user.getUserid());
+                Grants grants = AaaIdmLight.getStore().getGrants(domainId, user.getUserid());
                 List<Grant> grantsList = grants.getGrants();
                 for (int i = 0; i < grantsList.size(); i++) {
                     Grant grant = grantsList.get(i);
-                    Role role = AAAIDMLightModule.getStore().readRole(grant.getRoleid());
+                    Role role = AaaIdmLight.getStore().readRole(grant.getRoleid());
                     roleList.add(role);
                 }
             } catch (IDMStoreException e) {
@@ -467,9 +467,9 @@ public class DomainHandler {
         List<Role> roleList = new ArrayList<>();
 
         try {
-            domain = AAAIDMLightModule.getStore().readDomain(domainId);
+            domain = AaaIdmLight.getStore().readDomain(domainId);
         } catch (IDMStoreException e) {
-            LOG.error("StoreException", e);
+            LOG.error("StoreException: ", e);
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting domain");
             idmerror.setDetails(e.getMessage());
@@ -482,9 +482,9 @@ public class DomainHandler {
         }
 
         try {
-            user = AAAIDMLightModule.getStore().readUser(userId);
+            user = AaaIdmLight.getStore().readUser(userId);
         } catch (IDMStoreException e) {
-            LOG.error("StoreException", e);
+            LOG.error("StoreException: ", e);
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting user");
             idmerror.setDetails(e.getMessage());
@@ -497,11 +497,11 @@ public class DomainHandler {
         }
 
         try {
-            Grants grants = AAAIDMLightModule.getStore().getGrants(domainId, userId);
+            Grants grants = AaaIdmLight.getStore().getGrants(domainId, userId);
             List<Grant> grantsList = grants.getGrants();
             for (int i = 0; i < grantsList.size(); i++) {
                 Grant grant = grantsList.get(i);
-                Role role = AAAIDMLightModule.getStore().readRole(grant.getRoleid());
+                Role role = AaaIdmLight.getStore().readRole(grant.getRoleid());
                 roleList.add(role);
             }
         } catch (IDMStoreException e) {
@@ -538,9 +538,9 @@ public class DomainHandler {
         Role role;
 
         try {
-            domain = AAAIDMLightModule.getStore().readDomain(domainId);
+            domain = AaaIdmLight.getStore().readDomain(domainId);
         } catch (IDMStoreException e) {
-            LOG.error("Error deleting Grant", e);
+            LOG.error("Error deleting Grant: ", e);
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting domain");
             idmerror.setDetails(e.getMessage());
@@ -553,9 +553,9 @@ public class DomainHandler {
         }
 
         try {
-            user = AAAIDMLightModule.getStore().readUser(userId);
+            user = AaaIdmLight.getStore().readUser(userId);
         } catch (IDMStoreException e) {
-            LOG.error("StoreException", e);
+            LOG.error("StoreException: ", e);
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting user");
             idmerror.setDetails(e.getMessage());
@@ -568,9 +568,9 @@ public class DomainHandler {
         }
 
         try {
-            role = AAAIDMLightModule.getStore().readRole(roleId);
+            role = AaaIdmLight.getStore().readRole(roleId);
         } catch (IDMStoreException e) {
-            LOG.error("StoreException", e);
+            LOG.error("StoreException: ", e);
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting Role");
             idmerror.setDetails(e.getMessage());
@@ -584,15 +584,15 @@ public class DomainHandler {
 
         // see if grant already exists
         try {
-            Grant existingGrant = AAAIDMLightModule.getStore().readGrant(domainId, userId, roleId);
+            Grant existingGrant = AaaIdmLight.getStore().readGrant(domainId, userId, roleId);
             if (existingGrant == null) {
                 IDMError idmerror = new IDMError();
                 idmerror.setMessage("Grant does not exist for did:" + domainId + " uid:" + userId + " rid:" + roleId);
                 return Response.status(404).entity(idmerror).build();
             }
-            existingGrant = AAAIDMLightModule.getStore().deleteGrant(existingGrant.getGrantid());
+            existingGrant = AaaIdmLight.getStore().deleteGrant(existingGrant.getGrantid());
         } catch (IDMStoreException e) {
-            LOG.error("StoreException", e);
+            LOG.error("StoreException: ", e);
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error creating grant");
             idmerror.setDetails(e.getMessage());

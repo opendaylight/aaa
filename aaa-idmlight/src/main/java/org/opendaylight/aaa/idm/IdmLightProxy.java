@@ -30,7 +30,6 @@ import org.opendaylight.aaa.api.model.Grants;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,7 +98,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
         // TODO: ensure domain names are unique change to 'getDomain'
         LOG.debug("get domain");
         try {
-            domain = AAAIDMLightModule.getStore().readDomain(credsDomain);
+            domain = AaaIdmLight.getStore().readDomain(credsDomain);
             if (domain == null) {
                 throw new AuthenticationException("Domain :" + credsDomain + " does not exist");
             }
@@ -110,7 +109,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
         // check to see user exists and passes cred check
         try {
             LOG.debug("check user / pwd");
-            Users users = AAAIDMLightModule.getStore().getUsers(creds.username(), credsDomain);
+            Users users = AaaIdmLight.getStore().getUsers(creds.username(), credsDomain);
             List<User> userList = users.getUsers();
             if (userList.size() == 0) {
                 throw new AuthenticationException("User :" + creds.username()
@@ -125,12 +124,12 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
             // get all grants & roles for this domain and user
             LOG.debug("get grants");
             List<String> roles = new ArrayList<>();
-            Grants grants = AAAIDMLightModule.getStore().getGrants(domain.getDomainid(),
+            Grants grants = AaaIdmLight.getStore().getGrants(domain.getDomainid(),
                     user.getUserid());
             List<Grant> grantList = grants.getGrants();
             for (int z = 0; z < grantList.size(); z++) {
                 Grant grant = grantList.get(z);
-                Role role = AAAIDMLightModule.getStore().readRole(grant.getRoleid());
+                Role role = AaaIdmLight.getStore().readRole(grant.getRoleid());
                 if (role != null) {
                     roles.add(role.getName());
                 }
@@ -153,16 +152,16 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
 
     @Override
     public List<String> listDomains(String userId) {
-        return new IdMServiceImpl(AAAIDMLightModule.getStore()).listDomains(userId);
+        return new IdMServiceImpl(AaaIdmLight.getStore()).listDomains(userId);
     }
 
     @Override
     public List<String> listRoles(String userId, String domainName) {
-        return new IdMServiceImpl(AAAIDMLightModule.getStore()).listRoles(userId, domainName);
+        return new IdMServiceImpl(AaaIdmLight.getStore()).listRoles(userId, domainName);
     }
 
     @Override
     public List<String> listUserIDs() throws IDMStoreException {
-        return new IdMServiceImpl(AAAIDMLightModule.getStore()).listUserIDs();
+        return new IdMServiceImpl(AaaIdmLight.getStore()).listUserIDs();
     }
 }
