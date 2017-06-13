@@ -45,6 +45,9 @@ HTTP_PORT_KEY = 'org.osgi.service.http.port'
 DEFAULT_PROTOCOL = 'http'
 HTTPS_PROTOCOL = 'https'
 
+# Jolokia related constants
+JOLOKIA_FILE_LOCATION='../etc/org.jolokia.osgi.cfg'
+
 def setup_http():
     '''
     Sets the default port to try based on org.ops4j.pax.web.cfg.  If HTTPS is enabled then the script attempts
@@ -133,6 +136,10 @@ delete_grant.set_defaults(func=delete_grant)
 get_oauth2_token = subparsers.add_parser('get-oauth2-token', help='get an OAuth2 token')
 get_oauth2_token.add_argument('scope', help='the domain for the token scope', nargs=1)
 get_oauth2_token.set_defaults(func=get_oauth2_token)
+
+# jolokia password change related
+change_jolokia_password = subparsers.add_parser('change-jolokia-password', help='change the jolokia specific password')
+change_jolokia_password.set_defaults(func=change_jolokia_password)
 
 def process_result(r):
     ''' Generic method to print result of a REST call '''
@@ -299,6 +306,34 @@ def get_oauth2_token(user, password, scope):
     headers = {'Content-Type':'application/x-www-form-urlencoded'}
     post_request_unauthenticated(url, description, payload, headers, params)
 
+def change_jolokia_password():
+    with open(JOLOKIA_FILE_LOCATION, "r") as f:
+        lines = f.readlines()
+    basic_mode = False
+    for line in lines:
+        if "authMode" in line:
+            if "basic" in line:
+                basic_mode = True
+    if basic_mode:
+        replaced = False
+        new_password = poll_new_password()
+        with open(JOLOKIA_FILE_LOCATION, "w") as f:
+            for line in lines:
+                if "password" in line:
+                    f.write('password={}'.format(new_password))
+                    replaced = True
+                else:
+                    f.write(line)
+        f.close()
+        if replaced:
+            print "Successfully updated the jolokia password!"
+        else:
+            print "ERROR: Some unknown issue occurred while attempting to set the new password"
+            sys.exit(1)
+    else:
+        print "idmtool can only modify org.jolokia.osgi.cfg if authMode=basic at this time"
+        sys.exit(1)
+
 args = parser.parse_args()
 command = args.func.prog.split()[1:]
 
@@ -347,3 +382,5 @@ if "delete-grant" in command:
     delete_grant(user, password, args.userid[0], args.roleid[0])
 if "get-oauth2-token" in command:
     get_oauth2_token(user, password, args.scope[0])
+if "change-jolokia-password" in command:
+    change_jolokia_password()
