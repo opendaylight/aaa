@@ -19,7 +19,7 @@
     </parent>
 
     <groupId>org.opendaylight.aaa</groupId>
-    <artifactId>odl-aaa-authn</artifactId>
+    <artifactId>odl-aaa-authn-mdsal-cluster</artifactId>
     <version>0.6.0-SNAPSHOT</version>
     <packaging>feature</packaging>
 
@@ -45,21 +45,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>odl-aaa-api</artifactId>
-            <version>0.6.0-SNAPSHOT</version>
-            <type>xml</type>
-            <classifier>features</classifier>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>odl-aaa-cert</artifactId>
-            <version>${project.version}</version>
-            <type>xml</type>
-            <classifier>features</classifier>
-        </dependency>
-
         <!-- MD-SAL -->
         <dependency>
             <groupId>org.opendaylight.yangtools</groupId>
@@ -90,33 +75,14 @@
             <classifier>features</classifier>
         </dependency>
 
+        <!-- OSGi -->
         <dependency>
-            <groupId>org.opendaylight.odlparent</groupId>
-            <artifactId>odl-karaf-feat-jetty</artifactId>
-            <type>xml</type>
-            <classifier>features</classifier>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.dependencymanager</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-servlet</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-        </dependency>
-
-        <!-- EhCache -->
-        <dependency>
-            <groupId>net.sf.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.metatype</artifactId>
         </dependency>
 
         <!-- OAuth -->
@@ -141,12 +107,6 @@
             <artifactId>json</artifactId>
         </dependency>
 
-        <!-- commons-lang -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-
         <!-- AuthN -->
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
@@ -166,11 +126,23 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-authn-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn</artifactId>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn-sts</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-authn-mdsal-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-authn-mdsal-store-impl</artifactId>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
@@ -180,21 +152,19 @@
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-filterchain</artifactId>
         </dependency>
-
-        <!--H2 Store -->
         <dependency>
-            <groupId>org.opendaylight.odlparent</groupId>
-            <artifactId>odl-karaf-feat-jdbc</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>odl-aaa-cert</artifactId>
+            <version>${project.version}</version>
             <type>xml</type>
             <classifier>features</classifier>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-h2-store</artifactId>
+            <artifactId>odl-aaa-encryption-service</artifactId>
+            <version>${project.version}</version>
+            <type>xml</type>
+            <classifier>features</classifier>
         </dependency>
 
         <!-- IDMLight -->
@@ -210,7 +180,6 @@
             <type>py</type>
             <classifier>config</classifier>
         </dependency>
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -245,17 +214,42 @@
             <artifactId>javax.json</artifactId>
         </dependency>
 
+        <!-- REST -->
+        <dependency>
+            <groupId>org.opendaylight.odlparent</groupId>
+            <artifactId>odl-karaf-feat-jetty</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-servlet</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <!-- finalname="/etc/opendaylight/datastore/initial/config/aaa-mdsal-config.xml" -->
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-authn-mdsal-store-impl</artifactId>
+            <version>${project.version}</version>
+            <type>xml</type>
+            <classifier>config</classifier>
+        </dependency>
         <dependency>
             <!-- finalname="/etc/org.opendaylight.aaa.authn.cfg" -->
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-authn</artifactId>
-            <type>cfg</type>
-            <classifier>config</classifier>
-        </dependency>
-        <dependency>
-            <!-- finalname="/etc/org.opendaylight.aaa.tokens.cfg" -->
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-h2-store</artifactId>
             <type>cfg</type>
             <classifier>config</classifier>
         </dependency>

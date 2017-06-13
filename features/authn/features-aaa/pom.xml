@@ -186,16 +186,19 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-idmlight</artifactId>
-            <version>${project.version}</version>
-            <type>xml</type>
+            <artifactId>aaa-authn</artifactId>
+            <type>cfg</type>
             <classifier>config</classifier>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authn</artifactId>
+            <artifactId>aaa-h2-store</artifactId>
             <type>cfg</type>
             <classifier>config</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-h2-store</artifactId>
         </dependency>
         <dependency>
             <groupId>org.osgi</groupId>
