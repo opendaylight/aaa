@@ -24,9 +24,9 @@ import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
-import org.opendaylight.aaa.idm.AaaIdmLight;
 import org.opendaylight.aaa.idm.IdmLightApplication;
 import org.opendaylight.aaa.idm.IdmLightProxy;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,9 +57,10 @@ public class RoleHandler {
         LOG.info("get /roles");
         Roles roles = null;
         try {
-            roles = AaaIdmLight.getStore().getRoles();
-        } catch (IDMStoreException se) {
-            return new IDMError(500, "internal error getting roles", se.getMessage()).response();
+            roles = AAAIDMLightModule.getStore().getRoles();
+        } catch (IDMStoreException e) {
+            LOG.error("Internal error getting the roles", e);
+            return new IDMError(500, "internal error getting roles", e.getMessage()).response();
         }
         return Response.ok(roles).build();
     }
@@ -80,9 +81,10 @@ public class RoleHandler {
         Role role = null;
 
         try {
-            role = AaaIdmLight.getStore().readRole(id);
-        } catch (IDMStoreException se) {
-            return new IDMError(500, "internal error getting roles", se.getMessage()).response();
+            role = AAAIDMLightModule.getStore().readRole(id);
+        } catch (IDMStoreException e) {
+            LOG.error("Internal error getting the role", e);
+            return new IDMError(500, "internal error getting roles", e.getMessage()).response();
         }
 
         if (role == null) {
@@ -144,9 +146,10 @@ public class RoleHandler {
                         .response();
             }
 
-            role = AaaIdmLight.getStore().writeRole(role);
-        } catch (IDMStoreException se) {
-            return new IDMError(500, "internal error creating role", se.getMessage()).response();
+            role = AAAIDMLightModule.getStore().writeRole(role);
+        } catch (IDMStoreException e) {
+            LOG.error("Internal error creating role", e);
+            return new IDMError(500, "internal error creating role", e.getMessage()).response();
         }
         return Response.status(201).entity(role).build();
     }
@@ -187,7 +190,7 @@ public class RoleHandler {
                         .response();
             }
 
-            role = AaaIdmLight.getStore().updateRole(role);
+            role = AAAIDMLightModule.getStore().updateRole(role);
             if (role == null) {
                 return new IDMError(404, "role id not found :" + id, "").response();
             }
@@ -215,7 +218,7 @@ public class RoleHandler {
         LOG.info("Delete /roles/{}", id);
 
         try {
-            Role role = AaaIdmLight.getStore().deleteRole(id);
+            Role role = AAAIDMLightModule.getStore().deleteRole(id);
             if (role == null) {
                 return new IDMError(404, "role id not found :" + id, "").response();
             }

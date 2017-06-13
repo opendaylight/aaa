@@ -1,5 +1,0 @@
-<idm-config xmlns="config:aaa:idm:store:config">
-  <default-store>h2-data-store</default-store>
-  <time-to-live>36000</time-to-live>
-  <time-to-wait>3600</time-to-wait>
-</idm-config>
