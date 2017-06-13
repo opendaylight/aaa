@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1af78d9a_19060621",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/PKIUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 6995
+      },
+      "writtenOn": "2017-06-13T21:57:22Z",
+      "side": 1,
+      "message": "Did this earlier, but my IDE Intellij had a setting to convert to * if more than 5 classes are used from that package. Now changed the setting too.",
+      "parentUuid": "1af78d9a_a820429c",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "e8f4882016af7a6f09d25a466ce8d25f3bc6831b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1af78d9a_68749a9c",
         "filename": "aaa-encrypt-service/src/test/java/org/opendaylight/aaa/encrypt/PKIUtilTest.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-13T13:01:26Z",
       "side": 1,
       "message": "2017",
+      "range": {
+        "startLine": 2,
+        "startChar": 20,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "e8f4882016af7a6f09d25a466ce8d25f3bc6831b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_f9021a0a",
+        "filename": "aaa-encrypt-service/src/test/java/org/opendaylight/aaa/encrypt/PKIUtilTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6995
+      },
+      "writtenOn": "2017-06-13T21:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1af78d9a_68749a9c",
       "range": {
         "startLine": 2,
         "startChar": 20,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1af78d9a_7dff3502",
+        "filename": "aaa-encrypt-service/src/test/java/org/opendaylight/aaa/encrypt/PKIUtilTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6995
+      },
+      "writtenOn": "2017-06-13T21:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1af78d9a_0848765a",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 22
+      },
+      "revId": "e8f4882016af7a6f09d25a466ce8d25f3bc6831b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1af78d9a_e8408a37",
         "filename": "aaa-encrypt-service/src/test/java/org/opendaylight/aaa/encrypt/PKIUtilTest.java",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1af78d9a_5d04f914",
+        "filename": "aaa-encrypt-service/src/test/java/org/opendaylight/aaa/encrypt/PKIUtilTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 6995
+      },
+      "writtenOn": "2017-06-13T21:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1af78d9a_e8408a37",
+      "range": {
+        "startLine": 15,
+        "startChar": 1,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "e8f4882016af7a6f09d25a466ce8d25f3bc6831b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1af78d9a_885c6627",
         "filename": "aaa-encrypt-service/src/test/java/org/opendaylight/aaa/encrypt/PKIUtilTest.java",
         "patchSetId": 6
@@ -105,6 +201,30 @@
       "writtenOn": "2017-06-13T13:01:26Z",
       "side": 1,
       "message": "is there a problem if u construct this string in 2 or more lines ? the line should not be more than 120 char. same for all",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 58
+      },
+      "revId": "e8f4882016af7a6f09d25a466ce8d25f3bc6831b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_9d25c1ad",
+        "filename": "aaa-encrypt-service/src/test/java/org/opendaylight/aaa/encrypt/PKIUtilTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6995
+      },
+      "writtenOn": "2017-06-13T21:57:22Z",
+      "side": 1,
+      "message": "Yes, this might have been sensitive to any extra chars, but its working fine after i folded it in.",
+      "parentUuid": "1af78d9a_885c6627",
       "range": {
         "startLine": 37,
         "startChar": 7,
