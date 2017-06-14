@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1af78d9a_0ce4013a",
+        "filename": "karaf/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-06-14T12:59:44Z",
+      "side": 1,
+      "message": "should be\n\u003cartifactId\u003ekaraf4-parent\u003c/artifactId\u003e\n \u003cversion\u003e1.9.0-SNAPSHOT\u003c/version\u003e",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 39
+      },
+      "revId": "373c97323225947cfcca5651708bd84f0187cdcd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
