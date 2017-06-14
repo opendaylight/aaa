@@ -89,7 +89,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <dependency>
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
-      <version>1.8.3</version>
+      <version>1.9.3</version>
     </dependency>
     <!-- commons-beanutils' dependency on commons-collections is supposed to be optional... -->
     <dependency>
