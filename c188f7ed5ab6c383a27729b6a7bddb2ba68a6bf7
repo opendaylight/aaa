@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1af78d9a_46c1c52d",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/AAAShiroProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-06-14T22:51:07Z",
+      "side": 1,
+      "message": "expand",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 34
+      },
+      "revId": "c188f7ed5ab6c383a27729b6a7bddb2ba68a6bf7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_06c7bd46",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/AAAShiroProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-06-14T22:51:07Z",
+      "side": 1,
+      "message": "get rid of space",
+      "revId": "c188f7ed5ab6c383a27729b6a7bddb2ba68a6bf7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_86e28dd3",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/filters/MoonOAuthFilter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-06-14T22:51:07Z",
+      "side": 1,
+      "message": "out of order",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 72
+      },
+      "revId": "c188f7ed5ab6c383a27729b6a7bddb2ba68a6bf7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_e6e711e3",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/oauth2/OAuth2TokenServlet.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-06-14T22:51:07Z",
+      "side": 1,
+      "message": "out of order",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 85
+      },
+      "revId": "c188f7ed5ab6c383a27729b6a7bddb2ba68a6bf7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_c6ec95ca",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/tokenauthrealm/auth/AuthenticationBuilder.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-06-14T22:51:07Z",
+      "side": 1,
+      "message": "remove space",
+      "revId": "c188f7ed5ab6c383a27729b6a7bddb2ba68a6bf7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_26d119fc",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/tokenauthrealm/auth/AuthenticationBuilder.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-06-14T22:51:07Z",
+      "side": 1,
+      "message": "put above",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 83
+      },
+      "revId": "c188f7ed5ab6c383a27729b6a7bddb2ba68a6bf7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_66db211c",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/tokenauthrealm/auth/ClaimBuilder.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-06-14T22:51:07Z",
+      "side": 1,
+      "message": "out of order...",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 38
+      },
+      "revId": "c188f7ed5ab6c383a27729b6a7bddb2ba68a6bf7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_46d8a51d",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/tokenauthrealm/auth/HttpBasicAuth.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-06-14T22:51:07Z",
+      "side": 1,
+      "message": "out of order",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "c188f7ed5ab6c383a27729b6a7bddb2ba68a6bf7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_a604e97e",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/tokenauthrealm/auth/PasswordCredentialBuilder.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-06-14T22:51:07Z",
+      "side": 1,
+      "message": "out of order",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 84
+      },
+      "revId": "c188f7ed5ab6c383a27729b6a7bddb2ba68a6bf7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_8609ed97",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/impl/shiro/oauth2/OAuth2TokenServletTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-06-14T22:51:07Z",
+      "side": 1,
+      "message": "out of order",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 72
+      },
+      "revId": "c188f7ed5ab6c383a27729b6a7bddb2ba68a6bf7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
