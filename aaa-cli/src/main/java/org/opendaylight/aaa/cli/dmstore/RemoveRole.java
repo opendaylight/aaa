@@ -25,7 +25,7 @@ public class RemoveRole extends AaaCliAbstractCommand {
 
     @Option(name = "-name", aliases = {
             "--roleName" }, description = "The role name", required = true, multiValued = false)
-    private String roleName = "";
+    private final String roleName = "";
 
     public RemoveRole(final IIDMStore identityStore) {
         super(identityStore);
@@ -40,7 +40,7 @@ public class RemoveRole extends AaaCliAbstractCommand {
         if (roleId == null) {
             return "Role does not exist";
         }
-        if (identityStore.deleteUser(roleId) == null) {
+        if (identityStore.deleteRole(roleId) == null) {
             return "Failed to delete role " + roleName;
         }
         return "Role " + roleName + "has been deleted.";
