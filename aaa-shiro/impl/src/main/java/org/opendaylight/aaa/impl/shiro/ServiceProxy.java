@@ -21,9 +21,8 @@ import org.slf4j.LoggerFactory;
  * <code>odl-restconf-noauth</code>.
  *
  * The AAA service is enabled through installing the <code>odl-aaa-shiro</code>
- * feature. The <code>org.opendaylight.aaa.shiroact.Activator()</code>
- * constructor calls enables AAA through the ServiceProxy, which in turn enables
- * the AAAFilter.
+ * feature. The blueprint Provider in <code>aaa-shiro-act</code> enables AAA
+ * through the ServiceProxy, which in turn enables the AAAFilter.
  *
  * ServiceProxy is a singleton; access to the ServiceProxy is granted through
  * the <code>getInstance()</code> function.
@@ -32,7 +31,6 @@ import org.slf4j.LoggerFactory;
  * @see <a
  *      href="https://github.com/opendaylight/netconf/blob/master/opendaylight/restconf/sal-rest-connector/src/main/resources/WEB-INF/web.xml">resconf
  *      web,xml</a>
- * @see <code>org.opendaylight.aaa.shiro.Activator</code>
  * @see <code>org.opendaylight.aaa.shiro.filters.AAAFilter</code>
  */
 public class ServiceProxy {
