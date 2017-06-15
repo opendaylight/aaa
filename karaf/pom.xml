@@ -13,13 +13,13 @@
     <parent>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>karaf-parent</artifactId>
-        <version>1.7.4-SNAPSHOT</version>
+        <version>1.7.4-Boron-SR4</version>
         <relativePath></relativePath>
     </parent>
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>aaa-karaf</artifactId>
-    <version>0.4.4-SNAPSHOT</version>
+    <version>0.4.4-Boron-SR4</version>
     <packaging>pom</packaging>
     <prerequisites>
         <maven>3.1.1</maven>
