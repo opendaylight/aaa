@@ -46,7 +46,7 @@ DEFAULT_PROTOCOL = 'http'
 HTTPS_PROTOCOL = 'https'
 
 # Jolokia related constants
-JOLOKIA_FILE_LOCATION='../etc/org.jolokia.osgi.cfg'
+JOLOKIA_FILE_LOCATION = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "etc", "org.jolokia.osgi.cfg")
 
 def setup_http():
     '''
@@ -57,7 +57,7 @@ def setup_http():
     '''
 
     try:
-        pax_web_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), PAX_WEB_CFG_FILENAME)
+        pax_web_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "etc", PAX_WEB_CFG_FILENAME)
         with open(pax_web_path) as f:
             # build up a dictionary of the properties specified in the pax config
             content = f.readlines()
@@ -307,31 +307,35 @@ def get_oauth2_token(user, password, scope):
     post_request_unauthenticated(url, description, payload, headers, params)
 
 def change_jolokia_password():
-    with open(JOLOKIA_FILE_LOCATION, "r") as f:
-        lines = f.readlines()
-    basic_mode = False
-    for line in lines:
-        if "authMode" in line:
-            if "basic" in line:
-                basic_mode = True
-    if basic_mode:
-        replaced = False
-        new_password = poll_new_password()
-        with open(JOLOKIA_FILE_LOCATION, "w") as f:
-            for line in lines:
-                if "password" in line:
-                    f.write('password={}'.format(new_password))
-                    replaced = True
-                else:
-                    f.write(line)
-        f.close()
-        if replaced:
-            print "Successfully updated the jolokia password!"
+    try:
+        with open(JOLOKIA_FILE_LOCATION, "r") as f:
+            lines = f.readlines()
+        basic_mode = False
+        for line in lines:
+            if "authMode" in line:
+                if "basic" in line and "#" not in line:
+                    basic_mode = True
+        if basic_mode:
+            replaced = False
+            new_password = poll_new_password()
+            with open(JOLOKIA_FILE_LOCATION, "w") as f:
+                for line in lines:
+                    if "password" in line:
+                        f.write('password={}'.format(new_password))
+                        replaced = True
+                    else:
+                        f.write(line)
+            f.close()
+            if replaced:
+                print "Successfully updated the jolokia password!"
+            else:
+                print "ERROR: Some unknown issue occurred while attempting to set the new password"
+                sys.exit(1)
         else:
-            print "ERROR: Some unknown issue occurred while attempting to set the new password"
+            print "idmtool can only modify org.jolokia.osgi.cfg if authMode=basic at this time"
             sys.exit(1)
-    else:
-        print "idmtool can only modify org.jolokia.osgi.cfg if authMode=basic at this time"
+    except:
+        print "Unable to change the jolokia password, please check configuration."
         sys.exit(1)
 
 args = parser.parse_args()
