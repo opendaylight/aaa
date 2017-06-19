@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1af78d9a_c4e2c0d4",
+        "filename": "aaa-shiro/api/src/main/yang/aaa.yang",
+        "patchSetId": 12
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-06-19T17:20:55Z",
+      "side": 1,
+      "message": "The API for MD-SAL shouldn\u0027t be here. in order to let the end user easily switch between h2store and md-sal we need to make both data store in same bundle. I\u0027m okay if we will move everything to shiro bundles but we need to discuss how to do it",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 5
+      },
+      "revId": "9609bd1abe5df1ba5872132241b1d6e28b2342ce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
