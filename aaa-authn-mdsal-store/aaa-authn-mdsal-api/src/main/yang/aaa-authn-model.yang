@@ -1,3 +1,4 @@
+// WARNING: This module is deprecated and will be removed in Oxygen.
 module aaa-authn-model {
   yang-version 1;
   namespace "urn:aaa:yang:authn:claims";
@@ -16,6 +17,7 @@ module aaa-authn-model {
 // Following container provides the AuthN Claims data-structure
 
   container tokencache {
+    status deprecated;
     config false;
     list claims {
       key "token";
@@ -48,7 +50,7 @@ module aaa-authn-model {
   }
 
   container token_cache_times {
-
+    status deprecated;
     list token_list {
       key userId;
 
@@ -58,6 +60,7 @@ module aaa-authn-model {
       }
 
     list user_tokens {
+      status deprecated;
       key tokenid;
       leaf tokenid {
         type leafref {path "/tokencache/claims/token";}
@@ -76,6 +79,7 @@ module aaa-authn-model {
   //authentication model is for generating objects to be stores in the
   //data store for all the prev idm model objects.
   container authentication{
+     status deprecated;
      list domain{
          key domainid;
          leaf domainid {
@@ -120,6 +124,7 @@ module aaa-authn-model {
          }
      }
      list role {
+         status deprecated;
          key roleid;
          leaf roleid {
              type string;
@@ -136,6 +141,7 @@ module aaa-authn-model {
      }
 
      list grant {
+         status deprecated;
          key grantid;
          leaf grantid {
              type string;
