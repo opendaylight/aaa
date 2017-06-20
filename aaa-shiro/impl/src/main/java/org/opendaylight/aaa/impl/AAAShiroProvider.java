@@ -24,6 +24,7 @@ import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.AuthenticationManager
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.ClientManager;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.HttpBasicAuth;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.shiro.config.rev170619.ShiroConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +40,7 @@ public class AAAShiroProvider {
     private static AAAShiroProvider INSTANCE;
     private DataBroker dataBroker;
     private final ICertificateManager certificateManager;
+    private ShiroConfiguration shiroConfiguration;
 
     /**
      * Provider for this bundle.
@@ -47,9 +49,11 @@ public class AAAShiroProvider {
      */
     private AAAShiroProvider(final DataBroker dataBroker, final ICertificateManager certificateManager,
                              final CredentialAuth<PasswordCredentials> credentialAuth,
-                             final IIDMStore iidmStore, final TokenStore tokenStore) {
+                             final IIDMStore iidmStore, final TokenStore tokenStore,
+                             final ShiroConfiguration shiroConfiguration) {
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
+        this.shiroConfiguration = shiroConfiguration;
 
         this.initializeServices(credentialAuth, iidmStore, tokenStore);
     }
@@ -101,8 +105,10 @@ public class AAAShiroProvider {
     public static AAAShiroProvider newInstance(final DataBroker dataBroker,
                                                final ICertificateManager certificateManager,
                                                final CredentialAuth<PasswordCredentials> credentialAuth,
-                                               final IIDMStore iidmStore, final TokenStore tokenStore) {
-        INSTANCE = new AAAShiroProvider(dataBroker, certificateManager, credentialAuth, iidmStore, tokenStore);
+                                               final IIDMStore iidmStore, final TokenStore tokenStore,
+                                               final ShiroConfiguration shiroConfiguration) {
+        INSTANCE = new AAAShiroProvider(dataBroker, certificateManager, credentialAuth, iidmStore, tokenStore,
+                shiroConfiguration);
         return INSTANCE;
     }
 
@@ -113,7 +119,7 @@ public class AAAShiroProvider {
      */
     public static AAAShiroProvider getInstance() {
         if (INSTANCE == null) {
-            newInstance(null, null, null, null, null);
+            newInstance(null, null, null, null, null,null);
         }
         return INSTANCE;
     }
@@ -148,5 +154,14 @@ public class AAAShiroProvider {
      */
     public ICertificateManager getCertificateManager() {
         return certificateManager;
+    }
+
+    /**
+     * Extract Shiro related configuration.
+     *
+     * @return Shiro related configuration.
+     */
+    public ShiroConfiguration getShiroConfiguration() {
+        return this.shiroConfiguration;
     }
 }

@@ -13,6 +13,10 @@
     <feature name='odl-aaa-shiro' description='OpenDaylight :: AAA :: Shiro'
              version='${project.version}'>
 
+        <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-shiro-config.xml">
+            mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/xml/shiro-config
+        </configfile>
+
         <!-- OSGI -->
         <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/{{VERSION}}</bundle>
         <bundle>mvn:org.apache.felix/org.apache.felix.metatype/{{VERSION}}</bundle>

@@ -11,5 +11,8 @@
         <!-- AAA configuration file -->
         <configfile finalname="/etc/shiro.ini">mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/cfg/configuration
         </configfile>
+        <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-shiro-config.xml">
+            mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/xml/shiro-config
+        </configfile>
     </feature>
 </features>
