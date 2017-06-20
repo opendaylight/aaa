@@ -8,8 +8,8 @@
  -->
 <features name="odl-aaa-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
     <feature name="odl-aaa-shiro" version="${project.version}">
-        <!-- AAA configuration file -->
-        <configfile finalname="/etc/shiro.ini">mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/cfg/configuration
+        <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-app-config.xml">
+            mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/xml/aaa-app-config
         </configfile>
     </feature>
 </features>

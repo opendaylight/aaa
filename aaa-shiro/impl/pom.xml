@@ -198,17 +198,17 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             </goals>
             <configuration>
               <artifacts>
-                <!-- attach shiro.ini as an artifact -->
-                <artifact>
-                  <file>${project.build.directory}/classes/shiro.ini</file>
-                  <type>cfg</type>
-                  <classifier>configuration</classifier>
-                </artifact>
                 <!-- attach authn.cfg as an artifact -->
                 <artifact>
                   <file>${project.build.directory}/classes/authn.cfg</file>
                   <type>cfg</type>
                   <classifier>config</classifier>
+                </artifact>
+                <!-- attach aaa-app-config.xml as an artifact -->
+                <artifact>
+                  <file>${project.build.directory}/classes/initial/aaa-app-config.xml</file>
+                  <type>xml</type>
+                  <classifier>aaa-app-config</classifier>
                 </artifact>
               </artifacts>
             </configuration>
