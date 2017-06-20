@@ -109,11 +109,6 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.servicemix.bundles</groupId>
-            <artifactId>org.apache.servicemix.bundles.commons-beanutils</artifactId>
-            <version>1.8.3_2</version>
-        </dependency>
 
         <!-- AAA configuration file -->
         <dependency>
