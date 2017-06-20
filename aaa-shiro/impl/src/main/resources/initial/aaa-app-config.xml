@@ -1,0 +1,66 @@
+<!--
+  Copyright (c) 2017 Inocybe Technologies and others.  All rights reserved.
+
+  This program and the accompanying materials are made available under the
+  terms of the Eclipse Public License v1.0 which accompanies this distribution,
+  and is available at http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<shiro-configuration xmlns="urn:opendaylight:aaa:app:config">
+    <!--
+         Defines the default realm implementation, the TokenAuthRealm.  This is
+         the h2 based implementation of AAA
+    -->
+    <main>
+        <k>tokenAuthRealm</k>
+        <v>org.opendaylight.aaa.shiro.realm.TokenAuthRealm</v>
+    </main>
+
+    <!--
+         Adds the TokenAuthRealm to the list of available realms used for AAA.
+    -->
+    <main>
+        <k>securityManager.realms</k>
+        <v>$tokenAuthRealm</v>
+    </main>
+
+    <!--
+         A custom AuthenticationFilter is needed in order to support the OAuth2
+         use case.
+    -->
+    <main>
+        <k>authcBasic</k>
+        <v>org.opendaylight.aaa.shiro.filters.ODLHttpAuthenticationFilter</v>
+    </main>
+
+    <!--
+         An AuthenticationListener implementation used to keep an audit
+         trail of AAA challenges.
+    -->
+    <main>
+        <k>accountingListener</k>
+        <v>org.opendaylight.aaa.shiro.filters.AuthenticationListener</v>
+    </main>
+    <main>
+        <k>securityManager.authenticator.authenticationListeners</k>
+        <v>$accountingListener</v>
+    </main>
+
+    <!--
+         Model based RBAC implementation.
+    -->
+    <main>
+        <k>dynamicAuthorization</k>
+        <v>org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter</v>
+    </main>
+
+    <!--
+         URLS section from shiro.ini.  Do not modify this list unless you
+         know what you are doing;  instead use the model based AuthZ approach.
+    -->
+    <urls>
+        <k>/**</k>
+        <v>authcBasic, dynamicAuthorization</v>
+    </urls>
+    
+</shiro-configuration>
