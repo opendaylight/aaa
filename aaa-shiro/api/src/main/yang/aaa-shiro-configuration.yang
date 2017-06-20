@@ -1,0 +1,32 @@
+module aaa-shiro-configuration {
+    yang-version 1;
+    namespace "urn:opendaylight:aaa:shiro:config";
+    prefix "aaa-shiro-configuration";
+
+    revision "2017-06-19" {
+        description "Initial revision of aaa-configuration model";
+    }
+
+    grouping string-pair {
+        leaf k {
+            type string;
+        }
+        leaf v {
+            type string;
+        }
+    }
+
+    container shiro-configuration {
+        list main {
+            key "k";
+            uses string-pair;
+            ordered-by user;
+        }
+
+        list urls {
+            key "k";
+            uses string-pair;
+            ordered-by user;
+        }
+    }
+}

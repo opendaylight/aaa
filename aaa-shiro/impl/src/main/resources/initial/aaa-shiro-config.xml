@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xml xmlns="urn:opendaylight:aaa:shiro:config">
+    <shiro-configuration>
+        <main>
+            <k>tokenAuthRealm</k>
+            <v>org.opendaylight.aaa.shiro.realm.TokenAuthRealm</v>
+        </main>
+        <main>
+            <k>securityManager.realms</k>
+            <v>tokenAuthRealm</v>
+        </main>
+        <main>
+            <k>authcBasic</k>
+            <v>org.opendaylight.aaa.shiro.filters.ODLHttpAuthenticationFilter</v>
+        </main>
+        <main>
+            <k>accountingListener</k>
+            <v>org.opendaylight.aaa.shiro.filters.AuthenticationListener</v>
+        </main>
+        <main>
+            <k>securityManager.authenticator.authenticationListeners</k>
+            <v>accountingListener</v>
+        </main>
+        <main>
+            <k>securityManager.authenticator.authenticationListeners</k>
+            <v>accountingListener</v>
+        </main>
+        <main>
+            <k>dynamicAuthorization</k>
+            <v>org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter</v>
+        </main>
+        <urls>
+            <k>/**</k>
+            <v>authcBasic, dynamicAuthorization</v>
+        </urls>
+    </shiro-configuration>
+</xml>
