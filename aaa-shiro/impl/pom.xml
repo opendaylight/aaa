@@ -210,6 +210,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                   <type>cfg</type>
                   <classifier>config</classifier>
                 </artifact>
+                <artifact>
+                  <file>${project.build.directory}/classes/initial/aaa-shiro-config.xml</file>
+                  <type>xml</type>
+                  <classifier>shiro-config</classifier>
+                </artifact>
               </artifacts>
             </configuration>
           </execution>

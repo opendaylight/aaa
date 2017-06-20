@@ -1,0 +1,41 @@
+module aaa-shiro-configuration {
+    yang-version 1;
+    namespace "urn:opendaylight:aaa:shiro:config";
+    prefix "aaa-shiro-configuration";
+    organization "OpenDaylight";
+
+    contact "ryandgoulding@gmail.com";
+
+    revision "2017-06-19" {
+        description "aaa-shiro-configuration is used to manipulate aspects of AAA clustered-app-config.";
+    }
+
+    grouping string-pair {
+        description "Used to store string key/value pairs.";
+        leaf k {
+            type string;
+            description "The key.";
+        }
+        leaf v {
+            type string;
+            description "The value.";
+        }
+    }
+
+    container shiro-configuration {
+        description "AAA shiro related configuration.";
+        list main {
+            key "k";
+            uses string-pair;
+            ordered-by user;
+            description "The main section of shiro.ini.";
+        }
+
+        list urls {
+            key "k";
+            uses string-pair;
+            ordered-by user;
+            description "The urls section of shiro.ini.";
+        }
+    }
+}
