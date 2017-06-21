@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.opendaylight.aaa.shiro.realm.TokenAuthRealm;
 
@@ -98,6 +99,7 @@ public class TokenAuthRealmTest extends TokenAuthRealm {
         }
     }
 
+    @Ignore
     @Test
     public void testIsTokenAuthAvailable() {
         assertTrue(testRealm.isTokenAuthAvailable());
