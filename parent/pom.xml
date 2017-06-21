@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.opendaylight.odlparent</groupId>
     <artifactId>odlparent</artifactId>
-    <version>1.9.0</version>
+    <version>2.0.0</version>
     <relativePath />
   </parent>
 
@@ -18,7 +18,7 @@
   <properties>
     <!-- Karaf -->
     <karaf.branding.version>1.5.0-SNAPSHOT</karaf.branding.version>
-    <karaf.resources.version>1.9.0</karaf.resources.version>
+    <karaf.resources.version>2.0.0</karaf.resources.version>
 
     <!-- Local project version, needed for import -->
     <aaa.version>${project.version}</aaa.version>
@@ -48,7 +48,7 @@
     <!-- Test -->
     <javax.inject.version>1</javax.inject.version>
     <servlet.tester.version>7.0.0.pre5</servlet.tester.version>
-    <features.test.version>1.9.0</features.test.version>
+    <features.test.version>2.0.0</features.test.version>
   </properties>
 
   <dependencyManagement>
