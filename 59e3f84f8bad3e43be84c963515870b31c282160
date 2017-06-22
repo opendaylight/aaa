@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa2559ec_05a7c150",
+        "filename": "aaa-shiro/api/src/main/yang/aaa-shiro-configuration.yang",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-06-22T16:08:52Z",
+      "side": 1,
+      "message": "make more generic.",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 30
+      },
+      "revId": "59e3f84f8bad3e43be84c963515870b31c282160",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
