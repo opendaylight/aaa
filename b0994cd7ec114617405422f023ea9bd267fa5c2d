@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da2a55be_9ed789bf",
+        "filename": "aaa-shiro/api/src/main/yang/aaa-app-config.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-06-27T20:18:51Z",
+      "side": 1,
+      "message": "u  may name this as pair-key, just make leaf name readable",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 14
+      },
+      "revId": "b0994cd7ec114617405422f023ea9bd267fa5c2d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_fee4c5ad",
+        "filename": "aaa-shiro/api/src/main/yang/aaa-app-config.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-06-27T20:18:51Z",
+      "side": 1,
+      "message": "same ex: pair-value",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 14
+      },
+      "revId": "b0994cd7ec114617405422f023ea9bd267fa5c2d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_dee1019c",
+        "filename": "aaa-shiro/impl/src/main/resources/initial/aaa-app-config.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-06-27T20:18:51Z",
+      "side": 1,
+      "message": "can u add the other realms that exist in shiro.ini ex:ldaprealm, moonrealm? just show how they can use it.",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "b0994cd7ec114617405422f023ea9bd267fa5c2d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
