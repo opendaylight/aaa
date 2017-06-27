@@ -11,5 +11,8 @@
         <!-- AAA configuration file -->
         <configfile finalname="/etc/shiro.ini">mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/cfg/configuration
         </configfile>
+        <configfile finalname="bin/upgrade/convert-shiro-ini-to-rest-payload">
+            mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/py/convert-shiro-ini
+        </configfile>
     </feature>
 </features>
