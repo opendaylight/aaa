@@ -209,6 +209,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                   <file>${project.build.directory}/classes/initial/aaa-app-config.xml</file>
                   <type>xml</type>
                   <classifier>aaa-app-config</classifier>
+                <!-- attach convert-shiro-ini-to-rest-payload.py as an artifact -->
+                <artifact>
+                  <file>${project.build.directory}/classes/convert-shiro-ini-to-rest-payload.py</file>
+                  <type>py</type>
+                  <classifier>convert-shiro-ini</classifier>
                 </artifact>
               </artifacts>
             </configuration>

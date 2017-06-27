@@ -118,6 +118,15 @@
             <classifier>aaa-app-config</classifier>
         </dependency>
 
+        <!-- a conversion utility for upgrades -->
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-shiro</artifactId>
+            <version>${project.version}</version>
+            <type>py</type>
+            <classifier>convert-shiro-ini</classifier>
+        </dependency>
+
         <!-- add in standard jetty servlets bundle which exposes all sorts of useful filters
              that can be added in front of RESTCONF. -->
         <dependency>
