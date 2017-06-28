@@ -110,14 +110,12 @@
             <artifactId>json</artifactId>
         </dependency>
 
-        <!-- AAA configuration file -->
         <dependency>
-            <!-- finalname="/etc/shiro.ini" -->
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-shiro</artifactId>
             <version>${project.version}</version>
-            <type>cfg</type>
-            <classifier>configuration</classifier>
+            <type>xml</type>
+            <classifier>aaa-app-config</classifier>
         </dependency>
 
         <!-- add in standard jetty servlets bundle which exposes all sorts of useful filters
