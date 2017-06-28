@@ -45,7 +45,7 @@
     <!-- AAA filter in front of these REST web services -->
     <filter>
         <filter-name>ShiroFilter</filter-name>
-        <filter-class>org.opendaylight.aaa.shiro.filters.AAAFilter</filter-class>
+        <filter-class>org.opendaylight.aaa.shiro.filters.AAAShiroFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>ShiroFilter</filter-name>
