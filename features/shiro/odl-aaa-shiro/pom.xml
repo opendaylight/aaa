@@ -42,82 +42,17 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.opendaylight.aaa</groupId>
+                <artifactId>features-aaa</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
-        <!-- OSGI -->
-        <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.dependencymanager</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.metatype</artifactId>
-        </dependency>
-
-        <!-- Existing AAA infrastructure -->
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-shiro</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-filterchain</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>odl-aaa-authn</artifactId>
-            <version>${project.version}</version>
-            <type>xml</type>
-            <classifier>features</classifier>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>odl-aaa-cert</artifactId>
-            <version>${project.version}</version>
-            <type>xml</type>
-            <classifier>features</classifier>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.oltu.oauth2</groupId>
-            <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.oltu.oauth2</groupId>
-            <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.oltu.oauth2</groupId>
-            <artifactId>org.apache.oltu.oauth2.common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-shiro</artifactId>
-            <version>${project.version}</version>
-            <type>xml</type>
-            <classifier>aaa-app-config</classifier>
-        </dependency>
-
         <!-- add in standard jetty servlets bundle which exposes all sorts of useful filters
              that can be added in front of RESTCONF. -->
         <dependency>
