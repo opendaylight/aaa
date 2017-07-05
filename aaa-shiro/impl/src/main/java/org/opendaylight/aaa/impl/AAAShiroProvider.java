@@ -25,6 +25,7 @@ import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.ClientManager;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.HttpBasicAuth;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.datastore.config.rev170701.DatastoreConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +51,8 @@ public class AAAShiroProvider {
     private AAAShiroProvider(final DataBroker dataBroker, final ICertificateManager certificateManager,
                              final CredentialAuth<PasswordCredentials> credentialAuth,
                              final IIDMStore iidmStore, final TokenStore tokenStore,
-                             final ShiroConfiguration shiroConfiguration) {
+                             final ShiroConfiguration shiroConfiguration,
+                             final DatastoreConfig datastoreConfig) {
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
         this.shiroConfiguration = shiroConfiguration;
@@ -106,9 +108,10 @@ public class AAAShiroProvider {
                                                final ICertificateManager certificateManager,
                                                final CredentialAuth<PasswordCredentials> credentialAuth,
                                                final IIDMStore iidmStore, final TokenStore tokenStore,
-                                               final ShiroConfiguration shiroConfiguration) {
+                                               final ShiroConfiguration shiroConfiguration,
+                                               final DatastoreConfig datastoreConfig) {
         INSTANCE = new AAAShiroProvider(dataBroker, certificateManager, credentialAuth, iidmStore, tokenStore,
-                shiroConfiguration);
+                shiroConfiguration, datastoreConfig);
         return INSTANCE;
     }
 
@@ -119,7 +122,7 @@ public class AAAShiroProvider {
      */
     public static AAAShiroProvider getInstance() {
         if (INSTANCE == null) {
-            newInstance(null, null, null, null, null,null);
+            newInstance(null, null, null, null, null,null, null);
         }
         return INSTANCE;
     }

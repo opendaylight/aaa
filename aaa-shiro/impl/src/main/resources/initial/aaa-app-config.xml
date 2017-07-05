@@ -315,4 +315,3 @@
         <pair-value>authcBasic, dynamicAuthorization</pair-value>
     </urls>
 </shiro-configuration>
-

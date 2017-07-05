@@ -47,6 +47,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
       <groupId>${project.groupId}</groupId>
       <artifactId>aaa-shiro-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-authn-api</artifactId>
+    </dependency>
 
     <!-- jersey client for moon authN -->
     <dependency>
@@ -123,6 +127,19 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.dependencymanager</artifactId>
       <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>net.sf.ehcache</groupId>
+      <artifactId>ehcache</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.immutables</groupId>
+      <artifactId>value</artifactId>
     </dependency>
 
     <!-- Testing Dependencies -->
@@ -209,6 +226,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                   <file>${project.build.directory}/classes/initial/aaa-app-config.xml</file>
                   <type>xml</type>
                   <classifier>aaa-app-config</classifier>
+                </artifact>
+                <artifact>
+                  <file>${project.build.directory}/classes/initial/aaa-datastore-config.xml</file>
+                  <type>xml</type>
+                  <classifier>aaa-datastore-config</classifier>
                 </artifact>
                 <!-- attach convert-shiro-ini-to-rest-payload.py as an artifact -->
                 <artifact>

@@ -15,6 +15,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
           binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration"
           id="shiroConfiguration" default-config-file-name="aaa-app-config.xml" />
 
+  <odl:clustered-app-config id="datastoreConfig" default-config-file-name="aaa-datastore-config.xml"
+        binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.datastore.config.rev170701.DatastoreConfig">
+  </odl:clustered-app-config>
+
   <reference id="dataBroker"
     interface="org.opendaylight.controller.md.sal.binding.api.DataBroker"
     odl:type="default" />
@@ -44,6 +48,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="idmStore" />
     <argument ref="h2TokenStore" />
     <argument ref="shiroConfiguration" />
+    <argument ref="datastoreConfig" />
   </bean>
 
   <bean id="aaa" class="org.opendaylight.aaa.shiro.filters.AAAFilter" />
