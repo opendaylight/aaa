@@ -8,9 +8,9 @@
   <service ref="IdmLightProxy" interface="org.opendaylight.aaa.api.IdMService" odl:type="default"/>
   <service ref="IdmLightProxy" interface="org.opendaylight.aaa.api.CredentialAuth" odl:type="default"/>
 
-  <reference id="IIDMStore" interface="org.opendaylight.aaa.api.IIDMStore"/>
-  <bean id="AAAIDMLightModule" class="org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule" init-method="initializeStore">
-      <argument ref="IIDMStore"/>
-  </bean>
+<!--   <reference id="IIDMStore" interface="org.opendaylight.aaa.api.IIDMStore"/> -->
+<!--   <bean id="AAAIDMLightModule" class="org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule" init-method="initializeStore"> -->
+<!--       <argument ref="IIDMStore"/> -->
+<!--   </bean> -->
 
 </blueprint>

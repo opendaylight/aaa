@@ -188,6 +188,25 @@
               org.osgi.framework,
               org.osgi.util.tracker,
               org.slf4j,
+              !javax.naming,
+              !javax.naming.spi,
+              !javax.servlet,
+              !javax.servlet.http,
+              !javax.tools,
+              !javax.transaction.xa,
+              !org.apache.lucene.analysis,
+              !org.apache.lucene.analysis.standard,
+              !org.apache.lucene.document,
+              !org.apache.lucene.index,
+              !org.apache.lucene.queryParser,
+              !org.apache.lucene.search,
+              !org.apache.lucene.store,
+              !org.apache.lucene.util,
+              !com.vividsolutions.jts.geom,
+              !com.vividsolutions.jts.io,
+              !org.osgi.service.jdbc,
+              !javax.annotation,
+              !javax.naming
             </Import-Package>
             <!-- The idmlight REST endpoints are located relative to /auth from the ServletContext root. -->
             <Web-ContextPath>/auth</Web-ContextPath>

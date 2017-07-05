@@ -19,12 +19,20 @@ import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.impl.datastore.h2.H2Store;
+import org.opendaylight.aaa.impl.datastore.h2.H2TokenStore;
+import org.opendaylight.aaa.impl.datastore.mdsal.MdsalStore;
+import org.opendaylight.aaa.impl.datastore.mdsal.MdsalTokenStore;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.AuthenticationManager;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.ClientManager;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.HttpBasicAuth;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.datastore.config.rev170701.DatastoreConfig;
+//import org.osgi.framework.BundleContext;
+//import org.osgi.framework.FrameworkUtil;
+//import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +49,8 @@ public class AAAShiroProvider {
     private final DataBroker dataBroker;
     private final ICertificateManager certificateManager;
     private final ShiroConfiguration shiroConfiguration;
+    //private ServiceRegistration<IIDMStore> iidmStoreSrv;
+    //private ServiceRegistration<TokenStore> tokenStoreSrv;
 
     /**
      * Provider for this bundle.
@@ -49,12 +59,25 @@ public class AAAShiroProvider {
      */
     private AAAShiroProvider(final DataBroker dataBroker, final ICertificateManager certificateManager,
                              final CredentialAuth<PasswordCredentials> credentialAuth,
-                             final IIDMStore iidmStore, final TokenStore tokenStore,
-                             final ShiroConfiguration shiroConfiguration) {
+                             final ShiroConfiguration shiroConfiguration,
+                             final DatastoreConfig datastoreConfig) {
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
         this.shiroConfiguration = shiroConfiguration;
-
+        IIDMStore iidmStore;
+        TokenStore tokenStore;
+        if (datastoreConfig != null && datastoreConfig.getDefaultStore().equals(DatastoreConfig.DefaultStore.H2DataStore)) {
+            iidmStore = new H2Store();
+            tokenStore = new H2TokenStore(datastoreConfig.getTimeToLive().longValue(), datastoreConfig.getTimeToWait().longValue());
+        } else if (datastoreConfig != null && datastoreConfig.getDefaultStore().equals(DatastoreConfig.DefaultStore.MdsalDataStore)) {
+            iidmStore = new MdsalStore(dataBroker);
+            tokenStore = new MdsalTokenStore(datastoreConfig.getTimeToLive().longValue());
+        } else {
+            iidmStore = null;
+            tokenStore = null;
+            LOG.info("AAA Datastore has not been initialized");
+            return;
+        }
         this.initializeServices(credentialAuth, iidmStore, tokenStore);
     }
 
@@ -66,30 +89,28 @@ public class AAAShiroProvider {
      * @param tokenStore wired via blueprint
      */
     private void initializeServices(final CredentialAuth<PasswordCredentials> credentialAuth,
-                                    final IIDMStore iidmStore, final TokenStore tokenStore) {
-
+            IIDMStore iidmStore, TokenStore tokenStore) {
 
         final AuthenticationService authService = new AuthenticationManager();
         ServiceLocator.getInstance().setAuthenticationService(authService);
 
-
         final ClientService clientService = new ClientManager();
         ServiceLocator.getInstance().setClientService(clientService);
-
 
         final IdMService idmService = new IdMServiceImpl(iidmStore);
         ServiceLocator.getInstance().setIdmService(idmService);
 
-
         ServiceLocator.getInstance().setCredentialAuth(credentialAuth);
-
 
         final TokenAuth tokenAuth = new HttpBasicAuth();
         final List<TokenAuth> tokenAuthList = Lists.newArrayList(tokenAuth);
         ServiceLocator.getInstance().setTokenAuthCollection(tokenAuthList);
 
-
         ServiceLocator.getInstance().setTokenStore(tokenStore);
+
+        //final BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        //iidmStoreSrv = context.registerService(IIDMStore.class, iidmStore, null);
+        //tokenStoreSrv = context.registerService(TokenStore.class, tokenStore, null);
     }
 
     /**
@@ -98,17 +119,17 @@ public class AAAShiroProvider {
      * @param dataBroker The DataBroker
      * @param certificateManager the certificate manager
      * @param credentialAuth The CredentialAuth
-     * @param iidmStore The IDM store
-     * @param tokenStore The token store
+     * @param shiroConfiguration shiro.ini configuration
+     * @param datastoreConfig basic config for data store
      * @return the Provider
      */
     public static AAAShiroProvider newInstance(final DataBroker dataBroker,
                                                final ICertificateManager certificateManager,
                                                final CredentialAuth<PasswordCredentials> credentialAuth,
-                                               final IIDMStore iidmStore, final TokenStore tokenStore,
-                                               final ShiroConfiguration shiroConfiguration) {
-        INSTANCE = new AAAShiroProvider(dataBroker, certificateManager, credentialAuth, iidmStore, tokenStore,
-                shiroConfiguration);
+                                               final ShiroConfiguration shiroConfiguration,
+                                               final DatastoreConfig datastoreConfig) {
+        INSTANCE = new AAAShiroProvider(dataBroker, certificateManager, credentialAuth, shiroConfiguration,
+                datastoreConfig);
         return INSTANCE;
     }
 
@@ -132,6 +153,8 @@ public class AAAShiroProvider {
      * Method called when the blueprint container is destroyed.
      */
     public void close() {
+        //iidmStoreSrv.unregister();
+        //tokenStoreSrv.unregister();
         LOG.info("AAAShiroProvider Closed");
     }
 

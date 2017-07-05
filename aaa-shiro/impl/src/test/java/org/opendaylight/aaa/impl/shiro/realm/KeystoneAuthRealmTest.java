@@ -88,7 +88,7 @@ public class KeystoneAuthRealmTest {
 
     @Before
     public void setup() throws MalformedURLException, URISyntaxException {
-        AAAShiroProvider.newInstance(null, null, null, null, null, null);
+        AAAShiroProvider.newInstance(null, null, null, null, null);
 
         final String testUrl = "http://example.com";
         // a token for a user without roles

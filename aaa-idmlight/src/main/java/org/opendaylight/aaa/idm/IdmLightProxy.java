@@ -99,6 +99,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
         // TODO: ensure domain names are unique change to 'getDomain'
         LOG.debug("get domain");
         try {
+            //domain = AAAIDMLightModule.getStore().readDomain(credsDomain);
             domain = AAAIDMLightModule.getStore().readDomain(credsDomain);
             if (domain == null) {
                 throw new AuthenticationException("Domain :" + credsDomain + " does not exist");
@@ -110,6 +111,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
         // check to see user exists and passes cred check
         try {
             LOG.debug("check user / pwd");
+            //Users users = AAAIDMLightModule.getStore().getUsers(creds.username(), credsDomain);
             Users users = AAAIDMLightModule.getStore().getUsers(creds.username(), credsDomain);
             List<User> userList = users.getUsers();
             if (userList.size() == 0) {
