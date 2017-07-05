@@ -1,0 +1,41 @@
+module aaa-datastore-config {
+
+    yang-version 1;
+    namespace "urn:opendaylight:aaa:datastore:config";
+    prefix "aaa-datastore-config";
+
+    contact "m.elserngawy@gmail.com";
+    description
+        "This module contains the base config for aaa data stores.";
+
+    revision "2017-07-01" {
+        description
+            "Initial revision.";
+    }
+
+    container datastore-config {
+        leaf default-store {
+            description "Available data store types.";
+            type enumeration {
+                enum h2-data-store {
+                    description "H2 DataStore.";
+                    value 0;
+                }
+                enum mdsal-data-store {
+                    description "Mdsal DataStore.";
+                    value 1;
+                }
+            }
+        }
+        leaf time-to-live {
+            description "Time to live for tokens.";
+             type uint64;
+             default 36000;
+         }
+         leaf time-to-wait {
+             description "Time to wait for tokens.";
+             type uint64;
+             default 3600;
+         }
+    }
+}
