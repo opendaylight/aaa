@@ -11,6 +11,9 @@
         <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-app-config.xml">
             mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/xml/aaa-app-config
         </configfile>
+        <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-datastore-config.xml">
+            mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/xml/aaa-datastore-config
+        </configfile>
         <configfile finalname="bin/upgrade/convert-shiro-ini-to-rest-payload">
             mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/py/convert-shiro-ini
         </configfile>
