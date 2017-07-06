@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Red Hat, Inc. and others. All rights reserved.
+ * Copyright (c) 2016 - 2017 Red Hat, Inc. and others. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -21,8 +21,9 @@ import org.opendaylight.aaa.api.IDMStoreException;
  * Class with main() method and argument parsing etc.
  * This class ONLY deals with argument parsing etc. and doesn't "do" anything,
  * yet; this is intentional, and best for true unit test-ability of this class.
+ * The {@link Main} subclass has the actual logic.
  *
- * @author Michael Vorburger
+ * @author Michael Vorburger.ch
  */
 @SuppressWarnings("checkstyle:RegexpSingleLineJava") // allow System.out / System.err here..
 public abstract class AbstractMain {
@@ -33,6 +34,7 @@ public abstract class AbstractMain {
     private static final String OPTION_CHANGE_USER = "cu";
     private static final String OPTION_NEW_USER = "nu";
     private static final String OPTION_DEL_USER = "du";
+    private static final String OPTION_VERIFY_USER = "vu";
     private static final String OPTION_ADMINS = "a";
     private static final String OPTION_PASS = "p";
     private static final String OPTION_DEBUG = "X";
@@ -43,6 +45,7 @@ public abstract class AbstractMain {
     protected static final int RETURN_ILLEGAL_ARGUMENTS = -4;
     private static final int RETURN_ARGUMENTS_INCOMPATIBLE = -5;
     private static final int RETURN_ARGUMENTS_MISSING = -6;
+    protected static final int RETURN_PASSWORD_MISMATCH = -7;
 
     @SuppressWarnings({ "unchecked", "checkstyle:IllegalThrows", "checkstyle:IllegalCatch" })
     public int parseArguments(String[] args) throws Exception {
@@ -65,7 +68,8 @@ public abstract class AbstractMain {
                 System.err.println("Can't use these options together: -" + OPTION_CHANGE_USER
                         + ", -" + OPTION_NEW_USER);
                 return RETURN_ARGUMENTS_INCOMPATIBLE;
-            } else if (optionSet.has(OPTION_PASS) && !optionSet.has(OPTION_CHANGE_USER)
+            } else if (optionSet.has(OPTION_PASS)
+                    && !(optionSet.has(OPTION_CHANGE_USER) || optionSet.has(OPTION_VERIFY_USER))
                     && !optionSet.has(OPTION_NEW_USER)) {
                 System.err.println("If passwords are specificied, then must use one or the other of these options: -"
                         + OPTION_CHANGE_USER + ", -" + OPTION_NEW_USER);
@@ -79,6 +83,8 @@ public abstract class AbstractMain {
                 userNames = (List<String>) optionSet.valuesOf(OPTION_NEW_USER);
             } else if (optionSet.has(OPTION_DEL_USER)) {
                 userNames = (List<String>) optionSet.valuesOf(OPTION_DEL_USER);
+            } else if (optionSet.has(OPTION_VERIFY_USER)) {
+                userNames = (List<String>) optionSet.valuesOf(OPTION_VERIFY_USER);
             }
             List<String> passwords = (List<String>) optionSet.valuesOf(OPTION_PASS);
             if (!optionSet.has(OPTION_DEL_USER) && passwords.size() != userNames.size()) {
@@ -99,6 +105,8 @@ public abstract class AbstractMain {
 
             if (optionSet.has(OPTION_CHANGE_USER)) {
                 return resetPasswords(userNames, passwords);
+            } else if (optionSet.has(OPTION_VERIFY_USER)) {
+                return verifyUsers(userNames, passwords);
             } else if (optionSet.has(OPTION_NEW_USER)) {
                 boolean areAdmins = optionSet.has(OPTION_ADMINS);
                 return addNewUsers(userNames, passwords, areAdmins);
@@ -129,6 +137,8 @@ public abstract class AbstractMain {
                         .withRequiredArg();
                 acceptsAll(asList(OPTION_DEL_USER, "deleteUser"), "Existing user name to delete")
                         .withRequiredArg();
+                acceptsAll(asList(OPTION_VERIFY_USER, "verifyUser"), "Existing user name to verify password of")
+                        .withRequiredArg();
                 acceptsAll(asList(OPTION_PASS, "passwd"), "New password").withRequiredArg();
                 accepts(OPTION_ADMINS, "New User(s) added with 'admin' role");
                 // TODO accepts("v", "Display version information").forHelp();
@@ -154,6 +164,8 @@ public abstract class AbstractMain {
     protected abstract void listUsers() throws IDMStoreException;
 
     protected abstract int resetPasswords(List<String> userNames, List<String> passwords) throws IDMStoreException;
+
+    protected abstract int verifyUsers(List<String> userNames, List<String> passwords) throws IDMStoreException;
 
     protected abstract int addNewUsers(List<String> userNames, List<String> passwords, boolean areAdmins)
             throws IDMStoreException;

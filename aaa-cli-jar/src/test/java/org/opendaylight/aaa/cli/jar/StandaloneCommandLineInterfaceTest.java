@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Red Hat, Inc. and others. All rights reserved.
+ * Copyright (c) 2016 - 2017 Red Hat, Inc. and others. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -16,7 +16,7 @@ import org.junit.Test;
 /**
  * Test of StandaloneCommandLineInterface (and its dependencies; incl. real DB).
  *
- * @author Michael Vorburger
+ * @author Michael Vorburger.ch
  */
 public class StandaloneCommandLineInterfaceTest {
 
@@ -38,14 +38,20 @@ public class StandaloneCommandLineInterfaceTest {
     @Test
     public void testCreateNewUserAndSetPasswordAndDelete() throws Exception {
         assertThat(cli.getAllUserNames()).isEmpty();
+        assertThat(cli.checkUserPassword("duh", "dah")).isFalse();
+
         cli.createNewUser("test", "testpassword", false);
         assertThat(cli.getAllUserNames()).hasSize(1);
         assertThat(cli.getAllUserNames().get(0)).isEqualTo("test");
+        assertThat(cli.checkUserPassword("test", "testpassword")).isTrue();
 
         assertThat(cli.resetPassword("test", "anothertestpassword")).isTrue();
+        assertThat(cli.checkUserPassword("test", "testpassword")).isFalse();
+        assertThat(cli.checkUserPassword("test", "anothertestpassword")).isTrue();
 
         assertThat(cli.deleteUser("test")).isTrue();
         assertThat(cli.getAllUserNames()).hasSize(0);
+        assertThat(cli.checkUserPassword("test", "anothertestpassword")).isFalse();
     }
 
     @Test // https://bugs.opendaylight.org/show_bug.cgi?id=8157

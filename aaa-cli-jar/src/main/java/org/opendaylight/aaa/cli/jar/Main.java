@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Red Hat, Inc. and others. All rights reserved.
+ * Copyright (c) 2016 -2017 Red Hat, Inc. and others. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -13,9 +13,9 @@ import java.util.List;
 import org.opendaylight.aaa.api.IDMStoreException;
 
 /**
- * TestableMain which actually does something real.
+ * {@link AbstractMain} subclass with logic binding to the {@link StandaloneCommandLineInterface}.
  *
- * @author Michael Vorburger
+ * @author Michael Vorburger.ch
  */
 @SuppressWarnings("checkstyle:RegexpSingleLineJava") // allow System.out / System.err here..
 public class Main extends AbstractMain {
@@ -53,6 +53,21 @@ public class Main extends AbstractMain {
             } else {
                 System.err.println("User does not exist: " + userName);
                 return RETURN_ILLEGAL_ARGUMENTS;
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    protected int verifyUsers(List<String> userNames, List<String> passwords) throws IDMStoreException {
+        for (int i = 0; i < userNames.size(); i++) {
+            String userName = userNames.get(i);
+            String password = passwords.get(i);
+            if (cli.checkUserPassword(userName, password)) {
+                System.out.println("OK");
+            } else {
+                System.out.println("NOK");
+                return RETURN_PASSWORD_MISMATCH;
             }
         }
         return 0;
