@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Red Hat, Inc. and others. All rights reserved.
+ * Copyright (c) 2016 - 2017 Red Hat, Inc. and others. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -16,7 +16,7 @@ import org.junit.Test;
  * This intentionally only tests a very basic scenario end-to-end; more fine grained cases are covered in the
  * {@link StandaloneCommandLineInterfaceTest} and the {@link AbstractMainTest}.
  *
- * @author Michael Vorburger
+ * @author Michael Vorburger.ch
  */
 public class MainIntegrationTest {
 
@@ -29,11 +29,34 @@ public class MainIntegrationTest {
                 .parseArguments(new String[] { "-X", "--dbd", DIR, "-a", "-nu", "newuser", "-p", "firstpass" }))
                 .isEqualTo(0);
         assertThat(new Main()
+                .parseArguments(new String[] { "-X", "--dbd", DIR, "-vu", "newuser", "-p", "firstpass" }))
+                .isEqualTo(0);
+        assertThat(new Main()
+                .parseArguments(new String[] { "-X", "--dbd", DIR, "-vu", "newuser", "-p", "wrongpass" }))
+                .isEqualTo(-7);
+        assertThat(new Main()
                 .parseArguments(new String[] { "-X", "--dbd", DIR, "-cu", "newuser", "-p", "newpass" }))
+                .isEqualTo(0);
+        assertThat(new Main()
+                .parseArguments(new String[] { "-X", "--dbd", DIR, "-vu", "newuser", "-p", "firstpass" }))
+                .isEqualTo(-7);
+        assertThat(new Main()
+                .parseArguments(new String[] { "-X", "--dbd", DIR, "-vu", "newuser", "-p", "newpass" }))
                 .isEqualTo(0);
         assertThat(new Main()
                 .parseArguments(new String[] { "-X", "--dbd", DIR, "-du", "newuser" }))
                 .isEqualTo(0);
+        assertThat(new Main()
+                .parseArguments(new String[] { "-X", "--dbd", DIR, "-vu", "newuser", "-p", "newpass" }))
+                .isEqualTo(-7);
     }
 
+    @Test
+    public void testMismatchUsersPasswords() throws Exception {
+        assertThat(new Main()
+                .parseArguments(new String[] { "-X", "--dbd", DIR,
+                    "-vu", "newuser1", "-p", "newpass1",
+                    "-vu", "newuser2" /* No 2nd -p */ }))
+                .isEqualTo(-3);
+    }
 }

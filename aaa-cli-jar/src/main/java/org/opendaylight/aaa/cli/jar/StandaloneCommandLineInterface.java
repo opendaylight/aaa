@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Red Hat, Inc. and others. All rights reserved.
+ * Copyright (c) 2016 - 2017 Red Hat, Inc. and others. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
+import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.h2.config.IdmLightConfig;
@@ -26,7 +27,7 @@ import org.opendaylight.aaa.h2.persistence.H2Store;
  * AAA CLI interface.
  * This is for a "standalone Java" environment (i.e. plain JSE; non-OSGi, no Karaf).
  *
- * @author Michael Vorburger
+ * @author Michael Vorburger.ch
  */
 public class StandaloneCommandLineInterface {
 
@@ -60,6 +61,21 @@ public class StandaloneCommandLineInterface {
             user.setPassword(newPassword);
             identityStore.updateUser(user);
             return true;
+        }
+    }
+
+    /**
+     * Check a user's password.
+     * See <a href="https://bugs.opendaylight.org/show_bug.cgi?id=8721">Bug 8721 requirement</a>.
+     */
+    public boolean checkUserPassword(String userIdWithoutDomain, String password) throws IDMStoreException {
+        Optional<User> optUser = getSingleUser(userIdWithoutDomain);
+        if (!optUser.isPresent()) {
+            return false;
+        } else {
+            User user = optUser.get();
+            String realPwd = SHA256Calculator.getSHA256(password, user.getSalt());
+            return user.getPassword().equals(realPwd);
         }
     }
 

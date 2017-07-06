@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Red Hat, Inc. and others. All rights reserved.
+ * Copyright (c) 2016 - 2017 Red Hat, Inc. and others. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -10,6 +10,7 @@ package org.opendaylight.aaa.cli.jar;
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.any;
 
+import com.google.common.collect.Lists;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,7 +21,7 @@ import org.opendaylight.yangtools.testutils.mockito.MoreAnswers;
 /**
  * Unit Test of Main class with the argument parsing.
  *
- * @author Michael Vorburger
+ * @author Michael Vorburger.ch
  */
 public class AbstractMainTest {
 
@@ -152,4 +153,29 @@ public class AbstractMainTest {
         Mockito.verify(main).setDbDirectory(new File("."));
         Mockito.verify(main).deleteUsers(Collections.singletonList("duser"));
     }
+
+    @Test
+    public void verify1User1Password() throws Exception {
+        AbstractMain main = Mockito.spy(AbstractMain.class);
+        assertThat(main.parseArguments(new String[] { "-X", "-vu", "user", "-p", "pass" })).isEqualTo(0);
+        Mockito.verify(main).setDbDirectory(new File("."));
+        Mockito.verify(main).verifyUsers(Collections.singletonList("user"), Collections.singletonList("pass"));
+    }
+
+    @Test
+    public void verify2User2Password() throws Exception {
+        AbstractMain main = Mockito.spy(AbstractMain.class);
+        assertThat(main.parseArguments(new String[] {
+            "-X", "-vu", "user1", "-p", "pass1", "-vu", "user2", "-p", "pass2" })).isEqualTo(0);
+        Mockito.verify(main).setDbDirectory(new File("."));
+        Mockito.verify(main).verifyUsers(Lists.newArrayList("user1", "user2"), Lists.newArrayList("pass1", "pass2"));
+    }
+
+    @Test
+    public void verifyUserWithoutPassword() throws Exception {
+        AbstractMain main = Mockito.spy(AbstractMain.class);
+        assertThat(main.parseArguments(new String[] { "-X", "-vu", "user" })).isEqualTo(-3);
+
+    }
+
 }
