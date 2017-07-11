@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da2a55be_02966ef0",
+        "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/Main.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-07-11T13:57:30Z",
+      "side": 1,
+      "message": "This will fail pretty badly if the userNames.size() !\u003d passwords.size().  Can you add a Preconditions check or something?  Don\u0027t really care how its done as long as it works :).",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 47
+      },
+      "revId": "7e3738c78045dafcae94300f98bddc9a2b63d851",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_e29a3a13",
+        "filename": "aaa-cli-jar/src/test/java/org/opendaylight/aaa/cli/jar/MainIntegrationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-07-11T13:57:30Z",
+      "side": 1,
+      "message": "Add a basic test if username list size !\u003d password list size",
+      "revId": "7e3738c78045dafcae94300f98bddc9a2b63d851",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
