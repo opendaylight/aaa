@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da2a55be_7589e1c9",
+        "filename": "aaa-cli-jar/src/main/java/org/opendaylight/aaa/cli/jar/Main.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2017-07-12T22:09:10Z",
+      "side": 1,
+      "message": "It actually already works as is, because it\u0027s impossible for this to be called with userNames.size() !\u003d passwords.size(), because that\u0027s already checked for in AbstractMain\u0027s parseArguments line 90 (RETURN_ARGUMENTS_MISMATCHED) ... ;-) As proven by the new testMismatchUsersPasswords in MainIntegrationTest",
+      "parentUuid": "da2a55be_02966ef0",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 47
+      },
+      "revId": "7e3738c78045dafcae94300f98bddc9a2b63d851",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da2a55be_e29a3a13",
         "filename": "aaa-cli-jar/src/test/java/org/opendaylight/aaa/cli/jar/MainIntegrationTest.java",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-11T13:57:30Z",
       "side": 1,
       "message": "Add a basic test if username list size !\u003d password list size",
+      "revId": "7e3738c78045dafcae94300f98bddc9a2b63d851",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_55865dba",
+        "filename": "aaa-cli-jar/src/test/java/org/opendaylight/aaa/cli/jar/MainIntegrationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2017-07-12T22:09:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da2a55be_e29a3a13",
       "revId": "7e3738c78045dafcae94300f98bddc9a2b63d851",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
