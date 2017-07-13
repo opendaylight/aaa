@@ -138,6 +138,11 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>aaa-cli-jar</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-cert</artifactId>
                 <version>${project.version}</version>
             </dependency>
