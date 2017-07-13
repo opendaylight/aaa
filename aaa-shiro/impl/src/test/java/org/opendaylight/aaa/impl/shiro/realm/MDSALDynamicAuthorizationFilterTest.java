@@ -15,17 +15,19 @@ import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.CheckedFuture;
 import com.google.common.util.concurrent.Futures;
+import java.util.List;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import org.apache.shiro.subject.Subject;
+import org.junit.Before;
 import org.junit.Test;
-import org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter;
+import org.opendaylight.aaa.impl.AAAShiroProvider;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
@@ -40,6 +42,11 @@ import org.opendaylight.yangtools.yang.binding.DataObject;
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 public class MDSALDynamicAuthorizationFilterTest {
+
+    @Before
+    public void setup() {
+        AAAShiroProvider.newInstance(null, null, null, null, null, null);
+    }
 
     // test helper method to generate some cool mdsal data
     private DataBroker getTestData() throws Exception {

@@ -37,10 +37,10 @@ public class AAAShiroProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
-    private static AAAShiroProvider INSTANCE;
-    private DataBroker dataBroker;
+    private static volatile AAAShiroProvider INSTANCE;
+    private final DataBroker dataBroker;
     private final ICertificateManager certificateManager;
-    private ShiroConfiguration shiroConfiguration;
+    private final ShiroConfiguration shiroConfiguration;
 
     /**
      * Provider for this bundle.
@@ -118,9 +118,6 @@ public class AAAShiroProvider {
      * @return the Provider
      */
     public static AAAShiroProvider getInstance() {
-        if (INSTANCE == null) {
-            newInstance(null, null, null, null, null,null);
-        }
         return INSTANCE;
     }
 

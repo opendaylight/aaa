@@ -44,6 +44,7 @@ import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.impl.AAAShiroProvider;
 import org.opendaylight.aaa.impl.shiro.keystone.domain.KeystoneAuth;
 import org.opendaylight.aaa.impl.shiro.keystone.domain.KeystoneToken;
 import org.opendaylight.aaa.impl.shiro.realm.util.http.SimpleHttpClient;
@@ -87,6 +88,8 @@ public class KeystoneAuthRealmTest {
 
     @Before
     public void setup() throws MalformedURLException, URISyntaxException {
+        AAAShiroProvider.newInstance(null, null, null, null, null, null);
+
         final String testUrl = "http://example.com";
         // a token for a user without roles
         ksToken = new KeystoneToken.Token();

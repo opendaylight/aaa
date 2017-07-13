@@ -67,13 +67,16 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
 
     @Override
     public void init() {
-        ShiroConfiguration shiroConfiguration = AAAShiroProvider.getInstance().getShiroConfiguration();
-        while (shiroConfiguration == null) {
-            shiroConfiguration = AAAShiroProvider.getInstance().getShiroConfiguration();
+        while (AAAShiroProvider.getInstance() == null) {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                throw new RuntimeException("Interrupted waiting for b", e);
+            }
         }
 
         // Initialize the Shiro environment from clustered-app-config
-        final Ini ini = createIniFromClusteredAppConfig(shiroConfiguration);
+        final Ini ini = createIniFromClusteredAppConfig(AAAShiroProvider.getInstance().getShiroConfiguration());
         setIni(ini);
         super.init();
     }
