@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Sharon Aicler (saichler@cisco.com)
  */
+@Deprecated
 public class SHA256Calculator {
 
     private static final Logger LOG = LoggerFactory.getLogger(SHA256Calculator.class);
