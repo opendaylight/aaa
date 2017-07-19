@@ -55,7 +55,6 @@
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.metatype</artifactId>
         </dependency>
-
         <!-- Existing AAA infrastructure -->
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
@@ -67,7 +66,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>odl-aaa-authn</artifactId>
+            <artifactId>odl-aaa-api</artifactId>
             <version>${project.version}</version>
             <type>xml</type>
             <classifier>features</classifier>
@@ -79,7 +78,6 @@
             <type>xml</type>
             <classifier>features</classifier>
         </dependency>
-
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-web</artifactId>
@@ -88,7 +86,6 @@
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
         </dependency>
-
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
@@ -109,7 +106,6 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-shiro</artifactId>
@@ -117,7 +113,6 @@
             <type>xml</type>
             <classifier>aaa-app-config</classifier>
         </dependency>
-
         <!-- a conversion utility for upgrades -->
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
@@ -126,12 +121,115 @@
             <type>py</type>
             <classifier>convert-shiro-ini</classifier>
         </dependency>
-
         <!-- add in standard jetty servlets bundle which exposes all sorts of useful filters
              that can be added in front of RESTCONF. -->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlets</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.odlparent</groupId>
+            <artifactId>odl-karaf-feat-jetty</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-servlet</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-client</artifactId>
+        </dependency>
+        <!-- EhCache -->
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+        </dependency>
+        <!--H2 Store -->
+        <dependency>
+            <groupId>org.opendaylight.odlparent</groupId>
+            <artifactId>odl-karaf-feat-jdbc</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-h2-store</artifactId>
+        </dependency>
+        <!-- IDMLight -->
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-idmlight</artifactId>
+        </dependency>
+        <dependency>
+            <!-- finalname="bin/idmtool" -->
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-idmlight</artifactId>
+            <version>${project.version}</version>
+            <type>py</type>
+            <classifier>config</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-json-org</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-base</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-json-provider</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <!-- finalname="/etc/org.opendaylight.aaa.authn.cfg" -->
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-shiro</artifactId>
+            <type>cfg</type>
+            <classifier>config</classifier>
+        </dependency>
+        <dependency>
+            <!-- finalname="/etc/org.opendaylight.aaa.tokens.cfg" -->
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-h2-store</artifactId>
+            <type>cfg</type>
+            <classifier>config</classifier>
+        </dependency>
+        <dependency>
+            <!-- finalname="/etc/org.opendaylight.aaa.filterchain.cfg" -->
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-filterchain</artifactId>
+            <type>cfg</type>
+            <classifier>config</classifier>
         </dependency>
     </dependencies>
 </project>
