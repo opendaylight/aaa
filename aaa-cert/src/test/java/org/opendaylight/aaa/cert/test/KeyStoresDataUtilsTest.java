@@ -33,6 +33,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.File;
+import java.security.GeneralSecurityException;
 import java.security.Security;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,7 +67,7 @@ public class KeyStoresDataUtilsTest {
 
 
     @Test
-    public void keyStoresDataUtilsTest() {
+    public void keyStoresDataUtilsTest() throws GeneralSecurityException {
         // Test vars setup
         final OdlKeystore odlKeystore = new OdlKeystoreBuilder()
                 .setAlias(alias)

@@ -8,6 +8,7 @@
 
 package org.opendaylight.aaa.cert.utils;
 
+import java.security.GeneralSecurityException;
 import java.util.List;
 import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
 import org.opendaylight.aaa.cert.impl.ODLKeyTool;
@@ -154,8 +155,12 @@ public class KeyStoresDataUtils {
             return null;
         }
         final OdlKeystoreBuilder odlKeystoreBuilder = new OdlKeystoreBuilder(odlKeystore);
-        odlKeystoreBuilder.setKeystoreFile(encryService.decrypt(odlKeystore.getKeystoreFile()));
-        odlKeystoreBuilder.setStorePassword(encryService.decrypt(odlKeystore.getStorePassword()));
+        try {
+            odlKeystoreBuilder.setKeystoreFile(encryService.decrypt(odlKeystore.getKeystoreFile()));
+            odlKeystoreBuilder.setStorePassword(encryService.decrypt(odlKeystore.getStorePassword()));
+        } catch (GeneralSecurityException e) {
+            LOG.error("Unable to decrypt the keystore file or store password from keystore."+e.getMessage());
+        }
         return odlKeystoreBuilder.build();
     }
 
@@ -174,15 +179,23 @@ public class KeyStoresDataUtils {
             return null;
         }
         final TrustKeystoreBuilder trustKeyStoreBuilder = new TrustKeystoreBuilder(trustKeyStore);
-        trustKeyStoreBuilder.setKeystoreFile(encryService.decrypt(trustKeyStore.getKeystoreFile()));
-        trustKeyStoreBuilder.setStorePassword(encryService.decrypt(trustKeyStore.getStorePassword()));
+        try {
+            trustKeyStoreBuilder.setKeystoreFile(encryService.decrypt(trustKeyStore.getKeystoreFile()));
+            trustKeyStoreBuilder.setStorePassword(encryService.decrypt(trustKeyStore.getStorePassword()));
+        } catch (GeneralSecurityException e) {
+            LOG.error("Unable to decrypt the keystore file or store password from keystore."+e.getMessage());
+        }
         return trustKeyStoreBuilder.build();
     }
 
     private OdlKeystore encryptOdlKeyStore(final OdlKeystore odlKeystore) {
         final OdlKeystoreBuilder odlKeystoreBuilder = new OdlKeystoreBuilder(odlKeystore);
-        odlKeystoreBuilder.setKeystoreFile(encryService.encrypt(odlKeystore.getKeystoreFile()));
-        odlKeystoreBuilder.setStorePassword(encryService.encrypt(odlKeystore.getStorePassword()));
+        try {
+            odlKeystoreBuilder.setKeystoreFile(encryService.encrypt(odlKeystore.getKeystoreFile()));
+            odlKeystoreBuilder.setStorePassword(encryService.encrypt(odlKeystore.getStorePassword()));
+        } catch (GeneralSecurityException e) {
+            LOG.error("Unable to encrypt the keystore file or store password."+e.getMessage());
+        }
         return odlKeystoreBuilder.build();
     }
 
@@ -195,8 +208,12 @@ public class KeyStoresDataUtils {
 
     private TrustKeystore encryptTrustKeystore(final TrustKeystore trustKeyStore) {
         final TrustKeystoreBuilder trustKeyStoreBuilder = new TrustKeystoreBuilder(trustKeyStore);
-        trustKeyStoreBuilder.setKeystoreFile(encryService.encrypt(trustKeyStore.getKeystoreFile()));
-        trustKeyStoreBuilder.setStorePassword(encryService.encrypt(trustKeyStore.getStorePassword()));
+        try {
+            trustKeyStoreBuilder.setKeystoreFile(encryService.encrypt(trustKeyStore.getKeystoreFile()));
+            trustKeyStoreBuilder.setStorePassword(encryService.encrypt(trustKeyStore.getStorePassword()));
+        } catch (GeneralSecurityException e) {
+            LOG.error("Unable to encrypt the keystore file or store password."+e.getMessage());;
+        }
         return trustKeyStoreBuilder.build();
     }
 

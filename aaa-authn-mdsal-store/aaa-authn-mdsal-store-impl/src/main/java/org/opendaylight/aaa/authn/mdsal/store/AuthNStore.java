@@ -13,6 +13,7 @@ import com.google.common.util.concurrent.CheckedFuture;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import java.math.BigInteger;
+import java.security.GeneralSecurityException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.opendaylight.aaa.api.Authentication;
@@ -60,7 +61,11 @@ public class AuthNStore implements AutoCloseable, TokenStore {
 
     @Override
     public void put(String token, Authentication auth) {
-        token = dataEncrypter.encrypt(token);
+        try {
+            token = dataEncrypter.encrypt(token);
+        } catch (GeneralSecurityException e) {
+            LOG.error("Unable to encrypt the token."+e.getMessage());
+        }
         Claims claims = AuthNStoreUtil.createClaimsRecord(token, auth);
 
         // create and insert parallel struct
@@ -73,7 +78,11 @@ public class AuthNStore implements AutoCloseable, TokenStore {
 
     @Override
     public Authentication get(String token) {
-        token = dataEncrypter.encrypt(token);
+        try {
+            token = dataEncrypter.encrypt(token);
+        } catch (GeneralSecurityException e) {
+            LOG.error("Unable to encrypt the token."+e.getMessage());
+        }
         Authentication authentication = null;
         Claims claims = readClaims(token);
         if (claims != null) {
@@ -87,7 +96,11 @@ public class AuthNStore implements AutoCloseable, TokenStore {
 
     @Override
     public boolean delete(String token) {
-        token = dataEncrypter.encrypt(token);
+        try {
+            token = dataEncrypter.encrypt(token);
+        } catch (GeneralSecurityException e) {
+            LOG.error("Unable to encrypt the token."+e.getMessage());
+        }
         boolean result = false;
         Claims claims = readClaims(token);
         result = deleteClaims(token);
