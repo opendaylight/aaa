@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da2a55be_bbae7683",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/AuthNStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-07-27T18:17:12Z",
+      "side": 1,
+      "message": "should be final",
+      "revId": "def98d6c180381fc649477b77a5f134f85a4411a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_7ba4fea5",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/AuthNStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-07-27T18:17:12Z",
+      "side": 1,
+      "message": "this should be \", e\" not this...",
+      "range": {
+        "startLine": 67,
+        "startChar": 52,
+        "endLine": 67,
+        "endChar": 67
+      },
+      "revId": "def98d6c180381fc649477b77a5f134f85a4411a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_5b9f7a50",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/AuthNStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-07-27T18:17:12Z",
+      "side": 1,
+      "message": "should be final",
+      "revId": "def98d6c180381fc649477b77a5f134f85a4411a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_9ba9f27d",
+        "filename": "aaa-authn-mdsal-store/aaa-authn-mdsal-store-impl/src/main/java/org/opendaylight/aaa/authn/mdsal/store/AuthNStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-07-27T18:17:12Z",
+      "side": 1,
+      "message": "shoudl be final",
+      "revId": "def98d6c180381fc649477b77a5f134f85a4411a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_fbb74ed6",
+        "filename": "aaa-encrypt-service/src/test/java/org/opendaylight/aaa/encrypt/AAAEncryptServiceImplTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-07-27T18:17:12Z",
+      "side": 1,
+      "message": "import ordering is wrong...",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 46
+      },
+      "revId": "def98d6c180381fc649477b77a5f134f85a4411a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
