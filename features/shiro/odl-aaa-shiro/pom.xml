@@ -61,6 +61,17 @@
             <artifactId>aaa-shiro</artifactId>
         </dependency>
         <dependency>
+          <groupId>org.opendaylight.aaa</groupId>
+          <artifactId>aaa-shiro-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>odl-aaa-encryption-service</artifactId>
+            <version>${project.version}</version>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+        <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-filterchain</artifactId>
         </dependency>
@@ -168,11 +179,6 @@
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-h2-store</artifactId>
-        </dependency>
-        <!-- IDMLight -->
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-idmlight</artifactId>
         </dependency>
         <dependency>
             <!-- finalname="bin/idmtool" -->
