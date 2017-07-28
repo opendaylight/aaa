@@ -63,8 +63,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
       <groupId>org.apache.oltu.oauth2</groupId>
       <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
     </dependency>
-    <!-- end -->
-    <!-- KeystoneAuthRealm -->
     <dependency>
       <groupId>com.fasterxml.jackson.jaxrs</groupId>
       <artifactId>jackson-jaxrs-json-provider</artifactId>
@@ -73,7 +71,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         <groupId>org.opendaylight.aaa</groupId>
         <artifactId>aaa-cert</artifactId>
     </dependency>
-    <!-- end -->
     <dependency>
       <groupId>org.apache.shiro</groupId>
       <artifactId>shiro-web</artifactId>
@@ -96,11 +93,97 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
       <scope>provided</scope>
     </dependency>
 
+    <!--Yang Binding -->
+    <dependency>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>sal-binding-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>sal-common-util</artifactId>
+    </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-filterchain</artifactId>
+        </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-server</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.dependencymanager</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.core</artifactId>
+    </dependency>
+
+    <!-- JSON JAXB Stuff -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-json-org</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.jaxrs</groupId>
+      <artifactId>jackson-jaxrs-base</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.jaxrs</groupId>
+      <artifactId>jackson-jaxrs-json-provider</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.module</groupId>
+      <artifactId>jackson-module-jaxb-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-servlets</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
     <!-- Testing Dependencies -->
+    <dependency>
+      <groupId>com.sun.jersey.jersey-test-framework</groupId>
+      <artifactId>jersey-test-framework-grizzly2</artifactId>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jul-to-slf4j</artifactId>
+      <version>1.7.21</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-servlet</artifactId>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
@@ -153,6 +236,30 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
               org.opendaylight.aaa.shiro.realm,
               org.opendaylight.aaa.shiro.web.env
             </Export-Package>
+            <Import-Package>
+              com.google.*,
+              com.sun.jersey.spi.container.servlet,
+              javax.servlet.http,
+              javax.servlet.*,
+              org.apache.oltu.oauth2.*,
+              javax.ws.rs,javax.ws.rs.core,
+              javax.xml.bind.annotation,
+              org.opendaylight.aaa.*,
+              org.opendaylight.aaa.api.*,
+              org.opendaylight.aaa.filterchain.filters,
+              org.xml.sax,
+              org.apache.felix.dm,
+              org.apache.shiro.web.env,org.apache.shiro.authc,
+              org.eclipse.jetty.servlets;version="[8.1,10)",
+              org.opendaylight.*,
+              org.osgi.framework,
+              org.osgi.util.tracker,
+              org.osgi.service.cm.*,
+              org.osgi.service.http.*,
+              org.apache.shiro.web.*,
+              org.apache.shiro.*,
+              org.slf4j.*
+            </Import-Package>
           </instructions>
         </configuration>
       </plugin>
@@ -168,6 +275,12 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             </goals>
             <configuration>
               <artifacts>
+                <!-- attach idmtool as an artifact -->
+                <artifact>
+                  <file>${project.build.directory}/classes/idmtool.py</file>
+                  <type>py</type>
+                  <classifier>idmtool</classifier>
+                </artifact>
                 <!-- attach authn.cfg as an artifact -->
                 <artifact>
                   <file>${project.build.directory}/classes/authn.cfg</file>

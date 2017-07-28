@@ -3,28 +3,61 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
     version="3.0">
 
-
-    <!-- Shiro initialization common to both endpoints -->
+    <!-- Shiro initialization -->
     <context-param>
-        <param-name>shiroEnvironmentClass</param-name>
-        <param-value>org.opendaylight.aaa.shiro.web.env.KarafIniWebEnvironment</param-value>
+      <param-name>shiroEnvironmentClass</param-name>
+      <param-value>org.opendaylight.aaa.shiro.web.env.KarafIniWebEnvironment</param-value>
     </context-param>
-
     <listener>
         <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
     </listener>
 
-    <!-- Filters for moon endpoints -->
+    <!-- Allows user to add javax.servlet.Filter(s) in front of REST services -->
+    <filter>
+        <filter-name>DynamicFilterChain</filter-name>
+        <filter-class>org.opendaylight.aaa.filterchain.filters.CustomFilterAdapter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>DynamicFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- AAA filter in front of these REST web services -->
     <filter>
         <filter-name>ShiroFilter</filter-name>
         <filter-class>org.opendaylight.aaa.shiro.filters.AAAShiroFilter</filter-class>
     </filter>
-    <!-- Only require creds for the moon endpoints;  the OAuth2 endpoint was originally designed to take authentication
-    details through payload instead. -->
+    <filter-mapping>
+        <filter-name>ShiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- CORS filter -->
+    <filter>
+        <filter-name>cross-origin-restconf</filter-name>
+        <filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
+        <init-param>
+            <param-name>allowedOrigins</param-name>
+            <param-value>*</param-value>
+        </init-param>
+        <init-param>
+            <param-name>allowedMethods</param-name>
+            <param-value>GET,POST,OPTIONS,DELETE,PUT,HEAD</param-value>
+        </init-param>
+        <init-param>
+            <param-name>allowedHeaders</param-name>
+            <param-value>origin, content-type, accept, authorization, Authorization</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>cross-origin-restconf</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- Filters for moon endpoints -->
     <filter-mapping>
         <filter-name>ShiroFilter</filter-name>
         <url-pattern>/moon/*</url-pattern>
     </filter-mapping>
-
 
 </web-app>

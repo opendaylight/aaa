@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.idm.rest;
+package org.opendaylight.aaa.idm;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -24,9 +24,7 @@ import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
-import org.opendaylight.aaa.idm.IdmLightApplication;
-import org.opendaylight.aaa.idm.IdmLightProxy;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule;
+import org.opendaylight.aaa.idm.AAAIDMLightModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
