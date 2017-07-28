@@ -14,9 +14,9 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
-import org.opendaylight.aaa.idm.rest.DomainHandler;
-import org.opendaylight.aaa.idm.rest.RoleHandler;
-import org.opendaylight.aaa.idm.rest.UserHandler;
+import org.opendaylight.aaa.idm.DomainHandler;
+import org.opendaylight.aaa.idm.RoleHandler;
+import org.opendaylight.aaa.idm.UserHandler;
 
 /**
  * A JAX-RS application for IdmLight. The REST endpoints delivered by this
