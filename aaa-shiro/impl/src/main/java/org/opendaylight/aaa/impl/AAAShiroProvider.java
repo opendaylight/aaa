@@ -19,6 +19,7 @@ import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.idm.IdmLightProxy;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.AuthenticationManager;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.ClientManager;
@@ -110,6 +111,15 @@ public class AAAShiroProvider {
         INSTANCE = new AAAShiroProvider(dataBroker, certificateManager, credentialAuth, iidmStore, tokenStore,
                 shiroConfiguration);
         return INSTANCE;
+    }
+
+    public static AAAShiroProvider newInstance(final DataBroker dataBroker,
+            final ICertificateManager certificateManager,
+            final IIDMStore iidmStore, final TokenStore tokenStore,
+            final ShiroConfiguration shiroConfiguration) {
+            INSTANCE = new AAAShiroProvider(dataBroker, certificateManager, new IdmLightProxy(), iidmStore, tokenStore,
+                    shiroConfiguration);
+            return INSTANCE;
     }
 
     /**
