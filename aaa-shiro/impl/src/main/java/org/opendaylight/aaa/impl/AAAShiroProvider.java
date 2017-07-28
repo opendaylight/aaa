@@ -9,6 +9,8 @@ package org.opendaylight.aaa.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 import javax.naming.Name;
 import javax.servlet.ServletException;
@@ -22,6 +24,7 @@ import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.idm.IdmLightApplication;
 import org.opendaylight.aaa.impl.shiro.oauth2.OAuth2TokenServlet;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.AuthenticationManager;
@@ -44,12 +47,17 @@ public class AAAShiroProvider {
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
     private static volatile AAAShiroProvider INSTANCE;
+
+    private static final String SERVLET_NAME_KEY = "servlet-name";
+    private static final String AUTH_ENDPOINT_NAME = IdmLightApplication.class.getSimpleName();
+
     private final DataBroker dataBroker;
     private final ICertificateManager certificateManager;
     private final ShiroConfiguration shiroConfiguration;
     private final HttpService httpService;
     private final String moonEndpointPath;
     private final String oauth2EndpointPath;
+    private final String authEndpointPath;
 
 
     /**
@@ -63,29 +71,37 @@ public class AAAShiroProvider {
                              final ShiroConfiguration shiroConfiguration,
                              final HttpService httpService,
                              final String moonEndpointPath,
-                             final String oauth2EndpointPath) {
+                             final String oauth2EndpointPath,
+                             final String authEndpointPath) {
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
         this.shiroConfiguration = shiroConfiguration;
         this.httpService = httpService;
         this.moonEndpointPath = moonEndpointPath;
         this.oauth2EndpointPath = oauth2EndpointPath;
+        this.authEndpointPath = authEndpointPath;
 
         this.initializeServices(credentialAuth, iidmStore, tokenStore);
         try {
-            this.registerServletContexts(this.httpService, this.moonEndpointPath, this.oauth2EndpointPath);
+            this.registerServletContexts(this.httpService, this.moonEndpointPath, this.oauth2EndpointPath,
+                    this.authEndpointPath);
         } catch (final ServletException | NamespaceException e) {
             LOG.warn("Could not initialize AAA servlet endpoints", e);
         }
     }
 
     private void registerServletContexts(final HttpService httpService, final String moonEndpointPath,
-                                         final String oauth2EndpointPath) throws ServletException, NamespaceException {
+                                         final String oauth2EndpointPath, final String authEndpointPath)
+            throws ServletException, NamespaceException {
+
         Preconditions.checkNotNull(httpService, "httpService cannot be null");
 
         LOG.info("attempting registration of AAA moon and oauth2 servlets");
         httpService.registerServlet(moonEndpointPath, new org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint(), null, null);
         httpService.registerServlet(oauth2EndpointPath, new OAuth2TokenServlet(), null, null);
+        final Dictionary initParams = new Hashtable();
+        initParams.put(SERVLET_NAME_KEY, AUTH_ENDPOINT_NAME);
+        httpService.registerServlet(authEndpointPath, IdmLightApplication.create(), initParams, null);
     }
 
     /**
@@ -139,9 +155,10 @@ public class AAAShiroProvider {
                                                final ShiroConfiguration shiroConfiguration,
                                                final HttpService httpService,
                                                final String moonEndpointPath,
-                                               final String oauth2EndpointPath) {
+                                               final String oauth2EndpointPath,
+                                               final String authEndpointPath) {
         INSTANCE = new AAAShiroProvider(dataBroker, certificateManager, credentialAuth, iidmStore, tokenStore,
-                shiroConfiguration, httpService, moonEndpointPath, oauth2EndpointPath);
+                shiroConfiguration, httpService, moonEndpointPath, oauth2EndpointPath, authEndpointPath);
         return INSTANCE;
     }
 
@@ -169,6 +186,7 @@ public class AAAShiroProvider {
         if (httpService != null) {
             httpService.unregister(moonEndpointPath);
             httpService.unregister(oauth2EndpointPath);
+            httpService.unregister(authEndpointPath);
         }
     }
 

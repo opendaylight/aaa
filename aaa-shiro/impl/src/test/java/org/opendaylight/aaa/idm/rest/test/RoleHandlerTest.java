@@ -29,7 +29,7 @@ public class RoleHandlerTest extends HandlerTest {
     @Test
     public void testRoleHandler() {
         // check default roles
-        Roles roles = resource().path("/v1/roles").get(Roles.class);
+        Roles roles = resource().path("/auth/v1/roles").get(Roles.class);
         assertNotNull(roles);
         List<Role> roleList = roles.getRoles();
         assertEquals(2, roleList.size());
@@ -38,13 +38,13 @@ public class RoleHandlerTest extends HandlerTest {
         }
 
         // check existing role
-        Role role = resource().path("/v1/roles/0").get(Role.class);
+        Role role = resource().path("/auth/v1/roles/0").get(Role.class);
         assertNotNull(role);
         assertTrue(role.getName().equals("admin"));
 
         // check not exist Role
         try {
-            resource().path("/v1/roles/5").get(IDMError.class);
+            resource().path("/auth/v1/roles/5").get(IDMError.class);
             fail("Should failed with 404!");
         } catch (UniformInterfaceException e) {
             ClientResponse resp = e.getResponse();
@@ -57,14 +57,14 @@ public class RoleHandlerTest extends HandlerTest {
         roleData.put("name", "role1");
         roleData.put("description", "test Role");
         roleData.put("domainid", "0");
-        ClientResponse clientResponse = resource().path("/v1/roles").type(MediaType.APPLICATION_JSON)
+        ClientResponse clientResponse = resource().path("/auth/v1/roles").type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class, roleData);
         assertEquals(201, clientResponse.getStatus());
 
         // check create Role missing name data
         roleData.remove("name");
         try {
-            clientResponse = resource().path("/v1/roles").type(MediaType.APPLICATION_JSON).post(ClientResponse.class,
+            clientResponse = resource().path("/auth/v1/roles").type(MediaType.APPLICATION_JSON).post(ClientResponse.class,
                     roleData);
             assertEquals(404, clientResponse.getStatus());
         } catch (UniformInterfaceException e) {
@@ -74,20 +74,20 @@ public class RoleHandlerTest extends HandlerTest {
 
         // check update Role data
         roleData.put("name", "role1Update");
-        clientResponse = resource().path("/v1/roles/2").type(MediaType.APPLICATION_JSON).put(ClientResponse.class,
+        clientResponse = resource().path("/auth/v1/roles/2").type(MediaType.APPLICATION_JSON).put(ClientResponse.class,
                 roleData);
         assertEquals(200, clientResponse.getStatus());
-        role = resource().path("/v1/roles/2").get(Role.class);
+        role = resource().path("/auth/v1/roles/2").get(Role.class);
         assertNotNull(role);
         assertTrue(role.getName().equals("role1Update"));
 
         // check delete Role
-        clientResponse = resource().path("/v1/roles/2").delete(ClientResponse.class);
+        clientResponse = resource().path("/auth/v1/roles/2").delete(ClientResponse.class);
         assertEquals(204, clientResponse.getStatus());
 
         // check delete not existing Role
         try {
-            resource().path("/v1/roles/2").delete(IDMError.class);
+            resource().path("/auth/v1/roles/2").delete(IDMError.class);
             fail("Should failed with 404!");
         } catch (UniformInterfaceException e) {
             ClientResponse resp = e.getResponse();
@@ -101,7 +101,7 @@ public class RoleHandlerTest extends HandlerTest {
         roleData.put("description", "test Role");
         roleData.put("domainid", "0");
         roleData.put("roleid", "roleid");
-        clientResponse = resource().path("/v1/roles").type(MediaType.APPLICATION_JSON).post(ClientResponse.class,
+        clientResponse = resource().path("/auth/v1/roles").type(MediaType.APPLICATION_JSON).post(ClientResponse.class,
                 roleData);
         assertEquals(400, clientResponse.getStatus());
     }

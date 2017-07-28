@@ -14,8 +14,8 @@ import com.sun.jersey.test.framework.JerseyTest;
 import com.sun.jersey.test.framework.WebAppDescriptor;
 import org.junit.Before;
 import org.opendaylight.aaa.api.StoreBuilder;
+import org.opendaylight.aaa.idm.AAAIDMLightModule;
 import org.opendaylight.aaa.idm.IdmLightApplication;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.idmlight.rev151204.AAAIDMLightModule;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 public abstract class HandlerTest extends JerseyTest {
