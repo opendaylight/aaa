@@ -15,6 +15,12 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
           binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration"
           id="shiroConfiguration" default-config-file-name="aaa-app-config.xml" />
 
+  <bean id="IdmLightProxy" class="org.opendaylight.aaa.idm.IdmLightProxy">
+  </bean>
+
+  <service ref="IdmLightProxy" interface="org.opendaylight.aaa.api.IdMService" odl:type="default"/>
+  <service ref="IdmLightProxy" interface="org.opendaylight.aaa.api.CredentialAuth" odl:type="default"/>
+
   <reference id="dataBroker"
     interface="org.opendaylight.controller.md.sal.binding.api.DataBroker"
     odl:type="default" />
@@ -22,10 +28,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <reference id="certManager"
     interface="org.opendaylight.aaa.cert.api.ICertificateManager"
     odl:type="default-certificate-manager" />
-
-  <reference id="credentialAuth"
-             interface="org.opendaylight.aaa.api.CredentialAuth"
-             odl:type="default" />
 
   <reference id="idmStore"
              interface="org.opendaylight.aaa.api.IIDMStore"
@@ -38,18 +40,23 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <reference id="httpService"
              interface="org.osgi.service.http.HttpService"/>
 
+  <bean id="AAAIDMLightModule" class="org.opendaylight.aaa.idm.AAAIDMLightModule" init-method="initializeStore">
+      <argument ref="idmStore"/>
+  </bean>
+
   <bean id="provider"
     class="org.opendaylight.aaa.impl.AAAShiroProvider" factory-method="newInstance"
     init-method="init" destroy-method="close">
     <argument ref="dataBroker" />
     <argument ref="certManager" />
-    <argument ref="credentialAuth" />
+    <argument ref="IdmLightProxy" />
     <argument ref="idmStore" />
     <argument ref="h2TokenStore" />
     <argument ref="shiroConfiguration" />
     <argument ref="httpService" />
     <argument value="/moon" />
     <argument value="/oauth2" />
+    <argument value="/auth" />
   </bean>
 
   <bean id="aaa" class="org.opendaylight.aaa.shiro.filters.AAAFilter" />

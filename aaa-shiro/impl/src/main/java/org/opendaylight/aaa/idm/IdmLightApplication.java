@@ -8,15 +8,13 @@
 
 package org.opendaylight.aaa.idm;
 
+import com.sun.jersey.spi.container.servlet.ServletContainer;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.ws.rs.core.Application;
-
-import org.opendaylight.aaa.idm.rest.DomainHandler;
-import org.opendaylight.aaa.idm.rest.RoleHandler;
-import org.opendaylight.aaa.idm.rest.UserHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A JAX-RS application for IdmLight. The REST endpoints delivered by this
@@ -37,6 +35,8 @@ import org.opendaylight.aaa.idm.rest.UserHandler;
  * @see <code>org.opendaylight.aaa.idm.rest.RoleHandler</code>
  */
 public class IdmLightApplication extends Application {
+
+    private static final Logger LOG = LoggerFactory.getLogger(IdmLightApplication.class);
     // TODO create a bug to address the fact that the implementation assumes 128
     // as the max length, even though this claims 256.
     /**
@@ -50,5 +50,15 @@ public class IdmLightApplication extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         return new HashSet<>(Arrays.asList(DomainHandler.class, RoleHandler.class, UserHandler.class));
+    }
+
+    static class IdmLightServletContainer extends ServletContainer {
+        public IdmLightServletContainer(final Application application) {
+            super(application);
+        }
+    }
+
+    public static ServletContainer create() {
+        return new IdmLightServletContainer(new IdmLightApplication());
     }
 }

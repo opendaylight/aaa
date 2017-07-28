@@ -48,6 +48,13 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-shiro</artifactId>
                 <version>${project.version}</version>
+                <type>cfg</type>
+                <classifier>idmtool</classifier>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>aaa-shiro</artifactId>
+                <version>${project.version}</version>
                 <type>xml</type>
                 <classifier>aaa-app-config</classifier>
             </dependency>
@@ -102,11 +109,6 @@
                 <classifier>config</classifier>
             </dependency>
 
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-idmlight</artifactId>
-                <version>${project.version}</version>
-            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>features-aaa-authn</artifactId>
