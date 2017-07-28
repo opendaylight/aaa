@@ -9,6 +9,8 @@ package org.opendaylight.aaa.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 import javax.naming.Name;
 import javax.servlet.ServletException;
@@ -22,6 +24,7 @@ import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.idm.IdmLightApplication;
 import org.opendaylight.aaa.impl.shiro.oauth2.OAuth2TokenServlet;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.AuthenticationManager;
@@ -44,13 +47,13 @@ public class AAAShiroProvider {
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
     private static volatile AAAShiroProvider INSTANCE;
+
     private final DataBroker dataBroker;
     private final ICertificateManager certificateManager;
     private final ShiroConfiguration shiroConfiguration;
     private final HttpService httpService;
     private final String moonEndpointPath;
     private final String oauth2EndpointPath;
-
 
     /**
      * Provider for this bundle.
@@ -80,10 +83,11 @@ public class AAAShiroProvider {
     }
 
     private void registerServletContexts(final HttpService httpService, final String moonEndpointPath,
-                                         final String oauth2EndpointPath) throws ServletException, NamespaceException {
-        Preconditions.checkNotNull(httpService, "httpService cannot be null");
+                                         final String oauth2EndpointPath)
+            throws ServletException, NamespaceException {
+        LOG.info("attempting registration of AAA moon, oauth2 and auth servlets");
 
-        LOG.info("attempting registration of AAA moon and oauth2 servlets");
+        Preconditions.checkNotNull(httpService, "httpService cannot be null");
         httpService.registerServlet(moonEndpointPath, new org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint(), null, null);
         httpService.registerServlet(oauth2EndpointPath, new OAuth2TokenServlet(), null, null);
     }

@@ -14,7 +14,8 @@
         <configfile finalname="bin/upgrade/convert-shiro-ini-to-rest-payload">
             mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/py/convert-shiro-ini
         </configfile>
-        <configfile finalname="bin/idmtool">mvn:org.opendaylight.aaa/aaa-idmlight/${project.version}/py/config
+        <configfile finalname="bin/idmtool">
+            mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/py/idmtool
         </configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.authn.cfg">
             mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/cfg/config
