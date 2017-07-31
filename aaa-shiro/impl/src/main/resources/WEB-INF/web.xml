@@ -14,31 +14,6 @@
         <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
     </listener>
 
-
-
-    <!-- OPNFV Moon Project related endpoints -->
-    <servlet>
-        <servlet-name>MOON</servlet-name>
-        <servlet-class>org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MOON</servlet-name>
-        <url-pattern>/moon/token</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>MOON</servlet-name>
-        <url-pattern>/moon/revoke</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>MOON</servlet-name>
-        <url-pattern>/moon/validate</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>MOON</servlet-name>
-        <url-pattern>/moon/*</url-pattern>
-    </servlet-mapping>
-
     <!-- Filters for moon endpoints -->
     <filter>
         <filter-name>ShiroFilter</filter-name>
@@ -52,24 +27,4 @@
     </filter-mapping>
 
 
-
-
-    <!-- OAuth2TokenServlet is responsible for serving OAuth2 tokens to clients. -->
-    <servlet>
-        <servlet-name>OAuth2TokenServlet</servlet-name>
-        <servlet-class>org.opendaylight.aaa.impl.shiro.oauth2.OAuth2TokenServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>OAuth2TokenServlet</servlet-name>
-        <url-pattern>/oauth2/token</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>OAuth2TokenServlet</servlet-name>
-        <url-pattern>/oauth2/revoke</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>OAuth2TokenServlet</servlet-name>
-        <url-pattern>/oauth2/validate</url-pattern>
-    </servlet-mapping>
 </web-app>

@@ -35,6 +35,9 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
              interface="org.opendaylight.aaa.api.TokenStore"
              odl:type="default" />
 
+  <reference id="httpService"
+             interface="org.osgi.service.http.HttpService"/>
+
   <bean id="provider"
     class="org.opendaylight.aaa.impl.AAAShiroProvider" factory-method="newInstance"
     init-method="init" destroy-method="close">
@@ -44,6 +47,9 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="idmStore" />
     <argument ref="h2TokenStore" />
     <argument ref="shiroConfiguration" />
+    <argument ref="httpService" />
+    <argument value="/moon" />
+    <argument value="/oauth2" />
   </bean>
 
   <bean id="aaa" class="org.opendaylight.aaa.shiro.filters.AAAFilter" />

@@ -22,8 +22,13 @@ public class MoonTokenEndpoint extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(MoonTokenEndpoint.class);
     private static final long serialVersionUID = 4980356362831585417L;
 
+    @Override
+    public String getServletName() {
+        return MoonTokenEndpoint.class.getSimpleName();
+    }
+
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws IOException {
-        LOG.debug("MoonTokenEndpoint Servlet doPost");
+        LOG.info("MoonTokenEndpoint Servlet doPost: {} {}", req.getServletPath(), req.getRequestURI());
     }
 
 }

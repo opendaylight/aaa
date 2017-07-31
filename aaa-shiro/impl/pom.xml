@@ -173,7 +173,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         <configuration>
           <instructions>
             <Bundle-Name>${project.groupId}.${project.artifactId}</Bundle-Name>
-            <Web-ContextPath>/</Web-ContextPath>
             <Export-Package>
               org.opendaylight.aaa.impl.shiro,
               org.opendaylight.aaa.impl.shiro.tokenauthrealm,

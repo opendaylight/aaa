@@ -15,6 +15,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.same;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -50,6 +51,7 @@ import org.opendaylight.aaa.impl.shiro.keystone.domain.KeystoneToken;
 import org.opendaylight.aaa.impl.shiro.realm.util.http.SimpleHttpClient;
 import org.opendaylight.aaa.impl.shiro.realm.util.http.SimpleHttpRequest;
 import org.opendaylight.aaa.impl.shiro.realm.util.http.UntrustedSSL;
+import org.osgi.service.http.HttpService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class KeystoneAuthRealmTest {
@@ -88,7 +90,7 @@ public class KeystoneAuthRealmTest {
 
     @Before
     public void setup() throws MalformedURLException, URISyntaxException {
-        AAAShiroProvider.newInstance(null, null, null, null, null, null);
+        AAAShiroProvider.newInstance(null, null, null, null, null, null, mock(HttpService.class), null, null);
 
         final String testUrl = "http://example.com";
         // a token for a user without roles

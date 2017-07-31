@@ -42,6 +42,8 @@ import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.AuthenticationBuilder;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.ClaimBuilder;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.PasswordCredentialBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Secure Token Service (STS) endpoint.
@@ -50,6 +52,7 @@ import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.PasswordCredentialBui
  *
  */
 public class OAuth2TokenServlet extends HttpServlet {
+    private static final Logger LOG = LoggerFactory.getLogger(OAuth2TokenServlet.class);
     private static final long serialVersionUID = 8272453849539659999L;
 
     private static final String DOMAIN_SCOPE_REQUIRED = "Domain scope required";
@@ -68,21 +71,28 @@ public class OAuth2TokenServlet extends HttpServlet {
     }
 
     @Override
+    public String getServletName() {
+        return OAuth2TokenServlet.class.getSimpleName();
+    }
+
+    @Override
     @SuppressWarnings("checkstyle:IllegalCatch")
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        final String requestURI = req.getRequestURI();
+        LOG.info("Token endpoint accessed: {} {}", req.getServletPath(), requestURI);
         try {
-            if (req.getServletPath().equals(TOKEN_GRANT_ENDPOINT)) {
+            if (requestURI.equals(TOKEN_GRANT_ENDPOINT)) {
                 createAccessToken(req, resp);
-            } else if (req.getServletPath().equals(TOKEN_REVOKE_ENDPOINT)) {
+            } else if (requestURI.equals(TOKEN_REVOKE_ENDPOINT)) {
                 deleteAccessToken(req, resp);
-            } else if (req.getServletPath().equals(TOKEN_VALIDATE_ENDPOINT)) {
+            } else if (requestURI.equals(TOKEN_VALIDATE_ENDPOINT)) {
                 validateToken(req, resp);
             }
-        } catch (AuthenticationException e) {
+        } catch (final AuthenticationException e) {
             error(resp, SC_UNAUTHORIZED, e.getMessage());
-        } catch (OAuthProblemException oe) {
+        } catch (final OAuthProblemException oe) {
             error(resp, oe);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             error(resp, e);
         }
     }
