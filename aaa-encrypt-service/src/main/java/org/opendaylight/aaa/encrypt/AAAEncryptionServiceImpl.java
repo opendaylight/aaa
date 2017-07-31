@@ -7,16 +7,22 @@
  */
 package org.opendaylight.aaa.encrypt;
 
-import org.apache.commons.lang3.RandomStringUtils;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfigBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
-
+import java.io.File;
+import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+import java.util.Random;
+import java.util.StringTokenizer;
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -32,17 +38,14 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
-import java.util.Base64;
-import java.util.Random;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfigBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
 /*
  *  @author - Sharon Aicler (saichler@gmail.com)
@@ -108,54 +111,74 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     }
 
     @Override
-    public String encrypt(String data) throws GeneralSecurityException {
+    public String encrypt(String data) {
         //We could not instantiate the encryption key, hence no encryption or decryption will be done.
         if (key == null) {
             LOG.warn("Encryption Key is NULL, will not encrypt data.");
             return data;
         }
 
-        synchronized(encryptCipher) {
-            byte[] cryptobytes = encryptCipher.doFinal(data.getBytes());
-            String cryptostring = DatatypeConverter.printBase64Binary(cryptobytes);
-            return cryptostring;
+        try {
+            synchronized(encryptCipher) {
+                byte[] cryptobytes = encryptCipher.doFinal(data.getBytes());
+                String cryptostring = DatatypeConverter.printBase64Binary(cryptobytes);
+                return cryptostring;
+            }
+        } catch (IllegalBlockSizeException | BadPaddingException e) {
+            LOG.error("Failed to encrypt data.", e);
         }
 
+        return data;
     }
 
     @Override
-    public String decrypt(String encData) throws GeneralSecurityException{
+    public String decrypt(String encData) {
         if (key == null || encData == null || encData.length() == 0) {
             LOG.warn("String {} was not decrypted.", encData);
             return encData;
         }
 
-        byte[] cryptobytes = DatatypeConverter.parseBase64Binary(encData);
-        byte[] clearbytes = decryptCipher.doFinal(cryptobytes);
-        return new String(clearbytes);
+        try{
+            byte[] cryptobytes = DatatypeConverter.parseBase64Binary(encData);
+            byte[] clearbytes = decryptCipher.doFinal(cryptobytes);
+            return new String(clearbytes);
+        } catch (IllegalBlockSizeException | BadPaddingException e){
+            LOG.error("Failed to decrypt encoded data", e);
+        }
+        return encData;
     }
 
     @Override
-    public byte[] encrypt(byte[] data) throws GeneralSecurityException{
+    public byte[] encrypt(byte[] data) {
         //We could not instantiate the encryption key, hence no encryption or decryption will be done.
         if (key == null) {
             LOG.warn("Encryption Key is NULL, will not encrypt data.");
             return data;
         }
 
-        synchronized(encryptCipher) {
-            return encryptCipher.doFinal(data);
+        try {
+            synchronized(encryptCipher) {
+                return encryptCipher.doFinal(data);
+            }
+        } catch (IllegalBlockSizeException | BadPaddingException e) {
+            LOG.error("Failed to encrypt data.", e);
         }
+        return data;
     }
 
     @Override
-    public byte[] decrypt(byte[] encData) throws GeneralSecurityException{
+    public byte[] decrypt(byte[] encData) {
         if (encData == null) {
             LOG.warn("encData is null.");
             return encData;
         }
 
-        return decryptCipher.doFinal(encData);
+        try {
+            return decryptCipher.doFinal(encData);
+        } catch (IllegalBlockSizeException | BadPaddingException e){
+            LOG.error("Failed to decrypt encoded data", e);
+        }
+        return encData;
     }
 
     private void updateEncrySrvConfig(String newPwd, String newSalt) {

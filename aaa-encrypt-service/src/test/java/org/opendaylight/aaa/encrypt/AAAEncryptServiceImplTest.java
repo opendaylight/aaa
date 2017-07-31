@@ -15,8 +15,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
 
-import java.security.GeneralSecurityException;
-
 /*
  *  @author - Sharon Aicler (saichler@gmail.com)
  */
@@ -47,7 +45,7 @@ public class AAAEncryptServiceImplTest {
     }
 
     @Test
-    public void testShortString() throws GeneralSecurityException{
+    public void testShortString(){
         String before = "shortone";
         String encrypt = impl.encrypt(before);
         Assert.assertNotEquals(before,encrypt);
@@ -56,7 +54,7 @@ public class AAAEncryptServiceImplTest {
     }
 
     @Test
-    public void testLongString() throws GeneralSecurityException{
+    public void testLongString(){
         String before = "This is a very long string to encrypt for testing 1...2...3";
         String encrypt = impl.encrypt(before);
         Assert.assertNotEquals(before,encrypt);

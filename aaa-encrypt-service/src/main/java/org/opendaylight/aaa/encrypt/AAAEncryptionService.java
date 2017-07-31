@@ -11,15 +11,13 @@ package org.opendaylight.aaa.encrypt;
  *  @author - Sharon Aicler (saichler@gmail.com)
  */
 
-import java.security.GeneralSecurityException;
-
 public interface AAAEncryptionService {
 
-    public String encrypt(String data) throws GeneralSecurityException;
+    public String encrypt(String data);
 
-    public String decrypt(String encData) throws GeneralSecurityException;
+    public String decrypt(String encData);
 
-    public byte[] encrypt(byte[] data) throws GeneralSecurityException;
+    public byte[] encrypt(byte[] data);
 
-    public byte[] decrypt(byte[] encData) throws GeneralSecurityException;
+    public byte[] decrypt(byte[] encData);
 }
