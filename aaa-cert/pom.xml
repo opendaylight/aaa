@@ -44,6 +44,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <dependency>
       <groupId>org.bouncycastle</groupId>
       <artifactId>bcprov-jdk15on</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <!-- Testing Dependencies -->
