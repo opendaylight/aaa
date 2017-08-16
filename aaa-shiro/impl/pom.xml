@@ -54,18 +54,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
       <artifactId>jersey-client</artifactId>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>org.json</groupId>
-      <artifactId>json</artifactId>
-    </dependency>
     <!-- OAuth2 dependencies for moon -->
     <dependency>
       <groupId>org.apache.oltu.oauth2</groupId>
       <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.oltu.oauth2</groupId>
-      <artifactId>org.apache.oltu.oauth2.common</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.oltu.oauth2</groupId>
@@ -84,41 +76,20 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <!-- end -->
     <dependency>
       <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
       <artifactId>shiro-web</artifactId>
     </dependency>
+    <!-- Enforce newer commons-beanutils and commons-collections versions -->
     <dependency>
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
-      <version>1.8.3</version>
+      <version>1.9.3</version>
     </dependency>
-    <!-- commons-beanutils' dependency on commons-collections is supposed to be optional... -->
     <dependency>
       <groupId>commons-collections</groupId>
       <artifactId>commons-collections</artifactId>
       <version>3.2.2</version>
     </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.core</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.compendium</artifactId>
-      <scope>provided</scope>
-    </dependency>
+
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.dependencymanager</artifactId>
