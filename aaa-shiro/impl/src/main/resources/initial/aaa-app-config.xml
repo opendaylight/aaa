@@ -304,6 +304,10 @@
         <pair-key>/restconf/operational/aaa-authn-model**</pair-key>
         <pair-value>authcBasic, roles[admin]</pair-value>
     </urls>
+    <urls>
+        <pair-key>/restconf/operations/cluster-admin**</pair-key>
+        <pair-value>authcBasic, roles[admin]</pair-value>
+    </urls>
     <!-- Start moonAuthRealm commented out
     <urls>
         <pair-key>/token</pair-key>
