@@ -22,6 +22,30 @@
       "revId": "01077a6b811329496d5485284c33ee2f229a053b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_6df8bf49",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 634
+      },
+      "writtenOn": "2017-08-24T16:58:59Z",
+      "side": 1,
+      "message": "How do you mean? This should effectively prevent cluster-admin operations from using org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilte, no? Am I missing something?",
+      "parentUuid": "ba1f61a0_b2785290",
+      "range": {
+        "startLine": 11,
+        "startChar": 43,
+        "endLine": 13,
+        "endChar": 72
+      },
+      "revId": "01077a6b811329496d5485284c33ee2f229a053b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
