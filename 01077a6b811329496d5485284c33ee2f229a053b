@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba1f61a0_b2785290",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-08-24T12:40:54Z",
+      "side": 1,
+      "message": "This doesn\u0027t align with what you did in the app config?",
+      "range": {
+        "startLine": 11,
+        "startChar": 43,
+        "endLine": 13,
+        "endChar": 72
+      },
+      "revId": "01077a6b811329496d5485284c33ee2f229a053b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
