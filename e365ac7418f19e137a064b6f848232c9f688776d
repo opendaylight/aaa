@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba1f61a0_f0239fba",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/PKIUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-09-13T20:26:01Z",
+      "side": 1,
+      "message": "remove space...",
+      "revId": "e365ac7418f19e137a064b6f848232c9f688776d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
