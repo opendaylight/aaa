@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba1f61a0_70f5ef55",
+        "filename": "aaa-encrypt-service/src/test/java/org/opendaylight/aaa/encrypt/PKIUtilTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-09-13T18:54:07Z",
+      "side": 1,
+      "message": "no space",
+      "revId": "82c1ded96f325a9db63ae33831bb2b464af6e361",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_d0e65baf",
+        "filename": "aaa-encrypt-service/src/test/java/org/opendaylight/aaa/encrypt/PKIUtilTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-09-13T18:54:07Z",
+      "side": 1,
+      "message": "should be listed first.",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 81
+      },
+      "revId": "82c1ded96f325a9db63ae33831bb2b464af6e361",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
