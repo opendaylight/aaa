@@ -12,14 +12,14 @@ import java.io.DataOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.security.interfaces.DSAParams;
-import java.security.interfaces.DSAPublicKey;
-import java.security.interfaces.RSAPublicKey;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.PublicKey;
+import java.security.interfaces.DSAParams;
+import java.security.interfaces.DSAPublicKey;
+import java.security.interfaces.RSAPublicKey;
 import java.security.spec.DSAPublicKeySpec;
 import java.security.spec.ECPoint;
 import java.security.spec.ECPublicKeySpec;
@@ -28,6 +28,7 @@ import java.security.spec.RSAPublicKeySpec;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.apache.sshd.common.util.Base64;
 import org.apache.sshd.common.util.SecurityUtils;
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey;
@@ -42,7 +43,7 @@ import org.bouncycastle.openssl.PEMParser;
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
 import org.bouncycastle.openssl.jcajce.JcePEMDecryptorProviderBuilder;
 
-public class PKIUtil{
+public final class PKIUtil {
     private static final String KEY_FACTORY_TYPE_RSA = "RSA";
     private static final String KEY_FACTORY_TYPE_DSA = "DSA";
     private static final String KEY_FACTORY_TYPE_ECDSA = "EC";
@@ -67,28 +68,34 @@ public class PKIUtil{
     private byte[] bytes = new byte[0];
     private int pos = 0;
 
-    public PublicKey decodePublicKey(String keyLine) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchProviderException {
+    public PublicKey decodePublicKey(
+            String keyLine) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchProviderException {
 
         // look for the Base64 encoded part of the line to decode
         // both ssh-rsa and ssh-dss begin with "AAAA" due to the length bytes
         bytes = Base64.decodeBase64(keyLine.getBytes());
-        if (bytes.length == 0)
+        if (bytes.length == 0) {
             throw new IllegalArgumentException("No Base64 part to decode in " + keyLine);
+        }
         pos = 0;
 
         String type = decodeType();
-        if (type.equals(KEY_TYPE_RSA))
+        if (type.equals(KEY_TYPE_RSA)) {
             return decodeAsRSA();
+        }
 
-        if (type.equals(KEY_TYPE_DSA))
+        if (type.equals(KEY_TYPE_DSA)) {
             return decodeAsDSA();
+        }
 
-        if (type.equals(KEY_TYPE_ECDSA))
+        if (type.equals(KEY_TYPE_ECDSA)) {
             return decodeAsECDSA();
+        }
 
         throw new IllegalArgumentException("Unknown decode key type " + type + " in " + keyLine);
     }
 
+    @SuppressWarnings("AbbreviationAsWordInName")
     private PublicKey decodeAsECDSA()
             throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchProviderException {
         KeyFactory ecdsaFactory = SecurityUtils.getKeyFactory(KEY_FACTORY_TYPE_ECDSA);
@@ -106,11 +113,11 @@ public class PKIUtil{
 
     private PublicKey decodeAsDSA() throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchProviderException {
         KeyFactory dsaFactory = SecurityUtils.getKeyFactory(KEY_FACTORY_TYPE_DSA);
-        BigInteger p = decodeBigInt();
-        BigInteger q = decodeBigInt();
-        BigInteger g = decodeBigInt();
-        BigInteger y = decodeBigInt();
-        DSAPublicKeySpec spec = new DSAPublicKeySpec(y, p, q, g);
+        BigInteger bigIntegerP = decodeBigInt();
+        BigInteger bigIntegerQ = decodeBigInt();
+        BigInteger bigIntegerG = decodeBigInt();
+        BigInteger bigIntegerY = decodeBigInt();
+        DSAPublicKeySpec spec = new DSAPublicKeySpec(bigIntegerY, bigIntegerP, bigIntegerQ, bigIntegerG);
 
         return dsaFactory.generatePublic(spec);
     }
@@ -177,12 +184,12 @@ public class PKIUtil{
             dataOutputStream.write(KEY_TYPE_ECDSA.getBytes());
             dataOutputStream.writeInt(ECDSA_SUPPORTED_CURVE_NAME.getBytes().length);
             dataOutputStream.write(ECDSA_SUPPORTED_CURVE_NAME.getBytes());
-            byte[] x = ecPublicKey.getQ().getAffineXCoord().getEncoded();
-            byte[] y = ecPublicKey.getQ().getAffineYCoord().getEncoded();
-            dataOutputStream.writeInt(x.length + y.length + 1);
+            byte[] afineXCoord = ecPublicKey.getQ().getAffineXCoord().getEncoded();
+            byte[] affineYCoord = ecPublicKey.getQ().getAffineYCoord().getEncoded();
+            dataOutputStream.writeInt(afineXCoord.length + affineYCoord.length + 1);
             dataOutputStream.writeByte(0x04);
-            dataOutputStream.write(x);
-            dataOutputStream.write(y);
+            dataOutputStream.write(afineXCoord);
+            dataOutputStream.write(affineYCoord);
         } else {
             throw new IllegalArgumentException("Unknown public key encoding: " + publicKey.getAlgorithm());
         }
@@ -209,5 +216,4 @@ public class PKIUtil{
         keyReader.close();
         return keyPair;
     }
-
 }
