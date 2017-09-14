@@ -39,6 +39,24 @@
       "revId": "e365ac7418f19e137a064b6f848232c9f688776d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_c3b4d783",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/PKIUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2017-09-14T07:26:10Z",
+      "side": 1,
+      "message": "Sorry, bad config again in the IDE auto-import. Now it should be ok.",
+      "parentUuid": "ba1f61a0_f0239fba",
+      "revId": "e365ac7418f19e137a064b6f848232c9f688776d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
