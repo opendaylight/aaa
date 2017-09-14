@@ -140,6 +140,30 @@
       "revId": "0fc8a2e04fec3d90b3bde473f50d9d5409b6d215",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_9c719caa",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/PKIUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-09-14T13:59:15Z",
+      "side": 1,
+      "message": "ack.  Thanks for keeping up on these rules for us, they keep changing and I hardly ever remember ;).",
+      "parentUuid": "ba1f61a0_5c5444fe",
+      "range": {
+        "startLine": 115,
+        "startChar": 19,
+        "endLine": 115,
+        "endChar": 30
+      },
+      "revId": "0fc8a2e04fec3d90b3bde473f50d9d5409b6d215",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
