@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba1f61a0_012707cb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-09-14T13:40:12Z",
+      "side": 1,
+      "message": "Not sure why we have this duplicate messaging.  I think it is pretty clear from the first line, and this could be omitted.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "0fc8a2e04fec3d90b3bde473f50d9d5409b6d215",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_212a0b90",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/PKIUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-09-14T13:40:12Z",
+      "side": 1,
+      "message": "Any reason to make this final?  I could imagine a time when we may want to extend this, and adding this modifier could make that difficult.",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 13
+      },
+      "revId": "0fc8a2e04fec3d90b3bde473f50d9d5409b6d215",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_611fe36c",
+        "filename": "aaa-encrypt-service/src/main/java/org/opendaylight/aaa/encrypt/PKIUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-09-14T13:40:12Z",
+      "side": 1,
+      "message": "we really don\u0027t need the bigInteger prefix here?",
+      "range": {
+        "startLine": 115,
+        "startChar": 19,
+        "endLine": 115,
+        "endChar": 30
+      },
+      "revId": "0fc8a2e04fec3d90b3bde473f50d9d5409b6d215",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
