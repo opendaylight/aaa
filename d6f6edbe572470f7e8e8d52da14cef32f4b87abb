@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba1f61a0_dc0af424",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/idm/AAAIDMLightModule.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-09-14T18:24:27Z",
+      "side": 1,
+      "message": "okay, it just most of aaa code was by HP. we can just make it opendaylight creator instead.",
+      "parentUuid": "ba1f61a0_010ee73a",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 33
+      },
+      "revId": "d6f6edbe572470f7e8e8d52da14cef32f4b87abb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba1f61a0_e10ab324",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/idm/IdmLightApplication.java",
         "patchSetId": 11
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-14T13:46:07Z",
       "side": 1,
       "message": "empty line in between please!",
+      "revId": "d6f6edbe572470f7e8e8d52da14cef32f4b87abb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_3c04f016",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/idm/IdmLightApplication.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-09-14T18:24:27Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "ba1f61a0_e10ab324",
       "revId": "d6f6edbe572470f7e8e8d52da14cef32f4b87abb",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
