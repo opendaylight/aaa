@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * JDBC-supporting data source.  This can ease deployment with existing OSS
  * systems.
  *
+ * <p>
  * To enabled the <code>ODLJdbcRealm</code>, modify the realms declaration in
  * <code>etc/shiro.ini</code> as follows:
  * <code>

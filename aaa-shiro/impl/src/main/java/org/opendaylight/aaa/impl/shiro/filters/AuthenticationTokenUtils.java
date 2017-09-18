@@ -20,7 +20,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 public class AuthenticationTokenUtils {
 
     /**
-     * default value used in messaging when the "user" field is unparsable from the HTTP REST request
+     * default value used in messaging when the "user" field is unparsable from the HTTP REST request.
      */
     static final String DEFAULT_USERNAME = "an unknown user";
 

@@ -8,7 +8,8 @@
 
 package org.opendaylight.aaa.shiro.realm.mapping.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -27,7 +28,8 @@ public class BestAttemptGroupToRolesMappingStrategyTest {
 
     @Test
     public void mapGroupsToRoles() throws Exception {
-        final GroupsToRolesMappingStrategy groupsToRolesMappingStrategy = new BestAttemptGroupToRolesMappingStrategy();
+        final GroupsToRolesMappingStrategy groupsToRolesMappingStrategy =
+                new org.opendaylight.aaa.shiro.realm.mapping.impl.BestAttemptGroupToRolesMappingStrategy();
         final Collection<String> groups = Sets.newHashSet("person", "it");
         final String delimeter = ",";
         final Map<String, String> groupRolesMap = Maps.newHashMap();
@@ -35,8 +37,8 @@ public class BestAttemptGroupToRolesMappingStrategyTest {
         groupRolesMap.put("it", "admin");
         groupRolesMap.put("noNeedToExist", "admin");
 
-        final Map<String, Set<String>> result = groupsToRolesMappingStrategy.mapGroupsToRoles(
-                groups, delimeter, groupRolesMap);
+        final Map<String, Set<String>> result = groupsToRolesMappingStrategy
+                .mapGroupsToRoles(groups, delimeter, groupRolesMap);
         assertTrue(result.keySet().contains("it"));
         assertTrue(result.keySet().contains("person"));
         assertTrue(result.get("it").contains("admin"));
@@ -46,13 +48,14 @@ public class BestAttemptGroupToRolesMappingStrategyTest {
 
     @Test
     public void mapGroupsWithEmptyAssociationMap() {
-        final GroupsToRolesMappingStrategy groupsToRolesMappingStrategy = new BestAttemptGroupToRolesMappingStrategy();
+        final GroupsToRolesMappingStrategy groupsToRolesMappingStrategy =
+                new org.opendaylight.aaa.shiro.realm.mapping.impl.BestAttemptGroupToRolesMappingStrategy();
         final Collection<String> groups = Sets.newHashSet("person", "it");
         final String delimeter = ",";
         final Map<String, String> groupRolesMap = null;
 
-        final Map<String, Set<String>> result = groupsToRolesMappingStrategy.mapGroupsToRoles(
-                groups, delimeter, groupRolesMap);
+        final Map<String, Set<String>> result = groupsToRolesMappingStrategy
+                .mapGroupsToRoles(groups, delimeter, groupRolesMap);
         assertTrue(result.keySet().contains("it"));
         assertTrue(result.get("it").contains("it"));
     }

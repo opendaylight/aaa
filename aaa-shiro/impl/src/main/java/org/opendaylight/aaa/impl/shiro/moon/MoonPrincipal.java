@@ -8,14 +8,12 @@
 package org.opendaylight.aaa.shiro.moon;
 
 import com.google.common.collect.ImmutableSet;
-
 import java.io.Serializable;
 import java.util.Set;
-
 import org.opendaylight.aaa.api.Claim;
 
 /**
- * MoonPrincipal contains all user's information returned by moon on successful authentication
+ * MoonPrincipal contains all user's information returned by moon on successful authentication.
  *
  * @author Alioune BA alioune.ba@orange.com
  */
@@ -28,8 +26,8 @@ public class MoonPrincipal {
     private final String token;
 
 
-    public MoonPrincipal(final String username, final String domain, final String userId,
-            final Set<String> roles, final String token) {
+    public MoonPrincipal(final String username, final String domain, final String userId, final Set<String> roles,
+                         final String token) {
 
         this.username = username;
         this.domain = domain;
@@ -38,13 +36,13 @@ public class MoonPrincipal {
         this.token = token;
     }
 
-    public MoonPrincipal createODLPrincipal(final String username, final String domain,
-            final String userId, final Set<String> roles, final String token) {
+    public MoonPrincipal createODLPrincipal(final String username, final String domain, final String userId,
+                                            final Set<String> roles, final String token) {
 
-        return new MoonPrincipal(username, domain, userId, roles,token);
+        return new MoonPrincipal(username, domain, userId, roles, token);
     }
 
-    public Claim principalToClaim () {
+    public Claim principalToClaim() {
         return new MoonClaim("", this.getUserId(), this.getUsername(), this.getDomain(), this.getRoles());
     }
 
@@ -64,7 +62,7 @@ public class MoonPrincipal {
         return this.roles;
     }
 
-    public String getToken(){
+    public String getToken() {
         return this.token;
     }
 
@@ -76,8 +74,8 @@ public class MoonPrincipal {
         private String domain;
         private ImmutableSet<String> roles;
 
-        public MoonClaim(final String clientId, final String userId, final String user,
-                final String domain, final Set<String> roles) {
+        public MoonClaim(final String clientId, final String userId, final String user, final String domain,
+                         final Set<String> roles) {
 
             this.clientId = clientId;
             this.userId = userId;
@@ -157,8 +155,8 @@ public class MoonPrincipal {
 
         @Override
         public String toString() {
-            return "clientId:" + clientId + "," + "userId:" + userId + "," + "userName:" + user
-                    + "," + "domain:" + domain + "," + "roles:" + roles ;
+            return "clientId:" + clientId + "," + "userId:" + userId + "," + "userName:" + user + "," + "domain:"
+                    + domain + "," + "roles:" + roles;
         }
     }
 }

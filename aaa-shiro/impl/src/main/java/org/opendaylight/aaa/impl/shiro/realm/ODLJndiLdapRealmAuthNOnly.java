@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * without worrying about resolving LDAP attributes (groups) to OpenDaylight
  * roles.
  *
+ * <p>
  * The motivation for subclassing Shiro's implementation is two-fold: 1) Enhance
  * the default logging of Shiro. This allows us to more easily log incoming
  * connections, providing some security auditing. 2) Provide a common package in
@@ -72,7 +73,7 @@ public class ODLJndiLdapRealmAuthNOnly extends JndiLdapRealm {
     }
 
     /**
-     * Logs an incoming LDAP connection
+     * Logs an incoming LDAP connection.
      *
      * @param username
      *            the requesting user
@@ -84,7 +85,7 @@ public class ODLJndiLdapRealmAuthNOnly extends JndiLdapRealm {
     }
 
     /**
-     * Extracts the username from <code>token</code>
+     * Extracts the username from <code>token</code>.
      *
      * @param token Which possibly contains a username
      * @return the username if it can be extracted

@@ -12,12 +12,10 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -29,11 +27,11 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONString;
 import org.json.JSONTokener;
 import org.opendaylight.aaa.shiro.moon.MoonPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 /**
  * MoonRealm is a Shiro Realm that authenticates users from OPNFV/moon platform.
  *
@@ -52,7 +50,8 @@ public class MoonRealm extends AuthorizingRealm {
     }
 
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(final AuthenticationToken authenticationToken) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(
+            final AuthenticationToken authenticationToken) throws AuthenticationException {
         final String username;
         final String password;
         final String domain = MOON_DEFAULT_DOMAIN;
@@ -74,9 +73,9 @@ public class MoonRealm extends AuthorizingRealm {
 
         password = new String(upt.getPassword());
 
-        final MoonPrincipal moonPrincipal = moonAuthenticate(username,password,domain);
-        if (moonPrincipal != null){
-            return new SimpleAuthenticationInfo(moonPrincipal, password.toCharArray(),getName());
+        final MoonPrincipal moonPrincipal = moonAuthenticate(username, password, domain);
+        if (moonPrincipal != null) {
+            return new SimpleAuthenticationInfo(moonPrincipal, password.toCharArray(), getName());
         } else {
             return null;
         }
@@ -111,7 +110,8 @@ public class MoonRealm extends AuthorizingRealm {
         final String url = String.format("http://%s:%s/moon/auth/tokens", server, port);
         LOG.debug("Moon server is at: {}:{} and will be accessed through {}", server, port, url);
         final WebResource webResource = client.resource(url);
-        final String input = "{\"username\": \""+ username + "\"," + "\"password\":" + "\"" + password + "\"," + "\"project\":" + "\"" + domain + "\"" + "}";
+        final String input = "{\"username\": \"" + username + "\"," + "\"password\":" + "\"" + password + "\","
+                + "\"project\":" + "\"" + domain + "\"" + "}";
         final ClientResponse response = webResource.type("application/json").post(ClientResponse.class, input);
         output = response.getEntity(String.class);
         tokener = new JSONTokener(output);
@@ -122,17 +122,18 @@ public class MoonRealm extends AuthorizingRealm {
                 final String token = object.getString("token");
                 final String userID = username + "@" + domain;
                 final JSONArray jsonArray = object.getJSONArray("roles");
-                for (int i = 0; i < jsonArray.length(); i++){
+                for (int i = 0; i < jsonArray.length(); i++) {
                     try {
                         userRoles.add((String) jsonArray.get(i));
                     } catch (final ClassCastException e) {
                         LOG.debug("Unable to cast role as String, skipping {}", jsonArray.get(i), e);
                     }
                 }
-                return new MoonPrincipal(username,domain,userID,userRoles,token);
+                return new MoonPrincipal(username, domain, userID, userRoles, token);
             }
         } catch (final JSONException e) {
-            throw new IllegalStateException("Authentication Error : " + object.getJSONObject("error").getString("title"));
+            throw new IllegalStateException(
+                    "Authentication Error : " + object.getJSONObject("error").getString("title"));
         }
         return null;
     }

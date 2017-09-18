@@ -24,7 +24,7 @@ import java.util.Vector;
 public class TestAppender extends AppenderBase<LoggingEvent> {
 
     /**
-     * stores all log events in memory, instead of file
+     * stores all log events in memory, instead of file.
      */
     private List<LoggingEvent> events = new Vector<>();
 
@@ -36,15 +36,15 @@ public class TestAppender extends AppenderBase<LoggingEvent> {
     private static volatile TestAppender currentInstance;
 
     /**
-     * keeps track of the current instance
+     * keeps track of the current instance.
      */
     public TestAppender() {
         currentInstance = this;
     }
 
     @Override
-    protected void append(final LoggingEvent e) {
-        events.add(e);
+    protected void append(final LoggingEvent event) {
+        events.add(event);
     }
 
     /**

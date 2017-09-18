@@ -8,7 +8,6 @@
 
 package org.opendaylight.aaa.shiro.realm;
 
-
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -84,7 +83,7 @@ public class KeystoneAuthRealmTest {
     private ArgumentCaptor<KeystoneAuth> keystoneAuthArgumentCaptor;
 
     @Spy
-    private KeystoneAuthRealm keystoneAuthRealm;
+    private org.opendaylight.aaa.shiro.realm.KeystoneAuthRealm keystoneAuthRealm;
 
     private KeystoneToken.Token ksToken;
 
@@ -125,8 +124,7 @@ public class KeystoneAuthRealmTest {
         assertThat(keystoneAuth.getAuth().getIdentity().getMethods(), arrayContaining("password"));
         assertThat(keystoneAuth.getAuth().getIdentity().getPassword().getUser().getName(), is("user"));
         assertThat(keystoneAuth.getAuth().getIdentity().getPassword().getUser().getPassword(), is("password"));
-        assertThat(keystoneAuth.getAuth().getIdentity().getPassword().getUser().getDomain().getName(),
-                is("Default"));
+        assertThat(keystoneAuth.getAuth().getIdentity().getPassword().getUser().getDomain().getName(), is("Default"));
         assertThat(info, notNullValue());
         ODLPrincipal principal = (ODLPrincipal) info.getPrincipals().getPrimaryPrincipal();
         assertThat(principal.getUsername(), is("user"));
@@ -169,8 +167,7 @@ public class KeystoneAuthRealmTest {
         AuthenticationInfo info = keystoneAuthRealm.doGetAuthenticationInfo(token, client);
         verify(requestBuilder).entity(keystoneAuthArgumentCaptor.capture());
         KeystoneAuth keystoneAuth = keystoneAuthArgumentCaptor.getValue();
-        assertThat(keystoneAuth.getAuth().getIdentity().getPassword().getUser().getDomain().getName(),
-                is("sdn"));
+        assertThat(keystoneAuth.getAuth().getIdentity().getPassword().getUser().getDomain().getName(), is("sdn"));
         assertThat(info, notNullValue());
         ODLPrincipal principal = (ODLPrincipal) info.getPrincipals().getPrimaryPrincipal();
         assertThat(principal.getUserId(), is("user@sdn"));
@@ -183,8 +180,7 @@ public class KeystoneAuthRealmTest {
         AuthenticationInfo info = keystoneAuthRealm.doGetAuthenticationInfo(token, client);
         verify(requestBuilder).entity(keystoneAuthArgumentCaptor.capture());
         KeystoneAuth keystoneAuth = keystoneAuthArgumentCaptor.getValue();
-        assertThat(keystoneAuth.getAuth().getIdentity().getPassword().getUser().getDomain().getName(),
-                is("sdn"));
+        assertThat(keystoneAuth.getAuth().getIdentity().getPassword().getUser().getDomain().getName(), is("sdn"));
         assertThat(info, notNullValue());
         ODLPrincipal principal = (ODLPrincipal) info.getPrincipals().getPrimaryPrincipal();
         assertThat(principal.getUserId(), is("user@sdn"));

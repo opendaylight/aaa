@@ -20,10 +20,12 @@ import org.slf4j.LoggerFactory;
  * disabled by default in order to support workflows such as the feature
  * <code>odl-restconf-noauth</code>.
  *
+ * <p>
  * The AAA service is enabled through installing the <code>odl-aaa-shiro</code>
  * feature. The blueprint Provider in <code>aaa-shiro-act</code> enables AAA
  * through the ServiceProxy, which in turn enables the AAAFilter.
  *
+ * <p>
  * ServiceProxy is a singleton; access to the ServiceProxy is granted through
  * the <code>getInstance()</code> function.
  *
@@ -42,15 +44,17 @@ public class ServiceProxy {
     private AAAFilter filter;
 
     /**
-     * private for singleton pattern
+     * private for singleton pattern.
      */
     private ServiceProxy() {
-        final String INFO_MESSAGE = "Creating the ServiceProxy";
-        LOG.info(INFO_MESSAGE);
+        final String infoMessage = "Creating the ServiceProxy";
+        LOG.info(infoMessage);
     }
 
     /**
-     * @return ServiceProxy, a feature level singleton
+     * Get the single instance of the ServiceProxy.
+     *
+     * @return ServiceProxy, a feature level singleton.
      */
     public static ServiceProxy getInstance() {
         return instance;

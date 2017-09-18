@@ -8,18 +8,16 @@
 
 package org.opendaylight.aaa.shiro.filters;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
 
 import java.util.List;
-
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.junit.Test;
 import org.opendaylight.aaa.shiro.TestAppender;
-import org.opendaylight.aaa.shiro.filters.AuthenticationListener;
 
 /**
  * Test AuthenticationListener, which is responsible for logging Accounting events.
@@ -45,8 +43,7 @@ public class AuthenticationListenerTest {
         final int whichLoggingEvent = loggingEvents.size() - 1;
         final LoggingEvent latestLoggingEvent = loggingEvents.get(whichLoggingEvent);
         final String latestLogMessage = latestLoggingEvent.getMessage();
-        assertEquals("Successful authentication attempt by successfulUser1 from successfulHost1",
-                latestLogMessage);
+        assertEquals("Successful authentication attempt by successfulUser1 from successfulHost1", latestLogMessage);
     }
 
     @Test
@@ -56,8 +53,7 @@ public class AuthenticationListenerTest {
         final UsernamePasswordToken authenticationToken = new UsernamePasswordToken();
         authenticationToken.setUsername("unsuccessfulUser1");
         authenticationToken.setHost("unsuccessfulHost1");
-        final AuthenticationException authenticationException =
-                new AuthenticationException("test auth exception");
+        final AuthenticationException authenticationException = new AuthenticationException("test auth exception");
         // produces unsuccessful authentication attempt output
         authenticationListener.onFailure(authenticationToken, authenticationException);
 
@@ -67,6 +63,6 @@ public class AuthenticationListenerTest {
         final LoggingEvent latestLoggingEvent = loggingEvents.get(whichLoggingEvent);
         final String latestLogMessage = latestLoggingEvent.getMessage();
         assertEquals("Unsuccessful authentication attempt by unsuccessfulUser1 from unsuccessfulHost1",
-                latestLogMessage);
+                     latestLogMessage);
     }
 }
