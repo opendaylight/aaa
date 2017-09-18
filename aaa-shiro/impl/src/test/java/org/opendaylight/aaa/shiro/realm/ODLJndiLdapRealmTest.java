@@ -37,17 +37,19 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.junit.Test;
 
 /**
+ * Test for the LDAP realm.
+ *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 public class ODLJndiLdapRealmTest {
 
     /**
-     * throw-away anonymous test class
+     * throw-away anonymous test class.
      */
     class TestNamingEnumeration implements NamingEnumeration<SearchResult> {
 
         /**
-         * state variable
+         * state variable.
          */
         boolean first = true;
 
@@ -55,11 +57,11 @@ public class ODLJndiLdapRealmTest {
          * returned the first time <code>next()</code> or
          * <code>nextElement()</code> is called.
          */
-        SearchResult searchResult = new SearchResult("testuser", null, new BasicAttributes(
-                "objectClass", "engineering"));
+        SearchResult searchResult = new SearchResult("testuser", null,
+                                                     new BasicAttributes("objectClass", "engineering"));
 
         /**
-         * returns true the first time, then false for subsequent calls
+         * returns true the first time, then false for subsequent calls.
          */
         @Override
         public boolean hasMoreElements() {
@@ -67,7 +69,7 @@ public class ODLJndiLdapRealmTest {
         }
 
         /**
-         * returns <code>searchResult</code> then null for subsequent calls
+         * returns <code>searchResult</code> then null for subsequent calls.
          */
         @Override
         public SearchResult nextElement() {
@@ -79,14 +81,14 @@ public class ODLJndiLdapRealmTest {
         }
 
         /**
-         * does nothing because close() doesn't require any special behavior
+         * does nothing because close() doesn't require any special behavior.
          */
         @Override
         public void close() throws NamingException {
         }
 
         /**
-         * returns true the first time, then false for subsequent calls
+         * returns true the first time, then false for subsequent calls.
          */
         @Override
         public boolean hasMore() throws NamingException {
@@ -94,7 +96,7 @@ public class ODLJndiLdapRealmTest {
         }
 
         /**
-         * returns <code>searchResult</code> then null for subsequent calls
+         * returns <code>searchResult</code> then null for subsequent calls.
          */
         @Override
         public SearchResult next() throws NamingException {
@@ -104,17 +106,14 @@ public class ODLJndiLdapRealmTest {
             }
             return null;
         }
-    };
+    }
 
     /**
-     * throw away test class
+     * throw away test class.
      *
      * @author ryan
      */
-    class TestPrincipalCollection implements PrincipalCollection {
-        /**
-     *
-     */
+    public class TestPrincipalCollection implements PrincipalCollection {
         private static final long serialVersionUID = -1236759619455574475L;
 
         Vector<String> collection = new Vector<String>();
@@ -170,38 +169,35 @@ public class ODLJndiLdapRealmTest {
             // TODO Auto-generated method stub
             return null;
         }
-    };
+    }
 
     @Test
     public void testGetUsernameAuthenticationToken() {
         AuthenticationToken authenticationToken = null;
-        assertNull(ODLJndiLdapRealm.getUsername(authenticationToken));
-        AuthenticationToken validAuthenticationToken = new UsernamePasswordToken("test",
-                "testpassword");
-        assertEquals("test", ODLJndiLdapRealm.getUsername(validAuthenticationToken));
+        assertNull(org.opendaylight.aaa.shiro.realm.ODLJndiLdapRealm.getUsername(authenticationToken));
+        AuthenticationToken validAuthenticationToken = new UsernamePasswordToken("test", "testpassword");
+        assertEquals("test", org.opendaylight.aaa.shiro.realm.ODLJndiLdapRealm.getUsername(validAuthenticationToken));
     }
 
     @Test
     public void testGetUsernamePrincipalCollection() {
         PrincipalCollection pc = null;
-        assertNull(new ODLJndiLdapRealm().getUsername(pc));
+        assertNull(new org.opendaylight.aaa.shiro.realm.ODLJndiLdapRealm().getUsername(pc));
         TestPrincipalCollection tpc = new TestPrincipalCollection("testuser");
-        String username = new ODLJndiLdapRealm().getUsername(tpc);
+        String username = new org.opendaylight.aaa.shiro.realm.ODLJndiLdapRealm().getUsername(tpc);
         assertEquals("testuser", username);
     }
 
     @Test
-    public void testQueryForAuthorizationInfoPrincipalCollectionLdapContextFactory()
-            throws NamingException {
+    public void testQueryForAuthorizationInfoPrincipalCollectionLdapContextFactory() throws NamingException {
         LdapContext ldapContext = mock(LdapContext.class);
         // emulates an ldap search and returns the mocked up test class
-        when(
-                ldapContext.search((String) any(), (String) any(),
-                        (SearchControls) any())).thenReturn(new TestNamingEnumeration());
+        when(ldapContext.search((String) any(), (String) any(), (SearchControls) any()))
+                .thenReturn(new TestNamingEnumeration());
         LdapContextFactory ldapContextFactory = mock(LdapContextFactory.class);
         when(ldapContextFactory.getSystemLdapContext()).thenReturn(ldapContext);
-        AuthorizationInfo authorizationInfo = new ODLJndiLdapRealm().queryForAuthorizationInfo(
-                new TestPrincipalCollection("testuser"), ldapContextFactory);
+        AuthorizationInfo authorizationInfo = new org.opendaylight.aaa.shiro.realm.ODLJndiLdapRealm()
+                .queryForAuthorizationInfo(new TestPrincipalCollection("testuser"), ldapContextFactory);
         assertNotNull(authorizationInfo);
         assertFalse(authorizationInfo.getRoles().isEmpty());
         assertTrue(authorizationInfo.getRoles().contains("engineering"));
@@ -209,10 +205,11 @@ public class ODLJndiLdapRealmTest {
 
     @Test
     public void testBuildAuthorizationInfo() {
-        assertNull(ODLJndiLdapRealm.buildAuthorizationInfo(null));
+        assertNull(org.opendaylight.aaa.shiro.realm.ODLJndiLdapRealm.buildAuthorizationInfo(null));
         Set<String> roleNames = new HashSet<String>();
         roleNames.add("engineering");
-        AuthorizationInfo authorizationInfo = ODLJndiLdapRealm.buildAuthorizationInfo(roleNames);
+        AuthorizationInfo authorizationInfo = org.opendaylight.aaa.shiro.realm.ODLJndiLdapRealm
+                .buildAuthorizationInfo(roleNames);
         assertNotNull(authorizationInfo);
         assertFalse(authorizationInfo.getRoles().isEmpty());
         assertTrue(authorizationInfo.getRoles().contains("engineering"));
@@ -220,13 +217,13 @@ public class ODLJndiLdapRealmTest {
 
     @Test
     public void testGetRoleNamesForUser() throws NamingException {
-        ODLJndiLdapRealm ldapRealm = new ODLJndiLdapRealm();
+        org.opendaylight.aaa.shiro.realm.ODLJndiLdapRealm ldapRealm
+                = new org.opendaylight.aaa.shiro.realm.ODLJndiLdapRealm();
         LdapContext ldapContext = mock(LdapContext.class);
 
         // emulates an ldap search and returns the mocked up test class
-        when(
-                ldapContext.search((String) any(), (String) any(),
-                        (SearchControls) any())).thenReturn(new TestNamingEnumeration());
+        when(ldapContext.search((String) any(), (String) any(), (SearchControls) any()))
+                .thenReturn(new TestNamingEnumeration());
 
         // extracts the roles for "testuser" and ensures engineering is returned
         Set<String> roles = ldapRealm.getRoleNamesForUser("testuser", ldapContext);
@@ -236,7 +233,7 @@ public class ODLJndiLdapRealmTest {
 
     @Test
     public void testCreateSearchControls() {
-        SearchControls searchControls = ODLJndiLdapRealm.createSearchControls();
+        SearchControls searchControls = org.opendaylight.aaa.shiro.realm.ODLJndiLdapRealm.createSearchControls();
         assertNotNull(searchControls);
         int expectedSearchScope = SearchControls.SUBTREE_SCOPE;
         int actualSearchScope = searchControls.getSearchScope();

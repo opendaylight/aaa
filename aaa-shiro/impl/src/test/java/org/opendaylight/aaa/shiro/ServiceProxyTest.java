@@ -16,6 +16,8 @@ import org.junit.Test;
 import org.opendaylight.aaa.shiro.filters.AAAFilter;
 
 /**
+ * Test for the ServiceProxy.
+ *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 public class ServiceProxyTest {
@@ -23,23 +25,23 @@ public class ServiceProxyTest {
     @Test
     public void testGetInstance() {
         // ensures that singleton pattern is working
-        assertNotNull(ServiceProxy.getInstance());
+        assertNotNull(org.opendaylight.aaa.shiro.ServiceProxy.getInstance());
     }
 
     @Test
     public void testGetSetEnabled() {
         // combines set and get tests. These are important in this instance,
         // because getEnabled allows an optional callback Filter.
-        ServiceProxy.getInstance().setEnabled(true);
-        assertTrue(ServiceProxy.getInstance().getEnabled(null));
+        org.opendaylight.aaa.shiro.ServiceProxy.getInstance().setEnabled(true);
+        assertTrue(org.opendaylight.aaa.shiro.ServiceProxy.getInstance().getEnabled(null));
 
         AAAFilter testFilter = new AAAFilter();
         // register the filter
-        ServiceProxy.getInstance().getEnabled(testFilter);
+        org.opendaylight.aaa.shiro.ServiceProxy.getInstance().getEnabled(testFilter);
         assertTrue(testFilter.isEnabled());
 
-        ServiceProxy.getInstance().setEnabled(false);
-        assertFalse(ServiceProxy.getInstance().getEnabled(testFilter));
+        org.opendaylight.aaa.shiro.ServiceProxy.getInstance().setEnabled(false);
+        assertFalse(org.opendaylight.aaa.shiro.ServiceProxy.getInstance().getEnabled(testFilter));
         assertFalse(testFilter.isEnabled());
     }
 }

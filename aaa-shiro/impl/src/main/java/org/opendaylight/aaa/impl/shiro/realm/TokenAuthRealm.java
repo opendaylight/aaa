@@ -9,14 +9,10 @@
 package org.opendaylight.aaa.shiro.realm;
 
 import com.google.common.base.Strings;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.opendaylight.aaa.api.TokenStore;
-import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
-import org.opendaylight.aaa.impl.shiro.principal.ODLPrincipalImpl;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -29,8 +25,11 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.TokenAuth;
-import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.HttpBasicAuth;
+import org.opendaylight.aaa.api.TokenStore;
+import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
+import org.opendaylight.aaa.impl.shiro.principal.ODLPrincipalImpl;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
+import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.HttpBasicAuth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,29 +45,31 @@ public class TokenAuthRealm extends AuthorizingRealm {
     private static final String USERNAME_DOMAIN_SEPARATOR = "@";
 
     /**
-     * The unique identifying name for <code>TokenAuthRealm</code>
+     * The unique identifying name for <code>TokenAuthRealm</code>.
      */
     private static final String TOKEN_AUTH_REALM_DEFAULT_NAME = "TokenAuthRealm";
 
     /**
      * The message that is displayed if no <code>TokenAuth</code> interface is
-     * available yet
+     * available yet.
      */
-    private static final String AUTHENTICATION_SERVICE_UNAVAILABLE_MESSAGE = "{\"error\":\"Authentication service unavailable\"}";
+    private static final String AUTHENTICATION_SERVICE_UNAVAILABLE_MESSAGE
+            = "{\"error\":\"Authentication service unavailable\"}";
 
     /**
-     * The message that is displayed if credentials are missing or malformed
+     * The message that is displayed if credentials are missing or malformed.
      */
     private static final String FATAL_ERROR_DECODING_CREDENTIALS = "{\"error\":\"Unable to decode credentials\"}";
 
     /**
-     * The message that is displayed if non-Basic Auth is attempted
+     * The message that is displayed if non-Basic Auth is attempted.
      */
-    private static final String FATAL_ERROR_BASIC_AUTH_ONLY = "{\"error\":\"Only basic authentication is supported by TokenAuthRealm\"}";
+    private static final String FATAL_ERROR_BASIC_AUTH_ONLY
+            = "{\"error\":\"Only basic authentication is supported by TokenAuthRealm\"}";
 
     /**
      * The purposefully generic message displayed if <code>TokenAuth</code> is
-     * unable to validate the given credentials
+     * unable to validate the given credentials.
      */
     private static final String UNABLE_TO_AUTHENTICATE = "{\"error\":\"Could not authenticate\"}";
 
@@ -95,7 +96,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
         try {
             odlPrincipal = (ODLPrincipal) primaryPrincipal;
             return new SimpleAuthorizationInfo(odlPrincipal.getRoles());
-        } catch(ClassCastException e) {
+        } catch (ClassCastException e) {
             LOG.error("Couldn't decode authorization request", e);
         }
         return new SimpleAuthorizationInfo();
@@ -106,17 +107,17 @@ public class TokenAuthRealm extends AuthorizingRealm {
      *
      * @param username The request username
      * @param password The request password
-     * @param domain The request domain
+     * @param domain   The request domain
      * @return <code>username:password:domain</code>
      */
-    static String getUsernamePasswordDomainString(final String username, final String password,
-            final String domain) {
-        return username + HttpBasicAuth.AUTH_SEP + password  + HttpBasicAuth.AUTH_SEP + domain;
+    static String getUsernamePasswordDomainString(final String username, final String password, final String domain) {
+        return username + HttpBasicAuth.AUTH_SEP + password + HttpBasicAuth.AUTH_SEP + domain;
     }
 
     /**
+     * Get the token encoded.
      *
-     * @param credentialToken
+     * @param credentialToken credential
      * @return Base64 encoded token
      */
     static String getEncodedToken(final String credentialToken) {
@@ -124,8 +125,9 @@ public class TokenAuthRealm extends AuthorizingRealm {
     }
 
     /**
+     * Get the token authentication header.
      *
-     * @param encodedToken
+     * @param encodedToken enconded token
      * @return Basic <code>encodedToken</code>
      */
     static String getTokenAuthHeader(final String encodedToken) {
@@ -133,8 +135,9 @@ public class TokenAuthRealm extends AuthorizingRealm {
     }
 
     /**
+     * Get a map with the authentication headers.
      *
-     * @param tokenAuthHeader
+     * @param tokenAuthHeader token authentication header.
      * @return a map with the basic auth header
      */
     Map<String, List<String>> formHeadersWithToken(final String tokenAuthHeader) {
@@ -151,11 +154,10 @@ public class TokenAuthRealm extends AuthorizingRealm {
      *
      * @param username Username from the request
      * @param password Password from the request
-     * @param domain Domain from the request
+     * @param domain   Domain from the request
      * @return input map for <code>TokenAuth.validate()</code>
      */
-    Map<String, List<String>> formHeaders(final String username, final String password,
-            final String domain) {
+    Map<String, List<String>> formHeaders(final String username, final String password, final String domain) {
         String usernamePasswordToken = getUsernamePasswordDomainString(username, password, domain);
         String encodedToken = getEncodedToken(usernamePasswordToken);
         String tokenAuthHeader = getTokenAuthHeader(encodedToken);
@@ -163,9 +165,9 @@ public class TokenAuthRealm extends AuthorizingRealm {
     }
 
     /**
-     * Adapter to check for available <code>TokenAuth<code> implementations.
+     * Adapter to check for available <code>TokenAuth</code> implementations.
      *
-     * @return
+     * @return whether the token is available or not.
      */
     boolean isTokenAuthAvailable() {
         return ServiceLocator.getInstance().getAuthenticationService() != null;
@@ -182,8 +184,8 @@ public class TokenAuthRealm extends AuthorizingRealm {
      * .apache.shiro.authc.AuthenticationToken)
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
-            throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(
+            AuthenticationToken authenticationToken) throws AuthenticationException {
 
         String username = "";
         String password = "";
@@ -192,13 +194,12 @@ public class TokenAuthRealm extends AuthorizingRealm {
         try {
             final String qualifiedUser = extractUsername(authenticationToken);
             if (qualifiedUser.contains(USERNAME_DOMAIN_SEPARATOR)) {
-                final String [] qualifiedUserArray = qualifiedUser.split(USERNAME_DOMAIN_SEPARATOR);
+                final String[] qualifiedUserArray = qualifiedUser.split(USERNAME_DOMAIN_SEPARATOR);
                 try {
                     username = qualifiedUserArray[0];
                     domain = qualifiedUserArray[1];
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    LOG.trace("Couldn't parse domain from {}; trying without one",
-                            qualifiedUser, e);
+                    LOG.trace("Couldn't parse domain from {}; trying without one", qualifiedUser, e);
                 }
             } else {
                 username = qualifiedUser;
@@ -223,8 +224,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
             // iterate over <code>TokenAuth</code> implementations and
             // attempt to
             // authentication with each one
-            final List<TokenAuth> tokenAuthCollection = ServiceLocator.getInstance()
-                    .getTokenAuthCollection();
+            final List<TokenAuth> tokenAuthCollection = ServiceLocator.getInstance().getTokenAuthCollection();
             for (TokenAuth ta : tokenAuthCollection) {
                 try {
                     LOG.debug("Authentication attempt using {}", ta.getClass().getName());
@@ -233,8 +233,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
                         LOG.debug("Authentication attempt successful");
                         ServiceLocator.getInstance().getAuthenticationService().set(auth);
                         final ODLPrincipal odlPrincipal = ODLPrincipalImpl.createODLPrincipal(auth);
-                        return new SimpleAuthenticationInfo(odlPrincipal, password.toCharArray(),
-                                getName());
+                        return new SimpleAuthenticationInfo(odlPrincipal, password.toCharArray(), getName());
                     }
                 } catch (AuthenticationException ae) {
                     LOG.debug("Authentication attempt unsuccessful");
@@ -276,29 +275,25 @@ public class TokenAuthRealm extends AuthorizingRealm {
     }
 
     /**
-     * extract the username from an <code>AuthenticationToken</code>
+     * extract the username from an <code>AuthenticationToken</code>.
      *
-     * @param authenticationToken
-     * @return
-     * @throws ClassCastException
-     * @throws NullPointerException
+     * @param authenticationToken authentication token
+     * @return principal
      */
-    static String extractUsername(final AuthenticationToken authenticationToken)
-            throws ClassCastException, NullPointerException {
+    static String extractUsername(
+            final AuthenticationToken authenticationToken) throws ClassCastException, NullPointerException {
 
         return (String) authenticationToken.getPrincipal();
     }
 
     /**
-     * extract the password from an <code>AuthenticationToken</code>
+     * Extract the password from an <code>AuthenticationToken</code>.
      *
-     * @param authenticationToken
-     * @return
-     * @throws ClassCastException
-     * @throws NullPointerException
+     * @param authenticationToken authentication token.
+     * @return password
      */
-    static String extractPassword(final AuthenticationToken authenticationToken)
-            throws ClassCastException, NullPointerException {
+    static String extractPassword(
+            final AuthenticationToken authenticationToken) throws ClassCastException, NullPointerException {
 
         final UsernamePasswordToken upt = (UsernamePasswordToken) authenticationToken;
         return new String(upt.getPassword());

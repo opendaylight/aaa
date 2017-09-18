@@ -8,12 +8,13 @@
 
 package org.opendaylight.aaa.shiro.filters;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.junit.Test;
-import org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils;
 
 /**
  * Tests authentication token output utilities.
@@ -42,15 +43,18 @@ public class AuthenticationTokenUtilsTest {
     public void testIsUsernamePasswordToken() throws Exception {
         // null test
         final AuthenticationToken nullUsernamePasswordToken = null;
-        assertFalse(AuthenticationTokenUtils.isUsernamePasswordToken(nullUsernamePasswordToken));
+        assertFalse(org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils
+                            .isUsernamePasswordToken(nullUsernamePasswordToken));
 
         // alternate implementation of AuthenticationToken
         final AuthenticationToken notUsernamePasswordToken = new NotUsernamePasswordToken();
-        assertFalse(AuthenticationTokenUtils.isUsernamePasswordToken(notUsernamePasswordToken));
+        assertFalse(org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils
+                            .isUsernamePasswordToken(notUsernamePasswordToken));
 
         // positive test case
         final AuthenticationToken positiveUsernamePasswordToken = new UsernamePasswordToken();
-        assertTrue(AuthenticationTokenUtils.isUsernamePasswordToken(positiveUsernamePasswordToken));
+        assertTrue(org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils
+                           .isUsernamePasswordToken(positiveUsernamePasswordToken));
 
     }
 
@@ -58,50 +62,56 @@ public class AuthenticationTokenUtilsTest {
     public void testExtractUsername() throws Exception {
         // null test
         final AuthenticationToken nullAuthenticationToken = null;
-        assertEquals(AuthenticationTokenUtils.DEFAULT_TOKEN,
-                AuthenticationTokenUtils.extractUsername(nullAuthenticationToken));
+        assertEquals(org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils.DEFAULT_TOKEN,
+                     org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils
+                             .extractUsername(nullAuthenticationToken));
 
         // non-UsernamePasswordToken test
         final AuthenticationToken notUsernamePasswordToken = new NotUsernamePasswordToken();
-        assertEquals(AuthenticationTokenUtils.DEFAULT_TOKEN,
-                AuthenticationTokenUtils.extractUsername(notUsernamePasswordToken));
+        assertEquals(org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils.DEFAULT_TOKEN,
+                     org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils
+                             .extractUsername(notUsernamePasswordToken));
 
         // null username test
         final UsernamePasswordToken nullUsername = new UsernamePasswordToken();
         nullUsername.setUsername(null);
-        assertEquals(AuthenticationTokenUtils.DEFAULT_USERNAME,
-                AuthenticationTokenUtils.extractUsername(nullUsername));
+        assertEquals(org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils.DEFAULT_USERNAME,
+                     org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils.extractUsername(nullUsername));
 
         // positive test
         final UsernamePasswordToken positiveUsernamePasswordToken = new UsernamePasswordToken();
         final String testUsername = "testUser1";
         positiveUsernamePasswordToken.setUsername(testUsername);
-        assertEquals(testUsername, AuthenticationTokenUtils.extractUsername(positiveUsernamePasswordToken));
+        assertEquals(testUsername, org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils
+                .extractUsername(positiveUsernamePasswordToken));
     }
 
     @Test
     public void testExtractHostname() throws Exception {
         // null test
         final AuthenticationToken nullAuthenticationToken = null;
-        assertEquals(AuthenticationTokenUtils.DEFAULT_HOSTNAME,
-                AuthenticationTokenUtils.extractHostname(nullAuthenticationToken));
+        assertEquals(org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils.DEFAULT_HOSTNAME,
+                     org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils
+                             .extractHostname(nullAuthenticationToken));
 
         // non-UsernamePasswordToken test
         final AuthenticationToken notUsernamePasswordToken = new NotUsernamePasswordToken();
-        assertEquals(AuthenticationTokenUtils.DEFAULT_HOSTNAME,
-                AuthenticationTokenUtils.extractHostname(notUsernamePasswordToken));
+        assertEquals(org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils.DEFAULT_HOSTNAME,
+                     org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils
+                             .extractHostname(notUsernamePasswordToken));
 
         // null hostname test
         final UsernamePasswordToken nullHostname = new UsernamePasswordToken();
         nullHostname.setHost(null);
-        assertEquals(AuthenticationTokenUtils.DEFAULT_HOSTNAME,
-                AuthenticationTokenUtils.extractHostname(nullHostname));
+        assertEquals(org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils.DEFAULT_HOSTNAME,
+                     org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils.extractHostname(nullHostname));
 
         // positive test
         final UsernamePasswordToken positiveUsernamePasswordToken = new UsernamePasswordToken();
         final String testUsername = "testHostname1";
         positiveUsernamePasswordToken.setHost(testUsername);
-        assertEquals(testUsername, AuthenticationTokenUtils.extractHostname(positiveUsernamePasswordToken));
+        assertEquals(testUsername, org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils
+                .extractHostname(positiveUsernamePasswordToken));
     }
 
     @Test
@@ -110,7 +120,8 @@ public class AuthenticationTokenUtilsTest {
         unsuccessfulToken.setUsername("unsuccessfulUser1");
         unsuccessfulToken.setHost("unsuccessfulHost1");
         assertEquals("Unsuccessful authentication attempt by unsuccessfulUser1 from unsuccessfulHost1",
-                AuthenticationTokenUtils.generateUnsuccessfulAuthenticationMessage(unsuccessfulToken));
+                     org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils
+                             .generateUnsuccessfulAuthenticationMessage(unsuccessfulToken));
     }
 
     @Test
@@ -119,6 +130,7 @@ public class AuthenticationTokenUtilsTest {
         successfulToken.setUsername("successfulUser1");
         successfulToken.setHost("successfulHost1");
         assertEquals("Successful authentication attempt by successfulUser1 from successfulHost1",
-                AuthenticationTokenUtils.generateSuccessfulAuthenticationMessage(successfulToken));
+                     org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils
+                             .generateSuccessfulAuthenticationMessage(successfulToken));
     }
 }

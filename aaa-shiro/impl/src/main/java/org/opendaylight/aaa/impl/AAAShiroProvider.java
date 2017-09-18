@@ -10,7 +10,6 @@ package org.opendaylight.aaa.impl;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import java.util.List;
-import javax.naming.Name;
 import javax.servlet.ServletException;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.ClientService;
@@ -58,11 +57,9 @@ public class AAAShiroProvider {
      * @param dataBroker injected from blueprint
      */
     private AAAShiroProvider(final DataBroker dataBroker, final ICertificateManager certificateManager,
-                             final CredentialAuth<PasswordCredentials> credentialAuth,
-                             final IIDMStore iidmStore, final TokenStore tokenStore,
-                             final ShiroConfiguration shiroConfiguration,
-                             final HttpService httpService,
-                             final String moonEndpointPath,
+                             final CredentialAuth<PasswordCredentials> credentialAuth, final IIDMStore iidmStore,
+                             final TokenStore tokenStore, final ShiroConfiguration shiroConfiguration,
+                             final HttpService httpService, final String moonEndpointPath,
                              final String oauth2EndpointPath) {
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
@@ -84,7 +81,8 @@ public class AAAShiroProvider {
         Preconditions.checkNotNull(httpService, "httpService cannot be null");
 
         LOG.info("attempting registration of AAA moon and oauth2 servlets");
-        httpService.registerServlet(moonEndpointPath, new org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint(), null, null);
+        httpService
+                .registerServlet(moonEndpointPath, new org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint(), null, null);
         httpService.registerServlet(oauth2EndpointPath, new OAuth2TokenServlet(), null, null);
     }
 
@@ -92,11 +90,11 @@ public class AAAShiroProvider {
      * Initialize AAA Services.  This method will evolve over time as ServiceLocator is refactored/removed.
      *
      * @param credentialAuth wired via blueprint
-     * @param iidmStore wired via blueprint
-     * @param tokenStore wired via blueprint
+     * @param iidmStore      wired via blueprint
+     * @param tokenStore     wired via blueprint
      */
-    private void initializeServices(final CredentialAuth<PasswordCredentials> credentialAuth,
-                                    final IIDMStore iidmStore, final TokenStore tokenStore) {
+    private void initializeServices(final CredentialAuth<PasswordCredentials> credentialAuth, final IIDMStore iidmStore,
+                                    final TokenStore tokenStore) {
 
 
         final AuthenticationService authService = new AuthenticationManager();
@@ -123,13 +121,13 @@ public class AAAShiroProvider {
     }
 
     /**
-     * Singleton creation
+     * Singleton creation.
      *
-     * @param dataBroker The DataBroker
+     * @param dataBroker         The DataBroker
      * @param certificateManager the certificate manager
-     * @param credentialAuth The CredentialAuth
-     * @param iidmStore The IDM store
-     * @param tokenStore The token store
+     * @param credentialAuth     The CredentialAuth
+     * @param iidmStore          The IDM store
+     * @param tokenStore         The token store
      * @return the Provider
      */
     public static AAAShiroProvider newInstance(final DataBroker dataBroker,
@@ -137,16 +135,15 @@ public class AAAShiroProvider {
                                                final CredentialAuth<PasswordCredentials> credentialAuth,
                                                final IIDMStore iidmStore, final TokenStore tokenStore,
                                                final ShiroConfiguration shiroConfiguration,
-                                               final HttpService httpService,
-                                               final String moonEndpointPath,
+                                               final HttpService httpService, final String moonEndpointPath,
                                                final String oauth2EndpointPath) {
         INSTANCE = new AAAShiroProvider(dataBroker, certificateManager, credentialAuth, iidmStore, tokenStore,
-                shiroConfiguration, httpService, moonEndpointPath, oauth2EndpointPath);
+                                        shiroConfiguration, httpService, moonEndpointPath, oauth2EndpointPath);
         return INSTANCE;
     }
 
     /**
-     * Singleton extraction
+     * Singleton extraction.
      *
      * @return the Provider
      */

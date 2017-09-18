@@ -8,8 +8,8 @@
 
 package org.opendaylight.aaa.shiro.realm;
 
-import com.google.common.util.concurrent.CheckedFuture;
 import com.google.common.base.Optional;
+import com.google.common.util.concurrent.CheckedFuture;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import javax.servlet.ServletRequest;
@@ -35,23 +35,25 @@ import org.slf4j.LoggerFactory;
  * This model exposes the ability to manipulate policy information for specific paths
  * based on a tuple of (role, http_permission_list).
  *
+ * <p>
  * This mechanism will only work when put behind <code>authcBasic</code>
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
+@SuppressWarnings("AbbreviationAsWordInName")
 public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
 
     private static final Logger LOG = LoggerFactory.getLogger(MDSALDynamicAuthorizationFilter.class);
 
-    private static final InstanceIdentifier<HttpAuthorization> AUTHZ_CONTAINER_IID =
-            InstanceIdentifier.builder(HttpAuthorization.class).build();
+    private static final InstanceIdentifier<HttpAuthorization> AUTHZ_CONTAINER_IID = InstanceIdentifier
+            .builder(HttpAuthorization.class).build();
 
-    public static Optional<HttpAuthorization> getHttpAuthzContainer(final DataBroker dataBroker)
-            throws ExecutionException, InterruptedException, ReadFailedException {
+    public static Optional<HttpAuthorization> getHttpAuthzContainer(
+            final DataBroker dataBroker) throws ExecutionException, InterruptedException, ReadFailedException {
 
         try (ReadOnlyTransaction ro = dataBroker.newReadOnlyTransaction()) {
-            final CheckedFuture<Optional<HttpAuthorization>, ReadFailedException> result =
-                    ro.read(LogicalDatastoreType.CONFIGURATION, AUTHZ_CONTAINER_IID);
+            final CheckedFuture<Optional<HttpAuthorization>, ReadFailedException> result = ro
+                    .read(LogicalDatastoreType.CONFIGURATION, AUTHZ_CONTAINER_IID);
             return result.get();
         }
     }
@@ -77,18 +79,18 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
             return false;
         }
         final Subject subject = getSubject(request, response);
-        final HttpServletRequest httpServletRequest = (HttpServletRequest)request;
+        final HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         final String requestURI = httpServletRequest.getRequestURI();
         LOG.debug("isAccessAllowed for user={} to requestURI={}", subject, requestURI);
 
         final Optional<HttpAuthorization> authorizationOptional;
         try {
             authorizationOptional = getHttpAuthzContainer(dataBroker);
-        } catch(ExecutionException | InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             // Something went completely wrong trying to read the authz container.  Deny access.
             LOG.debug("Error accessing the Http Authz Container", e);
             return false;
-        } catch(final ReadFailedException e) {
+        } catch (final ReadFailedException e) {
             // The MDSAL read attempt failed.  fail-closed to prevent unauthorized access
             LOG.warn("MDSAL attempt to read Http Authz Container failed, disallowing access", e);
             return false;
@@ -104,16 +106,17 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
 
         final HttpAuthorization httpAuthorization = authorizationOptional.get();
         final Policies policies = httpAuthorization.getPolicies();
-        final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies.Policies> policiesList =
-                policies.getPolicies();
-        if(policiesList.isEmpty()) {
+        final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
+                .policies.Policies>
+                policiesList = policies.getPolicies();
+        if (policiesList.isEmpty()) {
             // The authorization container exists, but no rules are present.  Allow access.
             LOG.debug("Exiting successfully early since no authorization rules exist");
             return true;
         }
 
-        for (org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies.Policies policy :
-                policiesList) {
+        for (org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
+                .policies.Policies policy : policiesList) {
             final String resource = policy.getResource();
             final boolean pathsMatch = pathsMatch(resource, requestURI);
             if (pathsMatch) {
@@ -125,9 +128,9 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
                     final String role = permission.getRole();
                     LOG.trace("role={}", role);
                     final List<Permissions.Actions> actions = permission.getActions();
-                    for(Permissions.Actions action : actions) {
+                    for (Permissions.Actions action : actions) {
                         LOG.trace("action={}", action.getName());
-                        if(action.getName().equalsIgnoreCase(method)) {
+                        if (action.getName().equalsIgnoreCase(method)) {
                             final boolean hasRole = subject.hasRole(role);
                             LOG.trace("hasRole({})={}", role, hasRole);
                             if (hasRole) {

@@ -42,6 +42,7 @@ import org.osgi.service.http.HttpService;
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
+@SuppressWarnings("AbbreviationAsWordInName")
 public class MDSALDynamicAuthorizationFilterTest {
 
     @Before
@@ -55,21 +56,25 @@ public class MDSALDynamicAuthorizationFilterTest {
     }
 
     // test helper method to generate some cool mdsal data
-    private DataBroker getTestData(final String resource, final String role,
-                                   final String description, final Permissions.Actions actions) throws Exception {
+    private DataBroker getTestData(final String resource, final String role, final String description,
+                                   final Permissions.Actions actions) throws Exception {
 
         final List<Permissions.Actions> actionsList = Lists.newArrayList(actions);
         final Permissions permissions = mock(Permissions.class);
         when(permissions.getRole()).thenReturn(role);
         when(permissions.getActions()).thenReturn(actionsList);
         final List<Permissions> permissionsList = Lists.newArrayList(permissions);
-        final org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies.Policies innerPolicies =
-                mock(org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies.Policies.class);
+        final org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
+                .policies.Policies
+                innerPolicies = mock(
+                org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
+                        .policies.Policies.class);
         when(innerPolicies.getResource()).thenReturn(resource);
         when(innerPolicies.getDescription()).thenReturn(description);
         when(innerPolicies.getPermissions()).thenReturn(permissionsList);
-        final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies.Policies> policiesList =
-                Lists.newArrayList(innerPolicies);
+        final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
+                .policies.Policies>
+                policiesList = Lists.newArrayList(innerPolicies);
         final Policies policies = mock(Policies.class);
         when(policies.getPolicies()).thenReturn(policiesList);
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
@@ -93,7 +98,8 @@ public class MDSALDynamicAuthorizationFilterTest {
         // Test Setup:
         //
         // Ensure that the base isAccessAllowed(...) method calls the static helper method.
-        final MDSALDynamicAuthorizationFilter filter = mock(MDSALDynamicAuthorizationFilter.class);
+        final org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter filter = mock(
+                org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter.class);
         when(filter.isAccessAllowed(any(), any(), any(), any())).thenReturn(true);
         when(filter.isAccessAllowed(any(), any(), any())).thenCallRealMethod();
         assertTrue(filter.isAccessAllowed(null, null, null));
@@ -108,8 +114,8 @@ public class MDSALDynamicAuthorizationFilterTest {
         //
         // Ensure that data can be extracted appropriately.
         final DataBroker dataBroker = getTestData();
-        final Optional<HttpAuthorization> httpAuthorizationOptional =
-                MDSALDynamicAuthorizationFilter.getHttpAuthzContainer(dataBroker);
+        final Optional<HttpAuthorization> httpAuthorizationOptional
+                = org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter.getHttpAuthzContainer(dataBroker);
 
         assertNotNull(httpAuthorizationOptional);
         final HttpAuthorization authz = httpAuthorizationOptional.get();
@@ -122,12 +128,13 @@ public class MDSALDynamicAuthorizationFilterTest {
         //
         // Test Setup: No rules are added to the HttpAuthorization container.  Open access should be allowed.
         final Subject subject = mock(Subject.class);
-        final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
-            @Override
-            protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
-                return subject;
-            }
-        };
+        final org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter filter
+                = new org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter() {
+                    @Override
+                    protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
+                        return subject;
+                        }
+                };
 
         final HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getRequestURI()).thenReturn("abc");
@@ -164,12 +171,13 @@ public class MDSALDynamicAuthorizationFilterTest {
         // is instructed to return an immediateFailedCheckedFuture, to emulate an error in reading
         // the Data Store.
         final Subject subject = mock(Subject.class);
-        final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
-            @Override
-            protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
-                return subject;
-            }
-        };
+        final org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter filter
+                = new org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter() {
+                    @Override
+                    protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
+                        return subject;
+                    }
+                };
 
         final HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getRequestURI()).thenReturn("abc");
@@ -177,8 +185,8 @@ public class MDSALDynamicAuthorizationFilterTest {
 
         final Optional<DataObject> dataObjectOptional = mock(Optional.class);
         when(dataObjectOptional.isPresent()).thenReturn(false);
-        final CheckedFuture<Optional<DataObject>, ReadFailedException> cf =
-                Futures.immediateFailedCheckedFuture(new ReadFailedException("Test Fail"));
+        final CheckedFuture<Optional<DataObject>, ReadFailedException> cf = Futures
+                .immediateFailedCheckedFuture(new ReadFailedException("Test Fail"));
         final ReadOnlyTransaction rot = mock(ReadOnlyTransaction.class);
         when(rot.read(any(), any())).thenReturn(cf);
         final DataBroker dataBroker = mock(DataBroker.class);
@@ -199,12 +207,13 @@ public class MDSALDynamicAuthorizationFilterTest {
         // All other Methods are considered unauthorized.
         final Subject subject = mock(Subject.class);
         final DataBroker dataBroker = getTestData();
-        final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
-            @Override
-            protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
-                return subject;
-            }
-        };
+        final org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter filter
+                = new org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter() {
+                    @Override
+                    protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
+                        return subject;
+                    }
+                };
 
         final HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getRequestURI()).thenReturn("abc");
@@ -258,9 +267,9 @@ public class MDSALDynamicAuthorizationFilterTest {
         //
         // Create some mock data which has a couple of rules which may/may not match.  This
         // test ensures the correct application of said rules.
-        final List<Permissions.Actions> actionsList = Lists.newArrayList(Permissions.Actions.Get,
-                Permissions.Actions.Delete, Permissions.Actions.Patch, Permissions.Actions.Put,
-                Permissions.Actions.Post);
+        final List<Permissions.Actions> actionsList = Lists
+                .newArrayList(Permissions.Actions.Get, Permissions.Actions.Delete, Permissions.Actions.Patch,
+                              Permissions.Actions.Put, Permissions.Actions.Post);
         final String role = "admin";
         final String resource = "/**";
         final String resource2 = "/specialendpoint/**";
@@ -269,21 +278,28 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(permissions.getRole()).thenReturn(role);
         when(permissions.getActions()).thenReturn(actionsList);
         final List<Permissions> permissionsList = Lists.newArrayList(permissions);
-        final org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies.Policies innerPolicies =
-                mock(org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies.Policies.class);
+        final org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
+                .policies.Policies
+                innerPolicies = mock(
+                org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
+                        .policies.Policies.class);
         when(innerPolicies.getResource()).thenReturn(resource);
         when(innerPolicies.getDescription()).thenReturn(description);
         when(innerPolicies.getPermissions()).thenReturn(permissionsList);
-        final org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies.Policies innerPolicies2 =
-                mock(org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies.Policies.class);
+        final org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
+                .policies.Policies
+                innerPolicies2 = mock(
+                org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
+                        .policies.Policies.class);
         when(innerPolicies2.getResource()).thenReturn(resource2);
         final Permissions permissions2 = mock(Permissions.class);
         when(permissions2.getRole()).thenReturn("dog");
         when(permissions2.getActions()).thenReturn(actionsList);
         when(innerPolicies2.getPermissions()).thenReturn(Lists.newArrayList(permissions2));
         when(innerPolicies2.getDescription()).thenReturn("Specialized Rule");
-        List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies.Policies> policiesList =
-                Lists.newArrayList(innerPolicies, innerPolicies2);
+        List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
+                .policies.Policies>
+                policiesList = Lists.newArrayList(innerPolicies, innerPolicies2);
         final Policies policies = mock(Policies.class);
         when(policies.getPolicies()).thenReturn(policiesList);
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
@@ -299,12 +315,13 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(dataBroker.newReadOnlyTransaction()).thenReturn(rot);
 
         final Subject subject = mock(Subject.class);
-        final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
-            @Override
-            protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
-                return subject;
-            }
-        };
+        final org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter filter
+                = new org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter() {
+                    @Override
+                    protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
+                        return subject;
+                    }
+                };
 
         final HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getRequestURI()).thenReturn("/abc");
@@ -353,10 +370,9 @@ public class MDSALDynamicAuthorizationFilterTest {
         final String role = "admin";
         final String resource = "/**";
         final String description = "Test description";
-        final List<Permissions.Actions> actionsList = Lists.newArrayList(
-                Permissions.Actions.Get, Permissions.Actions.Put, Permissions.Actions.Delete,
-                Permissions.Actions.Patch, Permissions.Actions.Post
-        );
+        final List<Permissions.Actions> actionsList = Lists
+                .newArrayList(Permissions.Actions.Get, Permissions.Actions.Put, Permissions.Actions.Delete,
+                              Permissions.Actions.Patch, Permissions.Actions.Post);
         final Permissions permissions = mock(Permissions.class);
         when(permissions.getRole()).thenReturn(role);
         when(permissions.getActions()).thenReturn(actionsList);
@@ -364,13 +380,17 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(permissions2.getRole()).thenReturn("user");
         when(permissions2.getActions()).thenReturn(Lists.newArrayList(Permissions.Actions.Get));
         final List<Permissions> permissionsList = Lists.newArrayList(permissions, permissions2);
-        final org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies.Policies innerPolicies =
-                mock(org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies.Policies.class);
+        final org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
+                .policies.Policies
+                innerPolicies = mock(
+                org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
+                        .policies.Policies.class);
         when(innerPolicies.getResource()).thenReturn(resource);
         when(innerPolicies.getDescription()).thenReturn(description);
         when(innerPolicies.getPermissions()).thenReturn(permissionsList);
-        final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies.Policies> policiesList =
-                Lists.newArrayList(innerPolicies);
+        final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
+                .policies.Policies>
+                policiesList = Lists.newArrayList(innerPolicies);
         final Policies policies = mock(Policies.class);
         when(policies.getPolicies()).thenReturn(policiesList);
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
@@ -386,12 +406,13 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(dataBroker.newReadOnlyTransaction()).thenReturn(rot);
 
         final Subject subject = mock(Subject.class);
-        final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
-            @Override
-            protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
-                return subject;
-            }
-        };
+        final org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter filter
+                = new org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter() {
+                    @Override
+                    protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
+                        return subject;
+                    }
+                };
 
         final HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getRequestURI()).thenReturn("/abc");

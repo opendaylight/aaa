@@ -28,7 +28,7 @@ public class Accounter {
     }
 
     /**
-     * Account for a particular <code>message</code>
+     * Account for a particular <code>message</code>.
      *
      * @param message A message for the aggregated AAA log.
      */
