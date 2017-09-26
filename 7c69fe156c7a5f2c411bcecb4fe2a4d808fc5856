@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba1f61a0_fe84ec0b",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-09-26T15:46:37Z",
+      "side": 1,
+      "message": "Did you check to ensure the oauth2 endpoint still works after this?",
+      "range": {
+        "startLine": 263,
+        "startChar": 12,
+        "endLine": 263,
+        "endChar": 52
+      },
+      "revId": "7c69fe156c7a5f2c411bcecb4fe2a4d808fc5856",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
