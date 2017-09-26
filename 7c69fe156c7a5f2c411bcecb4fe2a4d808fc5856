@@ -22,6 +22,30 @@
       "revId": "7c69fe156c7a5f2c411bcecb4fe2a4d808fc5856",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba1f61a0_9eacd08d",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-09-26T15:53:18Z",
+      "side": 1,
+      "message": "yes, I test it using idmtool \n./karaf/target/assembly/bin/idmtool admin get-oauth2-token sdn\nPassword: \nhttp://localhost:8181/oauth2/token\nget_oauth2_token(scope\u003dsdn)\ncommand succeeded!\njson:\n{\n    \"access_token\": \"3086e70d-6bd8-334d-b71d-5f0e22e0f410\", \n    \"expires_in\": 3600, \n    \"token_type\": \"Bearer\"\n}",
+      "parentUuid": "ba1f61a0_fe84ec0b",
+      "range": {
+        "startLine": 263,
+        "startChar": 12,
+        "endLine": 263,
+        "endChar": 52
+      },
+      "revId": "7c69fe156c7a5f2c411bcecb4fe2a4d808fc5856",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
