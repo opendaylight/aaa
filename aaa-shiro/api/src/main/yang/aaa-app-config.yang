@@ -4,7 +4,7 @@ module aaa-app-config {
     prefix "aaa-app-config";
     organization "OpenDaylight";
 
-    contact "ryandgoulding@gmail.com";
+    contact "ryandgoulding@gmail.com, m.elserngawy@gmail.com";
 
     revision "2017-06-19" {
         description "aaa-app-config is used to manipulate aspects of AAA clustered-app-config.";
@@ -38,4 +38,31 @@ module aaa-app-config {
             description "The urls section of shiro.ini.";
         }
     }
+
+    container datastore-config {
+        leaf default-store {
+            description "Available data store types.";
+            type enumeration {
+                enum h2-data-store {
+                    description "H2 DataStore.";
+                    value 0;
+                }
+                enum mdsal-data-store {
+                    description "Mdsal DataStore.";
+                    value 1;
+                }
+            }
+        }
+        leaf time-to-live {
+            description "Time to live for tokens.";
+             type uint64;
+             default 36000;
+         }
+         leaf time-to-wait {
+             description "Time to wait for tokens.";
+             type uint64;
+             default 3600;
+         }
+    }
+
 }
