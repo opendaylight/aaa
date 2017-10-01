@@ -24,7 +24,7 @@ import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
-import org.opendaylight.aaa.idm.AAAIDMLightModule;
+import org.opendaylight.aaa.impl.AAAShiroProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +55,7 @@ public class RoleHandler {
         LOG.info("get /roles");
         Roles roles = null;
         try {
-            roles = AAAIDMLightModule.getStore().getRoles();
+            roles = AAAShiroProvider.getInstance().getIdmStore().getRoles();
         } catch (IDMStoreException e) {
             LOG.error("Internal error getting the roles", e);
             return new IDMError(500, "internal error getting roles", e.getMessage()).response();
@@ -79,7 +79,7 @@ public class RoleHandler {
         Role role = null;
 
         try {
-            role = AAAIDMLightModule.getStore().readRole(id);
+            role = AAAShiroProvider.getInstance().getIdmStore().readRole(id);
         } catch (IDMStoreException e) {
             LOG.error("Internal error getting the role", e);
             return new IDMError(500, "internal error getting roles", e.getMessage()).response();
@@ -144,7 +144,7 @@ public class RoleHandler {
                         .response();
             }
 
-            role = AAAIDMLightModule.getStore().writeRole(role);
+            role = AAAShiroProvider.getInstance().getIdmStore().writeRole(role);
         } catch (IDMStoreException e) {
             LOG.error("Internal error creating role", e);
             return new IDMError(500, "internal error creating role", e.getMessage()).response();
@@ -188,7 +188,7 @@ public class RoleHandler {
                         .response();
             }
 
-            role = AAAIDMLightModule.getStore().updateRole(role);
+            role = AAAShiroProvider.getInstance().getIdmStore().updateRole(role);
             if (role == null) {
                 return new IDMError(404, "role id not found :" + id, "").response();
             }
@@ -216,7 +216,7 @@ public class RoleHandler {
         LOG.info("Delete /roles/{}", id);
 
         try {
-            Role role = AAAIDMLightModule.getStore().deleteRole(id);
+            Role role = AAAShiroProvider.getInstance().getIdmStore().deleteRole(id);
             if (role == null) {
                 return new IDMError(404, "role id not found :" + id, "").response();
             }
