@@ -33,10 +33,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     </dependency>
     <dependency>
       <groupId>org.opendaylight.aaa</groupId>
-      <artifactId>aaa-h2-store</artifactId>
+      <artifactId>aaa-shiro</artifactId>
       <exclusions>
         <exclusion>
-          <!-- Completely disable transitive dependencies -->
+    <!-- Completely disable transitive dependencies -->
           <groupId>*</groupId>
           <artifactId>*</artifactId>
         </exclusion>
@@ -51,7 +51,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
     </dependency>
-
     <!-- Note that com.h2database:h2 is already shaded into aaa-h2-store -->
 
     <!-- Now for the FAT JAR we need to fix up some <scope>provided to be <scope>compile -->
@@ -65,7 +64,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
       <artifactId>slf4j-simple</artifactId>
       <scope>compile</scope> <!-- Not test -->
     </dependency>
-
     <!-- Testing Dependencies -->
     <dependency>
       <groupId>junit</groupId>
@@ -120,7 +118,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
               <minimizeJar>true</minimizeJar>
               <filters>
                 <filter>
-                  <artifact>org.opendaylight.aaa:aaa-h2-store</artifact>
+                  <artifact>org.opendaylight.aaa:aaa-shiro</artifact>
                   <includes>
                     <include>org/opendaylight/**</include>
                     <include>org/h2/Driver.class</include>
