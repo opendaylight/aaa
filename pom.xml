@@ -23,7 +23,6 @@
   <modules>
     <module>aaa-authn-api</module>
     <module>aaa-encrypt-service</module>
-    <module>aaa-h2-store</module>
     <module>aaa-cert</module>
     <module>aaa-cli</module>
     <module>aaa-cli-jar</module>

@@ -15,6 +15,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
           binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration"
           id="shiroConfiguration" default-config-file-name="aaa-app-config.xml" />
 
+  <odl:clustered-app-config id="datastoreConfig"
+        default-config-file-name="aaa-datastore-config.xml"
+        binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.DatastoreConfig" />
+
   <bean id="IdmLightProxy" class="org.opendaylight.aaa.idm.IdmLightProxy">
   </bean>
 
@@ -29,20 +33,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     interface="org.opendaylight.aaa.cert.api.ICertificateManager"
     odl:type="default-certificate-manager" />
 
-  <reference id="idmStore"
-             interface="org.opendaylight.aaa.api.IIDMStore"
-             odl:type="default" />
-
-  <reference id="h2TokenStore"
-             interface="org.opendaylight.aaa.api.TokenStore"
-             odl:type="default" />
-
   <reference id="httpService"
              interface="org.osgi.service.http.HttpService"/>
-
-  <bean id="AAAIDMLightModule" class="org.opendaylight.aaa.idm.AAAIDMLightModule" init-method="initializeStore">
-      <argument ref="idmStore"/>
-  </bean>
 
   <bean id="provider"
     class="org.opendaylight.aaa.impl.AAAShiroProvider" factory-method="newInstance"
@@ -50,12 +42,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="dataBroker" />
     <argument ref="certManager" />
     <argument ref="IdmLightProxy" />
-    <argument ref="idmStore" />
-    <argument ref="h2TokenStore" />
     <argument ref="shiroConfiguration" />
     <argument ref="httpService" />
     <argument value="/moon" />
     <argument value="/oauth2" />
+    <argument ref="datastoreConfig" />
   </bean>
 
   <bean id="aaa" class="org.opendaylight.aaa.shiro.filters.AAAFilter" />
