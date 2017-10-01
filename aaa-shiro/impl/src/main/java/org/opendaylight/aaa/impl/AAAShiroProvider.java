@@ -9,28 +9,31 @@ package org.opendaylight.aaa.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.List;
-import javax.naming.Name;
 import javax.servlet.ServletException;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.ClientService;
 import org.opendaylight.aaa.api.CredentialAuth;
+import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.IdMServiceImpl;
 import org.opendaylight.aaa.api.PasswordCredentials;
+import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
-import org.opendaylight.aaa.idm.IdmLightApplication;
+import org.opendaylight.aaa.impl.datastore.h2.H2Store;
+import org.opendaylight.aaa.impl.datastore.h2.H2TokenStore;
+import org.opendaylight.aaa.impl.datastore.mdsal.MdsalStore;
+import org.opendaylight.aaa.impl.datastore.mdsal.MdsalTokenStore;
 import org.opendaylight.aaa.impl.shiro.oauth2.OAuth2TokenServlet;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.AuthenticationManager;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.ClientManager;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.HttpBasicAuth;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.DatastoreConfig;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration;
 import org.osgi.service.http.HttpService;
 import org.osgi.service.http.NamespaceException;
@@ -54,6 +57,8 @@ public class AAAShiroProvider {
     private final HttpService httpService;
     private final String moonEndpointPath;
     private final String oauth2EndpointPath;
+    private static IIDMStore iidmStore;
+    private TokenStore tokenStore;
 
     /**
      * Provider for this bundle.
@@ -62,11 +67,11 @@ public class AAAShiroProvider {
      */
     private AAAShiroProvider(final DataBroker dataBroker, final ICertificateManager certificateManager,
                              final CredentialAuth<PasswordCredentials> credentialAuth,
-                             final IIDMStore iidmStore, final TokenStore tokenStore,
                              final ShiroConfiguration shiroConfiguration,
                              final HttpService httpService,
                              final String moonEndpointPath,
-                             final String oauth2EndpointPath) {
+                             final String oauth2EndpointPath,
+                             final DatastoreConfig datastoreConfig) {
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
         this.shiroConfiguration = shiroConfiguration;
@@ -74,6 +79,21 @@ public class AAAShiroProvider {
         this.moonEndpointPath = moonEndpointPath;
         this.oauth2EndpointPath = oauth2EndpointPath;
 
+        if (datastoreConfig != null && datastoreConfig.getDefaultStore()
+                .equals(DatastoreConfig.DefaultStore.H2DataStore)) {
+            iidmStore = new H2Store();
+            tokenStore = new H2TokenStore(datastoreConfig.getTimeToLive().longValue(),
+                    datastoreConfig.getTimeToWait().longValue());
+        } else if (datastoreConfig != null && datastoreConfig.getDefaultStore()
+                .equals(DatastoreConfig.DefaultStore.MdsalDataStore)) {
+            iidmStore = new MdsalStore(dataBroker);
+            tokenStore = new MdsalTokenStore(datastoreConfig.getTimeToLive().longValue());
+        } else {
+            iidmStore = null;
+            tokenStore = null;
+            LOG.info("AAA Datastore has not been initialized");
+            return;
+        }
         this.initializeServices(credentialAuth, iidmStore, tokenStore);
         try {
             this.registerServletContexts(this.httpService, this.moonEndpointPath, this.oauth2EndpointPath);
@@ -88,7 +108,8 @@ public class AAAShiroProvider {
         LOG.info("attempting registration of AAA moon, oauth2 and auth servlets");
 
         Preconditions.checkNotNull(httpService, "httpService cannot be null");
-        httpService.registerServlet(moonEndpointPath, new org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint(), null, null);
+        httpService.registerServlet(moonEndpointPath, new org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint(),
+                null, null);
         httpService.registerServlet(oauth2EndpointPath, new OAuth2TokenServlet(), null, null);
     }
 
@@ -101,61 +122,81 @@ public class AAAShiroProvider {
      */
     private void initializeServices(final CredentialAuth<PasswordCredentials> credentialAuth,
                                     final IIDMStore iidmStore, final TokenStore tokenStore) {
-
+        try {
+            new StoreBuilder(iidmStore).init();
+        } catch (final IDMStoreException e) {
+            LOG.error("Failed to initialize data in store", e);
+        }
 
         final AuthenticationService authService = new AuthenticationManager();
         ServiceLocator.getInstance().setAuthenticationService(authService);
 
-
         final ClientService clientService = new ClientManager();
         ServiceLocator.getInstance().setClientService(clientService);
-
 
         final IdMService idmService = new IdMServiceImpl(iidmStore);
         ServiceLocator.getInstance().setIdmService(idmService);
 
-
         ServiceLocator.getInstance().setCredentialAuth(credentialAuth);
-
 
         final TokenAuth tokenAuth = new HttpBasicAuth();
         final List<TokenAuth> tokenAuthList = Lists.newArrayList(tokenAuth);
         ServiceLocator.getInstance().setTokenAuthCollection(tokenAuthList);
 
-
         ServiceLocator.getInstance().setTokenStore(tokenStore);
     }
 
     /**
-     * Singleton creation
+     * Singleton creation.
      *
      * @param dataBroker The DataBroker
      * @param certificateManager the certificate manager
      * @param credentialAuth The CredentialAuth
-     * @param iidmStore The IDM store
-     * @param tokenStore The token store
+     * @param shiroConfiguration shiro config
+     * @param httpService http service
+     * @param moonEndpointPath moon path
+     * @param oauth2EndpointPath oauth path
+     * @param datastoreConfig data store config
      * @return the Provider
      */
     public static AAAShiroProvider newInstance(final DataBroker dataBroker,
                                                final ICertificateManager certificateManager,
                                                final CredentialAuth<PasswordCredentials> credentialAuth,
-                                               final IIDMStore iidmStore, final TokenStore tokenStore,
                                                final ShiroConfiguration shiroConfiguration,
                                                final HttpService httpService,
                                                final String moonEndpointPath,
-                                               final String oauth2EndpointPath) {
-        INSTANCE = new AAAShiroProvider(dataBroker, certificateManager, credentialAuth, iidmStore, tokenStore,
-                shiroConfiguration, httpService, moonEndpointPath, oauth2EndpointPath);
+                                               final String oauth2EndpointPath,
+                                               final DatastoreConfig datastoreConfig) {
+        INSTANCE = new AAAShiroProvider(dataBroker, certificateManager, credentialAuth, shiroConfiguration,
+                httpService, moonEndpointPath, oauth2EndpointPath, datastoreConfig);
         return INSTANCE;
     }
 
     /**
-     * Singleton extraction
+     * Singleton extraction.
      *
      * @return the Provider
      */
     public static AAAShiroProvider getInstance() {
         return INSTANCE;
+    }
+
+    /**
+     * Get IDM data store.
+     *
+     * @return IIDMStore data store
+     */
+    public static IIDMStore getIdmStore() {
+        return iidmStore;
+    }
+
+    /**
+     * Set IDM data store, only used for test.
+     *
+     * @param store data store
+     */
+    public static void setIdmStore(IIDMStore store) {
+        iidmStore = store;
     }
 
     /**
