@@ -65,12 +65,11 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-h2-store</artifactId>
+                <artifactId>aaa-shiro</artifactId>
                 <version>${project.version}</version>
-                <type>cfg</type>
-                <classifier>config</classifier>
+                <type>xml</type>
+                <classifier>aaa-app-config</classifier>
             </dependency>
-
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-authn-mdsal-api</artifactId>
@@ -115,11 +114,6 @@
                 <version>${project.version}</version>
                 <classifier>features</classifier>
                 <type>xml</type>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-h2-store</artifactId>
-                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
