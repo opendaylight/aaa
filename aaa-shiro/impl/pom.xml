@@ -102,10 +102,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
       <groupId>org.opendaylight.controller</groupId>
       <artifactId>sal-common-util</artifactId>
     </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-filterchain</artifactId>
-        </dependency>
+    <dependency>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-filterchain</artifactId>
+    </dependency>
     <dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-server</artifactId>
@@ -164,6 +164,28 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
       <scope>provided</scope>
     </dependency>
 
+    <!-- Database dependencies -->
+    <dependency>
+      <groupId>net.sf.ehcache</groupId>
+      <artifactId>ehcache</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.immutables</groupId>
+      <artifactId>value</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
+
     <!-- Testing Dependencies -->
     <dependency>
       <groupId>com.sun.jersey.jersey-test-framework</groupId>
@@ -216,6 +238,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
       <version>7.0.0.pre5</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.google.truth</groupId>
+      <artifactId>truth</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -234,7 +260,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
               org.opendaylight.aaa.shiro,
               org.opendaylight.aaa.shiro.filters,
               org.opendaylight.aaa.shiro.realm,
-              org.opendaylight.aaa.shiro.web.env
+              org.opendaylight.aaa.shiro.web.env,
+              org.opendaylight.aaa.impl.datastore.h2.*,
             </Export-Package>
             <Import-Package>
               com.google.*,
@@ -258,8 +285,29 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
               org.osgi.service.http.*,
               org.apache.shiro.web.*,
               org.apache.shiro.*,
-              org.slf4j.*
+              org.slf4j.*,
+              net.sf.ehcache.*,
+              !javax.naming,
+              !javax.naming.spi,
+              !javax.servlet,
+              !javax.servlet.http,
+              !javax.tools,
+              !javax.transaction.xa,
+              !org.apache.lucene.analysis,
+              !org.apache.lucene.analysis.standard,
+              !org.apache.lucene.document,
+              !org.apache.lucene.index,
+              !org.apache.lucene.queryParser,
+              !org.apache.lucene.search,
+              !org.apache.lucene.store,
+              !org.apache.lucene.util,
+              !com.vividsolutions.jts.geom,
+              !com.vividsolutions.jts.io,
+              !org.osgi.service.jdbc,
+              !javax.annotation,
+              !javax.naming
             </Import-Package>
+            <Embed-Dependency>h2;scope=compile|runtime;inline=true</Embed-Dependency>
             <Web-ContextPath>/auth</Web-ContextPath>
           </instructions>
         </configuration>
@@ -293,6 +341,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                   <file>${project.build.directory}/classes/initial/aaa-app-config.xml</file>
                   <type>xml</type>
                   <classifier>aaa-app-config</classifier>
+                </artifact>
+                <artifact>
+                  <file>${project.build.directory}/classes/initial/aaa-datastore-config.xml</file>
+                  <type>xml</type>
+                  <classifier>aaa-datastore-config</classifier>
                 </artifact>
                 <!-- attach convert-shiro-ini-to-rest-payload.py as an artifact -->
                 <artifact>

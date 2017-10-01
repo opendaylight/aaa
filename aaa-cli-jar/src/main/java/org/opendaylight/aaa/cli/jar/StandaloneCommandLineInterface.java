@@ -18,10 +18,10 @@ import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.api.model.User;
-import org.opendaylight.aaa.h2.config.IdmLightConfig;
-import org.opendaylight.aaa.h2.config.IdmLightConfigBuilder;
-import org.opendaylight.aaa.h2.config.IdmLightSimpleConnectionProvider;
-import org.opendaylight.aaa.h2.persistence.H2Store;
+import org.opendaylight.aaa.impl.datastore.h2.H2Store;
+import org.opendaylight.aaa.impl.datastore.h2.IdmLightConfig;
+import org.opendaylight.aaa.impl.datastore.h2.IdmLightConfigBuilder;
+import org.opendaylight.aaa.impl.datastore.h2.IdmLightSimpleConnectionProvider;
 
 /**
  * AAA CLI interface.
