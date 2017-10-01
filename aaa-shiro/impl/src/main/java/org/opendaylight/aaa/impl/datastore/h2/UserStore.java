@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.h2.persistence;
+package org.opendaylight.aaa.impl.datastore.h2;
 
 import com.google.common.base.Preconditions;
 
@@ -21,7 +21,6 @@ import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
-import org.opendaylight.aaa.h2.config.ConnectionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,17 +33,17 @@ import org.slf4j.LoggerFactory;
 public class UserStore extends AbstractStore<User> {
     private static final Logger LOG = LoggerFactory.getLogger(UserStore.class);
 
-    protected static final String SQL_ID = "userid";
-    protected static final String SQL_DOMAIN_ID = "domainid";
-    protected static final String SQL_NAME = "name";
-    protected static final String SQL_EMAIL = "email";
-    protected static final String SQL_PASSWORD = "password";
-    protected static final String SQL_DESCR = "description";
-    protected static final String SQL_ENABLED = "enabled";
-    protected static final String SQL_SALT = "salt";
+    public static final String SQL_ID = "userid";
+    public static final String SQL_DOMAIN_ID = "domainid";
+    public static final String SQL_NAME = "name";
+    public static final String SQL_EMAIL = "email";
+    public static final String SQL_PASSWORD = "password";
+    public static final String SQL_DESCR = "description";
+    public static final String SQL_ENABLED = "enabled";
+    public static final String SQL_SALT = "salt";
     private static final String TABLE_NAME = "USERS";
 
-    protected UserStore(ConnectionProvider dbConnectionFactory) {
+    public UserStore(ConnectionProvider dbConnectionFactory) {
         super(dbConnectionFactory, TABLE_NAME);
     }
 
@@ -76,7 +75,7 @@ public class UserStore extends AbstractStore<User> {
         return user;
     }
 
-    protected Users getUsers() throws StoreException {
+    public Users getUsers() throws StoreException {
         Users users = new Users();
         users.setUsers(listAll());
         return users;
@@ -97,7 +96,7 @@ public class UserStore extends AbstractStore<User> {
         return users;
     }
 
-    protected User getUser(String id) throws StoreException {
+    public User getUser(String id) throws StoreException {
         try (Connection conn = dbConnect();
                 PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM USERS WHERE userid = ? ")) {
             pstmt.setString(1, id);
@@ -137,7 +136,7 @@ public class UserStore extends AbstractStore<User> {
         }
     }
 
-    protected User putUser(User user) throws StoreException {
+    public User putUser(User user) throws StoreException {
 
         User savedUser = this.getUser(user.getUserid());
         if (savedUser == null) {

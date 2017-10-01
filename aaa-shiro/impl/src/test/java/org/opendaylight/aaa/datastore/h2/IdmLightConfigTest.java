@@ -5,13 +5,13 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.h2.config.tests;
+package org.opendaylight.aaa.datastore.h2;
 
 import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.Test;
-import org.opendaylight.aaa.h2.config.IdmLightConfig;
-import org.opendaylight.aaa.h2.config.IdmLightConfigBuilder;
+import org.opendaylight.aaa.impl.datastore.h2.IdmLightConfig;
+import org.opendaylight.aaa.impl.datastore.h2.IdmLightConfigBuilder;
 
 /**
  * Unit test for IdmLightConfig.

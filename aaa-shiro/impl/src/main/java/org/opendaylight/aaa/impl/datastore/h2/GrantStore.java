@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.h2.persistence;
+package org.opendaylight.aaa.impl.datastore.h2;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +18,6 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Grants;
-import org.opendaylight.aaa.h2.config.ConnectionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,13 +30,13 @@ import org.slf4j.LoggerFactory;
 public class GrantStore extends AbstractStore<Grant> {
     private static final Logger LOG = LoggerFactory.getLogger(GrantStore.class);
 
-    protected static final String SQL_ID = "grantid";
-    protected static final String SQL_TENANTID = "domainid";
-    protected static final String SQL_USERID = "userid";
-    protected static final String SQL_ROLEID = "roleid";
+    public static final String SQL_ID = "grantid";
+    public static final String SQL_TENANTID = "domainid";
+    public static final String SQL_USERID = "userid";
+    public static final String SQL_ROLEID = "roleid";
     private static final String TABLE_NAME = "GRANTS";
 
-    protected GrantStore(ConnectionProvider dbConnectionFactory) {
+    public GrantStore(ConnectionProvider dbConnectionFactory) {
         super(dbConnectionFactory, TABLE_NAME);
     }
 
@@ -65,7 +64,7 @@ public class GrantStore extends AbstractStore<Grant> {
         return grant;
     }
 
-    protected Grants getGrants(String did, String uid) throws StoreException {
+    public Grants getGrants(String did, String uid) throws StoreException {
         Grants grants = new Grants();
         try (Connection conn = dbConnect();
              PreparedStatement pstmt = conn

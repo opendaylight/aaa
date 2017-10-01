@@ -5,12 +5,11 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.h2.config;
+package org.opendaylight.aaa.impl.datastore.h2;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import org.opendaylight.aaa.h2.persistence.StoreException;
 
 /**
  * Simple Provider of JDBC Connections, based on an {@link IdmLightConfig} and

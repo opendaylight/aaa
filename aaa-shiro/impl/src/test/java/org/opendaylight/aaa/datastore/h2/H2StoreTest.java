@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.h2.persistence;
+package org.opendaylight.aaa.datastore.h2;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -22,8 +22,14 @@ import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.User;
-import org.opendaylight.aaa.h2.config.IdmLightConfigBuilder;
-import org.opendaylight.aaa.h2.config.IdmLightSimpleConnectionProvider;
+import org.opendaylight.aaa.impl.datastore.h2.DomainStore;
+import org.opendaylight.aaa.impl.datastore.h2.GrantStore;
+import org.opendaylight.aaa.impl.datastore.h2.H2Store;
+import org.opendaylight.aaa.impl.datastore.h2.IdmLightConfigBuilder;
+import org.opendaylight.aaa.impl.datastore.h2.IdmLightSimpleConnectionProvider;
+import org.opendaylight.aaa.impl.datastore.h2.RoleStore;
+import org.opendaylight.aaa.impl.datastore.h2.StoreException;
+import org.opendaylight.aaa.impl.datastore.h2.UserStore;
 
 public class H2StoreTest {
 

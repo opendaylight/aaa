@@ -5,7 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.h2.persistence;
+package org.opendaylight.aaa.impl.datastore.h2;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import org.opendaylight.aaa.h2.config.ConnectionProvider;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -89,7 +89,7 @@ abstract class AbstractStore<T> {
      *
      * @throws StoreException if a connection error occurs.
      */
-    protected void dbClean() throws StoreException {
+    public void dbClean() throws StoreException {
         try (Connection c = dbConnect()) {
             // The table name can't be a parameter in a prepared statement
             String sql = "DELETE FROM " + tableName;

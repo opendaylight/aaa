@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.h2.persistence;
+package org.opendaylight.aaa.impl.datastore.h2;
 
 import com.google.common.base.Preconditions;
 
@@ -20,7 +20,6 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
-import org.opendaylight.aaa.h2.config.ConnectionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,13 +32,13 @@ import org.slf4j.LoggerFactory;
 public class RoleStore extends AbstractStore<Role> {
     private static final Logger LOG = LoggerFactory.getLogger(RoleStore.class);
 
-    protected static final String SQL_ID = "roleid";
+    public static final String SQL_ID = "roleid";
     protected static final String SQL_DOMAIN_ID = "domainid";
-    protected static final String SQL_NAME = "name";
-    protected static final String SQL_DESCR = "description";
+    public static final String SQL_NAME = "name";
+    public static final String SQL_DESCR = "description";
     private static final String TABLE_NAME = "ROLES";
 
-    protected RoleStore(ConnectionProvider dbConnectionFactory) {
+    public RoleStore(ConnectionProvider dbConnectionFactory) {
         super(dbConnectionFactory, TABLE_NAME);
     }
 
@@ -65,7 +64,7 @@ public class RoleStore extends AbstractStore<Role> {
         return role;
     }
 
-    protected Roles getRoles() throws StoreException {
+    public Roles getRoles() throws StoreException {
         Roles roles = new Roles();
         roles.setRoles(listAll());
         return roles;

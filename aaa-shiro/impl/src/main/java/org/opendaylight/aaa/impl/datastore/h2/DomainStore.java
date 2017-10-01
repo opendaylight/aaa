@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.h2.persistence;
+package org.opendaylight.aaa.impl.datastore.h2;
 
 import com.google.common.base.Preconditions;
 
@@ -19,7 +19,6 @@ import java.sql.Statement;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Domains;
-import org.opendaylight.aaa.h2.config.ConnectionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,13 +31,13 @@ import org.slf4j.LoggerFactory;
 public class DomainStore extends AbstractStore<Domain> {
     private static final Logger LOG = LoggerFactory.getLogger(DomainStore.class);
 
-    protected static final String SQL_ID = "domainid";
-    protected static final String SQL_NAME = "name";
-    protected static final String SQL_DESCR = "description";
-    protected static final String SQL_ENABLED = "enabled";
+    public static final String SQL_ID = "domainid";
+    public static final String SQL_NAME = "name";
+    public static final String SQL_DESCR = "description";
+    public static final String SQL_ENABLED = "enabled";
     private static final String TABLE_NAME = "DOMAINS";
 
-    protected DomainStore(ConnectionProvider dbConnectionFactory) {
+    public DomainStore(ConnectionProvider dbConnectionFactory) {
         super(dbConnectionFactory, TABLE_NAME);
     }
 
@@ -61,7 +60,7 @@ public class DomainStore extends AbstractStore<Domain> {
         return domain;
     }
 
-    protected Domains getDomains() throws StoreException {
+    public Domains getDomains() throws StoreException {
         Domains domains = new Domains();
         domains.setDomains(listAll());
         return domains;
@@ -94,7 +93,7 @@ public class DomainStore extends AbstractStore<Domain> {
         }
     }
 
-    protected Domain createDomain(Domain domain) throws StoreException {
+    public Domain createDomain(Domain domain) throws StoreException {
         Preconditions.checkNotNull(domain);
         Preconditions.checkNotNull(domain.getName());
         Preconditions.checkNotNull(domain.isEnabled());

@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.h2.persistence;
+package org.opendaylight.aaa.impl.datastore.h2;
 
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IDMStoreUtil;
@@ -19,9 +19,7 @@ import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
-import org.opendaylight.aaa.h2.config.ConnectionProvider;
-import org.opendaylight.aaa.h2.config.IdmLightConfigBuilder;
-import org.opendaylight.aaa.h2.config.IdmLightSimpleConnectionProvider;
+import org.opendaylight.aaa.impl.datastore.h2.IdmLightConfigBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

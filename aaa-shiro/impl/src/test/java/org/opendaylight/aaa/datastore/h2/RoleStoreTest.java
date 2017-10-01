@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2014, 2016 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.h2.persistence;
+package org.opendaylight.aaa.datastore.h2;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
@@ -15,60 +15,54 @@ import static org.mockito.Mockito.verify;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.sql.Statement;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.opendaylight.aaa.api.model.Grants;
-import org.opendaylight.aaa.h2.config.ConnectionProvider;
+import org.opendaylight.aaa.api.model.Roles;
+import org.opendaylight.aaa.impl.datastore.h2.ConnectionProvider;
+import org.opendaylight.aaa.impl.datastore.h2.RoleStore;
 
-public class GrantStoreTest {
+public class RoleStoreTest {
 
     private final Connection connectionMock = mock(Connection.class);
 
     private final ConnectionProvider connectionFactoryMock = () -> connectionMock;
 
-    private final GrantStore grantStoreUnderTest = new GrantStore(connectionFactoryMock);
-
-    private final String did = "5";
-    private final String uid = "5";
+    private final RoleStore roleStoreUnderTest = new RoleStore(connectionFactoryMock);
 
     @Test
-    public void getGrantsTest() throws Exception {
+    public void getRolesTest() throws SQLException, Exception {
         // Setup Mock Behavior
         String[] tableTypes = { "TABLE" };
         Mockito.when(connectionMock.isClosed()).thenReturn(false);
         DatabaseMetaData dbmMock = mock(DatabaseMetaData.class);
         Mockito.when(connectionMock.getMetaData()).thenReturn(dbmMock);
         ResultSet rsUserMock = mock(ResultSet.class);
-        Mockito.when(dbmMock.getTables(null, null, "GRANTS", tableTypes)).thenReturn(rsUserMock);
+        Mockito.when(dbmMock.getTables(null, null, "ROLES", tableTypes)).thenReturn(rsUserMock);
         Mockito.when(rsUserMock.next()).thenReturn(true);
 
-        PreparedStatement pstmtMock = mock(PreparedStatement.class);
-        Mockito.when(connectionMock.prepareStatement(anyString())).thenReturn(pstmtMock);
+        Statement stmtMock = mock(Statement.class);
+        Mockito.when(connectionMock.createStatement()).thenReturn(stmtMock);
 
         ResultSet rsMock = getMockedResultSet();
-        Mockito.when(pstmtMock.executeQuery()).thenReturn(rsMock);
+        Mockito.when(stmtMock.executeQuery(anyString())).thenReturn(rsMock);
 
         // Run Test
-        Grants grants = grantStoreUnderTest.getGrants(did, uid);
+        Roles roles = roleStoreUnderTest.getRoles();
 
         // Verify
-        assertTrue(grants.getGrants().size() == 1);
-        verify(pstmtMock).close();
+        assertTrue(roles.getRoles().size() == 1);
+        verify(stmtMock).close();
     }
 
     public ResultSet getMockedResultSet() throws SQLException {
         ResultSet rsMock = mock(ResultSet.class);
         Mockito.when(rsMock.next()).thenReturn(true).thenReturn(false);
-        Mockito.when(rsMock.getInt(GrantStore.SQL_ID)).thenReturn(1);
-        Mockito.when(rsMock.getString(GrantStore.SQL_TENANTID)).thenReturn(did);
-        Mockito.when(rsMock.getString(GrantStore.SQL_USERID)).thenReturn(uid);
-        Mockito.when(rsMock.getString(GrantStore.SQL_ROLEID)).thenReturn("Role_1");
-
+        Mockito.when(rsMock.getInt(RoleStore.SQL_ID)).thenReturn(1);
+        Mockito.when(rsMock.getString(RoleStore.SQL_NAME)).thenReturn("RoleName_1");
+        Mockito.when(rsMock.getString(RoleStore.SQL_DESCR)).thenReturn("Desc_1");
         return rsMock;
     }
-
 }

@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.h2.config;
+package org.opendaylight.aaa.impl.datastore.h2;
 
 import java.io.File;
 import org.immutables.value.Value;

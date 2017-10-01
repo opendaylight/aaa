@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.h2.persistence;
+package org.opendaylight.aaa.datastore.h2;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
@@ -21,7 +21,8 @@ import java.sql.Statement;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.opendaylight.aaa.api.model.Domains;
-import org.opendaylight.aaa.h2.config.ConnectionProvider;
+import org.opendaylight.aaa.impl.datastore.h2.ConnectionProvider;
+import org.opendaylight.aaa.impl.datastore.h2.DomainStore;
 
 public class DomainStoreTest {
 
