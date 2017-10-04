@@ -1,0 +1,360 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a245df4_9a830ccc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-10-04T17:48:52Z",
+      "side": 1,
+      "message": "should be one line",
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_ba69b027",
+        "filename": "aaa-shiro/api/src/main/yang/aaa-app-config.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-10-04T17:48:52Z",
+      "side": 1,
+      "message": "should just be \"store\"",
+      "range": {
+        "startLine": 43,
+        "startChar": 13,
+        "endLine": 43,
+        "endChar": 26
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_fa732813",
+        "filename": "aaa-shiro/api/src/main/yang/aaa-app-config.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-10-04T17:48:52Z",
+      "side": 1,
+      "message": "can we just use a string instead?  enums can really suck if you want to add enum types in the future...",
+      "range": {
+        "startLine": 45,
+        "startChar": 17,
+        "endLine": 45,
+        "endChar": 28
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_5a607435",
+        "filename": "aaa-shiro/api/src/main/yang/aaa-app-config.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-10-04T17:48:52Z",
+      "side": 1,
+      "message": "should be this by default... this isn\u0027t needed.",
+      "range": {
+        "startLine": 48,
+        "startChar": 20,
+        "endLine": 48,
+        "endChar": 28
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_3a65c045",
+        "filename": "aaa-shiro/api/src/main/yang/aaa-app-config.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-10-04T17:48:52Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 27
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_da53c46a",
+        "filename": "aaa-shiro/api/src/main/yang/aaa-app-config.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-10-04T17:48:52Z",
+      "side": 1,
+      "message": "Having trouble understanding what this means? Is this measured in seconds?  Please specify the unit.  Same above.",
+      "range": {
+        "startLine": 62,
+        "startChar": 26,
+        "endLine": 62,
+        "endChar": 50
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_1a4efcc1",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-10-04T17:48:52Z",
+      "side": 1,
+      "message": "lets talk about this in the call;  not sure why we have so much here but i could be overlooking something.",
+      "range": {
+        "startLine": 289,
+        "startChar": 14,
+        "endLine": 308,
+        "endChar": 27
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_9ad14cd0",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/AAAShiroProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-10-04T17:48:52Z",
+      "side": 1,
+      "message": "why is this static? should it be final?",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 18
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_7ad618c7",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/AAAShiroProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-10-04T17:48:52Z",
+      "side": 1,
+      "message": "should this be final?",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 34
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_fae1689b",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/datastore/h2/DomainStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-10-04T17:48:52Z",
+      "side": 1,
+      "message": "we shouldn\u0027t just make this stuff public...",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 10
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_5aeeb48c",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/datastore/h2/DomainStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-10-04T17:48:52Z",
+      "side": 1,
+      "message": "why?",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_9ae82c7e",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/datastore/h2/H2TokenStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-10-04T17:48:52Z",
+      "side": 1,
+      "message": "Why not configure this through the app-config too?  Why aggregate separate beans for this?",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_7aed788b",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/datastore/h2/IdmLightConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-10-04T17:48:52Z",
+      "side": 1,
+      "message": "dead space",
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_bafed036",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/datastore/mdsal/MdsalStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-10-04T17:48:52Z",
+      "side": 1,
+      "message": "Why is this unimplemented class here?",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 23
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_5a9514e3",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/datastore/mdsal/MdsalTokenStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-10-04T17:48:52Z",
+      "side": 1,
+      "message": "why is this unimplemented class here?",
+      "range": {
+        "startLine": 14,
+        "startChar": 13,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_1afc3c3e",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/datastore/mdsal/MdsalTokenStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-10-04T17:48:52Z",
+      "side": 1,
+      "message": "dead space",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 8
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
