@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a245df4_d539d7d9",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-10-04T18:48:23Z",
+      "side": 0,
+      "message": "we don\u0027t really need to run those as service any more no bundle consume them. aaa-cli is the only one still consume the idmstore I will update it after we merge this.",
+      "parentUuid": "9a245df4_3a9ae014",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 35
+      },
+      "revId": "a380149884360cc9ec4a84de30461e802be3e9aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_da88e4c8",
         "filename": "artifacts/pom.xml",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-04T17:48:52Z",
       "side": 0,
       "message": "need to add the app config xml instead then?",
+      "range": {
+        "startLine": 66,
+        "startChar": 11,
+        "endLine": 72,
+        "endChar": 25
+      },
+      "revId": "a380149884360cc9ec4a84de30461e802be3e9aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_b536e3e5",
+        "filename": "artifacts/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-10-04T18:48:23Z",
+      "side": 0,
+      "message": "ok",
+      "parentUuid": "9a245df4_da88e4c8",
       "range": {
         "startLine": 66,
         "startChar": 11,

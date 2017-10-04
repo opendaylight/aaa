@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a245df4_3a6820f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-10-04T18:48:23Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a245df4_9a830ccc",
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_ba69b027",
         "filename": "aaa-shiro/api/src/main/yang/aaa-app-config.yang",
         "patchSetId": 5
@@ -65,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "9a245df4_fa54c822",
+        "filename": "aaa-shiro/api/src/main/yang/aaa-app-config.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-10-04T18:48:23Z",
+      "side": 1,
+      "message": "Well, the enum is to define the expected values of available data store. The data sore will be created based on this values so should be defined and listed some how. I don\u0027t get it why it\u0027s suck for defining the enum types ?",
+      "parentUuid": "9a245df4_fa732813",
+      "range": {
+        "startLine": 45,
+        "startChar": 17,
+        "endLine": 45,
+        "endChar": 28
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_5a607435",
         "filename": "aaa-shiro/api/src/main/yang/aaa-app-config.yang",
         "patchSetId": 5
@@ -76,6 +118,30 @@
       "writtenOn": "2017-10-04T17:48:52Z",
       "side": 1,
       "message": "should be this by default... this isn\u0027t needed.",
+      "range": {
+        "startLine": 48,
+        "startChar": 20,
+        "endLine": 48,
+        "endChar": 28
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_3a366004",
+        "filename": "aaa-shiro/api/src/main/yang/aaa-app-config.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-10-04T18:48:23Z",
+      "side": 1,
+      "message": "okay",
+      "parentUuid": "9a245df4_5a607435",
       "range": {
         "startLine": 48,
         "startChar": 20,
@@ -134,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "9a245df4_15340fdd",
+        "filename": "aaa-shiro/api/src/main/yang/aaa-app-config.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-10-04T18:48:23Z",
+      "side": 1,
+      "message": "yes seconds, ok",
+      "parentUuid": "9a245df4_da53c46a",
+      "range": {
+        "startLine": 62,
+        "startChar": 26,
+        "endLine": 62,
+        "endChar": 50
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_1a4efcc1",
         "filename": "aaa-shiro/impl/pom.xml",
         "patchSetId": 5
@@ -145,6 +235,30 @@
       "writtenOn": "2017-10-04T17:48:52Z",
       "side": 1,
       "message": "lets talk about this in the call;  not sure why we have so much here but i could be overlooking something.",
+      "range": {
+        "startLine": 289,
+        "startChar": 14,
+        "endLine": 308,
+        "endChar": 27
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_ba21b0b6",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-10-04T18:48:23Z",
+      "side": 1,
+      "message": "that was originally in the h2 bundle, If we didn\u0027t specify those, something went wrong when installing the feature keep looking for org.apache.lucene.analysis and com.vividsolutions.jts.geom dependencies. I believe there is a dependency conflict somehow",
+      "parentUuid": "9a245df4_1a4efcc1",
       "range": {
         "startLine": 289,
         "startChar": 14,
@@ -180,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "9a245df4_fa2b2892",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/AAAShiroProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-10-04T18:48:23Z",
+      "side": 1,
+      "message": "cause we need to consume the datastore in static way for test classes and cli bundle (I agree it should be through the aaashiro instance but this how it was originally we can refactor it later but will required deep refactoring)",
+      "parentUuid": "9a245df4_9ad14cd0",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 18
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_7ad618c7",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/AAAShiroProvider.java",
         "patchSetId": 5
@@ -191,6 +329,30 @@
       "writtenOn": "2017-10-04T17:48:52Z",
       "side": 1,
       "message": "should this be final?",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 34
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_5a187484",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/AAAShiroProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-10-04T18:48:23Z",
+      "side": 1,
+      "message": "okay",
+      "parentUuid": "9a245df4_7ad618c7",
       "range": {
         "startLine": 61,
         "startChar": 4,
@@ -226,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "9a245df4_3a1dc074",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/datastore/h2/DomainStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-10-04T18:48:23Z",
+      "side": 1,
+      "message": "the test classes consuming those variables, I\u0027m not sure how it was passing the test before.",
+      "parentUuid": "9a245df4_fae1689b",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 10
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_5aeeb48c",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/datastore/h2/DomainStore.java",
         "patchSetId": 5
@@ -237,6 +423,30 @@
       "writtenOn": "2017-10-04T17:48:52Z",
       "side": 1,
       "message": "why?",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_9a12ec60",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/datastore/h2/DomainStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-10-04T18:48:23Z",
+      "side": 1,
+      "message": "same for test classes",
+      "parentUuid": "9a245df4_5aeeb48c",
       "range": {
         "startLine": 40,
         "startChar": 4,
@@ -272,6 +482,30 @@
     },
     {
       "key": {
+        "uuid": "9a245df4_7a173852",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/datastore/h2/H2TokenStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-10-04T18:48:23Z",
+      "side": 1,
+      "message": "we can add this to the app-config, my thought was just not let anyone play with the allocated memory.",
+      "parentUuid": "9a245df4_9ae82c7e",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_7aed788b",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/datastore/h2/IdmLightConfig.java",
         "patchSetId": 5
@@ -289,6 +523,24 @@
     },
     {
       "key": {
+        "uuid": "9a245df4_da0bc429",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/datastore/h2/IdmLightConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-10-04T18:48:23Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a245df4_7aed788b",
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_bafed036",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/datastore/mdsal/MdsalStore.java",
         "patchSetId": 5
@@ -300,6 +552,30 @@
       "writtenOn": "2017-10-04T17:48:52Z",
       "side": 1,
       "message": "Why is this unimplemented class here?",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 23
+      },
+      "revId": "d8d82573630e864891870f6186fdf866954d26d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_fa02080a",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/datastore/mdsal/MdsalStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-10-04T18:48:23Z",
+      "side": 1,
+      "message": "It is just initial classes for mdsal datastore. I\u0027m in between moving the aaa-mdsal bundle or wait for the aaa.yang model in (MDSAL based AuthorizingRealm API only) patch in order to implement this. if you can just push the model in another patch and merge it I can include the implementation.",
+      "parentUuid": "9a245df4_bafed036",
       "range": {
         "startLine": 23,
         "startChar": 13,
