@@ -14,10 +14,9 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.math.BigInteger;
+import java.security.GeneralSecurityException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.PublicKey;
 import java.security.interfaces.DSAParams;
 import java.security.interfaces.DSAPublicKey;
@@ -25,13 +24,12 @@ import java.security.interfaces.RSAPublicKey;
 import java.security.spec.DSAPublicKeySpec;
 import java.security.spec.ECPoint;
 import java.security.spec.ECPublicKeySpec;
-import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.sshd.common.util.Base64;
-import org.apache.sshd.common.util.SecurityUtils;
+import org.apache.sshd.common.util.security.SecurityUtils;
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey;
 import org.bouncycastle.jce.ECNamedCurveTable;
 import org.bouncycastle.jce.ECPointUtil;
@@ -70,11 +68,11 @@ public class PKIUtil {
     private int pos = 0;
 
     public PublicKey decodePublicKey(
-            String keyLine) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchProviderException {
+            String keyLine) throws GeneralSecurityException {
 
         // look for the Base64 encoded part of the line to decode
         // both ssh-rsa and ssh-dss begin with "AAAA" due to the length bytes
-        bytes = Base64.decodeBase64(keyLine.getBytes());
+        bytes = Base64.getDecoder().decode(keyLine.getBytes());
         if (bytes.length == 0) {
             throw new IllegalArgumentException("No Base64 part to decode in " + keyLine);
         }
@@ -97,8 +95,7 @@ public class PKIUtil {
     }
 
     @SuppressWarnings("AbbreviationAsWordInName")
-    private PublicKey decodeAsECDSA() throws NoSuchAlgorithmException, InvalidKeySpecException,
-            NoSuchProviderException {
+    private PublicKey decodeAsECDSA() throws GeneralSecurityException {
         KeyFactory ecdsaFactory = SecurityUtils.getKeyFactory(KEY_FACTORY_TYPE_ECDSA);
 
         ECNamedCurveParameterSpec spec256r1 = ECNamedCurveTable.getParameterSpec(ECDSA_SUPPORTED_CURVE_NAME_SPEC);
@@ -112,7 +109,7 @@ public class PKIUtil {
         return ecdsaFactory.generatePublic(pubKeySpec);
     }
 
-    private PublicKey decodeAsDSA() throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchProviderException {
+    private PublicKey decodeAsDSA() throws GeneralSecurityException {
         KeyFactory dsaFactory = SecurityUtils.getKeyFactory(KEY_FACTORY_TYPE_DSA);
         BigInteger var1 = decodeBigInt();
         BigInteger var2 = decodeBigInt();
@@ -123,7 +120,7 @@ public class PKIUtil {
         return dsaFactory.generatePublic(spec);
     }
 
-    private PublicKey decodeAsRSA() throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchProviderException {
+    private PublicKey decodeAsRSA() throws GeneralSecurityException {
         KeyFactory rsaFactory = SecurityUtils.getKeyFactory(KEY_FACTORY_TYPE_RSA);
         BigInteger exponent = decodeBigInt();
         BigInteger modulus = decodeBigInt();
@@ -194,7 +191,7 @@ public class PKIUtil {
         } else {
             throw new IllegalArgumentException("Unknown public key encoding: " + publicKey.getAlgorithm());
         }
-        publicKeyEncoded = new String(Base64.encodeBase64(byteOs.toByteArray()));
+        publicKeyEncoded = new String(Base64.getEncoder().encodeToString(byteOs.toByteArray()));
         return publicKeyEncoded;
 
     }
