@@ -87,7 +87,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <plugins>
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <!-- TODO Remove when https://git.opendaylight.org/gerrit/#/c/48400/ is merged -->
+        <!--TODO Remove when https://git.opendaylight.org/gerrit/#/c/48400/ is merged-->
         <executions>
           <execution>
             <id>integration-test</id>
