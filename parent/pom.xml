@@ -16,33 +16,16 @@
   <packaging>pom</packaging>
 
   <properties>
-    <!-- Karaf -->
-    <karaf.branding.version>1.6.0-SNAPSHOT</karaf.branding.version>
-
-    <!-- Local project version, needed for import -->
-    <aaa.version>${project.version}</aaa.version>
-    <parent-path>${basedir}</parent-path>
-
     <!-- AuthZ -->
     <yangtools.version>1.2.0</yangtools.version>
     <mdsal.version>2.4.0-SNAPSHOT</mdsal.version>
     <mdsal.model.version>0.12.0-SNAPSHOT</mdsal.model.version>
     <controller.mdsal.version>1.7.0-SNAPSHOT</controller.mdsal.version>
-    <restconf.version>1.7.0-SNAPSHOT</restconf.version>
-    <config.version>0.8.0-SNAPSHOT</config.version>
-    <config.restconf.configfile>09-rest-connector.xml</config.restconf.configfile>
-    <config.configfile.directory>etc/opendaylight/karaf</config.configfile.directory>
 
     <!-- AuthN -->
     <glassfish.json.version>1.0.4</glassfish.json.version>
     <ehcache.version>2.8.3</ehcache.version>
-    <jta.version>1.1.1</jta.version>
     <oltu.version>1.0.2</oltu.version>
-
-    <config.authn.store.configfile>08-authn-config.xml</config.authn.store.configfile>
-
-    <!-- Keystone plugin -->
-    <httpclient.version>4.4</httpclient.version>
 
     <!-- Test -->
     <javax.inject.version>1</javax.inject.version>
@@ -56,7 +39,7 @@
       <dependency>
         <groupId>org.opendaylight.aaa</groupId>
         <artifactId>aaa-artifacts</artifactId>
-        <version>${aaa.version}</version>
+        <version>${project.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
