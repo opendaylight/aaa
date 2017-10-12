@@ -122,6 +122,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
                   <includes>
                     <include>org/opendaylight/**</include>
                     <include>org/h2/Driver.class</include>
+                    <include>org/h2/JdbcDriverBackwardsCompat.class</include>
                     <include>org/h2/upgrade/**</include>
                     <include>org/h2/util/**</include>
                     <include>org/h2/jdbc/**</include>

@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.opendaylight.odlparent</groupId>
     <artifactId>odlparent</artifactId>
-    <version>2.0.5</version>
+    <version>3.0.2</version>
     <relativePath />
   </parent>
 
@@ -17,7 +17,7 @@
 
   <properties>
     <!-- AuthZ -->
-    <yangtools.version>1.2.0</yangtools.version>
+    <yangtools.version>2.0.0</yangtools.version>
     <mdsal.version>2.4.0-SNAPSHOT</mdsal.version>
     <mdsal.model.version>0.12.0-SNAPSHOT</mdsal.model.version>
     <controller.mdsal.version>1.7.0-SNAPSHOT</controller.mdsal.version>
@@ -30,7 +30,7 @@
     <!-- Test -->
     <javax.inject.version>1</javax.inject.version>
     <servlet.tester.version>7.0.0.pre5</servlet.tester.version>
-    <features.test.version>2.0.5</features.test.version>
+    <features.test.version>3.0.2</features.test.version>
   </properties>
 
   <dependencyManagement>
@@ -91,11 +91,25 @@
         <groupId>org.apache.oltu.oauth2</groupId>
         <artifactId>org.apache.oltu.oauth2.common</artifactId>
         <version>${oltu.version}</version>
+        <exclusions>
+          <exclusion>
+            <!-- This is clashing with jackson's view of org.json world -->
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.apache.oltu.oauth2</groupId>
         <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
         <version>${oltu.version}</version>
+        <exclusions>
+          <exclusion>
+            <!-- This is clashing with jackson's view of org.json world -->
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.apache.oltu.oauth2</groupId>
