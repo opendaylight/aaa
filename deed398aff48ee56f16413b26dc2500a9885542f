@@ -46,6 +46,30 @@
       "revId": "deed398aff48ee56f16413b26dc2500a9885542f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_1bd41d1f",
+        "filename": "aaa-shiro/api/src/main/yang/aaa-app-config.yang",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-10-16T19:04:14Z",
+      "side": 1,
+      "message": "so what you are essentially doing is providing an alternative \"Realm\" (shiro api), but this forces the decision to be either/or.  Instead, it should be stackable like the rest of the Realm implementations and done through specifying it in clustered-app-config.  For example, right now you can have the TokenAuthRealm and the ODLJndiLdapRealm concurrently.  They will be tried in order by default.  What we really want is an MDSALRealm which can coexist with the TokenAuthRealm, similar to the aforementioned case.",
+      "parentUuid": "9a245df4_7b48b92d",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 9
+      },
+      "revId": "deed398aff48ee56f16413b26dc2500a9885542f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
