@@ -11,6 +11,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 import java.math.BigInteger;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -197,9 +199,17 @@ public class PKIUtil {
 
     }
 
+    public KeyPair decodePrivateKey(StringReader reader, String passphrase) throws IOException {
+        return doDecodePrivateKey(reader, passphrase);
+    }
+
     public KeyPair decodePrivateKey(String keyPath, String passphrase) throws IOException {
         FileReader fileReader = new FileReader(keyPath);
-        PEMParser keyReader = new PEMParser(fileReader);
+        return doDecodePrivateKey(fileReader, passphrase);
+    }
+
+    private KeyPair doDecodePrivateKey(Reader reader, String passphrase) throws IOException {
+        PEMParser keyReader = new PEMParser(reader);
         JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
         PEMDecryptorProvider decryptionProv = new JcePEMDecryptorProviderBuilder().build(passphrase.toCharArray());
 
