@@ -118,6 +118,30 @@
       "revId": "deed398aff48ee56f16413b26dc2500a9885542f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_07302400",
+        "filename": "aaa-shiro/api/src/main/yang/aaa-app-config.yang",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-10-24T18:07:59Z",
+      "side": 1,
+      "message": "I think we confusing each other :) . In the AAAShiroProvider.java \"L82\" we check for the store type h2/mdsal based on that AAAShiroProvider will create the backend store for both IDMStore and TokenStore after that the ServiceLocator will be initialized \"L97\". The realm then just use the ServiceLocator to call the IDMStore and TokenStore. It is not just token-store it is both idmstore and tokenstore. hope this make it clear",
+      "parentUuid": "9a245df4_67ec8090",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 9
+      },
+      "revId": "deed398aff48ee56f16413b26dc2500a9885542f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
