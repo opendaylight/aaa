@@ -38,9 +38,7 @@ import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.osgi.service.http.HttpService;
 
 /**
- * Tests the Dyanmic AuthZ Filter.
- *
- * @author Ryan Goulding (ryandgoulding@gmail.com)
+ * Tests the Dynamic Authorization Filter.
  */
 public class MDSALDynamicAuthorizationFilterTest {
 

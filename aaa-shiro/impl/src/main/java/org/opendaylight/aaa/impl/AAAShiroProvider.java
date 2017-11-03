@@ -33,8 +33,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provider for AAA shiro implementation.
- *
- * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 public class AAAShiroProvider {
 

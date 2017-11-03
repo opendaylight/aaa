@@ -30,7 +30,6 @@ import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.ClaimBuilder;
-import org.opendaylight.aaa.idm.AAAIDMLightModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

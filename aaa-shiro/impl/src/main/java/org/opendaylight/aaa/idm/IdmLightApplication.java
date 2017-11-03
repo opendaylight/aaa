@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * store.
  *
  * @author liemmn
- * @author Ryan Goulding (ryandgoulding@gmail.com)
  * @see <code>org.opendaylight.aaa.idm.rest.DomainHandler</code>
  * @see <code>org.opendaylight.aaa.idm.rest.UserHandler</code>
  * @see <code>org.opendaylight.aaa.idm.rest.RoleHandler</code>

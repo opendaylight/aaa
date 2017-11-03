@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Brocade Communications Systems, Inc. and others.  All rights reserved.
+ * Copyright (c) 2015, 2017 Brocade Communications Systems, Inc. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -13,8 +13,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Accounter is a common place to output AAA messages. Use this class through
  * invoking <code>Logger.output("message")</code>.
- *
- * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 public class Accounter {
 
