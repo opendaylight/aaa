@@ -38,8 +38,6 @@ import org.slf4j.LoggerFactory;
  * TokenAuthRealm is an adapter between the AAA shiro subsystem and the existing
  * <code>TokenAuth</code> mechanisms. Thus, one can enable use of
  * <code>IDMStore</code> and <code>IDMMDSALStore</code>.
- *
- * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 public class TokenAuthRealm extends AuthorizingRealm {
 

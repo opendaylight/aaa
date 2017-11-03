@@ -9,10 +9,7 @@ package org.opendaylight.aaa.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.List;
-import javax.naming.Name;
 import javax.servlet.ServletException;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.ClientService;
@@ -24,7 +21,6 @@ import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
-import org.opendaylight.aaa.idm.IdmLightApplication;
 import org.opendaylight.aaa.impl.shiro.oauth2.OAuth2TokenServlet;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.AuthenticationManager;
@@ -39,8 +35,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provider for AAA shiro implementation.
- *
- * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 public class AAAShiroProvider {
 

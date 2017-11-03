@@ -49,7 +49,6 @@ import org.slf4j.LoggerFactory;
  * Secure Token Service (STS) endpoint.
  *
  * @author liemmn
- *
  */
 public class OAuth2TokenServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(OAuth2TokenServlet.class);

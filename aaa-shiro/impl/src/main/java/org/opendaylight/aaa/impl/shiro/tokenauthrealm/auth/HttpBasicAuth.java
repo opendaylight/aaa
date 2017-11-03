@@ -40,7 +40,6 @@ import org.slf4j.LoggerFactory;
  * <code>Authorization: Basic YWRtaW46YWRtaW4=</code>
  *
  * @author liemmn
- *
  */
 public class HttpBasicAuth implements TokenAuth {
 
