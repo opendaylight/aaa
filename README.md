@@ -1,11 +1,10 @@
 ## Opendaylight AAA
 
-This project is aimed at providing a flexible, pluggable framework with out-of-the-box capabilities for Authentication, Authorization and Accounting.
+This project is aimed at providing a flexible, pluggable framework with out-of-the-box capabilities for Authentication, Authorization and Accounting (AAA).
 
 ## Caveats
 The following caveats are applicable to the current AAA implementation:
- - The database (H2) used by ODL AAA Authentication store is not-cluster enabled. When deployed in a clustered environment each node needs to have its AAA
- user file synchronised using out of band means.
+ - The database (H2) used by ODL AAA Authentication store is not-cluster enabled. When deployed in a clustered environment each node contains unique local credentials.
 
 ## Quick Start
 
@@ -15,10 +14,15 @@ The following caveats are applicable to the current AAA implementation:
 
 - Maven 3.3.9+
 - JDK8
+- Python 2.7+ (optional) for running wrapper scripts
 
 Get the code:
 
+Using HTTPS:
     git clone https://git.opendaylight.org/gerrit/aaa
+
+USING SSH:
+    git clone ssh://{USERNAME}@git.opendaylight.org:29418/aaa
 
 Build it:
 
@@ -26,13 +30,15 @@ Build it:
 
 ### Installing
 
-AAA is automatically installed upon installation of odl-restconf.  If you are using AAA from a non-RESTCONF context, you can install the necessary javax.servlet.Filter(s) through the following command:
+AAA is automatically installed upon installation of odl-restconf-noauth and enabled through aaa-shiro-act.
+
+If you are using AAA from a non-RESTCONF context, you can install the necessary javax.servlet.Filter(s) through the following command:
 
 	feature:install odl-aaa-shiro
 
 ### Protecting your REST/RestConf resources
 
-Add the AAA `AAAShiroFilter` filter to your REST resource (RESTconf example):
+Add the `AAAShiroFilter` filter to your REST resource (RESTCONF example):
 
     <servlet>
         <servlet-name>JAXRSRestconf</servlet-name>
@@ -51,11 +57,11 @@ Add the AAA `AAAShiroFilter` filter to your REST resource (RESTconf example):
         <load-on-startup>1</load-on-startup>
     </servlet>
 
-Rebuild and re-install your REST resource.
+Rebuild and re-install your RESTFUL resource.
 
 ### Running
 
-Once the installation finishes, one can authenticates with the Opendaylight controller by presenting a username/password and a domain name (scope) to be logged into:
+Once the installation finishes, one can authenticate with the OpenDaylight controller by presenting a username/password and a domain name (scope):
 
     curl -s -d 'grant_type=password&username=admin&password=admin&scope=sdn' http://<controller>:<port>/oauth2/token
 
@@ -139,7 +145,7 @@ The above example locks down access to the modules endpoint (and any URLS availa
 
 NOTE:  "aaa:resource" value starts with "/restconf".  Unlike the RolesAuthorizationFilter ("roles" in shiro.ini) which is relative to the ServletContext, The MDSALDyanmicAuthorizationFilter is relative to the Servlet Root (i.e., "/").  This is superior, as it is more specific and does not allow for ambiguity.
 
-2) shiro.ini urls section Authorization roles filter (i.e., "RolesAuthorizationFilter"). [DEPRECATED]
+2) aaa-app-config clustered application configuration "urls" section Authorization roles filter (i.e., "RolesAuthorizationFilter"). [DEPRECATED]
 
 Authorization is implemented via the aaa-shiro modules.  RolesAuthorizationFilter (roles filter) is limited purely to RESTCONF (HTTP) and does not focus on MD-SAL.
 
