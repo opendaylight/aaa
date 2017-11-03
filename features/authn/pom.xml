@@ -25,7 +25,6 @@
     <modules>
         <module>features-aaa</module>
         <module>odl-aaa-api</module>
-        <module>odl-aaa-authn</module>
         <module>odl-aaa-cert</module>
         <module>odl-aaa-cli</module>
         <module>odl-aaa-encryption-service</module>
