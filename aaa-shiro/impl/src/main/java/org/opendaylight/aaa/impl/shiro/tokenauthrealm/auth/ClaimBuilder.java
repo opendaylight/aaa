@@ -23,7 +23,6 @@ import org.opendaylight.aaa.impl.shiro.tokenauthrealm.util.HashCodeUtil;
  * mandatory.
  *
  * @author liemmn
- *
  */
 public class ClaimBuilder {
     private String userId = "";

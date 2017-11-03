@@ -24,7 +24,6 @@ import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
-import org.opendaylight.aaa.idm.AAAIDMLightModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +36,6 @@ import org.slf4j.LoggerFactory;
  * data.
  *
  * @author peter.mellquist@hp.com
- * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 @Path("/v1/roles")
 public class RoleHandler {

@@ -59,9 +59,6 @@ import org.slf4j.LoggerFactory;
  * This class is a <code>CustomFilterAdapterConfiguration</code> Event Producer,
  * and objects can subscribe for changes through:
  * <code>CustomFilterAdapterConfiguration.registerCustomFilterAdapterConfigurationListener(...)</code>
- *
- * @author Ryan Goulding (ryandgoulding@gmail.com)
- *
  */
 public class CustomFilterAdapterConfiguration implements ManagedService {
 
