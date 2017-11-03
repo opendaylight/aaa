@@ -17,7 +17,6 @@ import org.opendaylight.aaa.impl.shiro.tokenauthrealm.util.HashCodeUtil;
  * {@link PasswordCredentials} builder.
  *
  * @author liemmn
- *
  */
 public class PasswordCredentialBuilder {
     private final MutablePasswordCredentials pc = new MutablePasswordCredentials();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, 2017 Brocade Communications Systems, Inc. and others.  All rights reserved.
+ * Copyright (c) 2016 - 2017 Brocade Communications Systems, Inc. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -49,9 +49,6 @@ import org.slf4j.LoggerFactory;
  * methods (could not be passed as a parameter), and if a new chain was not
  * spawned each time, there is a risk that the existingChain changes in the
  * middle of requests, causing inconsistent behavior.
- *
- * @author Ryan Goulding (ryandgoulding@gmail.com)
- *
  */
 public class CustomFilterAdapter implements Filter, CustomFilterAdapterListener {
 
