@@ -26,7 +26,6 @@ import org.mortbay.jetty.testing.HttpTester;
 import org.mortbay.jetty.testing.ServletTester;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.Claim;
-import org.opendaylight.aaa.api.ClientService;
 import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.PasswordCredentials;
@@ -159,7 +158,6 @@ public class OAuth2TokenServletTest {
 
     @SuppressWarnings("unchecked")
     private static void mockServiceLocator() {
-        ServiceLocator.getInstance().setClientService(mock(ClientService.class));
         ServiceLocator.getInstance().setIdmService(mock(IdMService.class));
         ServiceLocator.getInstance().setAuthenticationService(mock(AuthenticationService.class));
         ServiceLocator.getInstance().setTokenStore(mock(TokenStore.class));

@@ -135,12 +135,6 @@ public class OAuth2TokenServlet extends HttpServlet {
         String clientId = null;
 
         OAuthRequest oauthRequest = new OAuthRequest(req);
-        // Any client credentials?
-        clientId = oauthRequest.getClientId();
-        if (clientId != null) {
-            ServiceLocator.getInstance().getClientService()
-                          .validate(clientId, oauthRequest.getClientSecret());
-        }
 
         // Credential request...
         if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(GrantType.PASSWORD.toString())) {

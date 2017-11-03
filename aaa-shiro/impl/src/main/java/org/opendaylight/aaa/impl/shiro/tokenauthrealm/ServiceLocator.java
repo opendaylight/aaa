@@ -11,7 +11,6 @@ package org.opendaylight.aaa.impl.shiro.tokenauthrealm;
 import java.util.List;
 import java.util.Vector;
 import org.opendaylight.aaa.api.AuthenticationService;
-import org.opendaylight.aaa.api.ClientService;
 import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.PasswordCredentials;
@@ -37,8 +36,6 @@ public class ServiceLocator {
     protected volatile AuthenticationService authenticationService;
 
     protected volatile IdMService idmService;
-
-    protected volatile ClientService clientService;
 
     private ServiceLocator() {
     }
@@ -127,13 +124,5 @@ public class ServiceLocator {
 
     public void setIdmService(IdMService idmService) {
         this.idmService = idmService;
-    }
-
-    public ClientService getClientService() {
-        return clientService;
-    }
-
-    public void setClientService(ClientService clientService) {
-        this.clientService = clientService;
     }
 }
