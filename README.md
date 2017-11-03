@@ -81,19 +81,9 @@ In this use-case, a user presents some credentials (e.g., username/password) dir
 
 #### Federated
 
-In the federated use-case, the responsibility of authentication is delegated to a third-party IdP (perhaps, an enterprise-level IdP): 
+In the federated use-case, the responsibility of authentication is delegated to a third-party IdP (perhaps, an enterprise-level IdP).
 
-![](https://wiki.opendaylight.org/images/f/fd/Federated_authn1.png)
-
-In the above use-case, the user authenticates with a third-party IdP (username/password is shown as an example, but it could be anything that the IdP supports, such as MFA, OTP, etc...).  Upon successful authentication, the IdP  returns back a claim about the identity of that user.  The claim is then submitted to the Opendaylight token endpoint in exchange for an access token that can be used to access protected resources on the controller.  The IdP claim must be mapped into a corresponding ODL claim (user/domain/role) before an access token can be granted.
-
-The Opendaylight controller comes with SSSD-based claim support, but other types of claim support can be also added with their implementation of the `org.opendaylight.aaa.api.ClaimAuth` API.
-
-We can also take federation one step further and delegate token management and optionally part of the authorization responsibility to the third-party IdP:
-
-![](https://wiki.opendaylight.org/images/2/22/Federated_authn2.png)
-
-In this case, we use the IdP token directly as an access token to access protected resources on the controller.  The controller maintains only enough information needed for access control.  Validation of the token is performed by implementation of the `org.opendaylight.aaa.api.TokenAuth` API and can be daisy-chained as resource filters on the controller, with the last filter being the controller's built-in  `org.opendaylight.aaa.sts.DirectTokenAuthFilter` to properly register the authentication context.
+For more information, consult ODLJndiLdapRealm and ODLJndiLdapRealmAuthnOnly documentation.
 
 ### Authorization & Access Control
 
