@@ -217,13 +217,6 @@
             <artifactId>jackson-module-jaxb-annotations</artifactId>
         </dependency>
         <dependency>
-            <!-- finalname="/etc/org.opendaylight.aaa.authn.cfg" -->
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-shiro</artifactId>
-            <type>cfg</type>
-            <classifier>config</classifier>
-        </dependency>
-        <dependency>
             <!-- finalname="/etc/org.opendaylight.aaa.tokens.cfg" -->
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-h2-store</artifactId>

@@ -9,13 +9,9 @@ package org.opendaylight.aaa.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.List;
-import javax.naming.Name;
 import javax.servlet.ServletException;
 import org.opendaylight.aaa.api.AuthenticationService;
-import org.opendaylight.aaa.api.ClientService;
 import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.IdMService;
@@ -24,11 +20,9 @@ import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
-import org.opendaylight.aaa.idm.IdmLightApplication;
 import org.opendaylight.aaa.impl.shiro.oauth2.OAuth2TokenServlet;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.AuthenticationManager;
-import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.ClientManager;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.HttpBasicAuth;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration;
@@ -105,10 +99,6 @@ public class AAAShiroProvider {
 
         final AuthenticationService authService = new AuthenticationManager();
         ServiceLocator.getInstance().setAuthenticationService(authService);
-
-
-        final ClientService clientService = new ClientManager();
-        ServiceLocator.getInstance().setClientService(clientService);
 
 
         final IdMService idmService = new IdMServiceImpl(iidmStore);
