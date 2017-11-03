@@ -23,7 +23,6 @@ import org.opendaylight.aaa.impl.shiro.tokenauthrealm.util.HashCodeUtil;
  * The expiration DEFAULTS to 0.
  *
  * @author liemmn
- *
  */
 public class AuthenticationBuilder {
 

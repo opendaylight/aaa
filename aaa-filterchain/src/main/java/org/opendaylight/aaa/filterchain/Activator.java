@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Brocade Communications Systems, Inc. and others.  All rights reserved.
+ * Copyright (c) 2016 - 2017 Brocade Communications Systems, Inc. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -26,8 +26,6 @@ import org.slf4j.LoggerFactory;
  * level clues concerning the activation of the <code>aaa-filterchain</code> bundle.
  * To enable these debug messages, issue the following command in the karaf
  * shell: <code>log:set debug org.opendaylight.aaa.filterchain.Activator</code>
- *
- * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 public class Activator extends DependencyActivatorBase {
 

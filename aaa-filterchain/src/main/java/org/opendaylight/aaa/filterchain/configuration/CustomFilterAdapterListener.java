@@ -15,8 +15,6 @@ import javax.servlet.FilterConfig;
 
 /**
  * React to changes to custom Filter list in config admin.
- *
- * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 public interface CustomFilterAdapterListener extends EventListener {
 

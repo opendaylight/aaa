@@ -20,14 +20,11 @@ The best way to find out how to use this script is to invoke the normal argparse
 This script attempts to determine whether HTTP or HTTPS is used through reading the
 org.ops4j.pax.web.cfg file, and determining whether HTTPS is enabled for the container.
 '''
-
-__author__ = "Ryan Goulding"
 __copyright__ = "Copyright (c) 2016 Brocade Communications Systems and others"
 __credits__ = "Ryan Goulding"
 __license__ = "EPL"
 __version__ = "1.1"
-__maintainer__ = "Ryan Goulding"
-__email__ = "ryandgoulding@gmail.com"
+__maintainer__ = "aaa-dev@lists.opendaylight.org"
 __status__ = "Production"
 
 import argparse, getpass, json, os, requests, sys, warnings
