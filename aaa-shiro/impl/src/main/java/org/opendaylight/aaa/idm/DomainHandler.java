@@ -33,7 +33,6 @@ import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.UserPwd;
 import org.opendaylight.aaa.api.model.Users;
-import org.opendaylight.aaa.idm.AAAIDMLightModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -297,8 +297,4 @@ public class H2Store implements IIDMStore {
         return grantStore.createGrant(grant);
     }
 
-    @Override
-    public boolean isMainNodeInCluster() {
-        return true;
-    }
 }

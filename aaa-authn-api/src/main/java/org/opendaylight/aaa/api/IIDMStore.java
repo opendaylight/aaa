@@ -72,5 +72,4 @@ public interface IIDMStore {
 
     Grants getGrants(String userid) throws IDMStoreException;
 
-    boolean isMainNodeInCluster();
 }

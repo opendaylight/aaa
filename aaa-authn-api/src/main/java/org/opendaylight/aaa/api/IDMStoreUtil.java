@@ -22,10 +22,6 @@ public final class IDMStoreUtil {
         throw new OperationNotSupportedException();
     }
 
-    public static String createDomainid(String domainName) {
-        return domainName;
-    }
-
     public static String createUserid(String username, String domainid) {
         return username + "@" + domainid;
     }

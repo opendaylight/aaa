@@ -195,8 +195,4 @@ public class IDMStore implements IIDMStore {
         return grants;
     }
 
-    @Override
-    public boolean isMainNodeInCluster() {
-        return true;
-    }
 }

@@ -45,10 +45,6 @@ public class IDMError {
         this.message = msg;
     }
 
-    public String getDetails() {
-        return details;
-    }
-
     public void setDetails(String details) {
         this.details = details;
     }
