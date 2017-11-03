@@ -1,4 +1,0 @@
-<mdsal-config xmlns="config:aaa:authn:mdsal:store">
-  <timeToLive>360000</timeToLive>
-  <timeToWait>10</timeToWait>
-</mdsal-config>
