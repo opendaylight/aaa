@@ -36,29 +36,6 @@ If you are using AAA from a non-RESTCONF context, you can install the necessary 
 
 	feature:install odl-aaa-shiro
 
-### Protecting your REST/RestConf resources
-
-Add the `AAAShiroFilter` filter to your REST resource (RESTCONF example):
-
-    <servlet>
-        <servlet-name>JAXRSRestconf</servlet-name>
-        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-        <init-param>
-            <param-name>javax.ws.rs.Application</param-name>
-            <param-value>org.opendaylight.controller.sal.rest.impl.RestconfApplication</param-value>
-        </init-param>
-        <!-- Token Auth Filter -->
-        <init-param>
-            <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
-            <param-value>
-                org.opendaylight.aaa.shiro.filters.AAAShiroFilter
-            </param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
-Rebuild and re-install your RESTFUL resource.
-
 ### Running
 
 Once the installation finishes, one can authenticate with the OpenDaylight controller by presenting a username/password and a domain name (scope):
