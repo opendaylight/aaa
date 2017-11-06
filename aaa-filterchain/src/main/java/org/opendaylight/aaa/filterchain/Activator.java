@@ -8,8 +8,9 @@
 
 package org.opendaylight.aaa.filterchain;
 
+import org.apache.felix.dm.DependencyActivatorBase;
+import org.apache.felix.dm.DependencyManager;
 import org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration;
-import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ManagedService;
@@ -28,24 +29,24 @@ import org.slf4j.LoggerFactory;
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
-public class Activator implements BundleActivator {
+public class Activator extends DependencyActivatorBase {
 
     private static final Logger LOG = LoggerFactory.getLogger(Activator.class);
 
     private ServiceRegistration<ManagedService> managedServiceServiceRegistration;
 
     @Override
-    public void stop(BundleContext context) throws Exception {
+    public void destroy(final BundleContext bc, final DependencyManager dm) throws Exception {
         LOG.debug("Destroying the aaa-filterchain bundle");
         managedServiceServiceRegistration.unregister();
     }
 
     @Override
-    public void start(BundleContext context) throws Exception {
+    public void init(final BundleContext bc, final DependencyManager dm) throws Exception {
         LOG.debug("Initializing the aaa-filterchain bundle");
         // Register the CustomFilterAdapterConfiguration ManagedService with the
         // BundleContext so config values can be loaded from the config admin
-        managedServiceServiceRegistration = context.registerService(ManagedService.class,
+        managedServiceServiceRegistration = bc.registerService(ManagedService.class,
                 CustomFilterAdapterConfiguration.getInstance(),
                 CustomFilterAdapterConfiguration.getInstance().getDefaultProperties());
     }
