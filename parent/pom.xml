@@ -79,10 +79,6 @@
         <version>${glassfish.json.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>org.apache.felix.metatype</artifactId>
-      </dependency>
-      <dependency>
         <groupId>net.sf.ehcache</groupId>
         <artifactId>ehcache</artifactId>
         <version>${ehcache.version}</version>
