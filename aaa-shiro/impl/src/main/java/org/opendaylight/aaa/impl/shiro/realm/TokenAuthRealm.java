@@ -9,9 +9,6 @@
 package org.opendaylight.aaa.shiro.realm;
 
 import com.google.common.base.Strings;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.opendaylight.aaa.api.TokenStore;
@@ -21,15 +18,14 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.codec.Base64;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.TokenAuth;
-import org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth.HttpBasicAuth;
+import org.opendaylight.aaa.impl.shiro.realm.util.TokenUtils;
+import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
 import org.opendaylight.aaa.impl.shiro.tokenauthrealm.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,8 +38,6 @@ import org.slf4j.LoggerFactory;
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 public class TokenAuthRealm extends AuthorizingRealm {
-
-    private static final String USERNAME_DOMAIN_SEPARATOR = "@";
 
     /**
      * The unique identifying name for <code>TokenAuthRealm</code>
@@ -102,67 +96,6 @@ public class TokenAuthRealm extends AuthorizingRealm {
     }
 
     /**
-     * Bridge new to old style <code>TokenAuth</code> interface.
-     *
-     * @param username The request username
-     * @param password The request password
-     * @param domain The request domain
-     * @return <code>username:password:domain</code>
-     */
-    static String getUsernamePasswordDomainString(final String username, final String password,
-            final String domain) {
-        return username + HttpBasicAuth.AUTH_SEP + password  + HttpBasicAuth.AUTH_SEP + domain;
-    }
-
-    /**
-     *
-     * @param credentialToken
-     * @return Base64 encoded token
-     */
-    static String getEncodedToken(final String credentialToken) {
-        return Base64.encodeToString(credentialToken.getBytes());
-    }
-
-    /**
-     *
-     * @param encodedToken
-     * @return Basic <code>encodedToken</code>
-     */
-    static String getTokenAuthHeader(final String encodedToken) {
-        return HttpBasicAuth.BASIC_PREFIX + encodedToken;
-    }
-
-    /**
-     *
-     * @param tokenAuthHeader
-     * @return a map with the basic auth header
-     */
-    Map<String, List<String>> formHeadersWithToken(final String tokenAuthHeader) {
-        final Map<String, List<String>> headers = new HashMap<String, List<String>>();
-        final List<String> headerValue = new ArrayList<String>();
-        headerValue.add(tokenAuthHeader);
-        headers.put(HttpBasicAuth.AUTH_HEADER, headerValue);
-        return headers;
-    }
-
-    /**
-     * Adapter between basic authentication mechanism and existing
-     * <code>TokenAuth</code> interface.
-     *
-     * @param username Username from the request
-     * @param password Password from the request
-     * @param domain Domain from the request
-     * @return input map for <code>TokenAuth.validate()</code>
-     */
-    Map<String, List<String>> formHeaders(final String username, final String password,
-            final String domain) {
-        String usernamePasswordToken = getUsernamePasswordDomainString(username, password, domain);
-        String encodedToken = getEncodedToken(usernamePasswordToken);
-        String tokenAuthHeader = getTokenAuthHeader(encodedToken);
-        return formHeadersWithToken(tokenAuthHeader);
-    }
-
-    /**
      * Adapter to check for available <code>TokenAuth<code> implementations.
      *
      * @return
@@ -185,25 +118,15 @@ public class TokenAuthRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
             throws AuthenticationException {
 
-        String username = "";
-        String password = "";
-        String domain = HttpBasicAuth.DEFAULT_DOMAIN;
+        final String username;
+        final String password;
+        final String domain;
 
         try {
-            final String qualifiedUser = extractUsername(authenticationToken);
-            if (qualifiedUser.contains(USERNAME_DOMAIN_SEPARATOR)) {
-                final String [] qualifiedUserArray = qualifiedUser.split(USERNAME_DOMAIN_SEPARATOR);
-                try {
-                    username = qualifiedUserArray[0];
-                    domain = qualifiedUserArray[1];
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    LOG.trace("Couldn't parse domain from {}; trying without one",
-                            qualifiedUser, e);
-                }
-            } else {
-                username = qualifiedUser;
-            }
-            password = extractPassword(authenticationToken);
+            final String possiblyQualifiedUser = TokenUtils.extractUsername(authenticationToken);
+            username = HeaderUtils.extractUsername(possiblyQualifiedUser);
+            domain = HeaderUtils.extractDomain(possiblyQualifiedUser);
+            password = TokenUtils.extractPassword(authenticationToken);
 
         } catch (NullPointerException e) {
             throw new AuthenticationException(FATAL_ERROR_DECODING_CREDENTIALS, e);
@@ -219,7 +142,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
         // if the password is empty, this is an OAuth2 request, not a Basic HTTP
         // Auth request
         if (!Strings.isNullOrEmpty(password)) {
-            Map<String, List<String>> headers = formHeaders(username, password, domain);
+            Map<String, List<String>> headers = HeaderUtils.formHeaders(username, password, domain);
             // iterate over <code>TokenAuth</code> implementations and
             // attempt to
             // authentication with each one
@@ -244,7 +167,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
         }
 
         // extract the authentication token and attempt validation of the token
-        final String token = extractUsername(authenticationToken);
+        final String token = TokenUtils.extractUsername(authenticationToken);
         final Authentication auth;
         try {
             auth = validate(token);
@@ -273,35 +196,6 @@ public class TokenAuthRealm extends AuthorizingRealm {
         }
         locator.getAuthenticationService().set(auth);
         return auth;
-    }
-
-    /**
-     * extract the username from an <code>AuthenticationToken</code>
-     *
-     * @param authenticationToken
-     * @return
-     * @throws ClassCastException
-     * @throws NullPointerException
-     */
-    static String extractUsername(final AuthenticationToken authenticationToken)
-            throws ClassCastException, NullPointerException {
-
-        return (String) authenticationToken.getPrincipal();
-    }
-
-    /**
-     * extract the password from an <code>AuthenticationToken</code>
-     *
-     * @param authenticationToken
-     * @return
-     * @throws ClassCastException
-     * @throws NullPointerException
-     */
-    static String extractPassword(final AuthenticationToken authenticationToken)
-            throws ClassCastException, NullPointerException {
-
-        final UsernamePasswordToken upt = (UsernamePasswordToken) authenticationToken;
-        return new String(upt.getPassword());
     }
 
 
