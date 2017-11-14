@@ -57,6 +57,19 @@ public class ODLPrincipalImpl implements ODLPrincipal {
         return new ODLPrincipalImpl(username, domain, userId, roles);
     }
 
+    /**
+     * A static factory method to create <code>ODLPrincipal</code> instances w/o roles.
+     *
+     * @param username The authenticated user
+     * @param domain The domain <code>username</code> belongs to.
+     * @param userId The unique key for <code>username</code>
+     * @return A Principal for the given session;  essentially a DTO.
+     */
+    public static ODLPrincipal createODLPrincipal(String username, String domain,
+                                                  String userId) {
+        return ODLPrincipalImpl.createODLPrincipal(username, domain, userId, null);
+    }
+
     @Override
     public String getUsername() {
         return this.username;
