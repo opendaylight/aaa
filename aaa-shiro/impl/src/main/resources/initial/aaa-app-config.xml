@@ -189,6 +189,21 @@
 
     <!--
       ===================================================================================
+      =================================== MdsalRealm ====================================
+      ===================================================================================
+      =                                                                                 =
+      = Description:  A Realm implementation utilizing the aaa.yang model.              =
+      ===================================================================================
+    -->
+    <!-- Start mdsalRealm commented out
+    <main>
+        <pair-key>mdsalRealm</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.realm.MdsalRealm</pair-value>
+    </main>
+    End mdsalRealm commented out-->
+
+    <!--
+      ===================================================================================
       ================================= MoonAuthRealm ===================================
       ===================================================================================
       =                                                                                 =
@@ -234,7 +249,9 @@
     </main>
     -->
 
-    <!-- add tokenAuthRealm as the only default realm -->
+    <!--
+    Add tokenAuthRealm as the only realm.  To enable mdsalRealm, add it to the list to he right of tokenAuthRealm.
+    -->
     <main>
         <pair-key>securityManager.realms</pair-key>
         <pair-value>$tokenAuthRealm</pair-value>
@@ -278,42 +295,24 @@
       =                                                                                 =
       ===================================================================================
     -->
-
-    <!-- restrict access to some endpoints by default -->
-    <urls>
-        <pair-key>/auth/**</pair-key>
-        <pair-value>authcBasic, roles[admin], dynamicAuthorization</pair-value>
-    </urls>
-    <urls>
-        <pair-key>/restconf/config/aaa-cert-mdsal**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
-    </urls>
-    <urls>
-        <pair-key>/restconf/operational/aaa-cert-mdsal**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
-    </urls>
-    <urls>
-        <pair-key>/restconf/operations/aaa-cert-rpc**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
-    </urls>
-    <urls>
-        <pair-key>/restconf/config/aaa-authn-model**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
-    </urls>
-    <urls>
-        <pair-key>/restconf/operational/aaa-authn-model**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
-    </urls>
-    <urls>
-        <pair-key>/restconf/operations/cluster-admin**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
-    </urls>
     <!-- Start moonAuthRealm commented out
     <urls>
         <pair-key>/token</pair-key>
         <pair-value>rest</pair-value>
     </urls>
     End moonAuthRealm commented out-->
+    <urls>
+        <pair-key>/operations/cluster-admin**</pair-key>
+        <pair-value>authcBasic, roles[admin]</pair-value>
+    </urls>
+    <urls>
+        <pair-key>/v1/**</pair-key>
+        <pair-value>authcBasic, roles[admin]</pair-value>
+    </urls>
+    <urls>
+        <pair-key>/config/aaa*/**</pair-key>
+        <pair-value>authcBasic, roles[admin]</pair-value>
+    </urls>
     <urls>
         <pair-key>/**</pair-key>
         <pair-value>authcBasic, dynamicAuthorization</pair-value>
