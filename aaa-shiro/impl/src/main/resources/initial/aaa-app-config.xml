@@ -186,6 +186,10 @@
         <pair-key>tokenAuthRealm</pair-key>
         <pair-value>org.opendaylight.aaa.shiro.realm.TokenAuthRealm</pair-value>
     </main>
+    <main>
+        <pair-key>mdsalRealm</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.realm.MdsalRealm</pair-value>
+    </main>
 
     <!--
       ===================================================================================
@@ -237,7 +241,7 @@
     <!-- add tokenAuthRealm as the only default realm -->
     <main>
         <pair-key>securityManager.realms</pair-key>
-        <pair-value>$tokenAuthRealm</pair-value>
+        <pair-value>$mdsalRealm,$tokenAuthRealm</pair-value>
     </main>
     <!-- Used to support OAuth2 use case. -->
     <main>

@@ -57,6 +57,11 @@ public class ODLPrincipalImpl implements ODLPrincipal {
         return new ODLPrincipalImpl(username, domain, userId, roles);
     }
 
+    public static ODLPrincipal createODLPrincipal(String username, String domain,
+                                                  String userId) {
+        return ODLPrincipalImpl.createODLPrincipal(username, domain, userId, null);
+    }
+
     @Override
     public String getUsername() {
         return this.username;
