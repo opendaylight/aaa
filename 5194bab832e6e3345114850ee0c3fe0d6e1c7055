@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a245df4_a170c972",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/realm/MdsalRealm.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-11-14T22:05:35Z",
+      "side": 1,
+      "message": "This is good, it will help us take the ride off \"/auth\" endpoints and domain, users and roles Handlers. I totally agree on this. But you make it tight to mdsal store only, we can have wrapper to handle the 2 datastores h2 \u0026 mdsal and also take off the ODLJdbcRealm.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 50
+      },
+      "revId": "5194bab832e6e3345114850ee0c3fe0d6e1c7055",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_c697d38e",
         "filename": "aaa-shiro/impl/src/main/resources/initial/aaa-app-config.xml",
         "patchSetId": 2
@@ -13,6 +36,30 @@
       "writtenOn": "2017-11-14T16:54:39Z",
       "side": 1,
       "message": "This is what I meant about stacking Realm implementations.  In your version, it made it either or.  Either H2 or MD-SAL.  There is no reason they can\u0027t/shouldn\u0027t co-exist.",
+      "range": {
+        "startLine": 244,
+        "startChar": 8,
+        "endLine": 244,
+        "endChar": 60
+      },
+      "revId": "5194bab832e6e3345114850ee0c3fe0d6e1c7055",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_013275f1",
+        "filename": "aaa-shiro/impl/src/main/resources/initial/aaa-app-config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-11-14T22:05:35Z",
+      "side": 1,
+      "message": "this is not quit right. its either external Idp (as ldap) or ODL local Idp. also having 2 local Idp data-store in ODL open side channel security issues and unnecessary effort. I don\u0027t agree on that its either h2 or mdsal to be used by ODL local Idp.",
+      "parentUuid": "9a245df4_c697d38e",
       "range": {
         "startLine": 244,
         "startChar": 8,
