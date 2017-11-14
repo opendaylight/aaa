@@ -113,8 +113,9 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
             Users users = AAAShiroProvider.getInstance().getIdmStore().getUsers(creds.username(), credsDomain);
             List<User> userList = users.getUsers();
             if (userList.size() == 0) {
-                throw new AuthenticationException("User :" + creds.username()
-                        + " does not exist in domain " + credsDomain);
+                return null;
+                //throw new AuthenticationException("User :" + creds.username()
+                //        + " does not exist in domain " + credsDomain);
             }
             user = userList.get(0);
             if (!SHA256Calculator.getSHA256(creds.password(), user.getSalt()).equals(
