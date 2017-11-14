@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a245df4_c697d38e",
+        "filename": "aaa-shiro/impl/src/main/resources/initial/aaa-app-config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-11-14T16:54:39Z",
+      "side": 1,
+      "message": "This is what I meant about stacking Realm implementations.  In your version, it made it either or.  Either H2 or MD-SAL.  There is no reason they can\u0027t/shouldn\u0027t co-exist.",
+      "range": {
+        "startLine": 244,
+        "startChar": 8,
+        "endLine": 244,
+        "endChar": 60
+      },
+      "revId": "5194bab832e6e3345114850ee0c3fe0d6e1c7055",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
