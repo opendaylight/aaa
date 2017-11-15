@@ -25,6 +25,7 @@ public class AAAShiroProvider {
     /**
      * Method called when the blueprint container is created.
      */
+    @SuppressWarnings("unused") // called via blueprint
     public void init() {
         LOG.info("AAAShiroProvider Session Initiated");
         ServiceProxy.getInstance().setEnabled(true);
@@ -33,6 +34,7 @@ public class AAAShiroProvider {
     /**
      * Method called when the blueprint container is destroyed.
      */
+    @SuppressWarnings("unused") // called via blueprint
     public void close() {
         LOG.info("AAAShiroProvider Closed");
     }
