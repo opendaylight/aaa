@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.idm.rest.test;
+package org.opendaylight.aaa.impl.shiro.idm.rest.test;
 
 import java.util.ArrayList;
 import java.util.List;

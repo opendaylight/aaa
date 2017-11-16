@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.idm.rest.test;
+package org.opendaylight.aaa.impl.shiro.idm.rest.test;
 
 import com.sun.jersey.spi.container.servlet.WebComponent;
 import com.sun.jersey.test.framework.AppDescriptor;
@@ -14,7 +14,7 @@ import com.sun.jersey.test.framework.JerseyTest;
 import com.sun.jersey.test.framework.WebAppDescriptor;
 import org.junit.Before;
 import org.opendaylight.aaa.api.StoreBuilder;
-import org.opendaylight.aaa.idm.IdmLightApplication;
+import org.opendaylight.aaa.impl.shiro.idm.IdmLightApplication;
 import org.opendaylight.aaa.impl.AAAShiroProvider;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 

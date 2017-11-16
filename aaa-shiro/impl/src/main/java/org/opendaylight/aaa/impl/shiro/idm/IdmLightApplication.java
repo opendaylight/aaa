@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.idm;
+package org.opendaylight.aaa.impl.shiro.idm;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -29,9 +29,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author liemmn
  * @author Ryan Goulding (ryandgoulding@gmail.com)
- * @see <code>org.opendaylight.aaa.idm.rest.DomainHandler</code>
- * @see <code>org.opendaylight.aaa.idm.rest.UserHandler</code>
- * @see <code>org.opendaylight.aaa.idm.rest.RoleHandler</code>
+ * @see <code>org.opendaylight.aaa.impl.shiro.idm.rest.DomainHandler</code>
+ * @see <code>org.opendaylight.aaa.impl.shiro.idm.rest.UserHandler</code>
+ * @see <code>org.opendaylight.aaa.impl.shiro.idm.rest.RoleHandler</code>
  */
 public class IdmLightApplication extends Application {
 
