@@ -58,9 +58,7 @@ AAA supports 2 main authentication use-cases:  *direct* and *federated* authenti
 
 #### Direct
 
-In this use-case, a user presents some credentials (e.g., username/password) directly to the Opendaylight (ODL) controller token endpoint `/oauth2/token` and receives an access token, which then can be used to access protected resources on the controller, similar to the example we saw in the Quickstart section: 
-
-![](https://wiki.opendaylight.org/images/c/cc/Direct_authn.png)
+In this use-case, a user presents some credentials (e.g., username/password) directly to the Opendaylight (ODL) controller token endpoint `/oauth2/token` and receives an access token, which then can be used to access protected resources on the controller, similar to the example we saw in the Quickstart section.
 
 #### Federated
 
