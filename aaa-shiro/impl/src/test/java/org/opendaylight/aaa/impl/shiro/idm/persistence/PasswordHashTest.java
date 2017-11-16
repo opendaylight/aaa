@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.idm.persistence;
+package org.opendaylight.aaa.impl.shiro.idm.persistence;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -24,7 +24,7 @@ import org.opendaylight.aaa.api.model.Grants;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
-import org.opendaylight.aaa.idm.IdmLightProxy;
+import org.opendaylight.aaa.impl.shiro.idm.IdmLightProxy;
 import org.opendaylight.aaa.impl.AAAShiroProvider;
 
 /*

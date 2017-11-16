@@ -19,7 +19,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         default-config-file-name="aaa-datastore-config.xml"
         binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.DatastoreConfig" />
 
-  <bean id="IdmLightProxy" class="org.opendaylight.aaa.idm.IdmLightProxy">
+  <bean id="IdmLightProxy" class="org.opendaylight.aaa.impl.shiro.idm.IdmLightProxy">
   </bean>
 
   <service ref="IdmLightProxy" interface="org.opendaylight.aaa.api.IdMService" odl:type="default"/>

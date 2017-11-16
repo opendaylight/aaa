@@ -22,7 +22,6 @@ import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
-import org.opendaylight.aaa.idm.IdmLightApplication;
 import org.opendaylight.aaa.impl.datastore.h2.H2Store;
 import org.opendaylight.aaa.impl.datastore.h2.H2TokenStore;
 import org.opendaylight.aaa.impl.datastore.mdsal.MdsalStore;
