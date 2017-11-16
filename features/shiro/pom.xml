@@ -23,7 +23,6 @@
 
     <modules>
         <module>features-aaa-shiro</module>
-        <module>odl-aaa-shiro</module>
     </modules>
 
     <build>

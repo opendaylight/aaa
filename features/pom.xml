@@ -23,7 +23,7 @@
 
   <modules>
     <module>shiro</module>
-    <module>authn</module>
+    <module>aaa</module>
   </modules>
 
   <build>

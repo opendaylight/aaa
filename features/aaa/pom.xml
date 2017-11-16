@@ -28,6 +28,7 @@
         <module>odl-aaa-cert</module>
         <module>odl-aaa-cli</module>
         <module>odl-aaa-encryption-service</module>
+        <module>odl-aaa-shiro</module>
     </modules>
 
     <build>
