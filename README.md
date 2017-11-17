@@ -5,6 +5,8 @@ This project is aimed at providing a flexible, pluggable framework with out-of-t
 ## Caveats
 The following caveats are applicable to the current AAA implementation:
  - The database (H2) used by ODL AAA Authentication store is not-cluster enabled. When deployed in a clustered environment each node contains unique local credentials.
+ - AAA provides two local IdP Realm implementations; TokenAuthRealm and MdsalRealm.  Although the use of both Realms at the same time is possible through Shiro's multi-realm approach, it is considered bad practice to provide two local identity stores.  Thus, users should specify one or the other for $securityManager.realms entry in the aaa-app-config configuration.
+ - The MdsalRealm is not initialized with any Users, Roles, Domains, or Grants.  The ability to add OOB Identity Information is considered separate work, and is targeted for the Oxygen release.
 
 ## Quick Start
 
