@@ -119,7 +119,11 @@ public class MdsalRealm extends AuthorizingRealm {
                 final String inputUsername = HeaderUtils.extractUsername(username);
                 final String domainId = HeaderUtils.extractDomain(username);
                 final String inputUserId = String.format("%s@%s", inputUsername, domainId);
-                if(u.getUserid().equals(inputUserId)) {
+                final boolean userEnabled =u.isEnabled();
+                if(!userEnabled) {
+                    LOG.trace("userId={} is skipped because it is disabled", u.getUserid());
+                }
+                if(userEnabled && u.getUserid().equals(inputUserId)) {
                     final String inputPassword = TokenUtils.extractPassword(authenticationToken);
                     final String hashedInputPassword = SHA256Calculator.getSHA256(inputPassword, u.getSalt());
                     if (hashedInputPassword.equals(u.getPassword())) {
