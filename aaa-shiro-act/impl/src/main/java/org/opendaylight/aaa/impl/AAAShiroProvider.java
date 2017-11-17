@@ -7,7 +7,7 @@
  */
 package org.opendaylight.aaa.impl;
 
-import org.opendaylight.aaa.shiro.ServiceProxy;
+import org.opendaylight.aaa.impl.shiro.ServiceProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
