@@ -27,6 +27,7 @@ public class ExtractFilterConfigFilter implements Filter {
     private FilterConfig filterConfig;
 
     @Override
+    @SuppressWarnings("checkstyle:hiddenField")
     public void init(final FilterConfig filterConfig) throws ServletException {
         this.filterConfig = filterConfig;
     }

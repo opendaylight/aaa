@@ -21,7 +21,7 @@ import javax.servlet.ServletResponse;
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
-public class CannotInstantiate implements Filter {
+public final class CannotInstantiate implements Filter {
     private CannotInstantiate() {
     }
 

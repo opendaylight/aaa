@@ -63,7 +63,7 @@ import org.slf4j.LoggerFactory;
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  *
  */
-public class CustomFilterAdapterConfiguration implements ManagedService {
+public final class CustomFilterAdapterConfiguration implements ManagedService {
 
     /**
      * Separates different filter definitions. For example:
@@ -319,7 +319,7 @@ public class CustomFilterAdapterConfiguration implements ManagedService {
      * Allows creation of <code>FilterConfig</code> from a key/value properties
      * file.
      */
-    private static class InjectedFilterConfig implements FilterConfig {
+    private static final class InjectedFilterConfig implements FilterConfig {
 
         private final String filterName;
         private final ServletContext servletContext;
@@ -387,7 +387,7 @@ public class CustomFilterAdapterConfiguration implements ManagedService {
      * Essentially a tuple of (filterClassName, propertiesFileName). Allows
      * quicker passing and return of Filter information.
      */
-    private static class FilterDTO {
+    private static final class FilterDTO {
 
         private final String clazzName;
         private final Map<String, String> initParams;

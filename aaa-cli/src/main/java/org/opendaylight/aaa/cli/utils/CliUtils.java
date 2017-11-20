@@ -17,9 +17,13 @@ import org.apache.felix.service.command.CommandSession;
  * @author mserngawy
  *
  */
-public class CliUtils {
+public final class CliUtils {
 
     public static final String LOGIN_FAILED_MESS = "User does not exist OR user name and passsword are not correct";
+
+    private CliUtils() {
+
+    }
 
     /**
      * Retrieve the password from the user.

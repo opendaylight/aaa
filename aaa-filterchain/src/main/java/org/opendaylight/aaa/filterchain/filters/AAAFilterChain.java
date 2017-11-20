@@ -73,7 +73,7 @@ public final class AAAFilterChain implements FilterChain {
      * @param response
      *            Wrapped parameter passed directly to
      *            <code>doFilter(ServletRequest, ServletResponse)</code>
-     * @param existingFilterChain
+     * @param newExistingFilterChain
      *            The chain provided from Jersey as defined in the Servlet's
      *            <code>web.xml</code>
      * @param injectedFilterChain
@@ -86,10 +86,10 @@ public final class AAAFilterChain implements FilterChain {
      *             <code>doFilter(ServletRequest, ServletResponse)</code>
      */
     public void doFilter(final ServletRequest request, final ServletResponse response,
-            final FilterChain existingFilterChain, final List<Filter> injectedFilterChain)
+            final FilterChain newExistingFilterChain, final List<Filter> injectedFilterChain)
             throws IOException, ServletException {
 
-        this.existingFilterChain = existingFilterChain;
+        this.existingFilterChain = newExistingFilterChain;
         this.injectedFilterChainIterator = injectedFilterChain.iterator();
         doFilter(request, response);
     }

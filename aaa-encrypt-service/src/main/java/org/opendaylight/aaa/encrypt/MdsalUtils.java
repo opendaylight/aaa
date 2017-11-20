@@ -29,8 +29,12 @@ import org.slf4j.LoggerFactory;
  * @author mserngawy
  *
  */
-public class MdsalUtils {
+public final class MdsalUtils {
     private static final Logger LOG = LoggerFactory.getLogger(MdsalUtils.class);
+
+    private MdsalUtils() {
+
+    }
 
     public static InstanceIdentifier<AaaEncryptServiceConfig> getEncryptionSrvConfigIid() {
         return InstanceIdentifier.builder(AaaEncryptServiceConfig.class).build();

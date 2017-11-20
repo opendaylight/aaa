@@ -26,7 +26,11 @@ import javax.servlet.ServletResponse;
  *
  * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
-public class FilterChainMockUtils {
+public final class FilterChainMockUtils {
+    private FilterChainMockUtils() {
+
+    }
+
     /**
      * Creates a mock <code>Filter</code> which adds ingress output to
      * callStack, calls doFilter, then adds egress output to the callStack.

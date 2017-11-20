@@ -34,15 +34,15 @@ public class DefaultMdsalSslData implements IAaaCertProvider {
 
     private final AaaCertMdsalProvider aaaCertMdsalProv;
     private final CtlKeystore ctlKeyStore;
-    private final TrustKeystore trustKeyStore;
+    private final TrustKeystore trustKeystore;
     private final String bundleName;
 
     public DefaultMdsalSslData(final AaaCertMdsalProvider aaaCertMdsalProv, final String bundleName,
-            final CtlKeystore ctlKeyStore, final TrustKeystore trustKeyStore) {
+            final CtlKeystore ctlKeyStore, final TrustKeystore trustKeystore) {
         this.bundleName = bundleName;
         this.aaaCertMdsalProv = aaaCertMdsalProv;
         this.ctlKeyStore = ctlKeyStore;
-        this.trustKeyStore = trustKeyStore;
+        this.trustKeystore = trustKeystore;
         this.aaaCertMdsalProv.initializeKeystoreDataTree();
     }
 
@@ -143,7 +143,7 @@ public class DefaultMdsalSslData implements IAaaCertProvider {
 
     @Override
     public TrustKeystore getTrustKeyStoreInfo() {
-        return trustKeyStore;
+        return trustKeystore;
     }
 
     @Override
@@ -157,7 +157,7 @@ public class DefaultMdsalSslData implements IAaaCertProvider {
             return aaaCertMdsalProv.addSslDataKeystores(bundleName, ctlKeyStore.getName(),
                     ctlKeyStore.getStorePassword(), ctlKeyStore.getAlias(), ctlKeyStore.getDname(),
                     ctlKeyStore.getKeyAlg(), ctlKeyStore.getSignAlg(), ctlKeyStore.getKeysize(),
-                    ctlKeyStore.getValidity(), trustKeyStore.getName(), trustKeyStore.getStorePassword(),
+                    ctlKeyStore.getValidity(), trustKeystore.getName(), trustKeystore.getStorePassword(),
                     getCipherSuites(ctlKeyStore.getCipherSuites()), ctlKeyStore.getTlsProtocols()) != null;
         }
         return true;

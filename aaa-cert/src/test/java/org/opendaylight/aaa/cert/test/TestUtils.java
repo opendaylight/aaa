@@ -27,7 +27,7 @@ import org.opendaylight.yangtools.yang.binding.DataObject;
  * Last update: 8 march 2017
  */
 
-public class TestUtils {
+public final class TestUtils {
     public static String dummyAlias = "fooAlias";
     public static String dummyCert = KeyStoreConstant.BEGIN_CERTIFICATE
             + "MIICKTCCAZKgAwIBAgIECMgzyzANBgkqhkiG9w0BAQUFADBZMQwwCgYDV"
@@ -43,6 +43,10 @@ public class TestUtils {
             + "EAVBWCNC+bbJftOTfpL3sL3YO+aQSmPt5ICgrz7wXDkzpf+0FwSqt+kiR"
             + "Wfw65RTgmn2hmYPh2QW4SaIN50ftLfUHgkf2zeMlodAQVYmBAd/woE3s7"
             + "fkSa9vQkUowgHAxW//7NOOTonnQPi2gH6ubaOCG4ZeXTwqHy47DGA0c8z" + "2Q=" + KeyStoreConstant.END_CERTIFICATE;
+
+    private TestUtils() {
+
+    }
 
     public static DataBroker mockDataBroker(SslData sslData) throws Exception {
         final Optional<DataObject> dataObjectOptional = mock(Optional.class);

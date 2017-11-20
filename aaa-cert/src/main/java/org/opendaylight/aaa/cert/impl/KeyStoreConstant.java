@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
  * @author mserngawy
  *
  */
-public class KeyStoreConstant {
+public final class KeyStoreConstant {
 
     public static final String BEGIN_CERTIFICATE = "-----BEGIN CERTIFICATE-----";
 
@@ -37,6 +37,10 @@ public class KeyStoreConstant {
     public static final String END_CERTIFICATE_REQUEST = "-----END CERTIFICATE REQUEST-----";
     public static final String TLS_PROTOCOL = "TLS";
     public static final String KEY_STORE_PATH = "configuration" + File.separator + "ssl" + File.separator;
+
+    private KeyStoreConstant() {
+
+    }
 
     public static boolean checkKeyStoreFile(final String fileName) {
         final File file = new File(KEY_STORE_PATH + fileName);

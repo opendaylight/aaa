@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author mserngawy
  *
  */
-public class SessionsManager implements AutoCloseable {
+public final class SessionsManager implements AutoCloseable {
 
     private static final Logger LOG = LoggerFactory.getLogger(SessionsManager.class);
 

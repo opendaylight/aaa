@@ -191,8 +191,8 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
                 final DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
                 final DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
                 final Document doc = docBuilder.parse(configFile);
-                final Node key = doc.getElementsByTagName(encryptKeyTag).item(0);
-                key.setTextContent(newPwd);
+                final Node keyNode = doc.getElementsByTagName(encryptKeyTag).item(0);
+                keyNode.setTextContent(newPwd);
                 final Node salt = doc.getElementsByTagName(encryptSaltTag).item(0);
                 salt.setTextContent(newSalt);
                 final TransformerFactory transformerFactory = TransformerFactory.newInstance();

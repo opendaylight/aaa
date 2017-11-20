@@ -21,12 +21,16 @@ import org.opendaylight.aaa.api.model.Users;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DataStoreUtils {
+public final class DataStoreUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(DataStoreUtils.class);
     private static final String ADMIN_ROLE = "admin";
 
-    public static final String getDomainId(IIDMStore identityStore, String domainName) throws IDMStoreException {
+    private DataStoreUtils() {
+
+    }
+
+    public static String getDomainId(IIDMStore identityStore, String domainName) throws IDMStoreException {
         Domains domains = identityStore.getDomains();
         if (domains != null) {
             for (Domain domain : domains.getDomains()) {
@@ -38,7 +42,7 @@ public class DataStoreUtils {
         return null;
     }
 
-    public static final String getRoleId(IIDMStore identityStore, String roleName) throws IDMStoreException {
+    public static String getRoleId(IIDMStore identityStore, String roleName) throws IDMStoreException {
         List<Role> roles = identityStore.getRoles().getRoles();
         for (Role role : roles) {
             if (role.getName().equalsIgnoreCase(roleName)) {
@@ -48,7 +52,7 @@ public class DataStoreUtils {
         return null;
     }
 
-    public static final String getUserId(IIDMStore identityStore, String userName) throws IDMStoreException {
+    public static String getUserId(IIDMStore identityStore, String userName) throws IDMStoreException {
         List<User> users = identityStore.getUsers().getUsers();
         for (User usr : users) {
             if (usr.getName().equalsIgnoreCase(userName)) {
@@ -58,7 +62,7 @@ public class DataStoreUtils {
         return null;
     }
 
-    public static final String getGrantId(IIDMStore identityStore, String domainName, String roleName, String userName)
+    public static String getGrantId(IIDMStore identityStore, String domainName, String roleName, String userName)
             throws IDMStoreException {
         final String domainId = getDomainId(identityStore, domainName);
         if (domainId == null) {

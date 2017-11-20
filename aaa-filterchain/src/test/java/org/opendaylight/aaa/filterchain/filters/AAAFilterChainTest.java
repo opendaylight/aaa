@@ -54,12 +54,12 @@ public class AAAFilterChainTest {
 
     @Test
     public void testDoFilterNoFilters() throws IOException, ServletException {
-        final ServletRequest servletRequest = mock(ServletRequest.class);
-        final ServletResponse servletResponse = mock(ServletResponse.class);
+        final ServletRequest request = mock(ServletRequest.class);
+        final ServletResponse response = mock(ServletResponse.class);
         final FilterChain filterChain = mock(FilterChain.class);
         doAnswer(invocationOnMock -> null).when(filterChain).doFilter(any(), any());
         final List<Filter> injectedFilterChain = new Vector<>();
-        AAAFilterChain.createAAAFilterChain().doFilter(servletRequest, servletResponse, filterChain,
+        AAAFilterChain.createAAAFilterChain().doFilter(request, response, filterChain,
                 injectedFilterChain);
     }
 

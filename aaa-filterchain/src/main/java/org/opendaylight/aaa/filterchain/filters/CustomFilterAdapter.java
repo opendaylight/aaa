@@ -85,6 +85,7 @@ public class CustomFilterAdapter implements Filter, CustomFilterAdapterListener 
     }
 
     @Override
+    @SuppressWarnings("checkstyle:hiddenField")
     public void init(final FilterConfig filterConfig) throws ServletException {
         LOG.info("Initializing CustomFilterAdapter");
         // register as a listener for config admin changes

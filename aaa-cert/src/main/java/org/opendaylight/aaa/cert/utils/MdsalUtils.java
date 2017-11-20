@@ -29,8 +29,12 @@ import org.slf4j.LoggerFactory;
  * @author mserngawy
  *
  */
-public class MdsalUtils {
+public final class MdsalUtils {
     private static final Logger LOG = LoggerFactory.getLogger(MdsalUtils.class);
+
+    private MdsalUtils() {
+
+    }
 
     /**
      * Executes delete as a blocking transaction.
