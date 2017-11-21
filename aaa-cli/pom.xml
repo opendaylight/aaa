@@ -61,6 +61,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
       <artifactId>powermock-module-junit4</artifactId>
       <scope>test</scope>
     </dependency>
+      <dependency>
+          <groupId>org.opendaylight.aaa</groupId>
+          <artifactId>aaa-idmlight</artifactId>
+          <version>${project.version}</version>
+      </dependency>
   </dependencies>
 
   <build>
