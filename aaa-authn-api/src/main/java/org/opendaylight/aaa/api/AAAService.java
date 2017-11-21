@@ -12,8 +12,6 @@ import javax.servlet.Filter;
 
 /**
  * Service interface exposing AAA Filtering for Servlets.
- *
- * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 public interface AAAService extends Filter {
 }

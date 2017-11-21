@@ -15,8 +15,6 @@ import org.slf4j.LoggerFactory;
  * AAAShiroProvider provides enablement of the AAAFilter for RESTCONF.  odl-restconf-noauth
  * demands AAA is turned off.  Since odl-restconf just installs AAA along with odl-restconf-noauth,
  * AAAFilter is disabled by default.  The filter is only enabled upon activation of this bundle.
- *
- * @version Ryan Goulding (ryandgoulding@gmail.com)
  */
 public class AAAShiroProvider {
 

@@ -36,8 +36,6 @@ import org.slf4j.LoggerFactory;
  * based on a tuple of (role, http_permission_list).
  *
  * This mechanism will only work when put behind <code>authcBasic</code>
- *
- * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
 

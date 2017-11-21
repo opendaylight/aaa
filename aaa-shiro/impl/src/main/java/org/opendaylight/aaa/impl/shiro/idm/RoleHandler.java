@@ -37,7 +37,6 @@ import org.slf4j.LoggerFactory;
  * data.
  *
  * @author peter.mellquist@hp.com
- * @author Ryan Goulding (ryandgoulding@gmail.com)
  */
 @Path("/v1/roles")
 public class RoleHandler {

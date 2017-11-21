@@ -12,8 +12,6 @@ import java.util.Set;
 
 /**
  * Principal for authentication.
- *
- * @author Ryan Goulding (ryandgoulding@gmail.com)s
  */
 public interface ODLPrincipal {
 
