@@ -16,6 +16,7 @@ import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.cli.utils.CliUtils;
+import org.opendaylight.aaa.idm.IdmLightProxy;
 
 @Command(name = "change-user-pwd", scope = "aaa", description = "Change the user password.")
 
@@ -51,6 +52,7 @@ public class ChangeUserPassword extends OsgiCommandSupport {
         for (User usr : users.getUsers()) {
             final String realPwd = SHA256Calculator.getSHA256(currentPwd, usr.getSalt());
             if (usr.getName().equals(userName) && usr.getPassword().equals(realPwd)) {
+                IdmLightProxy.clearClaimCache();
                 usr.setPassword(newPwd);
                 identityStore.updateUser(usr);
                 return userName + "'s password has been changed";

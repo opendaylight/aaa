@@ -15,6 +15,7 @@ import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
+import org.opendaylight.aaa.idm.IdmLightProxy;
 
 @Command(name = "remove-user", scope = "aaa", description = "Remove user.")
 
@@ -47,6 +48,7 @@ public class RemoveUser extends AaaCliAbstractCommand {
         if (identityStore.deleteUser(usrId) == null) {
             return "Failed to delete user " + userName;
         }
+        IdmLightProxy.clearClaimCache();
         return "User " + userName + "has been deleted.";
     }
 }
