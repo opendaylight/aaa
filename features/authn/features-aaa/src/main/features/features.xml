@@ -180,6 +180,7 @@
 
     <feature name='odl-aaa-cli' description='OpenDaylight :: AAA :: aaa opendaylight command line'
              version='${project.version}'>
+        <feature version="${project.version}">odl-aaa-authn</feature>
         <feature version="${project.version}">odl-aaa-cert</feature>
         <feature version='${project.version}'>odl-aaa-api</feature>
         <bundle>mvn:net.sf.ehcache/ehcache/{{VERSION}}</bundle>
