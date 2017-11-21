@@ -237,6 +237,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                         <Bundle-Name>${project.groupId}.${project.artifactId}</Bundle-Name>
                         <Export-Package>
                             org.opendaylight.aaa.impl.shiro,
+                            org.opendaylight.aaa.impl.shiro.idm,
                             org.opendaylight.aaa.impl.shiro.tokenauthrealm,
                             org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth,
                             org.opendaylight.aaa.shiro,
