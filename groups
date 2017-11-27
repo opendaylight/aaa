@@ -1,7 +1,4 @@
-# UUID                                  	Group Name
+# UUID                                                        	Group Name
 #
-47e13d2e31f5020400e9513ead676ebeaf7e17cc	Non-Interactive aaa users
-c9025ab9ddc1e3171919e085449f22c54f8f7b54	GitHub Replication
-global:Anonymous-Users                  	Anonymous Users
-global:Registered-Users                 	Registered Users
+c9025ab9ddc1e3171919e085449f22c54f8f7b54                      	GitHub Replication
 ldap:cn=gerrit-aaa-committers,ou=Groups,dc=opendaylight,dc=org	ldap/gerrit-aaa-committers
