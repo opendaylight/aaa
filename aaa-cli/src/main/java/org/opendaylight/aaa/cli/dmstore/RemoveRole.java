@@ -15,6 +15,7 @@ import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
+import org.opendaylight.aaa.impl.shiro.idm.IdmLightProxy;
 
 @Command(name = "remove-role", scope = "aaa", description = "Remove role.")
 
@@ -47,6 +48,7 @@ public class RemoveRole extends AaaCliAbstractCommand {
         if (identityStore.deleteUser(roleId) == null) {
             return "Failed to delete role " + roleName;
         }
+        IdmLightProxy.clearClaimCache();
         return "Role " + roleName + "has been deleted.";
     }
 }
