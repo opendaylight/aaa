@@ -76,7 +76,6 @@ public class StoreBuilder {
      *
      * @param domainID ID (same as name) of the "authentication domain"
      * @return ID of the just newly created Domain, or null if no new one had to be created
-     * @return true if initialization took place, false if it wasn't needed
      * @throws IDMStoreException for issues coming from the IIDMStore
      */
     public String initDomainAndRolesWithoutUsers(String domainID) throws IDMStoreException {
