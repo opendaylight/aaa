@@ -14,6 +14,7 @@ import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
+import org.opendaylight.aaa.impl.shiro.idm.IdmLightProxy;
 
 @Command(name = "remove-domain", scope = "aaa", description = "Remove domain.")
 
@@ -43,6 +44,7 @@ public class RemoveDomain extends AaaCliAbstractCommand {
         if (identityStore.deleteDomain(domainId) == null) {
             return "Failed to delete domain " + domainName;
         }
+        IdmLightProxy.clearClaimCache();
         return "Domain " + domainName + "has been deleted.";
     }
 }
