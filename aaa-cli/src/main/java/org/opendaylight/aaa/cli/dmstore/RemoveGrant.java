@@ -14,6 +14,7 @@ import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
+import org.opendaylight.aaa.impl.shiro.idm.IdmLightProxy;
 
 @Command(name = "remove-grant", scope = "aaa", description = "Remove grant.")
 
@@ -51,6 +52,7 @@ public class RemoveGrant extends AaaCliAbstractCommand {
         if (identityStore.deleteGrant(grantid) == null) {
             return "Failed to delete grant " + userName + " " + roleName + " " + domainName;
         }
+        IdmLightProxy.clearClaimCache();
         return "Grant has been deleted.";
     }
 }
