@@ -9,6 +9,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 -->
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
   xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0"
+  xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
   odl:use-default-for-reference-types="true">
 
   <odl:clustered-app-config
@@ -36,6 +37,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <reference id="httpService"
              interface="org.osgi.service.http.HttpService"/>
 
+  <!-- TODO: when we migrate off h2 towards the MD-SAL DS, get rid of this. -->
+  <cm:property-placeholder persistent-id="org.opendaylight.aaa.h2">
+    <cm:default-properties>
+      <cm:property name="dbUsername" value="foo" />
+      <cm:property name="dbPassword" value="bar" />
+    </cm:default-properties>
+  </cm:property-placeholder>
+
   <bean id="provider"
     class="org.opendaylight.aaa.impl.AAAShiroProvider" factory-method="newInstance"
     init-method="init" destroy-method="close">
@@ -47,6 +56,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument value="/moon" />
     <argument value="/oauth2" />
     <argument ref="datastoreConfig" />
+    <argument value="${dbUsername}" />
+    <argument value="${dbPassword}" />
   </bean>
 
   <bean id="aaa" class="org.opendaylight.aaa.shiro.filters.AAAFilter" />
