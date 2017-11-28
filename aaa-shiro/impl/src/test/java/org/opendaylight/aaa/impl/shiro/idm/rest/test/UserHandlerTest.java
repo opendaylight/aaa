@@ -32,9 +32,9 @@ public class UserHandlerTest extends HandlerTest {
         Users users = resource().path("/v1/users").get(Users.class);
         assertNotNull(users);
         List<User> usrList = users.getUsers();
-        assertEquals(2, usrList.size());
+        assertEquals(1, usrList.size());
         for (User usr : usrList) {
-            assertTrue(usr.getName().equals("admin") || usr.getName().equals("user"));
+            assertTrue(usr.getName().equals("admin"));
         }
 
         // check existing user
@@ -77,20 +77,20 @@ public class UserHandlerTest extends HandlerTest {
 
         // check update user data
         usrData.put("name", "usr1Update");
-        clientResponse = resource().path("/v1/users/2").type(MediaType.APPLICATION_JSON).put(ClientResponse.class,
+        clientResponse = resource().path("/v1/users/1").type(MediaType.APPLICATION_JSON).put(ClientResponse.class,
                 usrData);
         assertEquals(200, clientResponse.getStatus());
-        usr = resource().path("/v1/users/2").get(User.class);
+        usr = resource().path("/v1/users/1").get(User.class);
         assertNotNull(usr);
         assertTrue(usr.getName().equals("usr1Update"));
 
         // check delete user
-        clientResponse = resource().path("/v1/users/2").delete(ClientResponse.class);
+        clientResponse = resource().path("/v1/users/1").delete(ClientResponse.class);
         assertEquals(204, clientResponse.getStatus());
 
         // check delete not existing user
         try {
-            resource().path("/v1/users/2").delete(IDMError.class);
+            resource().path("/v1/users/1").delete(IDMError.class);
             fail("Should failed with 404!");
         } catch (UniformInterfaceException e) {
             ClientResponse resp = e.getResponse();

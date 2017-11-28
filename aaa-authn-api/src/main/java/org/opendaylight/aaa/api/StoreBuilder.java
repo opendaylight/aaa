@@ -39,7 +39,6 @@ import org.slf4j.LoggerFactory;
  * <ol>
  * <li>admin with admin role on sdn</li>
  * <li>admin with user role on sdn</li>
- * <li>user with user role on sdn</li>
  * </ol>
  *
  * @author peter.mellquist@hp.com
@@ -121,7 +120,8 @@ public class StoreBuilder {
 
     /**
      * Initialize IIDMStore with the default domain and the 'user' and 'admin'
-     * roles AND 2 default user accounts (with default passwords, which is bad practice).
+     * roles AND a default admin account (with default password, which is bad practice).
+     *
      * @param domainID ID (same as name) of the "authentication domain"
      * @throws IDMStoreException for issues coming from the IIDMStore
      */
@@ -129,7 +129,6 @@ public class StoreBuilder {
         String newDomainID = initDomainAndRolesWithoutUsers(domainID);
         if (newDomainID != null) {
             createUser(newDomainID, "admin", "admin", true);
-            createUser(newDomainID, "user", "user", false);
         }
     }
 
