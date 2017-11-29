@@ -19,7 +19,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -46,6 +45,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.impl.AAAShiroProvider;
+import org.opendaylight.aaa.impl.provider.GsonProvider;
 import org.opendaylight.aaa.impl.shiro.keystone.domain.KeystoneAuth;
 import org.opendaylight.aaa.impl.shiro.keystone.domain.KeystoneToken;
 import org.opendaylight.aaa.impl.shiro.realm.util.http.SimpleHttpClient;
@@ -98,7 +98,7 @@ public class KeystoneAuthRealmTest {
 
         when(certificateManager.getServerContext()).thenReturn(sslContext);
         when(client.requestBuilder(KeystoneToken.class)).thenReturn(requestBuilder);
-        when(clientBuilder.provider(JacksonJsonProvider.class)).thenReturn(clientBuilder);
+        when(clientBuilder.provider(GsonProvider.class)).thenReturn(clientBuilder);
         when(clientBuilder.sslContext(any())).thenReturn(clientBuilder);
         when(clientBuilder.hostnameVerifier(any())).thenReturn(clientBuilder);
         when(clientBuilder.build()).thenReturn(client);
