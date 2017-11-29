@@ -7,17 +7,18 @@
  */
 package org.opendaylight.aaa.shiro.realm;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -26,14 +27,10 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONString;
-import org.json.JSONTokener;
 import org.opendaylight.aaa.shiro.moon.MoonPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 /**
  * MoonRealm is a Shiro Realm that authenticates users from OPNFV/moon platform.
  *
@@ -86,11 +83,8 @@ public class MoonRealm extends AuthorizingRealm {
         final String output;
         final ClientConfig config = new DefaultClientConfig();
         final Client client = Client.create(config);
-        final JSONTokener tokener;
-        final JSONObject object;
-        final Set<String> userRoles = new LinkedHashSet<>();
 
-        final String hostFromShiro = (moonServerURL != null) ? moonServerURL.getHost() : null;
+        final String hostFromShiro = moonServerURL != null ? moonServerURL.getHost() : null;
         final String server;
         if (hostFromShiro != null) {
             server = hostFromShiro;
@@ -99,7 +93,7 @@ public class MoonRealm extends AuthorizingRealm {
             return null;
         }
 
-        final int portFromShiro = (moonServerURL != null) ? moonServerURL.getPort() : -1;
+        final int portFromShiro = moonServerURL != null ? moonServerURL.getPort() : -1;
         final String port;
         if (portFromShiro > 0) {
             port = Integer.toString(portFromShiro);
@@ -114,27 +108,38 @@ public class MoonRealm extends AuthorizingRealm {
         final String input = "{\"username\": \""+ username + "\"," + "\"password\":" + "\"" + password + "\"," + "\"project\":" + "\"" + domain + "\"" + "}";
         final ClientResponse response = webResource.type("application/json").post(ClientResponse.class, input);
         output = response.getEntity(String.class);
-        tokener = new JSONTokener(output);
-        object = new JSONObject(tokener);
 
-        try {
-            if (object.getString("token") != null) {
-                final String token = object.getString("token");
-                final String userID = username + "@" + domain;
-                final JSONArray jsonArray = object.getJSONArray("roles");
-                for (int i = 0; i < jsonArray.length(); i++){
-                    try {
-                        userRoles.add((String) jsonArray.get(i));
-                    } catch (final ClassCastException e) {
-                        LOG.debug("Unable to cast role as String, skipping {}", jsonArray.get(i), e);
-                    }
-                }
-                return new MoonPrincipal(username,domain,userID,userRoles,token);
-            }
-        } catch (final JSONException e) {
-            throw new IllegalStateException("Authentication Error : " + object.getJSONObject("error").getString("title"));
+        final JsonElement element = new JsonParser().parse(output);
+        if (!element.isJsonObject()) {
+            throw new IllegalStateException("Authentication error: returned output is not a JSON object");
         }
-        return null;
+
+        final JsonObject object = element.getAsJsonObject();
+        final JsonObject error = object.get("error").getAsJsonObject();
+        if (error != null) {
+            throw new IllegalStateException("Authentication Error : " + error.get("title").getAsString());
+        }
+
+        final JsonElement token = object.get("token");
+        if (token == null) {
+            return null;
+        }
+
+        final String tokenValue = token.getAsString();
+        final String userID = username + "@" + domain;
+
+        final Set<String> userRoles = new LinkedHashSet<>();
+        final JsonElement roles = object.get("roles");
+        if (roles != null) {
+            for (JsonElement role : roles.getAsJsonArray()) {
+                try {
+                    userRoles.add(role.getAsString());
+                } catch (final ClassCastException e) {
+                    LOG.debug("Unable to cast role as String, skipping {}", role, e);
+                }
+            }
+        }
+        return new MoonPrincipal(username, domain, userID, userRoles, tokenValue);
     }
 
     /**
