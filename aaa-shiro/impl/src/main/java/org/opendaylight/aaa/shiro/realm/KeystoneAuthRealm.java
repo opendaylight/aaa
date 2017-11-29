@@ -10,7 +10,6 @@ package org.opendaylight.aaa.shiro.realm;
 
 import static org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl.createODLPrincipal;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -41,6 +40,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.provider.GsonProvider;
 import org.opendaylight.aaa.shiro.AAAShiroProvider;
 import org.opendaylight.aaa.shiro.keystone.domain.KeystoneAuth;
 import org.opendaylight.aaa.shiro.keystone.domain.KeystoneToken;
@@ -214,7 +214,7 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
         return clientBuilder
                 .hostnameVerifier(hostnameVerifier)
                 .sslContext(sslContext)
-                .provider(JacksonJsonProvider.class)
+                .provider(GsonProvider.class)
                 .build();
     }
 

@@ -8,8 +8,6 @@
 
 package org.opendaylight.aaa.shiro.keystone.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +31,6 @@ public class KeystoneToken {
         return token;
     }
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Token {
 
         private List<Role> roles = new ArrayList<>();
