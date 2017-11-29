@@ -29,6 +29,8 @@ public abstract class HandlerTest extends JerseyTest {
                 .initParam("com.sun.jersey.config.feature.Trace", "true")
                 .initParam("com.sun.jersey.spi.container.ContainerResponseFilters",
                            "com.sun.jersey.api.container.filter.LoggingFilter")
+                .initParam("jersey.config.server.provider.packages",
+                        "org.opendaylight.aaa.impl.provider")
                 .build();
     }
 
