@@ -24,6 +24,9 @@ import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.impl.datastore.h2.H2Store;
 import org.opendaylight.aaa.impl.datastore.h2.H2TokenStore;
+import org.opendaylight.aaa.impl.datastore.h2.IdmLightConfig;
+import org.opendaylight.aaa.impl.datastore.h2.IdmLightConfigBuilder;
+import org.opendaylight.aaa.impl.datastore.h2.IdmLightSimpleConnectionProvider;
 import org.opendaylight.aaa.impl.datastore.mdsal.MdsalStore;
 import org.opendaylight.aaa.impl.datastore.mdsal.MdsalTokenStore;
 import org.opendaylight.aaa.impl.shiro.oauth2.OAuth2TokenServlet;
@@ -67,7 +70,9 @@ public class AAAShiroProvider {
                              final HttpService httpService,
                              final String moonEndpointPath,
                              final String oauth2EndpointPath,
-                             final DatastoreConfig datastoreConfig) {
+                             final DatastoreConfig datastoreConfig,
+                             final String dbUsername,
+                             final String dbPassword) {
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
         this.shiroConfiguration = shiroConfiguration;
@@ -77,7 +82,9 @@ public class AAAShiroProvider {
 
         if (datastoreConfig != null && datastoreConfig.getStore()
                 .equals(DatastoreConfig.Store.H2DataStore)) {
-            iidmStore = new H2Store();
+            final IdmLightConfig config = new IdmLightConfigBuilder()
+                    .dbUser(dbUsername).dbPwd(dbPassword).build();
+            iidmStore = new H2Store(new IdmLightSimpleConnectionProvider(config));
             tokenStore = new H2TokenStore(datastoreConfig.getTimeToLive().longValue(),
                     datastoreConfig.getTimeToWait().longValue());
         } else if (datastoreConfig != null && datastoreConfig.getStore()
@@ -159,9 +166,11 @@ public class AAAShiroProvider {
                                                final HttpService httpService,
                                                final String moonEndpointPath,
                                                final String oauth2EndpointPath,
-                                               final DatastoreConfig datastoreConfig) {
+                                               final DatastoreConfig datastoreConfig,
+                                               final String dbUsername,
+                                               final String dbPassword) {
         INSTANCE = new AAAShiroProvider(dataBroker, certificateManager, credentialAuth, shiroConfiguration,
-                httpService, moonEndpointPath, oauth2EndpointPath, datastoreConfig);
+                httpService, moonEndpointPath, oauth2EndpointPath, datastoreConfig, dbUsername, dbPassword);
         return INSTANCE;
     }
 

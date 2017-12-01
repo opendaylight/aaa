@@ -52,6 +52,18 @@ The access token can then be used to access protected resources on the controlle
 
     curl -s -H 'Authorization: Bearer d772d85e-34c7-3099-bea5-cfafd3c747cb' http://<controller>:<port>/restconf/operational/opendaylight-inventory:nodes
 
+### Defaults
+
+Although it is poor security practice, AAA's TokenAuthRealm creates some defaults out of the box.  In order to avoid default credentials, please see the aaa-cli-jar module, which allows installers to pre-install identity information.  Due to the fact that OpenDaylight does not have a proper installer project, default credentials become a chicken/egg problem.  The choice to utilize defaults was initially decided to help bootstrap interaction with ODL's restful web services.  AAA's TokenAuthRealm creates:
+* the "sdn" domain
+* the "admin" and "user" roles
+* the "admin" user with "admin" password
+* 2 grants
+  * admin user is granted admin role priveledges on sdn domain
+  * admin user is granted user role priveledges on sdn domain
+
+TokenAuthRealm's H2 file-based database, which stores the identity information, is secured with default credentials "foo"/"bar".  Default credentials on the local file-based database is a smaller concern, since without running an H2 Server instance on the local machine (ODL doesn't by default), the database is only accessible locally (i.e., user in front of keyboard).  However, these credentials can be adjusted too by setting "dbUsername" and "dbPassword" within etc/org.opendaylight.aaa.h2.cfg.
+
 ## Framework Overview
 
 ### Authentication

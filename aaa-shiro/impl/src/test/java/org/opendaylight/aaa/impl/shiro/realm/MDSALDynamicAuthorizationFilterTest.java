@@ -44,7 +44,7 @@ public class MDSALDynamicAuthorizationFilterTest {
 
     @Before
     public void setup() {
-        AAAShiroProvider.newInstance(null, null, null, null, mock(HttpService.class), null, null, null);
+        AAAShiroProvider.newInstance(null, null, null, null, mock(HttpService.class), null, null, null, null, null);
     }
 
     // test helper method to generate some cool mdsal data
