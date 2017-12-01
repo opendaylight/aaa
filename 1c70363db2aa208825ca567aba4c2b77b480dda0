@@ -22,6 +22,30 @@
       "revId": "1c70363db2aa208825ca567aba4c2b77b480dda0",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a1969be_2e061921",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 4013
+      },
+      "writtenOn": "2017-12-01T15:20:44Z",
+      "side": 1,
+      "message": "forget this comment",
+      "parentUuid": "7a1969be_ee0b6129",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 28
+      },
+      "revId": "1c70363db2aa208825ca567aba4c2b77b480dda0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
