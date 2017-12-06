@@ -279,41 +279,18 @@
       ===================================================================================
     -->
 
-    <!-- restrict access to some endpoints by default -->
     <urls>
-        <pair-key>/auth/**</pair-key>
-        <pair-value>authcBasic, roles[admin], dynamicAuthorization</pair-value>
-    </urls>
-    <urls>
-        <pair-key>/restconf/config/aaa-cert-mdsal**</pair-key>
+        <pair-key>/operations/cluster-admin**</pair-key>
         <pair-value>authcBasic, roles[admin]</pair-value>
     </urls>
     <urls>
-        <pair-key>/restconf/operational/aaa-cert-mdsal**</pair-key>
+        <pair-key>/v1/**</pair-key>
         <pair-value>authcBasic, roles[admin]</pair-value>
     </urls>
     <urls>
-        <pair-key>/restconf/operations/aaa-cert-rpc**</pair-key>
+        <pair-key>/config/aaa*/**</pair-key>
         <pair-value>authcBasic, roles[admin]</pair-value>
     </urls>
-    <urls>
-        <pair-key>/restconf/config/aaa-authn-model**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
-    </urls>
-    <urls>
-        <pair-key>/restconf/operational/aaa-authn-model**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
-    </urls>
-    <urls>
-        <pair-key>/restconf/operations/cluster-admin**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
-    </urls>
-    <!-- Start moonAuthRealm commented out
-    <urls>
-        <pair-key>/token</pair-key>
-        <pair-value>rest</pair-value>
-    </urls>
-    End moonAuthRealm commented out-->
     <urls>
         <pair-key>/**</pair-key>
         <pair-value>authcBasic, dynamicAuthorization</pair-value>
