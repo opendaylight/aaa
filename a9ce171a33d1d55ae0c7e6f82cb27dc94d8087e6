@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab65e90_af185d00",
+        "filename": "aaa-cli-jar/pom.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2017-12-13T18:50:22Z",
+      "side": 1,
+      "message": "Is this just a left over, or does the test not work anymore after the bump?  Why?  We need this functionality... ;-)",
+      "revId": "a9ce171a33d1d55ae0c7e6f82cb27dc94d8087e6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
