@@ -253,7 +253,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                         </Export-Package>
                         <Import-Package>
                             com.google.*,
-                            com.sun.jersey.spi.container.servlet,
+                            com.sun.jersey.*,
+                            org.json.*,
                             javax.servlet.http,
                             javax.servlet.*,
                             org.apache.oltu.oauth2.*,
