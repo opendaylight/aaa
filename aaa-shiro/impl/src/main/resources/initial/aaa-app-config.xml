@@ -269,6 +269,17 @@
     </main>
     End moonAuthRealm commented out-->
 
+    <!-- Start moonAuthorization filter for REST endpoints commented out
+    <main>
+        <pair-key>moonAuthorization</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.filters.MoonAuthorizationFilter</pair-value>
+    </main>
+    <main>
+        <pair-key>moonAuthorization.url</pair-key>
+        <pair-value>http://localhost:31002</pair-value>
+    </main>
+    End moonAuthRealm commented out-->
+
     <!-- in order to track AAA challenge attempts -->
     <main>
         <pair-key>accountingListener</pair-key>
