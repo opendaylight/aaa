@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86a87cb4_45c43820",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-12-19T16:15:39Z",
+      "side": 1,
+      "message": "We are using GSONinstead. Please don\u0027t import org.json.",
+      "range": {
+        "startLine": 257,
+        "startChar": 28,
+        "endLine": 257,
+        "endChar": 39
+      },
+      "revId": "c0005cd8508994b55e6d012d5d2a2d23ce8b2f9d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b6035a0_33e75d7d",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/filters/MoonAuthorizationFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-12-19T16:15:39Z",
+      "side": 1,
+      "message": "All of thesemust be expanded, dont use \"*\".",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 19
+      },
+      "revId": "c0005cd8508994b55e6d012d5d2a2d23ce8b2f9d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e7c45f9_18700cd0",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/filters/MoonAuthorizationFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2017-12-19T16:15:39Z",
+      "side": 1,
+      "message": "We can\u0027t use org.json.  Use GSON instead.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 18
+      },
+      "revId": "c0005cd8508994b55e6d012d5d2a2d23ce8b2f9d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
