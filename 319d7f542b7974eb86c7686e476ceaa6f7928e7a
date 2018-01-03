@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48810890_8bd7b712",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/filters/MoonAuthorizationFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-01-03T19:11:54Z",
+      "side": 1,
+      "message": "make this a constant named DEFAULT_MOON_SERVER_URL above.",
+      "range": {
+        "startLine": 40,
+        "startChar": 35,
+        "endLine": 40,
+        "endChar": 60
+      },
+      "revId": "319d7f542b7974eb86c7686e476ceaa6f7928e7a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bea5ab0d_e4bca630",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/filters/MoonAuthorizationFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-01-03T19:11:54Z",
+      "side": 1,
+      "message": "This should be the first class variable in the class.  I would move it right below the class declaration to keep consistent with common ODL styling.",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 93
+      },
+      "revId": "319d7f542b7974eb86c7686e476ceaa6f7928e7a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f728aa34_b1f364c9",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/filters/MoonAuthorizationFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-01-03T19:11:54Z",
+      "side": 1,
+      "message": "Any worries that this could cause ClassCastException?  I don\u0027t think so in this case but it would be cheap to add a try/catch.",
+      "range": {
+        "startLine": 50,
+        "startChar": 54,
+        "endLine": 50,
+        "endChar": 74
+      },
+      "revId": "319d7f542b7974eb86c7686e476ceaa6f7928e7a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb7ab292_5c78c0d5",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/filters/MoonAuthorizationFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-01-03T19:11:54Z",
+      "side": 1,
+      "message": "functions should start w/ a lower case letter.",
+      "range": {
+        "startLine": 56,
+        "startChar": 20,
+        "endLine": 56,
+        "endChar": 37
+      },
+      "revId": "319d7f542b7974eb86c7686e476ceaa6f7928e7a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c502f92_d172a65b",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/filters/MoonAuthorizationFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-01-03T19:11:54Z",
+      "side": 1,
+      "message": "Remove this",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 137
+      },
+      "revId": "319d7f542b7974eb86c7686e476ceaa6f7928e7a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47a6a376_ca903fd3",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/impl/shiro/filters/MoonAuthorizationFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-01-03T19:11:54Z",
+      "side": 1,
+      "message": "instead of saving a local variable, just return below.",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 23
+      },
+      "revId": "319d7f542b7974eb86c7686e476ceaa6f7928e7a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
