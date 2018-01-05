@@ -8,7 +8,7 @@
 
 package org.opendaylight.aaa.cli;
 
-import java.util.Objects;
+import javax.annotation.Nullable;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
@@ -65,8 +65,13 @@ public final class SessionsManager implements AutoCloseable {
         authUsers.put(new Element(userName, usr));
     }
 
-    public User getCurrentUser(String userName) {
-        Objects.requireNonNull(userName, "User name cannot be null");
+    /**
+     * Attempt to find the {@link User} associated with the given user name in the cache.
+     *
+     * @param userName The string to use for cache lookup
+     * @return The {@link User} associated with the given user name, if not cached return null.
+     */
+    public @Nullable User getCurrentUser(String userName) {
         Element elem = authUsers.get(userName);
         if (elem != null) {
             return (User) elem.getObjectValue();
