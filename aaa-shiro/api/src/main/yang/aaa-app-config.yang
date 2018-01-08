@@ -46,9 +46,6 @@ module aaa-app-config {
                 enum h2-data-store {
                     description "H2 DataStore.";
                 }
-                enum mdsal-data-store {
-                    description "Mdsal DataStore.";
-                }
             }
         }
         leaf time-to-live {
