@@ -87,10 +87,6 @@ public class AAAShiroProvider {
             iidmStore = new H2Store(new IdmLightSimpleConnectionProvider(config));
             tokenStore = new H2TokenStore(datastoreConfig.getTimeToLive().longValue(),
                     datastoreConfig.getTimeToWait().longValue());
-        } else if (datastoreConfig != null && datastoreConfig.getStore()
-                .equals(DatastoreConfig.Store.MdsalDataStore)) {
-            iidmStore = new MdsalStore(dataBroker);
-            tokenStore = new MdsalTokenStore(datastoreConfig.getTimeToLive().longValue());
         } else {
             iidmStore = null;
             tokenStore = null;
