@@ -35,11 +35,6 @@
       // 2) to allow bootstrap of the controller (first time start) since otherwise    //
       //    configuration becomes a chicken and the egg problem.                       //
       //                                                                               //
-      // If you have an existing shiro.ini file, one way you can convert it is by      //
-      // using the utilty script:                                                      //
-      // > python bin/upgrade/convert-shiro-ini-to-rest-payload <filename>             //
-      // This will make a best attempt effort to create an XML payload from the given  //
-      // shiro.ini file, and produce the results on stdout.                            //
       ///////////////////////////////////////////////////////////////////////////////////
     -->
 

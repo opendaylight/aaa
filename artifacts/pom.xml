@@ -136,13 +136,6 @@
                 <type>xml</type>
             </dependency>
             <dependency>
-                <groupId>org.opendaylight.aaa</groupId>
-                <artifactId>aaa-shiro</artifactId>
-                <version>${project.version}</version>
-                <type>py</type>
-                <classifier>convert-shiro-ini</classifier>
-            </dependency>
-            <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>features-aaa</artifactId>
                 <version>${project.version}</version>
