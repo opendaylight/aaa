@@ -120,10 +120,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-        </dependency>
+
         <!-- JSON JAXB Stuff -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -256,7 +253,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                         </Export-Package>
                         <Import-Package>
                             com.google.*,
-                            com.sun.jersey.*,
+                            com.sun.jersey.spi.container.servlet,
                             javax.servlet.http,
                             javax.servlet.*,
                             org.apache.oltu.oauth2.*,
