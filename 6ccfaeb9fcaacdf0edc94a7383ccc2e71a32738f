@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "823b9204_da818797",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-01-11T14:20:55Z",
+      "side": 1,
+      "message": "This change has messed up jetty initialization, I am reverting this for now.",
+      "range": {
+        "startLine": 259,
+        "startChar": 28,
+        "endLine": 259,
+        "endChar": 45
+      },
+      "revId": "6ccfaeb9fcaacdf0edc94a7383ccc2e71a32738f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
