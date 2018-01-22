@@ -21,6 +21,7 @@
             mvn:org.opendaylight.aaa/aaa-filterchain/${project.version}/cfg/config
         </configfile>
         <feature version="[3.0.0,4)">odl-karaf-feat-jdbc</feature>
-        <feature version="[3.0.0,4)">odl-karaf-feat-jetty</feature>
+        <feature>jetty</feature>
+        <feature>http</feature>
     </feature>
 </features>

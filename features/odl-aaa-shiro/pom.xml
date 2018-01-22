@@ -128,12 +128,6 @@
             <classifier>aaa-datastore-config</classifier>
         </dependency>
         <dependency>
-            <groupId>org.opendaylight.odlparent</groupId>
-            <artifactId>odl-karaf-feat-jetty</artifactId>
-            <type>xml</type>
-            <classifier>features</classifier>
-        </dependency>
-        <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-servlet</artifactId>
         </dependency>
