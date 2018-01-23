@@ -22,5 +22,6 @@
         </configfile>
         <feature version="[3.0.0,4)">odl-karaf-feat-jdbc</feature>
         <feature version="[3.0.0,4)">odl-karaf-feat-jetty</feature>
+        <feature version="[3.0.0,4)">odl-jersey-1</feature>
     </feature>
 </features>
