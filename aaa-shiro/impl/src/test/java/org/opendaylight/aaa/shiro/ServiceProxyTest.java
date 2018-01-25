@@ -6,13 +6,14 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.impl.shiro;
+package org.opendaylight.aaa.shiro;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import org.opendaylight.aaa.shiro.ServiceProxy;
 import org.opendaylight.aaa.shiro.filters.AAAFilter;
 
 public class ServiceProxyTest {

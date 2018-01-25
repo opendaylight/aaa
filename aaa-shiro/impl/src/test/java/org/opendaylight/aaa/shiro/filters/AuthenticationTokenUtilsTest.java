@@ -13,7 +13,6 @@ import static org.junit.Assert.*;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.junit.Test;
-import org.opendaylight.aaa.shiro.filters.AuthenticationTokenUtils;
 
 /**
  * Tests authentication token output utilities.

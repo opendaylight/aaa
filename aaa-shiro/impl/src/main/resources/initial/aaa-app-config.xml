@@ -61,7 +61,7 @@
     <!-- Start ldapRealm commented out
     <main>
         <pair-key>ldapRealm</pair-key>
-        <pair-value>org.opendaylight.aaa.shiro.realm.ODLJndiLdapRealmAuthNOnly</pair-value>
+        <pair-value>ODLJndiLdapRealmAuthNOnly</pair-value>
     </main>
     <main>
         <pair-key>ldapRealm.userDnTemplate</pair-key>
@@ -97,7 +97,7 @@
     <!-- Start adRealm commented out
     <main>
         <pair-key>adRealm</pair-key>
-        <pair-value>org.opendaylight.aaa.shiro.realm.ODLActiveDirectoryRealm</pair-value>
+        <pair-value>ODLActiveDirectoryRealm</pair-value>
     </main>
     <main>
         <pair-key>adRealm.searchBase</pair-key>
@@ -153,7 +153,7 @@
     </main>
     <main>
         <pair-key>jdbcRealm</pair-key>
-        <pair-value>org.opendaylight.aaa.shiro.realm.ODLJdbcRealm</pair-value>
+        <pair-value>ODLJdbcRealm</pair-value>
     </main>
     <main>
         <pair-key>jdbcRealm.dataSource</pair-key>
@@ -193,7 +193,7 @@
     <!-- Start mdsalRealm commented out
     <main>
         <pair-key>mdsalRealm</pair-key>
-        <pair-value>org.opendaylight.aaa.shiro.realm.MdsalRealm</pair-value>
+        <pair-value>MdsalRealm</pair-value>
     </main>
     End mdsalRealm commented out-->
 
@@ -208,7 +208,7 @@
     <!-- Start moonAuthRealm commented out
     <main>
         <pair-key>moonAuthRealm</pair-key>
-        <pair-value>org.opendaylight.aaa.shiro.realm.MoonRealm</pair-value>
+        <pair-value>MoonRealm</pair-value>
     </main>
     <main>
         <pair-key>moonAuthRealm.moonServerURL</pair-key>
@@ -228,7 +228,7 @@
     <!-- Start keystoneAuthRealm commented out
     <main>
         <pair-key>keystoneAuthRealm</pair-key>
-        <pair-value>org.opendaylight.aaa.shiro.realm.KeystoneAuthRealm</pair-value>
+        <pair-value>KeystoneAuthRealm</pair-value>
     </main>
     <main>
         <pair-key>keystoneAuthRealm.url</pair-key>
@@ -260,7 +260,7 @@
     <!-- Start moonAuthRealm commented out
     <main>
         <pair-key>rest</pair-key>
-        <pair-value>org.opendaylight.aaa.shiro.filters.MoonOAuthFilter</pair-value>
+        <pair-value>MoonOAuthFilter</pair-value>
     </main>
     End moonAuthRealm commented out-->
 
