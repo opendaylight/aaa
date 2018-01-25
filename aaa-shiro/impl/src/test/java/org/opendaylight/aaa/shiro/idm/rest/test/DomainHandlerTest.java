@@ -18,12 +18,14 @@ import com.sun.jersey.api.client.UniformInterfaceException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.ws.rs.core.MediaType;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Domains;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.Roles;
 
+@Ignore
 public class DomainHandlerTest extends HandlerTest {
 
     @Test
