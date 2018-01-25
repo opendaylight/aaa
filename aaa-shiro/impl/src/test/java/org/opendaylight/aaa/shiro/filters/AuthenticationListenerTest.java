@@ -19,7 +19,6 @@ import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.junit.Test;
 import org.opendaylight.aaa.shiro.TestAppender;
-import org.opendaylight.aaa.shiro.filters.AuthenticationListener;
 
 /**
  * Test AuthenticationListener, which is responsible for logging Accounting events.

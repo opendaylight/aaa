@@ -22,8 +22,6 @@ import java.sql.SQLException;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.opendaylight.aaa.api.model.Grants;
-import org.opendaylight.aaa.impl.datastore.h2.ConnectionProvider;
-import org.opendaylight.aaa.impl.datastore.h2.GrantStore;
 
 public class GrantStoreTest {
 

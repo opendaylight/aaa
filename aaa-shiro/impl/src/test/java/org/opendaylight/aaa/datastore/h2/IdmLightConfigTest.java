@@ -10,8 +10,6 @@ package org.opendaylight.aaa.datastore.h2;
 import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.Test;
-import org.opendaylight.aaa.impl.datastore.h2.IdmLightConfig;
-import org.opendaylight.aaa.impl.datastore.h2.IdmLightConfigBuilder;
 
 /**
  * Unit test for IdmLightConfig.

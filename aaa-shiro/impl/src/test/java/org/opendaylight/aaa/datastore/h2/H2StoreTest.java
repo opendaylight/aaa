@@ -22,14 +22,6 @@ import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.User;
-import org.opendaylight.aaa.impl.datastore.h2.DomainStore;
-import org.opendaylight.aaa.impl.datastore.h2.GrantStore;
-import org.opendaylight.aaa.impl.datastore.h2.H2Store;
-import org.opendaylight.aaa.impl.datastore.h2.IdmLightConfigBuilder;
-import org.opendaylight.aaa.impl.datastore.h2.IdmLightSimpleConnectionProvider;
-import org.opendaylight.aaa.impl.datastore.h2.RoleStore;
-import org.opendaylight.aaa.impl.datastore.h2.StoreException;
-import org.opendaylight.aaa.impl.datastore.h2.UserStore;
 
 public class H2StoreTest {
 
