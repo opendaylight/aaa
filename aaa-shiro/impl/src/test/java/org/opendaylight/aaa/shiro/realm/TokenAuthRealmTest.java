@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.opendaylight.aaa.shiro.realm.util.TokenUtils;
+import org.opendaylight.aaa.impl.shiro.realm.util.TokenUtils;
 import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
 import org.junit.Ignore;
 import org.junit.Test;

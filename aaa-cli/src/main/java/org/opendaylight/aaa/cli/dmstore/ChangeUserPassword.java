@@ -16,7 +16,7 @@ import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.cli.utils.CliUtils;
-import org.opendaylight.aaa.shiro.idm.IdmLightProxy;
+import org.opendaylight.aaa.impl.shiro.idm.IdmLightProxy;
 
 @Command(name = "change-user-pwd", scope = "aaa", description = "Change the user password.")
 

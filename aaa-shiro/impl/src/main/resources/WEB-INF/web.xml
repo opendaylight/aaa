@@ -8,14 +8,10 @@
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
-            <param-value>org.opendaylight.aaa.shiro.idm.IdmLightApplication</param-value>
+            <param-value>org.opendaylight.aaa.impl.shiro.idm.IdmLightApplication</param-value>
         </init-param>
         <init-param>
            <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name><param-value>true</param-value>
-        </init-param>
-        <init-param>
-            <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>org.opendaylight.aaa.impl.provider</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
