@@ -245,15 +245,15 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                     <instructions>
                         <Bundle-Name>${project.groupId}.${project.artifactId}</Bundle-Name>
                         <Export-Package>
-                            org.opendaylight.aaa.impl.shiro,
-                            org.opendaylight.aaa.impl.shiro.idm,
-                            org.opendaylight.aaa.impl.shiro.tokenauthrealm,
-                            org.opendaylight.aaa.impl.shiro.tokenauthrealm.auth,
+                            org.opendaylight.aaa.shiro,
+                            org.opendaylight.aaa.shiro.idm,
+                            org.opendaylight.aaa.shiro.tokenauthrealm,
+                            org.opendaylight.aaa.shiro.tokenauthrealm.auth,
                             org.opendaylight.aaa.shiro,
                             org.opendaylight.aaa.shiro.filters,
                             org.opendaylight.aaa.shiro.realm,
               org.opendaylight.aaa.shiro.web.env,
-              org.opendaylight.aaa.impl.datastore.h2.*,
+              org.opendaylight.aaa.datastore.h2.*,
                         </Export-Package>
                         <Import-Package>
                             com.google.*,
