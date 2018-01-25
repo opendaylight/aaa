@@ -15,7 +15,7 @@ import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.util.Factory;
 import org.apache.shiro.web.env.IniWebEnvironment;
-import org.opendaylight.aaa.shiro.AAAShiroProvider;
+import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.shiro.configuration.Main;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.shiro.configuration.Urls;

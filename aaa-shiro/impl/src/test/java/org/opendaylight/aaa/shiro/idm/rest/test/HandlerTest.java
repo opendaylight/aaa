@@ -15,7 +15,7 @@ import com.sun.jersey.test.framework.WebAppDescriptor;
 import org.junit.Before;
 import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.shiro.idm.IdmLightApplication;
-import org.opendaylight.aaa.shiro.AAAShiroProvider;
+import org.opendaylight.aaa.AAAShiroProvider;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 public abstract class HandlerTest extends JerseyTest {

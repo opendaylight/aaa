@@ -43,7 +43,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.opendaylight.aaa.provider.GsonProvider;
-import org.opendaylight.aaa.shiro.AAAShiroProvider;
+import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.shiro.keystone.domain.KeystoneAuth;

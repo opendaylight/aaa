@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class AAAShiroProvider {
 
-    private static final Logger LOG = LoggerFactory.getLogger(org.opendaylight.aaa.shiro.AAAShiroProvider.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
     /**
      * Method called when the blueprint container is created.

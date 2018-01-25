@@ -25,7 +25,7 @@ import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
-import org.opendaylight.aaa.shiro.AAAShiroProvider;
+import org.opendaylight.aaa.AAAShiroProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

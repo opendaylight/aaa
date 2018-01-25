@@ -14,7 +14,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.opendaylight.aaa.shiro.AAAShiroProvider;
+import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.PasswordCredentials;

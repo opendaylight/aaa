@@ -46,7 +46,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   </cm:property-placeholder>
 
   <bean id="provider"
-        class="org.opendaylight.aaa.shiro.AAAShiroProvider" factory-method="newInstance"
+        class="org.opendaylight.aaa.AAAShiroProvider" factory-method="newInstance"
         init-method="init" destroy-method="close">
     <argument ref="dataBroker" />
     <argument ref="certManager" />

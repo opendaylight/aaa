@@ -20,7 +20,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import org.opendaylight.aaa.shiro.AAAShiroProvider;
+import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.Role;

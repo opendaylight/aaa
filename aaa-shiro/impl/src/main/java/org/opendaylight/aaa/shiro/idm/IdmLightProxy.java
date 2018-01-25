@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.opendaylight.aaa.shiro.AAAShiroProvider;
+import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.CredentialAuth;
