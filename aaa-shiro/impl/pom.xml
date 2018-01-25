@@ -127,62 +127,33 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 
         <!-- JSON JAXB Stuff -->
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-json-org</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.jaxrs</groupId>
-            <artifactId>jackson-jaxrs-base</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.jaxrs</groupId>
-            <artifactId>jackson-jaxrs-json-provider</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-jaxb-annotations</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlets</artifactId>
             <scope>provided</scope>
         </dependency>
 
-    <!-- Testing Dependencies -->
         <dependency>
-      <groupId>net.sf.ehcache</groupId>
-      <artifactId>ehcache</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.immutables</groupId>
-      <artifactId>value</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-    </dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.immutables</groupId>
+            <artifactId>value</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
 
-    <!-- Testing Dependencies -->
+        <!-- Testing Dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -229,10 +200,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <version>7.0.0.pre5</version>
             <scope>test</scope>
         </dependency>
-    <dependency>
-      <groupId>com.google.truth</groupId>
-      <artifactId>truth</artifactId>
-    </dependency>
+        <dependency>
+            <groupId>com.google.truth</groupId>
+            <artifactId>truth</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -252,9 +223,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                             org.opendaylight.aaa.shiro,
                             org.opendaylight.aaa.shiro.filters,
                             org.opendaylight.aaa.shiro.realm,
+                            <!-- TODO: This is temporary until we can find a better spot for GsonProvider. -->
+                            org.opendaylight.aaa.provider,
                             org.opendaylight.aaa.shiro.web.env,
                             org.opendaylight.aaa.datastore.h2.*,
-                            org.opendaylight.aaa.provider
                         </Export-Package>
                         <Import-Package>
                             com.google.*,
@@ -262,6 +234,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                             javax.servlet.http,
                             javax.servlet.*,
                             org.apache.oltu.oauth2.*,
+                            javax.ws.rs.ext,
                             javax.ws.rs,javax.ws.rs.core,
                             javax.xml.bind.annotation,
                             org.opendaylight.aaa.*,
@@ -300,7 +273,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                             !javax.annotation,
                             !javax.naming
                         </Import-Package>
-            <Embed-Dependency>h2;scope=compile|runtime;inline=true</Embed-Dependency>
+                        <Embed-Dependency>h2;scope=compile|runtime;inline=true</Embed-Dependency>
                         <Web-ContextPath>/auth</Web-ContextPath>
                     </instructions>
                 </configuration>
