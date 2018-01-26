@@ -10,7 +10,6 @@ package org.opendaylight.aaa.cli.dmstore;
 
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
-import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
@@ -36,8 +35,8 @@ public class AddRole extends AaaCliAbstractCommand {
             "--roleDescription" }, description = "The role Description", required = true, multiValued = false)
     private String roleDesc = "";
 
-    public AddRole(final IIDMStore identityStore) {
-        super(identityStore);
+    public AddRole() {
+        super();
     }
 
     @Override

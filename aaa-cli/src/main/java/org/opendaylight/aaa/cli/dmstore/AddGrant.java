@@ -10,7 +10,6 @@ package org.opendaylight.aaa.cli.dmstore;
 
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
-import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
@@ -36,8 +35,8 @@ public class AddGrant extends AaaCliAbstractCommand {
             "--roleName" }, description = "The role name", required = false, multiValued = false)
     private String roleName = "";
 
-    public AddGrant(final IIDMStore identityStore) {
-        super(identityStore);
+    public AddGrant() {
+        super();
     }
 
     @Override

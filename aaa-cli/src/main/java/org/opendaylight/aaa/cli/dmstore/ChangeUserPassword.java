@@ -16,6 +16,7 @@ import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.cli.utils.CliUtils;
+import org.opendaylight.aaa.impl.AAAShiroProvider;
 import org.opendaylight.aaa.impl.shiro.idm.IdmLightProxy;
 
 @Command(name = "change-user-pwd", scope = "aaa", description = "Change the user password.")
@@ -34,8 +35,8 @@ public class ChangeUserPassword extends OsgiCommandSupport {
             "--userName" }, description = "The user name", required = true, multiValued = false)
     private String userName = "";
 
-    public ChangeUserPassword(final IIDMStore identityStore) {
-        this.identityStore = identityStore;
+    public ChangeUserPassword() {
+        this.identityStore = AAAShiroProvider.getIdmStore();
     }
 
     @Override

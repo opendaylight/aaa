@@ -10,7 +10,6 @@ package org.opendaylight.aaa.cli.dmstore;
 
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
-import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
@@ -28,8 +27,8 @@ public class RemoveDomain extends AaaCliAbstractCommand {
             "--domainName" }, description = "The domain name", required = true, multiValued = false)
     private String domainName = "";
 
-    public RemoveDomain(final IIDMStore identityStore) {
-        super(identityStore);
+    public RemoveDomain() {
+        super();
     }
 
     @Override

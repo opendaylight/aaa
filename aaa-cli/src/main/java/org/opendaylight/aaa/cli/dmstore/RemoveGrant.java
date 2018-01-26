@@ -10,7 +10,6 @@ package org.opendaylight.aaa.cli.dmstore;
 
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
-import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
@@ -36,8 +35,8 @@ public class RemoveGrant extends AaaCliAbstractCommand {
             "--roleName" }, description = "The role name", required = false, multiValued = false)
     private String roleName = "";
 
-    public RemoveGrant(final IIDMStore identityStore) {
-        super(identityStore);
+    public RemoveGrant() {
+        super();
     }
 
     @Override
