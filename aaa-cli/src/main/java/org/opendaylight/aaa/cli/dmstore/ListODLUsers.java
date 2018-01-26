@@ -9,7 +9,6 @@
 package org.opendaylight.aaa.cli.dmstore;
 
 import org.apache.karaf.shell.commands.Command;
-import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 
@@ -23,8 +22,8 @@ import org.opendaylight.aaa.cli.utils.CliUtils;
  */
 public class ListODLUsers extends AaaCliAbstractCommand {
 
-    public ListODLUsers(final IIDMStore identityStore) {
-        super(identityStore);
+    public ListODLUsers() {
+        super();
     }
 
     @Override

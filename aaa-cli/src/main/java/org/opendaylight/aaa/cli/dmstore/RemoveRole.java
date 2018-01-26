@@ -10,7 +10,6 @@ package org.opendaylight.aaa.cli.dmstore;
 
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
-import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
@@ -26,10 +25,10 @@ public class RemoveRole extends AaaCliAbstractCommand {
 
     @Option(name = "-name", aliases = {
             "--roleName" }, description = "The role name", required = true, multiValued = false)
-    private final String roleName = "";
+    private String roleName = "";
 
-    public RemoveRole(final IIDMStore identityStore) {
-        super(identityStore);
+    public RemoveRole() {
+        super();
     }
 
     @Override

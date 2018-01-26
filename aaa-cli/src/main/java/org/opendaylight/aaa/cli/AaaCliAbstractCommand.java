@@ -8,6 +8,7 @@
 package org.opendaylight.aaa.cli;
 
 import org.apache.karaf.shell.console.OsgiCommandSupport;
+import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.cli.utils.CliUtils;
@@ -24,8 +25,8 @@ public abstract class AaaCliAbstractCommand extends OsgiCommandSupport {
     private static volatile String authUser = null;
     protected final IIDMStore identityStore;
 
-    public AaaCliAbstractCommand(final IIDMStore identityStore) {
-        this.identityStore = identityStore;
+    public AaaCliAbstractCommand() {
+        this.identityStore = AAAShiroProvider.getIdmStore();
     }
 
     @Override

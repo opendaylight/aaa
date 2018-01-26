@@ -15,7 +15,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.SessionsManager;
@@ -34,8 +33,8 @@ public class AaaCliAbstractCommandTest {
 
     class TestAaaCliAbstractCommand extends AaaCliAbstractCommand {
 
-        TestAaaCliAbstractCommand(IIDMStore identityStore) {
-            super(identityStore);
+        TestAaaCliAbstractCommand() {
+            super();
         }
 
         @Override

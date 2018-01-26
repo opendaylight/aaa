@@ -10,7 +10,6 @@ package org.opendaylight.aaa.cli.dmstore;
 
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
-import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
@@ -30,38 +29,38 @@ public class AddUser extends AaaCliAbstractCommand {
             description = "The user name",
             required = true,
             multiValued = false)
-    private final String userName = "";
+    private String userName = "";
 
     @Option(name = "-dname",
             aliases = { "--domainName" },
             description = "The domain name",
             required = true,
             multiValued = false)
-    private final String domainName = "";
+    private String domainName = "";
 
     @Option(name = "-rname",
             aliases = { "--roleName" },
             description = "The role name",
             required = false,
             multiValued = false)
-    private final String roleName = "";
+    private String roleName = "";
 
     @Option(name = "-desc",
             aliases = { "--userDescription" },
             description = "The user Description",
             required = false,
             multiValued = false)
-    private final String userDesc = "";
+    private String userDesc = "";
 
     @Option(name = "-email",
             aliases = { "--userEmail" },
             description = "The user email",
             required = false,
             multiValued = false)
-    private final String userEmail = "";
+    private String userEmail = "";
 
-    public AddUser(final IIDMStore identityStore) {
-        super(identityStore);
+    public AddUser() {
+        super();
     }
 
     @Override

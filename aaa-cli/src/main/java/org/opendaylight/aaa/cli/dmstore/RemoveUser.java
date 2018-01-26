@@ -10,7 +10,6 @@ package org.opendaylight.aaa.cli.dmstore;
 
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
-import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
@@ -28,8 +27,8 @@ public class RemoveUser extends AaaCliAbstractCommand {
             "--userName" }, description = "The user name", required = true, multiValued = false)
     private String userName = "";
 
-    public RemoveUser(final IIDMStore identityStore) {
-        super(identityStore);
+    public RemoveUser() {
+        super();
     }
 
     @Override
