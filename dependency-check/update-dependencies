@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# Copyright © 2017, 2018 Red Hat, Inc. and others.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Eclipse Public License v1.0 which accompanies this distribution,
+# and is available at http://www.eclipse.org/legal/epl-v10.html
+
+xmlstarlet sel -N "maven=http://maven.apache.org/POM/4.0.0" -t \
+-m "maven:project/maven:dependencyManagement/maven:dependencies/maven:dependency" \
+-v maven:groupId -o " " -v maven:artifactId -o " classifier=" -v maven:classifier -o " type=" -v maven:type -n \
+../artifacts/pom.xml |
+sort |
+awk '
+BEGIN { predeps = 1 }
+FNR == NR && predeps && /<dependencies>/ {
+  print
+  predeps = 0
+}
+FNR == NR && !predeps && /<\/dependencies>/ {
+  postdeps=1
+}
+FNR == NR && predeps
+FNR == NR && postdeps {
+  footer=footer "\n" $0
+}
+FNR < NR && !/org.opendaylight/ {
+  printf "        <dependency>\n"
+  printf "            <groupId>%s</groupId>\n", $1
+  printf "            <artifactId>%s</artifactId>\n", $2
+  for (i = 3; i <= NF; i++) {
+    equalidx = index($i, "=")
+    if (equalidx != length($i)) {
+      element = substr($i, 1, equalidx - 1)
+      value = substr($i, equalidx + 1)
+      printf "            <%s>%s</%s>\n", element, value, element
+    }
+  }
+  printf "        </dependency>\n"
+}
+END { print footer }
+' pom.xml - > pom.xml.new
+mv pom.xml.new pom.xml
