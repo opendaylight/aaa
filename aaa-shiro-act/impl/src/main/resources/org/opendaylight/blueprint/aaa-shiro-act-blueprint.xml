@@ -11,7 +11,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0"
   odl:use-default-for-reference-types="true">
 
-  <bean id="provider" class="org.opendaylight.aaa.AAAShiroProvider"
+  <bean id="provider" class="org.opendaylight.aaa.impl.AAAShiroProvider"
     init-method="init" destroy-method="close" />
 
 </blueprint>

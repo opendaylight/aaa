@@ -21,6 +21,8 @@ import java.sql.Statement;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.opendaylight.aaa.api.model.Roles;
+import org.opendaylight.aaa.impl.datastore.h2.ConnectionProvider;
+import org.opendaylight.aaa.impl.datastore.h2.RoleStore;
 
 public class RoleStoreTest {
 
