@@ -28,18 +28,27 @@ public class H2TokenStore implements AutoCloseable, TokenStore {
     private final Cache tokens;
 
     public H2TokenStore(long secondsToLive, long secondsToIdle) {
-        CacheManager cm = CacheManager.newInstance();
-        tokens = new Cache(new CacheConfiguration(TOKEN_CACHE, maxCachedTokensInMemory)
-                                    .maxEntriesLocalDisk(maxCachedTokensOnDisk)
-                                    .timeToLiveSeconds(secondsToLive)
-                                    .timeToIdleSeconds(secondsToIdle));
-        cm.addCache(tokens);
-        cm.setName(TOKEN_CACHE_MANAGER);
+        // When we restart, the cache manager and token cache are already there
+        CacheManager cm = CacheManager.getCacheManager(TOKEN_CACHE_MANAGER);
+        if (cm == null) {
+            cm = CacheManager.newInstance();
+            cm.setName(TOKEN_CACHE_MANAGER);
+        }
+        Cache existingCache = cm.getCache(TOKEN_CACHE);
+        if (existingCache != null) {
+            tokens = existingCache;
+        } else {
+            tokens = new Cache(new CacheConfiguration(TOKEN_CACHE, maxCachedTokensInMemory)
+                    .maxEntriesLocalDisk(maxCachedTokensOnDisk)
+                    .timeToLiveSeconds(secondsToLive)
+                    .timeToIdleSeconds(secondsToIdle));
+            cm.addCache(tokens);
+        }
         LOG.info("Initialized token store with default cache config");
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         LOG.info("Shutting down token store...");
         CacheManager.getInstance().shutdown();
     }

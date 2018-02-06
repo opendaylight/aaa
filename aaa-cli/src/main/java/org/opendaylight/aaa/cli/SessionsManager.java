@@ -39,12 +39,21 @@ public final class SessionsManager implements AutoCloseable {
     private static final String CLI_CACHE = "users";
 
     private SessionsManager() {
-        CacheManager cm = CacheManager.newInstance();
-        authUsers = new Cache(new CacheConfiguration(CLI_CACHE, MAX_CACHED_USERS_IN_MEMORY)
-                .maxEntriesLocalDisk(MAX_CACHED_USERS_ON_DISK).timeToLiveSeconds(SECONDS_TO_LIVE)
-                .timeToIdleSeconds(SECONDS_TO_IDLE));
-        cm.addCache(authUsers);
-        cm.setName(CLI_CACHE_MANAGER);
+        // When we restart, the cache manager and CLI cache are already there
+        CacheManager cm = CacheManager.getCacheManager(CLI_CACHE_MANAGER);
+        if (cm == null) {
+            cm = CacheManager.newInstance();
+            cm.setName(CLI_CACHE_MANAGER);
+        }
+        Cache existingCache = cm.getCache(CLI_CACHE);
+        if (existingCache != null) {
+            authUsers = existingCache;
+        } else {
+            authUsers = new Cache(new CacheConfiguration(CLI_CACHE, MAX_CACHED_USERS_IN_MEMORY)
+                    .maxEntriesLocalDisk(MAX_CACHED_USERS_ON_DISK).timeToLiveSeconds(SECONDS_TO_LIVE)
+                    .timeToIdleSeconds(SECONDS_TO_IDLE));
+            cm.addCache(authUsers);
+        }
         LOG.info("Initialized cli authorized users cache manager");
     }
 
@@ -56,7 +65,7 @@ public final class SessionsManager implements AutoCloseable {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         LOG.info("Shutting down cli authorized users cache manager");
         CacheManager.getInstance().shutdown();
     }
