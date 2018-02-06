@@ -16,6 +16,24 @@
       "revId": "d5821abc28e14eab1f8d681dda2477c4fa96c9af",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13952612_b23dc6a4",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/SessionsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4540
+      },
+      "writtenOn": "2018-02-06T17:54:23Z",
+      "side": 1,
+      "message": "Right, that’s a problem too; the cache issue is one I actually saw blowing up when running the distribution. I haven’t see the shared session manager cause problems, so perhaps we can leave that for another patch...",
+      "parentUuid": "41f050d5_59c9df1c",
+      "revId": "d5821abc28e14eab1f8d681dda2477c4fa96c9af",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
