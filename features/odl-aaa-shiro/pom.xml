@@ -46,6 +46,7 @@
     </dependencyManagement>
 
     <dependencies>
+
         <!-- OSGI -->
         <dependency>
             <groupId>org.apache.felix</groupId>
@@ -88,6 +89,10 @@
             <version>${project.version}</version>
             <type>xml</type>
             <classifier>features</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
@@ -182,14 +187,6 @@
         </dependency>
 
         <dependency>
-            <!-- finalname="bin/idmtool" -->
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-shiro</artifactId>
-            <version>${project.version}</version>
-            <type>py</type>
-            <classifier>idmtool</classifier>
-        </dependency>
-        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
         </dependency>
@@ -216,6 +213,15 @@
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-jaxb-annotations</artifactId>
+        </dependency>
+
+        <dependency>
+            <!-- finalname="bin/idmtool" -->
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-shiro</artifactId>
+            <version>${project.version}</version>
+            <type>py</type>
+            <classifier>idmtool</classifier>
         </dependency>
         <dependency>
             <groupId>javax.ws.rs</groupId>

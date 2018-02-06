@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ws.rs.core.Application;
+import org.opendaylight.aaa.provider.GsonProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,6 +49,7 @@ public class IdmLightApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-        return new HashSet<>(Arrays.asList(DomainHandler.class, RoleHandler.class, UserHandler.class));
+        return new HashSet<>(Arrays.asList(GsonProvider.class,
+                DomainHandler.class, RoleHandler.class, UserHandler.class));
     }
 }

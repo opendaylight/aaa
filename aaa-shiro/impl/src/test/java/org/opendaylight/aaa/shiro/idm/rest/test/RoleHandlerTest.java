@@ -19,11 +19,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.MediaType;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
 
+@Ignore
 public class RoleHandlerTest extends HandlerTest {
 
     @Test
