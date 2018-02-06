@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41f050d5_59c9df1c",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/SessionsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-02-06T16:07:13Z",
+      "side": 1,
+      "message": "isn\u0027t tihs main problem here really that this SessionsManager is in a static field?  That\u0027s going to be trouble if OSGi starts and stops this bundle (is that\u0027s what it does?) without unloading the class, throwing away the classloader, and starting afresh.",
+      "revId": "d5821abc28e14eab1f8d681dda2477c4fa96c9af",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
