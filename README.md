@@ -163,6 +163,6 @@ karaf> log:set TRACE org.opendaylight.aaa
 #### Enable Successful/Unsuccessful Authentication Attempts Logging
 By default, successful/unsuccessful authentication attempts are NOT logged.  This is due to the fact that logging can severely decrease REST performance.  To enable logging of successful/unsuccessful REST attempts, issue the following command:
 
-karaf> log:set DEBUG AuthenticationListener
+karaf> log:set DEBUG org.opendaylight.aaa.shiro.filters.AuthenticationListener
 
 It is possible to add custom AuthenticationListener(s) to the Shiro based configuration, allowing different ways to listen for successful/unsuccessful authentication attempts.  Custom AuthenticationListener(s) must implement the org.apache.shiro.authc.AuthenticationListener interface.
