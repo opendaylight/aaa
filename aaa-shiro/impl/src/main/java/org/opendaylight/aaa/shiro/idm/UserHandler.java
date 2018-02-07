@@ -331,12 +331,12 @@ public class UserHandler {
      * @param verbal
      *            such as "creating", "deleting", "updating"
      * @param ex
-     *            The exception, which is propagated in the response
+     *            The exception, which is logged locally
      * @return A response containing internal error with specific reasoning
      */
     private Response internalError(final String verbal, final Exception ex) {
         LOG.error("There was an internal error {} the user", verbal, ex);
-        return new IDMError(500, String.format("There was an internal error %s the user", verbal), ex.getMessage())
+        return new IDMError(500, String.format("There was an internal error %s the user", verbal))
                 .response();
     }
 

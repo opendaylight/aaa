@@ -37,6 +37,10 @@ public class IDMError {
         details = msgDetails;
     }
 
+    public IDMError(int statusCode, String msg) {
+        this(statusCode, msg, "");
+    }
+
     public String getMessage() {
         return message;
     }
