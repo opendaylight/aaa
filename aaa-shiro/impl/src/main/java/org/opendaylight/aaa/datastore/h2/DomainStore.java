@@ -132,12 +132,13 @@ public class DomainStore extends AbstractStore<Domain> {
             savedDomain.setEnabled(domain.isEnabled());
         }
 
-        String query = "UPDATE DOMAINS SET description = ?, enabled = ? WHERE domainid = ?";
+        String query = "UPDATE domains SET description = ?, enabled = ?, name = ? WHERE domainid = ?";
         try (Connection conn = dbConnect();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, savedDomain.getDescription());
             statement.setInt(2, savedDomain.isEnabled() ? 1 : 0);
-            statement.setString(3, savedDomain.getDomainid());
+            statement.setString(3, savedDomain.getName());
+            statement.setString(4, savedDomain.getDomainid());
             statement.executeUpdate();
         } catch (SQLException e) {
             LOG.error("Error updating domain {}", domain.getDomainid(), e);
