@@ -153,6 +153,13 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <artifactId>commons-lang3</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.jolokia</groupId>
+            <artifactId>jolokia-osgi</artifactId>
+            <!-- TODO: remove once this version is propagated to odlparent -->
+            <version>1.5.0</version>
+        </dependency>
+
         <!-- Testing Dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -254,6 +261,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                             org.apache.shiro.*,
                             org.slf4j.*,
                             net.sf.ehcache.*,
+                            org.jolokia.osgi.security,
                             !javax.naming,
                             !javax.naming.spi,
                             !javax.servlet,
