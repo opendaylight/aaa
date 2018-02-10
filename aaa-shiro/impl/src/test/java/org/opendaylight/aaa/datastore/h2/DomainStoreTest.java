@@ -8,6 +8,8 @@
 
 package org.opendaylight.aaa.datastore.h2;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -18,8 +20,10 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Domains;
 
 public class DomainStoreTest {
@@ -53,6 +57,22 @@ public class DomainStoreTest {
         // Verify
         assertTrue(domains.getDomains().size() == 1);
         verify(stmtMock).close();
+    }
+
+    @Test
+    public void deleteDomainsTest() throws SQLException, Exception {
+        DomainStore ds = new DomainStore(new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().build()));
+        String domainId = "Testing12345";
+
+        // Run Test
+        Domain testDomain = new Domain();
+        testDomain.setDomainid(domainId);
+        testDomain.setName(domainId);
+        testDomain.setEnabled(Boolean.TRUE);
+        ds.createDomain(testDomain);
+        assertEquals(ds.getDomain(domainId).getDomainid(), domainId);
+        ds.deleteDomain(domainId);
+        assertNull(ds.getDomain(domainId));
     }
 
     public ResultSet getMockedResultSet() throws SQLException {

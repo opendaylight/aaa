@@ -43,7 +43,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         </dependencies>
     </dependencyManagement>
 
+
+
     <dependencies>
+
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>aaa-shiro-api</artifactId>
@@ -150,9 +153,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
+            <artifactId>commons-text</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.jolokia</groupId>
             <artifactId>jolokia-osgi</artifactId>
@@ -249,6 +251,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                             org.opendaylight.aaa.api.*,
                             org.opendaylight.aaa.filterchain.filters,
                             org.xml.sax,
+                            org.apache.commons.text,
                             org.apache.felix.dm,
                             org.apache.shiro.web.env,org.apache.shiro.authc,
                             org.eclipse.jetty.servlets;version="[8.1,10)",

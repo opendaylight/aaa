@@ -49,7 +49,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
+      <artifactId>commons-text</artifactId>
     </dependency>
     <!-- Note that com.h2database:h2 is already shaded into aaa-h2-store -->
 
