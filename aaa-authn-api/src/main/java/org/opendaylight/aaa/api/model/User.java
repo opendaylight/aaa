@@ -18,10 +18,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "user")
 public class User {
+    private static final int USER_ACCOUNT_ENABLED = 1;
+    private static final int USER_ACCOUNT_DISABLED = 0;
+    private static final int USER_ACCOUNT_DEFAULT_ENABLED = USER_ACCOUNT_ENABLED;
+
     private String userid;
     private String name;
     private String description;
-    private Boolean enabled;
+    private int enabled = USER_ACCOUNT_DEFAULT_ENABLED;
     private String email;
     private String password;
     private String salt;
@@ -52,10 +56,18 @@ public class User {
     }
 
     public Boolean isEnabled() {
-        return enabled;
+        return (enabled == USER_ACCOUNT_ENABLED);
     }
 
-    public void setEnabled(Boolean enabled) {
+    public void setEnabled(final boolean enabled) {
+        if (enabled) {
+            setEnabled(USER_ACCOUNT_ENABLED);
+        } else {
+            setEnabled(USER_ACCOUNT_DISABLED);
+        }
+    }
+
+    public void setEnabled(final int enabled) {
         this.enabled = enabled;
     }
 
@@ -102,9 +114,12 @@ public class User {
         if (other == null) {
             return false;
         }
-        if (compareValues(getName(), other.getName()) && compareValues(getEmail(), other.getEmail())
-                && compareValues(isEnabled(), other.isEnabled()) && compareValues(getPassword(), other.getPassword())
-                && compareValues(getSalt(), other.getSalt()) && compareValues(getUserid(), other.getUserid())
+        if (compareValues(getName(), other.getName())
+                && compareValues(getEmail(), other.getEmail())
+                && isEnabled().equals(other.isEnabled())
+                && compareValues(getPassword(), other.getPassword())
+                && compareValues(getSalt(), other.getSalt())
+                && compareValues(getUserid(), other.getUserid())
                 && compareValues(getDescription(), other.getDescription())) {
             return true;
         }

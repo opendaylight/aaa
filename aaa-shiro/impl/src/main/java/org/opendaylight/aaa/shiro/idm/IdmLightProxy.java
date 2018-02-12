@@ -122,6 +122,9 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
                     user.getPassword())) {
                 throw new AuthenticationException("UserName / Password not found");
             }
+            if (!user.isEnabled()) {
+                throw new AuthenticationException("Account is disabled");
+            }
 
             // get all grants & roles for this domain and user
             LOG.debug("get grants");
