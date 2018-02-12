@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3afa9182_cc1fa408",
+        "filename": "aaa-idmlight/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-02-12T17:02:45Z",
+      "side": 1,
+      "message": "line up the comments",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "acd9c2abd4b2e338ae03578c249f1ec70cacc0d1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
