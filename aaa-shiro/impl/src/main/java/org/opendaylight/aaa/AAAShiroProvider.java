@@ -10,6 +10,7 @@ package org.opendaylight.aaa;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import javax.servlet.ServletException;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.CredentialAuth;
@@ -46,6 +47,7 @@ public class AAAShiroProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
+    private static final CompletableFuture<AAAShiroProvider> INSTANCE_FUTURE = new CompletableFuture();
     private static volatile AAAShiroProvider INSTANCE;
     private static IIDMStore iidmStore;
 
@@ -165,6 +167,7 @@ public class AAAShiroProvider {
                                                final String dbPassword) {
         INSTANCE = new AAAShiroProvider(dataBroker, certificateManager, credentialAuth, shiroConfiguration,
                 httpService, moonEndpointPath, oauth2EndpointPath, datastoreConfig, dbUsername, dbPassword);
+        INSTANCE_FUTURE.complete(INSTANCE);
         return INSTANCE;
     }
 
@@ -175,6 +178,10 @@ public class AAAShiroProvider {
      */
     public static AAAShiroProvider getInstance() {
         return INSTANCE;
+    }
+
+    public static CompletableFuture<AAAShiroProvider> getInstanceFuture() {
+        return INSTANCE_FUTURE;
     }
 
     /**

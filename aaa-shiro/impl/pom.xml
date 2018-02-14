@@ -262,6 +262,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                             org.slf4j.*,
                             net.sf.ehcache.*,
                             org.jolokia.osgi.security,
+                            org.osgi.service.blueprint.container,
                             !javax.naming,
                             !javax.naming.spi,
                             !javax.servlet,
@@ -284,6 +285,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                         </Import-Package>
                         <Embed-Dependency>h2;scope=compile|runtime;inline=true</Embed-Dependency>
                         <Web-ContextPath>/auth</Web-ContextPath>
+                        <Bundle-Activator>org.opendaylight.aaa.AAAShiroActivator</Bundle-Activator>
                     </instructions>
                 </configuration>
             </plugin>

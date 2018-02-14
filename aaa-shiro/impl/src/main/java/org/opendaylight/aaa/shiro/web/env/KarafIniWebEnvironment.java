@@ -9,6 +9,7 @@
 package org.opendaylight.aaa.shiro.web.env;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.IniSecurityManagerFactory;
@@ -64,17 +65,15 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
 
     @Override
     public void init() {
-        while (AAAShiroProvider.getInstance() == null) {
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                throw new RuntimeException("Interrupted waiting for b", e);
-            }
-        }
+        try {
+            AAAShiroProvider provider = AAAShiroProvider.getInstanceFuture().get();
 
-        // Initialize the Shiro environment from clustered-app-config
-        final Ini ini = createIniFromClusteredAppConfig(AAAShiroProvider.getInstance().getShiroConfiguration());
-        setIni(ini);
-        super.init();
+            // Initialize the Shiro environment from clustered-app-config
+            final Ini ini = createIniFromClusteredAppConfig(provider.getShiroConfiguration());
+            setIni(ini);
+            super.init();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException("Error obtaining AAAShiroProvider", e);
+        }
     }
 }
