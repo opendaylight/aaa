@@ -104,6 +104,24 @@
       "revId": "6d534af2fa1703c7ea479c075c7193dacd119eaf",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef5998ce_762c44c7",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/KarafIniWebEnvironment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-02-15T15:10:54Z",
+      "side": 1,
+      "message": "I don\u0027t think we should put a deadline on this since it would be arbitrary and we don\u0027t know how long it could take.  CDS itself can can block up to 3 min on startup. So I think it\u0027s safest to leave this infinite and let the other code I put in kill it when necessary.",
+      "parentUuid": "5fd8790c_70dea853",
+      "revId": "6d534af2fa1703c7ea479c075c7193dacd119eaf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
