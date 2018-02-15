@@ -86,6 +86,24 @@
       "revId": "6d534af2fa1703c7ea479c075c7193dacd119eaf",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fd8790c_70dea853",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/KarafIniWebEnvironment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-02-15T15:03:14Z",
+      "side": 1,
+      "message": "How about a follow-up patch with this for Fluroine, but not Oxygen anymore? I\u0027ll propose one...",
+      "parentUuid": "3365c187_b2c1ff7e",
+      "revId": "6d534af2fa1703c7ea479c075c7193dacd119eaf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
