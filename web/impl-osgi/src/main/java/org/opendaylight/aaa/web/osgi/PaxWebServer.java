@@ -52,7 +52,11 @@ public class PaxWebServer implements WebServer {
     @Override
     public String getBaseURL() {
         WebContainerDTO details = paxWeb.getWebcontainerDTO();
-        return "http://" + details.listeningAddresses[0] + ":" + details.port;
+        if (details.securePort != null && details.securePort > 0) {
+            return "https://" + details.listeningAddresses[0] + ":" + details.securePort;
+        } else {
+            return "http://" + details.listeningAddresses[0] + ":" + details.port;
+        }
     }
 
     @Override
