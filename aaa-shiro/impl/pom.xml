@@ -43,10 +43,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         </dependencies>
     </dependencyManagement>
 
-
-
     <dependencies>
-
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>aaa-shiro-api</artifactId>
@@ -161,6 +158,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <!-- TODO: remove once this version is propagated to odlparent -->
             <version>1.5.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa.web</groupId>
+            <artifactId>web-osgi-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <!-- Testing Dependencies -->
         <dependency>
@@ -249,7 +251,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                             javax.xml.bind.annotation,
                             org.opendaylight.aaa.*,
                             org.opendaylight.aaa.api.*,
-                            org.opendaylight.aaa.filterchain.filters,
                             org.xml.sax,
                             org.apache.commons.text,
                             org.apache.felix.dm,
@@ -268,7 +269,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                             org.osgi.service.blueprint.container,
                             org.h2.*,
                         </Import-Package>
-                        <Web-ContextPath>/auth</Web-ContextPath>
                         <Bundle-Activator>org.opendaylight.aaa.AAAShiroActivator</Bundle-Activator>
                     </instructions>
                 </configuration>
