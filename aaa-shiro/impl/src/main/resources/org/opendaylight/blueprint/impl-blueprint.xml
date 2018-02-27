@@ -65,4 +65,9 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 
   <bean id="authenticator" class="org.opendaylight.aaa.authenticator.ODLAuthenticator" />
   <service ref="authenticator" interface="org.jolokia.osgi.security.Authenticator" />
+
+  <reference id="webContainer" interface="org.ops4j.pax.web.service.WebContainer" />
+  <bean id="osgiWebInitializer" class="org.opendaylight.aaa.shiro.web.env.OsgiWebInitializer" destroy-method="close">
+    <argument ref="webContainer"/>
+  </bean>
 </blueprint>
