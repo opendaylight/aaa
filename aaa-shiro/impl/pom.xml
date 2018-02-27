@@ -43,10 +43,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         </dependencies>
     </dependencyManagement>
 
-
-
     <dependencies>
-
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>aaa-shiro-api</artifactId>
@@ -160,6 +157,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <artifactId>jolokia-osgi</artifactId>
             <!-- TODO: remove once this version is propagated to odlparent -->
             <version>1.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa.web</groupId>
+            <artifactId>web-api</artifactId>
+            <version>0.8.0-SNAPSHOT</version>
         </dependency>
 
         <!-- Testing Dependencies -->
@@ -287,7 +289,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                             !javax.naming
                         </Import-Package>
                         <Embed-Dependency>h2;scope=compile|runtime;inline=true</Embed-Dependency>
-                        <Web-ContextPath>/auth</Web-ContextPath>
                         <Bundle-Activator>org.opendaylight.aaa.AAAShiroActivator</Bundle-Activator>
                     </instructions>
                 </configuration>
