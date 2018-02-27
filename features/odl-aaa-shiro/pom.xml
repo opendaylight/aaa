@@ -63,7 +63,13 @@
             <!-- TODO: remove once upgraded jolokia version is propagated to odlparent -->
             <version>1.5.0</version>
         </dependency>
+
         <!-- Existing AAA infrastructure -->
+        <dependency>
+            <groupId>org.opendaylight.aaa.web</groupId>
+            <artifactId>web-osgi-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-shiro</artifactId>
