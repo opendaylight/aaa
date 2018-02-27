@@ -1,0 +1,118 @@
+/*
+ * Copyright (c) 2018 Red Hat, Inc. and others. All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ */
+package org.opendaylight.infrautils.web;
+
+import java.util.List;
+import java.util.Map;
+import javax.servlet.ServletContainerInitializer;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextListener;
+import javax.servlet.ServletRegistration;
+import org.immutables.value.Value;
+import org.immutables.value.Value.Default;
+// TODO import org.opendaylight.infrautils.utils.types.IDs;
+
+/**
+ * Web Context with URL prefix. AKA Web App or Servlet context.
+ *
+ * <p>
+ * This not surprisingly looks somewhat like a Servlet (3.x)
+ * {@link ServletContext}, which also allows programmatic dynamic registration
+ * e.g. via {@link ServletRegistration}; however in practice direct use of that
+ * API has been found to be problematic under OSGi, because it is intended for
+ * JSE and <a href="https://github.com/eclipse/jetty.project/issues/1395">does
+ * not easily appear to permit dynamic registration at any time</a> (only during
+ * Servlet container initialization time by
+ * {@link ServletContainerInitializer}), and is generally less clear to use than
+ * this simple API which intentionally maps directly to what one would have
+ * declared in a web.xml file. This API is also slightly more focused and drops
+ * a number of concepts that API has which we do not want to support here
+ * (including e.g. security, roles, multipart etc.)
+ *
+ * <p>
+ * It also looks somewhat similar to the OSGi HttpService, but we want to avoid
+ * any org.osgi dependency (both API and impl) here, and that API is also less
+ * clear (and uses an ancient (!) {@link java.util.Dictionary} in its method
+ * signature), and most importantly does not support Filters and Listeners, only
+ * Servlets. The Pax Web API does extend the base OSGi API and adds supports for
+ * Filters, Listeners and context parameters, but is still OSGi specific,
+ * whereas this offers a much simpler standalone API.
+ *
+ * <p>
+ * This is immutable, with a Builder, because contrary to a declarative approach
+ * in a file such as web.xml, the registration very much order matters (e.g. an
+ * addContextParam invoked after a registerServlet won't be seen by that
+ * Servlet; and a Filter added to a protect a Servlet could not yet be active
+ * for an instant if the registerServlet is before the registerFilter).
+ * Therefore, this API enforces atomicity and lets clients first register
+ * everything on the Builder, and only then use
+ * {@link WebServer#registerWebContext(WebContext)}.
+ *
+ * @author Michael Vorburger.ch
+ */
+@Value.Immutable
+@Value.Style(visibility = Value.Style.ImplementationVisibility.PRIVATE, depluralize = true)
+public abstract class WebContext {
+
+    public static WebContextBuilder builder() {
+        return new WebContextBuilder();
+    }
+
+    /**
+     * Path which will be used as URL prefix to all registered servlets and filters.
+     */
+    public abstract String contextPath();
+
+    /**
+     * Flag whether this context supports web sessions, defaults to true.
+     */
+    @Default
+    public boolean hasSessions() {
+        return true;
+    }
+
+    /**
+     * Servlets.
+     */
+    public abstract List<ServletDetails> servlets();
+
+    /**
+     * Filters.
+     */
+    public abstract List<FilterDetails> filters();
+
+    /**
+     * Listeners.
+     */
+    public abstract List<ServletContextListener> listeners();
+
+    /**
+     * Context params. NB: These are the web context's wide parameters; contrary to
+     * individual {@link ServletDetails#initParams()} and
+     * {@link FilterDetails#initParams()}.
+     */
+    public abstract Map<String, String> contextParams();
+
+/* TODO
+
+    @Value.Check
+    protected void check() {
+        IDs.checkOnlyAZ09Underscore(contextPath());
+        servlets().forEach(servlet -> {
+            if (servlet.urlPatterns().isEmpty()) {
+                throw new IllegalArgumentException("Servlet has no URL: " + servlet.name());
+            }
+        });
+        filters().forEach(filter -> {
+            if (filter.urlPatterns().isEmpty()) {
+                throw new IllegalArgumentException("Filter has no URL: " + filter.name());
+            }
+        });
+    }
+*/
+}
