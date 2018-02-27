@@ -1,0 +1,58 @@
+/*
+ * Copyright (c) 2018 Red Hat, Inc. and others. All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ */
+package org.opendaylight.aaa.shiro.web.env;
+
+import javax.servlet.ServletException;
+import org.apache.shiro.web.env.EnvironmentLoaderListener;
+import org.eclipse.jetty.servlets.CrossOriginFilter;
+import org.opendaylight.aaa.filterchain.filters.CustomFilterAdapter;
+import org.opendaylight.aaa.shiro.filters.AAAShiroFilter;
+import org.opendaylight.aaa.shiro.idm.IdmLightApplication;
+import org.opendaylight.aaa.web.FilterDetails;
+import org.opendaylight.aaa.web.ServletDetails;
+import org.opendaylight.aaa.web.WebContext;
+import org.opendaylight.aaa.web.WebServer;
+
+/**
+ * Initializer for web components.
+ *
+ * @author Michael Vorburger.ch
+ */
+public class WebInitializer {
+
+    public WebInitializer(WebServer webServer) throws ServletException {
+        webServer.registerWebContext(WebContext.builder().contextPath("/auth").hasSessions(true)
+
+            .addServlet(ServletDetails.builder().servlet(new com.sun.jersey.spi.container.servlet.ServletContainer())
+                 // TODO test using javax.ws.rs.core.Application.class.getName() instead; NB .core.
+                .putInitParam("javax.ws.rs.Application", IdmLightApplication.class.getName())
+                .putInitParam("com.sun.jersey.api.json.POJOMappingFeature", "true")
+                .putInitParam("jersey.config.server.provider.packages", "org.opendaylight.aaa.impl.provider")
+                .addUrlPattern("/*").build())
+
+             // TODO factor out this common AAA related web context configuration to somewhere shared
+             //   instead of likely copy/pasting it from here to WebInitializer classes which will want to do the same
+
+             //  Shiro initialization
+            .putContextParam("shiroEnvironmentClass", KarafIniWebEnvironment.class.getName())
+            .addListener(new EnvironmentLoaderListener())
+             // Allows user to add javax.servlet.Filter(s) in front of REST services
+            .addFilter(FilterDetails.builder().filter(new CustomFilterAdapter()).addUrlPattern("/*").build())
+             // AAA filter in front of these REST web services
+            .addFilter(FilterDetails.builder().filter(new AAAShiroFilter()).addUrlPattern("/*").build())
+             // CORS filter
+            .addFilter(FilterDetails.builder().filter(new CrossOriginFilter()).addUrlPattern("/*")
+                .putInitParam("allowedOrigins", "*")
+                .putInitParam("allowedMethods", "GET,POST,OPTIONS,DELETE,PUT,HEAD")
+                .putInitParam("allowedHeaders", "origin, content-type, accept, authorization")
+                .build())
+
+            .build());
+    }
+
+}
