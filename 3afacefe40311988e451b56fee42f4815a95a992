@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19d68c9c_06859200",
+        "filename": "web/impl-osgi/src/main/java/org/opendaylight/aaa/web/osgi/MapDictionary.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-06T22:41:58Z",
+      "side": 1,
+      "message": "Annotate as @NotThreadSafe?",
+      "revId": "3afacefe40311988e451b56fee42f4815a95a992",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a257432d_27b37f71",
+        "filename": "web/impl-osgi/src/main/java/org/opendaylight/aaa/web/osgi/PaxWebServer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-06T22:41:58Z",
+      "side": 1,
+      "message": "These are only accessed via the ctor and don\u0027t need to be stored but I understand it\u0027s easier in lieu of passing them around. I assume it\u0027s OK to hold a hard reference to the  HttpContext for the life of the web app. You could null these out after paxWeb.end() in the ctor but that seems a bit funky.",
+      "revId": "3afacefe40311988e451b56fee42f4815a95a992",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f11cc03b_a5f55410",
+        "filename": "web/impl-osgi/src/main/java/org/opendaylight/aaa/web/osgi/PaxWebServer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-06T22:41:58Z",
+      "side": 1,
+      "message": "supportsSessions",
+      "range": {
+        "startLine": 75,
+        "startChar": 36,
+        "endLine": 75,
+        "endChar": 47
+      },
+      "revId": "3afacefe40311988e451b56fee42f4815a95a992",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "556164cb_e983e092",
+        "filename": "web/impl-osgi/src/main/java/org/opendaylight/aaa/web/osgi/PaxWebServer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-06T22:41:58Z",
+      "side": 1,
+      "message": "filters",
+      "range": {
+        "startLine": 93,
+        "startChar": 68,
+        "endLine": 93,
+        "endChar": 76
+      },
+      "revId": "3afacefe40311988e451b56fee42f4815a95a992",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
