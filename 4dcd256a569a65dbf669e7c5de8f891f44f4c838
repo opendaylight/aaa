@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dfe22493_4527fe31",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-06T17:47:26Z",
+      "side": 0,
+      "message": "As explained by voice during Kernel Call, just FTR for anyone else interested: because now the new class WebInitializer has static references to this, in code instead of web.xml - so maven-bundle-plugin figures this out by itself now; nice? Leaving this in actually causes an SFT failure due to double package. It\u0027s possible that even more can be removed now (likely java.servlet), but I would much rather that this gets accepted, and then more clean up can be done separately on top of this in the future.",
+      "parentUuid": "a6c200ed_0c9daac7",
+      "range": {
+        "startLine": 252,
+        "startChar": 27,
+        "endLine": 252,
+        "endChar": 69
+      },
+      "revId": "4dcd256a569a65dbf669e7c5de8f891f44f4c838",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12d31c26_84d91297",
         "filename": "aaa-shiro/impl/pom.xml",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2018-03-06T13:05:49Z",
       "side": 0,
       "message": "cool!",
+      "range": {
+        "startLine": 290,
+        "startChar": 24,
+        "endLine": 290,
+        "endChar": 64
+      },
+      "revId": "4dcd256a569a65dbf669e7c5de8f891f44f4c838",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9785cf0f_5252d01b",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-06T17:47:26Z",
+      "side": 0,
+      "message": "Tx! So +2 from the AAA PTL? ;)",
+      "parentUuid": "12d31c26_84d91297",
       "range": {
         "startLine": 290,
         "startChar": 24,
