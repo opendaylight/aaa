@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af56b790_bdede2ea",
+        "filename": "web/impl-osgi/src/main/java/org/opendaylight/aaa/web/osgi/PaxWebServer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-03-06T13:01:39Z",
+      "side": 1,
+      "message": "What if SSL/TLS is utilized?",
+      "range": {
+        "startLine": 57,
+        "startChar": 16,
+        "endLine": 57,
+        "endChar": 23
+      },
+      "revId": "4dcd256a569a65dbf669e7c5de8f891f44f4c838",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
