@@ -23,28 +23,32 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Utilities for test, the certicate needs to be updated yearly.
- * Last update: 8 march 2017
+ * Utilities for test, the certificate needs to be updated every 10 years.
+ * Last update: 5 march 2018
  */
 
 public class TestUtils {
     public static String dummyAlias = "fooAlias";
-    public static String dummyCert = KeyStoreConstant.BEGIN_CERTIFICATE +
-            "MIICKTCCAZKgAwIBAgIECMgzyzANBgkqhkiG9w0BAQUFADBZMQwwCgYDV" +
-            "QQDDANPREwxDDAKBgNVBAsMA0RldjEYMBYGA1UECgwPTGludXhGb3VuZG" +
-            "F0aW9uMRQwEgYDVQQHDAtRQyBNb250cmVhbDELMAkGA1UEBhMCQ0EwHhc" +
-            "NMTcwMzAzMTYyMDA1WhcNMTgwMzAzMTYyMDA1WjBZMQwwCgYDVQQDDANP" +
-            "REwxDDAKBgNVBAsMA0RldjEYMBYGA1UECgwPTGludXhGb3VuZGF0aW9uM" +
-            "RQwEgYDVQQHDAtRQyBNb250cmVhbDELMAkGA1UEBhMCQ0EwgZ8wDQYJKo" +
-            "ZIhvcNAQEBBQADgY0AMIGJAoGBAJrQxIfdU230tedhXnM25r3ht5UQ5Jo" +
-            "G7+9H9b2WcrrkehJ++AZ2zq6SJDLVVnjgXh/YgFo3L6DOKnVTwnXUXGLk" +
-            "NiJhqL2ndu49zI63CxQ2EjBR8tlD5HctNH4SKj1RqmYvt0H3LUZSBKH8Y" +
-            "XGL0U0Qyxwe3flRh2Y6sMb3o47rAgMBAAEwDQYJKoZIhvcNAQEFBQADgY" +
-            "EAVBWCNC+bbJftOTfpL3sL3YO+aQSmPt5ICgrz7wXDkzpf+0FwSqt+kiR" +
-            "Wfw65RTgmn2hmYPh2QW4SaIN50ftLfUHgkf2zeMlodAQVYmBAd/woE3s7" +
-            "fkSa9vQkUowgHAxW//7NOOTonnQPi2gH6ubaOCG4ZeXTwqHy47DGA0c8z" +
-            "2Q="+
-            KeyStoreConstant.END_CERTIFICATE;
+    public static String dummyCert = KeyStoreConstant.BEGIN_CERTIFICATE
+            + "MIIDTzCCAjegAwIBAgIJAMrURYFr+EdHMA0GCSqGSIb3DQEBCwUAMD4xPDA6BgNV"
+            + "BAMMM09ETCwgT1U9RGV2LCBPPUxpbnV4Rm91bmRhdGlvbiwgTD1RQyBNb250cmVh"
+            + "bCwgQz1DQTAeFw0xODAzMDUxNjAxNTFaFw0yODAzMDIxNjAxNTFaMD4xPDA6BgNV"
+            + "BAMMM09ETCwgT1U9RGV2LCBPPUxpbnV4Rm91bmRhdGlvbiwgTD1RQyBNb250cmVh"
+            + "bCwgQz1DQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAK5XhMEOXslX"
+            + "pLaL9Ws5X0QLzGuFXiLIhyYG8XBZAI55UNVMbrTqKd7461F2r72ljI2pdQ2hUAlv"
+            + "dyjX58TTMRVgfEKe9U7pr394Wqc7Kg+r3MnBxiVfPoq8fR0K2/RsuPU2wTmjDhIY"
+            + "wrnKcfAZ8IEMcPQuT3w2rSX98b28uXeurGwvK+3G5LEVr3OrsGT9o57UERaPf+nq"
+            + "EPMNlU6ix7523P0vj9Riw58Zc0R22H5HE87VX9Ck2nQxaAvyHuHYJfIH+VBDDY9w"
+            + "h1rlb8aRpBi9yyDEw6EuN2CZg9VVs1dfEwfFl90mpDk/OELGAh6ya8KP2iqVXP8u"
+            + "tYC6M8LnkfkCAwEAAaNQME4wHQYDVR0OBBYEFG3VOc6a6ti9+wSmPiVP0Za77hyX"
+            + "MB8GA1UdIwQYMBaAFG3VOc6a6ti9+wSmPiVP0Za77hyXMAwGA1UdEwQFMAMBAf8w"
+            + "DQYJKoZIhvcNAQELBQADggEBAFFHa2nywM2xf+B56EwRoPLfDXc1qZUJpC5BtnsJ"
+            + "hNfiy3kaEnsEwBOXMsw87jy4Y3Dn+XcH1elKNpArwUj8vq3as4rlobqY1UFmFVGV"
+            + "0BnSBYFnHNUwha5c0vhdhB++Q1YJduOLWJi0a+sXP/sBkzTjfWdqX1vcu0a0QtIm"
+            + "rrngV+qcu6yJl/duwx5TCzf6lVElFjNoV6zchwz7uqblC/aFlraPzQWFCYci+3zd"
+            + "FF3x8s9EX9TJj9smmPtHBzthkIWxEikk+gpOg5RHhILkOZsDbxVxXJoPQZXERdWH"
+            + "8XtYREVKt5CTN6ZEF0742hXUvkkuz1YvvCbJQb/Pe9fokQ8="
+            + KeyStoreConstant.END_CERTIFICATE;
 
     public static DataBroker mockDataBroker(SslData sslData) throws Exception {
         final Optional<DataObject> dataObjectOptional = mock(Optional.class);
