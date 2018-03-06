@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53302e40_18fef8ab",
+        "filename": "web/api/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-06T18:06:10Z",
+      "side": 1,
+      "message": "Done, removed - for now.  It was for the check() method in the WebContext - just ignore; I\u0027ll add this back when I\u0027ll reincarnate this in infrautils.",
+      "parentUuid": "7f4e70fe_271bca1a",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 4
+      },
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5de572e_7f4063a3",
         "filename": "web/api/pom.xml",
         "patchSetId": 8
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "9873d9f2_40cc51e3",
+        "filename": "web/api/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-06T18:06:10Z",
+      "side": 1,
+      "message": "autorelease actually passed just fine.  infrautils is already above AAA (it does not have any dependency to aaa, and it never will).  I don\u0027t mind at all to remove this (and the entire WebContextApiTest with it), but Robert said in today\u0027s Kernel call that he does not actually object to this - Robert?",
+      "parentUuid": "2dfed25a_9cd3e7a9",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 25
+      },
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8f9878e_f3d6cbda",
         "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
         "patchSetId": 8
@@ -107,6 +155,30 @@
       "writtenOn": "2018-03-06T13:21:15Z",
       "side": 1,
       "message": "I think you mean to say \"the registration order very much matters\"",
+      "range": {
+        "startLine": 73,
+        "startChar": 47,
+        "endLine": 73,
+        "endChar": 70
+      },
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ed86c00_32add2bc",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-06T18:06:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8f9878e_f3d6cbda",
       "range": {
         "startLine": 73,
         "startChar": 47,
@@ -165,6 +237,54 @@
     },
     {
       "key": {
+        "uuid": "8209e865_63468246",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-06T18:06:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c775a0e6_ac671804",
+      "range": {
+        "startLine": 75,
+        "startChar": 53,
+        "endLine": 75,
+        "endChar": 58
+      },
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9564e6df_9fb15284",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-06T18:06:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c480b81e_5aff885f",
+      "range": {
+        "startLine": 75,
+        "startChar": 30,
+        "endLine": 75,
+        "endChar": 42
+      },
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b35288f_56501955",
         "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
         "patchSetId": 8
@@ -176,6 +296,24 @@
       "writtenOn": "2018-03-06T13:21:15Z",
       "side": 1,
       "message": "minor thing but your javadoc says \"supports\" so perhaps name this \"supportsSessions\"? what would it mean to \"have sessions\"?",
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ccccae0_9a4a7cd8",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-06T18:06:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b35288f_56501955",
       "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -229,6 +367,30 @@
     },
     {
       "key": {
+        "uuid": "2cf895b8_cc605b7c",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-06T18:06:10Z",
+      "side": 1,
+      "message": "Servlet are declared in an on order in web.xml... you are probably right that for Servlet, but not Filters, the order doesn\u0027t really matter - but just for consistency with filters() shall we keep it as is?",
+      "parentUuid": "fbfd6d33_00c54cfb",
+      "range": {
+        "startLine": 108,
+        "startChar": 20,
+        "endLine": 108,
+        "endChar": 24
+      },
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9aad6288_45334a42",
         "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
         "patchSetId": 8
@@ -264,6 +426,30 @@
       "side": 1,
       "message": "Not with this, order matters!!",
       "parentUuid": "9aad6288_45334a42",
+      "range": {
+        "startLine": 113,
+        "startChar": 20,
+        "endLine": 113,
+        "endChar": 24
+      },
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2df4a15_ae583190",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-06T18:06:10Z",
+      "side": 1,
+      "message": "Yeah, I think changing this would be wrong.. OK to leave?",
+      "parentUuid": "d3df6d97_bca7b977",
       "range": {
         "startLine": 113,
         "startChar": 20,
