@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6c200ed_0c9daac7",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-03-06T13:05:49Z",
+      "side": 0,
+      "message": "Why is this removed?  I am fairly certain this is needed.",
+      "range": {
+        "startLine": 252,
+        "startChar": 27,
+        "endLine": 252,
+        "endChar": 69
+      },
+      "revId": "4dcd256a569a65dbf669e7c5de8f891f44f4c838",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12d31c26_84d91297",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-03-06T13:05:49Z",
+      "side": 0,
+      "message": "cool!",
+      "range": {
+        "startLine": 290,
+        "startChar": 24,
+        "endLine": 290,
+        "endChar": 64
+      },
+      "revId": "4dcd256a569a65dbf669e7c5de8f891f44f4c838",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
