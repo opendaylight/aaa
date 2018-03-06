@@ -45,6 +45,162 @@
       "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6ecfb65_493cfe2b",
+        "filename": "web/api/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-06T13:21:15Z",
+      "side": 1,
+      "message": "Can aaa depend on infrautils based on current governance? I thought this was the reason this wasn\u0027t going into infrautils, at least not right now.",
+      "parentUuid": "e5de572e_7f4063a3",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 25
+      },
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8f9878e_f3d6cbda",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-06T13:21:15Z",
+      "side": 1,
+      "message": "I think you mean to say \"the registration order very much matters\"",
+      "range": {
+        "startLine": 73,
+        "startChar": 47,
+        "endLine": 73,
+        "endChar": 70
+      },
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c775a0e6_ac671804",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-06T13:21:15Z",
+      "side": 1,
+      "message": "might",
+      "range": {
+        "startLine": 75,
+        "startChar": 53,
+        "endLine": 75,
+        "endChar": 58
+      },
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c480b81e_5aff885f",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-06T13:21:15Z",
+      "side": 1,
+      "message": "\"to protect\"",
+      "range": {
+        "startLine": 75,
+        "startChar": 30,
+        "endLine": 75,
+        "endChar": 42
+      },
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b35288f_56501955",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-06T13:21:15Z",
+      "side": 1,
+      "message": "minor thing but your javadoc says \"supports\" so perhaps name this \"supportsSessions\"? what would it mean to \"have sessions\"?",
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8f63899_9212dc6c",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-06T13:21:15Z",
+      "side": 1,
+      "message": "Collection?",
+      "range": {
+        "startLine": 108,
+        "startChar": 20,
+        "endLine": 108,
+        "endChar": 24
+      },
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aad6288_45334a42",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-06T13:21:15Z",
+      "side": 1,
+      "message": "Collection?",
+      "range": {
+        "startLine": 113,
+        "startChar": 20,
+        "endLine": 113,
+        "endChar": 24
+      },
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
