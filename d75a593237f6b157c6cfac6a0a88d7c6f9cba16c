@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f4e70fe_271bca1a",
+        "filename": "web/api/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-03-06T13:02:04Z",
+      "side": 1,
+      "message": "Is there a reason this is here?  A reminder for when it is eventually migrated?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 4
+      },
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5de572e_7f4063a3",
+        "filename": "web/api/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-03-06T13:02:04Z",
+      "side": 1,
+      "message": "Will this change autorelease build order at scope\u003dtest, or is infrautils already above AAA?",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 25
+      },
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
