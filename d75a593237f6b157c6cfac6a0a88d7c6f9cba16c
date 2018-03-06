@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2dfed25a_9cd3e7a9",
+        "filename": "web/api/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-03-06T17:22:15Z",
+      "side": 1,
+      "message": "Michael has agreed to remove this temporarily, until we move this functionality to infrautils, to avoid governance issues.",
+      "parentUuid": "d6ecfb65_493cfe2b",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 25
+      },
+      "revId": "d75a593237f6b157c6cfac6a0a88d7c6f9cba16c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8f9878e_f3d6cbda",
         "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
         "patchSetId": 8
