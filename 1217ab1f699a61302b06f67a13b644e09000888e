@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fddfe4c9_faf93cf4",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-06T22:24:48Z",
+      "side": 1,
+      "message": "minor thing but really should be \"supportsSessions\"",
+      "range": {
+        "startLine": 101,
+        "startChar": 19,
+        "endLine": 101,
+        "endChar": 34
+      },
+      "revId": "1217ab1f699a61302b06f67a13b644e09000888e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
