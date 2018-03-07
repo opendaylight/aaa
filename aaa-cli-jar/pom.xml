@@ -51,7 +51,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-text</artifactId>
     </dependency>
-    <!-- Note that com.h2database:h2 is already shaded into aaa-h2-store -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>compile</scope>
+    </dependency>
 
     <!-- Now for the FAT JAR we need to fix up some <scope>provided to be <scope>compile -->
     <dependency>
@@ -121,6 +125,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
                   <artifact>org.opendaylight.aaa:aaa-shiro</artifact>
                   <includes>
                     <include>org/opendaylight/**</include>
+                  </includes>
+                </filter>
+                <filter>
+                  <artifact>com.h2database:h2</artifact>
+                  <includes>
                     <include>org/h2/Driver.class</include>
                     <include>org/h2/JdbcDriverBackwardsCompat.class</include>
                     <include>org/h2/upgrade/**</include>
