@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bf5dcaa1_b62129be",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-03-07T19:39:09Z",
+      "side": 1,
+      "message": "all of this can be removed/rebased.",
+      "range": {
+        "startLine": 243,
+        "startChar": 24,
+        "endLine": 291,
+        "endChar": 97
+      },
+      "revId": "15e731e05c3b9fef75b2e6686c840a7fe4001be6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d889d1e4_aa221497",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/OsgiWebInitializer.java",
         "patchSetId": 9
