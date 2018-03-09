@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2f68d3f8_39a87cc6",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/FilterDetails.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-09T18:50:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66edd847_ad0dde03",
+      "revId": "c48843a58850fc7bf174e0b043fbbbceceab5941",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1fe6156_0a0be91c",
         "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2018-03-09T16:59:10Z",
       "side": 1,
       "message": "Please remove commented code or uncomment and finish it.",
+      "revId": "c48843a58850fc7bf174e0b043fbbbceceab5941",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba79762a_c565f773",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-09T18:50:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1fe6156_0a0be91c",
       "revId": "c48843a58850fc7bf174e0b043fbbbceceab5941",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
