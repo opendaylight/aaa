@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90b7b95e_d93892bf",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-09T16:49:51Z",
+      "side": 1,
+      "message": "Done (via rebase conflict resoltion; I don\u0027t want to remove any more here)",
+      "parentUuid": "bf5dcaa1_b62129be",
+      "range": {
+        "startLine": 243,
+        "startChar": 24,
+        "endLine": 291,
+        "endChar": 97
+      },
+      "revId": "15e731e05c3b9fef75b2e6686c840a7fe4001be6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d889d1e4_aa221497",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/OsgiWebInitializer.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2018-03-06T22:52:19Z",
       "side": 1,
       "message": "Shouldn\u0027t this be created in the impl-osgi bundle and advertised with the WebServer interface which users import via reference?",
+      "range": {
+        "startLine": 24,
+        "startChar": 42,
+        "endLine": 24,
+        "endChar": 54
+      },
+      "revId": "15e731e05c3b9fef75b2e6686c840a7fe4001be6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae618e28_e8de8a16",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/OsgiWebInitializer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-09T16:49:51Z",
+      "side": 1,
+      "message": "Nope, that doesn\u0027t work.  I spent a long night debugging why not.  It would take changes in Pax Web to make that possible; has to do with setting the thread context class loader to the correct bundle, which needs to be the one of the bundle using the PaxWebServer, not the impl-osgi one. You are more than welcome to try for yourself and enjoy experiencing the same... \"fun\" while debugging this for yourself.",
+      "parentUuid": "d889d1e4_aa221497",
       "range": {
         "startLine": 24,
         "startChar": 42,
