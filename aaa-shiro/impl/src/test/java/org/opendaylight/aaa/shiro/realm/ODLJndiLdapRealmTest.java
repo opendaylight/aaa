@@ -39,13 +39,11 @@ import org.junit.Test;
 public class ODLJndiLdapRealmTest {
 
     /**
-     * throw-away anonymous test class
+     * throw-away anonymous test class.
      */
     class TestNamingEnumeration implements NamingEnumeration<SearchResult> {
 
-        /**
-         * state variable
-         */
+        // State variable
         boolean first = true;
 
         /**
@@ -56,7 +54,7 @@ public class ODLJndiLdapRealmTest {
                 "objectClass", "engineering"));
 
         /**
-         * returns true the first time, then false for subsequent calls
+         * returns true the first time, then false for subsequent calls.
          */
         @Override
         public boolean hasMoreElements() {
@@ -64,7 +62,7 @@ public class ODLJndiLdapRealmTest {
         }
 
         /**
-         * returns <code>searchResult</code> then null for subsequent calls
+         * returns <code>searchResult</code> then null for subsequent calls.
          */
         @Override
         public SearchResult nextElement() {
@@ -76,14 +74,14 @@ public class ODLJndiLdapRealmTest {
         }
 
         /**
-         * does nothing because close() doesn't require any special behavior
+         * does nothing because close() doesn't require any special behavior.
          */
         @Override
         public void close() throws NamingException {
         }
 
         /**
-         * returns true the first time, then false for subsequent calls
+         * returns true the first time, then false for subsequent calls.
          */
         @Override
         public boolean hasMore() throws NamingException {
@@ -91,7 +89,7 @@ public class ODLJndiLdapRealmTest {
         }
 
         /**
-         * returns <code>searchResult</code> then null for subsequent calls
+         * returns <code>searchResult</code> then null for subsequent calls.
          */
         @Override
         public SearchResult next() throws NamingException {
@@ -101,22 +99,19 @@ public class ODLJndiLdapRealmTest {
             }
             return null;
         }
-    };
+    }
 
     /**
-     * throw away test class
+     * throw away test class.
      *
      * @author ryan
      */
     class TestPrincipalCollection implements PrincipalCollection {
-        /**
-     *
-     */
         private static final long serialVersionUID = -1236759619455574475L;
 
         Vector<String> collection = new Vector<String>();
 
-        public TestPrincipalCollection(String element) {
+        TestPrincipalCollection(String element) {
             collection.add(element);
         }
 
@@ -167,7 +162,7 @@ public class ODLJndiLdapRealmTest {
             // TODO Auto-generated method stub
             return null;
         }
-    };
+    }
 
     @Test
     public void testGetUsernameAuthenticationToken() {

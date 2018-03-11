@@ -102,7 +102,7 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
         } catch (UncheckedExecutionException e) {
             Throwable cause = e.getCause();
             if (!Objects.isNull(cause) && cause instanceof AuthenticationException) {
-                throw (AuthenticationException) cause;
+                throw new AuthenticationException(e);
             }
             throw e;
         }

@@ -13,7 +13,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.opendaylight.aaa.shiro.ServiceProxy;
 import org.opendaylight.aaa.shiro.filters.AAAFilter;
 
 public class ServiceProxyTest {

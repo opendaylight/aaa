@@ -22,7 +22,7 @@ import org.opendaylight.aaa.api.TokenStore;
  *
  * @author liemmn
  */
-public class ServiceLocator {
+public final class ServiceLocator {
 
     private static final ServiceLocator INSTANCE = new ServiceLocator();
 

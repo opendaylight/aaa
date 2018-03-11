@@ -14,14 +14,16 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 /**
  * Utilities for manipulating <code>AuthenticationToken</code> instances from Shiro.
  */
-public class TokenUtils {
+public final class TokenUtils {
+
+    private TokenUtils() {
+    }
+
     /**
-     * extract the username from an <code>AuthenticationToken</code>
+     * extract the username from an <code>AuthenticationToken</code>.
      *
-     * @param authenticationToken
-     * @return
-     * @throws ClassCastException
-     * @throws NullPointerException
+     * @param authenticationToken authentication token
+     * @return string with the user name
      */
     public static String extractUsername(final AuthenticationToken authenticationToken)
             throws ClassCastException, NullPointerException {
@@ -30,12 +32,10 @@ public class TokenUtils {
     }
 
     /**
-     * extract the password from an <code>AuthenticationToken</code>
+     * extract the password from an <code>AuthenticationToken</code>.
      *
-     * @param authenticationToken
-     * @return
-     * @throws ClassCastException
-     * @throws NullPointerException
+     * @param authenticationToken authentication token
+     * @return string with the extracted password
      */
     public static String extractPassword(final AuthenticationToken authenticationToken)
             throws ClassCastException, NullPointerException {

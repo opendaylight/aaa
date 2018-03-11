@@ -62,8 +62,8 @@ public class ClaimBuilder {
         return this;
     }
 
-    public ClaimBuilder addRoles(Set<String> roles) {
-        for (String role : roles) {
+    public ClaimBuilder addRoles(Set<String> theRoles) {
+        for (String role : theRoles) {
             addRole(role);
         }
         return this;

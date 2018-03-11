@@ -10,7 +10,6 @@ package org.opendaylight.aaa.shiro.realm.util.http;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import com.sun.jersey.api.client.Client;

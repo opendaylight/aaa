@@ -44,15 +44,17 @@ import org.slf4j.LoggerFactory;
  * additional Authorization capabilities.  To enable this Realm, add the
  * following to <code>shiro.ini</code>:
  *
- *<code>#ldapRealm = ODLJndiLdapRealmAuthNOnly
- *#ldapRealm.userDnTemplate = uid={0},ou=People,dc=DOMAIN,dc=TLD
- *#ldapRealm.contextFactory.url = ldap://URL:389
- *#ldapRealm.searchBase = dc=DOMAIN,dc=TLD
- *#ldapRealm.ldapAttributeForComparison = objectClass
- *# The CSV list of enabled realms.  In order to enable a realm, add it to the
- *# list below:
+ * <p>
+ * <code>#ldapRealm = ODLJndiLdapRealmAuthNOnly
+ * #ldapRealm.userDnTemplate = uid={0},ou=People,dc=DOMAIN,dc=TLD
+ * #ldapRealm.contextFactory.url = ldap://URL:389
+ * #ldapRealm.searchBase = dc=DOMAIN,dc=TLD
+ * #ldapRealm.ldapAttributeForComparison = objectClass
+ * # The CSV list of enabled realms.  In order to enable a realm, add it to the
+ * # list below:
  * securityManager.realms = $tokenAuthRealm, $ldapRealm</code>
  *
+ * <p>
  * The values above are specific to the deployed LDAP domain.  If the defaults
  * are not sufficient, alternatives can be derived through enabling
  * <code>TRACE</code> level logging.  To enable <code>TRACE</code> level
@@ -61,8 +63,8 @@ import org.slf4j.LoggerFactory;
  *
  * @see <code>org.apache.shiro.realm.ldap.JndiLdapRealm</code>
  * @see <a
- *      href="https://shiro.apache.org/static/1.2.3/apidocs/org/apache/shiro/realm/ldap/JndiLdapRealm.html">Shiro
- *      documentation</a>
+ * href="https://shiro.apache.org/static/1.2.3/apidocs/org/apache/shiro/realm/ldap/JndiLdapRealm.html">Shiro
+ * documentation</a>
  */
 public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
 
@@ -91,8 +93,8 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
     /**
      * Strategy to determine how groups are mapped to roles.
      */
-    private static final GroupsToRolesMappingStrategy GROUPS_TO_ROLES_MAPPING_STRATEGY =
-            new BestAttemptGroupToRolesMappingStrategy();
+    private static final GroupsToRolesMappingStrategy GROUPS_TO_ROLES_MAPPING_STRATEGY
+            = new BestAttemptGroupToRolesMappingStrategy();
 
     /**
      * The searchBase for the ldap query, which indicates the LDAP realms to
@@ -127,8 +129,7 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
      * .apache.shiro.authc.AuthenticationToken)
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
-            throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
         // Delegates all AuthN lookup responsibility to the super class
         try {
@@ -142,10 +143,9 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
     }
 
     /**
-     * Logs an incoming LDAP connection
+     * Logs an incoming LDAP connection.
      *
-     * @param username
-     *            the requesting user
+     * @param username the requesting user
      */
     protected void logIncomingConnection(final String username) {
         LOG.info("AAA LDAP connection from {}", username);
@@ -153,19 +153,34 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
     }
 
     /**
-     * Extracts the username from <code>token</code>
+     * Extracts the username from <code>token</code>.
      *
      * @param token Encoded token which could contain a username
      * @return The extracted username
-     * @throws ClassCastException
-     *             The incoming token is not username/password (i.e., X.509
-     *             certificate)
+     * @throws ClassCastException The incoming token is not username/password (i.e., X.509
+     *                            certificate)
      */
     public static String getUsername(AuthenticationToken token) throws ClassCastException {
         if (null == token) {
             return null;
         }
         return (String) token.getPrincipal();
+    }
+
+    /**
+     * extracts a username from <code>principals</code>.
+     *
+     * @param principals A single principal extracted for the username
+     * @return The username if possible
+     * @throws ClassCastException the PrincipalCollection contains an element that is not in
+     *                            username/password form (i.e., X.509 certificate)
+     */
+    protected String getUsername(final PrincipalCollection principals) throws ClassCastException {
+
+        if (null == principals) {
+            return null;
+        }
+        return (String) getAvailablePrincipal(principals);
     }
 
     @Override
@@ -180,23 +195,6 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
         return ai;
     }
 
-    /**
-     * extracts a username from <code>principals</code>
-     *
-     * @param principals A single principal extracted for the username
-     * @return The username if possible
-     * @throws ClassCastException
-     *             the PrincipalCollection contains an element that is not in
-     *             username/password form (i.e., X.509 certificate)
-     */
-    protected String getUsername(final PrincipalCollection principals) throws ClassCastException {
-
-        if (null == principals) {
-            return null;
-        }
-        return (String) getAvailablePrincipal(principals);
-    }
-
     /*
      * (non-Javadoc)
      *
@@ -206,11 +204,13 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
      *
      * <code>/** = authcBasic, roles[person]</code>
      *
-     * @see org.apache.shiro.realm.ldap.JndiLdapRealm#queryForAuthorizationInfo(org.apache.shiro.subject.PrincipalCollection, org.apache.shiro.realm.ldap.LdapContextFactory)
+     * @see org.apache.shiro.realm.ldap.JndiLdapRealm#queryForAuthorizationInfo(org.apache.shiro.subject
+     * .PrincipalCollection, org.apache.shiro.realm.ldap.LdapContextFactory)
      */
     @Override
     protected AuthorizationInfo queryForAuthorizationInfo(PrincipalCollection principals,
-            LdapContextFactory ldapContextFactory) throws NamingException {
+                                                          LdapContextFactory ldapContextFactory) throws
+            NamingException {
 
         AuthorizationInfo authorizationInfo = null;
         try {
@@ -241,22 +241,22 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
      * extracts the Set of roles associated with a user based on the username
      * and ldap context (server).
      *
-     * @param username The username for the request
+     * @param username    The username for the request
      * @param ldapContext The specific system context provided by <code>shiro.ini</code>
      * @return A set of roles
      * @throws NamingException If the ldap search fails
      */
-    protected Set<String> getRoleNamesForUser(final String username, final LdapContext ldapContext)
-            throws NamingException {
+    protected Set<String> getRoleNamesForUser(final String username,
+                                              final LdapContext ldapContext) throws NamingException {
 
         final Set<String> roleNames = new LinkedHashSet<String>();
         final SearchControls searchControls = createSearchControls();
 
         LOG.debug("Asking the configured LDAP about which groups uid=\"{}\" belongs to using "
-                + "searchBase=\"{}\" ldapAttributeForComparison=\"{}\"",
-                username, searchBase, ldapAttributeForComparison);
-        final NamingEnumeration<SearchResult> answer = ldapContext.search(searchBase,
-                String.format("%s=%s", UID, username), searchControls);
+                          + "searchBase=\"{}\" ldapAttributeForComparison=\"{}\"", username, searchBase,
+                  ldapAttributeForComparison);
+        final NamingEnumeration<SearchResult> answer = ldapContext
+                .search(searchBase, String.format("%s=%s", UID, username), searchControls);
 
         while (answer.hasMoreElements()) {
             final SearchResult searchResult = answer.next();
@@ -268,30 +268,30 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
                     LOG.debug("LDAP returned \"{}\" attribute for \"{}\"", attr.getID(), username);
                     if (attr.getID().equals(ldapAttributeForComparison)) {
                         final Collection<String> groupNamesExtractedFromLdap = LdapUtils.getAllAttributeValues(attr);
-                        final Map<String, Set<String>> groupsToRoles = this.GROUPS_TO_ROLES_MAPPING_STRATEGY.mapGroupsToRoles(
-                                groupNamesExtractedFromLdap, ROLE_NAMES_DELIMITER, groupRolesMap);
+                        final Map<String, Set<String>> groupsToRoles = this.GROUPS_TO_ROLES_MAPPING_STRATEGY
+                                .mapGroupsToRoles(groupNamesExtractedFromLdap, ROLE_NAMES_DELIMITER, groupRolesMap);
 
                         final Collection<String> roleNamesFromLdapGroups;
                         // map the groups
                         if (groupRolesMap != null) {
                             roleNamesFromLdapGroups = new HashSet<>();
-                            for (String  rolesKey : groupsToRoles.keySet()) {
+                            for (String rolesKey : groupsToRoles.keySet()) {
                                 roleNamesFromLdapGroups.addAll(groupsToRoles.get(rolesKey));
                             }
                             if (LOG.isDebugEnabled()) {
                                 for (String group : groupsToRoles.keySet()) {
                                     LOG.debug("Mapped the \"{}\" LDAP group to \"{}\" ODL role for \"{}\"", group,
-                                            groupsToRoles.get(group), username);
+                                              groupsToRoles.get(group), username);
                                 }
                             }
                         } else {
-                            LOG.debug("Since groupRolesMap was unspecified, no mapping is attempted so " +
-                                    "the role names are set to the extracted group names");
+                            LOG.debug("Since groupRolesMap was unspecified, no mapping is attempted so "
+                                              + "the role names are set to the extracted group names");
                             roleNamesFromLdapGroups = groupNamesExtractedFromLdap;
                             if (LOG.isDebugEnabled()) {
                                 for (String group : groupNamesExtractedFromLdap) {
-                                    LOG.debug("Mapped the \"{}\" LDAP group to \"{}\" ODL role for \"{}\"",
-                                            group, group, username);
+                                    LOG.debug("Mapped the \"{}\" LDAP group to \"{}\" ODL role for \"{}\"", group,
+                                              group, username);
                                 }
                             }
                         }
@@ -305,7 +305,7 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
     }
 
     /**
-     * A utility method to help create the search controls for the LDAP lookup
+     * A utility method to help create the search controls for the LDAP lookup.
      *
      * @return A generic set of search controls for LDAP scoped to subtree
      */

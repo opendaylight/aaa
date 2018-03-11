@@ -21,6 +21,7 @@ import javax.net.ssl.SSLContext;
  * An utility that represents an HTTP client that allows to make
  * HTTP requests.
  */
+@SuppressWarnings("checkstyle:FinalClass")
 public class SimpleHttpClient {
 
     private final Client client;
@@ -60,22 +61,22 @@ public class SimpleHttpClient {
         /**
          * Sets the SSLContext to be used for SSL requests.
          *
-         * @param sslContext the SSLContext.
+         * @param context the SSLContext.
          * @return self, the client builder.
          */
-        public Builder sslContext(final SSLContext sslContext) {
-            this.sslContext = sslContext;
+        public Builder sslContext(final SSLContext context) {
+            this.sslContext = context;
             return this;
         }
 
         /**
          * Sets the hostname verifier the request is made with.
          *
-         * @param hostnameVerifier the hostname verifier.
+         * @param verifier the hostname verifier.
          * @return self, the client builder.
          */
-        public Builder hostnameVerifier(final HostnameVerifier hostnameVerifier) {
-            this.hostnameVerifier = hostnameVerifier;
+        public Builder hostnameVerifier(final HostnameVerifier verifier) {
+            this.hostnameVerifier = verifier;
             return this;
         }
 

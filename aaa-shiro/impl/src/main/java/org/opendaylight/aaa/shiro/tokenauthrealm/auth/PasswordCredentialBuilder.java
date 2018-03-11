@@ -7,12 +7,9 @@
  */
 package org.opendaylight.aaa.shiro.tokenauthrealm.auth;
 
-import static org.opendaylight.aaa.shiro.tokenauthrealm.util.EqualUtil.areEqual;
-import static org.opendaylight.aaa.shiro.tokenauthrealm.util.HashCodeUtil.hash;
-
 import org.opendaylight.aaa.api.PasswordCredentials;
-import org.opendaylight.aaa.shiro.tokenauthrealm.util.HashCodeUtil;
 import org.opendaylight.aaa.shiro.tokenauthrealm.util.EqualUtil;
+import org.opendaylight.aaa.shiro.tokenauthrealm.util.HashCodeUtil;
 
 /**
  * {@link PasswordCredentials} builder.
