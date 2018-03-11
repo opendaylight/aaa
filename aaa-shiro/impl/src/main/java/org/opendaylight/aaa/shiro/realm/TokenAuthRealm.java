@@ -41,29 +41,30 @@ import org.slf4j.LoggerFactory;
 public class TokenAuthRealm extends AuthorizingRealm {
 
     /**
-     * The unique identifying name for <code>TokenAuthRealm</code>
+     * The unique identifying name for <code>TokenAuthRealm</code>.
      */
     private static final String TOKEN_AUTH_REALM_DEFAULT_NAME = "TokenAuthRealm";
 
     /**
-     * The message that is displayed if no <code>TokenAuth</code> interface is
-     * available yet
+     * The message that is displayed if no <code>TokenAuth</code> interface is available yet.
      */
-    private static final String AUTHENTICATION_SERVICE_UNAVAILABLE_MESSAGE = "{\"error\":\"Authentication service unavailable\"}";
+    private static final String AUTHENTICATION_SERVICE_UNAVAILABLE_MESSAGE =
+            "{\"error\":\"Authentication service unavailable\"}";
 
     /**
-     * The message that is displayed if credentials are missing or malformed
+     * The message that is displayed if credentials are missing or malformed.
      */
     private static final String FATAL_ERROR_DECODING_CREDENTIALS = "{\"error\":\"Unable to decode credentials\"}";
 
     /**
-     * The message that is displayed if non-Basic Auth is attempted
+     * The message that is displayed if non-Basic Auth is attempted.
      */
-    private static final String FATAL_ERROR_BASIC_AUTH_ONLY = "{\"error\":\"Only basic authentication is supported by TokenAuthRealm\"}";
+    private static final String FATAL_ERROR_BASIC_AUTH_ONLY
+            = "{\"error\":\"Only basic authentication is supported by TokenAuthRealm\"}";
 
     /**
      * The purposefully generic message displayed if <code>TokenAuth</code> is
-     * unable to validate the given credentials
+     * unable to validate the given credentials.
      */
     private static final String UNABLE_TO_AUTHENTICATE = "{\"error\":\"Could not authenticate\"}";
 
@@ -97,7 +98,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
         try {
             odlPrincipal = (ODLPrincipal) primaryPrincipal;
             return new SimpleAuthorizationInfo(odlPrincipal.getRoles());
-        } catch(ClassCastException e) {
+        } catch (ClassCastException e) {
             LOG.error("Couldn't decode authorization request", e);
         }
         return new SimpleAuthorizationInfo();
@@ -114,8 +115,8 @@ public class TokenAuthRealm extends AuthorizingRealm {
      * .apache.shiro.authc.AuthenticationToken)
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
-            throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(
+            AuthenticationToken authenticationToken) throws AuthenticationException {
 
         final String username;
         final String password;
@@ -148,8 +149,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
                         LOG.debug("Authentication attempt successful");
                         authenticationService.set(auth);
                         final ODLPrincipal odlPrincipal = ODLPrincipalImpl.createODLPrincipal(auth);
-                        return new SimpleAuthenticationInfo(odlPrincipal, password.toCharArray(),
-                                getName());
+                        return new SimpleAuthenticationInfo(odlPrincipal, password.toCharArray(), getName());
                     }
                 } catch (AuthenticationException ae) {
                     LOG.debug("Authentication attempt unsuccessful");

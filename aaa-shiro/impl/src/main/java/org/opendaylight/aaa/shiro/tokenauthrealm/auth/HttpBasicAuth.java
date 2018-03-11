@@ -123,7 +123,7 @@ public class HttpBasicAuth implements TokenAuth {
                     final String message = "Login Attempt in Bad Format."
                             + " Please provide user:password in Base64 format.";
                     LOG.info(message);
-                    throw new AuthenticationException(message);
+                    throw new AuthenticationException(message, e);
                 }
             }
         }

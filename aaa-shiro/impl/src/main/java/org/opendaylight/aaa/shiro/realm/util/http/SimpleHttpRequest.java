@@ -26,6 +26,8 @@ import javax.ws.rs.core.Response;
  *
  * @param <T> the return type of the request.
  */
+// Suppressed so UT's can mock it using Mockito.
+@SuppressWarnings("checkstyle:FinalClass")
 public class SimpleHttpRequest<T> {
     private final Client client;
     private final Class<T> outputType;
@@ -34,7 +36,7 @@ public class SimpleHttpRequest<T> {
     private String method;
     private MediaType mediaType;
     private Object entity;
-    private Map<String, String> queryParams = new HashMap<>();
+    private final Map<String, String> queryParams = new HashMap<>();
 
     private SimpleHttpRequest(final Client client, final Class<T> outputType) {
         this.client = client;
@@ -86,7 +88,7 @@ public class SimpleHttpRequest<T> {
     }
 
     public static class Builder<T> {
-        private SimpleHttpRequest<T> request;
+        private final SimpleHttpRequest<T> request;
 
         Builder(Client client, Class<T> outputType) {
             request = new SimpleHttpRequest<>(client, outputType);

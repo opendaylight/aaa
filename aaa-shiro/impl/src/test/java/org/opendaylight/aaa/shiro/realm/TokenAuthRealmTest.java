@@ -54,7 +54,8 @@ public class TokenAuthRealmTest {
         final String password = "password";
         final String domain = "domain";
         final String expectedUsernamePasswordString = "user:password:domain";
-        assertEquals(expectedUsernamePasswordString, HeaderUtils.getUsernamePasswordDomainString(username, password, domain));
+        assertEquals(expectedUsernamePasswordString, HeaderUtils.getUsernamePasswordDomainString(
+                username, password, domain));
     }
 
     @Test
@@ -67,8 +68,8 @@ public class TokenAuthRealmTest {
 
     @Test
     public void testGetTokenAuthHeader() {
-        final String encodedCredentials = HeaderUtils.getEncodedToken(HeaderUtils.getUsernamePasswordDomainString("user1",
-                "password", "sdn"));
+        final String encodedCredentials = HeaderUtils.getEncodedToken(HeaderUtils.getUsernamePasswordDomainString(
+                "user1", "password", "sdn"));
         final String expectedTokenAuthHeader = "Basic " + encodedCredentials;
         assertEquals(expectedTokenAuthHeader, HeaderUtils.getTokenAuthHeader(encodedCredentials));
     }

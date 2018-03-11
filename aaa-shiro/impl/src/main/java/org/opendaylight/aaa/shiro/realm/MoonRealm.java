@@ -49,7 +49,8 @@ public class MoonRealm extends AuthorizingRealm {
     }
 
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(final AuthenticationToken authenticationToken) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(
+            final AuthenticationToken authenticationToken) throws AuthenticationException {
         final String username;
         final String password;
         final String domain = MOON_DEFAULT_DOMAIN;
@@ -71,9 +72,9 @@ public class MoonRealm extends AuthorizingRealm {
 
         password = new String(upt.getPassword());
 
-        final MoonPrincipal moonPrincipal = moonAuthenticate(username,password,domain);
-        if (moonPrincipal != null){
-            return new SimpleAuthenticationInfo(moonPrincipal, password.toCharArray(),getName());
+        final MoonPrincipal moonPrincipal = moonAuthenticate(username, password, domain);
+        if (moonPrincipal != null) {
+            return new SimpleAuthenticationInfo(moonPrincipal, password.toCharArray(), getName());
         } else {
             return null;
         }
@@ -105,7 +106,8 @@ public class MoonRealm extends AuthorizingRealm {
         final String url = String.format("http://%s:%s/moon/auth/tokens", server, port);
         LOG.debug("Moon server is at: {}:{} and will be accessed through {}", server, port, url);
         final WebResource webResource = client.resource(url);
-        final String input = "{\"username\": \""+ username + "\"," + "\"password\":" + "\"" + password + "\"," + "\"project\":" + "\"" + domain + "\"" + "}";
+        final String input = "{\"username\": \"" + username + "\"," + "\"password\":" + "\"" + password + "\","
+                + "\"project\":" + "\"" + domain + "\"" + "}";
         final ClientResponse response = webResource.type("application/json").post(ClientResponse.class, input);
         output = response.getEntity(String.class);
 

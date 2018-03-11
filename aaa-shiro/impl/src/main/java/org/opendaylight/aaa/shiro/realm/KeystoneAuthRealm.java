@@ -94,6 +94,7 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     }
 
     @Override
+    @SuppressWarnings("checkstyle:AvoidHidingCauseException")
     protected AuthenticationInfo doGetAuthenticationInfo(final AuthenticationToken authenticationToken) {
         try {
             final boolean hasSslVerification = getSslVerification();

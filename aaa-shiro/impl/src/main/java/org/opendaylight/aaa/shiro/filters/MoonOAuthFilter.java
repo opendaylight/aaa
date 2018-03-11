@@ -41,7 +41,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * MoonOAuthFilter filters oauth1 requests form token based authentication
+ * MoonOAuthFilter filters oauth1 requests form token based authentication.
  *
  * @author Alioune BA alioune.ba@orange.com
  */
@@ -65,7 +65,8 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
     }
 
     @Override
-    protected UsernamePasswordToken createToken(final ServletRequest request, final ServletResponse response) throws Exception {
+    protected UsernamePasswordToken createToken(final ServletRequest request,
+                                                final ServletResponse response) throws Exception {
         final HttpServletRequest httpRequest;
         final OAuthRequest oauthRequest;
         try {
@@ -86,7 +87,7 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
 
     @Override
     protected boolean onLoginSuccess(final AuthenticationToken token, final Subject subject,
-            final ServletRequest request, final ServletResponse response) throws Exception {
+                                     final ServletRequest request, final ServletResponse response) throws Exception {
 
         final HttpServletResponse httpResponse;
         try {
@@ -110,8 +111,9 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
     }
 
     @Override
-    protected boolean onLoginFailure(final AuthenticationToken token, final AuthenticationException e,
-            final ServletRequest request, final ServletResponse response) {
+    protected boolean onLoginFailure(final AuthenticationToken token,
+                                     final AuthenticationException authenticationException,
+                                     final ServletRequest request, final ServletResponse response) {
 
         final HttpServletResponse resp;
         try {
@@ -125,6 +127,7 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
     }
 
     @Override
+    @SuppressWarnings("checkstyle:IllegalCatch")
     protected boolean executeLogin(final ServletRequest request, final ServletResponse response) throws Exception {
 
         final HttpServletRequest req;
@@ -147,8 +150,8 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
             if (req.getServletPath().equals(TOKEN_GRANT_ENDPOINT)) {
                 final UsernamePasswordToken token = createToken(request, response);
                 if (token == null) {
-                    final String msg = "A valid non-null AuthenticationToken " +
-                            "must be created in order to execute a login attempt.";
+                    final String msg = "A valid non-null AuthenticationToken "
+                            + "must be created in order to execute a login attempt.";
                     throw new IllegalStateException(msg);
                 }
                 try {
@@ -167,35 +170,34 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
             error(resp, SC_UNAUTHORIZED, e.getMessage());
         } catch (final OAuthProblemException oe) {
             error(resp, oe);
-        } catch (final Exception e) {
+        } catch (final RuntimeException e) {
             error(resp, e);
         }
         return false;
     }
 
-    private void oauthAccessTokenResponse(final HttpServletResponse resp, final Claim claim, final String clientId, final String token)
-            throws OAuthSystemException, IOException {
+    private void oauthAccessTokenResponse(final HttpServletResponse resp, final Claim claim, final String clientId,
+                                          final String token) throws OAuthSystemException, IOException {
 
         if (claim == null) {
             throw new AuthenticationException(UNAUTHORIZED);
         }
 
         // Cache this token...
-        final Authentication auth = new AuthenticationBuilder(new ClaimBuilder(claim).setClientId(
-                clientId).build()).setExpiration(tokenExpiration()).build();
+        final Authentication auth = new AuthenticationBuilder(new ClaimBuilder(claim).setClientId(clientId).build())
+                .setExpiration(tokenExpiration()).build();
         tokenStore.put(token, auth);
 
         final OAuthResponse r = OAuthASResponse.tokenResponse(SC_CREATED).setAccessToken(token)
-                                         .setTokenType(TokenType.BEARER.toString())
-                                         .setExpiresIn(Long.toString(auth.expiration()))
-                                         .buildJSONMessage();
+                .setTokenType(TokenType.BEARER.toString()).setExpiresIn(Long.toString(auth.expiration()))
+                .buildJSONMessage();
         write(resp, r);
     }
 
-    private void write(final HttpServletResponse resp, final OAuthResponse r) throws IOException {
-        resp.setStatus(r.getResponseStatus());
+    private void write(final HttpServletResponse resp, final OAuthResponse response) throws IOException {
+        resp.setStatus(response.getResponseStatus());
         PrintWriter pw = resp.getWriter();
-        pw.print(r.getBody());
+        pw.print(response.getBody());
         pw.flush();
         pw.close();
     }
@@ -205,37 +207,35 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
     }
 
     /**
-     * Utility method used to emit an error OAuthResponse with the given HTTP code
+     * Utility method used to emit an error OAuthResponse with the given HTTP code.
      */
     private void error(final HttpServletResponse resp, final int httpCode, final String error) {
         try {
-            final OAuthResponse r = OAuthResponse.errorResponse(httpCode).setError(error)
-                                           .buildJSONMessage();
+            final OAuthResponse r = OAuthResponse.errorResponse(httpCode).setError(error).buildJSONMessage();
             write(resp, r);
         } catch (final IOException | OAuthSystemException ex) {
             LOG.error("Failed to write the error ", ex);
         }
     }
 
-    private void error(final HttpServletResponse resp, final OAuthProblemException e) {
+    private void error(final HttpServletResponse resp, final OAuthProblemException oauthProblemException) {
         try {
-            final OAuthResponse r = OAuthResponse.errorResponse(SC_BAD_REQUEST).error(e)
-                                           .buildJSONMessage();
+            final OAuthResponse r = OAuthResponse.errorResponse(SC_BAD_REQUEST).error(oauthProblemException)
+                    .buildJSONMessage();
             write(resp, r);
         } catch (final IOException | OAuthSystemException ex) {
             LOG.error("Failed to write the error ", ex);
         }
     }
 
-    private void error(final HttpServletResponse resp, final Exception e) {
+    private void error(final HttpServletResponse resp, final Exception exception) {
         try {
             final OAuthResponse r = OAuthResponse.errorResponse(SC_INTERNAL_SERVER_ERROR)
-                                           .setError(e.getClass().getName())
-                                           .setErrorDescription(e.getMessage()).buildJSONMessage();
+                    .setError(exception.getClass().getName()).setErrorDescription(exception.getMessage())
+                    .buildJSONMessage();
             write(resp, r);
         } catch (final IOException | OAuthSystemException ex) {
             LOG.error("Failed to write the error ", ex);
         }
     }
-
 }

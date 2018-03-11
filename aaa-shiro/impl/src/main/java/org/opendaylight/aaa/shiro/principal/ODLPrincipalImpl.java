@@ -16,7 +16,7 @@ import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
  * An ODL specific principal which stores some critical information about the user
  * making the auth request.
  */
-public class ODLPrincipalImpl implements ODLPrincipal {
+public final class ODLPrincipalImpl implements ODLPrincipal {
 
     private final String username;
     private final String domain;

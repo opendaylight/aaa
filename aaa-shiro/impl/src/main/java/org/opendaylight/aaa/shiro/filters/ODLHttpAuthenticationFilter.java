@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
  * Extends <code>BasicHttpAuthenticationFilter</code> to include ability to
  * authenticate OAuth2 tokens.
  *
+ * <p>
  * This behavior is enabled by default for backwards compatibility. To disable
  * OAuth2 functionality, just comment out the following line from the
  * <code>etc/shiro.ini</code> file:

@@ -15,7 +15,7 @@ import java.util.Set;
 import org.opendaylight.aaa.api.Claim;
 
 /**
- * MoonPrincipal contains all user's information returned by moon on successful authentication
+ * MoonPrincipal contains all user's information returned by moon on successful authentication.
  *
  * @author Alioune BA alioune.ba@orange.com
  */
@@ -27,7 +27,6 @@ public class MoonPrincipal {
     private final ImmutableSet<String> roles;
     private final String token;
 
-
     public MoonPrincipal(final String username, final String domain, final String userId,
             final Set<String> roles, final String token) {
 
@@ -38,13 +37,13 @@ public class MoonPrincipal {
         this.token = token;
     }
 
-    public MoonPrincipal createODLPrincipal(final String username, final String domain,
-            final String userId, final Set<String> roles, final String token) {
+    public MoonPrincipal createODLPrincipal(final String userName, final String theDomain,
+            final String theUserId, final Set<String> theRoles, final String theToken) {
 
-        return new MoonPrincipal(username, domain, userId, roles,token);
+        return new MoonPrincipal(userName, theDomain, theUserId, theRoles,theToken);
     }
 
-    public Claim principalToClaim () {
+    public Claim principalToClaim() {
         return new MoonClaim("", this.getUserId(), this.getUsername(), this.getDomain(), this.getRoles());
     }
 
@@ -64,7 +63,7 @@ public class MoonPrincipal {
         return this.roles;
     }
 
-    public String getToken(){
+    public String getToken() {
         return this.token;
     }
 

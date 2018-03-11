@@ -25,4 +25,7 @@ public class AuthenticationException extends RuntimeException {
         super(msg, cause);
     }
 
+    public AuthenticationException(Throwable throwable) {
+        super(throwable);
+    }
 }

@@ -73,14 +73,16 @@ public class MdsalRealm extends AuthorizingRealm {
 
             // iterate through and determine the appropriate roles based on the programmed grants
             final Grants grants = auth.getGrants();
-            final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication.grants.Grants> grantsList = grants.getGrants();
-            for (Grant grant : grantsList ) {
+            final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication
+                    .grants.Grants> grantsList = grants.getGrants();
+            for (Grant grant : grantsList) {
                 if (grant.getUserid().equals(odlPrincipal.getUserId())) {
                     final Roles roles = auth.getRoles();
                     if (roles != null) {
-                        final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication.roles.Roles> rolesList =
-                                roles.getRoles();
-                        for (org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication.roles.Roles role : rolesList) {
+                        final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214
+                                .authentication.roles.Roles> rolesList = roles.getRoles();
+                        for (org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214
+                                .authentication.roles.Roles role : rolesList) {
                             if (role.getRoleid().equals(grant.getRoleid())) {
                                 authRoles.add(role.getRoleid());
                             }
@@ -98,7 +100,7 @@ public class MdsalRealm extends AuthorizingRealm {
      * @return the <code>authentication</code> container
      */
     private Optional<Authentication> getAuthenticationContainer() {
-        try (final ReadOnlyTransaction ro = dataBroker.newReadOnlyTransaction()) {
+        try (ReadOnlyTransaction ro = dataBroker.newReadOnlyTransaction()) {
             final CheckedFuture<Optional<Authentication>, ReadFailedException> result =
                     ro.read(LogicalDatastoreType.CONFIGURATION, AUTH_IID);
 
@@ -119,21 +121,23 @@ public class MdsalRealm extends AuthorizingRealm {
         if (opt.isPresent()) {
             final Authentication auth = opt.get();
             final Users users = auth.getUsers();
-            final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication.users.Users> usersList =
-                    users.getUsers();
-            for (org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication.users.Users u : usersList) {
+            final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication
+                    .users.Users> usersList = users.getUsers();
+            for (org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication.users
+                    .Users u : usersList) {
                 final String inputUsername = HeaderUtils.extractUsername(username);
                 final String domainId = HeaderUtils.extractDomain(username);
                 final String inputUserId = String.format("%s@%s", inputUsername, domainId);
                 final boolean userEnabled = u.isEnabled();
-                if(!userEnabled) {
+                if (!userEnabled) {
                     LOG.trace("userId={} is skipped because it is disabled", u.getUserid());
                 }
-                if(userEnabled && u.getUserid().equals(inputUserId)) {
+                if (userEnabled && u.getUserid().equals(inputUserId)) {
                     final String inputPassword = TokenUtils.extractPassword(authenticationToken);
                     final String hashedInputPassword = SHA256Calculator.getSHA256(inputPassword, u.getSalt());
                     if (hashedInputPassword.equals(u.getPassword())) {
-                        final ODLPrincipal odlPrincipal = ODLPrincipalImpl.createODLPrincipal(inputUsername,domainId,inputUserId);
+                        final ODLPrincipal odlPrincipal = ODLPrincipalImpl
+                                .createODLPrincipal(inputUsername, domainId, inputUserId);
                         return new SimpleAuthenticationInfo(odlPrincipal, inputPassword, getName());
                     }
                 }
