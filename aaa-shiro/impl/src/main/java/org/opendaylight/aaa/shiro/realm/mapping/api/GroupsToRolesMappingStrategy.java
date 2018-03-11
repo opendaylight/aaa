@@ -20,11 +20,11 @@ public interface GroupsToRolesMappingStrategy {
     /**
      * Convert LDAP groups to ODL roles.
      *
-     * @param groups A collection of String groups extracted from making an LDAP query.
-     * @param delimeter A separator to allow multiple target roles.
+     * @param groups        A collection of String groups extracted from making an LDAP query.
+     * @param delimiter     A separator to allow multiple target roles.
      * @param groupRolesMap The association between groups to roles
      * @return A <code>non-null</code> map with group as the key and roles as the value
      */
-    Map<String, Set<String>> mapGroupsToRoles(final Collection<String> groups, final String delimeter,
-                                              final Map<String, String> groupRolesMap);
+    Map<String, Set<String>> mapGroupsToRoles(Collection<String> groups, String delimiter,
+                                              Map<String, String> groupRolesMap);
 }

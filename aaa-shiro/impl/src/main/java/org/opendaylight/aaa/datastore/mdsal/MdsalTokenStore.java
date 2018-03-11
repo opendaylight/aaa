@@ -12,7 +12,7 @@ import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.TokenStore;
 
 /**
- * Implementation of the mdsal AAA token store
+ * Implementation of the mdsal AAA token store.
  */
 public class MdsalTokenStore implements AutoCloseable, TokenStore {
 

@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * is that <code>AAAFilter</code> was designed to support the existing noauth
  * mechanism, while this filter cannot be disabled.
  *
+ * <p>
  * This class is also responsible for delivering debug information; to enable these
  * debug statements, please issue the following in the karaf shell:
  *

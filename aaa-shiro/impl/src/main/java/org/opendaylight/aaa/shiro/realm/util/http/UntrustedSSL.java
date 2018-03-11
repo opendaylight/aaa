@@ -20,17 +20,17 @@ import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
  * Container for an SSL context that allows untrusted access and a hostname
  * verifier that accepts any hostname.
  */
-public class UntrustedSSL {
+public final class UntrustedSSL {
 
     private UntrustedSSL() {}
 
-    private static class InsecureHostnameVerifier {
+    private static final class InsecureHostnameVerifier {
         private static final HostnameVerifier INSTANCE = (hostname, session) -> true;
 
         private InsecureHostnameVerifier() {}
     }
 
-    private static class InsecureTrustManager {
+    private static final class InsecureTrustManager {
         private static final TrustManager[] INSTANCE = new TrustManager[] {
             new X509TrustManager() {
                 private final X509Certificate[] empty = new X509Certificate[] {};
@@ -56,7 +56,7 @@ public class UntrustedSSL {
         private InsecureTrustManager() {}
     }
 
-    private static class InsecureSSLContext {
+    private static final class InsecureSSLContext {
         private static final SSLContext INSTANCE = buildSSLContext();
 
         private InsecureSSLContext() {}

@@ -8,12 +8,11 @@
 
 package org.opendaylight.aaa.shiro.filters;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
 
 import java.util.List;
-
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;

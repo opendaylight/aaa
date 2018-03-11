@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * Accounter is a common place to output AAA messages. Use this class through
  * invoking <code>Logger.output("message")</code>.
  */
-public class Accounter {
+public final class Accounter {
 
     private static final Logger LOG = LoggerFactory.getLogger(Accounter.class);
 
@@ -26,7 +26,7 @@ public class Accounter {
     }
 
     /**
-     * Account for a particular <code>message</code>
+     * Account for a particular <code>message</code>.
      *
      * @param message A message for the aggregated AAA log.
      */

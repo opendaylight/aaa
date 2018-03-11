@@ -7,13 +7,10 @@
  */
 package org.opendaylight.aaa.shiro.moon;
 
-
 import java.io.IOException;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,5 +27,4 @@ public class MoonTokenEndpoint extends HttpServlet {
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws IOException {
         LOG.info("MoonTokenEndpoint Servlet doPost: {} {}", req.getServletPath(), req.getRequestURI());
     }
-
 }

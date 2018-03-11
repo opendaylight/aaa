@@ -8,7 +8,8 @@
 
 package org.opendaylight.aaa.shiro.realm.mapping.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;

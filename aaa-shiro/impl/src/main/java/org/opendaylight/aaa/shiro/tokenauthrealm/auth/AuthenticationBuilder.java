@@ -7,15 +7,12 @@
  */
 package org.opendaylight.aaa.shiro.tokenauthrealm.auth;
 
-import static org.opendaylight.aaa.shiro.tokenauthrealm.util.EqualUtil.areEqual;
-import static org.opendaylight.aaa.shiro.tokenauthrealm.util.HashCodeUtil.hash;
-
 import java.io.Serializable;
 import java.util.Set;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.Claim;
-import org.opendaylight.aaa.shiro.tokenauthrealm.util.HashCodeUtil;
 import org.opendaylight.aaa.shiro.tokenauthrealm.util.EqualUtil;
+import org.opendaylight.aaa.shiro.tokenauthrealm.util.HashCodeUtil;
 
 /**
  * A builder for the authentication context.
@@ -100,11 +97,12 @@ public class AuthenticationBuilder {
                 return false;
             }
             Authentication authentication = (Authentication) object;
-            return EqualUtil.areEqual(expiration, authentication.expiration()) && EqualUtil.areEqual(claim.roles(), authentication.roles())
-                    && EqualUtil.areEqual(claim.domain(), authentication.domain())
-                    && EqualUtil.areEqual(claim.userId(), authentication.userId())
-                    && EqualUtil.areEqual(claim.user(), authentication.user())
-                    && EqualUtil.areEqual(claim.clientId(), authentication.clientId());
+            return EqualUtil.areEqual(expiration, authentication.expiration()) && EqualUtil
+                    .areEqual(claim.roles(), authentication.roles()) && EqualUtil
+                    .areEqual(claim.domain(), authentication.domain()) && EqualUtil
+                    .areEqual(claim.userId(), authentication.userId()) && EqualUtil
+                    .areEqual(claim.user(), authentication.user()) && EqualUtil
+                    .areEqual(claim.clientId(), authentication.clientId());
         }
 
         @Override
