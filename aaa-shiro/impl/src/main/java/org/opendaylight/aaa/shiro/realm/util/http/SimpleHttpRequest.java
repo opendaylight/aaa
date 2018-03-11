@@ -26,6 +26,7 @@ import javax.ws.rs.core.Response;
  *
  * @param <T> the return type of the request.
  */
+@SuppressWarnings("checkstyle:FinalClass")
 public class SimpleHttpRequest<T> {
     private final Client client;
     private final Class<T> outputType;

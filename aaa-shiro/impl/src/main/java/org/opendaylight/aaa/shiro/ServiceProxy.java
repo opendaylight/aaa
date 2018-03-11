@@ -20,10 +20,12 @@ import org.slf4j.LoggerFactory;
  * disabled by default in order to support workflows such as the feature
  * <code>odl-restconf-noauth</code>.
  *
+ * <p>
  * The AAA service is enabled through installing the <code>odl-aaa-shiro</code>
  * feature. The blueprint Provider in <code>aaa-shiro-act</code> enables AAA
  * through the ServiceProxy, which in turn enables the AAAFilter.
  *
+ * <p>
  * ServiceProxy is a singleton; access to the ServiceProxy is granted through
  * the <code>getInstance()</code> function.
  *
@@ -32,7 +34,7 @@ import org.slf4j.LoggerFactory;
  *      web,xml</a>
  * @see <code>AAAFilter</code>
  */
-public class ServiceProxy {
+public final class ServiceProxy {
 
     private static final Logger LOG = LoggerFactory.getLogger(ServiceProxy.class);
 
@@ -41,15 +43,17 @@ public class ServiceProxy {
     private AAAFilter filter;
 
     /**
-     * private for singleton pattern
+     * private for singleton pattern.
      */
     private ServiceProxy() {
-        final String INFO_MESSAGE = "Creating the ServiceProxy";
-        LOG.info(INFO_MESSAGE);
+        final String infoMessage = "Creating the ServiceProxy";
+        LOG.info(infoMessage);
     }
 
     /**
-     * @return ServiceProxy, a feature level singleton
+     * Returns the single instance.
+     *
+     * @return ServiceProxy, a feature level singleton.
      */
     public static ServiceProxy getInstance() {
         return instance;
@@ -73,13 +77,13 @@ public class ServiceProxy {
     /**
      * Extract whether the service is enabled.
      *
-     * @param filter
+     * @param aaaFilter
      *            register an optional Filter for callback if enable state
      *            changes
      * @return Whether the service is enabled
      */
-    public synchronized boolean getEnabled(final AAAFilter filter) {
-        this.filter = filter;
+    public synchronized boolean getEnabled(final AAAFilter aaaFilter) {
+        this.filter = aaaFilter;
         return enabled;
     }
 }

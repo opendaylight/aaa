@@ -17,6 +17,9 @@ package org.opendaylight.aaa.api;
 public class AuthenticationException extends RuntimeException {
     private static final long serialVersionUID = -187422301135305719L;
 
+    public AuthenticationException() {
+    }
+
     public AuthenticationException(String msg) {
         super(msg);
     }
@@ -25,4 +28,7 @@ public class AuthenticationException extends RuntimeException {
         super(msg, cause);
     }
 
+    public AuthenticationException(Throwable throwable) {
+        super(throwable);
+    }
 }

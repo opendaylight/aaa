@@ -18,13 +18,17 @@ import org.opendaylight.aaa.shiro.tokenauthrealm.auth.HttpBasicAuth;
 /**
  * Utilities for HTTP header manipulation.
  */
-public class HeaderUtils {
+public final class HeaderUtils {
 
     public static final String USERNAME_DOMAIN_SEPARATOR = "@";
 
+    private HeaderUtils() {
+    }
+
     /**
+     * Returns a string containing the encoded token.
      *
-     * @param credentialToken
+     * @param credentialToken token to encode
      * @return Base64 encoded token
      */
     public static String getEncodedToken(final String credentialToken) {
@@ -36,17 +40,18 @@ public class HeaderUtils {
      *
      * @param username The request username
      * @param password The request password
-     * @param domain The request domain
+     * @param domain   The request domain
      * @return <code>username:password:domain</code>
      */
     public static String getUsernamePasswordDomainString(final String username, final String password,
                                                          final String domain) {
-        return username + HttpBasicAuth.AUTH_SEP + password  + HttpBasicAuth.AUTH_SEP + domain;
+        return username + HttpBasicAuth.AUTH_SEP + password + HttpBasicAuth.AUTH_SEP + domain;
     }
 
     /**
+     * Returns a string with the authorization header.
      *
-     * @param encodedToken
+     * @param encodedToken encoded token
      * @return Basic <code>encodedToken</code>
      */
     public static String getTokenAuthHeader(final String encodedToken) {
@@ -54,13 +59,14 @@ public class HeaderUtils {
     }
 
     /**
+     * Returns a map with all the list of headers for the given token.
      *
-     * @param tokenAuthHeader
+     * @param tokenAuthHeader token authorization header
      * @return a map with the basic auth header
      */
     public static Map<String, List<String>> formHeadersWithToken(final String tokenAuthHeader) {
-        final Map<String, List<String>> headers = new HashMap<String, List<String>>();
-        final List<String> headerValue = new ArrayList<String>();
+        final Map<String, List<String>> headers = new HashMap<>();
+        final List<String> headerValue = new ArrayList<>();
         headerValue.add(tokenAuthHeader);
         headers.put(HttpBasicAuth.AUTH_HEADER, headerValue);
         return headers;
@@ -72,7 +78,7 @@ public class HeaderUtils {
      *
      * @param username Username from the request
      * @param password Password from the request
-     * @param domain Domain from the request
+     * @param domain   Domain from the request
      * @return input map for <code>TokenAuth.validate()</code>
      */
     public static Map<String, List<String>> formHeaders(final String username, final String password,
@@ -84,28 +90,28 @@ public class HeaderUtils {
     }
 
     /**
-     * Extract username from the form <code>user</code> or <code>user@domain</code>
+     * Extract username from the form <code>user</code> or <code>user@domain</code>.
      *
      * @param possiblyQualifiedUsername <code>user</code> or <code>user@domain</code>
      * @return username
      */
     public static String extractUsername(final String possiblyQualifiedUsername) {
         if (possiblyQualifiedUsername.contains(USERNAME_DOMAIN_SEPARATOR)) {
-            final String [] qualifiedUserArray = possiblyQualifiedUsername.split(USERNAME_DOMAIN_SEPARATOR);
+            final String[] qualifiedUserArray = possiblyQualifiedUsername.split(USERNAME_DOMAIN_SEPARATOR);
             return qualifiedUserArray[0];
         }
         return possiblyQualifiedUsername;
     }
 
     /**
-     * Extract domain from the form <code>user</code> or <code>user@domain</code>
+     * Extract domain from the form <code>user</code> or <code>user@domain</code>.
      *
      * @param possiblyQualifiedUsername <code>user</code> or <code>user@domain</code>
      * @return the domain or <code>HttpBasicAuth.DEFAULT_DOMAIN</code>
      */
     public static String extractDomain(final String possiblyQualifiedUsername) {
         if (possiblyQualifiedUsername.contains(USERNAME_DOMAIN_SEPARATOR)) {
-            final String [] qualifiedUserArray = possiblyQualifiedUsername.split(USERNAME_DOMAIN_SEPARATOR);
+            final String[] qualifiedUserArray = possiblyQualifiedUsername.split(USERNAME_DOMAIN_SEPARATOR);
             return qualifiedUserArray[1];
         }
         return HttpBasicAuth.DEFAULT_DOMAIN;

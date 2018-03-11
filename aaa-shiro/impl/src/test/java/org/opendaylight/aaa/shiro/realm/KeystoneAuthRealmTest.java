@@ -8,7 +8,6 @@
 
 package org.opendaylight.aaa.shiro.realm;
 
-
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -42,10 +41,10 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.opendaylight.aaa.provider.GsonProvider;
 import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.provider.GsonProvider;
 import org.opendaylight.aaa.shiro.keystone.domain.KeystoneAuth;
 import org.opendaylight.aaa.shiro.keystone.domain.KeystoneToken;
 import org.opendaylight.aaa.shiro.realm.util.http.SimpleHttpClient;

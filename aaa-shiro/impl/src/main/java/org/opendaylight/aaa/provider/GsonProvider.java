@@ -9,14 +9,16 @@ package org.opendaylight.aaa.provider;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
@@ -24,8 +26,6 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
 
 // Taken from https://memorynotfound.com/jaxrs-jersey-gson-serializer-deserializer/
 @Provider
@@ -76,23 +76,23 @@ public class GsonProvider<T> implements MessageBodyReader<T>, MessageBodyWriter<
     }
 
     @Override
-    public long getSize(T t, Class<?> type, Type genericType,
+    public long getSize(T type, Class<?> theClass, Type genericType,
                         Annotation[] annotations, MediaType mediaType) {
         return -1;
     }
 
     @Override
-    public void writeTo(T t, Class<?> type, Type genericType, Annotation[] annotations,
+    public void writeTo(T type, Class<?> theClass, Type genericType, Annotation[] annotations,
                         MediaType mediaType, MultivaluedMap<String, Object> httpHeaders,
                         OutputStream entityStream) throws IOException, WebApplicationException {
 
         PrintWriter printWriter = new PrintWriter(entityStream);
         try {
             String json;
-            if (ui.getQueryParameters().containsKey(PRETTY_PRINT)){
-                json = prettyGson.toJson(t);
+            if (ui.getQueryParameters().containsKey(PRETTY_PRINT)) {
+                json = prettyGson.toJson(type);
             } else {
-                json = gson.toJson(t);
+                json = gson.toJson(type);
             }
             printWriter.write(json);
             printWriter.flush();

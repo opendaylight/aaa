@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provider for AAA shiro implementation.
  */
-public class AAAShiroProvider {
+public final class AAAShiroProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
@@ -101,28 +101,28 @@ public class AAAShiroProvider {
         }
     }
 
-    private void registerServletContexts(final HttpService httpService, final String moonEndpointPath,
-                                         final String oauth2EndpointPath)
+    private void registerServletContexts(final HttpService httpservice, final String moonEndPointPath,
+                                         final String oauth2EndPointPath)
             throws ServletException, NamespaceException {
         LOG.info("attempting registration of AAA moon, oauth2 and auth servlets");
 
-        Preconditions.checkNotNull(httpService, "httpService cannot be null");
-        httpService.registerServlet(moonEndpointPath, new org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint(),
+        Preconditions.checkNotNull(httpservice, "httpService cannot be null");
+        httpservice.registerServlet(moonEndPointPath, new org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint(),
                 null, null);
-        httpService.registerServlet(oauth2EndpointPath, new OAuth2TokenServlet(), null, null);
+        httpservice.registerServlet(oauth2EndPointPath, new OAuth2TokenServlet(), null, null);
     }
 
     /**
      * Initialize AAA Services.  This method will evolve over time as ServiceLocator is refactored/removed.
      *
      * @param credentialAuth wired via blueprint
-     * @param iidmStore wired via blueprint
-     * @param tokenStore wired via blueprint
+     * @param iidmstore wired via blueprint
+     * @param tokenstore wired via blueprint
      */
     private void initializeServices(final CredentialAuth<PasswordCredentials> credentialAuth,
-                                    final IIDMStore iidmStore, final TokenStore tokenStore) {
+                                    final IIDMStore iidmstore, final TokenStore tokenstore) {
         try {
-            new StoreBuilder(iidmStore).init();
+            new StoreBuilder(iidmstore).init();
         } catch (final IDMStoreException e) {
             LOG.error("Failed to initialize data in store", e);
         }
@@ -130,7 +130,7 @@ public class AAAShiroProvider {
         final AuthenticationService authService = new AuthenticationManager();
         ServiceLocator.getInstance().setAuthenticationService(authService);
 
-        final IdMService idmService = new IdMServiceImpl(iidmStore);
+        final IdMService idmService = new IdMServiceImpl(iidmstore);
         ServiceLocator.getInstance().setIdmService(idmService);
 
         ServiceLocator.getInstance().setCredentialAuth(credentialAuth);
@@ -139,7 +139,7 @@ public class AAAShiroProvider {
         final List<TokenAuth> tokenAuthList = Lists.newArrayList(tokenAuth);
         ServiceLocator.getInstance().setTokenAuthCollection(tokenAuthList);
 
-        ServiceLocator.getInstance().setTokenStore(tokenStore);
+        ServiceLocator.getInstance().setTokenStore(tokenstore);
     }
 
     /**

@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * package, <code>org.opendaylightaaa.shiro.realm</code>, which enables easier
  * import by consuming servlets.
  *
+ * <p>
  * To enable the <code>ODLActiveDirectoryRealm</code>, modify the realms
  * declaration in <code>etc/shiro.ini</code> as follows:
  * <code>adRealm = ODLActiveDirectoryRealm

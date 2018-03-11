@@ -61,7 +61,8 @@ public class DomainStoreTest {
 
     @Test
     public void deleteDomainsTest() throws SQLException, Exception {
-        DomainStore ds = new DomainStore(new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().build()));
+        final DomainStore ds = new DomainStore(
+                new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().build()));
         String domainId = "Testing12345";
 
         // Run Test
