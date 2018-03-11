@@ -22,6 +22,29 @@
       "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "769bd31c_41176ecf",
+        "filename": "features/odl-aaa-shiro/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2018-03-11T18:58:18Z",
+      "side": 1,
+      "message": "This means we are pulling explicitly pax-web-api. Shouldn\u0027t that be provided by a karaf feature instead?",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 20
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
