@@ -49,6 +49,76 @@
     },
     {
       "key": {
+        "uuid": "64a96ade_4764ff6e",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2018-03-12T15:42:06Z",
+      "side": 1,
+      "message": "I was under the impression the purpose of this layer to allow users to register things without resorting to explicit Import-Package magic.\n\nThat capability is not demonstrated here -- in fact pax.web.service is added here as an import, which seems to indicate implementation leakage. I left a comment about that in the BP container.\n\nThat is very much grounds for -1, at least in my eyes. As for \u0027never -1\u0027: votes are a matter of opinion. It is up to you as contributor and for committers whether or not you take it into account.",
+      "parentUuid": "4850384a_ac610151",
+      "range": {
+        "startLine": 243,
+        "startChar": 0,
+        "endLine": 272,
+        "endChar": 41
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17900128_800263f2",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/OsgiWebInitializer.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2018-03-12T15:42:06Z",
+      "side": 1,
+      "message": "Why is this not in the implementation?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a859967d_7af0b7f9",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2018-03-12T15:42:06Z",
+      "side": 1,
+      "message": "This should live osgi provider and should be injected here as a service.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 9
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "769bd31c_41176ecf",
         "filename": "features/odl-aaa-shiro/pom.xml",
         "patchSetId": 11
@@ -84,6 +154,30 @@
       "side": 1,
       "message": "Probably, but let us please clarify through comments here EXACTLY what I need to do to get your +1 on this one, before I actually make any changes?\n\nSo (AFAIK) the \"pax-web-api\" bundle gets installed by Karaf\u0027s standard web feature, which we (ODL) always already have install anyway as in, aaa and restconf don\u0027t run without web.  Therefore, this works just fine in practice.  \n\nIf your argument is that we should perhaps add a more explicit dependency to the Karaf web feature somewhere, then I\u0027m happy to do that - where do you want it?  In odl-aaa-shiro/src/main/feature/feature.xml as a \u003cfeature\u003eweb\u003c/feature\u003e, after the odl-karaf-feat-jetty? But... odlparent\u0027s odl-karaf-feat-jetty features already has a \u003cfeature\u003ewar - so doesn\u0027t that do exactly this already?\n\nI\u0027m therefore unclear exactly what you are suggesting - will you clarify?",
       "parentUuid": "769bd31c_41176ecf",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 20
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "645d320b_def88931",
+        "filename": "features/odl-aaa-shiro/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2018-03-12T15:42:06Z",
+      "side": 1,
+      "message": "What I am saying is that it is unclear why that pax-web-api bundle is being mentioned in feature.xml -- from what you are saying it should have been eliminated as being pulled in by the war feature (through something like 5 dependencies), but it is not.\n\nWhat I would like to see is that being acknowledged and tracked somewhere, as it is clearly some amount of technical debt.",
+      "parentUuid": "17f1725e_0e25ee08",
       "range": {
         "startLine": 68,
         "startChar": 0,
