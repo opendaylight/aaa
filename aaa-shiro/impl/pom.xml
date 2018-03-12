@@ -120,10 +120,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.compendium</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
-        </dependency>
 
         <!-- JSON JAXB Stuff -->
         <dependency>
@@ -243,8 +239,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                         <Import-Package>
                             com.google.*,
                             com.sun.jersey.spi.container.servlet,
+                            com.sun.jersey.api.client.config,
                             javax.servlet.http,
                             javax.servlet.*,
+                            javax.net.ssl,
                             org.apache.oltu.oauth2.*,
                             javax.ws.rs.ext,
                             javax.ws.rs,javax.ws.rs.core,
@@ -270,7 +268,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                             org.ops4j.pax.web.service,
                             org.h2.*,
                         </Import-Package>
-                        <Bundle-Activator>org.opendaylight.aaa.AAAShiroActivator</Bundle-Activator>
                     </instructions>
                 </configuration>
             </plugin>

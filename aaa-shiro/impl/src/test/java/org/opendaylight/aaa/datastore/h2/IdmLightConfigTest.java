@@ -20,7 +20,7 @@ public class IdmLightConfigTest {
 
     @Test
     public void testDefaults() {
-        IdmLightConfig config = new IdmLightConfigBuilder().build();
+        IdmLightConfig config = new IdmLightConfigBuilder().dbUser("foo").dbPwd("bar").build();
         assertThat(config.getDbDriver()).isEqualTo("org.h2.Driver");
         assertThat(config.getDbConnectionString()).isEqualTo("jdbc:h2:./data/idmlight.db");
         assertThat(config.getDbUser()).isEqualTo("foo");
@@ -31,6 +31,7 @@ public class IdmLightConfigTest {
     @Test
     public void testCustomDirectory() {
         IdmLightConfigBuilder builder = new IdmLightConfigBuilder();
+        builder.dbUser("foo").dbPwd("bar");
         builder.dbDirectory("target");
         IdmLightConfig config = builder.build();
         assertThat(config.getDbConnectionString()).isEqualTo("jdbc:h2:target/idmlight.db");
@@ -39,6 +40,7 @@ public class IdmLightConfigTest {
     @Test
     public void testCustomConnectionString() {
         IdmLightConfigBuilder builder = new IdmLightConfigBuilder();
+        builder.dbUser("foo").dbPwd("bar");
         builder.dbConnectionString("jdbc:mysql://localhost/test");
         IdmLightConfig config = builder.build();
         assertThat(config.getDbConnectionString()).isEqualTo("jdbc:mysql://localhost/test");

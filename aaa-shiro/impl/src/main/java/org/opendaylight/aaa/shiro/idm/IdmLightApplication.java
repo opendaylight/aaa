@@ -8,13 +8,11 @@
 
 package org.opendaylight.aaa.shiro.idm;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import com.google.common.collect.ImmutableSet;
 import java.util.Set;
 import javax.ws.rs.core.Application;
+import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.provider.GsonProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A JAX-RS application for IdmLight. The REST endpoints delivered by this
@@ -29,13 +27,12 @@ import org.slf4j.LoggerFactory;
  * store.
  *
  * @author liemmn
- * @see <code>org.opendaylight.aaa.shiro.idm.rest.DomainHandler</code>
- * @see <code>org.opendaylight.aaa.shiro.idm.rest.UserHandler</code>
- * @see <code>org.opendaylight.aaa.shiro.idm.rest.RoleHandler</code>
+ *
+ * @see org.opendaylight.aaa.shiro.idm.DomainHandler
+ * @see org.opendaylight.aaa.shiro.idm.UserHandler
+ * @see org.opendaylight.aaa.shiro.idm.RoleHandler
  */
 public class IdmLightApplication extends Application {
-
-    private static final Logger LOG = LoggerFactory.getLogger(IdmLightApplication.class);
 
     // TODO create a bug to address the fact that the implementation assumes 128
     // as the max length, even though this claims 256.
@@ -44,12 +41,19 @@ public class IdmLightApplication extends Application {
      */
     public static final int MAX_FIELD_LEN = 256;
 
-    public IdmLightApplication() {
+    private final AAAShiroProvider provider;
+
+    public IdmLightApplication(AAAShiroProvider provider) {
+        this.provider = provider;
     }
 
     @Override
-    public Set<Class<?>> getClasses() {
-        return new HashSet<>(Arrays.asList(GsonProvider.class,
-                DomainHandler.class, RoleHandler.class, UserHandler.class));
+    public Set<Object> getSingletons() {
+        return ImmutableSet.builderWithExpectedSize(32)
+                    .add(new GsonProvider<>())
+                    .add(new DomainHandler(provider))
+                    .add(new RoleHandler(provider))
+                    .add(new UserHandler(provider))
+                    .build();
     }
 }
