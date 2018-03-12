@@ -35,6 +35,7 @@
     <module>aaa-shiro-act</module>
     <module>dependency-check</module>
     <module>web</module>
+    <module>it</module>
   </modules>
 
   <build>
