@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.idm;
 
 import javax.ws.rs.Consumes;
@@ -40,7 +39,14 @@ import org.slf4j.LoggerFactory;
  */
 @Path("/v1/roles")
 public class RoleHandler {
+
     private static final Logger LOG = LoggerFactory.getLogger(RoleHandler.class);
+
+    private final AAAShiroProvider provider;
+
+    public RoleHandler(AAAShiroProvider provider) {
+        this.provider = provider;
+    }
 
     /**
      * Extracts all roles.
@@ -54,7 +60,7 @@ public class RoleHandler {
         LOG.info("get /roles");
         Roles roles = null;
         try {
-            roles = AAAShiroProvider.getInstance().getIdmStore().getRoles();
+            roles = provider.getIdmStore().getRoles();
         } catch (IDMStoreException e) {
             LOG.error("Internal error getting the roles", e);
             return new IDMError(500, "internal error getting roles", e.getMessage()).response();
@@ -78,7 +84,7 @@ public class RoleHandler {
         Role role = null;
 
         try {
-            role = AAAShiroProvider.getInstance().getIdmStore().readRole(id);
+            role = provider.getIdmStore().readRole(id);
         } catch (IDMStoreException e) {
             LOG.error("Internal error getting the role", e);
             return new IDMError(500, "internal error getting roles", e.getMessage()).response();
@@ -143,7 +149,7 @@ public class RoleHandler {
                         .response();
             }
 
-            role = AAAShiroProvider.getInstance().getIdmStore().writeRole(role);
+            role = provider.getIdmStore().writeRole(role);
         } catch (IDMStoreException e) {
             LOG.error("Internal error creating role", e);
             return new IDMError(500, "internal error creating role", e.getMessage()).response();
@@ -175,19 +181,19 @@ public class RoleHandler {
 
             // name
             // TODO: names should be unique
-            if ((role.getName() != null) && (role.getName().length() > IdmLightApplication.MAX_FIELD_LEN)) {
+            if (role.getName() != null && role.getName().length() > IdmLightApplication.MAX_FIELD_LEN) {
                 return new IDMError(400, "role name max length is :" + IdmLightApplication.MAX_FIELD_LEN, "")
                         .response();
             }
 
             // description
-            if ((role.getDescription() != null)
-                    && (role.getDescription().length() > IdmLightApplication.MAX_FIELD_LEN)) {
+            if (role.getDescription() != null
+                    && role.getDescription().length() > IdmLightApplication.MAX_FIELD_LEN) {
                 return new IDMError(400, "role description max length is :" + IdmLightApplication.MAX_FIELD_LEN, "")
                         .response();
             }
 
-            role = AAAShiroProvider.getInstance().getIdmStore().updateRole(role);
+            role = provider.getIdmStore().updateRole(role);
             if (role == null) {
                 return new IDMError(404, "role id not found :" + id, "").response();
             }
@@ -215,7 +221,7 @@ public class RoleHandler {
         LOG.info("Delete /roles/{}", id);
 
         try {
-            Role role = AAAShiroProvider.getInstance().getIdmStore().deleteRole(id);
+            Role role = provider.getIdmStore().deleteRole(id);
             if (role == null) {
                 return new IDMError(404, "role id not found :" + id, "").response();
             }

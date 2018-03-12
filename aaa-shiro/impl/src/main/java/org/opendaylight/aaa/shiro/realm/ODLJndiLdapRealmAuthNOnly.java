@@ -43,7 +43,7 @@ public class ODLJndiLdapRealmAuthNOnly extends JndiLdapRealm {
      * Adds debugging information surrounding creation of ODLJndiLdapRealm
      */
     public ODLJndiLdapRealmAuthNOnly() {
-        LOG.debug("Creating ODLJndiLdapRealmAuthNOnly");
+        LOG.info("ODLJndiLdapRealmAuthNOnly realm created");
     }
 
     /*

@@ -12,19 +12,23 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.CheckedFuture;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
 import org.opendaylight.aaa.shiro.realm.util.TokenUtils;
 import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
+import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
@@ -51,8 +55,11 @@ public class MdsalRealm extends AuthorizingRealm {
     private static final InstanceIdentifier<Authentication> AUTH_IID =
             InstanceIdentifier.builder(Authentication.class).build();
 
+    private final DataBroker dataBroker;
+
     public MdsalRealm() {
-        LOG.info("Instantiating {}", MdsalRealm.class.getName());
+        this.dataBroker = Objects.requireNonNull(ThreadLocals.DATABROKER_TL.get());
+        LOG.info("MdsalRealm created");
     }
 
     @Override
@@ -91,7 +98,6 @@ public class MdsalRealm extends AuthorizingRealm {
      * @return the <code>authentication</code> container
      */
     private Optional<Authentication> getAuthenticationContainer() {
-        final DataBroker dataBroker = AAAShiroProvider.getInstance().getDataBroker();
         try (final ReadOnlyTransaction ro = dataBroker.newReadOnlyTransaction()) {
             final CheckedFuture<Optional<Authentication>, ReadFailedException> result =
                     ro.read(LogicalDatastoreType.CONFIGURATION, AUTH_IID);
