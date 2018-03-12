@@ -9,6 +9,7 @@ package org.opendaylight.aaa.shiro.web.env;
 
 import javax.servlet.ServletException;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.filterchain.filters.CustomFilterAdapter;
 import org.opendaylight.aaa.shiro.filters.AAAShiroFilter;
 import org.opendaylight.aaa.shiro.idm.IdmLightApplication;
@@ -30,14 +31,11 @@ public class WebInitializer {
 
     private final WebContextRegistration registraton;
 
-    public WebInitializer(WebServer webServer) throws ServletException {
+    public WebInitializer(WebServer webServer, AAAShiroProvider provider) throws ServletException {
         this.registraton = webServer.registerWebContext(WebContext.builder().contextPath("auth").supportsSessions(true)
 
-            .addServlet(ServletDetails.builder().servlet(new com.sun.jersey.spi.container.servlet.ServletContainer())
-                 // TODO test using javax.ws.rs.core.Application.class.getName() instead; NB .core.
-                 //   or, even much more better, use new ServletContainer(new IdmLightApplication()) ...
-                 //   as that is, ultimately, one of the main reasons for doing it like this!
-                .putInitParam("javax.ws.rs.Application", IdmLightApplication.class.getName())
+            .addServlet(ServletDetails.builder().servlet(new com.sun.jersey.spi.container.servlet.ServletContainer(
+                    new IdmLightApplication(provider)))
                 .putInitParam("com.sun.jersey.api.json.POJOMappingFeature", "true")
                 .putInitParam("jersey.config.server.provider.packages", "org.opendaylight.aaa.impl.provider")
                 .addUrlPattern("/*").build())
@@ -46,7 +44,7 @@ public class WebInitializer {
              //   copy/pasting it from here to WebInitializer classes in other project, which will want to do the same.
 
              //  Shiro initialization
-            .addListener(new KarafIniWebEnvironmentLoaderListener())
+            .addListener(new KarafIniWebEnvironmentLoaderListener(provider))
              // Allows user to add javax.servlet.Filter(s) in front of REST services
             .addFilter(FilterDetails.builder().filter(new CustomFilterAdapter()).addUrlPattern("/*").build())
              // AAA filter in front of these REST web services as well as for moon endpoints

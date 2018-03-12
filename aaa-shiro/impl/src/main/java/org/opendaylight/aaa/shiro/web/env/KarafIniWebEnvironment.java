@@ -5,11 +5,9 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.web.env;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.IniSecurityManagerFactory;
@@ -34,14 +32,14 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
     private static final String MAIN_SECTION_HEADER = "main";
     private static final String URLS_SECTION_HEADER = "urls";
 
-    public KarafIniWebEnvironment() {
-        LOG.info("Initializing the Web Environment using {}",
-                KarafIniWebEnvironment.class.getName());
+    private final AAAShiroProvider provider;
+
+    public KarafIniWebEnvironment(AAAShiroProvider provider) {
+        this.provider = provider;
+        LOG.info("Initializing the Web Environment using {}", KarafIniWebEnvironment.class.getName());
     }
 
-    private static Ini createIniFromClusteredAppConfig(
-            final ShiroConfiguration shiroConfiguration) {
-
+    private static Ini createIniFromClusteredAppConfig(final ShiroConfiguration shiroConfiguration) {
         final Ini ini = new Ini();
 
         final Ini.Section mainSection = ini.addSection(MAIN_SECTION_HEADER);
@@ -65,15 +63,16 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
 
     @Override
     public void init() {
+        ThreadLocals.DATABROKER_TL.set(provider.getDataBroker());
+        ThreadLocals.CERT_MANAGER_TL.set(provider.getCertificateManager());
         try {
-            AAAShiroProvider provider = AAAShiroProvider.getInstanceFuture().get();
-
             // Initialize the Shiro environment from clustered-app-config
             final Ini ini = createIniFromClusteredAppConfig(provider.getShiroConfiguration());
             setIni(ini);
             super.init();
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException("Error obtaining AAAShiroProvider", e);
+        } finally {
+            ThreadLocals.DATABROKER_TL.remove();
+            ThreadLocals.CERT_MANAGER_TL.remove();
         }
     }
 }

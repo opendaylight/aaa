@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  *         Builder
  */
 @Immutable
-@Value.Style(stagedBuilder = true, strictBuilder = true, builder = "new",
+@Value.Style(strictBuilder = true, builder = "new",
     typeImmutable = "*Impl", visibility = ImplementationVisibility.PRIVATE)
 public abstract class IdmLightConfig {
 
@@ -67,20 +67,14 @@ public abstract class IdmLightConfig {
      *
      * @return data base user
      */
-    @Default
-    public String getDbUser() {
-        return "foo";
-    }
+    public abstract String getDbUser();
 
     /**
      * The database password. This is not the same as AAA credentials!
      *
      * @return data base password
      */
-    @Default
-    public String getDbPwd() {
-        return "bar";
-    }
+    public abstract String getDbPwd();
 
     /**
      * Timeout for database connections in seconds.

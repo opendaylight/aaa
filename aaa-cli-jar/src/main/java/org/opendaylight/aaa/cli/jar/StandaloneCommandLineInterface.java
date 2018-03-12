@@ -37,7 +37,7 @@ public class StandaloneCommandLineInterface {
 
     public StandaloneCommandLineInterface(File directoryWithDatabaseFile) throws IOException, IDMStoreException {
         IdmLightConfigBuilder configBuider = new IdmLightConfigBuilder();
-        configBuider.dbDirectory(directoryWithDatabaseFile.getCanonicalPath());
+        configBuider.dbDirectory(directoryWithDatabaseFile.getCanonicalPath()).dbUser("foo").dbPwd("bar");
         IdmLightConfig config = configBuider.build();
 
         H2Store h2Store = new H2Store(new IdmLightSimpleConnectionProvider(config));
