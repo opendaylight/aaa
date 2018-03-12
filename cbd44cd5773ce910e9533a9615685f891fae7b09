@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "d0cc1511_7899457b",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-12T23:10:47Z",
+      "side": 1,
+      "message": "\u003d\u003d\u003e https://git.opendaylight.org/gerrit/#/c/69411/",
+      "parentUuid": "df6ae269_b54816c2",
+      "range": {
+        "startLine": 243,
+        "startChar": 0,
+        "endLine": 272,
+        "endChar": 41
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17900128_800263f2",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/OsgiWebInitializer.java",
         "patchSetId": 11
