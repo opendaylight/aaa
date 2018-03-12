@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4850384a_ac610151",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-12T11:17:14Z",
+      "side": 1,
+      "message": "Maybe, but that is not in scope of this change, please never -1 it just because perhaps more could be done here - instead feel free to contribute by raising a follow-up change and remove more, if you think and have tested that it is safe.",
+      "parentUuid": "d401a582_bb07885a",
+      "range": {
+        "startLine": 243,
+        "startChar": 0,
+        "endLine": 272,
+        "endChar": 41
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "769bd31c_41176ecf",
         "filename": "features/odl-aaa-shiro/pom.xml",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2018-03-11T18:58:18Z",
       "side": 1,
       "message": "This means we are pulling explicitly pax-web-api. Shouldn\u0027t that be provided by a karaf feature instead?",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 20
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17f1725e_0e25ee08",
+        "filename": "features/odl-aaa-shiro/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-12T11:17:14Z",
+      "side": 1,
+      "message": "Probably, but let us please clarify through comments here EXACTLY what I need to do to get your +1 on this one, before I actually make any changes?\n\nSo (AFAIK) the \"pax-web-api\" bundle gets installed by Karaf\u0027s standard web feature, which we (ODL) always already have install anyway as in, aaa and restconf don\u0027t run without web.  Therefore, this works just fine in practice.  \n\nIf your argument is that we should perhaps add a more explicit dependency to the Karaf web feature somewhere, then I\u0027m happy to do that - where do you want it?  In odl-aaa-shiro/src/main/feature/feature.xml as a \u003cfeature\u003eweb\u003c/feature\u003e, after the odl-karaf-feat-jetty? But... odlparent\u0027s odl-karaf-feat-jetty features already has a \u003cfeature\u003ewar - so doesn\u0027t that do exactly this already?\n\nI\u0027m therefore unclear exactly what you are suggesting - will you clarify?",
+      "parentUuid": "769bd31c_41176ecf",
       "range": {
         "startLine": 68,
         "startChar": 0,
