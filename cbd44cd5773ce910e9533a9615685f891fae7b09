@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "df6ae269_b54816c2",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-12T18:27:33Z",
+      "side": 1,
+      "message": "One of the purposes of this layer is indeed to allow users to register things without resorting to explicit Import-Package magic for classes listed in web.xml.  However this explicit Import-Package list here, without a * for default imports, seems to be about much more than only what was originally and historically in web.xml here.  I\u0027m not fully familiar with the exact history, and very reluctant to already remove this in this first change here (and have to retest it, and have Ryan retest restconf...).  I therefore propose to get this in as-is already, and perhaps in the future look at if this could be further cleaned-up later.\n\n\u003e  It is up to you as contributor and for committers whether or not you take it into account.\n\nRyan, as the AAA commmiter on this, could you weigh in and clarify if you require this to be further explored in this change, or if you are OK if this goes in like this already?",
+      "parentUuid": "64a96ade_4764ff6e",
+      "range": {
+        "startLine": 243,
+        "startChar": 0,
+        "endLine": 272,
+        "endChar": 41
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17900128_800263f2",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/OsgiWebInitializer.java",
         "patchSetId": 11
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "1797676e_5ce0eb98",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/OsgiWebInitializer.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-12T18:27:33Z",
+      "side": 1,
+      "message": "it cannot; the WebInitializer used in line 24 is aaa.shiro.web.env specific.  One could change this to take a WebInitializer parameter, but this seemed clearer and simpler.\n\nthis is also somewhat related to the other comment in impl-blueprint.xml ... this HAS to be a \u003cbean\u003e in the bundle which is registering web components, and cannot be a \u003cbean\u003e or exposed OSGi service in the web/impl-osgi.  \n\nI guess hypothetically it COULD be a simple class in impl-osgi, and not registered as a Bean nor Service, and then used in the BP XML of a bundle such as aaa-shiro, but that seems more confusing than adding any value, to me.  Think of these few lines here more as simple \"wiring\" that could also have been \"coded in XML\" in impl-blueprint.xml - I\u0027m just an XML hater, and will now raise a follow-up patch where I\u0027ll convert that impl-blueprint.xml to annotation based blueprint instead, where this class will become a @Singleton instead.",
+      "parentUuid": "17900128_800263f2",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a859967d_7af0b7f9",
         "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
         "patchSetId": 11
@@ -107,6 +155,30 @@
       "writtenOn": "2018-03-12T15:42:06Z",
       "side": 1,
       "message": "This should live osgi provider and should be injected here as a service.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 9
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "723dcaee_a7d25664",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-12T18:27:33Z",
+      "side": 1,
+      "message": "as per feedback given earlier to Tom, may I copy/paste: Nope, that doesn\u0027t work.  I spent a long night debugging why not.  It would take changes in Pax Web to make that possible; has to do with setting the thread context class loader to the correct bundle, which needs to be the one of the bundle using the PaxWebServer, not the impl-osgi one. You are more than welcome to try for yourself and enjoy experiencing the same... \"fun\" while debugging this for yourself.",
+      "parentUuid": "a859967d_7af0b7f9",
       "range": {
         "startLine": 69,
         "startChar": 0,
@@ -178,6 +250,30 @@
       "side": 1,
       "message": "What I am saying is that it is unclear why that pax-web-api bundle is being mentioned in feature.xml -- from what you are saying it should have been eliminated as being pulled in by the war feature (through something like 5 dependencies), but it is not.\n\nWhat I would like to see is that being acknowledged and tracked somewhere, as it is clearly some amount of technical debt.",
       "parentUuid": "17f1725e_0e25ee08",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 20
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62df1b90_954b2830",
+        "filename": "features/odl-aaa-shiro/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-12T18:27:33Z",
+      "side": 1,
+      "message": "I\u0027m afraid but I still don\u0027t think I really understand what you are requesting I do here, BUT on looking this over, I have realized that this actually is not needed at all here in the feature, since it\u0027s already in aaa-shiro/impl/pom.xml as well anyway, so transitively inherited.  I\u0027m therefore willing to just completely remove this, if that would help to get this point resolved - could you please kindly confirm that it would?",
+      "parentUuid": "645d320b_def88931",
       "range": {
         "startLine": 68,
         "startChar": 0,
