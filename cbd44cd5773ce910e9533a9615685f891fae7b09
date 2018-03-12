@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "1324c7e3_66ba65dc",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/OsgiWebInitializer.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-12T23:40:17Z",
+      "side": 1,
+      "message": "\u003e will now raise a follow-up patch where I\u0027ll convert that impl-blueprint.xml to annotation based blueprint instead, where this class will become a @Singleton instead.\n\nactually strike that, this should not be a pre-req to get this in... may be later, some time; not now.",
+      "parentUuid": "1797676e_5ce0eb98",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a859967d_7af0b7f9",
         "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
         "patchSetId": 11
