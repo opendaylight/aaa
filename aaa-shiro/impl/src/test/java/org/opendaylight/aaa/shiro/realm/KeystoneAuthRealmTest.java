@@ -5,9 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.realm;
-
 
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.is;
@@ -40,7 +38,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.Spy;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.opendaylight.aaa.provider.GsonProvider;
 import org.opendaylight.aaa.AAAShiroProvider;
@@ -83,14 +81,16 @@ public class KeystoneAuthRealmTest {
     @Captor
     private ArgumentCaptor<KeystoneAuth> keystoneAuthArgumentCaptor;
 
-    @Spy
     private KeystoneAuthRealm keystoneAuthRealm;
 
     private KeystoneToken.Token ksToken;
 
     @Before
     public void setup() throws MalformedURLException, URISyntaxException {
-        AAAShiroProvider.newInstance(null, null, null, null, mock(HttpService.class), null, null, null, null, null);
+        AAAShiroProvider provider = new AAAShiroProvider(null, null, null, null, mock(HttpService.class), null, null,
+                null, null);
+
+        keystoneAuthRealm = Mockito.spy(new KeystoneAuthRealm(provider));
 
         final String testUrl = "http://example.com";
         // a token for a user without roles

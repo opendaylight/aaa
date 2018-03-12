@@ -120,10 +120,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.compendium</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
-        </dependency>
 
         <!-- JSON JAXB Stuff -->
         <dependency>
@@ -240,7 +236,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                             org.opendaylight.aaa.shiro.web.env,
                             org.opendaylight.aaa.datastore.h2.*,
                         </Export-Package>
-                        <Bundle-Activator>org.opendaylight.aaa.AAAShiroActivator</Bundle-Activator>
                     </instructions>
                 </configuration>
             </plugin>

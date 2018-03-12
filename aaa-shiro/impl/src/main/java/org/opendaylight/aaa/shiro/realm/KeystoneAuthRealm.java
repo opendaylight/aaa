@@ -5,10 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.realm;
-
-import static org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl.createODLPrincipal;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -75,6 +72,12 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     private volatile String defaultDomain = DEFAULT_KEYSTONE_DOMAIN;
 
     private final LoadingCache<Boolean, SimpleHttpClient> clientCache = buildCache();
+
+    private final AAAShiroProvider provider;
+
+    public KeystoneAuthRealm(AAAShiroProvider provider) {
+        this.provider = provider;
+    }
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(final PrincipalCollection principalCollection) {
@@ -183,7 +186,7 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
                     public SimpleHttpClient load(Boolean withSslVerification) throws Exception {
                         return buildClient(
                                 withSslVerification,
-                                AAAShiroProvider.getInstance().getCertificateManager(),
+                                provider.getCertificateManager(),
                                 SimpleHttpClient.clientBuilder());
                     }
                 });

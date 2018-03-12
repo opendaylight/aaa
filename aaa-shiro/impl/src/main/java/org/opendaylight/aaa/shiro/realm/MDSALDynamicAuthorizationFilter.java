@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.realm;
 
 import com.google.common.util.concurrent.CheckedFuture;
@@ -35,8 +34,9 @@ import org.slf4j.LoggerFactory;
  * This model exposes the ability to manipulate policy information for specific paths
  * based on a tuple of (role, http_permission_list).
  *
- * This mechanism will only work when put behind <code>authcBasic</code>
+ * <p>This mechanism will only work when put behind <code>authcBasic</code>.
  */
+@SuppressWarnings("checkstyle:AbbreviationAsWordInName")
 public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
 
     private static final Logger LOG = LoggerFactory.getLogger(MDSALDynamicAuthorizationFilter.class);
@@ -54,10 +54,16 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
         }
     }
 
+    private final AAAShiroProvider provider;
+
+    public MDSALDynamicAuthorizationFilter(AAAShiroProvider provider) {
+        this.provider = provider;
+    }
+
     @Override
     public boolean isAccessAllowed(final ServletRequest request, final ServletResponse response,
                                    final Object mappedValue) {
-        final DataBroker dataBroker = AAAShiroProvider.getInstance().getDataBroker();
+        final DataBroker dataBroker = provider.getDataBroker();
         return isAccessAllowed(request, response, mappedValue, dataBroker);
     }
 

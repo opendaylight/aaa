@@ -51,7 +51,10 @@ public class MdsalRealm extends AuthorizingRealm {
     private static final InstanceIdentifier<Authentication> AUTH_IID =
             InstanceIdentifier.builder(Authentication.class).build();
 
-    public MdsalRealm() {
+    private final AAAShiroProvider provider;
+
+    public MdsalRealm(AAAShiroProvider provider) {
+        this.provider = provider;
         LOG.info("Instantiating {}", MdsalRealm.class.getName());
     }
 
@@ -91,7 +94,7 @@ public class MdsalRealm extends AuthorizingRealm {
      * @return the <code>authentication</code> container
      */
     private Optional<Authentication> getAuthenticationContainer() {
-        final DataBroker dataBroker = AAAShiroProvider.getInstance().getDataBroker();
+        final DataBroker dataBroker = provider.getDataBroker();
         try (final ReadOnlyTransaction ro = dataBroker.newReadOnlyTransaction()) {
             final CheckedFuture<Optional<Authentication>, ReadFailedException> result =
                     ro.read(LogicalDatastoreType.CONFIGURATION, AUTH_IID);

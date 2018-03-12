@@ -8,6 +8,7 @@
 package org.opendaylight.aaa.shiro.web.env;
 
 import javax.servlet.ServletException;
+import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.web.osgi.PaxWebServer;
 import org.ops4j.pax.web.service.WebContainer;
 
@@ -20,8 +21,8 @@ public class OsgiWebInitializer {
 
     private final WebInitializer web;
 
-    public OsgiWebInitializer(WebContainer paxWebContainer) throws ServletException {
-        this.web = new WebInitializer(new PaxWebServer(paxWebContainer));
+    public OsgiWebInitializer(WebContainer paxWebContainer, AAAShiroProvider provider) throws ServletException {
+        this.web = new WebInitializer(new PaxWebServer(paxWebContainer), provider);
     }
 
     public void close() {

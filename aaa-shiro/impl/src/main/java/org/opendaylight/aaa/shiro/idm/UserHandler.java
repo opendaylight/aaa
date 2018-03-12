@@ -5,11 +5,9 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.idm;
 
 import java.util.Collection;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,11 +19,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
-import org.opendaylight.aaa.AAAShiroProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,6 +74,12 @@ public class UserHandler {
      */
     private static final String DEFAULT_EMAIL = "";
 
+    private final AAAShiroProvider provider;
+
+    public UserHandler(AAAShiroProvider provider) {
+        this.provider = provider;
+    }
+
     /**
      * Extracts all users. The password and salt fields are redacted for
      * security reasons.
@@ -88,7 +92,7 @@ public class UserHandler {
         LOG.info("GET /auth/v1/users  (extracts all users)");
 
         try {
-            final Users users = AAAShiroProvider.getInstance().getIdmStore().getUsers();
+            final Users users = provider.getIdmStore().getUsers();
 
             // Redact the password and salt for security purposes.
             final Collection<User> usersList = users.getUsers();
@@ -118,7 +122,7 @@ public class UserHandler {
         LOG.info("GET auth/v1/users/ {}  (extract user with specified id)", id);
 
         try {
-            final User user = AAAShiroProvider.getInstance().getIdmStore().readUser(id);
+            final User user = provider.getIdmStore().readUser(id);
 
             if (user == null) {
                 final String error = "user not found! id: " + id;
@@ -225,7 +229,7 @@ public class UserHandler {
         try {
             // At this point, fields have been properly verified. Create the
             // user account
-            final User createdUser = AAAShiroProvider.getInstance().getIdmStore().writeUser(user);
+            final User createdUser = provider.getIdmStore().writeUser(user);
             user.setUserid(createdUser.getUserid());
         } catch (IDMStoreException se) {
             return internalError("creating", se);
@@ -280,7 +284,7 @@ public class UserHandler {
                 return providedFieldTooLong("domain", IdmLightApplication.MAX_FIELD_LEN);
             }
 
-            user = AAAShiroProvider.getInstance().getIdmStore().updateUser(user);
+            user = provider.getIdmStore().updateUser(user);
             if (user == null) {
                 return new IDMError(404, String.format("User not found for id %s", id), "").response();
             }
@@ -310,7 +314,7 @@ public class UserHandler {
         LOG.info("DELETE /auth/v1/users/{}  (Delete a user account)", id);
 
         try {
-            final User user = AAAShiroProvider.getInstance().getIdmStore().deleteUser(id);
+            final User user = provider.getIdmStore().deleteUser(id);
 
             if (user == null) {
                 return new IDMError(404, String.format("Error deleting user.  " + "Couldn't find user with id %s", id),

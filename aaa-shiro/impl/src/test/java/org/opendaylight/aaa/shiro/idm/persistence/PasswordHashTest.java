@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.idm.persistence;
 
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.PasswordCredentials;
@@ -32,10 +30,11 @@ import org.opendaylight.aaa.shiro.idm.IdmLightProxy;
 */
 public class PasswordHashTest {
 
+    private IIDMStore store;
+
     @Before
     public void before() throws IDMStoreException {
-        IIDMStore store = Mockito.mock(IIDMStore.class);
-        AAAShiroProvider.setIdmStore(store);
+        store = Mockito.mock(IIDMStore.class);
         Domain domain = new Domain();
         domain.setName("sdn");
         domain.setDomainid("sdn");
@@ -72,7 +71,7 @@ public class PasswordHashTest {
 
     @Test
     public void testPasswordHash() {
-        IdmLightProxy proxy = new IdmLightProxy();
+        IdmLightProxy proxy = new IdmLightProxy(store);
         proxy.authenticate(new Creds());
     }
 

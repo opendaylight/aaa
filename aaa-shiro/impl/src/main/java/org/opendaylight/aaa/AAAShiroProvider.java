@@ -7,10 +7,10 @@
  */
 package org.opendaylight.aaa;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import javax.servlet.ServletException;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.CredentialAuth;
@@ -23,11 +23,7 @@ import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
-import org.opendaylight.aaa.datastore.h2.H2Store;
 import org.opendaylight.aaa.datastore.h2.H2TokenStore;
-import org.opendaylight.aaa.datastore.h2.IdmLightConfig;
-import org.opendaylight.aaa.datastore.h2.IdmLightConfigBuilder;
-import org.opendaylight.aaa.datastore.h2.IdmLightSimpleConnectionProvider;
 import org.opendaylight.aaa.shiro.oauth2.OAuth2TokenServlet;
 import org.opendaylight.aaa.shiro.tokenauthrealm.ServiceLocator;
 import org.opendaylight.aaa.shiro.tokenauthrealm.auth.AuthenticationManager;
@@ -43,14 +39,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Provider for AAA shiro implementation.
  */
-public class AAAShiroProvider {
+public final class AAAShiroProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
-    private static final CompletableFuture<AAAShiroProvider> INSTANCE_FUTURE = new CompletableFuture();
-    private static volatile AAAShiroProvider INSTANCE;
-    private static IIDMStore iidmStore;
-
+    private IIDMStore iidmStore;
     private final DataBroker dataBroker;
     private final ICertificateManager certificateManager;
     private final HttpService httpService;
@@ -60,19 +53,25 @@ public class AAAShiroProvider {
     private final TokenStore tokenStore;
 
     /**
-     * Provider for this bundle.
+     * Constructor.
      *
-     * @param dataBroker injected from blueprint
+     * @param dataBroker The DataBroker
+     * @param certificateManager the certificate manager
+     * @param credentialAuth The CredentialAuth
+     * @param shiroConfiguration shiro config
+     * @param httpService http service
+     * @param moonEndpointPath moon path
+     * @param oauth2EndpointPath oauth path
+     * @param datastoreConfig data store config
      */
-    private AAAShiroProvider(final DataBroker dataBroker, final ICertificateManager certificateManager,
+    public AAAShiroProvider(final DataBroker dataBroker, final ICertificateManager certificateManager,
                              final CredentialAuth<PasswordCredentials> credentialAuth,
                              final ShiroConfiguration shiroConfiguration,
                              final HttpService httpService,
                              final String moonEndpointPath,
                              final String oauth2EndpointPath,
                              final DatastoreConfig datastoreConfig,
-                             final String dbUsername,
-                             final String dbPassword) {
+                             final IIDMStore idmStore) {
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
         this.shiroConfiguration = shiroConfiguration;
@@ -82,18 +81,16 @@ public class AAAShiroProvider {
 
         if (datastoreConfig != null && datastoreConfig.getStore()
                 .equals(DatastoreConfig.Store.H2DataStore)) {
-            final IdmLightConfig config = new IdmLightConfigBuilder()
-                    .dbUser(dbUsername).dbPwd(dbPassword).build();
-            iidmStore = new H2Store(new IdmLightSimpleConnectionProvider(config));
-            tokenStore = new H2TokenStore(datastoreConfig.getTimeToLive().longValue(),
+            this.iidmStore = idmStore;
+            this.tokenStore = new H2TokenStore(datastoreConfig.getTimeToLive().longValue(),
                     datastoreConfig.getTimeToWait().longValue());
         } else {
-            iidmStore = null;
-            tokenStore = null;
+            this.iidmStore = null;
+            this.tokenStore = null;
             LOG.info("AAA Datastore has not been initialized");
             return;
         }
-        this.initializeServices(credentialAuth, iidmStore, tokenStore);
+        this.initializeServices(credentialAuth, idmStore, tokenStore);
         try {
             this.registerServletContexts(this.httpService, this.moonEndpointPath, this.oauth2EndpointPath);
         } catch (final ServletException | NamespaceException e) {
@@ -143,53 +140,14 @@ public class AAAShiroProvider {
     }
 
     /**
-     * Singleton creation.
-     *
-     * @param dataBroker The DataBroker
-     * @param certificateManager the certificate manager
-     * @param credentialAuth The CredentialAuth
-     * @param shiroConfiguration shiro config
-     * @param httpService http service
-     * @param moonEndpointPath moon path
-     * @param oauth2EndpointPath oauth path
-     * @param datastoreConfig data store config
-     * @return the Provider
-     */
-    public static AAAShiroProvider newInstance(final DataBroker dataBroker,
-                                               final ICertificateManager certificateManager,
-                                               final CredentialAuth<PasswordCredentials> credentialAuth,
-                                               final ShiroConfiguration shiroConfiguration,
-                                               final HttpService httpService,
-                                               final String moonEndpointPath,
-                                               final String oauth2EndpointPath,
-                                               final DatastoreConfig datastoreConfig,
-                                               final String dbUsername,
-                                               final String dbPassword) {
-        INSTANCE = new AAAShiroProvider(dataBroker, certificateManager, credentialAuth, shiroConfiguration,
-                httpService, moonEndpointPath, oauth2EndpointPath, datastoreConfig, dbUsername, dbPassword);
-        INSTANCE_FUTURE.complete(INSTANCE);
-        return INSTANCE;
-    }
-
-    /**
-     * Singleton extraction.
-     *
-     * @return the Provider
-     */
-    public static AAAShiroProvider getInstance() {
-        return INSTANCE;
-    }
-
-    public static CompletableFuture<AAAShiroProvider> getInstanceFuture() {
-        return INSTANCE_FUTURE;
-    }
-
-    /**
      * Get IDM data store.
      *
      * @return IIDMStore data store
+     *
+     * @deprecated instead of calling this, just directly inject an IIDMStore into the class needing it
      */
-    public static IIDMStore getIdmStore() {
+    @Deprecated
+    public IIDMStore getIdmStore() {
         return iidmStore;
     }
 
@@ -198,7 +156,8 @@ public class AAAShiroProvider {
      *
      * @param store data store
      */
-    public static void setIdmStore(IIDMStore store) {
+    @VisibleForTesting
+    public void setIdmStore(IIDMStore store) {
         iidmStore = store;
     }
 
