@@ -20,9 +20,16 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         default-config-file-name="aaa-datastore-config.xml"
         binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.DatastoreConfig" />
 
-  <bean id="IdmLightProxy" class="org.opendaylight.aaa.shiro.idm.IdmLightProxy">
+  <bean id="idmStore" class="org.opendaylight.aaa.datastore.h2.H2Store">
+    <argument value="${dbUsername}" />
+    <argument value="${dbPassword}" />
   </bean>
 
+  <bean id="IdmLightProxy" class="org.opendaylight.aaa.shiro.idm.IdmLightProxy">
+    <argument ref="idmStore" />
+  </bean>
+
+  <service ref="idmStore" interface="org.opendaylight.aaa.api.IIDMStore" odl:type="default"/>
   <service ref="IdmLightProxy" interface="org.opendaylight.aaa.api.IdMService" odl:type="default"/>
   <service ref="IdmLightProxy" interface="org.opendaylight.aaa.api.CredentialAuth" odl:type="default"/>
 
@@ -46,7 +53,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   </cm:property-placeholder>
 
   <bean id="provider"
-        class="org.opendaylight.aaa.AAAShiroProvider" factory-method="newInstance"
+        class="org.opendaylight.aaa.AAAShiroProvider"
         init-method="init" destroy-method="close">
     <argument ref="dataBroker" />
     <argument ref="certManager" />
@@ -56,8 +63,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument value="/moon" />
     <argument value="/oauth2" />
     <argument ref="datastoreConfig" />
-    <argument value="${dbUsername}" />
-    <argument value="${dbPassword}" />
+    <argument ref="idmStore" />
   </bean>
 
   <bean id="aaa" class="org.opendaylight.aaa.shiro.filters.AAAFilter" />
@@ -69,5 +75,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <reference id="webServer" interface="org.opendaylight.aaa.web.WebServer" />
   <bean id="webInitializer" class="org.opendaylight.aaa.shiro.web.env.WebInitializer" destroy-method="close">
     <argument ref="webServer"/>
+    <argument ref="provider"/>
   </bean>
 </blueprint>

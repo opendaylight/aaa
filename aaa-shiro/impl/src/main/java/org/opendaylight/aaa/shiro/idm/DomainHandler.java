@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.idm;
 
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.model.Claim;
 import org.opendaylight.aaa.api.model.Domain;
@@ -33,7 +33,6 @@ import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.UserPwd;
 import org.opendaylight.aaa.api.model.Users;
-import org.opendaylight.aaa.AAAShiroProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,6 +51,12 @@ public class DomainHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(DomainHandler.class);
 
+    private final AAAShiroProvider provider;
+
+    public DomainHandler(AAAShiroProvider provider) {
+        this.provider = provider;
+    }
+
     /**
      * Extracts all domains.
      *
@@ -63,7 +68,7 @@ public class DomainHandler {
         LOG.info("Get /domains");
         Domains domains = null;
         try {
-            domains = AAAShiroProvider.getInstance().getIdmStore().getDomains();
+            domains = provider.getIdmStore().getDomains();
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -88,7 +93,7 @@ public class DomainHandler {
         LOG.info("Get /domains/{}", domainId);
         Domain domain = null;
         try {
-            domain = AAAShiroProvider.getInstance().getIdmStore().readDomain(domainId);
+            domain = provider.getIdmStore().readDomain(domainId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -141,7 +146,7 @@ public class DomainHandler {
             if (domain.getDescription() == null) {
                 domain.setDescription("");
             }
-            domain = AAAShiroProvider.getInstance().getIdmStore().writeDomain(domain);
+            domain = provider.getIdmStore().writeDomain(domain);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -171,7 +176,7 @@ public class DomainHandler {
         LOG.info("Put /domains/{}", domainId);
         try {
             domain.setDomainid(domainId);
-            domain = AAAShiroProvider.getInstance().getIdmStore().updateDomain(domain);
+            domain = provider.getIdmStore().updateDomain(domain);
             if (domain == null) {
                 IDMError idmerror = new IDMError();
                 idmerror.setMessage("Not found! Domain id:" + domainId);
@@ -203,7 +208,7 @@ public class DomainHandler {
         LOG.info("Delete /domains/{}", domainId);
 
         try {
-            Domain domain = AAAShiroProvider.getInstance().getIdmStore().deleteDomain(domainId);
+            Domain domain = provider.getIdmStore().deleteDomain(domainId);
             if (domain == null) {
                 IDMError idmerror = new IDMError();
                 idmerror.setMessage("Not found! Domain id:" + domainId);
@@ -260,7 +265,7 @@ public class DomainHandler {
 
         // validate domain id
         try {
-            domain = AAAShiroProvider.getInstance().getIdmStore().readDomain(domainId);
+            domain = provider.getIdmStore().readDomain(domainId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -276,7 +281,7 @@ public class DomainHandler {
         grant.setDomainid(domainId);
 
         try {
-            user = AAAShiroProvider.getInstance().getIdmStore().readUser(userId);
+            user = provider.getIdmStore().readUser(userId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -301,7 +306,7 @@ public class DomainHandler {
             return Response.status(404).entity(idmerror).build();
         }
         try {
-            role = AAAShiroProvider.getInstance().getIdmStore().readRole(roleId);
+            role = provider.getIdmStore().readRole(roleId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -317,7 +322,7 @@ public class DomainHandler {
 
         // see if grant already exists for this
         try {
-            Grant existingGrant = AAAShiroProvider.getInstance().getIdmStore().readGrant(domainId, userId, roleId);
+            Grant existingGrant = provider.getIdmStore().readGrant(domainId, userId, roleId);
             if (existingGrant != null) {
                 IDMError idmerror = new IDMError();
                 idmerror.setMessage("Grant already exists for did:" + domainId + " uid:" + userId + " rid:" + roleId);
@@ -333,7 +338,7 @@ public class DomainHandler {
 
         // create grant
         try {
-            grant = AAAShiroProvider.getInstance().getIdmStore().writeGrant(grant);
+            grant = provider.getIdmStore().writeGrant(grant);
         } catch (IDMStoreException e) {
             LOG.error("StoreException: ", e);
             IDMError idmerror = new IDMError();
@@ -368,7 +373,7 @@ public class DomainHandler {
         List<Role> roleList = new ArrayList<>();
 
         try {
-            domain = AAAShiroProvider.getInstance().getIdmStore().readDomain(domainId);
+            domain = provider.getIdmStore().readDomain(domainId);
         } catch (IDMStoreException se) {
             LOG.error("StoreException: ", se);
             IDMError idmerror = new IDMError();
@@ -398,7 +403,7 @@ public class DomainHandler {
 
         // find userid for user
         try {
-            Users users = AAAShiroProvider.getInstance().getIdmStore().getUsers(username, domainId);
+            Users users = provider.getIdmStore().getUsers(username, domainId);
             List<User> userList = users.getUsers();
             if (userList.size() == 0) {
                 IDMError idmerror = new IDMError();
@@ -417,11 +422,11 @@ public class DomainHandler {
             claim.setUsername(username);
             claim.setUserid(user.getUserid());
             try {
-                Grants grants = AAAShiroProvider.getInstance().getIdmStore().getGrants(domainId, user.getUserid());
+                Grants grants = provider.getIdmStore().getGrants(domainId, user.getUserid());
                 List<Grant> grantsList = grants.getGrants();
                 for (int i = 0; i < grantsList.size(); i++) {
                     Grant grant = grantsList.get(i);
-                    Role role = AAAShiroProvider.getInstance().getIdmStore().readRole(grant.getRoleid());
+                    Role role = provider.getIdmStore().readRole(grant.getRoleid());
                     roleList.add(role);
                 }
             } catch (IDMStoreException e) {
@@ -465,7 +470,7 @@ public class DomainHandler {
         List<Role> roleList = new ArrayList<>();
 
         try {
-            domain = AAAShiroProvider.getInstance().getIdmStore().readDomain(domainId);
+            domain = provider.getIdmStore().readDomain(domainId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -480,7 +485,7 @@ public class DomainHandler {
         }
 
         try {
-            user = AAAShiroProvider.getInstance().getIdmStore().readUser(userId);
+            user = provider.getIdmStore().readUser(userId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -495,11 +500,11 @@ public class DomainHandler {
         }
 
         try {
-            Grants grants = AAAShiroProvider.getInstance().getIdmStore().getGrants(domainId, userId);
+            Grants grants = provider.getIdmStore().getGrants(domainId, userId);
             List<Grant> grantsList = grants.getGrants();
             for (int i = 0; i < grantsList.size(); i++) {
                 Grant grant = grantsList.get(i);
-                Role role = AAAShiroProvider.getInstance().getIdmStore().readRole(grant.getRoleid());
+                Role role = provider.getIdmStore().readRole(grant.getRoleid());
                 roleList.add(role);
             }
         } catch (IDMStoreException e) {
@@ -536,7 +541,7 @@ public class DomainHandler {
         Role role;
 
         try {
-            domain = AAAShiroProvider.getInstance().getIdmStore().readDomain(domainId);
+            domain = provider.getIdmStore().readDomain(domainId);
         } catch (IDMStoreException e) {
             LOG.error("Error deleting Grant", e);
             IDMError idmerror = new IDMError();
@@ -551,7 +556,7 @@ public class DomainHandler {
         }
 
         try {
-            user = AAAShiroProvider.getInstance().getIdmStore().readUser(userId);
+            user = provider.getIdmStore().readUser(userId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -566,7 +571,7 @@ public class DomainHandler {
         }
 
         try {
-            role = AAAShiroProvider.getInstance().getIdmStore().readRole(roleId);
+            role = provider.getIdmStore().readRole(roleId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -582,13 +587,13 @@ public class DomainHandler {
 
         // see if grant already exists
         try {
-            Grant existingGrant = AAAShiroProvider.getInstance().getIdmStore().readGrant(domainId, userId, roleId);
+            Grant existingGrant = provider.getIdmStore().readGrant(domainId, userId, roleId);
             if (existingGrant == null) {
                 IDMError idmerror = new IDMError();
                 idmerror.setMessage("Grant does not exist for did:" + domainId + " uid:" + userId + " rid:" + roleId);
                 return Response.status(404).entity(idmerror).build();
             }
-            existingGrant = AAAShiroProvider.getInstance().getIdmStore().deleteGrant(existingGrant.getGrantid());
+            existingGrant = provider.getIdmStore().deleteGrant(existingGrant.getGrantid());
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();

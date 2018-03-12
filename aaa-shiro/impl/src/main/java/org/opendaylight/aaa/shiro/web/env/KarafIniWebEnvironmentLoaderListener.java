@@ -23,5 +23,4 @@ public class KarafIniWebEnvironmentLoaderListener extends EnvironmentLoaderListe
     protected Class<?> determineWebEnvironmentClass(ServletContext servletContext) {
         return KarafIniWebEnvironment.class;
     }
-
 }

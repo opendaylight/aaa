@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.web.env;
 
 import java.util.List;
@@ -39,9 +38,7 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
                 KarafIniWebEnvironment.class.getName());
     }
 
-    private static Ini createIniFromClusteredAppConfig(
-            final ShiroConfiguration shiroConfiguration) {
-
+    private static Ini createIniFromClusteredAppConfig(final ShiroConfiguration shiroConfiguration) {
         final Ini ini = new Ini();
 
         final Ini.Section mainSection = ini.addSection(MAIN_SECTION_HEADER);
@@ -66,7 +63,10 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
     @Override
     public void init() {
         try {
-            AAAShiroProvider provider = AAAShiroProvider.getInstanceFuture().get();
+            AAAShiroProvider provider = AAAShiroProvider.INSTANCE_FUTURE.get();
+
+            ThreadLocals.DATABROKER_TL.set(provider.getDataBroker());
+            ThreadLocals.CERT_MANAGER_TL.set(provider.getCertificateManager());
 
             // Initialize the Shiro environment from clustered-app-config
             final Ini ini = createIniFromClusteredAppConfig(provider.getShiroConfiguration());
@@ -74,6 +74,9 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
             super.init();
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException("Error obtaining AAAShiroProvider", e);
+        } finally {
+            ThreadLocals.DATABROKER_TL.remove();
+            ThreadLocals.CERT_MANAGER_TL.remove();
         }
     }
 }

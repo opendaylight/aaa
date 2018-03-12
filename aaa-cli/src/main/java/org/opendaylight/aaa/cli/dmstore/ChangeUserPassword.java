@@ -11,7 +11,6 @@ package org.opendaylight.aaa.cli.dmstore;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
-import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.model.User;
@@ -29,14 +28,14 @@ import org.opendaylight.aaa.shiro.idm.IdmLightProxy;
  */
 public class ChangeUserPassword extends OsgiCommandSupport {
 
-    protected IIDMStore identityStore;
+    private final IIDMStore identityStore;
 
     @Option(name = "-user", aliases = {
             "--userName" }, description = "The user name", required = true, multiValued = false)
-    private String userName = "";
+    private final String userName = "";
 
-    public ChangeUserPassword() {
-        this.identityStore = AAAShiroProvider.getIdmStore();
+    public ChangeUserPassword(IIDMStore identityStore) {
+        this.identityStore = identityStore;
     }
 
     @Override

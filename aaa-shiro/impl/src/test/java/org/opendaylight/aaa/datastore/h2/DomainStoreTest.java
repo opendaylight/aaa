@@ -61,7 +61,6 @@ public class DomainStoreTest {
 
     @Test
     public void deleteDomainsTest() throws SQLException, Exception {
-        DomainStore ds = new DomainStore(new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().build()));
         String domainId = "Testing12345";
 
         // Run Test
@@ -69,6 +68,10 @@ public class DomainStoreTest {
         testDomain.setDomainid(domainId);
         testDomain.setName(domainId);
         testDomain.setEnabled(Boolean.TRUE);
+
+        DomainStore ds = new DomainStore(
+                new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().dbUser("foo").dbPwd("bar").build()));
+
         ds.createDomain(testDomain);
         assertEquals(ds.getDomain(domainId).getDomainid(), domainId);
         ds.deleteDomain(domainId);
