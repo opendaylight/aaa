@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.idm;
 
 import com.google.common.base.Preconditions;
@@ -15,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.CredentialAuth;
@@ -55,6 +53,12 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
                 new ConcurrentHashMap<PasswordCredentials, Claim>());
     }
 
+    private final IIDMStore idmStore;
+
+    public IdmLightProxy(IIDMStore idmStore) {
+        this.idmStore = idmStore;
+    }
+
     @Override
     public Claim authenticate(PasswordCredentials creds) {
         Preconditions.checkNotNull(creds);
@@ -92,7 +96,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
         }
     }
 
-    private static Claim dbAuthenticate(PasswordCredentials creds) {
+    private Claim dbAuthenticate(PasswordCredentials creds) {
         Domain domain = null;
         User user = null;
         String credsDomain = creds.domain() == null ? IIDMStore.DEFAULT_DOMAIN : creds.domain();
@@ -100,7 +104,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
         // TODO: ensure domain names are unique change to 'getDomain'
         LOG.debug("get domain");
         try {
-            domain = AAAShiroProvider.getInstance().getIdmStore().readDomain(credsDomain);
+            domain = idmStore.readDomain(credsDomain);
             if (domain == null) {
                 throw new AuthenticationException("Domain :" + credsDomain + " does not exist");
             }
@@ -111,7 +115,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
         // check to see user exists and passes cred check
         try {
             LOG.debug("check user / pwd");
-            Users users = AAAShiroProvider.getInstance().getIdmStore().getUsers(creds.username(), credsDomain);
+            Users users = idmStore.getUsers(creds.username(), credsDomain);
             List<User> userList = users.getUsers();
             if (userList.size() == 0) {
                 throw new AuthenticationException("User :" + creds.username()
@@ -129,12 +133,11 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
             // get all grants & roles for this domain and user
             LOG.debug("get grants");
             List<String> roles = new ArrayList<>();
-            Grants grants = AAAShiroProvider.getInstance().getIdmStore().getGrants(domain.getDomainid(),
-                    user.getUserid());
+            Grants grants = idmStore.getGrants(domain.getDomainid(), user.getUserid());
             List<Grant> grantList = grants.getGrants();
             for (int z = 0; z < grantList.size(); z++) {
                 Grant grant = grantList.get(z);
-                Role role = AAAShiroProvider.getInstance().getIdmStore().readRole(grant.getRoleid());
+                Role role = idmStore.readRole(grant.getRoleid());
                 if (role != null) {
                     roles.add(role.getName());
                 }
@@ -157,16 +160,16 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
 
     @Override
     public List<String> listDomains(String userId) {
-        return new IdMServiceImpl(AAAShiroProvider.getInstance().getIdmStore()).listDomains(userId);
+        return new IdMServiceImpl(idmStore).listDomains(userId);
     }
 
     @Override
     public List<String> listRoles(String userId, String domainName) {
-        return new IdMServiceImpl(AAAShiroProvider.getInstance().getIdmStore()).listRoles(userId, domainName);
+        return new IdMServiceImpl(idmStore).listRoles(userId, domainName);
     }
 
     @Override
     public List<String> listUserIDs() throws IDMStoreException {
-        return new IdMServiceImpl(AAAShiroProvider.getInstance().getIdmStore()).listUserIDs();
+        return new IdMServiceImpl(idmStore).listUserIDs();
     }
 }

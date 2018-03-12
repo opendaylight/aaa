@@ -31,8 +31,9 @@ public class H2Store implements IIDMStore {
     private final RoleStore roleStore;
     private final GrantStore grantStore;
 
-    public H2Store() {
-        this(new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().build()));
+    public H2Store(String dbUsername, String dbPassword) {
+        this(new IdmLightSimpleConnectionProvider(
+                new IdmLightConfigBuilder().dbUser(dbUsername).dbPwd(dbPassword).build()));
     }
 
     public H2Store(ConnectionProvider connectionFactory) {

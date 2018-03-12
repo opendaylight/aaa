@@ -5,19 +5,19 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.realm;
 
-import com.google.common.util.concurrent.CheckedFuture;
 import com.google.common.base.Optional;
+import com.google.common.util.concurrent.CheckedFuture;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;
-import org.opendaylight.aaa.AAAShiroProvider;
+import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
@@ -35,8 +35,9 @@ import org.slf4j.LoggerFactory;
  * This model exposes the ability to manipulate policy information for specific paths
  * based on a tuple of (role, http_permission_list).
  *
- * This mechanism will only work when put behind <code>authcBasic</code>
+ * <p>This mechanism will only work when put behind <code>authcBasic</code>.
  */
+@SuppressWarnings("checkstyle:AbbreviationAsWordInName")
 public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
 
     private static final Logger LOG = LoggerFactory.getLogger(MDSALDynamicAuthorizationFilter.class);
@@ -54,26 +55,15 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
         }
     }
 
+    private final DataBroker dataBroker;
+
+    public MDSALDynamicAuthorizationFilter() {
+        this.dataBroker = Objects.requireNonNull(ThreadLocals.DATABROKER_TL.get());
+    }
+
     @Override
     public boolean isAccessAllowed(final ServletRequest request, final ServletResponse response,
                                    final Object mappedValue) {
-        final DataBroker dataBroker = AAAShiroProvider.getInstance().getDataBroker();
-        return isAccessAllowed(request, response, mappedValue, dataBroker);
-    }
-
-    public boolean isAccessAllowed(final ServletRequest request, final ServletResponse response,
-                                   final Object mappedValue, final DataBroker dataBroker) {
-
-        // FIXME:  Remove this check when Bug 7793 is resolved.
-        // Bug 7793: shiro.ini needs to die
-        // shiro instantiates this Filter as part of the web container initialization, but has
-        // no way of passing the DataBroker reference.  Thus, the dependency cannot be expressed
-        // easily.  Hitherto, the Filter may be instantiated prior to the DataBroker actually being
-        // made available.  For now, just fail out (deny access) until the DataBroker becomes
-        // available (injected via Blueprint in AAAShiroProvider.newInstance(DataBroker))
-        if (dataBroker == null) {
-            return false;
-        }
         final Subject subject = getSubject(request, response);
         final HttpServletRequest httpServletRequest = (HttpServletRequest)request;
         final String requestURI = httpServletRequest.getRequestURI();

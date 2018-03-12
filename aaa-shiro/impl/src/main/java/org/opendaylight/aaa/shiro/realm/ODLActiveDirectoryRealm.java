@@ -35,6 +35,6 @@ public class ODLActiveDirectoryRealm extends ActiveDirectoryRealm {
     private static final Logger LOG = LoggerFactory.getLogger(ODLActiveDirectoryRealm.class);
 
     public ODLActiveDirectoryRealm() {
-        LOG.debug("Creating an instance of ODLActiveDirectoryRealm to use with AAA");
+        LOG.info("ODLActiveDirectoryRealm created");
     }
 }

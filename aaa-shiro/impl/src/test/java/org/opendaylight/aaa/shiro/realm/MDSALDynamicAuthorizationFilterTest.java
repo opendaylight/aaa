@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.subject.Subject;
 import org.junit.Before;
 import org.junit.Test;
-import org.opendaylight.aaa.AAAShiroProvider;
+import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
@@ -35,7 +35,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev1
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.Policies;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.permission.Permissions;
 import org.opendaylight.yangtools.yang.binding.DataObject;
-import org.osgi.service.http.HttpService;
 
 /**
  * Tests the Dynamic Authorization Filter.
@@ -44,7 +43,6 @@ public class MDSALDynamicAuthorizationFilterTest {
 
     @Before
     public void setup() {
-        AAAShiroProvider.newInstance(null, null, null, null, mock(HttpService.class), null, null, null, null, null);
     }
 
     // test helper method to generate some cool mdsal data
@@ -86,20 +84,6 @@ public class MDSALDynamicAuthorizationFilterTest {
     }
 
     @Test
-    public void testIsAccessAllowed() throws Exception {
-        //
-        // Test Setup:
-        //
-        // Ensure that the base isAccessAllowed(...) method calls the static helper method.
-        final MDSALDynamicAuthorizationFilter filter = mock(MDSALDynamicAuthorizationFilter.class);
-        when(filter.isAccessAllowed(any(), any(), any(), any())).thenReturn(true);
-        when(filter.isAccessAllowed(any(), any(), any())).thenCallRealMethod();
-        assertTrue(filter.isAccessAllowed(null, null, null));
-        when(filter.isAccessAllowed(any(), any(), any(), any())).thenReturn(false);
-        assertFalse(filter.isAccessAllowed(null, null, null));
-    }
-
-    @Test
     public void testGetHttpAuthzContainer() throws Exception {
         //
         // Test Setup:
@@ -120,6 +104,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         //
         // Test Setup: No rules are added to the HttpAuthorization container.  Open access should be allowed.
         final Subject subject = mock(Subject.class);
+        ThreadLocals.DATABROKER_TL.set(getTestData());
         final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
             @Override
             protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
@@ -142,7 +127,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         //
         // Ensure that access is allowed since no data is returned from the MDSAL read.
         // This is through making sure the Optional is not present.
-        assertTrue(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertTrue(filter.isAccessAllowed(request, null, null));
 
         //
         // Same as above, but with an empty policy list returned.
@@ -152,22 +137,14 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(httpAuthorization.getPolicies()).thenReturn(policies);
         when(dataObjectOptional.isPresent()).thenReturn(true);
         when(dataObjectOptional.get()).thenReturn(httpAuthorization);
-        assertTrue(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertTrue(filter.isAccessAllowed(request, null, null));
     }
 
     @Test
     public void testMDSALExceptionDuringRead() throws Exception {
-        //
         // Test Setup: No rules are added to the HttpAuthorization container.  The MDSAL read
         // is instructed to return an immediateFailedCheckedFuture, to emulate an error in reading
         // the Data Store.
-        final Subject subject = mock(Subject.class);
-        final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
-            @Override
-            protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
-                return subject;
-            }
-        };
 
         final HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getRequestURI()).thenReturn("abc");
@@ -182,9 +159,17 @@ public class MDSALDynamicAuthorizationFilterTest {
         final DataBroker dataBroker = mock(DataBroker.class);
         when(dataBroker.newReadOnlyTransaction()).thenReturn(rot);
 
-        //
+        final Subject subject = mock(Subject.class);
+        ThreadLocals.DATABROKER_TL.set(dataBroker);
+        final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
+            @Override
+            protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
+                return subject;
+            }
+        };
+
         // Ensure that if an error occurs while reading MD-SAL that access is denied.
-        assertFalse(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertFalse(filter.isAccessAllowed(request, null, null));
     }
 
     @Test
@@ -196,7 +181,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         // A Rule is added to match /** allowing HTTP PUT for the admin role.
         // All other Methods are considered unauthorized.
         final Subject subject = mock(Subject.class);
-        final DataBroker dataBroker = getTestData();
+        ThreadLocals.DATABROKER_TL.set(getTestData());
         final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
             @Override
             protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
@@ -215,21 +200,21 @@ public class MDSALDynamicAuthorizationFilterTest {
         // Make a PUT HTTP request from a Subject with the admin role.  The request URL does not match,
         // since "abc" does not start with a "/" character.  Since no rule exists for this particular request,
         // then access should be allowed.
-        assertTrue(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertTrue(filter.isAccessAllowed(request, null, null));
 
         //
         // Test Case 2:
         //
         // Repeat of the above against a matching endpoint.  Access should be allowed.
         when(request.getRequestURI()).thenReturn("/anotherexamplethatshouldwork");
-        assertTrue(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertTrue(filter.isAccessAllowed(request, null, null));
 
         //
         // Test Case 3:
         //
         // Repeat of the above request against a more complex endpoint.  Access should be allowed.
         when(request.getRequestURI()).thenReturn("/auth/v1/users");
-        assertTrue(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertTrue(filter.isAccessAllowed(request, null, null));
 
         //
         // Test Case 4:
@@ -237,7 +222,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         // Negative test case-- ensure that when an unallowed method (POST) is tried with an otherwise
         // allowable request, that access is denied.
         when(request.getMethod()).thenReturn("Post");
-        assertFalse(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertFalse(filter.isAccessAllowed(request, null, null));
 
         //
         // Test Case 5:
@@ -246,7 +231,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         // request, that acess is denied.
         when(request.getMethod()).thenReturn("Put");
         when(subject.hasRole("admin")).thenReturn(false);
-        assertFalse(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertFalse(filter.isAccessAllowed(request, null, null));
     }
 
     @Test
@@ -297,6 +282,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(dataBroker.newReadOnlyTransaction()).thenReturn(rot);
 
         final Subject subject = mock(Subject.class);
+        ThreadLocals.DATABROKER_TL.set(dataBroker);
         final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
             @Override
             protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
@@ -313,7 +299,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         // Test Case 1:
         //
         // In the setup, two rules were added.  First, make sure that the first rule is working.
-        assertTrue(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertTrue(filter.isAccessAllowed(request, null, null));
 
         //
         // Test Case 2:
@@ -321,11 +307,11 @@ public class MDSALDynamicAuthorizationFilterTest {
         // Both rules would technically match the input request URI.  We want to make sure that
         // order is respected.  We do this by ensuring access is granted (i.e., the first rule is matched).
         when(request.getRequestURI()).thenReturn("/specialendpoint");
-        assertTrue(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertTrue(filter.isAccessAllowed(request, null, null));
         when(request.getRequestURI()).thenReturn("/specialendpoint/");
-        assertTrue(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertTrue(filter.isAccessAllowed(request, null, null));
         when(request.getRequestURI()).thenReturn("/specialendpoint/somewhatextended");
-        assertTrue(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertTrue(filter.isAccessAllowed(request, null, null));
 
         //
         // Test Case 3:
@@ -336,13 +322,13 @@ public class MDSALDynamicAuthorizationFilterTest {
         policiesList = Lists.newArrayList(innerPolicies2, innerPolicies);
         when(policies.getPolicies()).thenReturn(policiesList);
         when(request.getRequestURI()).thenReturn("/abc");
-        assertTrue(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertTrue(filter.isAccessAllowed(request, null, null));
         when(request.getRequestURI()).thenReturn("/specialendpoint");
-        assertFalse(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertFalse(filter.isAccessAllowed(request, null, null));
         when(request.getRequestURI()).thenReturn("/specialendpoint/");
-        assertFalse(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertFalse(filter.isAccessAllowed(request, null, null));
         when(request.getRequestURI()).thenReturn("/specialendpoint/somewhatextended");
-        assertFalse(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertFalse(filter.isAccessAllowed(request, null, null));
     }
 
     @Test
@@ -384,6 +370,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(dataBroker.newReadOnlyTransaction()).thenReturn(rot);
 
         final Subject subject = mock(Subject.class);
+        ThreadLocals.DATABROKER_TL.set(dataBroker);
         final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
             @Override
             protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
@@ -397,9 +384,9 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(subject.hasRole("admin")).thenReturn(false);
         when(subject.hasRole("user")).thenReturn(true);
 
-        assertFalse(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertFalse(filter.isAccessAllowed(request, null, null));
         when(request.getMethod()).thenReturn("Get");
-        assertTrue(filter.isAccessAllowed(request, null, null, dataBroker));
+        assertTrue(filter.isAccessAllowed(request, null, null));
 
     }
 }

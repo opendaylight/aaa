@@ -15,7 +15,6 @@ import com.sun.jersey.test.framework.WebAppDescriptor;
 import org.junit.Before;
 import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.shiro.idm.IdmLightApplication;
-import org.opendaylight.aaa.AAAShiroProvider;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 public abstract class HandlerTest extends JerseyTest {
@@ -41,6 +40,5 @@ public abstract class HandlerTest extends JerseyTest {
         SLF4JBridgeHandler.install();
         super.setUp();
         new StoreBuilder(testStore).init();
-        AAAShiroProvider.setIdmStore(testStore);
     }
 }

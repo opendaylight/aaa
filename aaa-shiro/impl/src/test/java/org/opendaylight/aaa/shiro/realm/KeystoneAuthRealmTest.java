@@ -5,9 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.realm;
-
 
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.is;
@@ -15,7 +13,6 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -40,18 +37,17 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.Spy;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.opendaylight.aaa.provider.GsonProvider;
-import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.provider.GsonProvider;
 import org.opendaylight.aaa.shiro.keystone.domain.KeystoneAuth;
 import org.opendaylight.aaa.shiro.keystone.domain.KeystoneToken;
 import org.opendaylight.aaa.shiro.realm.util.http.SimpleHttpClient;
 import org.opendaylight.aaa.shiro.realm.util.http.SimpleHttpRequest;
 import org.opendaylight.aaa.shiro.realm.util.http.UntrustedSSL;
-import org.osgi.service.http.HttpService;
+import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class KeystoneAuthRealmTest {
@@ -83,14 +79,15 @@ public class KeystoneAuthRealmTest {
     @Captor
     private ArgumentCaptor<KeystoneAuth> keystoneAuthArgumentCaptor;
 
-    @Spy
     private KeystoneAuthRealm keystoneAuthRealm;
 
     private KeystoneToken.Token ksToken;
 
     @Before
     public void setup() throws MalformedURLException, URISyntaxException {
-        AAAShiroProvider.newInstance(null, null, null, null, mock(HttpService.class), null, null, null, null, null);
+        ThreadLocals.CERT_MANAGER_TL.set(certificateManager);
+
+        keystoneAuthRealm = Mockito.spy(new KeystoneAuthRealm());
 
         final String testUrl = "http://example.com";
         // a token for a user without roles

@@ -5,10 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.realm;
-
-import static org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl.createODLPrincipal;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -41,13 +38,13 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.provider.GsonProvider;
-import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.shiro.keystone.domain.KeystoneAuth;
 import org.opendaylight.aaa.shiro.keystone.domain.KeystoneToken;
+import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
 import org.opendaylight.aaa.shiro.realm.util.http.SimpleHttpClient;
 import org.opendaylight.aaa.shiro.realm.util.http.SimpleHttpRequest;
 import org.opendaylight.aaa.shiro.realm.util.http.UntrustedSSL;
-import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
+import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,6 +72,13 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     private volatile String defaultDomain = DEFAULT_KEYSTONE_DOMAIN;
 
     private final LoadingCache<Boolean, SimpleHttpClient> clientCache = buildCache();
+
+    private final ICertificateManager certManager;
+
+    public KeystoneAuthRealm() {
+        this.certManager = Objects.requireNonNull(ThreadLocals.CERT_MANAGER_TL.get());
+        LOG.info("KeystoneAuthRealm created");
+    }
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(final PrincipalCollection principalCollection) {
@@ -181,10 +185,7 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
                 .build(new CacheLoader<Boolean, SimpleHttpClient>() {
                     @Override
                     public SimpleHttpClient load(Boolean withSslVerification) throws Exception {
-                        return buildClient(
-                                withSslVerification,
-                                AAAShiroProvider.getInstance().getCertificateManager(),
-                                SimpleHttpClient.clientBuilder());
+                        return buildClient(withSslVerification, certManager, SimpleHttpClient.clientBuilder());
                     }
                 });
     }

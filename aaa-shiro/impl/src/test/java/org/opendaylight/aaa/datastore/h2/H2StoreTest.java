@@ -53,23 +53,26 @@ public class H2StoreTest {
 
     @Before
     public void before() throws StoreException, SQLException {
-        UserStore us = new UserStore(new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().build()));
+        IdmLightSimpleConnectionProvider dbConnectionFactory = new IdmLightSimpleConnectionProvider(
+                new IdmLightConfigBuilder().dbUser("foo").dbPwd("bar").build());
+        UserStore us = new UserStore(dbConnectionFactory);
         us.dbClean();
-        DomainStore ds = new DomainStore(new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().build()));
+        DomainStore ds = new DomainStore(dbConnectionFactory);
         ds.dbClean();
-        RoleStore rs = new RoleStore(new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().build()));
+        RoleStore rs = new RoleStore(dbConnectionFactory);
         rs.dbClean();
-        GrantStore gs = new GrantStore(new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().build()));
+        GrantStore gs = new GrantStore(dbConnectionFactory);
         gs.dbClean();
 
-        h2Store = new H2Store();
+        h2Store = new H2Store("foo", "bar");
     }
 
     @Test
     public void testCreateDefaultDomain() throws StoreException {
         Domain domain = new Domain();
         Assert.assertEquals(true, domain != null);
-        DomainStore ds = new DomainStore(new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().build()));
+        DomainStore ds = new DomainStore(
+                new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().dbUser("foo").dbPwd("bar").build()));
         domain.setName(IIDMStore.DEFAULT_DOMAIN);
         domain.setEnabled(true);
         domain = ds.createDomain(domain);
@@ -99,7 +102,8 @@ public class H2StoreTest {
 
     @Test
     public void testUpdatingUserEmail() throws StoreException {
-        UserStore us = new UserStore(new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().build()));
+        UserStore us = new UserStore(
+                new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().dbUser("foo").dbPwd("bar").build()));
         Domain domain = h2Store.createDomain("sdn", true);
         User user = h2Store.createUser("test", "pass", domain.getDomainid(), "desc", "email", true, "SALT");
 
