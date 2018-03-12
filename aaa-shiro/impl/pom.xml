@@ -236,38 +236,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                             org.opendaylight.aaa.shiro.web.env,
                             org.opendaylight.aaa.datastore.h2.*,
                         </Export-Package>
-                        <Import-Package>
-                            com.google.*,
-                            com.sun.jersey.spi.container.servlet,
-                            com.sun.jersey.api.client.config,
-                            javax.servlet.http,
-                            javax.servlet.*,
-                            javax.net.ssl,
-                            org.apache.oltu.oauth2.*,
-                            javax.ws.rs.ext,
-                            javax.ws.rs,javax.ws.rs.core,
-                            javax.xml.bind.annotation,
-                            org.opendaylight.aaa.*,
-                            org.opendaylight.aaa.api.*,
-                            org.xml.sax,
-                            org.apache.commons.text,
-                            org.apache.felix.dm,
-                            org.apache.shiro.web.env,org.apache.shiro.authc,
-                            org.eclipse.jetty.servlets;version="[8.1,10)",
-                            org.opendaylight.*,
-                            org.osgi.framework,
-                            org.osgi.util.tracker,
-                            org.osgi.service.cm.*,
-                            org.osgi.service.http.*,
-                            org.apache.shiro.web.*,
-                            org.apache.shiro.*,
-                            org.slf4j.*,
-                            net.sf.ehcache.*,
-                            org.jolokia.osgi.security,
-                            org.osgi.service.blueprint.container,
-                            org.ops4j.pax.web.service,
-                            org.h2.*,
-                        </Import-Package>
                     </instructions>
                 </configuration>
             </plugin>
