@@ -16,6 +16,23 @@
       "revId": "17a7fba663dbbd60921cfeb630545d4a25fcd924",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02485ed6_e0170027",
+        "filename": "it/src/test/java/org/opendaylight/aaa/it/AaaIntegrationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-13T05:50:20Z",
+      "side": 1,
+      "message": "These timeouts seem pretty short, especially if it\u0027s to run in jenkins.",
+      "revId": "17a7fba663dbbd60921cfeb630545d4a25fcd924",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
