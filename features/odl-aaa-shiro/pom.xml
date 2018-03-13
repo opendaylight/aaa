@@ -66,11 +66,6 @@
 
         <!-- Existing AAA infrastructure -->
         <dependency>
-            <groupId>org.opendaylight.aaa.web</groupId>
-            <artifactId>web-osgi-impl</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-shiro</artifactId>
         </dependency>
