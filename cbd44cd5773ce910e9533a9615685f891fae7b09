@@ -263,6 +263,30 @@
     },
     {
       "key": {
+        "uuid": "3330758a_35fb36ea",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-13T13:59:07Z",
+      "side": 1,
+      "message": "\u003e All it takes is to do yangtools.util.ClassLoaderUtils.withClassLoader(ClassLoader, Callable)...\n\ncool! Go for it... ;) More seriously: I had actually tried (the equivalent of) what this does already.  It does not work, because Pax Web sets the TCCL itself, and therefore overrides whatever we could set.\n\nIt\u0027s not PaxWebServer itself that is touchy about the classloader, but the registered Servlet and Filters could be - Shiro is.  I think the real question is not \"would there be some way to subclass and make Shirot not use TCCL\", but \"how can we make this easy to use without having to fix-up web components, and make it simple to switch a web.xml to programmatic registration\" - which this approach as currently proposed achieves.\n\nFull disclosure: I\u0027m rapidely loosing interest in further pursuing this and continue arguing about this.  Thank You (all who actively engaged) for the time you spent reviewing - it was fun.",
+      "parentUuid": "d603075d_0329a486",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 9
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "769bd31c_41176ecf",
         "filename": "features/odl-aaa-shiro/pom.xml",
         "patchSetId": 11
@@ -370,6 +394,30 @@
       "side": 1,
       "message": "How about removing it and checking the resulting feature.xml?",
       "parentUuid": "62df1b90_954b2830",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 20
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cc72556_e9eabe7e",
+        "filename": "features/odl-aaa-shiro/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-13T13:59:07Z",
+      "side": 1,
+      "message": "sure, see https://git.opendaylight.org/gerrit/69439.",
+      "parentUuid": "13302e44_5096bf3f",
       "range": {
         "startLine": 68,
         "startChar": 0,
