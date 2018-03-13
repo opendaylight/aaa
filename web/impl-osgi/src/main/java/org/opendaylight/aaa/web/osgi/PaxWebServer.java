@@ -12,6 +12,7 @@ import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
@@ -21,6 +22,7 @@ import org.opendaylight.aaa.web.WebContext;
 import org.opendaylight.aaa.web.WebContextRegistration;
 import org.opendaylight.aaa.web.WebServer;
 import org.ops4j.pax.cdi.api.OsgiService;
+import org.ops4j.pax.cdi.api.OsgiServiceProvider;
 import org.ops4j.pax.web.service.WebContainer;
 import org.ops4j.pax.web.service.WebContainerDTO;
 import org.osgi.service.http.HttpContext;
@@ -34,8 +36,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Michael Vorburger.ch
  */
-// This is a utility class and cannot be a @Singleton @OsgiServiceProvider
-// (because Pax Web handles class loading relative to its calling bundle)
+@Singleton
+@OsgiServiceProvider
 public class PaxWebServer implements WebServer {
 
     // TODO write an IT (using Pax Exam) which tests this, re-use JettyLauncherTest
