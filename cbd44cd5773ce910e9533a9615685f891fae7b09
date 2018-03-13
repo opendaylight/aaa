@@ -239,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "d603075d_0329a486",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2018-03-13T03:17:21Z",
+      "side": 1,
+      "message": "I am no stranger to ClassLoaders.\n\nNow why is PaxWebServer touchy about the classloader, and more specifically, why cannot the shim simply manipulate the TCCL (given the Class\u003c?\u003e which is being registered)?\n\nAll it takes is to do yangtools.util.ClassLoaderUtils.withClassLoader(ClassLoader, Callable)...",
+      "parentUuid": "723dcaee_a7d25664",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 9
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "769bd31c_41176ecf",
         "filename": "features/odl-aaa-shiro/pom.xml",
         "patchSetId": 11
