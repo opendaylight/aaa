@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68a8061b_0c45daab",
+        "filename": "it/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-13T05:41:08Z",
+      "side": 1,
+      "message": "aaa can\u0027t depend on infrautils, at least not right now.",
+      "revId": "17a7fba663dbbd60921cfeb630545d4a25fcd924",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
