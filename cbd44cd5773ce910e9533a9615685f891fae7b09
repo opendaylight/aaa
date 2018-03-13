@@ -287,6 +287,30 @@
     },
     {
       "key": {
+        "uuid": "649abc02_a254beaf",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-13T14:56:24Z",
+      "side": 1,
+      "message": "\u003e \u003e All it takes is to do yangtools.util.ClassLoaderUtils.withClassLoader(ClassLoader,\n \u003e Callable)...\n \u003e \n \u003e cool! Go for it... ;) More seriously: I had actually tried (the\n \u003e equivalent of) what this does already.  It does not work, because\n \u003e Pax Web sets the TCCL itself, and therefore overrides whatever we\n \u003e could set.\n \u003e \n \u003e It\u0027s not PaxWebServer itself that is touchy about the classloader,\n \u003e but the registered Servlet and Filters could be - Shiro is. \n\nThat\u0027s b/c you were setting the TCCL on the register call and paw web sets it\u0027s own TCCL in the middle when it invokes the servlet code. The failure occurs in the Shiro filter code so we should try setting the TCCL in AAAShiroFilter before it calls the base class. I can try that if you want...",
+      "parentUuid": "3330758a_35fb36ea",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 9
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "769bd31c_41176ecf",
         "filename": "features/odl-aaa-shiro/pom.xml",
         "patchSetId": 11
