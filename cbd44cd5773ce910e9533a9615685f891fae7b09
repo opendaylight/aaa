@@ -311,6 +311,30 @@
     },
     {
       "key": {
+        "uuid": "832e71d3_88cfdc8f",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-13T15:54:27Z",
+      "side": 1,
+      "message": "Sure, don\u0027t let me stop you to go for it, but ideally in a follow-up change owned by you instead of this one?  I have no doubt that it is possible to one way or another do something very smart and eventually get Shiro working with more time, but I think it\u0027s the wrong approach here, because of what I explained above:  It should be simple to use this and switch from declarative web.xml to this API.  We cannot have to debug every 3rd party web framework to make more OSGi compliant than it would have to be if one had used web.xml.  To the best of my abilities, this as-is achieves that.  The fact that PaxWebServer is not registered as an OSGi service but is used directly by bundles is a very minor detail, to me.\n\nI\u0027m loosing interest in further tweaking this, and am against  requring future migration from web.xml to this API in other projects require a Ph.D. in classloadology.\n\nPS: Shame to see you retract your earlier +1? ;-)",
+      "parentUuid": "649abc02_a254beaf",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 9
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "769bd31c_41176ecf",
         "filename": "features/odl-aaa-shiro/pom.xml",
         "patchSetId": 11
