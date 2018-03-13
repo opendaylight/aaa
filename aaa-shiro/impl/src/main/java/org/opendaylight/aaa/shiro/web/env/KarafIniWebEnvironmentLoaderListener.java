@@ -9,6 +9,8 @@ package org.opendaylight.aaa.shiro.web.env;
 
 import javax.servlet.ServletContext;
 import org.apache.shiro.web.env.EnvironmentLoaderListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Shiro EnvironmentLoaderListener with static WebEnvironmentClass,
@@ -18,6 +20,12 @@ import org.apache.shiro.web.env.EnvironmentLoaderListener;
  * @author Michael Vorburger.ch
  */
 public class KarafIniWebEnvironmentLoaderListener extends EnvironmentLoaderListener {
+
+    private static final Logger LOG = LoggerFactory.getLogger(KarafIniWebEnvironmentLoaderListener.class);
+
+    public KarafIniWebEnvironmentLoaderListener() {
+        LOG.info("new KarafIniWebEnvironmentLoaderListener() : {}", this);
+    }
 
     @Override
     protected Class<?> determineWebEnvironmentClass(ServletContext servletContext) {
