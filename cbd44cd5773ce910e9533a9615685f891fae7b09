@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "1b1c8889_05f2d49f",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-03-14T13:22:54Z",
+      "side": 1,
+      "message": "I\u0027ve tested locally and we shouldn\u0027t need these imports anymore.  Thanks for the follow-up.",
+      "parentUuid": "d0cc1511_7899457b",
+      "range": {
+        "startLine": 243,
+        "startChar": 0,
+        "endLine": 272,
+        "endChar": 41
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17900128_800263f2",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/OsgiWebInitializer.java",
         "patchSetId": 11
@@ -180,6 +204,30 @@
       "side": 1,
       "message": "\u003e will now raise a follow-up patch where I\u0027ll convert that impl-blueprint.xml to annotation based blueprint instead, where this class will become a @Singleton instead.\n\nactually strike that, this should not be a pre-req to get this in... may be later, some time; not now.",
       "parentUuid": "1797676e_5ce0eb98",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "cbd44cd5773ce910e9533a9615685f891fae7b09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99e5507b_5023bd4b",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/OsgiWebInitializer.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-03-14T13:22:54Z",
+      "side": 1,
+      "message": "For now, I am tempted to say lets just get this in as-is.  This class is not an API, so we can always follow up later with a more generic impl in the \"impl-osgi\" bundle.",
+      "parentUuid": "1324c7e3_66ba65dc",
       "range": {
         "startLine": 19,
         "startChar": 0,
