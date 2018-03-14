@@ -41,7 +41,8 @@ import org.slf4j.LoggerFactory;
  * {@link WebServer} (and {@link WebContext}) bridge implementation
  * delegating to Pax Web WebContainer (which extends an OSGi {@link HttpService}).
  *
- * @author Michael Vorburger.ch
+ * @author Michael Vorburger.ch - original author
+ * @author Tom Pantelis - added ServiceFactory to solve possible class loading issues in web components
  */
 @Singleton
 public class PaxWebServer {
@@ -70,7 +71,7 @@ public class PaxWebServer {
                 }
             }, new MapDictionary<>(Collections.emptyMap()));
 
-        LOG.info("PaxWebServer initialized");
+        LOG.info("PaxWebServer initialized & WebServer service factory registered");
     }
 
     @PreDestroy
@@ -103,15 +104,14 @@ public class PaxWebServer {
                 bundleWebContainer = bundleContext.getService(webContainerServiceRef);
             }
         } catch (IllegalStateException e) {
-            LOG.warn("Error obtaining WebContainer OSGi service using bundle {}", bundle);
+            LOG.warn("Error obtaining WebContainer OSGi service using bundle {}", bundle, e);
         }
 
         final ServiceReference<WebContainer> finalWebContainerServiceRef = webContainerServiceRef;
         final WebContainer finalWebContainer = bundleWebContainer;
         return new WebServer() {
             @Override
-            public WebContextRegistration registerWebContext(WebContext webContext)
-                    throws ServletException {
+            public WebContextRegistration registerWebContext(WebContext webContext) throws ServletException {
                 return new WebContextImpl(finalWebContainer, webContext) {
                     @Override
                     public void close() {
@@ -152,6 +152,7 @@ public class PaxWebServer {
             this.contextPath = webContext.contextPath();
 
             if (this.paxWeb == null) {
+                LOG.warn("Ignoring WebContext servlet & filter registrations (see previous WARN): {}", contextPath);
                 return;
             }
 
