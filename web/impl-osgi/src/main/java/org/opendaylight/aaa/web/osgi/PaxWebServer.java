@@ -8,10 +8,14 @@
 package org.opendaylight.aaa.web.osgi;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.Nullable;
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
@@ -23,6 +27,11 @@ import org.opendaylight.aaa.web.WebServer;
 import org.ops4j.pax.cdi.api.OsgiService;
 import org.ops4j.pax.web.service.WebContainer;
 import org.ops4j.pax.web.service.WebContainerDTO;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceFactory;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.http.HttpContext;
 import org.osgi.service.http.HttpService;
 import org.slf4j.Logger;
@@ -34,23 +43,42 @@ import org.slf4j.LoggerFactory;
  *
  * @author Michael Vorburger.ch
  */
-// This is a utility class and cannot be a @Singleton @OsgiServiceProvider
-// (because Pax Web handles class loading relative to its calling bundle)
-public class PaxWebServer implements WebServer {
+@Singleton
+public class PaxWebServer {
 
     // TODO write an IT (using Pax Exam) which tests this, re-use JettyLauncherTest
 
     private static final Logger LOG = LoggerFactory.getLogger(PaxWebServer.class);
 
     private final WebContainer paxWeb;
+    private final ServiceRegistration<?> serviceRegistration;
 
     @Inject
-    public PaxWebServer(@OsgiService WebContainer paxWebContainer) {
+    public PaxWebServer(@OsgiService WebContainer paxWebContainer, BundleContext bundleContext) {
         this.paxWeb = paxWebContainer;
+
+        serviceRegistration = bundleContext.registerService(new String[]{WebServer.class.getName()},
+            new ServiceFactory<WebServer>() {
+                @Override
+                public WebServer getService(Bundle bundle, ServiceRegistration<WebServer> registration) {
+                    return newWebServer(bundle);
+                }
+
+                @Override
+                public void ungetService(Bundle bundle, ServiceRegistration<WebServer> registration,
+                        WebServer service) {
+                }
+            }, new MapDictionary<>(Collections.emptyMap()));
+
+        LOG.info("PaxWebServer initialized");
     }
 
-    @Override
-    public String getBaseURL() {
+    @PreDestroy
+    public void close() {
+        serviceRegistration.unregister();
+    }
+
+    private String getBaseURL() {
         WebContainerDTO details = paxWeb.getWebcontainerDTO();
         if (details.securePort != null && details.securePort > 0) {
             return "https://" + details.listeningAddresses[0] + ":" + details.securePort;
@@ -59,25 +87,73 @@ public class PaxWebServer implements WebServer {
         }
     }
 
-    @Override
-    public WebContextRegistration registerWebContext(WebContext webContext) throws ServletException {
-        return new WebContextImpl(webContext);
+    private WebServer newWebServer(Bundle bundle) {
+        LOG.info("Creating WebServer instance for bundle {}", bundle);
+
+        final BundleContext bundleContext = bundle.getBundleContext();
+        WebContainer bundleWebContainer = null;
+        ServiceReference<WebContainer> webContainerServiceRef = null;
+        try {
+            // Get the WebContainer service using the given bundle's context so the WebContainer service instance uses
+            // the bundle's class loader.
+            webContainerServiceRef = bundleContext.getServiceReference(WebContainer.class);
+            if (webContainerServiceRef == null) {
+                LOG.warn("WebContainer OSGi service not found using bundle {}", bundle);
+            } else {
+                bundleWebContainer = bundleContext.getService(webContainerServiceRef);
+            }
+        } catch (IllegalStateException e) {
+            LOG.warn("Error obtaining WebContainer OSGi service using bundle {}", bundle);
+        }
+
+        final ServiceReference<WebContainer> finalWebContainerServiceRef = webContainerServiceRef;
+        final WebContainer finalWebContainer = bundleWebContainer;
+        return new WebServer() {
+            @Override
+            public WebContextRegistration registerWebContext(WebContext webContext)
+                    throws ServletException {
+                return new WebContextImpl(finalWebContainer, webContext) {
+                    @Override
+                    public void close() {
+                        super.close();
+
+                        if (finalWebContainerServiceRef != null) {
+                            try {
+                                bundleContext.ungetService(finalWebContainerServiceRef);
+                            } catch (IllegalStateException e) {
+                                LOG.debug("Error from ungetService", e);
+                            }
+                        }
+                    }
+                };
+            }
+
+            @Override
+            public String getBaseURL() {
+                return PaxWebServer.this.getBaseURL();
+            }
+        };
     }
 
-    private class WebContextImpl implements WebContextRegistration {
+    private static class WebContextImpl implements WebContextRegistration {
 
         private final String contextPath;
-
+        private final WebContainer paxWeb;
         private final List<Servlet> registeredServlets = new ArrayList<>();
         private final List<EventListener> registeredEventListeners = new ArrayList<>();
         private final List<Filter> registeredFilters = new ArrayList<>();
 
-        WebContextImpl(WebContext webContext) throws ServletException {
+        WebContextImpl(@Nullable WebContainer paxWeb, WebContext webContext) throws ServletException {
             // We ignore webContext.supportsSessions() because the OSGi HttpService / Pax Web API
             // does not seem to support not wanting session support on some web contexts
             // (it assumes always with session); but other implementation support without.
 
+            this.paxWeb = paxWeb;
             this.contextPath = webContext.contextPath();
+
+            if (this.paxWeb == null) {
+                return;
+            }
 
             // NB This is NOT the URL prefix of the context, but the context.id which is
             // used while registering the HttpContext in the OSGi service registry.
@@ -151,7 +227,5 @@ public class PaxWebServer implements WebServer {
                 paxWeb.unregisterEventListener(eventListener);
             }
         }
-
     }
-
 }
