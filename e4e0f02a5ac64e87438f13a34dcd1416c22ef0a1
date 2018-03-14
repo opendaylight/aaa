@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fdc01b3_25228e11",
+        "filename": "web/impl-osgi/src/main/java/org/opendaylight/aaa/web/osgi/PaxWebServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-14T11:31:05Z",
+      "side": 1,
+      "message": "This can be made final",
+      "revId": "e4e0f02a5ac64e87438f13a34dcd1416c22ef0a1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4ea6a54_69c9789b",
+        "filename": "web/impl-osgi/src/main/java/org/opendaylight/aaa/web/osgi/PaxWebServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-14T11:31:05Z",
+      "side": 1,
+      "message": "Declare here and make final",
+      "revId": "e4e0f02a5ac64e87438f13a34dcd1416c22ef0a1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23295c2b_f7f059db",
+        "filename": "web/impl-osgi/src/main/java/org/opendaylight/aaa/web/osgi/PaxWebServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-14T11:31:05Z",
+      "side": 1,
+      "message": "This isn\u0027t needed if bundleWebContainer is final",
+      "revId": "e4e0f02a5ac64e87438f13a34dcd1416c22ef0a1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9925157a_bce12217",
+        "filename": "web/impl-osgi/src/main/java/org/opendaylight/aaa/web/osgi/PaxWebServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-14T11:31:05Z",
+      "side": 1,
+      "message": "Don\u0027t need this check.",
+      "revId": "e4e0f02a5ac64e87438f13a34dcd1416c22ef0a1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
