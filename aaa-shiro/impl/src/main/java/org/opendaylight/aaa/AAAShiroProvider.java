@@ -45,14 +45,12 @@ public final class AAAShiroProvider {
 
     public static final CompletableFuture<AAAShiroProvider> INSTANCE_FUTURE = new CompletableFuture<>();
 
-    private final IIDMStore iidmStore;
     private final DataBroker dataBroker;
     private final ICertificateManager certificateManager;
     private final HttpService httpService;
     private final ShiroConfiguration shiroConfiguration;
     private final String moonEndpointPath;
     private final String oauth2EndpointPath;
-    private final TokenStore tokenStore;
 
     /**
      * Constructor.
@@ -72,17 +70,13 @@ public final class AAAShiroProvider {
         this.moonEndpointPath = moonEndpointPath;
         this.oauth2EndpointPath = oauth2EndpointPath;
 
-        if (datastoreConfig != null && datastoreConfig.getStore()
-                .equals(DatastoreConfig.Store.H2DataStore)) {
-            this.iidmStore = idmStore;
-            this.tokenStore = new H2TokenStore(datastoreConfig.getTimeToLive().longValue(),
-                    datastoreConfig.getTimeToWait().longValue());
-        } else {
-            this.iidmStore = null;
-            this.tokenStore = null;
+        if (datastoreConfig == null || !datastoreConfig.getStore().equals(DatastoreConfig.Store.H2DataStore)) {
             LOG.info("AAA Datastore has not been initialized");
             return;
         }
+
+        final TokenStore tokenStore = new H2TokenStore(datastoreConfig.getTimeToLive().longValue(),
+                datastoreConfig.getTimeToWait().longValue());
         this.initializeServices(credentialAuth, idmStore, tokenStore);
         try {
             this.registerServletContexts(this.httpService, this.moonEndpointPath, this.oauth2EndpointPath);
@@ -132,18 +126,6 @@ public final class AAAShiroProvider {
         ServiceLocator.getInstance().setTokenAuthCollection(tokenAuthList);
 
         ServiceLocator.getInstance().setTokenStore(tokenStore);
-    }
-
-    /**
-     * Get IDM data store.
-     *
-     * @return IIDMStore data store
-     *
-     * @deprecated instead of calling this, just directly inject an IIDMStore into the class needing it
-     */
-    @Deprecated
-    public IIDMStore getIdmStore() {
-        return iidmStore;
     }
 
     /**

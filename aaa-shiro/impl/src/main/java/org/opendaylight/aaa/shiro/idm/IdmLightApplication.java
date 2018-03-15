@@ -11,7 +11,7 @@ package org.opendaylight.aaa.shiro.idm;
 import com.google.common.collect.ImmutableSet;
 import java.util.Set;
 import javax.ws.rs.core.Application;
-import org.opendaylight.aaa.AAAShiroProvider;
+import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.provider.GsonProvider;
 
 /**
@@ -41,19 +41,19 @@ public class IdmLightApplication extends Application {
      */
     public static final int MAX_FIELD_LEN = 256;
 
-    private final AAAShiroProvider provider;
+    private final IIDMStore iidMStore;
 
-    public IdmLightApplication(AAAShiroProvider provider) {
-        this.provider = provider;
+    public IdmLightApplication(IIDMStore iidMStore) {
+        this.iidMStore = iidMStore;
     }
 
     @Override
     public Set<Object> getSingletons() {
         return ImmutableSet.builderWithExpectedSize(32)
                     .add(new GsonProvider<>())
-                    .add(new DomainHandler(provider))
-                    .add(new RoleHandler(provider))
-                    .add(new UserHandler(provider))
+                    .add(new DomainHandler(iidMStore))
+                    .add(new RoleHandler(iidMStore))
+                    .add(new UserHandler(iidMStore))
                     .build();
     }
 }
