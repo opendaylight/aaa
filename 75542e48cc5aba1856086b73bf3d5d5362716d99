@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29160262_98c6ad68",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/KarafIniWebEnvironment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-03-15T13:02:36Z",
+      "side": 1,
+      "message": "Shiro requires a zero-arg constructor to be present for instantiation of this class.",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 62
+      },
+      "revId": "75542e48cc5aba1856086b73bf3d5d5362716d99",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
