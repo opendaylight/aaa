@@ -20,8 +20,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.api.IDMStoreException;
+import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.Claim;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Domains;
@@ -51,10 +51,10 @@ public class DomainHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(DomainHandler.class);
 
-    private final AAAShiroProvider provider;
+    private final IIDMStore iidMStore;
 
-    public DomainHandler(AAAShiroProvider provider) {
-        this.provider = provider;
+    public DomainHandler(IIDMStore iidMStore) {
+        this.iidMStore = iidMStore;
     }
 
     /**
@@ -68,7 +68,7 @@ public class DomainHandler {
         LOG.info("Get /domains");
         Domains domains = null;
         try {
-            domains = provider.getIdmStore().getDomains();
+            domains = iidMStore.getDomains();
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -93,7 +93,7 @@ public class DomainHandler {
         LOG.info("Get /domains/{}", domainId);
         Domain domain = null;
         try {
-            domain = provider.getIdmStore().readDomain(domainId);
+            domain = iidMStore.readDomain(domainId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -146,7 +146,7 @@ public class DomainHandler {
             if (domain.getDescription() == null) {
                 domain.setDescription("");
             }
-            domain = provider.getIdmStore().writeDomain(domain);
+            domain = iidMStore.writeDomain(domain);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -176,7 +176,7 @@ public class DomainHandler {
         LOG.info("Put /domains/{}", domainId);
         try {
             domain.setDomainid(domainId);
-            domain = provider.getIdmStore().updateDomain(domain);
+            domain = iidMStore.updateDomain(domain);
             if (domain == null) {
                 IDMError idmerror = new IDMError();
                 idmerror.setMessage("Not found! Domain id:" + domainId);
@@ -208,7 +208,7 @@ public class DomainHandler {
         LOG.info("Delete /domains/{}", domainId);
 
         try {
-            Domain domain = provider.getIdmStore().deleteDomain(domainId);
+            Domain domain = iidMStore.deleteDomain(domainId);
             if (domain == null) {
                 IDMError idmerror = new IDMError();
                 idmerror.setMessage("Not found! Domain id:" + domainId);
@@ -265,7 +265,7 @@ public class DomainHandler {
 
         // validate domain id
         try {
-            domain = provider.getIdmStore().readDomain(domainId);
+            domain = iidMStore.readDomain(domainId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -281,7 +281,7 @@ public class DomainHandler {
         grant.setDomainid(domainId);
 
         try {
-            user = provider.getIdmStore().readUser(userId);
+            user = iidMStore.readUser(userId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -306,7 +306,7 @@ public class DomainHandler {
             return Response.status(404).entity(idmerror).build();
         }
         try {
-            role = provider.getIdmStore().readRole(roleId);
+            role = iidMStore.readRole(roleId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -322,7 +322,7 @@ public class DomainHandler {
 
         // see if grant already exists for this
         try {
-            Grant existingGrant = provider.getIdmStore().readGrant(domainId, userId, roleId);
+            Grant existingGrant = iidMStore.readGrant(domainId, userId, roleId);
             if (existingGrant != null) {
                 IDMError idmerror = new IDMError();
                 idmerror.setMessage("Grant already exists for did:" + domainId + " uid:" + userId + " rid:" + roleId);
@@ -338,7 +338,7 @@ public class DomainHandler {
 
         // create grant
         try {
-            grant = provider.getIdmStore().writeGrant(grant);
+            grant = iidMStore.writeGrant(grant);
         } catch (IDMStoreException e) {
             LOG.error("StoreException: ", e);
             IDMError idmerror = new IDMError();
@@ -373,7 +373,7 @@ public class DomainHandler {
         List<Role> roleList = new ArrayList<>();
 
         try {
-            domain = provider.getIdmStore().readDomain(domainId);
+            domain = iidMStore.readDomain(domainId);
         } catch (IDMStoreException se) {
             LOG.error("StoreException: ", se);
             IDMError idmerror = new IDMError();
@@ -403,7 +403,7 @@ public class DomainHandler {
 
         // find userid for user
         try {
-            Users users = provider.getIdmStore().getUsers(username, domainId);
+            Users users = iidMStore.getUsers(username, domainId);
             List<User> userList = users.getUsers();
             if (userList.size() == 0) {
                 IDMError idmerror = new IDMError();
@@ -422,11 +422,11 @@ public class DomainHandler {
             claim.setUsername(username);
             claim.setUserid(user.getUserid());
             try {
-                Grants grants = provider.getIdmStore().getGrants(domainId, user.getUserid());
+                Grants grants = iidMStore.getGrants(domainId, user.getUserid());
                 List<Grant> grantsList = grants.getGrants();
                 for (int i = 0; i < grantsList.size(); i++) {
                     Grant grant = grantsList.get(i);
-                    Role role = provider.getIdmStore().readRole(grant.getRoleid());
+                    Role role = iidMStore.readRole(grant.getRoleid());
                     roleList.add(role);
                 }
             } catch (IDMStoreException e) {
@@ -470,7 +470,7 @@ public class DomainHandler {
         List<Role> roleList = new ArrayList<>();
 
         try {
-            domain = provider.getIdmStore().readDomain(domainId);
+            domain = iidMStore.readDomain(domainId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -485,7 +485,7 @@ public class DomainHandler {
         }
 
         try {
-            user = provider.getIdmStore().readUser(userId);
+            user = iidMStore.readUser(userId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -500,11 +500,11 @@ public class DomainHandler {
         }
 
         try {
-            Grants grants = provider.getIdmStore().getGrants(domainId, userId);
+            Grants grants = iidMStore.getGrants(domainId, userId);
             List<Grant> grantsList = grants.getGrants();
             for (int i = 0; i < grantsList.size(); i++) {
                 Grant grant = grantsList.get(i);
-                Role role = provider.getIdmStore().readRole(grant.getRoleid());
+                Role role = iidMStore.readRole(grant.getRoleid());
                 roleList.add(role);
             }
         } catch (IDMStoreException e) {
@@ -541,7 +541,7 @@ public class DomainHandler {
         Role role;
 
         try {
-            domain = provider.getIdmStore().readDomain(domainId);
+            domain = iidMStore.readDomain(domainId);
         } catch (IDMStoreException e) {
             LOG.error("Error deleting Grant", e);
             IDMError idmerror = new IDMError();
@@ -556,7 +556,7 @@ public class DomainHandler {
         }
 
         try {
-            user = provider.getIdmStore().readUser(userId);
+            user = iidMStore.readUser(userId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -571,7 +571,7 @@ public class DomainHandler {
         }
 
         try {
-            role = provider.getIdmStore().readRole(roleId);
+            role = iidMStore.readRole(roleId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -587,13 +587,13 @@ public class DomainHandler {
 
         // see if grant already exists
         try {
-            Grant existingGrant = provider.getIdmStore().readGrant(domainId, userId, roleId);
+            Grant existingGrant = iidMStore.readGrant(domainId, userId, roleId);
             if (existingGrant == null) {
                 IDMError idmerror = new IDMError();
                 idmerror.setMessage("Grant does not exist for did:" + domainId + " uid:" + userId + " rid:" + roleId);
                 return Response.status(404).entity(idmerror).build();
             }
-            existingGrant = provider.getIdmStore().deleteGrant(existingGrant.getGrantid());
+            existingGrant = iidMStore.deleteGrant(existingGrant.getGrantid());
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
