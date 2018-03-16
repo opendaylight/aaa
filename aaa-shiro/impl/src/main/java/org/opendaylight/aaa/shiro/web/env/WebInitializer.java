@@ -10,7 +10,7 @@ package org.opendaylight.aaa.shiro.web.env;
 import javax.servlet.ServletException;
 import org.apache.shiro.web.env.EnvironmentLoaderListener;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
-import org.opendaylight.aaa.AAAShiroProvider;
+import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.filterchain.filters.CustomFilterAdapter;
 import org.opendaylight.aaa.shiro.filters.AAAShiroFilter;
 import org.opendaylight.aaa.shiro.idm.IdmLightApplication;
@@ -32,12 +32,12 @@ public class WebInitializer {
 
     private final WebContextRegistration registraton;
 
-    public WebInitializer(WebServer webServer, AAAShiroProvider provider,
+    public WebInitializer(WebServer webServer, IIDMStore iidMStore,
             EnvironmentLoaderListener shiroWebEnvLoader) throws ServletException {
         this.registraton = webServer.registerWebContext(WebContext.builder().contextPath("auth").supportsSessions(true)
 
             .addServlet(ServletDetails.builder().servlet(new com.sun.jersey.spi.container.servlet.ServletContainer(
-                    new IdmLightApplication(provider)))
+                    new IdmLightApplication(iidMStore)))
                 .putInitParam("com.sun.jersey.api.json.POJOMappingFeature", "true")
                 .putInitParam("jersey.config.server.provider.packages", "org.opendaylight.aaa.impl.provider")
                 .addUrlPattern("/*").build())

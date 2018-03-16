@@ -19,8 +19,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.api.IDMStoreException;
+import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
@@ -74,10 +74,10 @@ public class UserHandler {
      */
     private static final String DEFAULT_EMAIL = "";
 
-    private final AAAShiroProvider provider;
+    private final IIDMStore iidMStore;
 
-    public UserHandler(AAAShiroProvider provider) {
-        this.provider = provider;
+    public UserHandler(IIDMStore iidMStore) {
+        this.iidMStore = iidMStore;
     }
 
     /**
@@ -92,7 +92,7 @@ public class UserHandler {
         LOG.info("GET /auth/v1/users  (extracts all users)");
 
         try {
-            final Users users = provider.getIdmStore().getUsers();
+            final Users users = iidMStore.getUsers();
 
             // Redact the password and salt for security purposes.
             final Collection<User> usersList = users.getUsers();
@@ -122,7 +122,7 @@ public class UserHandler {
         LOG.info("GET auth/v1/users/ {}  (extract user with specified id)", id);
 
         try {
-            final User user = provider.getIdmStore().readUser(id);
+            final User user = iidMStore.readUser(id);
 
             if (user == null) {
                 final String error = "user not found! id: " + id;
@@ -229,7 +229,7 @@ public class UserHandler {
         try {
             // At this point, fields have been properly verified. Create the
             // user account
-            final User createdUser = provider.getIdmStore().writeUser(user);
+            final User createdUser = iidMStore.writeUser(user);
             user.setUserid(createdUser.getUserid());
         } catch (IDMStoreException se) {
             return internalError("creating", se);
@@ -284,7 +284,7 @@ public class UserHandler {
                 return providedFieldTooLong("domain", IdmLightApplication.MAX_FIELD_LEN);
             }
 
-            user = provider.getIdmStore().updateUser(user);
+            user = iidMStore.updateUser(user);
             if (user == null) {
                 return new IDMError(404, String.format("User not found for id %s", id), "").response();
             }
@@ -314,7 +314,7 @@ public class UserHandler {
         LOG.info("DELETE /auth/v1/users/{}  (Delete a user account)", id);
 
         try {
-            final User user = provider.getIdmStore().deleteUser(id);
+            final User user = iidMStore.deleteUser(id);
 
             if (user == null) {
                 return new IDMError(404, String.format("Error deleting user.  " + "Couldn't find user with id %s", id),

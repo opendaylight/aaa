@@ -18,9 +18,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
-import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.api.IDMStoreException;
+import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
@@ -42,10 +41,10 @@ public class RoleHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(RoleHandler.class);
 
-    private final AAAShiroProvider provider;
+    private final IIDMStore iidMStore;
 
-    public RoleHandler(AAAShiroProvider provider) {
-        this.provider = provider;
+    public RoleHandler(IIDMStore iidMStore) {
+        this.iidMStore = iidMStore;
     }
 
     /**
@@ -60,7 +59,7 @@ public class RoleHandler {
         LOG.info("get /roles");
         Roles roles = null;
         try {
-            roles = provider.getIdmStore().getRoles();
+            roles = iidMStore.getRoles();
         } catch (IDMStoreException e) {
             LOG.error("Internal error getting the roles", e);
             return new IDMError(500, "internal error getting roles", e.getMessage()).response();
@@ -84,7 +83,7 @@ public class RoleHandler {
         Role role = null;
 
         try {
-            role = provider.getIdmStore().readRole(id);
+            role = iidMStore.readRole(id);
         } catch (IDMStoreException e) {
             LOG.error("Internal error getting the role", e);
             return new IDMError(500, "internal error getting roles", e.getMessage()).response();
@@ -149,7 +148,7 @@ public class RoleHandler {
                         .response();
             }
 
-            role = provider.getIdmStore().writeRole(role);
+            role = iidMStore.writeRole(role);
         } catch (IDMStoreException e) {
             LOG.error("Internal error creating role", e);
             return new IDMError(500, "internal error creating role", e.getMessage()).response();
@@ -193,7 +192,7 @@ public class RoleHandler {
                         .response();
             }
 
-            role = provider.getIdmStore().updateRole(role);
+            role = iidMStore.updateRole(role);
             if (role == null) {
                 return new IDMError(404, "role id not found :" + id, "").response();
             }
@@ -221,7 +220,7 @@ public class RoleHandler {
         LOG.info("Delete /roles/{}", id);
 
         try {
-            Role role = provider.getIdmStore().deleteRole(id);
+            Role role = iidMStore.deleteRole(id);
             if (role == null) {
                 return new IDMError(404, "role id not found :" + id, "").response();
             }
