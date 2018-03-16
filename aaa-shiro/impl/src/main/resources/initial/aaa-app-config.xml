@@ -260,7 +260,7 @@
     <!-- Start moonAuthRealm commented out
     <main>
         <pair-key>rest</pair-key>
-        <pair-value>MoonOAuthFilter</pair-value>
+        <pair-value>org.opendaylight.aaa.shiro.filters.MoonOAuthFilter</pair-value>
     </main>
     End moonAuthRealm commented out-->
 

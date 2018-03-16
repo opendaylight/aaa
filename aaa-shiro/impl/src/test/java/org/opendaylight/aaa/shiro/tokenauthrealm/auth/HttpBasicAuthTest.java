@@ -24,6 +24,7 @@ import org.junit.Test;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.CredentialAuth;
+import org.opendaylight.aaa.api.PasswordCredentials;
 
 public class HttpBasicAuthTest {
     private static final String USERNAME = "admin";
@@ -34,18 +35,14 @@ public class HttpBasicAuthTest {
     @SuppressWarnings("unchecked")
     @Before
     public void setup() {
-        auth = new HttpBasicAuth();
-        auth.credentialAuth = mock(CredentialAuth.class);
-        when(
-                auth.credentialAuth.authenticate(new PasswordCredentialBuilder()
-                        .setUserName(USERNAME).setPassword(PASSWORD).setDomain(DOMAIN).build()))
-                .thenReturn(
-                        new ClaimBuilder().setUser("admin").addRole("admin").setUserId("123")
-                                .build());
-        when(
-                auth.credentialAuth.authenticate(new PasswordCredentialBuilder()
-                        .setUserName(USERNAME).setPassword("bozo").setDomain(DOMAIN).build()))
-                .thenThrow(new AuthenticationException("barf"));
+        CredentialAuth<PasswordCredentials> mockCredentialAuth = mock(CredentialAuth.class);
+        auth = new HttpBasicAuth(mockCredentialAuth);
+        when(mockCredentialAuth.authenticate(
+                new PasswordCredentialBuilder().setUserName(USERNAME).setPassword(PASSWORD).setDomain(DOMAIN).build()))
+                        .thenReturn(new ClaimBuilder().setUser("admin").addRole("admin").setUserId("123").build());
+        when(mockCredentialAuth.authenticate(
+                new PasswordCredentialBuilder().setUserName(USERNAME).setPassword("bozo").setDomain(DOMAIN).build()))
+                        .thenThrow(new AuthenticationException("barf"));
     }
 
     @Test

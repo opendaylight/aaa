@@ -9,7 +9,6 @@
 package org.opendaylight.aaa.shiro.realm;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -20,14 +19,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.junit.Before;
+import org.junit.Test;
 import org.opendaylight.aaa.shiro.realm.util.TokenUtils;
 import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.opendaylight.aaa.shiro.tokenauthrealm.auth.AuthenticationManager;
+import org.opendaylight.aaa.shiro.tokenauthrealm.auth.TokenAuthenticators;
+import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
 
-public class TokenAuthRealmTest extends TokenAuthRealm {
+public class TokenAuthRealmTest {
 
-    private TokenAuthRealm testRealm = new TokenAuthRealm();
+    private TokenAuthRealm testRealm;
+
+    @Before
+    public void setup() {
+        ThreadLocals.AUTH_SETVICE_TL.set(new AuthenticationManager());
+        ThreadLocals.TOKEN_AUTHENICATORS_TL.set(new TokenAuthenticators());
+        testRealm = new TokenAuthRealm();
+    }
 
     @Test
     public void testTokenAuthRealm() {
@@ -70,7 +79,7 @@ public class TokenAuthRealmTest extends TokenAuthRealm {
                 HeaderUtils.getTokenAuthHeader(
                         HeaderUtils.getUsernamePasswordDomainString(
                                 "user1", "password", "sdn")));
-        final Map<String, List<String>> expectedHeaders = new HashMap<String, List<String>>();
+        final Map<String, List<String>> expectedHeaders = new HashMap<>();
         expectedHeaders.put("Authorization", Lists.newArrayList(authHeader));
         final Map<String, List<String>> actualHeaders = HeaderUtils.formHeadersWithToken(authHeader);
         List<String> value;
@@ -88,7 +97,7 @@ public class TokenAuthRealmTest extends TokenAuthRealm {
         final String authHeader = HeaderUtils.getTokenAuthHeader(HeaderUtils.getEncodedToken(
                 HeaderUtils.getUsernamePasswordDomainString(
                         username, password, domain)));
-        final Map<String, List<String>> expectedHeaders = new HashMap<String, List<String>>();
+        final Map<String, List<String>> expectedHeaders = new HashMap<>();
         expectedHeaders.put("Authorization", Lists.newArrayList(authHeader));
         final Map<String, List<String>> actualHeaders = HeaderUtils.formHeaders(username, password, domain);
         List<String> value;
@@ -96,12 +105,6 @@ public class TokenAuthRealmTest extends TokenAuthRealm {
             value = expectedHeaders.get(key);
             assertTrue(actualHeaders.get(key).equals(value));
         }
-    }
-
-    @Ignore
-    @Test
-    public void testIsTokenAuthAvailable() {
-        assertTrue(testRealm.isTokenAuthAvailable());
     }
 
     @Test(expected = org.apache.shiro.authc.AuthenticationException.class)

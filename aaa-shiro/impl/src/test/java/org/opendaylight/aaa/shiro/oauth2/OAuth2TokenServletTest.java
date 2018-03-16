@@ -11,27 +11,24 @@ package org.opendaylight.aaa.shiro.oauth2;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mortbay.jetty.testing.HttpTester;
 import org.mortbay.jetty.testing.ServletTester;
-import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.PasswordCredentials;
-import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.TokenStore;
-import org.opendaylight.aaa.shiro.tokenauthrealm.ServiceLocator;
 import org.opendaylight.aaa.shiro.tokenauthrealm.auth.AuthenticationBuilder;
 import org.opendaylight.aaa.shiro.tokenauthrealm.auth.ClaimBuilder;
 
@@ -54,6 +51,15 @@ public class OAuth2TokenServletTest {
                                                          .addRole("admin").build();
     private static final ServletTester SERVER = new ServletTester();
 
+    @Mock
+    private CredentialAuth<PasswordCredentials> mockCredentialAuth;
+
+    @Mock
+    private IdMService mockIdMService;
+
+    @Mock
+    private TokenStore mockTokenStore;
+
     @BeforeClass
     public static void init() throws Exception {
         // Set up SERVER
@@ -74,14 +80,8 @@ public class OAuth2TokenServletTest {
 
     @Before
     public void setup() {
-        mockServiceLocator();
-        when(ServiceLocator.getInstance().getTokenStore().tokenExpiration()).thenReturn(
-                TOKEN_TIMEOUT_SECS);
-    }
-
-    @After
-    public void teardown() {
-        ServiceLocator.getInstance().getTokenAuthCollection().clear();
+        MockitoAnnotations.initMocks(this);
+        when(mockTokenStore.tokenExpiration()).thenReturn(TOKEN_TIMEOUT_SECS);
     }
 
     @Test
@@ -100,9 +100,7 @@ public class OAuth2TokenServletTest {
 
     @Test
     public void testCreateTokenWithPassword() throws Exception {
-        when(
-                ServiceLocator.getInstance().getCredentialAuth()
-                              .authenticate(any(PasswordCredentials.class))).thenReturn(CLAIM);
+        when(mockCredentialAuth.authenticate(any(PasswordCredentials.class))).thenReturn(CLAIM);
 
         HttpTester req = new HttpTester();
         req.setMethod("POST");
@@ -120,10 +118,8 @@ public class OAuth2TokenServletTest {
 
     @Test
     public void testCreateTokenWithRefreshToken() throws Exception {
-        when(ServiceLocator.getInstance().getTokenStore().get(anyString())).thenReturn(
-                new AuthenticationBuilder(CLAIM).build());
-        when(ServiceLocator.getInstance().getIdmService().listRoles(anyString(), anyString())).thenReturn(
-                Arrays.asList("admin", "user"));
+        when(mockTokenStore.get(anyString())).thenReturn(new AuthenticationBuilder(CLAIM).build());
+        when(mockIdMService.listRoles(anyString(), anyString())).thenReturn(Arrays.asList("admin", "user"));
 
         HttpTester req = new HttpTester();
         req.setMethod("POST");
@@ -141,8 +137,7 @@ public class OAuth2TokenServletTest {
 
     @Test
     public void testDeleteToken() throws Exception {
-        when(ServiceLocator.getInstance().getTokenStore().delete("token_to_be_deleted")).thenReturn(
-                true);
+        when(mockTokenStore.delete("token_to_be_deleted")).thenReturn(true);
 
         HttpTester req = new HttpTester();
         req.setMethod("POST");
@@ -154,14 +149,5 @@ public class OAuth2TokenServletTest {
         HttpTester resp = new HttpTester();
         resp.parse(SERVER.getResponses(req.generate()));
         Assert.assertEquals(204, resp.getStatus());
-    }
-
-    @SuppressWarnings("unchecked")
-    private static void mockServiceLocator() {
-        ServiceLocator.getInstance().setIdmService(mock(IdMService.class));
-        ServiceLocator.getInstance().setAuthenticationService(mock(AuthenticationService.class));
-        ServiceLocator.getInstance().setTokenStore(mock(TokenStore.class));
-        ServiceLocator.getInstance().setCredentialAuth(mock(CredentialAuth.class));
-        ServiceLocator.getInstance().getTokenAuthCollection().add(mock(TokenAuth.class));
     }
 }

@@ -14,7 +14,10 @@ import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.util.Factory;
 import org.apache.shiro.web.env.IniWebEnvironment;
+import org.opendaylight.aaa.api.AuthenticationService;
+import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.shiro.tokenauthrealm.auth.TokenAuthenticators;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.shiro.configuration.Main;
@@ -37,12 +40,19 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
     private final ShiroConfiguration shiroConfiguration;
     private final DataBroker dataBroker;
     private final ICertificateManager certificateManager;
+    private final AuthenticationService authenticationService;
+    private final TokenAuthenticators tokenAuthenticators;
+    private final TokenStore tokenStore;
 
     AAAIniWebEnvironment(ShiroConfiguration shiroConfiguration, DataBroker dataBroker,
-            ICertificateManager certificateManager) {
+            ICertificateManager certificateManager, AuthenticationService authenticationService,
+            TokenAuthenticators tokenAuthenticators, TokenStore tokenStore) {
         this.shiroConfiguration = shiroConfiguration;
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
+        this.authenticationService = authenticationService;
+        this.tokenAuthenticators = tokenAuthenticators;
+        this.tokenStore = tokenStore;
         LOG.debug("AAAIniWebEnvironment created");
     }
 
@@ -72,6 +82,9 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
     public void init() {
         ThreadLocals.DATABROKER_TL.set(dataBroker);
         ThreadLocals.CERT_MANAGER_TL.set(certificateManager);
+        ThreadLocals.AUTH_SETVICE_TL.set(authenticationService);
+        ThreadLocals.TOKEN_AUTHENICATORS_TL.set(tokenAuthenticators);
+        ThreadLocals.TOKEN_STORE_TL.set(tokenStore);
         try {
             // Initialize the Shiro environment from clustered-app-config
             final Ini ini = createIniFromClusteredAppConfig(shiroConfiguration);
@@ -80,6 +93,9 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
         } finally {
             ThreadLocals.DATABROKER_TL.remove();
             ThreadLocals.CERT_MANAGER_TL.remove();
+            ThreadLocals.AUTH_SETVICE_TL.remove();
+            ThreadLocals.TOKEN_AUTHENICATORS_TL.remove();
+            ThreadLocals.TOKEN_STORE_TL.remove();
         }
     }
 }

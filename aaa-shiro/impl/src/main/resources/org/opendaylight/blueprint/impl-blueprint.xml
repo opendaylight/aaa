@@ -29,6 +29,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="idmStore" />
   </bean>
 
+  <bean id="authService" class="org.opendaylight.aaa.shiro.tokenauthrealm.auth.AuthenticationManager"/>
+
   <service ref="idmStore" interface="org.opendaylight.aaa.api.IIDMStore" odl:type="default"/>
   <service ref="IdmLightProxy" interface="org.opendaylight.aaa.api.IdMService" odl:type="default"/>
   <service ref="IdmLightProxy" interface="org.opendaylight.aaa.api.CredentialAuth" odl:type="default"/>
@@ -64,6 +66,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument value="/oauth2" />
     <argument ref="datastoreConfig" />
     <argument ref="idmStore" />
+    <argument ref="authService" />
   </bean>
 
   <bean id="aaa" class="org.opendaylight.aaa.shiro.filters.AAAFilter" />
@@ -76,6 +79,13 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="shiroConfiguration"/>
     <argument ref="dataBroker"/>
     <argument ref="certManager"/>
+    <argument ref="authService" />
+    <argument>
+      <bean factory-ref="provider" factory-method="getTokenAuthenticators"/>
+    </argument>
+    <argument>
+      <bean factory-ref="provider" factory-method="getTokenStore"/>
+    </argument>
   </bean>
 
   <reference id="webServer" interface="org.opendaylight.aaa.web.WebServer" />

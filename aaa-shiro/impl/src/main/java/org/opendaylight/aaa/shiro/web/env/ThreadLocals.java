@@ -7,7 +7,10 @@
  */
 package org.opendaylight.aaa.shiro.web.env;
 
+import org.opendaylight.aaa.api.AuthenticationService;
+import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.shiro.tokenauthrealm.auth.TokenAuthenticators;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 
 /**
@@ -20,4 +23,10 @@ public interface ThreadLocals {
     ThreadLocal<DataBroker> DATABROKER_TL = new ThreadLocal<>();
 
     ThreadLocal<ICertificateManager> CERT_MANAGER_TL = new ThreadLocal<>();
+
+    ThreadLocal<AuthenticationService> AUTH_SETVICE_TL = new ThreadLocal<>();
+
+    ThreadLocal<TokenStore> TOKEN_STORE_TL = new ThreadLocal<>();
+
+    ThreadLocal<TokenAuthenticators> TOKEN_AUTHENICATORS_TL = new ThreadLocal<>();
 }
