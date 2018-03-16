@@ -8,6 +8,7 @@
 package org.opendaylight.aaa.shiro.web.env;
 
 import javax.servlet.ServletException;
+import org.apache.shiro.web.env.EnvironmentLoaderListener;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.filterchain.filters.CustomFilterAdapter;
@@ -31,7 +32,8 @@ public class WebInitializer {
 
     private final WebContextRegistration registraton;
 
-    public WebInitializer(WebServer webServer, AAAShiroProvider provider) throws ServletException {
+    public WebInitializer(WebServer webServer, AAAShiroProvider provider,
+            EnvironmentLoaderListener shiroWebEnvLoader) throws ServletException {
         this.registraton = webServer.registerWebContext(WebContext.builder().contextPath("auth").supportsSessions(true)
 
             .addServlet(ServletDetails.builder().servlet(new com.sun.jersey.spi.container.servlet.ServletContainer(
@@ -44,7 +46,7 @@ public class WebInitializer {
              //   copy/pasting it from here to WebInitializer classes in other project, which will want to do the same.
 
              //  Shiro initialization
-            .addListener(new KarafIniWebEnvironmentLoaderListener())
+            .addListener(shiroWebEnvLoader)
              // Allows user to add javax.servlet.Filter(s) in front of REST services
             .addFilter(FilterDetails.builder().filter(new CustomFilterAdapter()).addUrlPattern("/*").build())
              // AAA filter in front of these REST web services as well as for moon endpoints

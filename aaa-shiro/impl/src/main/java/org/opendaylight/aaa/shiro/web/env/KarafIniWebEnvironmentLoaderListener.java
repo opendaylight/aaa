@@ -16,7 +16,11 @@ import org.apache.shiro.web.env.EnvironmentLoaderListener;
  * "shiroEnvironmentClass" context parameter as String.
  *
  * @author Michael Vorburger.ch
+ *
+ * @deprecated in favor of {@link ShiroWebEnvironmentLoaderListener} which injects dependencies instead of
+ *             accessing statically.
  */
+@Deprecated
 public class KarafIniWebEnvironmentLoaderListener extends EnvironmentLoaderListener {
 
     @Override
