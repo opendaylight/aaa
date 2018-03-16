@@ -13,6 +13,7 @@ import com.sun.jersey.test.framework.AppDescriptor;
 import com.sun.jersey.test.framework.JerseyTest;
 import com.sun.jersey.test.framework.WebAppDescriptor;
 import org.junit.Before;
+import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.shiro.idm.IdmLightApplication;
 import org.slf4j.bridge.SLF4JBridgeHandler;
@@ -39,6 +40,6 @@ public abstract class HandlerTest extends JerseyTest {
         SLF4JBridgeHandler.removeHandlersForRootLogger();
         SLF4JBridgeHandler.install();
         super.setUp();
-        new StoreBuilder(testStore).init();
+        new StoreBuilder(testStore).initWithDefaultUsers(IIDMStore.DEFAULT_DOMAIN);
     }
 }

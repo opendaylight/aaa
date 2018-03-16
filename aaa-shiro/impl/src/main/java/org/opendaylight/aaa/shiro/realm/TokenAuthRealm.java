@@ -11,9 +11,7 @@ package org.opendaylight.aaa.shiro.realm;
 import com.google.common.base.Strings;
 import java.util.List;
 import java.util.Map;
-import org.opendaylight.aaa.api.TokenStore;
-import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
-import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
+import java.util.Objects;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -23,10 +21,15 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.opendaylight.aaa.api.Authentication;
+import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.TokenAuth;
+import org.opendaylight.aaa.api.TokenStore;
+import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
+import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
 import org.opendaylight.aaa.shiro.realm.util.TokenUtils;
 import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
-import org.opendaylight.aaa.shiro.tokenauthrealm.ServiceLocator;
+import org.opendaylight.aaa.shiro.tokenauthrealm.auth.TokenAuthenticators;
+import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,8 +69,15 @@ public class TokenAuthRealm extends AuthorizingRealm {
 
     private static final Logger LOG = LoggerFactory.getLogger(TokenAuthRealm.class);
 
+    private final AuthenticationService authenticationService;
+    private final TokenStore tokenStore;
+    private final TokenAuthenticators tokenAuthenticators;
+
     public TokenAuthRealm() {
         super.setName(TOKEN_AUTH_REALM_DEFAULT_NAME);
+        authenticationService = Objects.requireNonNull(ThreadLocals.AUTH_SETVICE_TL.get());
+        tokenStore = ThreadLocals.TOKEN_STORE_TL.get();
+        tokenAuthenticators = Objects.requireNonNull(ThreadLocals.TOKEN_AUTHENICATORS_TL.get());
     }
 
     /*
@@ -91,15 +101,6 @@ public class TokenAuthRealm extends AuthorizingRealm {
             LOG.error("Couldn't decode authorization request", e);
         }
         return new SimpleAuthorizationInfo();
-    }
-
-    /**
-     * Adapter to check for available <code>TokenAuth<code> implementations.
-     *
-     * @return
-     */
-    boolean isTokenAuthAvailable() {
-        return ServiceLocator.getInstance().getAuthenticationService() != null;
     }
 
     /*
@@ -132,11 +133,6 @@ public class TokenAuthRealm extends AuthorizingRealm {
             throw new AuthenticationException(FATAL_ERROR_BASIC_AUTH_ONLY, e);
         }
 
-        // check to see if there are TokenAuth implementations available
-        if (!isTokenAuthAvailable()) {
-            throw new AuthenticationException(AUTHENTICATION_SERVICE_UNAVAILABLE_MESSAGE);
-        }
-
         // if the password is empty, this is an OAuth2 request, not a Basic HTTP
         // Auth request
         if (!Strings.isNullOrEmpty(password)) {
@@ -144,15 +140,13 @@ public class TokenAuthRealm extends AuthorizingRealm {
             // iterate over <code>TokenAuth</code> implementations and
             // attempt to
             // authentication with each one
-            final List<TokenAuth> tokenAuthCollection = ServiceLocator.getInstance()
-                    .getTokenAuthCollection();
-            for (TokenAuth ta : tokenAuthCollection) {
+            for (TokenAuth ta : tokenAuthenticators.getTokenAuthCollection()) {
                 try {
                     LOG.debug("Authentication attempt using {}", ta.getClass().getName());
                     final Authentication auth = ta.validate(headers);
                     if (auth != null) {
                         LOG.debug("Authentication attempt successful");
-                        ServiceLocator.getInstance().getAuthenticationService().set(auth);
+                        authenticationService.set(auth);
                         final ODLPrincipal odlPrincipal = ODLPrincipalImpl.createODLPrincipal(auth);
                         return new SimpleAuthenticationInfo(odlPrincipal, password.toCharArray(),
                                 getName());
@@ -182,8 +176,6 @@ public class TokenAuthRealm extends AuthorizingRealm {
     }
 
     private Authentication validate(final String token) {
-        final ServiceLocator locator = ServiceLocator.getInstance();
-        final TokenStore tokenStore = locator.getTokenStore();
         if (tokenStore == null) {
             throw new AuthenticationException("Token store not available, could not validate the token " + token);
         }
@@ -192,7 +184,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
         if (auth == null) {
             throw new AuthenticationException("Could not validate the token " + token);
         }
-        locator.getAuthenticationService().set(auth);
+        authenticationService.set(auth);
         return auth;
     }
 

@@ -36,9 +36,12 @@ import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.apache.oltu.oauth2.common.message.types.TokenType;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationException;
+import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.Claim;
+import org.opendaylight.aaa.api.CredentialAuth;
+import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.PasswordCredentials;
-import org.opendaylight.aaa.shiro.tokenauthrealm.ServiceLocator;
+import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.shiro.tokenauthrealm.auth.AuthenticationBuilder;
 import org.opendaylight.aaa.shiro.tokenauthrealm.auth.ClaimBuilder;
 import org.opendaylight.aaa.shiro.tokenauthrealm.auth.PasswordCredentialBuilder;
@@ -62,7 +65,20 @@ public class OAuth2TokenServlet extends HttpServlet {
     static final String TOKEN_REVOKE_ENDPOINT = "/oauth2/revoke";
     static final String TOKEN_VALIDATE_ENDPOINT = "/oauth2/validate";
 
+    private final CredentialAuth<PasswordCredentials> credentialAuth;
+    private final AuthenticationService authenticationService;
+    private final TokenStore tokenStore;
+    private final IdMService idmService;
+
     private transient OAuthIssuer oi;
+
+    public OAuth2TokenServlet(CredentialAuth<PasswordCredentials> credentialAuth,
+            AuthenticationService authenticationService, TokenStore tokenStore, IdMService idmService) {
+        this.credentialAuth = credentialAuth;
+        this.authenticationService = authenticationService;
+        this.tokenStore = tokenStore;
+        this.idmService = idmService;
+    }
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -100,11 +116,11 @@ public class OAuth2TokenServlet extends HttpServlet {
             throws IOException, OAuthSystemException {
         String token = req.getReader().readLine();
         if (token != null) {
-            Authentication authn = ServiceLocator.getInstance().getTokenStore().get(token.trim());
+            Authentication authn = tokenStore.get(token.trim());
             if (authn == null) {
                 throw new AuthenticationException(UNAUTHORIZED);
             } else {
-                ServiceLocator.getInstance().getAuthenticationService().set(authn);
+                authenticationService.set(authn);
                 resp.setStatus(SC_OK);
             }
         } else {
@@ -117,7 +133,7 @@ public class OAuth2TokenServlet extends HttpServlet {
             throws IOException {
         String token = req.getReader().readLine();
         if (token != null) {
-            if (ServiceLocator.getInstance().getTokenStore().delete(token.trim())) {
+            if (tokenStore.delete(token.trim())) {
                 resp.setStatus(SC_NO_CONTENT);
             } else {
                 throw new AuthenticationException(UNAUTHORIZED);
@@ -142,7 +158,7 @@ public class OAuth2TokenServlet extends HttpServlet {
                     oauthRequest.getUsername()).setPassword(oauthRequest.getPassword())
                                                                     .setDomain(domain).build();
             if (!oauthRequest.getScopes().isEmpty()) {
-                claim = ServiceLocator.getInstance().getCredentialAuth().authenticate(pc);
+                claim = credentialAuth.authenticate(pc);
             }
         } else if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(
                 GrantType.REFRESH_TOKEN.toString())) {
@@ -151,10 +167,9 @@ public class OAuth2TokenServlet extends HttpServlet {
             if (!oauthRequest.getScopes().isEmpty()) {
                 String domain = oauthRequest.getScopes().iterator().next();
                 // Authenticate...
-                Authentication auth = ServiceLocator.getInstance().getTokenStore().get(token);
+                Authentication auth = tokenStore.get(token);
                 if (auth != null && domain != null) {
-                    List<String> roles = ServiceLocator.getInstance().getIdmService()
-                                                       .listRoles(auth.userId(), domain);
+                    List<String> roles = idmService.listRoles(auth.userId(), domain);
                     if (!roles.isEmpty()) {
                         ClaimBuilder cb = new ClaimBuilder(auth);
                         cb.setDomain(domain); // scope domain
@@ -188,7 +203,7 @@ public class OAuth2TokenServlet extends HttpServlet {
         // Cache this token...
         Authentication auth = new AuthenticationBuilder(new ClaimBuilder(claim).setClientId(
                 clientId).build()).setExpiration(tokenExpiration()).build();
-        ServiceLocator.getInstance().getTokenStore().put(token, auth);
+        tokenStore.put(token, auth);
 
         OAuthResponse response = OAuthASResponse.tokenResponse(SC_CREATED).setAccessToken(token)
                                          .setTokenType(TokenType.BEARER.toString())
@@ -199,7 +214,7 @@ public class OAuth2TokenServlet extends HttpServlet {
 
     // Token expiration
     private long tokenExpiration() {
-        return ServiceLocator.getInstance().getTokenStore().tokenExpiration();
+        return tokenStore.tokenExpiration();
     }
 
     // Emit an error OAuthResponse with the given HTTP code

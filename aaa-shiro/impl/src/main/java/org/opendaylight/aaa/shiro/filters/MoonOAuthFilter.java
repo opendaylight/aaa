@@ -31,11 +31,12 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.Claim;
+import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.shiro.moon.MoonPrincipal;
 import org.opendaylight.aaa.shiro.oauth2.OAuthRequest;
-import org.opendaylight.aaa.shiro.tokenauthrealm.ServiceLocator;
 import org.opendaylight.aaa.shiro.tokenauthrealm.auth.AuthenticationBuilder;
 import org.opendaylight.aaa.shiro.tokenauthrealm.auth.ClaimBuilder;
+import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,6 +57,12 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
     static final String TOKEN_GRANT_ENDPOINT = "/token";
     static final String TOKEN_REVOKE_ENDPOINT = "/revoke";
     static final String TOKEN_VALIDATE_ENDPOINT = "/validate";
+
+    private final TokenStore tokenStore;
+
+    public MoonOAuthFilter() {
+        tokenStore = ThreadLocals.TOKEN_STORE_TL.get();
+    }
 
     @Override
     protected UsernamePasswordToken createToken(final ServletRequest request, final ServletResponse response) throws Exception {
@@ -117,6 +124,7 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
         return false;
     }
 
+    @Override
     protected boolean executeLogin(final ServletRequest request, final ServletResponse response) throws Exception {
 
         final HttpServletRequest req;
@@ -175,7 +183,7 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
         // Cache this token...
         final Authentication auth = new AuthenticationBuilder(new ClaimBuilder(claim).setClientId(
                 clientId).build()).setExpiration(tokenExpiration()).build();
-        ServiceLocator.getInstance().getTokenStore().put(token, auth);
+        tokenStore.put(token, auth);
 
         final OAuthResponse r = OAuthASResponse.tokenResponse(SC_CREATED).setAccessToken(token)
                                          .setTokenType(TokenType.BEARER.toString())
@@ -193,7 +201,7 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
     }
 
     private long tokenExpiration() {
-        return ServiceLocator.getInstance().getTokenStore().tokenExpiration();
+        return tokenStore.tokenExpiration();
     }
 
     /**
