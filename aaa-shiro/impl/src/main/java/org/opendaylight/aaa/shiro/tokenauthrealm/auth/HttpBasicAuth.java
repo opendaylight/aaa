@@ -17,7 +17,6 @@ import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.TokenAuth;
-import org.opendaylight.aaa.shiro.tokenauthrealm.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,8 +63,11 @@ public class HttpBasicAuth implements TokenAuth {
 
     private static final Logger LOG = LoggerFactory.getLogger(HttpBasicAuth.class);
 
-    volatile CredentialAuth<PasswordCredentials> credentialAuth =
-            ServiceLocator.getInstance().getCredentialAuth();
+    private final CredentialAuth<PasswordCredentials> credentialAuth;
+
+    public HttpBasicAuth(CredentialAuth<PasswordCredentials> credentialAuth) {
+        this.credentialAuth = credentialAuth;
+    }
 
     private static boolean checkAuthHeaderFormat(final String authHeader) {
         return authHeader != null && authHeader.startsWith(BASIC_PREFIX);
