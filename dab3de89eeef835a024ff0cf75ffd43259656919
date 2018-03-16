@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab557ef5_7054ae59",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/AAAIniWebEnvironment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-16T16:39:57Z",
+      "side": 1,
+      "message": "sic",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 12
+      },
+      "revId": "dab3de89eeef835a024ff0cf75ffd43259656919",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5cf35ee_1edc62b7",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/AAAIniWebEnvironment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-16T16:39:57Z",
+      "side": 1,
+      "message": "Why is this needed now?",
+      "range": {
+        "startLine": 70,
+        "startChar": 65,
+        "endLine": 70,
+        "endChar": 80
+      },
+      "revId": "dab3de89eeef835a024ff0cf75ffd43259656919",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "642c181d_239c6301",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContextSecurer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-16T16:39:57Z",
+      "side": 1,
+      "message": "Can you add javadocs here?",
+      "revId": "dab3de89eeef835a024ff0cf75ffd43259656919",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
