@@ -9,6 +9,7 @@ package org.opendaylight.aaa.shiro.web.env;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Supplier;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.IniSecurityManagerFactory;
@@ -19,12 +20,15 @@ import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.shiro.configuration.Main;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.shiro.configuration.Urls;
+import org.opendaylight.yangtools.util.ClassLoaderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Identical to <code>IniWebEnvironment</code> except the Ini is loaded from
- * <code>${KARAF_HOME}/etc/shiro.ini</code>.
+ * <code>${KARAF_HOME}/etc/shiro.ini</code>, and setting the TCCL (x2) so that
+ * loading of classes by name (from aaa-app-config.xml) works even with
+ * ShiroWebContextSecurer.
  */
 public class KarafIniWebEnvironment extends IniWebEnvironment {
 
@@ -54,7 +58,8 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
         }
 
         final Factory<SecurityManager> factory = new IniSecurityManagerFactory(ini);
-        final SecurityManager securityManager = factory.getInstance();
+        final SecurityManager securityManager = ClassLoaderUtils.withClassLoader(
+                KarafIniWebEnvironment.class.getClassLoader(), (Supplier<SecurityManager>) factory::getInstance);
         SecurityUtils.setSecurityManager(securityManager);
 
         return ini;
@@ -71,7 +76,10 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
             // Initialize the Shiro environment from clustered-app-config
             final Ini ini = createIniFromClusteredAppConfig(provider.getShiroConfiguration());
             setIni(ini);
-            super.init();
+            ClassLoaderUtils.withClassLoader(KarafIniWebEnvironment.class.getClassLoader(), (Supplier<Void>) () -> {
+                super.init();
+                return null;
+            });
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException("Error obtaining AAAShiroProvider", e);
         } finally {

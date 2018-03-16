@@ -8,15 +8,15 @@
 package org.opendaylight.aaa.shiro.web.env;
 
 import javax.servlet.ServletException;
-import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.filterchain.filters.CustomFilterAdapter;
-import org.opendaylight.aaa.shiro.filters.AAAShiroFilter;
 import org.opendaylight.aaa.shiro.idm.IdmLightApplication;
 import org.opendaylight.aaa.web.FilterDetails;
 import org.opendaylight.aaa.web.ServletDetails;
 import org.opendaylight.aaa.web.WebContext;
+import org.opendaylight.aaa.web.WebContextBuilder;
 import org.opendaylight.aaa.web.WebContextRegistration;
+import org.opendaylight.aaa.web.WebContextSecurer;
 import org.opendaylight.aaa.web.WebServer;
 
 /**
@@ -31,8 +31,9 @@ public class WebInitializer {
 
     private final WebContextRegistration registraton;
 
-    public WebInitializer(WebServer webServer, AAAShiroProvider provider) throws ServletException {
-        this.registraton = webServer.registerWebContext(WebContext.builder().contextPath("auth").supportsSessions(true)
+    public WebInitializer(WebServer webServer, AAAShiroProvider provider, WebContextSecurer webContextSecurer)
+            throws ServletException {
+        WebContextBuilder webContextBuilder = WebContext.builder().contextPath("auth").supportsSessions(true)
 
             .addServlet(ServletDetails.builder().servlet(new com.sun.jersey.spi.container.servlet.ServletContainer(
                     new IdmLightApplication(provider)))
@@ -40,23 +41,12 @@ public class WebInitializer {
                 .putInitParam("jersey.config.server.provider.packages", "org.opendaylight.aaa.impl.provider")
                 .addUrlPattern("/*").build())
 
-             // TODO factor out this common AAA related web context configuration to somewhere shared instead of
-             //   copy/pasting it from here to WebInitializer classes in other project, which will want to do the same.
+            // Allows user to add javax.servlet.Filter(s) in front of REST services
+            .addFilter(FilterDetails.builder().filter(new CustomFilterAdapter()).addUrlPattern("/*").build());
 
-             //  Shiro initialization
-            .addListener(new KarafIniWebEnvironmentLoaderListener())
-             // Allows user to add javax.servlet.Filter(s) in front of REST services
-            .addFilter(FilterDetails.builder().filter(new CustomFilterAdapter()).addUrlPattern("/*").build())
-             // AAA filter in front of these REST web services as well as for moon endpoints
-            .addFilter(FilterDetails.builder().filter(new AAAShiroFilter()).addUrlPattern("/*", "/moon/*").build())
-             // CORS filter
-            .addFilter(FilterDetails.builder().filter(new CrossOriginFilter()).addUrlPattern("/*")
-                .putInitParam("allowedOrigins", "*")
-                .putInitParam("allowedMethods", "GET,POST,OPTIONS,DELETE,PUT,HEAD")
-                .putInitParam("allowedHeaders", "origin, content-type, accept, authorization")
-                .build())
+        webContextSecurer.requireAuthentication(webContextBuilder, "/*", "/moon/*");
 
-            .build());
+        this.registraton = webServer.registerWebContext(webContextBuilder.build());
     }
 
     public void close() {

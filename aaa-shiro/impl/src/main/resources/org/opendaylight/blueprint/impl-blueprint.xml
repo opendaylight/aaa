@@ -72,9 +72,13 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <bean id="authenticator" class="org.opendaylight.aaa.authenticator.ODLAuthenticator" />
   <service ref="authenticator" interface="org.jolokia.osgi.security.Authenticator" />
 
+  <bean id="webContextSecurer" class="org.opendaylight.aaa.shiro.web.env.ShiroWebContextSecurer" />
+  <service ref="webContextSecurer" interface="org.opendaylight.aaa.web.WebContextSecurer" />
+
   <reference id="webServer" interface="org.opendaylight.aaa.web.WebServer" />
   <bean id="webInitializer" class="org.opendaylight.aaa.shiro.web.env.WebInitializer" destroy-method="close">
     <argument ref="webServer"/>
     <argument ref="provider"/>
+    <argument ref="webContextSecurer"/>
   </bean>
 </blueprint>
