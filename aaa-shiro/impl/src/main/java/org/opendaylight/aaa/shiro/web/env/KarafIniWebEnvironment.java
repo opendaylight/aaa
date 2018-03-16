@@ -8,15 +8,19 @@
 package org.opendaylight.aaa.shiro.web.env;
 
 import java.util.concurrent.ExecutionException;
+import java.util.function.Supplier;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.web.env.IniWebEnvironment;
 import org.opendaylight.aaa.AAAShiroProvider;
+import org.opendaylight.yangtools.util.ClassLoaderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Identical to <code>IniWebEnvironment</code> except the Ini is loaded from
- * <code>${KARAF_HOME}/etc/shiro.ini</code>.
+ * <code>${KARAF_HOME}/etc/shiro.ini</code>, and setting the TCCL (x2) so that
+ * loading of classes by name (from aaa-app-config.xml) works even with
+ * ShiroWebContextSecurer.
  *
  * @deprecated in favor of {@link AAAIniWebEnvironment}. This class is kept for compatibility for other projects that
  *             reference it in a web.xml file where it's instantiated via reflection and the dependencies must be
@@ -28,8 +32,7 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
     private static final Logger LOG = LoggerFactory.getLogger(KarafIniWebEnvironment.class);
 
     public KarafIniWebEnvironment() {
-        LOG.info("Initializing the Web Environment using {}",
-                KarafIniWebEnvironment.class.getName());
+        LOG.info("Initializing the Web Environment using {}", KarafIniWebEnvironment.class.getName());
     }
 
     @Override
@@ -46,7 +49,10 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
             // Initialize the Shiro environment from clustered-app-config
             final Ini ini = AAAIniWebEnvironment.createIniFromClusteredAppConfig(provider.getShiroConfiguration());
             setIni(ini);
-            super.init();
+            ClassLoaderUtils.withClassLoader(KarafIniWebEnvironment.class.getClassLoader(), (Supplier<Void>) () -> {
+                super.init();
+                return null;
+            });
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException("Error obtaining AAAShiroProvider", e);
         } finally {
