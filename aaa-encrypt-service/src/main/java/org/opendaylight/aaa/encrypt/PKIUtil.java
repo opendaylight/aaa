@@ -9,11 +9,13 @@ package org.opendaylight.aaa.encrypt;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -72,7 +74,7 @@ public class PKIUtil {
 
         // look for the Base64 encoded part of the line to decode
         // both ssh-rsa and ssh-dss begin with "AAAA" due to the length bytes
-        bytes = Base64.getDecoder().decode(keyLine.getBytes());
+        bytes = Base64.getDecoder().decode(keyLine.getBytes(StandardCharsets.UTF_8));
         if (bytes.length == 0) {
             throw new IllegalArgumentException("No Base64 part to decode in " + keyLine);
         }
@@ -131,14 +133,14 @@ public class PKIUtil {
 
     private String decodeType() {
         int len = decodeInt();
-        String type = new String(bytes, pos, len);
+        String type = new String(bytes, pos, len, StandardCharsets.UTF_8);
         pos += len;
         return type;
     }
 
     private int decodeInt() {
-        return ((bytes[pos++] & 0xFF) << 24) | ((bytes[pos++] & 0xFF) << 16) | ((bytes[pos++] & 0xFF) << 8)
-                | (bytes[pos++] & 0xFF);
+        return (bytes[pos++] & 0xFF) << 24 | (bytes[pos++] & 0xFF) << 16 | (bytes[pos++] & 0xFF) << 8
+                | bytes[pos++] & 0xFF;
     }
 
     private BigInteger decodeBigInt() {
@@ -150,23 +152,22 @@ public class PKIUtil {
     }
 
     public String encodePublicKey(PublicKey publicKey) throws IOException {
-        String publicKeyEncoded;
         ByteArrayOutputStream byteOs = new ByteArrayOutputStream();
-        if (publicKey.getAlgorithm().equals(KEY_FACTORY_TYPE_RSA)) {
+        if (publicKey instanceof RSAPublicKey && publicKey.getAlgorithm().equals(KEY_FACTORY_TYPE_RSA)) {
             RSAPublicKey rsaPublicKey = (RSAPublicKey) publicKey;
             DataOutputStream dataOutputStream = new DataOutputStream(byteOs);
-            dataOutputStream.writeInt(KEY_TYPE_RSA.getBytes().length);
-            dataOutputStream.write(KEY_TYPE_RSA.getBytes());
+            dataOutputStream.writeInt(KEY_TYPE_RSA.getBytes(StandardCharsets.UTF_8).length);
+            dataOutputStream.write(KEY_TYPE_RSA.getBytes(StandardCharsets.UTF_8));
             dataOutputStream.writeInt(rsaPublicKey.getPublicExponent().toByteArray().length);
             dataOutputStream.write(rsaPublicKey.getPublicExponent().toByteArray());
             dataOutputStream.writeInt(rsaPublicKey.getModulus().toByteArray().length);
             dataOutputStream.write(rsaPublicKey.getModulus().toByteArray());
-        } else if (publicKey.getAlgorithm().equals(KEY_FACTORY_TYPE_DSA)) {
+        } else if (publicKey instanceof DSAPublicKey && publicKey.getAlgorithm().equals(KEY_FACTORY_TYPE_DSA)) {
             DSAPublicKey dsaPublicKey = (DSAPublicKey) publicKey;
             DSAParams dsaParams = dsaPublicKey.getParams();
             DataOutputStream dataOutputStream = new DataOutputStream(byteOs);
-            dataOutputStream.writeInt(KEY_TYPE_DSA.getBytes().length);
-            dataOutputStream.write(KEY_TYPE_DSA.getBytes());
+            dataOutputStream.writeInt(KEY_TYPE_DSA.getBytes(StandardCharsets.UTF_8).length);
+            dataOutputStream.write(KEY_TYPE_DSA.getBytes(StandardCharsets.UTF_8));
             dataOutputStream.writeInt(dsaParams.getP().toByteArray().length);
             dataOutputStream.write(dsaParams.getP().toByteArray());
             dataOutputStream.writeInt(dsaParams.getQ().toByteArray().length);
@@ -175,13 +176,13 @@ public class PKIUtil {
             dataOutputStream.write(dsaParams.getG().toByteArray());
             dataOutputStream.writeInt(dsaPublicKey.getY().toByteArray().length);
             dataOutputStream.write(dsaPublicKey.getY().toByteArray());
-        } else if (publicKey.getAlgorithm().equals(KEY_FACTORY_TYPE_ECDSA)) {
+        } else if (publicKey instanceof BCECPublicKey && publicKey.getAlgorithm().equals(KEY_FACTORY_TYPE_ECDSA)) {
             BCECPublicKey ecPublicKey = (BCECPublicKey) publicKey;
             DataOutputStream dataOutputStream = new DataOutputStream(byteOs);
-            dataOutputStream.writeInt(KEY_TYPE_ECDSA.getBytes().length);
-            dataOutputStream.write(KEY_TYPE_ECDSA.getBytes());
-            dataOutputStream.writeInt(ECDSA_SUPPORTED_CURVE_NAME.getBytes().length);
-            dataOutputStream.write(ECDSA_SUPPORTED_CURVE_NAME.getBytes());
+            dataOutputStream.writeInt(KEY_TYPE_ECDSA.getBytes(StandardCharsets.UTF_8).length);
+            dataOutputStream.write(KEY_TYPE_ECDSA.getBytes(StandardCharsets.UTF_8));
+            dataOutputStream.writeInt(ECDSA_SUPPORTED_CURVE_NAME.getBytes(StandardCharsets.UTF_8).length);
+            dataOutputStream.write(ECDSA_SUPPORTED_CURVE_NAME.getBytes(StandardCharsets.UTF_8));
             byte[] affineXCoord = ecPublicKey.getQ().getAffineXCoord().getEncoded();
             byte[] affineYCoord = ecPublicKey.getQ().getAffineYCoord().getEncoded();
             dataOutputStream.writeInt(affineXCoord.length + affineYCoord.length + 1);
@@ -191,8 +192,8 @@ public class PKIUtil {
         } else {
             throw new IllegalArgumentException("Unknown public key encoding: " + publicKey.getAlgorithm());
         }
-        publicKeyEncoded = new String(Base64.getEncoder().encodeToString(byteOs.toByteArray()));
-        return publicKeyEncoded;
+
+        return Base64.getEncoder().encodeToString(byteOs.toByteArray());
 
     }
 
@@ -201,24 +202,25 @@ public class PKIUtil {
     }
 
     public KeyPair decodePrivateKey(String keyPath, String passphrase) throws IOException {
-        FileReader fileReader = new FileReader(keyPath);
-        return doDecodePrivateKey(fileReader, passphrase);
+        try (Reader reader = new InputStreamReader(new FileInputStream(keyPath), StandardCharsets.UTF_8)) {
+            return doDecodePrivateKey(reader, passphrase);
+        }
     }
 
     private KeyPair doDecodePrivateKey(Reader reader, String passphrase) throws IOException {
-        PEMParser keyReader = new PEMParser(reader);
-        JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
-        PEMDecryptorProvider decryptionProv = new JcePEMDecryptorProviderBuilder().build(passphrase.toCharArray());
+        try (PEMParser keyReader = new PEMParser(reader)) {
+            JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
+            PEMDecryptorProvider decryptionProv = new JcePEMDecryptorProviderBuilder().build(passphrase.toCharArray());
 
-        Object privateKey = keyReader.readObject();
-        KeyPair keyPair;
-        if (privateKey instanceof PEMEncryptedKeyPair) {
-            PEMKeyPair decryptedKeyPair = ((PEMEncryptedKeyPair) privateKey).decryptKeyPair(decryptionProv);
-            keyPair = converter.getKeyPair(decryptedKeyPair);
-        } else {
-            keyPair = converter.getKeyPair((PEMKeyPair) privateKey);
+            Object privateKey = keyReader.readObject();
+            KeyPair keyPair;
+            if (privateKey instanceof PEMEncryptedKeyPair) {
+                PEMKeyPair decryptedKeyPair = ((PEMEncryptedKeyPair) privateKey).decryptKeyPair(decryptionProv);
+                keyPair = converter.getKeyPair(decryptedKeyPair);
+            } else {
+                keyPair = converter.getKeyPair((PEMKeyPair) privateKey);
+            }
+            return keyPair;
         }
-        keyReader.close();
-        return keyPair;
     }
 }
