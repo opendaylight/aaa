@@ -40,17 +40,16 @@ public class KeystoneAuth {
         }
 
         public static final class Identity {
-            private final String[] methods;
-            private final Password password;
             private static final String METHOD_PASSWORD = "password";
 
+            private final Password password;
+
             private Identity(String username, String password, String domain) {
-                this.methods = new String[]{METHOD_PASSWORD};
                 this.password = new Password(username, password, domain);
             }
 
             public String[] getMethods() {
-                return methods;
+                return new String[]{METHOD_PASSWORD};
             }
 
             public Password getPassword() {

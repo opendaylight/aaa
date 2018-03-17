@@ -8,6 +8,7 @@
 package org.opendaylight.aaa.shiro.realm;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 import com.google.common.util.concurrent.CheckedFuture;
 import java.util.List;
 import java.util.Objects;
@@ -64,6 +65,9 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
     @Override
     public boolean isAccessAllowed(final ServletRequest request, final ServletResponse response,
                                    final Object mappedValue) {
+        Preconditions.checkArgument(request instanceof HttpServletRequest,
+                "Expected HttpServletRequest, received {}", request);
+
         final Subject subject = getSubject(request, response);
         final HttpServletRequest httpServletRequest = (HttpServletRequest)request;
         final String requestURI = httpServletRequest.getRequestURI();

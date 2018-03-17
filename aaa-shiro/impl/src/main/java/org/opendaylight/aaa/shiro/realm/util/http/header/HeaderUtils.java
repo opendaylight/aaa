@@ -8,6 +8,7 @@
 
 package org.opendaylight.aaa.shiro.realm.util.http.header;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +33,7 @@ public final class HeaderUtils {
      * @return Base64 encoded token
      */
     public static String getEncodedToken(final String credentialToken) {
-        return Base64.encodeToString(credentialToken.getBytes());
+        return Base64.encodeToString(credentialToken.getBytes(StandardCharsets.UTF_8));
     }
 
     /**

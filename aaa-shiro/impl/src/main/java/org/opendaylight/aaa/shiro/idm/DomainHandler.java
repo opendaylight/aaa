@@ -593,7 +593,7 @@ public class DomainHandler {
                 idmerror.setMessage("Grant does not exist for did:" + domainId + " uid:" + userId + " rid:" + roleId);
                 return Response.status(404).entity(idmerror).build();
             }
-            existingGrant = iidMStore.deleteGrant(existingGrant.getGrantid());
+            iidMStore.deleteGrant(existingGrant.getGrantid());
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();

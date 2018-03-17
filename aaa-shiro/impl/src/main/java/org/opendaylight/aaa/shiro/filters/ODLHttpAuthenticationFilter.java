@@ -8,10 +8,10 @@
 
 package org.opendaylight.aaa.shiro.filters;
 
+import java.util.Locale;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
@@ -54,8 +54,8 @@ public class ODLHttpAuthenticationFilter extends BasicHttpAuthenticationFilter {
 
     @Override
     protected boolean isLoginAttempt(String authzHeader) {
-        final String authzScheme = getAuthzScheme().toLowerCase();
-        final String authzHeaderLowerCase = authzHeader.toLowerCase();
+        final String authzScheme = getAuthzScheme().toLowerCase(Locale.ROOT);
+        final String authzHeaderLowerCase = authzHeader.toLowerCase(Locale.ROOT);
         return authzHeaderLowerCase.startsWith(authzScheme)
                 || authzHeaderLowerCase.startsWith(BEARER_SCHEME);
     }

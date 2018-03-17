@@ -12,8 +12,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
-
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
@@ -21,17 +21,15 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.LdapContext;
-
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.realm.ldap.JndiLdapRealm;
+import org.apache.shiro.realm.ldap.DefaultLdapRealm;
 import org.apache.shiro.realm.ldap.LdapContextFactory;
 import org.apache.shiro.realm.ldap.LdapUtils;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.Nameable;
 import org.opendaylight.aaa.shiro.accounting.Accounter;
 import org.opendaylight.aaa.shiro.realm.mapping.api.GroupsToRolesMappingStrategy;
 import org.opendaylight.aaa.shiro.realm.mapping.impl.BestAttemptGroupToRolesMappingStrategy;
@@ -66,7 +64,7 @@ import org.slf4j.LoggerFactory;
  * href="https://shiro.apache.org/static/1.2.3/apidocs/org/apache/shiro/realm/ldap/JndiLdapRealm.html">Shiro
  * documentation</a>
  */
-public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
+public class ODLJndiLdapRealm extends DefaultLdapRealm {
 
     private static final Logger LOG = LoggerFactory.getLogger(ODLJndiLdapRealm.class);
 
@@ -249,7 +247,7 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
     protected Set<String> getRoleNamesForUser(final String username,
                                               final LdapContext ldapContext) throws NamingException {
 
-        final Set<String> roleNames = new LinkedHashSet<String>();
+        final Set<String> roleNames = new LinkedHashSet<>();
         final SearchControls searchControls = createSearchControls();
 
         LOG.debug("Asking the configured LDAP about which groups uid=\"{}\" belongs to using "
@@ -275,13 +273,13 @@ public class ODLJndiLdapRealm extends JndiLdapRealm implements Nameable {
                         // map the groups
                         if (groupRolesMap != null) {
                             roleNamesFromLdapGroups = new HashSet<>();
-                            for (String rolesKey : groupsToRoles.keySet()) {
-                                roleNamesFromLdapGroups.addAll(groupsToRoles.get(rolesKey));
+                            for (Set<String> roles : groupsToRoles.values()) {
+                                roleNamesFromLdapGroups.addAll(roles);
                             }
                             if (LOG.isDebugEnabled()) {
-                                for (String group : groupsToRoles.keySet()) {
-                                    LOG.debug("Mapped the \"{}\" LDAP group to \"{}\" ODL role for \"{}\"", group,
-                                              groupsToRoles.get(group), username);
+                                for (Entry<String, Set<String>> entry : groupsToRoles.entrySet()) {
+                                    LOG.debug("Mapped the \"{}\" LDAP group to \"{}\" ODL role for \"{}\"",
+                                            entry.getKey(), entry.getValue(), username);
                                 }
                             }
                         } else {

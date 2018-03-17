@@ -198,22 +198,19 @@ public class UserHandler {
         }
 
         // The "description" field is optional and defaults to "".
-        final String userDescription = user.getDescription();
+        String userDescription = user.getDescription();
         if (userDescription == null) {
             user.setDescription(DEFAULT_DESCRIPTION);
-        }
-        // The "description" field has a maximum length.
-        if (userDescription.length() > IdmLightApplication.MAX_FIELD_LEN) {
+        } else  if (userDescription.length() > IdmLightApplication.MAX_FIELD_LEN) {
+            // The "description" field has a maximum length.
             return providedFieldTooLong("description", IdmLightApplication.MAX_FIELD_LEN);
         }
 
         // The "email" field is optional and defaults to "".
-        String userEmail = user.getEmail();
+        final String userEmail = user.getEmail();
         if (userEmail == null) {
             user.setEmail(DEFAULT_EMAIL);
-            userEmail = DEFAULT_EMAIL;
-        }
-        if (userEmail.length() > IdmLightApplication.MAX_FIELD_LEN) {
+        } else if (userEmail.length() > IdmLightApplication.MAX_FIELD_LEN) {
             return providedFieldTooLong("email", IdmLightApplication.MAX_FIELD_LEN);
         }
         // TODO add a check on email format here.

@@ -8,6 +8,7 @@
 
 package org.opendaylight.aaa.shiro.tokenauthrealm.auth;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -78,8 +79,8 @@ public class HttpBasicAuth implements TokenAuth {
     }
 
     private static String[] extractCredentialArray(final String authHeader) {
-        return new String(Base64.getDecoder().decode(authHeader.substring(BASIC_PREFIX.length())))
-                .split(AUTH_SEP);
+        return new String(Base64.getDecoder().decode(authHeader.substring(BASIC_PREFIX.length())),
+                StandardCharsets.UTF_8).split(AUTH_SEP);
     }
 
     private static boolean verifyCredentialArray(final String[] creds) {

@@ -49,8 +49,6 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
 
     private static final Logger LOG = LoggerFactory.getLogger(MoonOAuthFilter.class);
 
-    private static final String DOMAIN_SCOPE_REQUIRED = "Domain scope required";
-    private static final String NOT_IMPLEMENTED = "not_implemented";
     private static final String UNAUTHORIZED = "unauthorized";
     private static final String UNAUTHORIZED_CREDENTIALS = "Unauthorized: Login/Password incorrect";
 
@@ -81,7 +79,7 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
 
     @Override
     protected boolean onAccessDenied(final ServletRequest request, final ServletResponse response) throws Exception {
-        final Subject currentUser = SecurityUtils.getSubject();
+        SecurityUtils.getSubject();
         return executeLogin(request, response);
     }
 
@@ -161,11 +159,11 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
                 } catch (final AuthenticationException e) {
                     return onLoginFailure(token, e, request, response);
                 }
-            } else if (req.getServletPath().equals(TOKEN_REVOKE_ENDPOINT)) {
+            } /*else if (req.getServletPath().equals(TOKEN_REVOKE_ENDPOINT)) {
                 //TODO: deleteAccessToken(req, resp);
             } else if (req.getServletPath().equals(TOKEN_VALIDATE_ENDPOINT)) {
                 //TODO: validateToken(req, resp);
-            }
+            }*/
         } catch (final AuthenticationException e) {
             error(resp, SC_UNAUTHORIZED, e.getMessage());
         } catch (final OAuthProblemException oe) {

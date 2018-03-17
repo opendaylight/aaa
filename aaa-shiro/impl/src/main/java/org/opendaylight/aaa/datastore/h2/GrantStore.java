@@ -8,12 +8,12 @@
 
 package org.opendaylight.aaa.datastore.h2;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import org.apache.commons.text.StringEscapeUtils;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.model.Grant;
@@ -140,6 +140,7 @@ public class GrantStore extends AbstractStore<Grant> {
         }
     }
 
+    @SuppressFBWarnings("SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE")
     protected Grant deleteGrant(String grantid) throws StoreException {
         grantid = StringEscapeUtils.escapeHtml4(grantid);
         Grant savedGrant = this.getGrant(grantid);

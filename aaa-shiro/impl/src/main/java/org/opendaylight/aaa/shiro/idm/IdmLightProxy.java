@@ -8,12 +8,11 @@
 package org.opendaylight.aaa.shiro.idm;
 
 import com.google.common.base.Preconditions;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
+import javax.annotation.Nonnull;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.CredentialAuth;
@@ -77,9 +76,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
                 claim = cache.get(creds);
                 if (claim == null) {
                     claim = dbAuthenticate(creds);
-                    if (claim != null) {
-                        cache.put(creds, claim);
-                    }
+                    cache.put(creds, claim);
                 }
             }
         }
@@ -96,6 +93,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
         }
     }
 
+    @Nonnull
     private Claim dbAuthenticate(PasswordCredentials creds) {
         Domain domain = null;
         User user = null;
@@ -146,7 +144,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
             // build up the claim
             LOG.debug("build a claim");
             ClaimBuilder claim = new ClaimBuilder();
-            claim.setUserId(user.getUserid().toString());
+            claim.setUserId(user.getUserid());
             claim.setUser(creds.username());
             claim.setDomain(credsDomain);
             for (int z = 0; z < roles.size(); z++) {
