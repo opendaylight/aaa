@@ -16,18 +16,8 @@
   <packaging>pom</packaging>
 
   <properties>
-    <!-- AuthZ -->
-    <controller.mdsal.version>1.8.0-SNAPSHOT</controller.mdsal.version>
-
     <!-- AuthN -->
-    <glassfish.json.version>1.0.4</glassfish.json.version>
-    <ehcache.version>2.8.3</ehcache.version>
     <oltu.version>1.0.2</oltu.version>
-
-    <!-- Test -->
-    <javax.inject.version>1</javax.inject.version>
-    <servlet.tester.version>7.0.0.pre5</servlet.tester.version>
-    <features.test.version>3.0.2</features.test.version>
   </properties>
 
   <dependencyManagement>
@@ -43,7 +33,7 @@
       <dependency>
         <groupId>org.opendaylight.controller</groupId>
         <artifactId>mdsal-artifacts</artifactId>
-        <version>${controller.mdsal.version}</version>
+        <version>1.8.0-SNAPSHOT</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
@@ -52,7 +42,7 @@
       <dependency>
         <groupId>org.glassfish</groupId>
         <artifactId>javax.json</artifactId>
-        <version>${glassfish.json.version}</version>
+        <version>1.0.4</version>
       </dependency>
       <dependency>
         <groupId>org.apache.felix</groupId>
@@ -61,7 +51,7 @@
       <dependency>
         <groupId>net.sf.ehcache</groupId>
         <artifactId>ehcache</artifactId>
-        <version>${ehcache.version}</version>
+        <version>2.8.3</version>
       </dependency>
       <dependency>
         <groupId>org.apache.oltu.oauth2</groupId>
@@ -97,19 +87,12 @@
       <dependency>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>features-test</artifactId>
-        <version>${features.test.version}</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>javax.inject</groupId>
-        <artifactId>javax.inject</artifactId>
-        <version>${javax.inject.version}</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.mortbay.jetty</groupId>
         <artifactId>jetty-servlet-tester</artifactId>
-        <version>${servlet.tester.version}</version>
+        <version>7.0.0.pre5</version>
         <scope>test</scope>
       </dependency>
     </dependencies>
