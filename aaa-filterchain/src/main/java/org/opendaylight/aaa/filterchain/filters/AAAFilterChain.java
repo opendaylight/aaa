@@ -53,9 +53,9 @@ public final class AAAFilterChain implements FilterChain {
         // Request has successfully
         // traversed the injected filter chain links and we can invoke filtering
         // on the existing chain.
-        if (injectedFilterChainIterator.hasNext()) {
+        if (injectedFilterChainIterator != null && injectedFilterChainIterator.hasNext()) {
             injectedFilterChainIterator.next().doFilter(request, response, this);
-        } else {
+        } else if (existingFilterChain != null) {
             existingFilterChain.doFilter(request, response);
         }
     }
