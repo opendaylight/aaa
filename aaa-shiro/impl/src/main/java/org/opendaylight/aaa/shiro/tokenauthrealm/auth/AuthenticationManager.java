@@ -8,7 +8,6 @@
 package org.opendaylight.aaa.shiro.tokenauthrealm.auth;
 
 import java.util.Dictionary;
-import java.util.Hashtable;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.osgi.service.cm.ConfigurationException;
@@ -23,23 +22,13 @@ public class AuthenticationManager implements AuthenticationService, ManagedServ
     private static final String AUTH_ENABLED_ERR = "Error setting authEnabled";
 
     protected static final String AUTH_ENABLED = "authEnabled";
-    protected static final Dictionary<String, String> DEFAULTS = new Hashtable<>();
-
-    static {
-        DEFAULTS.put(AUTH_ENABLED, Boolean.FALSE.toString());
-    }
 
     // In non-Karaf environments, authEnabled is set to false by default
-    private static volatile boolean authEnabled = false;
+    private volatile boolean authEnabled = false;
 
-    private static final AuthenticationManager AUTHENTICATION_MANAGER = new AuthenticationManager();
     private final ThreadLocal<Authentication> auth = new InheritableThreadLocal<>();
 
     public AuthenticationManager() {
-    }
-
-    static AuthenticationManager instance() {
-        return AUTHENTICATION_MANAGER;
     }
 
     @Override
@@ -59,7 +48,7 @@ public class AuthenticationManager implements AuthenticationService, ManagedServ
 
     @Override
     public boolean isAuthEnabled() {
-        return this.authEnabled;
+        return authEnabled;
     }
 
     @Override
