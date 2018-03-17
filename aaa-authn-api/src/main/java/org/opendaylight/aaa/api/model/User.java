@@ -8,6 +8,8 @@
 
 package org.opendaylight.aaa.api.model;
 
+import java.util.Objects;
+
 /**
  *
  * @author peter.mellquist@hp.com
@@ -56,7 +58,7 @@ public class User {
     }
 
     public Boolean isEnabled() {
-        return (enabled == USER_ACCOUNT_ENABLED);
+        return enabled == USER_ACCOUNT_ENABLED;
     }
 
     public void setEnabled(final boolean enabled) {
@@ -105,22 +107,27 @@ public class User {
 
     @Override
     public int hashCode() {
-        return this.name.hashCode();
+        return name != null ? name.hashCode() : 0;
     }
 
     @Override
     public boolean equals(Object obj) {
-        User other = (User) obj;
-        if (other == null) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        if (compareValues(getName(), other.getName())
-                && compareValues(getEmail(), other.getEmail())
+
+        User other = (User) obj;
+        if (Objects.equals(getName(), other.getName())
+                && Objects.equals(getEmail(), other.getEmail())
                 && isEnabled().equals(other.isEnabled())
-                && compareValues(getPassword(), other.getPassword())
-                && compareValues(getSalt(), other.getSalt())
-                && compareValues(getUserid(), other.getUserid())
-                && compareValues(getDescription(), other.getDescription())) {
+                && Objects.equals(getPassword(), other.getPassword())
+                && Objects.equals(getSalt(), other.getSalt())
+                && Objects.equals(getUserid(), other.getUserid())
+                && Objects.equals(getDescription(), other.getDescription())) {
             return true;
         }
         return false;
@@ -129,21 +136,5 @@ public class User {
     @Override
     public String toString() {
         return name;
-    }
-
-    private boolean compareValues(Object c1, Object c2) {
-        if (c1 == null && c2 != null) {
-            return false;
-        }
-        if (c1 != null && c2 == null) {
-            return false;
-        }
-        if (c1 == null && c2 == null) {
-            return true;
-        }
-        if (c1.equals(c2)) {
-            return true;
-        }
-        return false;
     }
 }

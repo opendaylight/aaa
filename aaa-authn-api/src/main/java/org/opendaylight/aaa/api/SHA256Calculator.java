@@ -7,6 +7,7 @@
  */
 package org.opendaylight.aaa.api;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -43,7 +44,7 @@ public final class SHA256Calculator {
     }
 
     public static String getSHA256(byte[] data, String salt) {
-        byte[] saltBytes = salt.getBytes();
+        byte[] saltBytes = salt.getBytes(StandardCharsets.UTF_8);
         byte[] temp = new byte[data.length + saltBytes.length];
         System.arraycopy(data, 0, temp, 0, data.length);
         System.arraycopy(saltBytes, 0, temp, data.length, saltBytes.length);
@@ -77,6 +78,6 @@ public final class SHA256Calculator {
     }
 
     public static String getSHA256(String password, String salt) {
-        return getSHA256(password.getBytes(), salt);
+        return getSHA256(password.getBytes(StandardCharsets.UTF_8), salt);
     }
 }

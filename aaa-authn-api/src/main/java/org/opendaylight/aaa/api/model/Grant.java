@@ -8,6 +8,8 @@
 
 package org.opendaylight.aaa.api.model;
 
+import java.util.Objects;
+
 /**
  *
  * @author peter.mellquist@hp.com
@@ -62,28 +64,17 @@ public class Grant {
 
     @Override
     public boolean equals(Object obj) {
-        Grant other = (Grant) obj;
-        if (other == null) {
-            return false;
-        }
-        if (compareValues(getDomainid(), other.getDomainid()) && compareValues(getRoleid(), other.getRoleid())
-                && compareValues(getUserid(), other.getUserid())) {
+        if (this == obj) {
             return true;
         }
-        return false;
-    }
 
-    private boolean compareValues(Object c1, Object c2) {
-        if (c1 == null && c2 != null) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        if (c1 != null && c2 == null) {
-            return false;
-        }
-        if (c1 == null && c2 == null) {
-            return true;
-        }
-        if (c1.equals(c2)) {
+
+        Grant other = (Grant) obj;
+        if (Objects.equals(getDomainid(), other.getDomainid()) && Objects.equals(getRoleid(), other.getRoleid())
+                && Objects.equals(getUserid(), other.getUserid())) {
             return true;
         }
         return false;
