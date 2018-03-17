@@ -19,7 +19,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.servlet.Filter;
 import javax.servlet.FilterConfig;
@@ -128,7 +128,7 @@ public final class CustomFilterAdapterConfiguration implements ManagedService {
     }
 
     public Dictionary<String, ?> getDefaultProperties() {
-        return DEFAULT_CONFIGURATION;
+        return new Hashtable<>(DEFAULT_CONFIGURATION);
     }
 
     // Invoked in response to configuration admin changes
@@ -207,9 +207,9 @@ public final class CustomFilterAdapterConfiguration implements ManagedService {
      */
     private static ServletContext extractServletContext(final CustomFilterAdapterListener listener) {
         final FilterConfig listenerFilterConfig = listener.getFilterConfig();
-        final ServletContext listenerServletContext = (listenerFilterConfig != null
+        final ServletContext listenerServletContext = listenerFilterConfig != null
                 ? listenerFilterConfig.getServletContext()
-                : null);
+                : null;
         return listenerServletContext;
     }
 
@@ -348,7 +348,7 @@ public final class CustomFilterAdapterConfiguration implements ManagedService {
         // interface. It is never called.
         @Override
         public String getInitParameter(final String paramName) {
-            return (filterConfig != null ? filterConfig.get(paramName) : null);
+            return filterConfig != null ? filterConfig.get(paramName) : null;
         }
 
         // The following method is implemented for conformance with the
@@ -361,12 +361,12 @@ public final class CustomFilterAdapterConfiguration implements ManagedService {
 
                 @Override
                 public boolean hasMoreElements() {
-                    return (keySet != null ? keySet.hasNext() : false);
+                    return keySet != null ? keySet.hasNext() : false;
                 }
 
                 @Override
                 public String nextElement() {
-                    return (keySet != null ? keySet.next() : null);
+                    return keySet != null ? keySet.next() : null;
                 }
             };
         }
@@ -454,15 +454,14 @@ public final class CustomFilterAdapterConfiguration implements ManagedService {
             final Map<String, String> fullConfiguration) {
 
         final Map<String, String> extractedConfig = new HashMap<>();
-        final Set<String> fullConfigurationKeySet = fullConfiguration.keySet();
-        for (String key : fullConfigurationKeySet) {
+        for (Entry<String, String> entry : fullConfiguration.entrySet()) {
+            String key = entry.getKey();
             final int lastDotSeparator = key.lastIndexOf(".");
             if (lastDotSeparator >= 0) {
                 final String comparisonClazzNameSubstring = key.substring(0, lastDotSeparator);
                 if (comparisonClazzNameSubstring.equals(clazzName)) {
-                    final String value = fullConfiguration.get(key);
                     final String filterInitParamKey = key.substring(lastDotSeparator + 1);
-                    extractedConfig.put(filterInitParamKey, value);
+                    extractedConfig.put(filterInitParamKey, entry.getValue());
                 }
             } else {
                 if (!key.equals(CUSTOM_FILTER_LIST_KEY)) {
