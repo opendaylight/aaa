@@ -8,6 +8,8 @@
 
 package org.opendaylight.aaa.api.model;
 
+import java.util.Objects;
+
 /**
  *
  * @author peter.mellquist@hp.com
@@ -57,40 +59,30 @@ public class Domain {
 
     @Override
     public int hashCode() {
-        return this.name.hashCode();
+        return name != null ? name.hashCode() : 0;
     }
 
     @Override
     public boolean equals(Object obj) {
-        Domain other = (Domain) obj;
-        if (other == null) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        if (compareValues(getName(), other.getName()) && compareValues(getDomainid(), other.getDomainid())
-                && compareValues(getDescription(), other.getDescription())) {
+
+        Domain other = (Domain) obj;
+        if (Objects.equals(getName(), other.getName()) && Objects.equals(getDomainid(), other.getDomainid())
+                && Objects.equals(getDescription(), other.getDescription())) {
             return true;
         }
         return false;
     }
+
 
     @Override
     public String toString() {
         return name;
-    }
-
-    private boolean compareValues(Object c1, Object c2) {
-        if (c1 == null && c2 != null) {
-            return false;
-        }
-        if (c1 != null && c2 == null) {
-            return false;
-        }
-        if (c1 == null && c2 == null) {
-            return true;
-        }
-        if (c1.equals(c2)) {
-            return true;
-        }
-        return false;
     }
 }
