@@ -393,9 +393,8 @@ public class ODLKeyTool {
      * @return keystore object otherwise return null if it fails to load.
      */
     public KeyStore loadKeyStore(final String keyStoreName, final String keystorePassword) {
-        try {
+        try (FileInputStream fInputStream = new FileInputStream(workingDir + keyStoreName)) {
             final KeyStore keyStore = KeyStore.getInstance("JKS");
-            final FileInputStream fInputStream = new FileInputStream(workingDir + keyStoreName);
             keyStore.load(fInputStream, keystorePassword.toCharArray());
             return keyStore;
         } catch (NoSuchAlgorithmException | CertificateException | IOException | KeyStoreException e) {

@@ -8,10 +8,10 @@
 
 package org.opendaylight.aaa.cert.impl;
 
+import com.google.common.base.MoreObjects;
 import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.opendaylight.aaa.cert.api.IAaaCertProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystore;
@@ -99,7 +99,7 @@ public class DefaultMdsalSslData implements IAaaCertProvider {
 
     @Override
     public String getCertificateTrustStore(String alias, boolean withTag) {
-        return aaaCertMdsalProv.getTrustStoreCertificate(bundleName, alias, withTag);
+        return MoreObjects.firstNonNull(aaaCertMdsalProv.getTrustStoreCertificate(bundleName, alias, withTag), "");
     }
 
     @Override
@@ -113,7 +113,7 @@ public class DefaultMdsalSslData implements IAaaCertProvider {
 
     @Override
     public String getODLKeyStoreCertificate(final boolean withTag) {
-        return aaaCertMdsalProv.getODLStoreCertificate(bundleName, withTag);
+        return MoreObjects.firstNonNull(aaaCertMdsalProv.getODLStoreCertificate(bundleName, withTag), "");
     }
 
     @Override
@@ -133,7 +133,7 @@ public class DefaultMdsalSslData implements IAaaCertProvider {
 
     private String[] getCipherSuites(final List<CipherSuites> cipherSuites) {
         final List<String> suites = new ArrayList<>();
-        if (cipherSuites != null & !cipherSuites.isEmpty()) {
+        if (cipherSuites != null && !cipherSuites.isEmpty()) {
             cipherSuites.stream().forEach(cs -> {
                 suites.add(cs.getSuiteName());
             });

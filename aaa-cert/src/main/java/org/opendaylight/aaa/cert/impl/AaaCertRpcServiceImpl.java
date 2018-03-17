@@ -8,6 +8,7 @@
 
 package org.opendaylight.aaa.cert.impl;
 
+import com.google.common.base.Strings;
 import com.google.common.util.concurrent.SettableFuture;
 import java.util.concurrent.Future;
 import org.opendaylight.aaa.cert.api.IAaaCertProvider;
@@ -70,7 +71,7 @@ public class AaaCertRpcServiceImpl implements AaaCertRpcService {
     public Future<RpcResult<GetNodeCertifcateOutput>> getNodeCertifcate(GetNodeCertifcateInput input) {
         final SettableFuture<RpcResult<GetNodeCertifcateOutput>> futureResult = SettableFuture.create();
         final String cert = aaaCertProvider.getCertificateTrustStore(input.getNodeAlias(), false);
-        if (cert != null && !cert.isEmpty()) {
+        if (!Strings.isNullOrEmpty(cert)) {
             final GetNodeCertifcateOutput nodeCertOutput = new GetNodeCertifcateOutputBuilder().setNodeCert(cert)
                     .build();
             futureResult.set(RpcResultBuilder.<GetNodeCertifcateOutput>success(nodeCertOutput).build());
@@ -96,7 +97,7 @@ public class AaaCertRpcServiceImpl implements AaaCertRpcService {
     public Future<RpcResult<GetODLCertificateOutput>> getODLCertificate() {
         final SettableFuture<RpcResult<GetODLCertificateOutput>> futureResult = SettableFuture.create();
         final String cert = aaaCertProvider.getODLKeyStoreCertificate(false);
-        if (cert != null && !cert.isEmpty()) {
+        if (!Strings.isNullOrEmpty(cert)) {
             final GetODLCertificateOutput odlCertOutput = new GetODLCertificateOutputBuilder().setOdlCert(cert).build();
             futureResult.set(RpcResultBuilder.<GetODLCertificateOutput>success(odlCertOutput).build());
         } else {
@@ -109,7 +110,7 @@ public class AaaCertRpcServiceImpl implements AaaCertRpcService {
     public Future<RpcResult<GetODLCertificateReqOutput>> getODLCertificateReq() {
         final SettableFuture<RpcResult<GetODLCertificateReqOutput>> futureResult = SettableFuture.create();
         final String certReq = aaaCertProvider.genODLKeyStoreCertificateReq(false);
-        if (certReq != null && !certReq.isEmpty()) {
+        if (!Strings.isNullOrEmpty(certReq)) {
             final GetODLCertificateReqOutput odlCertReqOutput = new GetODLCertificateReqOutputBuilder()
                     .setOdlCertReq(certReq).build();
             futureResult.set(RpcResultBuilder.<GetODLCertificateReqOutput>success(odlCertReqOutput).build());
