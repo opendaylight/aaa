@@ -12,6 +12,7 @@ import com.google.common.base.Strings;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import javax.annotation.Nonnull;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -160,13 +161,10 @@ public class TokenAuthRealm extends AuthorizingRealm {
 
         // extract the authentication token and attempt validation of the token
         final String token = TokenUtils.extractUsername(authenticationToken);
-        final Authentication auth;
         try {
-            auth = validate(token);
-            if (auth != null) {
-                final ODLPrincipal odlPrincipal = ODLPrincipalImpl.createODLPrincipal(auth);
-                return new SimpleAuthenticationInfo(odlPrincipal, "", getName());
-            }
+            final Authentication auth = validate(token);
+            final ODLPrincipal odlPrincipal = ODLPrincipalImpl.createODLPrincipal(auth);
+            return new SimpleAuthenticationInfo(odlPrincipal, "", getName());
         } catch (AuthenticationException e) {
             LOG.debug("Unknown OAuth2 Token Access Request", e);
         }
@@ -175,6 +173,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
         return null;
     }
 
+    @Nonnull
     private Authentication validate(final String token) {
         if (tokenStore == null) {
             throw new AuthenticationException("Token store not available, could not validate the token " + token);

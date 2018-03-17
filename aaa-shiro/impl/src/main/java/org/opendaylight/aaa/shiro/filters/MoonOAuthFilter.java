@@ -9,7 +9,6 @@ package org.opendaylight.aaa.shiro.filters;
 
 import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 import static javax.servlet.http.HttpServletResponse.SC_CREATED;
-import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
 import java.io.IOException;
@@ -49,8 +48,6 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
 
     private static final Logger LOG = LoggerFactory.getLogger(MoonOAuthFilter.class);
 
-    private static final String DOMAIN_SCOPE_REQUIRED = "Domain scope required";
-    private static final String NOT_IMPLEMENTED = "not_implemented";
     private static final String UNAUTHORIZED = "unauthorized";
     private static final String UNAUTHORIZED_CREDENTIALS = "Unauthorized: Login/Password incorrect";
 
@@ -81,7 +78,7 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
 
     @Override
     protected boolean onAccessDenied(final ServletRequest request, final ServletResponse response) throws Exception {
-        final Subject currentUser = SecurityUtils.getSubject();
+        SecurityUtils.getSubject();
         return executeLogin(request, response);
     }
 
@@ -160,11 +157,11 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
                 } catch (final AuthenticationException e) {
                     return onLoginFailure(token, e, request, response);
                 }
-            } else if (req.getServletPath().equals(TOKEN_REVOKE_ENDPOINT)) {
+            } /*else if (req.getServletPath().equals(TOKEN_REVOKE_ENDPOINT)) {
                 //TODO: deleteAccessToken(req, resp);
             } else if (req.getServletPath().equals(TOKEN_VALIDATE_ENDPOINT)) {
                 //TODO: validateToken(req, resp);
-            }
+            }*/
         } catch (final AuthenticationException e) {
             error(resp, SC_UNAUTHORIZED, e.getMessage());
         } catch (final OAuthProblemException oe) {
@@ -218,17 +215,6 @@ public class MoonOAuthFilter extends AuthenticatingFilter {
     private void error(final HttpServletResponse resp, final OAuthProblemException oauthProblemException) {
         try {
             final OAuthResponse r = OAuthResponse.errorResponse(SC_BAD_REQUEST).error(oauthProblemException)
-                    .buildJSONMessage();
-            write(resp, r);
-        } catch (final IOException | OAuthSystemException ex) {
-            LOG.error("Failed to write the error ", ex);
-        }
-    }
-
-    private void error(final HttpServletResponse resp, final Exception exception) {
-        try {
-            final OAuthResponse r = OAuthResponse.errorResponse(SC_INTERNAL_SERVER_ERROR)
-                    .setError(exception.getClass().getName()).setErrorDescription(exception.getMessage())
                     .buildJSONMessage();
             write(resp, r);
         } catch (final IOException | OAuthSystemException ex) {

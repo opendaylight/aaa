@@ -16,12 +16,6 @@ import org.opendaylight.aaa.api.TokenStore;
  */
 public class MdsalTokenStore implements AutoCloseable, TokenStore {
 
-    private final long timeToLive;
-
-    public MdsalTokenStore(long timeToLive) {
-        this.timeToLive = timeToLive;
-    }
-
     @Override
     public void put(String token, Authentication auth) {
         // TODO Auto-generated method stub

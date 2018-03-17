@@ -16,6 +16,7 @@ import static javax.servlet.http.HttpServletResponse.SC_NO_CONTENT;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -53,6 +54,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author liemmn
  */
+@SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
 public class OAuth2TokenServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(OAuth2TokenServlet.class);
     private static final long serialVersionUID = 8272453849539659999L;
@@ -65,10 +67,10 @@ public class OAuth2TokenServlet extends HttpServlet {
     static final String TOKEN_REVOKE_ENDPOINT = "/oauth2/revoke";
     static final String TOKEN_VALIDATE_ENDPOINT = "/oauth2/validate";
 
-    private final CredentialAuth<PasswordCredentials> credentialAuth;
-    private final AuthenticationService authenticationService;
-    private final TokenStore tokenStore;
-    private final IdMService idmService;
+    private final transient CredentialAuth<PasswordCredentials> credentialAuth;
+    private final transient AuthenticationService authenticationService;
+    private final transient TokenStore tokenStore;
+    private final transient IdMService idmService;
 
     private transient OAuthIssuer oi;
 

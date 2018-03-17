@@ -7,6 +7,7 @@
  */
 package org.opendaylight.aaa.datastore.h2;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
@@ -15,13 +16,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Base class for H2 stores.
  */
+// "Nonconstant string passed to execute or addBatch method on an SQL statement...Consider using a prepared statement
+// instead. It is more efficient and less vulnerable to SQL injection attacks.". Possible TODO - is it worth it here to
+// use prepared statements?
+@SuppressFBWarnings("SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE")
 abstract class AbstractStore<T> {
 
     private static final Logger LOG = LoggerFactory.getLogger(AbstractStore.class);
@@ -93,7 +97,9 @@ abstract class AbstractStore<T> {
         try (Connection c = dbConnect()) {
             // The table name can't be a parameter in a prepared statement
             String sql = "DELETE FROM " + tableName;
-            c.createStatement().execute(sql);
+            try (Statement statement = c.createStatement()) {
+                statement.execute(sql);
+            }
         } catch (SQLException e) {
             LOG.error("Error clearing table {}", tableName, e);
             throw new StoreException("Error clearing table " + tableName, e);

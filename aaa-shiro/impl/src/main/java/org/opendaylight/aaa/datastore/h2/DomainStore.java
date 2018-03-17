@@ -9,13 +9,12 @@
 package org.opendaylight.aaa.datastore.h2;
 
 import com.google.common.base.Preconditions;
-
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import org.apache.commons.text.StringEscapeUtils;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Domains;
@@ -148,6 +147,7 @@ public class DomainStore extends AbstractStore<Domain> {
         return savedDomain;
     }
 
+    @SuppressFBWarnings("SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE")
     protected Domain deleteDomain(String domainid) throws StoreException {
         domainid = StringEscapeUtils.escapeHtml4(domainid);
         Domain deletedDomain = this.getDomain(domainid);

@@ -8,10 +8,8 @@
 package org.opendaylight.aaa.shiro.moon;
 
 import com.google.common.collect.ImmutableSet;
-
 import java.io.Serializable;
 import java.util.Set;
-
 import org.opendaylight.aaa.api.Claim;
 
 /**
@@ -67,17 +65,17 @@ public class MoonPrincipal {
         return this.token;
     }
 
-    public class MoonClaim implements Claim, Serializable {
+    private static class MoonClaim implements Claim, Serializable {
+        private static final long serialVersionUID = 1L;
 
-        private String clientId;
-        private String userId;
-        private String user;
-        private String domain;
-        private ImmutableSet<String> roles;
+        private final String clientId;
+        private final String userId;
+        private final String user;
+        private final String domain;
+        private final ImmutableSet<String> roles;
 
-        public MoonClaim(final String clientId, final String userId, final String user,
-                final String domain, final Set<String> roles) {
-
+        MoonClaim(final String clientId, final String userId, final String user, final String domain,
+                final Set<String> roles) {
             this.clientId = clientId;
             this.userId = userId;
             this.user = user;
@@ -112,46 +110,6 @@ public class MoonPrincipal {
         @Override
         public Set<String> roles() {
             return roles;
-        }
-
-        public String getClientId() {
-            return clientId;
-        }
-
-        public void setClientId(String clientId) {
-            this.clientId = clientId;
-        }
-
-        public String getUserId() {
-            return userId;
-        }
-
-        public void setUserId(String userId) {
-            this.userId = userId;
-        }
-
-        public String getUser() {
-            return user;
-        }
-
-        public void setUser(String user) {
-            this.user = user;
-        }
-
-        public String getDomain() {
-            return domain;
-        }
-
-        public void setDomain(String domain) {
-            this.domain = domain;
-        }
-
-        public ImmutableSet<String> getRoles() {
-            return roles;
-        }
-
-        public void setRoles(ImmutableSet<String> roles) {
-            this.roles = ImmutableSet.copyOf(roles);
         }
 
         @Override

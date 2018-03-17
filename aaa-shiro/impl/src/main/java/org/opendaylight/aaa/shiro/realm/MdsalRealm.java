@@ -34,7 +34,6 @@ import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.Authentication;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication.Grants;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication.Users;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
@@ -64,14 +63,16 @@ public class MdsalRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(final PrincipalCollection principalCollection) {
         // the final set or roles to return to the caller;  empty to start
         final Set<String> authRoles = Sets.newHashSet();
-        final ODLPrincipal odlPrincipal = (ODLPrincipal)principalCollection.getPrimaryPrincipal();
-        final Optional<Authentication> opt = getAuthenticationContainer();
-        if (opt.isPresent()) {
-            final Authentication auth = opt.get();
 
-            // iterate through and determine the appropriate roles based on the programmed grants
-            final Grants grants = auth.getGrants();
-        }
+        // TODO - this code is incomplete, thus commented out
+//        final ODLPrincipal odlPrincipal = (ODLPrincipal)principalCollection.getPrimaryPrincipal();
+//        final Optional<Authentication> opt = getAuthenticationContainer();
+//        if (opt.isPresent()) {
+//            final Authentication auth = opt.get();
+//
+//            // iterate through and determine the appropriate roles based on the programmed grants
+//            final Grants grants = auth.getGrants();
+//        }
         return new SimpleAuthorizationInfo(authRoles);
     }
 

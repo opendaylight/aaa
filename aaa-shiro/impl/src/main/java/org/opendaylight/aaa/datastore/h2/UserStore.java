@@ -9,13 +9,12 @@
 package org.opendaylight.aaa.datastore.h2;
 
 import com.google.common.base.Preconditions;
-
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import org.apache.commons.text.StringEscapeUtils;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.SHA256Calculator;
@@ -180,6 +179,7 @@ public class UserStore extends AbstractStore<User> {
         return savedUser;
     }
 
+    @SuppressFBWarnings("SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE")
     protected User deleteUser(String userid) throws StoreException {
         userid = StringEscapeUtils.escapeHtml4(userid);
         User savedUser = this.getUser(userid);

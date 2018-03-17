@@ -8,6 +8,7 @@
 
 package org.opendaylight.aaa.shiro.filters;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -22,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * level.  To enable the messages out of the box, use the following command from karaf:
  * <code>log:set DEBUG org.opendaylight.aaa.shiro.authc.AuthenicationListener</code>
  */
+@SuppressFBWarnings("NM_SAME_SIMPLE_NAME_AS_INTERFACE")
 public class AuthenticationListener implements org.apache.shiro.authc.AuthenticationListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(AuthenticationListener.class);
