@@ -32,7 +32,7 @@ public class ChangeUserPassword extends OsgiCommandSupport {
 
     @Option(name = "-user", aliases = {
             "--userName" }, description = "The user name", required = true, multiValued = false)
-    private final String userName = "";
+    private String userName;
 
     public ChangeUserPassword(IIDMStore identityStore) {
         this.identityStore = identityStore;
