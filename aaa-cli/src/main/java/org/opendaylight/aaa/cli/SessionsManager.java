@@ -29,7 +29,7 @@ public final class SessionsManager implements AutoCloseable {
 
     private static final Logger LOG = LoggerFactory.getLogger(SessionsManager.class);
 
-    private static SessionsManager sessionMgr = null;
+    private static SessionsManager sessionMgr = new SessionsManager();
     private final Cache authUsers;
     private static final int MAX_CACHED_USERS_IN_MEMORY = 1;
     private static final int MAX_CACHED_USERS_ON_DISK = 1;
@@ -58,9 +58,6 @@ public final class SessionsManager implements AutoCloseable {
     }
 
     public static SessionsManager getInstance() {
-        if (sessionMgr == null) {
-            sessionMgr = new SessionsManager();
-        }
         return sessionMgr;
     }
 

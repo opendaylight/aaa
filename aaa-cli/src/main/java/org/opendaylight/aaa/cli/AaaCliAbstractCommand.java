@@ -7,6 +7,7 @@
  */
 package org.opendaylight.aaa.cli;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.User;
@@ -19,6 +20,7 @@ import org.opendaylight.aaa.cli.utils.DataStoreUtils;
  * @author mserngawy
  *
  */
+@SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 public abstract class AaaCliAbstractCommand extends OsgiCommandSupport {
 
     private static volatile String authUser = null;
