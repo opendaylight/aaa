@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fca4643f_e49f1ff7",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/MoonOAuthFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-19T14:42:40Z",
+      "side": 0,
+      "message": "agree - in these cases when I don\u0027t the intent and can\u0027t prove RTE can\u0027t be throne, I catch RTE instead - you still have to suppress CS but FB won\u0027t complain that Exception is never thrown.",
+      "parentUuid": "8906f6a6_db1d53a0",
+      "revId": "a0c5f24a56931de704cdc1080debd7225d890026",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "658a8d23_40149ce1",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MdsalRealm.java",
         "patchSetId": 5
@@ -84,6 +102,24 @@
       "side": 0,
       "message": "I am sorry, I do not know what could happen :(",
       "parentUuid": "9f2a7504_765c5e4f",
+      "revId": "a0c5f24a56931de704cdc1080debd7225d890026",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c141201_f0b84794",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MdsalRealm.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-19T14:42:40Z",
+      "side": 0,
+      "message": "I agree - I don\u0027t see any reason this entire block should be deleted for checkstyle violations. I assume it was an accident so I\u0027m putting it back. I actually commented out the rest of the code in my FB patch due to unused vars, in fact this removal renders the whole method useless.",
+      "parentUuid": "658a8d23_40149ce1",
       "revId": "a0c5f24a56931de704cdc1080debd7225d890026",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
