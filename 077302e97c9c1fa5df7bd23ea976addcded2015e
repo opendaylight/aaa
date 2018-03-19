@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2767018c_4bdd2ee7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4540
+      },
+      "writtenOn": "2018-03-19T14:58:27Z",
+      "side": 1,
+      "message": "You need this because of the existence of NaN, -0, -inf and +inf with floats and doubles. See Effective Java for details...",
+      "revId": "077302e97c9c1fa5df7bd23ea976addcded2015e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "298118db_06adbb3f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
