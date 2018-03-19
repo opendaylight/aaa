@@ -8,6 +8,8 @@
 
 package org.opendaylight.aaa.api.model;
 
+import java.util.Objects;
+
 /**
  *
  * @author peter.mellquist@hp.com
@@ -49,17 +51,22 @@ public class Role {
 
     @Override
     public int hashCode() {
-        return this.name.hashCode();
+        return name != null ? name.hashCode() : 0;
     }
 
     @Override
     public boolean equals(Object obj) {
-        Role other = (Role) obj;
-        if (other == null) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        if (compareValues(getName(), other.getName()) && compareValues(getRoleid(), other.getRoleid())
-                && compareValues(getDescription(), other.getDescription())) {
+
+        Role other = (Role) obj;
+        if (Objects.equals(getName(), other.getName()) && Objects.equals(getRoleid(), other.getRoleid())
+                && Objects.equals(getDescription(), other.getDescription())) {
             return true;
         }
         return false;
@@ -76,21 +83,5 @@ public class Role {
 
     public String getDomainid() {
         return this.domainid;
-    }
-
-    private boolean compareValues(Object c1, Object c2) {
-        if (c1 == null && c2 != null) {
-            return false;
-        }
-        if (c1 != null && c2 == null) {
-            return false;
-        }
-        if (c1 == null && c2 == null) {
-            return true;
-        }
-        if (c1.equals(c2)) {
-            return true;
-        }
-        return false;
     }
 }

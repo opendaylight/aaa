@@ -104,14 +104,14 @@ public class StoreBuilder {
         adminRole.setName("admin");
         adminRole.setDomainid(newDomainID);
         adminRole.setDescription("a role for admins");
-        adminRole = store.writeRole(adminRole);
+        store.writeRole(adminRole);
         LOG.info("Created 'admin' role");
 
         Role userRole = new Role();
         userRole.setName("user");
         userRole.setDomainid(newDomainID);
         userRole.setDescription("a role for users");
-        userRole = store.writeRole(userRole);
+        store.writeRole(userRole);
         LOG.info("Created 'user' role");
 
         return newDomainID;
@@ -207,7 +207,7 @@ public class StoreBuilder {
         grant.setDomainid(domainID);
         grant.setUserid(userID);
         grant.setRoleid(roleID);
-        grant = store.writeGrant(grant);
+        store.writeGrant(grant);
         LOG.debug("Granted '" + userID + "' user the '" + roleID + "' role in domain '" + domainID + "'");
     }
 }
