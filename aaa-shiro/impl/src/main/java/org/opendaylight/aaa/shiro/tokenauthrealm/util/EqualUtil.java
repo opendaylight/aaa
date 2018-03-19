@@ -32,14 +32,6 @@ public final class EqualUtil {
         return c1 == c2;
     }
 
-    public static boolean areEqual(float c1, float c2) {
-        return Float.floatToIntBits(c1) == Float.floatToIntBits(c2);
-    }
-
-    public static boolean areEqual(double c1, double c2) {
-        return Double.doubleToLongBits(c1) == Double.doubleToLongBits(c2);
-    }
-
     public static boolean areEqual(Object c1, Object c2) {
         return c1 == null ? c2 == null : c1.equals(c2);
     }
