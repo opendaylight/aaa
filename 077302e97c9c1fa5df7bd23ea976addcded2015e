@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "298118db_06adbb3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-19T14:38:39Z",
+      "side": 1,
+      "message": "I don\u0027t see the purpose of the entire class except for areEqual(Object c1, Object c2) but that is the same as Objects.equals. So I\u0027d suggest to lose the entire class.",
+      "revId": "077302e97c9c1fa5df7bd23ea976addcded2015e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
