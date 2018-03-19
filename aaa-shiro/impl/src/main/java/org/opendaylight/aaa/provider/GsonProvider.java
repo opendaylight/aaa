@@ -9,6 +9,7 @@ package org.opendaylight.aaa.provider;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -82,6 +83,7 @@ public class GsonProvider<T> implements MessageBodyReader<T>, MessageBodyWriter<
     }
 
     @Override
+    @SuppressFBWarnings("DM_DEFAULT_ENCODING")
     public void writeTo(T type, Class<?> theClass, Type genericType, Annotation[] annotations,
                         MediaType mediaType, MultivaluedMap<String, Object> httpHeaders,
                         OutputStream entityStream) throws IOException, WebApplicationException {

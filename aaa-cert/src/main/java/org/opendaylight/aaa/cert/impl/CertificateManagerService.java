@@ -65,8 +65,7 @@ public class CertificateManagerService implements ICertificateManager {
     public CertificateManagerService(AaaCertServiceConfig aaaCertServiceConfig, final DataBroker dataBroker,
             final AAAEncryptionService encryptionSrv) {
         if (aaaCertServiceConfig == null) {
-            throw new IllegalArgumentException(
-                    "Certificate Manager service configuration is null: " + aaaCertServiceConfig.toString());
+            throw new IllegalArgumentException("Certificate Manager service configuration is null");
         }
         if (aaaCertServiceConfig.isUseConfig()) {
             if (aaaCertServiceConfig.getCtlKeystore() != null

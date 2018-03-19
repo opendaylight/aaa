@@ -8,6 +8,7 @@
 
 package org.opendaylight.aaa.cert.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
@@ -138,6 +139,7 @@ public class AaaCertProvider implements IAaaCertProvider {
     }
 
     @Override
+    @SuppressFBWarnings("PZLA_PREFER_ZERO_LENGTH_ARRAYS")
     public String[] getCipherSuites() {
         final List<CipherSuites> cipherSuites = ctlKeyStore.getCipherSuites();
         if (cipherSuites != null && !cipherSuites.isEmpty()) {
@@ -153,6 +155,7 @@ public class AaaCertProvider implements IAaaCertProvider {
     }
 
     @Override
+    @SuppressFBWarnings("PZLA_PREFER_ZERO_LENGTH_ARRAYS")
     public String[] getTlsProtocols() {
         String tlsProtocols = ctlKeyStore.getTlsProtocols();
         if (tlsProtocols != null && !tlsProtocols.isEmpty()) {

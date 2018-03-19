@@ -9,6 +9,7 @@ package org.opendaylight.aaa.encrypt;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -123,7 +124,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
         }
         try {
             synchronized (encryptCipher) {
-                byte[] cryptobytes = encryptCipher.doFinal(data.getBytes());
+                byte[] cryptobytes = encryptCipher.doFinal(data.getBytes(Charset.defaultCharset()));
                 String cryptostring = DatatypeConverter.printBase64Binary(cryptobytes);
                 return cryptostring;
             }
@@ -160,7 +161,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
         try {
             byte[] cryptobytes = DatatypeConverter.parseBase64Binary(encData);
             byte[] clearbytes = decryptCipher.doFinal(cryptobytes);
-            return new String(clearbytes);
+            return new String(clearbytes, Charset.defaultCharset());
         } catch (IllegalBlockSizeException | BadPaddingException e) {
             LOG.error("Failed to decrypt encoded data", e);
         }

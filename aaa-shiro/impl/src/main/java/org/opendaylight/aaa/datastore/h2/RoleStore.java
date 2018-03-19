@@ -9,13 +9,12 @@
 package org.opendaylight.aaa.datastore.h2;
 
 import com.google.common.base.Preconditions;
-
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import org.apache.commons.text.StringEscapeUtils;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.model.Role;
@@ -128,6 +127,7 @@ public class RoleStore extends AbstractStore<Role> {
         return savedRole;
     }
 
+    @SuppressFBWarnings("SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE")
     protected Role deleteRole(String roleid) throws StoreException {
         roleid = StringEscapeUtils.escapeHtml4(roleid);
         Role savedRole = this.getRole(roleid);

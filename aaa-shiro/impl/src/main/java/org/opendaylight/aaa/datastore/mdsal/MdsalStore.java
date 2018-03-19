@@ -26,10 +26,10 @@ import org.opendaylight.controller.md.sal.binding.api.DataBroker;
  */
 public class MdsalStore implements IIDMStore {
 
-    private final DataBroker dataBroker;
+    //private final DataBroker dataBroker;
 
     public MdsalStore(DataBroker dataBroker) {
-        this.dataBroker = dataBroker;
+        //this.dataBroker = dataBroker;
     }
 
     @Override

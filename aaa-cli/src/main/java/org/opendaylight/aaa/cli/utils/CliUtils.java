@@ -9,6 +9,7 @@ package org.opendaylight.aaa.cli.utils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import org.apache.felix.service.command.CommandSession;
 
 /**
@@ -38,9 +39,9 @@ public final class CliUtils {
      */
     public static String readPassword(final CommandSession session, final String pwdPrintStr) throws Exception {
         session.getConsole().println(pwdPrintStr);
-        final InputStreamReader iStreamReader = new InputStreamReader(session.getKeyboard());
-        final BufferedReader bReader = new BufferedReader(iStreamReader);
-        final String pwd = bReader.readLine();
-        return pwd;
+        try (BufferedReader bReader = new BufferedReader(new InputStreamReader(session.getKeyboard(),
+                StandardCharsets.UTF_8))) {
+            return bReader.readLine();
+        }
     }
 }

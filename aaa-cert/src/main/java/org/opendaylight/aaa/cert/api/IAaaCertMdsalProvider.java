@@ -10,6 +10,7 @@ package org.opendaylight.aaa.cert.api;
 
 import java.security.KeyStore;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslData;
 
 /**
@@ -111,6 +112,7 @@ public interface IAaaCertMdsalProvider {
      * @param withTag  boolean to add cert tag to the return string
      * @return certificate as string
      */
+    @Nullable
     String getODLStoreCertificate(@Nonnull String bundleName, boolean withTag);
 
     /**
@@ -121,6 +123,7 @@ public interface IAaaCertMdsalProvider {
      * @param withTag  boolean to add cert tag to the return string
      * @return certificate as string
      */
+    @Nullable
     String getTrustStoreCertificate(@Nonnull String bundleName, @Nonnull String alias,  boolean withTag);
 
     /**

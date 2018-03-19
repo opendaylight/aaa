@@ -11,9 +11,12 @@ package org.opendaylight.aaa.cert.impl;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Default values class for aaa-cert bundle.
@@ -22,6 +25,7 @@ import java.nio.charset.StandardCharsets;
  *
  */
 public final class KeyStoreConstant {
+    private static final Logger LOG = LoggerFactory.getLogger(KeyStoreConstant.class);
 
     public static final String BEGIN_CERTIFICATE = "-----BEGIN CERTIFICATE-----";
 
@@ -50,7 +54,9 @@ public final class KeyStoreConstant {
     public static String createDir(final String dir) {
         final File file = new File(dir);
         if (!file.exists()) {
-            file.mkdirs();
+            if (!file.mkdirs()) {
+                LOG.error("Failed to create directories {}", file);
+            }
         }
         return file.getAbsolutePath();
     }
@@ -60,13 +66,15 @@ public final class KeyStoreConstant {
             return null;
         }
 
-        try {
-            final FileInputStream fInputStream = new FileInputStream(KEY_STORE_PATH + certFile);
-            final byte[] certBytes = new byte[fInputStream.available()];
-            fInputStream.read(certBytes);
-            fInputStream.close();
-            final String cert = new String(certBytes, StandardCharsets.UTF_8);
-            return cert;
+        final String path = KEY_STORE_PATH + certFile;
+        try (FileInputStream fInputStream = new FileInputStream(path)) {
+            final int available = fInputStream.available();
+            final byte[] certBytes = new byte[available];
+            final int numRead = fInputStream.read(certBytes);
+            if (numRead != available) {
+                LOG.warn("Expected {} bytes read from {}, actual was {}", available, path, numRead);
+            }
+            return new String(certBytes, StandardCharsets.UTF_8);
         } catch (final IOException e) {
             return null;
         }
@@ -77,11 +85,9 @@ public final class KeyStoreConstant {
             return false;
         }
 
-        BufferedWriter out;
-        try {
-            out = new BufferedWriter(new FileWriter(KEY_STORE_PATH + fileName));
+        try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(KEY_STORE_PATH + fileName), StandardCharsets.UTF_8))) {
             out.write(cert);
-            out.close();
             return true;
         } catch (final IOException e) {
             return false;
