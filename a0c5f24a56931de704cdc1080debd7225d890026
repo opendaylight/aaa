@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "51604916_7d0b1d04",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/MoonOAuthFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2018-03-19T14:33:26Z",
+      "side": 0,
+      "message": "Good catch, I\u0027ll try to keep it.",
+      "parentUuid": "8906f6a6_db1d53a0",
+      "revId": "a0c5f24a56931de704cdc1080debd7225d890026",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "658a8d23_40149ce1",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MdsalRealm.java",
         "patchSetId": 5
@@ -48,6 +66,24 @@
       "side": 0,
       "message": "I don\u0027t think it can...",
       "parentUuid": "658a8d23_40149ce1",
+      "revId": "a0c5f24a56931de704cdc1080debd7225d890026",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1471bd7b_b84e7e25",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MdsalRealm.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2018-03-19T14:33:26Z",
+      "side": 0,
+      "message": "I am sorry, I do not know what could happen :(",
+      "parentUuid": "9f2a7504_765c5e4f",
       "revId": "a0c5f24a56931de704cdc1080debd7225d890026",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false

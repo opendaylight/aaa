@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "160a1ab0_5dca1c51",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/AuthenticationException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2018-03-19T14:33:26Z",
+      "side": 1,
+      "message": "Maybe I just over-generated it :)",
+      "parentUuid": "e05a787f_b8b68f53",
+      "revId": "58b0ad20582b00d86454eb82097e7e10a4256a3e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17163e79_ff4d728e",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/KeystoneAuthRealm.java",
         "patchSetId": 5
@@ -47,6 +65,24 @@
       "writtenOn": "2018-03-19T13:51:14Z",
       "side": 1,
       "message": "perhaps a quick inline comment above the Supress explaning why you could not make this class final would be useful to future code archeologists?",
+      "revId": "58b0ad20582b00d86454eb82097e7e10a4256a3e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee9c12b9_f512c106",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/util/http/SimpleHttpClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5861
+      },
+      "writtenOn": "2018-03-19T14:33:26Z",
+      "side": 1,
+      "message": "It is because of Mockito\u0027s tests, I\u0027ll include that comment.",
+      "parentUuid": "ce1969b5_c9fd38d0",
       "revId": "58b0ad20582b00d86454eb82097e7e10a4256a3e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
