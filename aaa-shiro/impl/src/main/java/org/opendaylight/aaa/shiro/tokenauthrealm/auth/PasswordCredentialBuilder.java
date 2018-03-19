@@ -7,9 +7,9 @@
  */
 package org.opendaylight.aaa.shiro.tokenauthrealm.auth;
 
+import java.util.Objects;
 import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.shiro.tokenauthrealm.util.EqualUtil;
-import org.opendaylight.aaa.shiro.tokenauthrealm.util.HashCodeUtil;
 
 /**
  * {@link PasswordCredentials} builder.
@@ -75,10 +75,7 @@ public class PasswordCredentialBuilder {
         @Override
         public int hashCode() {
             if (hashCode == 0) {
-                int result = HashCodeUtil.SEED;
-                result = HashCodeUtil.hash(result, username);
-                result = HashCodeUtil.hash(result, password);
-                hashCode = result;
+                hashCode = Objects.hash(username, password);
             }
             return hashCode;
         }

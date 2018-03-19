@@ -8,11 +8,11 @@
 package org.opendaylight.aaa.shiro.tokenauthrealm.auth;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.shiro.tokenauthrealm.util.EqualUtil;
-import org.opendaylight.aaa.shiro.tokenauthrealm.util.HashCodeUtil;
 
 /**
  * A builder for the authentication context.
@@ -108,10 +108,7 @@ public class AuthenticationBuilder {
         @Override
         public int hashCode() {
             if (hashCode == 0) {
-                int result = HashCodeUtil.SEED;
-                result = HashCodeUtil.hash(result, expiration);
-                result = HashCodeUtil.hash(result, claim.hashCode());
-                hashCode = result;
+                hashCode = Objects.hash(expiration, claim);
             }
             return hashCode;
         }

@@ -8,15 +8,14 @@
 package org.opendaylight.aaa.shiro.tokenauthrealm.auth;
 
 import static org.opendaylight.aaa.shiro.tokenauthrealm.util.EqualUtil.areEqual;
-import static org.opendaylight.aaa.shiro.tokenauthrealm.util.HashCodeUtil.hash;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import java.io.Serializable;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 import org.opendaylight.aaa.api.Claim;
-import org.opendaylight.aaa.shiro.tokenauthrealm.util.HashCodeUtil;
 
 /**
  * Builder for a {@link Claim}. The userId, user, and roles information is
@@ -142,13 +141,7 @@ public class ClaimBuilder {
         @Override
         public int hashCode() {
             if (hashCode == 0) {
-                int result = HashCodeUtil.SEED;
-                result = hash(result, clientId);
-                result = hash(result, userId);
-                result = hash(result, user);
-                result = hash(result, domain);
-                result = hash(result, roles);
-                hashCode = result;
+                hashCode = Objects.hash(clientId, userId, user, domain, roles);
             }
             return hashCode;
         }
