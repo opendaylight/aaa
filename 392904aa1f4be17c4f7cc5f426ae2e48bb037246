@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc37d392_0f0e2f29",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/datastore/h2/AbstractStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-03-19T17:59:08Z",
+      "side": 1,
+      "message": "It is worth it later, but for now this is fine.  The tableName is never exposed so its not something that could be buttered up for SQL injection from a remote context.  It can be done later.",
+      "range": {
+        "startLine": 26,
+        "startChar": 81,
+        "endLine": 26,
+        "endChar": 94
+      },
+      "revId": "392904aa1f4be17c4f7cc5f426ae2e48bb037246",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf9dbf2c_8b49e197",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/datastore/mdsal/MdsalStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-03-19T17:59:08Z",
+      "side": 1,
+      "message": "Fair.  This whole class was added and +2 by someone other than me even though it is skeleton code.  I will manually remove it in a followup.",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "392904aa1f4be17c4f7cc5f426ae2e48bb037246",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "98ecf92b_03cf9684",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/datastore/mdsal/MdsalTokenStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-03-19T17:59:08Z",
+      "side": 1,
+      "message": "same as last comment.",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 67
+      },
+      "revId": "392904aa1f4be17c4f7cc5f426ae2e48bb037246",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53a6bef9_706ca524",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/MoonOAuthFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-03-19T17:59:08Z",
+      "side": 1,
+      "message": "I\u0027ll remove this in a follow-up.",
+      "range": {
+        "startLine": 162,
+        "startChar": 14,
+        "endLine": 166,
+        "endChar": 15
+      },
+      "revId": "392904aa1f4be17c4f7cc5f426ae2e48bb037246",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
