@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e05a787f_b8b68f53",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/AuthenticationException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-19T13:51:14Z",
+      "side": 1,
+      "message": "I usually try to avoid default constructors on Exceptions, but I\u0027m assuming you had a good reason for needing this.",
+      "revId": "58b0ad20582b00d86454eb82097e7e10a4256a3e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17163e79_ff4d728e",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-19T13:51:14Z",
+      "side": 1,
+      "message": "This does not seem right to me.  From what I understand of this code, it\u0027s trying to rethrow the contained AuthenticationException if it was the cause of the UncheckedExecutionException, is that right?  Won\u0027t what you are doing here rethrow an AuthenticationException with a cause of the UncheckedExecutionException which will have another AuthenticationException as cause instead?",
+      "revId": "58b0ad20582b00d86454eb82097e7e10a4256a3e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce1969b5_c9fd38d0",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/util/http/SimpleHttpClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-19T13:51:14Z",
+      "side": 1,
+      "message": "perhaps a quick inline comment above the Supress explaning why you could not make this class final would be useful to future code archeologists?",
+      "revId": "58b0ad20582b00d86454eb82097e7e10a4256a3e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "853725dd_8a88b75c",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/util/http/SimpleHttpRequest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-19T13:51:14Z",
+      "side": 1,
+      "message": "perhaps a quick inline comment above the Supress explaning why you could not make this class final would be useful to future code archeologists?",
+      "revId": "58b0ad20582b00d86454eb82097e7e10a4256a3e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8906f6a6_db1d53a0",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/MoonOAuthFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-19T13:51:14Z",
+      "side": 0,
+      "message": "are you 100% sure it\u0027s a good idea to loose this?  Especially given that this is security sensitive code?  From what (little...) I understand here, the idea seems to have bene that any (other) Exception, incl. RTE like NPE \u0026 Co. will lead to a HTTP 500, without divulging details like stack traces like it would if we let it propagate.  Perhaps this was done intentionally, should should be kept?",
+      "revId": "a0c5f24a56931de704cdc1080debd7225d890026",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "658a8d23_40149ce1",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MdsalRealm.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-19T13:51:14Z",
+      "side": 0,
+      "message": "Whoa... I think it would be wortwhile to spell out with a comment here why this can be delete (I\u0027m not immediately seeing it), and for Ryan to look this over..",
+      "revId": "a0c5f24a56931de704cdc1080debd7225d890026",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
