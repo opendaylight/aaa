@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "30162ec1_9f6139fe",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/util/http/SimpleHttpClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-19T14:51:53Z",
+      "side": 1,
+      "message": "no - I see that now. Trying to use the real classes in the tests...",
+      "parentUuid": "5208f1ed_064b5d6d",
+      "revId": "58b0ad20582b00d86454eb82097e7e10a4256a3e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "853725dd_8a88b75c",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/util/http/SimpleHttpRequest.java",
         "patchSetId": 5
