@@ -33,6 +33,24 @@
       "revId": "a0c5f24a56931de704cdc1080debd7225d890026",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f2a7504_765c5e4f",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MdsalRealm.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-03-19T14:23:56Z",
+      "side": 0,
+      "message": "I don\u0027t think it can...",
+      "parentUuid": "658a8d23_40149ce1",
+      "revId": "a0c5f24a56931de704cdc1080debd7225d890026",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
