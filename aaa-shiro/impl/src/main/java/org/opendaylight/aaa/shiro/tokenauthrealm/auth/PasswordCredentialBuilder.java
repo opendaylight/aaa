@@ -68,7 +68,8 @@ public class PasswordCredentialBuilder {
             }
             PasswordCredentials passwordCredentials = (PasswordCredentials) object;
             return Objects.equals(username, passwordCredentials.username())
-                    && Objects.equals(password, passwordCredentials.password());
+                    && Objects.equals(password, passwordCredentials.password())
+                    && Objects.equals(domain, passwordCredentials.domain());
         }
 
         @Override
