@@ -35,7 +35,7 @@ public final class SHA256Calculator {
     }
 
     public static String generateSALT() {
-        StringBuffer salt = new StringBuffer();
+        StringBuilder salt = new StringBuilder();
         for (int i = 0; i < 12; i++) {
             int random = (int) (Math.random() * 24 + 1);
             salt.append((char) (65 + random));
