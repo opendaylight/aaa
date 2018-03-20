@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1d6d27ab_d2353be9",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/AAAIniWebEnvironment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-20T19:34:21Z",
+      "side": 1,
+      "message": "yeah - this is what I did originally to workaround the TCCL issue when WebServer was advertised as a service. The only problem might be if someone pushed a aaa-app-config referencing a class from another project but that would be an issue regardless and hard to support.",
+      "parentUuid": "2943ad59_2b3df9bd",
+      "range": {
+        "startLine": 70,
+        "startChar": 65,
+        "endLine": 70,
+        "endChar": 80
+      },
+      "revId": "dab3de89eeef835a024ff0cf75ffd43259656919",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "642c181d_239c6301",
         "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContextSecurer.java",
         "patchSetId": 3
