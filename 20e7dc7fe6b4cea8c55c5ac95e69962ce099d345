@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99ae8844_e32cc526",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/spi/WebContextSecurer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-20T12:53:19Z",
+      "side": 1,
+      "message": ".spi !",
+      "revId": "20e7dc7fe6b4cea8c55c5ac95e69962ce099d345",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f5ffeb8_99626b71",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/spi/WebContextSecurer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-20T12:53:19Z",
+      "side": 1,
+      "message": "!",
+      "revId": "20e7dc7fe6b4cea8c55c5ac95e69962ce099d345",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffab8440_81752cc4",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/spi/WebContextSecurer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-03-20T12:53:19Z",
+      "side": 1,
+      "message": "!",
+      "revId": "20e7dc7fe6b4cea8c55c5ac95e69962ce099d345",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
