@@ -28,19 +28,21 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import org.junit.Test;
+import org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration;
 
 /**
  * Custom Filter Adapter Test Suite.
  */
 public class CustomFilterAdapterTest {
 
+    final CustomFilterAdapterConfiguration mockAdapterConfig = mock(CustomFilterAdapterConfiguration.class);
     final ServletRequest servletRequest = mock(ServletRequest.class);
     final ServletResponse servletResponse = mock(ServletResponse.class);
     final FilterChain filterChain = mock(FilterChain.class);
 
     @Test
     public void testDoFilter() throws Exception {
-        final CustomFilterAdapter customFilterAdapter = new CustomFilterAdapter();
+        final CustomFilterAdapter customFilterAdapter = new CustomFilterAdapter(mockAdapterConfig);
         final FilterChainMockUtils.TestFilterDTO testFilterDTO = FilterChainMockUtils.createFilterChain(3);
         customFilterAdapter.updateInjectedFilters(testFilterDTO.getFilters());
         final boolean[] existingFilterChainEncountered = { false };
@@ -56,7 +58,7 @@ public class CustomFilterAdapterTest {
     // also tests CustomFilterAdapter.getFilterConfig()
     @Test
     public void testInit() throws Exception {
-        final CustomFilterAdapter customFilterAdapter = new CustomFilterAdapter();
+        final CustomFilterAdapter customFilterAdapter = new CustomFilterAdapter(mockAdapterConfig);
         // test tolerance of null filter config
         customFilterAdapter.init(null);
         assertNull(customFilterAdapter.getFilterConfig());
@@ -99,7 +101,7 @@ public class CustomFilterAdapterTest {
     }
 
     private void testUpdateInjectedFilters(final int size) throws IOException, ServletException {
-        final CustomFilterAdapter customFilterAdapter = new CustomFilterAdapter();
+        final CustomFilterAdapter customFilterAdapter = new CustomFilterAdapter(mockAdapterConfig);
         final FilterChainMockUtils.TestFilterDTO testFilterDTO = FilterChainMockUtils.createFilterChain(size);
         customFilterAdapter.updateInjectedFilters(testFilterDTO.getFilters());
         customFilterAdapter.doFilter(servletRequest, servletResponse, filterChain);
@@ -114,7 +116,7 @@ public class CustomFilterAdapterTest {
 
     @Test
     public void testRealFilters() throws Exception {
-        final CustomFilterAdapter customFilterAdapter = new CustomFilterAdapter();
+        final CustomFilterAdapter customFilterAdapter = new CustomFilterAdapter(mockAdapterConfig);
         final List<Filter> injectedFilters = new Vector<>();
         injectedFilters.add(new TestFilter1());
         injectedFilters.add(new TestFilter2());
