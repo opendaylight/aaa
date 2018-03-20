@@ -21,8 +21,10 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import org.opendaylight.aaa.web.ServletDetails;
 import org.opendaylight.aaa.web.WebContext;
+import org.opendaylight.aaa.web.WebContextBuilder;
 import org.opendaylight.aaa.web.WebContextRegistration;
 import org.opendaylight.aaa.web.WebServer;
+import org.opendaylight.aaa.web.spi.WebContextSecurer;
 import org.ops4j.pax.cdi.api.OsgiService;
 import org.ops4j.pax.web.service.WebContainer;
 import org.ops4j.pax.web.service.WebContainerDTO;
@@ -52,10 +54,13 @@ public class PaxWebServer {
 
     private final WebContainer paxWeb;
     private final ServiceRegistration<?> serviceRegistration;
+    private final WebContextSecurer webContextSecurer;
 
     @Inject
-    public PaxWebServer(@OsgiService WebContainer paxWebContainer, BundleContext bundleContext) {
+    public PaxWebServer(@OsgiService WebContainer paxWebContainer, @OsgiService WebContextSecurer webContextSecurer,
+            BundleContext bundleContext) {
         this.paxWeb = paxWebContainer;
+        this.webContextSecurer = webContextSecurer;
 
         serviceRegistration = bundleContext.registerService(new String[]{WebServer.class.getName()},
             new ServiceFactory<WebServer>() {
@@ -111,7 +116,7 @@ public class PaxWebServer {
         return new WebServer() {
             @Override
             public WebContextRegistration registerWebContext(WebContext webContext) throws ServletException {
-                return new WebContextImpl(bundleWebContainer, webContext) {
+                return new WebContextImpl(bundleWebContainer, webContextSecurer, webContext) {
                     @Override
                     public void close() {
                         super.close();
@@ -140,7 +145,8 @@ public class PaxWebServer {
         private final List<EventListener> registeredEventListeners = new ArrayList<>();
         private final List<Filter> registeredFilters = new ArrayList<>();
 
-        WebContextImpl(WebContainer paxWeb, WebContext webContext) throws ServletException {
+        WebContextImpl(WebContainer paxWeb, WebContextSecurer webContextSecurer, WebContext webContext)
+                throws ServletException {
             // We ignore webContext.supportsSessions() because the OSGi HttpService / Pax Web API
             // does not seem to support not wanting session support on some web contexts
             // (it assumes always with session); but other implementation support without.
@@ -152,24 +158,30 @@ public class PaxWebServer {
             // used while registering the HttpContext in the OSGi service registry.
             String contextID = contextPath + ".id";
 
+            // Copy WebContext and protect all urlPatternsRequiringAuthentication using WebContextSecurer
+            WebContextBuilder webContextWithAuthBuilder = new WebContextBuilder().from(webContext);
+            webContextSecurer.requireAuthentication(webContextWithAuthBuilder,
+                    webContext.urlPatternsRequiringAuthentication());
+            WebContext webContextWithAuth = webContextWithAuthBuilder.build();
+
             HttpContext osgiHttpContext = paxWeb.createDefaultHttpContext(contextID);
             paxWeb.begin(osgiHttpContext);
 
             // The order in which we set things up here matters...
 
             // 1. Context parameters - because listeners, filters and servlets could need them
-            paxWeb.setContextParam(new MapDictionary<>(webContext.contextParams()), osgiHttpContext);
+            paxWeb.setContextParam(new MapDictionary<>(webContextWithAuth.contextParams()), osgiHttpContext);
 
             // 2. Listeners - because they could set up things that filters and servlets need
-            webContext.listeners().forEach(listener -> registerListener(osgiHttpContext, listener));
+            webContextWithAuth.listeners().forEach(listener -> registerListener(osgiHttpContext, listener));
 
             // 3. Filters - because subsequent servlets should already be covered by the filters
-            webContext.filters().forEach(filter ->
+            webContextWithAuth.filters().forEach(filter ->
                 registerFilter(osgiHttpContext, filter.urlPatterns(), filter.name(), filter.filter(),
                         filter.initParams()));
 
             // 4. servlets - 'bout time for 'em by now, don't you think? ;)
-            for (ServletDetails servlet : webContext.servlets()) {
+            for (ServletDetails servlet : webContextWithAuth.servlets()) {
                 registerServlet(osgiHttpContext, servlet.urlPatterns(), servlet.name(), servlet.servlet(),
                         servlet.initParams());
             }

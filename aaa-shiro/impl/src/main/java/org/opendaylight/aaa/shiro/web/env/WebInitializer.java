@@ -14,9 +14,7 @@ import org.opendaylight.aaa.shiro.idm.IdmLightApplication;
 import org.opendaylight.aaa.web.FilterDetails;
 import org.opendaylight.aaa.web.ServletDetails;
 import org.opendaylight.aaa.web.WebContext;
-import org.opendaylight.aaa.web.WebContextBuilder;
 import org.opendaylight.aaa.web.WebContextRegistration;
-import org.opendaylight.aaa.web.WebContextSecurer;
 import org.opendaylight.aaa.web.WebServer;
 
 /**
@@ -31,10 +29,9 @@ public class WebInitializer {
 
     private final WebContextRegistration registraton;
 
-    public WebInitializer(WebServer webServer, IIDMStore iidMStore,
-            WebContextSecurer webContextSecurer) throws ServletException {
+    public WebInitializer(WebServer webServer, IIDMStore iidMStore) throws ServletException {
 
-        WebContextBuilder webContextBuilder = WebContext.builder().contextPath("auth").supportsSessions(true)
+        this.registraton = webServer.registerWebContext(WebContext.builder().contextPath("auth").supportsSessions(true)
 
             .addServlet(ServletDetails.builder().servlet(new com.sun.jersey.spi.container.servlet.ServletContainer(
                     new IdmLightApplication(iidMStore)))
@@ -43,11 +40,11 @@ public class WebInitializer {
                 .addUrlPattern("/*").build())
 
             // Allows user to add javax.servlet.Filter(s) in front of REST services
-            .addFilter(FilterDetails.builder().filter(new CustomFilterAdapter()).addUrlPattern("/*").build());
+            .addFilter(FilterDetails.builder().filter(new CustomFilterAdapter()).addUrlPattern("/*").build())
 
-        webContextSecurer.requireAuthentication(webContextBuilder, "/*", "/moon/*");
+            .addUrlPatternsRequiringAuthentication("/*", "/moon/*")
 
-        this.registraton = webServer.registerWebContext(webContextBuilder.build());
+            .build());
     }
 
     public void close() {

@@ -121,6 +121,14 @@ public abstract class WebContext {
      */
     public abstract Map<String, String> contextParams();
 
+    /**
+     * URL Patterns requiring authentication to access. This will configures the
+     * WebContext in an implementation specific manner; typically, this will be done
+     * by adding a <code>javax.servlet.Filter</code> (or several, and whatever else
+     * they may need).
+     */
+    public abstract List<String> urlPatternsRequiringAuthentication();
+
     @Value.Check
     protected void check() {
         servlets().forEach(servlet -> {
