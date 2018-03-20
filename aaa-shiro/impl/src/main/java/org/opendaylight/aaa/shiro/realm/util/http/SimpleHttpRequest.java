@@ -52,8 +52,7 @@ public class SimpleHttpRequest<T> {
         WebResource webResource = client.resource(uri).path(path);
 
         // add the query params
-        queryParams.entrySet().forEach(queryParamEntry ->
-                webResource.queryParam(queryParamEntry.getKey(), queryParamEntry.getValue()));
+        queryParams.forEach(webResource::queryParam);
 
         try {
             if (outputType == Response.class) {

@@ -88,7 +88,7 @@ public class IdMServiceImpl implements IdMService {
     @Override
     public List<String> listUserIDs() throws IDMStoreException {
         List<User> users = repository.getUsers().getUsers();
-        return users.stream().map(user -> user.getName()).collect(Collectors.toList());
+        return users.stream().map(User::getName).collect(Collectors.toList());
     }
 
 }

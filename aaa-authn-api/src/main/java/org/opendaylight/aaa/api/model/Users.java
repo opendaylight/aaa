@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "users")
 public class Users {
-    private List<User> users = new ArrayList<User>();
+    private List<User> users = new ArrayList<>();
 
     public void setUsers(List<User> users) {
         this.users = users;

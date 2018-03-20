@@ -109,7 +109,7 @@ public class ODLJndiLdapRealmTest {
     class TestPrincipalCollection implements PrincipalCollection {
         private static final long serialVersionUID = -1236759619455574475L;
 
-        Vector<String> collection = new Vector<String>();
+        Vector<String> collection = new Vector<>();
 
         TestPrincipalCollection(String element) {
             collection.add(element);
@@ -127,7 +127,7 @@ public class ODLJndiLdapRealmTest {
 
         @Override
         public Set<String> asSet() {
-            HashSet<String> set = new HashSet<String>();
+            HashSet<String> set = new HashSet<>();
             set.addAll(collection);
             return set;
         }
@@ -189,7 +189,7 @@ public class ODLJndiLdapRealmTest {
         // emulates an ldap search and returns the mocked up test class
         when(
                 ldapContext.search((String) any(), (String) any(),
-                        (SearchControls) any())).thenReturn(new TestNamingEnumeration());
+                        any())).thenReturn(new TestNamingEnumeration());
         LdapContextFactory ldapContextFactory = mock(LdapContextFactory.class);
         when(ldapContextFactory.getSystemLdapContext()).thenReturn(ldapContext);
         AuthorizationInfo authorizationInfo = new ODLJndiLdapRealm().queryForAuthorizationInfo(
@@ -202,7 +202,7 @@ public class ODLJndiLdapRealmTest {
     @Test
     public void testBuildAuthorizationInfo() {
         assertNull(ODLJndiLdapRealm.buildAuthorizationInfo(null));
-        Set<String> roleNames = new HashSet<String>();
+        Set<String> roleNames = new HashSet<>();
         roleNames.add("engineering");
         AuthorizationInfo authorizationInfo = ODLJndiLdapRealm.buildAuthorizationInfo(roleNames);
         assertNotNull(authorizationInfo);
@@ -218,7 +218,7 @@ public class ODLJndiLdapRealmTest {
         // emulates an ldap search and returns the mocked up test class
         when(
                 ldapContext.search((String) any(), (String) any(),
-                        (SearchControls) any())).thenReturn(new TestNamingEnumeration());
+                        any())).thenReturn(new TestNamingEnumeration());
 
         // extracts the roles for "testuser" and ensures engineering is returned
         Set<String> roles = ldapRealm.getRoleNamesForUser("testuser", ldapContext);

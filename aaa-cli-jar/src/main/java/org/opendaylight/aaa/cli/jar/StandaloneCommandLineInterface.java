@@ -49,7 +49,7 @@ public class StandaloneCommandLineInterface {
 
     public List<String> getAllUserNames() throws IDMStoreException {
         List<User> users = identityStore.getUsers().getUsers();
-        return users.stream().map(user -> user.getName()).collect(Collectors.toList());
+        return users.stream().map(User::getName).collect(Collectors.toList());
     }
 
     public boolean resetPassword(String userIdWithoutDomain, String newPassword) throws IDMStoreException {

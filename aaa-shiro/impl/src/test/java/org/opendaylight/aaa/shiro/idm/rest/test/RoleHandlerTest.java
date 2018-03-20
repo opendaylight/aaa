@@ -55,7 +55,7 @@ public class RoleHandlerTest extends HandlerTest {
         }
 
         // check create Role
-        Map<String, String> roleData = new HashMap<String, String>();
+        Map<String, String> roleData = new HashMap<>();
         roleData.put("name", "role1");
         roleData.put("description", "test Role");
         roleData.put("domainid", "0");
@@ -98,7 +98,7 @@ public class RoleHandlerTest extends HandlerTest {
         }
 
         // Bug 8382: if a role id is specified, 400 is returned
-        roleData = new HashMap<String, String>();
+        roleData = new HashMap<>();
         roleData.put("name", "role1");
         roleData.put("description", "test Role");
         roleData.put("domainid", "0");

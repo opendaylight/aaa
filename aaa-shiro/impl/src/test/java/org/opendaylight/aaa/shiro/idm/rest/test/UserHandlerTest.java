@@ -55,7 +55,7 @@ public class UserHandlerTest extends HandlerTest {
         }
 
         // check create user
-        Map<String, String> usrData = new HashMap<String, String>();
+        Map<String, String> usrData = new HashMap<>();
         usrData.put("name", "usr1");
         usrData.put("description", "test user");
         usrData.put("enabled", "true");
@@ -101,7 +101,7 @@ public class UserHandlerTest extends HandlerTest {
         }
 
         // Bug 8382: if a user id is specified, 400 is returned
-        usrData = new HashMap<String, String>();
+        usrData = new HashMap<>();
         usrData.put("name", "usr1");
         usrData.put("description", "test user");
         usrData.put("enabled", "true");

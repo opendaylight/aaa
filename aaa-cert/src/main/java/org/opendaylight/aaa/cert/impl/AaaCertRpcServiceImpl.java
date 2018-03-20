@@ -74,7 +74,7 @@ public class AaaCertRpcServiceImpl implements AaaCertRpcService {
         if (!Strings.isNullOrEmpty(cert)) {
             final GetNodeCertifcateOutput nodeCertOutput = new GetNodeCertifcateOutputBuilder().setNodeCert(cert)
                     .build();
-            futureResult.set(RpcResultBuilder.<GetNodeCertifcateOutput>success(nodeCertOutput).build());
+            futureResult.set(RpcResultBuilder.success(nodeCertOutput).build());
         } else {
             futureResult.set(RpcResultBuilder.<GetNodeCertifcateOutput>failed().build());
         }
@@ -99,7 +99,7 @@ public class AaaCertRpcServiceImpl implements AaaCertRpcService {
         final String cert = aaaCertProvider.getODLKeyStoreCertificate(false);
         if (!Strings.isNullOrEmpty(cert)) {
             final GetODLCertificateOutput odlCertOutput = new GetODLCertificateOutputBuilder().setOdlCert(cert).build();
-            futureResult.set(RpcResultBuilder.<GetODLCertificateOutput>success(odlCertOutput).build());
+            futureResult.set(RpcResultBuilder.success(odlCertOutput).build());
         } else {
             futureResult.set(RpcResultBuilder.<GetODLCertificateOutput>failed().build());
         }
@@ -113,7 +113,7 @@ public class AaaCertRpcServiceImpl implements AaaCertRpcService {
         if (!Strings.isNullOrEmpty(certReq)) {
             final GetODLCertificateReqOutput odlCertReqOutput = new GetODLCertificateReqOutputBuilder()
                     .setOdlCertReq(certReq).build();
-            futureResult.set(RpcResultBuilder.<GetODLCertificateReqOutput>success(odlCertReqOutput).build());
+            futureResult.set(RpcResultBuilder.success(odlCertReqOutput).build());
         } else {
             futureResult.set(RpcResultBuilder.<GetODLCertificateReqOutput>failed().build());
         }

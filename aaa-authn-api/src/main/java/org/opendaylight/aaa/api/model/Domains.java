@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "domains")
 public class Domains {
-    private List<Domain> domains = new ArrayList<Domain>();
+    private List<Domain> domains = new ArrayList<>();
 
     public void setDomains(List<Domain> domains) {
         this.domains = domains;

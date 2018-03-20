@@ -62,11 +62,8 @@ public class GsonProvider<T> implements MessageBodyReader<T>, MessageBodyWriter<
                       MediaType mediaType, MultivaluedMap<String, String> httpHeaders,
                       InputStream entityStream) throws IOException, WebApplicationException {
 
-        InputStreamReader reader = new InputStreamReader(entityStream, "UTF-8");
-        try {
+        try (InputStreamReader reader = new InputStreamReader(entityStream, "UTF-8")) {
             return gson.fromJson(reader, type);
-        } finally {
-            reader.close();
         }
     }
 
@@ -86,10 +83,9 @@ public class GsonProvider<T> implements MessageBodyReader<T>, MessageBodyWriter<
     @SuppressFBWarnings("DM_DEFAULT_ENCODING")
     public void writeTo(T type, Class<?> theClass, Type genericType, Annotation[] annotations,
                         MediaType mediaType, MultivaluedMap<String, Object> httpHeaders,
-                        OutputStream entityStream) throws IOException, WebApplicationException {
+                        OutputStream entityStream) throws WebApplicationException {
 
-        PrintWriter printWriter = new PrintWriter(entityStream);
-        try {
+        try (PrintWriter printWriter = new PrintWriter(entityStream)) {
             String json;
             if (ui.getQueryParameters().containsKey(PRETTY_PRINT)) {
                 json = prettyGson.toJson(type);
@@ -98,8 +94,6 @@ public class GsonProvider<T> implements MessageBodyReader<T>, MessageBodyWriter<
             }
             printWriter.write(json);
             printWriter.flush();
-        } finally {
-            printWriter.close();
         }
     }
 }

@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "roles")
 public class Roles {
-    private List<Role> roles = new ArrayList<Role>();
+    private List<Role> roles = new ArrayList<>();
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
