@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import org.apache.shiro.web.env.EnvironmentLoaderListener;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.opendaylight.aaa.api.IIDMStore;
+import org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration;
 import org.opendaylight.aaa.filterchain.filters.CustomFilterAdapter;
 import org.opendaylight.aaa.shiro.filters.AAAShiroFilter;
 import org.opendaylight.aaa.shiro.idm.IdmLightApplication;
@@ -33,7 +34,8 @@ public class WebInitializer {
     private final WebContextRegistration registraton;
 
     public WebInitializer(WebServer webServer, IIDMStore iidMStore,
-            EnvironmentLoaderListener shiroWebEnvLoader) throws ServletException {
+            EnvironmentLoaderListener shiroWebEnvLoader,
+            CustomFilterAdapterConfiguration customFilterAdapterConfig) throws ServletException {
         this.registraton = webServer.registerWebContext(WebContext.builder().contextPath("auth").supportsSessions(true)
 
             .addServlet(ServletDetails.builder().servlet(new com.sun.jersey.spi.container.servlet.ServletContainer(
@@ -48,7 +50,8 @@ public class WebInitializer {
              //  Shiro initialization
             .addListener(shiroWebEnvLoader)
              // Allows user to add javax.servlet.Filter(s) in front of REST services
-            .addFilter(FilterDetails.builder().filter(new CustomFilterAdapter()).addUrlPattern("/*").build())
+            .addFilter(FilterDetails.builder().filter(new CustomFilterAdapter(customFilterAdapterConfig))
+                    .addUrlPattern("/*").build())
              // AAA filter in front of these REST web services as well as for moon endpoints
             .addFilter(FilterDetails.builder().filter(new AAAShiroFilter()).addUrlPattern("/*", "/moon/*").build())
              // CORS filter

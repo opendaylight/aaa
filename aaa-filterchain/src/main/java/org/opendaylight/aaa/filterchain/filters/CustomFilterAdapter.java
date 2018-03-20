@@ -54,12 +54,18 @@ public class CustomFilterAdapter implements Filter, CustomFilterAdapterListener 
 
     private static final Logger LOG = LoggerFactory.getLogger(CustomFilterAdapter.class);
 
+    private final CustomFilterAdapterConfiguration customFilterAdapterConfig;
+
     private FilterConfig filterConfig;
 
     /**
      * Stores the injected filter chain. TODO can this be an ArrayList?
      */
     private volatile List<Filter> injectedFilterChain = Collections.emptyList();
+
+    public CustomFilterAdapter(CustomFilterAdapterConfiguration customFilterAdapterConfig) {
+        this.customFilterAdapterConfig = customFilterAdapterConfig;
+    }
 
     @Override
     public void destroy() {
@@ -82,12 +88,11 @@ public class CustomFilterAdapter implements Filter, CustomFilterAdapterListener 
     }
 
     @Override
-    @SuppressWarnings("checkstyle:hiddenField")
-    public void init(final FilterConfig filterConfig) throws ServletException {
+    public void init(final FilterConfig newFilterConfig) throws ServletException {
         LOG.info("Initializing CustomFilterAdapter");
         // register as a listener for config admin changes
-        CustomFilterAdapterConfiguration.getInstance().registerCustomFilterAdapterConfigurationListener(this);
-        this.filterConfig = filterConfig;
+        customFilterAdapterConfig.registerCustomFilterAdapterConfigurationListener(this);
+        this.filterConfig = newFilterConfig;
     }
 
     /**

@@ -88,10 +88,15 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     </argument>
   </bean>
 
+  <reference id="customFilterAdapterConfig"
+      interface="org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration"/>
+
   <reference id="webServer" interface="org.opendaylight.aaa.web.WebServer" />
+
   <bean id="webInitializer" class="org.opendaylight.aaa.shiro.web.env.WebInitializer" destroy-method="close">
     <argument ref="webServer"/>
     <argument ref="idmStore"/>
     <argument ref="shiroWebEnvLoader"/>
+    <argument ref="customFilterAdapterConfig"/>
   </bean>
 </blueprint>
