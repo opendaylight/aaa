@@ -68,13 +68,14 @@ public class PasswordCredentialBuilder {
             }
             PasswordCredentials passwordCredentials = (PasswordCredentials) object;
             return Objects.equals(username, passwordCredentials.username())
-                    && Objects.equals(password, passwordCredentials.password());
+                    && Objects.equals(password, passwordCredentials.password())
+                    && Objects.equals(domain, passwordCredentials.domain());
         }
 
         @Override
         public int hashCode() {
             if (hashCode == 0) {
-                hashCode = Objects.hash(username, password);
+                hashCode = Objects.hash(username, password, domain);
             }
             return hashCode;
         }
