@@ -134,9 +134,7 @@ public class DefaultMdsalSslData implements IAaaCertProvider {
     private String[] getCipherSuites(final List<CipherSuites> cipherSuites) {
         final List<String> suites = new ArrayList<>();
         if (cipherSuites != null && !cipherSuites.isEmpty()) {
-            cipherSuites.stream().forEach(cs -> {
-                suites.add(cs.getSuiteName());
-            });
+            cipherSuites.forEach(cs -> suites.add(cs.getSuiteName()));
         }
         return suites.toArray(new String[suites.size()]);
     }

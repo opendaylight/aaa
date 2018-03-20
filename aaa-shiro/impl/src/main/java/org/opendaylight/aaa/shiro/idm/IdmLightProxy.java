@@ -40,15 +40,15 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
     private static final Logger LOG = LoggerFactory.getLogger(IdmLightProxy.class);
 
     /**
-     * claimCache is responsible for storing the active claims per domain.  The
+     * CLAIM_CACHE is responsible for storing the active claims per domain.  The
      * outer map is keyed by domain, and the inner map is keyed by
      * <code>PasswordCredentials</code>.
      */
-    private static Map<String, Map<PasswordCredentials, Claim>> claimCache = new ConcurrentHashMap<>();
+    private static final Map<String, Map<PasswordCredentials, Claim>> CLAIM_CACHE = new ConcurrentHashMap<>();
 
     // adds a store for the default "sdn" domain
     static {
-        claimCache.put(IIDMStore.DEFAULT_DOMAIN,
+        CLAIM_CACHE.put(IIDMStore.DEFAULT_DOMAIN,
                 new ConcurrentHashMap<>());
     }
 
@@ -65,19 +65,11 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
         Preconditions.checkNotNull(creds.password());
         String domain = creds.domain() == null ? IIDMStore.DEFAULT_DOMAIN : creds.domain();
         // FIXME: Add cache invalidation
-        Map<PasswordCredentials, Claim> cache = claimCache.get(domain);
-        if (cache == null) {
-            cache = new ConcurrentHashMap<>();
-            claimCache.put(domain, cache);
-        }
+        Map<PasswordCredentials, Claim> cache = CLAIM_CACHE.computeIfAbsent(domain, k -> new ConcurrentHashMap<>());
         Claim claim = cache.get(creds);
         if (claim == null) {
-            synchronized (claimCache) {
-                claim = cache.get(creds);
-                if (claim == null) {
-                    claim = dbAuthenticate(creds);
-                    cache.put(creds, claim);
-                }
+            synchronized (CLAIM_CACHE) {
+                claim = cache.computeIfAbsent(creds, this::dbAuthenticate);
             }
         }
         return claim;
@@ -88,7 +80,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
      */
     public static synchronized void clearClaimCache() {
         LOG.info("Clearing the claim cache");
-        for (Map<PasswordCredentials, Claim> cache : claimCache.values()) {
+        for (Map<PasswordCredentials, Claim> cache : CLAIM_CACHE.values()) {
             cache.clear();
         }
     }
