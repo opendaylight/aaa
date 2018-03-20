@@ -7,13 +7,14 @@
  */
 package org.opendaylight.aaa.shiro.web.env;
 
+import java.util.List;
 import org.apache.shiro.web.env.EnvironmentLoaderListener;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.opendaylight.aaa.shiro.filters.AAAShiroFilter;
 import org.opendaylight.aaa.web.FilterDetails;
 import org.opendaylight.aaa.web.WebContext;
 import org.opendaylight.aaa.web.WebContextBuilder;
-import org.opendaylight.aaa.web.WebContextSecurer;
+import org.opendaylight.aaa.web.spi.WebContextSecurer;
 
 /**
  * Secures a {@link WebContext} using Shiro.
@@ -29,15 +30,15 @@ public class ShiroWebContextSecurer implements WebContextSecurer {
     }
 
     @Override
-    public void requireAuthentication(WebContextBuilder webContextBuilder, String... urlPatterns) {
+    public void requireAuthentication(WebContextBuilder webContextBuilder, List<String> urlPatterns) {
         webContextBuilder
             .addListener(shiroEnvironmentLoaderListener)
 
             // AAA filter in front of these REST web services as well as for moon endpoints
-            .addFilter(FilterDetails.builder().filter(new AAAShiroFilter()).addUrlPattern(urlPatterns).build())
+            .addFilter(FilterDetails.builder().filter(new AAAShiroFilter()).addAllUrlPatterns(urlPatterns).build())
 
             // CORS filter
-            .addFilter(FilterDetails.builder().filter(new CrossOriginFilter()).addUrlPattern(urlPatterns)
+            .addFilter(FilterDetails.builder().filter(new CrossOriginFilter()).addAllUrlPatterns(urlPatterns)
                .putInitParam("allowedOrigins", "*")
                .putInitParam("allowedMethods", "GET,POST,OPTIONS,DELETE,PUT,HEAD")
                .putInitParam("allowedHeaders", "origin, content-type, accept, authorization")
