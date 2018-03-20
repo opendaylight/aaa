@@ -132,9 +132,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
             LOG.debug("get grants");
             List<String> roles = new ArrayList<>();
             Grants grants = idmStore.getGrants(domain.getDomainid(), user.getUserid());
-            List<Grant> grantList = grants.getGrants();
-            for (int z = 0; z < grantList.size(); z++) {
-                Grant grant = grantList.get(z);
+            for (Grant grant : grants.getGrants()) {
                 Role role = idmStore.readRole(grant.getRoleid());
                 if (role != null) {
                     roles.add(role.getName());
@@ -147,8 +145,8 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
             claim.setUserId(user.getUserid());
             claim.setUser(creds.username());
             claim.setDomain(credsDomain);
-            for (int z = 0; z < roles.size(); z++) {
-                claim.addRole(roles.get(z));
+            for (String role : roles) {
+                claim.addRole(role);
             }
             return claim.build();
         } catch (IDMStoreException se) {

@@ -73,9 +73,7 @@ public class IdMServiceImpl implements IdMService {
 
             // find all grants for uid and did
             Grants grants = repository.getGrants(did, userId);
-            List<Grant> grantList = grants.getGrants();
-            for (int z = 0; z < grantList.size(); z++) {
-                Grant grant = grantList.get(z);
+            for (Grant grant : grants.getGrants()) {
                 Role role = repository.readRole(grant.getRoleid());
                 roles.add(role.getName());
             }

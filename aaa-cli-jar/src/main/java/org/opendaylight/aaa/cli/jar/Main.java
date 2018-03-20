@@ -75,8 +75,7 @@ public class Main extends AbstractMain {
 
     @Override
     protected int deleteUsers(List<String> userNames) throws IDMStoreException {
-        for (int i = 0; i < userNames.size(); i++) {
-            String userName = userNames.get(i);
+        for (String userName : userNames) {
             if (cli.deleteUser(userName)) {
                 System.out.print("User deleted");
             } else {

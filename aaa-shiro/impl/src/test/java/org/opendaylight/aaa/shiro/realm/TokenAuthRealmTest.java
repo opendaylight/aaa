@@ -131,7 +131,7 @@ public class TokenAuthRealmTest {
     @Test(expected = ClassCastException.class)
     public void testExtractUsernameBadUsernameClass() {
         AuthenticationToken at = mock(AuthenticationToken.class);
-        when(at.getPrincipal()).thenReturn(new Integer(1));
+        when(at.getPrincipal()).thenReturn(1);
         TokenUtils.extractUsername(at);
     }
 
@@ -139,7 +139,7 @@ public class TokenAuthRealmTest {
     public void testExtractPasswordBadPasswordClass() {
         AuthenticationToken at = mock(AuthenticationToken.class);
         when(at.getPrincipal()).thenReturn("username");
-        when(at.getCredentials()).thenReturn(new Integer(1));
+        when(at.getCredentials()).thenReturn(1);
         TokenUtils.extractPassword(at);
     }
 }

@@ -423,9 +423,7 @@ public class DomainHandler {
             claim.setUserid(user.getUserid());
             try {
                 Grants grants = iidMStore.getGrants(domainId, user.getUserid());
-                List<Grant> grantsList = grants.getGrants();
-                for (int i = 0; i < grantsList.size(); i++) {
-                    Grant grant = grantsList.get(i);
+                for (Grant grant : grants.getGrants()) {
                     Role role = iidMStore.readRole(grant.getRoleid());
                     roleList.add(role);
                 }
@@ -501,9 +499,7 @@ public class DomainHandler {
 
         try {
             Grants grants = iidMStore.getGrants(domainId, userId);
-            List<Grant> grantsList = grants.getGrants();
-            for (int i = 0; i < grantsList.size(); i++) {
-                Grant grant = grantsList.get(i);
+            for (Grant grant : grants.getGrants()) {
                 Role role = iidMStore.readRole(grant.getRoleid());
                 roleList.add(role);
             }
