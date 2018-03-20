@@ -12,7 +12,6 @@ import java.util.Objects;
 import java.util.Set;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.Claim;
-import org.opendaylight.aaa.shiro.tokenauthrealm.util.EqualUtil;
 
 /**
  * A builder for the authentication context.
@@ -97,12 +96,12 @@ public class AuthenticationBuilder {
                 return false;
             }
             Authentication authentication = (Authentication) object;
-            return EqualUtil.areEqual(expiration, authentication.expiration()) && EqualUtil
-                    .areEqual(claim.roles(), authentication.roles()) && EqualUtil
-                    .areEqual(claim.domain(), authentication.domain()) && EqualUtil
-                    .areEqual(claim.userId(), authentication.userId()) && EqualUtil
-                    .areEqual(claim.user(), authentication.user()) && EqualUtil
-                    .areEqual(claim.clientId(), authentication.clientId());
+            return expiration == authentication.expiration()
+                    && Objects.equals(claim.roles(), authentication.roles())
+                    && Objects.equals(claim.domain(), authentication.domain())
+                    && Objects.equals(claim.userId(), authentication.userId())
+                    && Objects.equals(claim.user(), authentication.user())
+                    && Objects.equals(claim.clientId(), authentication.clientId());
         }
 
         @Override

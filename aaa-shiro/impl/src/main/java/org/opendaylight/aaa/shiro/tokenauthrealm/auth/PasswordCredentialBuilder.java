@@ -9,7 +9,6 @@ package org.opendaylight.aaa.shiro.tokenauthrealm.auth;
 
 import java.util.Objects;
 import org.opendaylight.aaa.api.PasswordCredentials;
-import org.opendaylight.aaa.shiro.tokenauthrealm.util.EqualUtil;
 
 /**
  * {@link PasswordCredentials} builder.
@@ -68,8 +67,8 @@ public class PasswordCredentialBuilder {
                 return false;
             }
             PasswordCredentials passwordCredentials = (PasswordCredentials) object;
-            return EqualUtil.areEqual(username, passwordCredentials.username())
-                    && EqualUtil.areEqual(password, passwordCredentials.password());
+            return Objects.equals(username, passwordCredentials.username())
+                    && Objects.equals(password, passwordCredentials.password());
         }
 
         @Override

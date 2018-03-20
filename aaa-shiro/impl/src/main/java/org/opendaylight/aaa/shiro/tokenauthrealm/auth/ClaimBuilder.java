@@ -7,8 +7,6 @@
  */
 package org.opendaylight.aaa.shiro.tokenauthrealm.auth;
 
-import static org.opendaylight.aaa.shiro.tokenauthrealm.util.EqualUtil.areEqual;
-
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import java.io.Serializable;
@@ -133,9 +131,11 @@ public class ClaimBuilder {
                 return false;
             }
             Claim claim = (Claim) object;
-            return areEqual(roles, claim.roles()) && areEqual(domain, claim.domain())
-                    && areEqual(userId, claim.userId()) && areEqual(user, claim.user())
-                    && areEqual(clientId, claim.clientId());
+            return Objects.equals(roles, claim.roles())
+                    && Objects.equals(domain, claim.domain())
+                    && Objects.equals(userId, claim.userId())
+                    && Objects.equals(user, claim.user())
+                    && Objects.equals(clientId, claim.clientId());
         }
 
         @Override
