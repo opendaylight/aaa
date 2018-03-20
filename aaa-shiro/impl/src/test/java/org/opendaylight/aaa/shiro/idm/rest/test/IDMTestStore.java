@@ -23,10 +23,10 @@ import org.opendaylight.aaa.api.model.Users;
 
 public class IDMTestStore implements IIDMStore {
 
-    private List<Domain> domains = new ArrayList<Domain>();
-    private List<Grant> grants = new ArrayList<Grant>();
-    private List<Role> roles = new ArrayList<Role>();
-    private List<User> users = new ArrayList<User>();
+    private List<Domain> domains = new ArrayList<>();
+    private List<Grant> grants = new ArrayList<>();
+    private List<Role> roles = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
     public IDMTestStore() {
         // TODO Auto-generated constructor stub
@@ -195,7 +195,7 @@ public class IDMTestStore implements IIDMStore {
         }
         for (Grant grant : grants) {
             if (grant.getUserid().equals(user.getUserid()) && grant.getDomainid().equals(domain.getDomainid())) {
-                List<User> usrList = new ArrayList<User>();
+                List<User> usrList = new ArrayList<>();
                 usrList.add(user);
                 usrs.setUsers(usrList);
                 break;
@@ -246,7 +246,7 @@ public class IDMTestStore implements IIDMStore {
     @Override
     public Grants getGrants(String domainid, String userid) throws IDMStoreException {
         Grants usrGrants = new Grants();
-        List<Grant> usrGrant = new ArrayList<Grant>();
+        List<Grant> usrGrant = new ArrayList<>();
         for (Grant grant : grants) {
             if (grant.getUserid().equals(userid) && grant.getDomainid().equals(domainid)) {
                 usrGrant.add(grant);
@@ -259,7 +259,7 @@ public class IDMTestStore implements IIDMStore {
     @Override
     public Grants getGrants(String userid) throws IDMStoreException {
         Grants usrGrants = new Grants();
-        List<Grant> usrGrant = new ArrayList<Grant>();
+        List<Grant> usrGrant = new ArrayList<>();
         for (Grant grant : grants) {
             if (grant.getUserid().equals(userid)) {
                 usrGrant.add(grant);

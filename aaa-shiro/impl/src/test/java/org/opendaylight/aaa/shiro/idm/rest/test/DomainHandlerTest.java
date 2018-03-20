@@ -52,7 +52,7 @@ public class DomainHandlerTest extends HandlerTest {
         }
 
         // check create domain
-        Map<String, String> domainData = new HashMap<String, String>();
+        Map<String, String> domainData = new HashMap<>();
         domainData.put("name", "dom1");
         domainData.put("description", "test dom");
         domainData.put("enabled", "true");
@@ -70,7 +70,7 @@ public class DomainHandlerTest extends HandlerTest {
         assertTrue(domain.getName().equals("dom1Update"));
 
         // check create grant
-        Map<String, String> grantData = new HashMap<String, String>();
+        Map<String, String> grantData = new HashMap<>();
         grantData.put("roleid", "1");
         clientResponse = resource().path("/v1/domains/1/users/0/roles").type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class, grantData);
@@ -87,7 +87,7 @@ public class DomainHandlerTest extends HandlerTest {
         assertEquals(404, clientResponse.getStatus());
 
         // check validate user (admin)
-        Map<String, String> usrPwdData = new HashMap<String, String>();
+        Map<String, String> usrPwdData = new HashMap<>();
         usrPwdData.put("username", "admin");
         usrPwdData.put("userpwd", "admin");
         clientResponse = resource().path("/v1/domains/0/users/roles").type(MediaType.APPLICATION_JSON)

@@ -49,7 +49,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
     // adds a store for the default "sdn" domain
     static {
         claimCache.put(IIDMStore.DEFAULT_DOMAIN,
-                new ConcurrentHashMap<PasswordCredentials, Claim>());
+                new ConcurrentHashMap<>());
     }
 
     private final IIDMStore idmStore;
