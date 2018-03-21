@@ -10,10 +10,10 @@ package org.opendaylight.aaa.cli.dmstore;
 
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
+import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
-import org.opendaylight.aaa.shiro.idm.IdmLightProxy;
 
 @Command(name = "remove-domain", scope = "aaa", description = "Remove domain.")
 
@@ -23,12 +23,14 @@ import org.opendaylight.aaa.shiro.idm.IdmLightProxy;
  */
 public class RemoveDomain extends AaaCliAbstractCommand {
 
+    private final ClaimCache claimCache;
+
     @Option(name = "-name", aliases = {
             "--domainName" }, description = "The domain name", required = true, multiValued = false)
-    private String domainName = "";
+    private String domainName;
 
-    public RemoveDomain() {
-        super();
+    public RemoveDomain(ClaimCache claimCache) {
+        this.claimCache = claimCache;
     }
 
     @Override
@@ -43,7 +45,7 @@ public class RemoveDomain extends AaaCliAbstractCommand {
         if (identityStore.deleteDomain(domainId) == null) {
             return "Failed to delete domain " + domainName;
         }
-        IdmLightProxy.clearClaimCache();
+        claimCache.clear();
         return "Domain " + domainName + "has been deleted.";
     }
 }

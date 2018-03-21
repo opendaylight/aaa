@@ -11,12 +11,12 @@ package org.opendaylight.aaa.cli.dmstore;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
+import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.cli.utils.CliUtils;
-import org.opendaylight.aaa.shiro.idm.IdmLightProxy;
 
 @Command(name = "change-user-pwd", scope = "aaa", description = "Change the user password.")
 
@@ -29,13 +29,15 @@ import org.opendaylight.aaa.shiro.idm.IdmLightProxy;
 public class ChangeUserPassword extends OsgiCommandSupport {
 
     private final IIDMStore identityStore;
+    private final ClaimCache claimCache;
 
     @Option(name = "-user", aliases = {
             "--userName" }, description = "The user name", required = true, multiValued = false)
     private String userName;
 
-    public ChangeUserPassword(IIDMStore identityStore) {
+    public ChangeUserPassword(IIDMStore identityStore, ClaimCache claimCache) {
         this.identityStore = identityStore;
+        this.claimCache = claimCache;
     }
 
     @Override
@@ -49,7 +51,7 @@ public class ChangeUserPassword extends OsgiCommandSupport {
         for (User usr : users.getUsers()) {
             final String realPwd = SHA256Calculator.getSHA256(currentPwd, usr.getSalt());
             if (usr.getName().equals(userName) && usr.getPassword().equals(realPwd)) {
-                IdmLightProxy.clearClaimCache();
+                claimCache.clear();
                 usr.setPassword(newPwd);
                 identityStore.updateUser(usr);
                 return userName + "'s password has been changed";

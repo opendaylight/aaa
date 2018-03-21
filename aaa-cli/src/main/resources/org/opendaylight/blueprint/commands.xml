@@ -5,6 +5,7 @@
     </reference>
 
     <reference id="iIDMStore" interface="org.opendaylight.aaa.api.IIDMStore" />
+    <reference id="claimCache" interface="org.opendaylight.aaa.api.ClaimCache" />
 
     <command-bundle xmlns="http://karaf.apache.org/xmlns/shell/v1.1.0">
         <command>
@@ -25,6 +26,7 @@
         <command>
             <action class="org.opendaylight.aaa.cli.dmstore.ChangeUserPassword">
                 <argument ref="iIDMStore" />
+                <argument ref="claimCache" />
             </action>
         </command>
         <command>
@@ -84,21 +86,25 @@
         </command>
         <command>
             <action class="org.opendaylight.aaa.cli.dmstore.RemoveGrant">
+                <argument ref="claimCache" />
                 <property name="identityStore" ref="iIDMStore"/>
             </action>
         </command>
         <command>
             <action class="org.opendaylight.aaa.cli.dmstore.RemoveUser">
+                <argument ref="claimCache" />
                 <property name="identityStore" ref="iIDMStore"/>
             </action>
         </command>
         <command>
             <action class="org.opendaylight.aaa.cli.dmstore.RemoveRole">
+                <argument ref="claimCache" />
                 <property name="identityStore" ref="iIDMStore"/>
             </action>
         </command>
         <command>
             <action class="org.opendaylight.aaa.cli.dmstore.RemoveDomain">
+                <argument ref="claimCache" />
                 <property name="identityStore" ref="iIDMStore"/>
             </action>
         </command>
