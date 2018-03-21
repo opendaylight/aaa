@@ -10,7 +10,7 @@ package org.opendaylight.aaa.shiro.filters;
 
 import org.apache.shiro.web.servlet.ShiroFilter;
 import org.opendaylight.aaa.api.AAAService;
-import org.opendaylight.aaa.shiro.ServiceProxy;
+import org.opendaylight.aaa.shiro.AAAShiroActivation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,20 +24,17 @@ import org.slf4j.LoggerFactory;
  * @see <code>javax.servlet.Filter</code>
  * @see <code>org.apache.shiro.web.servlet.ShiroFilter</code>
  */
-public class AAAFilter extends ShiroFilter implements AAAService {
+public class AAAFilter extends ShiroFilter implements AAAService, AAAShiroActivation {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAFilter.class);
 
     public AAAFilter() {
         LOG.debug("Creating the AAAFilter");
+        super.setEnabled(false);
     }
 
     /*
-     * (non-Javadoc)
-     *
-     * Adds context clues that aid in debugging. Also initializes the enable
-     * status to correspond with
-     * <code>ServiceProxy.getInstance.getEnabled()</code>.
+     * Adds context clues that aid in debugging.
      *
      * @see org.apache.shiro.web.servlet.ShiroFilter#init()
      */
@@ -45,24 +42,21 @@ public class AAAFilter extends ShiroFilter implements AAAService {
     public void init() throws Exception {
         super.init();
         LOG.debug("Initializing the AAAFilter");
-        // sets the filter to the startup value. Because of non-determinism in
-        // bundle loading, this passes an instance of itself along so that if
-        // the
-        // enable status changes, then AAAFilter enable status is changed.
-        setEnabled(ServiceProxy.getInstance().getEnabled(this));
     }
 
     /*
-     * (non-Javadoc)
-     *
      * Adds context clues to aid in debugging whether the filter is enabled.
      *
-     * @see
-     * org.apache.shiro.web.servlet.OncePerRequestFilter#setEnabled(boolean)
+     * @see org.apache.shiro.web.servlet.OncePerRequestFilter#setEnabled(boolean)
      */
     @Override
     public void setEnabled(final boolean enabled) {
         super.setEnabled(enabled);
         LOG.debug("Setting AAAFilter enabled to {}", enabled);
+    }
+
+    @Override
+    public void activate() {
+        setEnabled(true);
     }
 }

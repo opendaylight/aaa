@@ -11,7 +11,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0"
   odl:use-default-for-reference-types="true">
 
-  <bean id="provider" class="org.opendaylight.aaa.act.AAAShiroProvider"
-    init-method="init" destroy-method="close" />
+  <odl:static-reference id="aaaActivation" interface="org.opendaylight.aaa.shiro.AAAShiroActivation"/>
+
+  <bean id="provider" class="org.opendaylight.aaa.act.AAAShiroActivator">
+    <argument ref="aaaActivation"/>
+  </bean>
 
 </blueprint>
