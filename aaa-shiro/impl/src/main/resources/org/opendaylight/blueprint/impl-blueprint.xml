@@ -69,8 +69,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="authService" />
   </bean>
 
-  <bean id="aaa" class="org.opendaylight.aaa.shiro.filters.AAAFilter" />
-  <service ref="aaa" interface="org.opendaylight.aaa.api.AAAService" />
+  <bean id="aaaFilter" class="org.opendaylight.aaa.shiro.filters.AAAFilter" />
+
+  <service ref="aaaFilter">
+    <interfaces>
+      <value>org.opendaylight.aaa.api.AAAService</value>
+      <value>org.opendaylight.aaa.shiro.AAAShiroActivation</value>
+    </interfaces>
+  </service>
 
   <bean id="authenticator" class="org.opendaylight.aaa.authenticator.ODLAuthenticator" />
   <service ref="authenticator" interface="org.jolokia.osgi.security.Authenticator" />

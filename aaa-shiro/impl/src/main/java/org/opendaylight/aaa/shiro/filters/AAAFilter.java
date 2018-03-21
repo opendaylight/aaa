@@ -10,7 +10,7 @@ package org.opendaylight.aaa.shiro.filters;
 
 import org.apache.shiro.web.servlet.ShiroFilter;
 import org.opendaylight.aaa.api.AAAService;
-import org.opendaylight.aaa.shiro.ServiceProxy;
+import org.opendaylight.aaa.shiro.AAAShiroActivation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * @see <code>javax.servlet.Filter</code>
  * @see <code>org.apache.shiro.web.servlet.ShiroFilter</code>
  */
-public class AAAFilter extends ShiroFilter implements AAAService {
+public class AAAFilter extends ShiroFilter implements AAAService, AAAShiroActivation {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAFilter.class);
 
@@ -45,11 +45,6 @@ public class AAAFilter extends ShiroFilter implements AAAService {
     public void init() throws Exception {
         super.init();
         LOG.debug("Initializing the AAAFilter");
-        // sets the filter to the startup value. Because of non-determinism in
-        // bundle loading, this passes an instance of itself along so that if
-        // the
-        // enable status changes, then AAAFilter enable status is changed.
-        setEnabled(ServiceProxy.getInstance().getEnabled(this));
     }
 
     /*
@@ -64,5 +59,10 @@ public class AAAFilter extends ShiroFilter implements AAAService {
     public void setEnabled(final boolean enabled) {
         super.setEnabled(enabled);
         LOG.debug("Setting AAAFilter enabled to {}", enabled);
+    }
+
+    @Override
+    public void activate() {
+        setEnabled(true);
     }
 }
