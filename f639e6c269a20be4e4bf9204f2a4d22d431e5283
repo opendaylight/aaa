@@ -22,6 +22,30 @@
       "revId": "f639e6c269a20be4e4bf9204f2a4d22d431e5283",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e85c9be6_7f3686ad",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-03-25T21:21:19Z",
+      "side": 1,
+      "message": "Fixed by https://git.opendaylight.org/gerrit/#/c/70066/",
+      "parentUuid": "14620fed_3e0e0ec2",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 12
+      },
+      "revId": "f639e6c269a20be4e4bf9204f2a4d22d431e5283",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
