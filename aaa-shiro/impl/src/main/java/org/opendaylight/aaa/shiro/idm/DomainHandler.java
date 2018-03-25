@@ -20,6 +20,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.Claim;
@@ -52,9 +53,11 @@ public class DomainHandler {
     private static final Logger LOG = LoggerFactory.getLogger(DomainHandler.class);
 
     private final IIDMStore iidMStore;
+    private final ClaimCache claimCache;
 
-    public DomainHandler(IIDMStore iidMStore) {
+    public DomainHandler(IIDMStore iidMStore, ClaimCache claimCache) {
         this.iidMStore = iidMStore;
+        this.claimCache = claimCache;
     }
 
     /**
@@ -182,7 +185,7 @@ public class DomainHandler {
                 idmerror.setMessage("Not found! Domain id:" + domainId);
                 return Response.status(404).entity(idmerror).build();
             }
-            IdmLightProxy.clearClaimCache();
+            claimCache.clear();
             return Response.status(200).entity(domain).build();
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
@@ -221,7 +224,7 @@ public class DomainHandler {
             idmerror.setDetails(e.getMessage());
             return Response.status(500).entity(idmerror).build();
         }
-        IdmLightProxy.clearClaimCache();
+        claimCache.clear();
         return Response.status(204).build();
     }
 
@@ -347,7 +350,7 @@ public class DomainHandler {
             return Response.status(500).entity(idmerror).build();
         }
 
-        IdmLightProxy.clearClaimCache();
+        claimCache.clear();
         return Response.status(201).entity(grant).build();
     }
 
@@ -597,7 +600,7 @@ public class DomainHandler {
             idmerror.setDetails(e.getMessage());
             return Response.status(500).entity(idmerror).build();
         }
-        IdmLightProxy.clearClaimCache();
+        claimCache.clear();
         return Response.status(204).build();
     }
 }

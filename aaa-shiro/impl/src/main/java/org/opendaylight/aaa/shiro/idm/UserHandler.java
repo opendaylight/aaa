@@ -19,6 +19,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.IDMError;
@@ -75,9 +76,11 @@ public class UserHandler {
     private static final String DEFAULT_EMAIL = "";
 
     private final IIDMStore iidMStore;
+    private final ClaimCache claimCache;
 
-    public UserHandler(IIDMStore iidMStore) {
+    public UserHandler(IIDMStore iidMStore, ClaimCache claimCache) {
         this.iidMStore = iidMStore;
+        this.claimCache = claimCache;
     }
 
     /**
@@ -286,7 +289,7 @@ public class UserHandler {
                 return new IDMError(404, String.format("User not found for id %s", id), "").response();
             }
 
-            IdmLightProxy.clearClaimCache();
+            claimCache.clear();
 
             // Redact the password and salt for security reasons.
             redactUserPasswordInfo(user);
@@ -322,7 +325,7 @@ public class UserHandler {
         }
 
         // Successfully deleted the user; report success to the client.
-        IdmLightProxy.clearClaimCache();
+        claimCache.clear();
         return Response.status(204).build();
     }
 

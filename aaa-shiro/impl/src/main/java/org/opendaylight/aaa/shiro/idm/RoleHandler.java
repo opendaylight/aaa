@@ -18,6 +18,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.IDMError;
@@ -42,9 +43,11 @@ public class RoleHandler {
     private static final Logger LOG = LoggerFactory.getLogger(RoleHandler.class);
 
     private final IIDMStore iidMStore;
+    private final ClaimCache claimCache;
 
-    public RoleHandler(IIDMStore iidMStore) {
+    public RoleHandler(IIDMStore iidMStore, ClaimCache claimCache) {
         this.iidMStore = iidMStore;
+        this.claimCache = claimCache;
     }
 
     /**
@@ -196,7 +199,7 @@ public class RoleHandler {
             if (role == null) {
                 return new IDMError(404, "role id not found :" + id, "").response();
             }
-            IdmLightProxy.clearClaimCache();
+            claimCache.clear();
             return Response.status(200).entity(role).build();
         } catch (IDMStoreException e) {
             LOG.error("Internal error putting role", e);
@@ -228,7 +231,7 @@ public class RoleHandler {
             LOG.error("Internal error deleting role", e);
             return new IDMError(500, "internal error deleting role", e.getMessage()).response();
         }
-        IdmLightProxy.clearClaimCache();
+        claimCache.clear();
         return Response.status(204).build();
     }
 }

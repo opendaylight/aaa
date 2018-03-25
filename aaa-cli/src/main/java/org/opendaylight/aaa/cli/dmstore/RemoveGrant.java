@@ -10,10 +10,10 @@ package org.opendaylight.aaa.cli.dmstore;
 
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
+import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
-import org.opendaylight.aaa.shiro.idm.IdmLightProxy;
 
 @Command(name = "remove-grant", scope = "aaa", description = "Remove grant.")
 
@@ -23,20 +23,22 @@ import org.opendaylight.aaa.shiro.idm.IdmLightProxy;
  */
 public class RemoveGrant extends AaaCliAbstractCommand {
 
+    private final ClaimCache claimCache;
+
     @Option(name = "-uname", aliases = {
             "--userName" }, description = "The user name", required = true, multiValued = false)
-    private String userName = "";
+    private String userName;
 
     @Option(name = "-dname", aliases = {
             "--domainName" }, description = "The domain name", required = true, multiValued = false)
-    private String domainName = "";
+    private String domainName;
 
     @Option(name = "-rname", aliases = {
             "--roleName" }, description = "The role name", required = false, multiValued = false)
-    private String roleName = "";
+    private String roleName;
 
-    public RemoveGrant() {
-        super();
+    public RemoveGrant(ClaimCache claimCache) {
+        this.claimCache = claimCache;
     }
 
     @Override
@@ -51,7 +53,7 @@ public class RemoveGrant extends AaaCliAbstractCommand {
         if (identityStore.deleteGrant(grantid) == null) {
             return "Failed to delete grant " + userName + " " + roleName + " " + domainName;
         }
-        IdmLightProxy.clearClaimCache();
+        claimCache.clear();
         return "Grant has been deleted.";
     }
 }

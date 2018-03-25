@@ -10,10 +10,10 @@ package org.opendaylight.aaa.cli.dmstore;
 
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
+import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
-import org.opendaylight.aaa.shiro.idm.IdmLightProxy;
 
 @Command(name = "remove-role", scope = "aaa", description = "Remove role.")
 
@@ -23,12 +23,14 @@ import org.opendaylight.aaa.shiro.idm.IdmLightProxy;
  */
 public class RemoveRole extends AaaCliAbstractCommand {
 
+    private final ClaimCache claimCache;
+
     @Option(name = "-name", aliases = {
             "--roleName" }, description = "The role name", required = true, multiValued = false)
-    private String roleName = "";
+    private String roleName;
 
-    public RemoveRole() {
-        super();
+    public RemoveRole(ClaimCache claimCache) {
+        this.claimCache = claimCache;
     }
 
     @Override
@@ -43,7 +45,7 @@ public class RemoveRole extends AaaCliAbstractCommand {
         if (identityStore.deleteRole(roleId) == null) {
             return "Failed to delete role " + roleName;
         }
-        IdmLightProxy.clearClaimCache();
+        claimCache.clear();
         return "Role " + roleName + "has been deleted.";
     }
 }

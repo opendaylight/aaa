@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
+import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
@@ -35,22 +36,15 @@ import org.slf4j.LoggerFactory;
 /**
  * An OSGi proxy for the IdmLight server.
  */
-public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMService {
+public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMService, ClaimCache {
 
     private static final Logger LOG = LoggerFactory.getLogger(IdmLightProxy.class);
 
     /**
-     * CLAIM_CACHE is responsible for storing the active claims per domain.  The
-     * outer map is keyed by domain, and the inner map is keyed by
-     * <code>PasswordCredentials</code>.
+     * Responsible for storing the active claims per domain. The outer map is keyed by domain, and the inner map is
+     * keyed by <code>PasswordCredentials</code>.
      */
-    private static final Map<String, Map<PasswordCredentials, Claim>> CLAIM_CACHE = new ConcurrentHashMap<>();
-
-    // adds a store for the default "sdn" domain
-    static {
-        CLAIM_CACHE.put(IIDMStore.DEFAULT_DOMAIN,
-                new ConcurrentHashMap<>());
-    }
+    private final Map<String, Map<PasswordCredentials, Claim>> claimCache = new ConcurrentHashMap<>();
 
     private final IIDMStore idmStore;
 
@@ -64,25 +58,19 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
         Preconditions.checkNotNull(creds.username());
         Preconditions.checkNotNull(creds.password());
         String domain = creds.domain() == null ? IIDMStore.DEFAULT_DOMAIN : creds.domain();
+
         // FIXME: Add cache invalidation
-        Map<PasswordCredentials, Claim> cache = CLAIM_CACHE.computeIfAbsent(domain, k -> new ConcurrentHashMap<>());
-        Claim claim = cache.get(creds);
-        if (claim == null) {
-            synchronized (CLAIM_CACHE) {
-                claim = cache.computeIfAbsent(creds, this::dbAuthenticate);
-            }
-        }
-        return claim;
+        return claimCache.computeIfAbsent(domain, k -> new ConcurrentHashMap<>())
+                .computeIfAbsent(creds, this::dbAuthenticate);
     }
 
     /**
      * Clears the cache of any active claims.
      */
-    public static synchronized void clearClaimCache() {
+    @Override
+    public void clear() {
         LOG.info("Clearing the claim cache");
-        for (Map<PasswordCredentials, Claim> cache : CLAIM_CACHE.values()) {
-            cache.clear();
-        }
+        claimCache.clear();
     }
 
     @Nonnull
