@@ -33,7 +33,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 
   <service ref="idmStore" interface="org.opendaylight.aaa.api.IIDMStore" odl:type="default"/>
 
-  <service ref="idmLightProxy">
+  <service ref="idmLightProxy" odl:type="default">
     <interfaces>
       <value>org.opendaylight.aaa.api.IdMService</value>
       <value>org.opendaylight.aaa.api.CredentialAuth</value>
