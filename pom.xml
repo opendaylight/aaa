@@ -29,13 +29,25 @@
     <module>aaa-filterchain</module>
     <module>artifacts</module>
     <module>features</module>
-    <module>karaf</module>
     <module>parent</module>
     <module>aaa-shiro</module>
     <module>aaa-shiro-act</module>
     <module>dependency-check</module>
     <module>web</module>
   </modules>
+
+  <profiles>
+    <profile>
+      <id>karaf</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+
+      <modules>
+        <module>karaf</module>
+      </modules>
+    </profile>
+  </profiles>
 
   <build>
     <plugins>
