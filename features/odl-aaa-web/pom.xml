@@ -27,6 +27,13 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.opendaylight.odlparent</groupId>
+            <artifactId>odl-guava-23</artifactId>
+            <version>3.0.2</version>
+            <classifier>features</classifier>
+            <type>xml</type>
+        </dependency>
+        <dependency>
             <groupId>org.osgi</groupId>
             <!-- required due to https://jira.opendaylight.org/browse/ODLPARENT-136 -->
             <artifactId>org.osgi.compendium</artifactId>

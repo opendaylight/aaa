@@ -2,5 +2,6 @@
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.4.0" name="odl-aaa-${project.version}">
     <feature name="odl-aaa-web" version="${project.version}">
         <feature version="[3.0.0,4)">odl-karaf-feat-jetty</feature>
+        <feature version="[3.0.0,4)">odl-guava-23</feature>
     </feature>
 </features>
