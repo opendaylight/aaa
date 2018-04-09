@@ -58,13 +58,21 @@
         </dependency>
 
         <dependency>
-            <groupId>org.jolokia</groupId>
-            <artifactId>jolokia-osgi</artifactId>
-            <!-- TODO: remove once upgraded jolokia version is propagated to odlparent -->
-            <version>1.5.0</version>
+            <groupId>org.opendaylight.controller</groupId>
+            <artifactId>odl-jolokia</artifactId>
+            <version>1.11.0-SNAPSHOT</version>
+            <classifier>features</classifier>
+            <type>xml</type>
         </dependency>
 
         <!-- Existing AAA infrastructure -->
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>odl-aaa-web</artifactId>
+            <version>0.8.0-SNAPSHOT</version>
+            <classifier>features</classifier>
+            <type>xml</type>
+        </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa.web</groupId>
             <artifactId>web-osgi-impl</artifactId>
