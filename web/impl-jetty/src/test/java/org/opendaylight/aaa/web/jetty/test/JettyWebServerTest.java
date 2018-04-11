@@ -1,0 +1,39 @@
+/*
+ * Copyright (c) 2018 Red Hat, Inc. and others. All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ */
+package org.opendaylight.aaa.web.jetty.test;
+
+import org.junit.After;
+import org.junit.Before;
+import org.opendaylight.aaa.web.WebServer;
+import org.opendaylight.aaa.web.jetty.JettyWebServer;
+import org.opendaylight.aaa.web.test.AbstractWebServerTest;
+
+/**
+ * Tests {@link JettyWebServer}.
+ *
+ * @author Michael Vorburger.ch
+ */
+public class JettyWebServerTest extends AbstractWebServerTest {
+
+    private JettyWebServer webServer;
+
+    @Before
+    public void beforeTest() {
+        webServer = new JettyWebServer();
+    }
+
+    @Override
+    protected WebServer getWebServer() {
+        return webServer;
+    }
+
+    @After
+    public void afterTest() {
+        webServer.stop();
+    }
+}
