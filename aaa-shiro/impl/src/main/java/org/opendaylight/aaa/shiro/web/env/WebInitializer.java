@@ -8,6 +8,8 @@
 package org.opendaylight.aaa.shiro.web.env;
 
 import javax.servlet.ServletException;
+
+import org.glassfish.jersey.server.ResourceConfig;
 import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration;
@@ -36,11 +38,10 @@ public class WebInitializer {
     public WebInitializer(WebServer webServer, ClaimCache claimCache, IIDMStore iidMStore,
             WebContextSecurer webContextSecurer,
             CustomFilterAdapterConfiguration customFilterAdapterConfig) throws ServletException {
-
         WebContextBuilder webContextBuilder = WebContext.builder().contextPath("auth").supportsSessions(true)
 
-            .addServlet(ServletDetails.builder().servlet(new com.sun.jersey.spi.container.servlet.ServletContainer(
-                    new IdmLightApplication(iidMStore, claimCache)))
+            .addServlet(ServletDetails.builder().servlet(new org.glassfish.jersey.servlet.ServletContainer(
+                    new IdmLightApplication(iidMStore, claimCache).getResourceConfig()))
                 .putInitParam("com.sun.jersey.api.json.POJOMappingFeature", "true")
                 .putInitParam("jersey.config.server.provider.packages", "org.opendaylight.aaa.impl.provider")
                 .addUrlPattern("/*").build())

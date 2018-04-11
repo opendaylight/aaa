@@ -11,6 +11,8 @@ package org.opendaylight.aaa.shiro.idm;
 import com.google.common.collect.ImmutableSet;
 import java.util.Set;
 import javax.ws.rs.core.Application;
+
+import org.glassfish.jersey.server.ResourceConfig;
 import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.provider.GsonProvider;
@@ -33,7 +35,7 @@ import org.opendaylight.aaa.provider.GsonProvider;
  * @see org.opendaylight.aaa.shiro.idm.UserHandler
  * @see org.opendaylight.aaa.shiro.idm.RoleHandler
  */
-public class IdmLightApplication extends Application {
+public class IdmLightApplication {
 
     // TODO create a bug to address the fact that the implementation assumes 128
     // as the max length, even though this claims 256.
@@ -44,19 +46,20 @@ public class IdmLightApplication extends Application {
 
     private final IIDMStore iidMStore;
     private final ClaimCache claimCache;
+    private final ResourceConfig resourceConfig;
 
     public IdmLightApplication(IIDMStore iidMStore, ClaimCache claimCache) {
         this.iidMStore = iidMStore;
         this.claimCache = claimCache;
+
+        resourceConfig = new ResourceConfig();
+        resourceConfig.register(new GsonProvider<>());
+        resourceConfig.register(new DomainHandler(iidMStore, claimCache));
+        resourceConfig.register(new RoleHandler(iidMStore, claimCache));
+        resourceConfig.register(new UserHandler(iidMStore, claimCache));
     }
 
-    @Override
-    public Set<Object> getSingletons() {
-        return ImmutableSet.builderWithExpectedSize(4)
-                    .add(new GsonProvider<>())
-                    .add(new DomainHandler(iidMStore, claimCache))
-                    .add(new RoleHandler(iidMStore, claimCache))
-                    .add(new UserHandler(iidMStore, claimCache))
-                    .build();
+    public ResourceConfig getResourceConfig() {
+        return resourceConfig;
     }
 }

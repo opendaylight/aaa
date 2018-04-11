@@ -1,40 +1,33 @@
-/*
- * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
- *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution,
- * and is available at http://www.eclipse.org/legal/epl-v10.html
- */
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
 
 package org.opendaylight.aaa.api.model;
 
-/**
- *
- * @author peter.mellquist@hp.com
- *
- */
-
 import javax.ws.rs.core.Response;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@XmlRootElement(name = "idmerror")
+@XmlRootElement(
+        name = "idmerror"
+)
 public class IDMError {
     private static final Logger LOG = LoggerFactory.getLogger(IDMError.class);
-
     private String message;
     private String details;
-    private int code = 500;
+    private int code;
 
     public IDMError() {
+        this.code = 500;
     }
 
     public IDMError(int statusCode, String msg, String msgDetails) {
-        code = statusCode;
-        message = msg;
-        details = msgDetails;
+        this.code = 500;
+        this.code = statusCode;
+        this.message = msg;
+        this.details = msgDetails;
     }
 
     public IDMError(int statusCode, String msg) {
@@ -42,7 +35,7 @@ public class IDMError {
     }
 
     public String getMessage() {
-        return message;
+        return this.message;
     }
 
     public void setMessage(String msg) {
@@ -54,7 +47,7 @@ public class IDMError {
     }
 
     public Response response() {
-        LOG.error("error: {} details: {} status: {}", this.message, this.details, code);
+        LOG.error("error: {} details: {} status: {}", new Object[]{this.message, this.details, this.code});
         return Response.status(this.code).entity(this).build();
     }
 }
