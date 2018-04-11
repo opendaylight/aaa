@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- vi: set et smarttab sw=2 tabstop=2: -->
 <!--
  Copyright © 2018 Red Hat, Inc. and others. All rights reserved.
 
@@ -13,20 +12,38 @@
 
   <parent>
     <groupId>org.opendaylight.odlparent</groupId>
-    <artifactId>odlparent-lite</artifactId>
+    <artifactId>bundle-parent</artifactId>
     <version>3.0.2</version>
-    <relativePath />
+    <relativePath/>
   </parent>
 
   <groupId>org.opendaylight.aaa.web</groupId>
-  <artifactId>web-aggregator</artifactId>
+  <artifactId>web-jetty-impl</artifactId>
   <version>0.8.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
   <name>ODL :: aaa :: ${project.artifactId}</name>
+  <packaging>bundle</packaging>
 
-  <modules>
-    <module>api</module>
-    <module>impl-osgi</module>
-    <module>impl-jetty</module>
-  </modules>
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>web-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.truth</groupId>
+      <artifactId>truth</artifactId>
+    </dependency>
+
+  </dependencies>
 </project>
