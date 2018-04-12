@@ -17,7 +17,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import javax.servlet.ServletException;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.opendaylight.aaa.web.FilterDetails;
 import org.opendaylight.aaa.web.ServletDetails;
@@ -37,9 +36,8 @@ public abstract class AbstractWebServerTest {
     protected abstract WebServer getWebServer();
 
     @Test
-    @Ignore
     public void testAddAfterStart() throws ServletException, IOException {
-        WebContextBuilder webContextBuilder = WebContext.builder().contextPath("test1");
+        WebContextBuilder webContextBuilder = WebContext.builder().contextPath("/test1");
         webContextBuilder.addServlet(
                 ServletDetails.builder().addUrlPattern("/*").name("Test").servlet(new TestServlet()).build());
         WebContextRegistration webContextRegistration = getWebServer().registerWebContext(webContextBuilder.build());
@@ -48,10 +46,9 @@ public abstract class AbstractWebServerTest {
     }
 
     @Test
-    @Ignore
     public void testAddFilter() throws Exception {
         TestFilter testFilter = new TestFilter();
-        WebContextBuilder webContextBuilder = WebContext.builder().contextPath("testingFilters");
+        WebContextBuilder webContextBuilder = WebContext.builder().contextPath("/testingFilters");
         webContextBuilder
             .putContextParam("testParam1", "avalue")
             .addFilter(FilterDetails.builder().addUrlPattern("/*").name("Test").filter(testFilter).build());
@@ -61,15 +58,15 @@ public abstract class AbstractWebServerTest {
     }
 
     @Test
-    @Ignore
     public void testRegisterListener() throws Exception {
-        WebContextBuilder webContextBuilder = WebContext.builder().contextPath("testingListener");
+        WebContextBuilder webContextBuilder = WebContext.builder().contextPath("/testingListener");
         TestListener testListener = new TestListener();
         webContextBuilder.addListener(testListener);
         assertThat(testListener.isInitialized).isFalse();
         WebContextRegistration webContextRegistration = getWebServer().registerWebContext(webContextBuilder.build());
         assertThat(testListener.isInitialized).isTrue();
         webContextRegistration.close();
+        assertThat(testListener.isInitialized).isFalse();
     }
 
     static void checkTestServlet(String urlPrefix) throws IOException {
