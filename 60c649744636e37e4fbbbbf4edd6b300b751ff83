@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89bc2df5_0740d379",
+        "filename": "web/impl-jetty/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-04-12T22:59:45Z",
+      "side": 1,
+      "message": "We generally push jetty versions into odlparent for centralization.  Is this a candidate?  If so, a TODO would be nice to have here since there is obvious latency in adopting through odlparent...",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 41
+      },
+      "revId": "60c649744636e37e4fbbbbf4edd6b300b751ff83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90c401f4_264865ac",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/JettyWebServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-04-12T22:59:45Z",
+      "side": 1,
+      "message": "cool;  i will let this point go in the api patch then.",
+      "revId": "60c649744636e37e4fbbbbf4edd6b300b751ff83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
