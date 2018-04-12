@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0edfcd0a_1b2e41ca",
+        "filename": "web/impl-jetty/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-04-12T17:45:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a42fc9a_2411babc",
+      "revId": "17089b84beda80dd81c12a892bf6faa42702664e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3c9339c_fb6c27e0",
         "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/JettyWebServer.java",
         "patchSetId": 4
