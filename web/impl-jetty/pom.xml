@@ -31,6 +31,13 @@
     </dependency>
 
     <dependency>
+      <groupId>org.eclipse.jetty.aggregate</groupId>
+      <artifactId>jetty-all</artifactId>
+      <classifier>uber</classifier>
+      <version>9.3.21.v20170918</version>
+    </dependency>
+
+    <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
     </dependency>
@@ -44,6 +51,5 @@
       <groupId>com.google.truth</groupId>
       <artifactId>truth</artifactId>
     </dependency>
-
   </dependencies>
 </project>
