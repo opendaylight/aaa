@@ -23,8 +23,10 @@ public class JettyWebServerTest extends AbstractWebServerTest {
     private JettyWebServer webServer;
 
     @Before
-    public void beforeTest() {
-        webServer = new JettyWebServer();
+    @SuppressWarnings("checkstyle:IllegalThrows") // Jetty throws Throwable
+    public void beforeTest() throws Throwable {
+        webServer = new JettyWebServer(8282);
+        webServer.start();
     }
 
     @Override
@@ -33,7 +35,7 @@ public class JettyWebServerTest extends AbstractWebServerTest {
     }
 
     @After
-    public void afterTest() {
+    public void afterTest() throws Exception {
         webServer.stop();
     }
 }

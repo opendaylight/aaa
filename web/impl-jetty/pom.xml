@@ -23,11 +23,21 @@
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>bundle</packaging>
 
+  <properties>
+    <!-- Find duplicates on Classpath, to avoid Jetty version conflicts -->
+    <duplicate-finder.skip>false</duplicate-finder.skip>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>web-api</artifactId>
       <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-webapp</artifactId>
     </dependency>
 
     <dependency>
@@ -44,6 +54,5 @@
       <groupId>com.google.truth</groupId>
       <artifactId>truth</artifactId>
     </dependency>
-
   </dependencies>
 </project>
