@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "927cc6d8_5e1c5d33",
+        "filename": "web/impl-jetty/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-04-12T16:41:18Z",
+      "side": 1,
+      "message": "Can we use aaa-parent instead, in order to enable checkstyle and findbugs enforcement?",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "39924733df0450b29c1108848b44f02c9bb44b15",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ba780c0_b46a82a4",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/JettyWebServer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-04-12T16:41:18Z",
+      "side": 1,
+      "message": "Please remove this.",
+      "revId": "39924733df0450b29c1108848b44f02c9bb44b15",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
