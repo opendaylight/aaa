@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "628b7e6a_1e770d79",
+        "filename": "web/impl-jetty/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-04-13T17:09:40Z",
+      "side": 1,
+      "message": "it actually already has some but not everything we need (no JMX), and I was going to suggest to you that this module for tests and standalone should be able to use a more recent Jetty version than the one we have in Karaf, but upon looking more into this, I realized what a fucking mess all this is (and it felt like a \"déjà vue\" of a very similiar situation I hit when I worked on metrics and wanted to use a more recent version of something else).  Basically whatever odlparent has in its dependencyManagement is hard to override - because even if you do here, then if another project where you depend on this (say neutron/integration/test-standalone I\u0027m working on) you hit a confusing nightmare, because Maven will give preference to odlparent\u0027s version of some but not all Jetty JARs... long story short, I\u0027ve ditched and much simplied this in Patch Set 3 - a smaller dependency with no version; that\u0027s clearly the right thing to do here, for now.",
+      "parentUuid": "89bc2df5_0740d379",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 41
+      },
+      "revId": "60c649744636e37e4fbbbbf4edd6b300b751ff83",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90c401f4_264865ac",
         "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/JettyWebServer.java",
         "patchSetId": 2
