@@ -30,12 +30,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <artifactId>aaa-shiro-api</artifactId>
         </dependency>
 
-        <!-- jersey client for moon authN -->
         <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-            <scope>provided</scope>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
         </dependency>
+
         <!-- OAuth2 dependencies for moon -->
         <dependency>
             <groupId>org.apache.oltu.oauth2</groupId>
@@ -90,10 +89,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <artifactId>aaa-filterchain</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-server</artifactId>
-        </dependency>
-        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
@@ -138,6 +133,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <artifactId>web-api</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa.web</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
 
         <!-- Testing Dependencies -->
         <dependency>
@@ -150,10 +149,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <artifactId>jul-to-slf4j</artifactId>
             <version>1.7.21</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-servlet</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
@@ -173,11 +168,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey.jersey-test-framework</groupId>
-            <artifactId>jersey-test-framework-grizzly2</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
