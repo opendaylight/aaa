@@ -8,14 +8,15 @@
 
 package org.opendaylight.aaa.shiro.realm.util.http;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.UniformInterfaceException;
-import com.sun.jersey.api.client.WebResource;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientResponseContext;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.ResponseProcessingException;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -35,7 +36,7 @@ public class SimpleHttpRequest<T> {
     private String path;
     private String method;
     private MediaType mediaType;
-    private Object entity;
+    private Entity<?> entity;
     private final Map<String, String> queryParams = new HashMap<>();
 
     private SimpleHttpRequest(final Client client, final Class<T> outputType) {
@@ -49,20 +50,21 @@ public class SimpleHttpRequest<T> {
      * @return the result of the http request.
      */
     public T execute() {
-        WebResource webResource = client.resource(uri).path(path);
+        WebTarget target = client.target(uri).path(path);
 
         // add the query params
-        queryParams.forEach(webResource::queryParam);
+        queryParams.forEach(target::queryParam);
 
         try {
             if (outputType == Response.class) {
-                ClientResponse output = webResource.type(mediaType).method(method, ClientResponse.class, entity);
+                ClientResponseContext output = target.request(mediaType)
+                        .method(method, entity, ClientResponseContext.class);
                 return outputType.cast(clientResponseToResponse(output));
             } else {
-                return webResource.type(mediaType).method(method, outputType, entity);
+                return target.request(mediaType).method(method, entity, outputType);
             }
-        } catch (UniformInterfaceException theException) {
-            throw new WebApplicationException(theException, clientResponseToResponse(theException.getResponse()));
+        } catch (ResponseProcessingException e) {
+            throw new WebApplicationException(e, clientResponseToResponse(e.getResponse()));
         }
     }
 
@@ -75,21 +77,27 @@ public class SimpleHttpRequest<T> {
      *
      * @return the builder.
      */
-    static <T> Builder<T> builder(Client client, Class<T> outputType) {
+    static <T> Builder<T> builder(final Client client, final Class<T> outputType) {
         return new Builder<>(client, outputType);
     }
 
-    private static Response clientResponseToResponse(final ClientResponse clientResponse) {
+    private static Response clientResponseToResponse(final ClientResponseContext clientResponse) {
         Response.ResponseBuilder rb = Response.status(clientResponse.getStatus());
         clientResponse.getHeaders().forEach((header, values) -> values.forEach(value -> rb.header(header, value)));
-        rb.entity(clientResponse.getEntityInputStream());
+        rb.entity(clientResponse.getEntityStream());
+        return rb.build();
+    }
+
+    private static Response clientResponseToResponse(final Response clientResponse) {
+        Response.ResponseBuilder rb = Response.status(clientResponse.getStatus());
+        clientResponse.getHeaders().forEach((header, values) -> values.forEach(value -> rb.header(header, value)));
         return rb.build();
     }
 
     public static class Builder<T> {
         private final SimpleHttpRequest<T> request;
 
-        Builder(Client client, Class<T> outputType) {
+        Builder(final Client client, final Class<T> outputType) {
             request = new SimpleHttpRequest<>(client, outputType);
         }
 
@@ -99,7 +107,7 @@ public class SimpleHttpRequest<T> {
          * @param uri the URI.
          * @return self, the request builder.
          */
-        public Builder<T> uri(URI uri) {
+        public Builder<T> uri(final URI uri) {
             request.uri = uri;
             return this;
         }
@@ -110,7 +118,7 @@ public class SimpleHttpRequest<T> {
          * @param path the path.
          * @return self, the request builder.
          */
-        public Builder<T> path(String path) {
+        public Builder<T> path(final String path) {
             request.path = path;
             return this;
         }
@@ -121,7 +129,7 @@ public class SimpleHttpRequest<T> {
          * @param method the method.
          * @return self, the request builder.
          */
-        public Builder<T> method(String method) {
+        public Builder<T> method(final String method) {
             request.method = method;
             return this;
         }
@@ -132,7 +140,7 @@ public class SimpleHttpRequest<T> {
          * @param mediaType the media type.
          * @return self, the request builder.
          */
-        public Builder<T> mediaType(MediaType mediaType) {
+        public Builder<T> mediaType(final MediaType mediaType) {
             request.mediaType = mediaType;
             return this;
         }
@@ -143,7 +151,7 @@ public class SimpleHttpRequest<T> {
          * @param input the input payload.
          * @return self, the request builder.
          */
-        public Builder<T> entity(Object input) {
+        public Builder<T> entity(final Entity<?> input) {
             request.entity = input;
             return this;
         }
@@ -157,7 +165,7 @@ public class SimpleHttpRequest<T> {
          * @param theParamValue the parameter value
          * @return  self, the request builder
          */
-        public Builder<T> queryParam(String theQueryParam, String theParamValue) {
+        public Builder<T> queryParam(final String theQueryParam, final String theParamValue) {
             request.queryParams.put(theQueryParam, theParamValue);
             return this;
         }
