@@ -27,5 +27,7 @@
     <module>api</module>
     <module>impl-osgi</module>
     <module>impl-jetty</module>
+    <module>servlet-api</module>
+    <module>servlet-jersey2</module>
   </modules>
 </project>
