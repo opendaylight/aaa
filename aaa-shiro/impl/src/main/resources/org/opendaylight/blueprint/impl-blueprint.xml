@@ -52,6 +52,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <reference id="httpService"
              interface="org.osgi.service.http.HttpService"/>
 
+  <reference id="servletSupport" interface="org.opendaylight.aaa.web.servlet.ServletSupport"/>
+
   <!-- TODO: when we migrate off h2 towards the MD-SAL DS, get rid of this. -->
   <cm:property-placeholder persistent-id="org.opendaylight.aaa.h2">
     <cm:default-properties>
@@ -107,5 +109,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="idmStore"/>
     <argument ref="webContextSecurer"/>
     <argument ref="customFilterAdapterConfig"/>
+    <argument ref="servletSupport"/>
   </bean>
 </blueprint>
