@@ -7,18 +7,22 @@
  */
 package org.opendaylight.aaa.shiro.realm;
 
+import static java.util.Objects.requireNonNull;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientResponseContext;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -28,6 +32,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.opendaylight.aaa.shiro.moon.MoonPrincipal;
+import org.opendaylight.aaa.web.servlet.ServletSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +46,14 @@ public class MoonRealm extends AuthorizingRealm {
     private static final Logger LOG = LoggerFactory.getLogger(MoonRealm.class);
 
     private static final String MOON_DEFAULT_DOMAIN = "sdn";
+
+    private final ServletSupport support;
+
     private URL moonServerURL;
+
+    MoonRealm(final ServletSupport support) {
+        this.support = requireNonNull(support);
+    }
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(final PrincipalCollection principalCollection) {
@@ -81,10 +93,6 @@ public class MoonRealm extends AuthorizingRealm {
     }
 
     public MoonPrincipal moonAuthenticate(final String username, final String password, final String domain) {
-        final String output;
-        final ClientConfig config = new DefaultClientConfig();
-        final Client client = Client.create(config);
-
         final String hostFromShiro = moonServerURL != null ? moonServerURL.getHost() : null;
         final String server;
         if (hostFromShiro != null) {
@@ -105,13 +113,17 @@ public class MoonRealm extends AuthorizingRealm {
 
         final String url = String.format("http://%s:%s/moon/auth/tokens", server, port);
         LOG.debug("Moon server is at: {}:{} and will be accessed through {}", server, port, url);
-        final WebResource webResource = client.resource(url);
+
+        final Client client = support.createClientBuilder().build();
+        final WebTarget webResource = client.target(url);
         final String input = "{\"username\": \"" + username + "\"," + "\"password\":" + "\"" + password + "\","
                 + "\"project\":" + "\"" + domain + "\"" + "}";
-        final ClientResponse response = webResource.type("application/json").post(ClientResponse.class, input);
-        output = response.getEntity(String.class);
 
-        final JsonElement element = new JsonParser().parse(output);
+        final InputStream response = webResource.request("application/json")
+                .post(Entity.text(input), ClientResponseContext.class).getEntityStream();
+        client.close();
+
+        final JsonElement element = new JsonParser().parse(new InputStreamReader(response, StandardCharsets.UTF_8));
         if (!element.isJsonObject()) {
             throw new IllegalStateException("Authentication error: returned output is not a JSON object");
         }
@@ -141,6 +153,7 @@ public class MoonRealm extends AuthorizingRealm {
                 }
             }
         }
+
         return new MoonPrincipal(username, domain, userID, userRoles, tokenValue);
     }
 

@@ -12,15 +12,16 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.core.util.MultivaluedMapImpl;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientResponseContext;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class SimpleHttpRequestTest {
     private Client client;
 
     @Mock
-    private ClientResponse clientResponse;
+    private ClientResponseContext clientResponse;
 
     @Mock
     KeystoneToken theToken;
@@ -47,7 +48,7 @@ public class SimpleHttpRequestTest {
     public void execute() throws Exception {
         URI uri = new URL("http://example.com").toURI();
         String path = "path";
-        MultivaluedMap<String, String> headers = new MultivaluedMapImpl();
+        MultivaluedMap<String, String> headers = new MultivaluedHashMap<>();
         headers.put("header1", Collections.singletonList("value1"));
         headers.put("header2", Collections.singletonList("value2"));
         SimpleHttpRequest<Response> request = SimpleHttpRequest.builder(client, Response.class)
@@ -55,12 +56,12 @@ public class SimpleHttpRequestTest {
                 .path(path)
                 .mediaType(MediaType.APPLICATION_JSON_TYPE)
                 .method("POST")
-                .entity("entity")
+                .entity(Entity.text("entity"))
                 .build();
-        when(client.resource(uri)
+        when(client.target(uri)
                 .path(path)
-                .type(MediaType.APPLICATION_JSON_TYPE)
-                .method("POST", ClientResponse.class, "entity"))
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .method("POST", Entity.text("entity"), ClientResponseContext.class))
             .thenReturn(clientResponse);
         when(clientResponse.getStatus()).thenReturn(200);
         when(clientResponse.getHeaders()).thenReturn(headers);
@@ -86,13 +87,13 @@ public class SimpleHttpRequestTest {
                 .path(path)
                 .mediaType(MediaType.APPLICATION_JSON_TYPE)
                 .method("POST")
-                .entity("entity")
+                .entity(Entity.text("entity"))
                 .queryParam("nocatalog", "true")
                 .build();
-        when(client.resource(uri)
+        when(client.target(uri)
                 .path(path)
-                .type(MediaType.APPLICATION_JSON_TYPE)
-                .method("POST", KeystoneToken.class, "entity"))
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .method("POST", Entity.text("entity"), KeystoneToken.class))
                 .thenReturn(theToken);
         SimpleHttpRequest<KeystoneToken> spiedRequest = Mockito.spy(request);
         KeystoneToken response = spiedRequest.execute();
