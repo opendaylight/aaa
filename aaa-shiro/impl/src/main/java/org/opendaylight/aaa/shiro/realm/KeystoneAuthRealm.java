@@ -7,6 +7,8 @@
  */
 package org.opendaylight.aaa.shiro.realm;
 
+import static java.util.Objects.requireNonNull;
+
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -25,6 +27,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -45,6 +48,7 @@ import org.opendaylight.aaa.shiro.realm.util.http.SimpleHttpClient;
 import org.opendaylight.aaa.shiro.realm.util.http.SimpleHttpRequest;
 import org.opendaylight.aaa.shiro.realm.util.http.UntrustedSSL;
 import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
+import org.opendaylight.aaa.web.servlet.ServletSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,12 +75,13 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     private volatile boolean sslVerification = true;
     private volatile String defaultDomain = DEFAULT_KEYSTONE_DOMAIN;
 
-    private final LoadingCache<Boolean, SimpleHttpClient> clientCache = buildCache();
+    private final LoadingCache<Boolean, SimpleHttpClient> clientCache;
 
     private final ICertificateManager certManager;
 
-    public KeystoneAuthRealm() {
-        this.certManager = Objects.requireNonNull(ThreadLocals.CERT_MANAGER_TL.get());
+    public KeystoneAuthRealm(final ServletSupport support) {
+        this.certManager = requireNonNull(ThreadLocals.CERT_MANAGER_TL.get());
+        clientCache = buildCache(support);
         LOG.info("KeystoneAuthRealm created");
     }
 
@@ -102,7 +107,7 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
             return doGetAuthenticationInfo(authenticationToken, client);
         } catch (UncheckedExecutionException e) {
             Throwable cause = e.getCause();
-            if (!Objects.isNull(cause) && cause instanceof AuthenticationException) {
+            if (cause instanceof AuthenticationException) {
                 throw (AuthenticationException) cause;
             }
             throw e;
@@ -150,7 +155,7 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
                 .path(AUTH_PATH)
                 .method(HttpMethod.POST)
                 .mediaType(MediaType.APPLICATION_JSON_TYPE)
-                .entity(keystoneAuth)
+                .entity(Entity.json(keystoneAuth))
                 .queryParam(NO_CATALOG_OPTION,"")
                 .build();
 
@@ -179,14 +184,14 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
      *
      * @return the cache.
      */
-    protected LoadingCache<Boolean, SimpleHttpClient> buildCache() {
+    protected LoadingCache<Boolean, SimpleHttpClient> buildCache(final ServletSupport support) {
         return CacheBuilder.newBuilder()
                 .expireAfterAccess(CLIENT_EXPIRE_AFTER_ACCESS, TimeUnit.SECONDS)
                 .expireAfterWrite(CLIENT_EXPIRE_AFTER_WRITE, TimeUnit.SECONDS)
                 .build(new CacheLoader<Boolean, SimpleHttpClient>() {
                     @Override
-                    public SimpleHttpClient load(Boolean withSslVerification) throws Exception {
-                        return buildClient(withSslVerification, certManager, SimpleHttpClient.clientBuilder());
+                    public SimpleHttpClient load(final Boolean withSslVerification) throws Exception {
+                        return buildClient(withSslVerification, certManager, SimpleHttpClient.clientBuilder(support));
                     }
                 });
     }
