@@ -26,5 +26,6 @@
   <modules>
     <module>api</module>
     <module>impl-osgi</module>
+    <module>servlet-util</module>
   </modules>
 </project>
