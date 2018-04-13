@@ -213,10 +213,6 @@
             <type>py</type>
             <classifier>idmtool</classifier>
         </dependency>
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-        </dependency>
 
         <dependency>
             <!-- finalname="/etc/org.opendaylight.aaa.filterchain.cfg" -->
