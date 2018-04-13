@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fea2b659_dac21532",
+        "filename": "web/servlet-util/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2018-04-13T16:12:49Z",
+      "side": 1,
+      "message": "If we were to split this into API/impl, the API would be the builder plus a BuilderFactory. Then an implementation would be injected into individual downstreams (via, for example, blueprint).",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 21
+      },
+      "revId": "c4342410fc654310541295055cbcc13323d71ab5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
