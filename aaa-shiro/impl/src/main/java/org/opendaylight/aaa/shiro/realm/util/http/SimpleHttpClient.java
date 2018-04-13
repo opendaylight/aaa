@@ -8,14 +8,13 @@
 
 package org.opendaylight.aaa.shiro.realm.util.http;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.client.urlconnection.HTTPSProperties;
-import java.util.HashSet;
-import java.util.Set;
+import static java.util.Objects.requireNonNull;
+
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import org.opendaylight.aaa.web.servlet.ServletSupport;
 
 /**
  * An utility that represents an HTTP client that allows to make
@@ -36,8 +35,8 @@ public class SimpleHttpClient {
      *
      * @return the client builder.
      */
-    public static Builder clientBuilder() {
-        return new Builder();
+    public static Builder clientBuilder(final ServletSupport support) {
+        return new Builder(support);
     }
 
     /**
@@ -47,17 +46,16 @@ public class SimpleHttpClient {
      * @param <T> the return type of the request.
      * @return the request builder.
      */
-    public <T> SimpleHttpRequest.Builder<T> requestBuilder(Class<T> outputType) {
+    public <T> SimpleHttpRequest.Builder<T> requestBuilder(final Class<T> outputType) {
         return new SimpleHttpRequest.Builder<>(client, outputType);
     }
 
     public static class Builder {
+        private final ClientBuilder builder;
 
-        private SSLContext sslContext;
-        private HostnameVerifier hostnameVerifier;
-        private final Set<Class<?>> providers = new HashSet<>();
-
-        private Builder() {}
+        Builder(final ServletSupport support) {
+            this.builder = requireNonNull(support).createClientBuilder();
+        }
 
         /**
          * Sets the SSLContext to be used for SSL requests.
@@ -66,7 +64,7 @@ public class SimpleHttpClient {
          * @return self, the client builder.
          */
         public Builder sslContext(final SSLContext context) {
-            this.sslContext = context;
+            builder.sslContext(context);
             return this;
         }
 
@@ -77,7 +75,7 @@ public class SimpleHttpClient {
          * @return self, the client builder.
          */
         public Builder hostnameVerifier(final HostnameVerifier verifier) {
-            this.hostnameVerifier = verifier;
+            builder.hostnameVerifier(verifier);
             return this;
         }
 
@@ -89,7 +87,7 @@ public class SimpleHttpClient {
          * @return self, the client builder.
          */
         public Builder provider(final Class<?> provider) {
-            providers.add(provider);
+            builder.register(provider);
             return this;
         }
 
@@ -99,14 +97,7 @@ public class SimpleHttpClient {
          * @return the client.
          */
         public SimpleHttpClient build() {
-            final ClientConfig clientConfig = new DefaultClientConfig();
-            clientConfig.getClasses().addAll(providers);
-            clientConfig.getProperties().put(
-                    HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
-                    new HTTPSProperties(hostnameVerifier, sslContext));
-            final Client client = Client.create(clientConfig);
-            return new SimpleHttpClient(client);
+            return new SimpleHttpClient(builder.build());
         }
-
     }
 }
