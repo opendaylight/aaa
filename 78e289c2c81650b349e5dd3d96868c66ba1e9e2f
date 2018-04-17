@@ -79,6 +79,24 @@
       "revId": "78e289c2c81650b349e5dd3d96868c66ba1e9e2f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4374104f_f7ed24ba",
+        "filename": "web/servlet-jersey2/src/main/java/org/opendaylight/aaa/web/servlet/jersey2/osgi/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2018-04-17T02:08:49Z",
+      "side": 1,
+      "message": "Blueprint feels like an overkill for what we\u0027re doing. This has less runtime complexity and is usable in osgi.core-only environments.",
+      "parentUuid": "9d028a2d_59f5820c",
+      "revId": "78e289c2c81650b349e5dd3d96868c66ba1e9e2f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
