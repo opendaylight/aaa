@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "98e62d74_773c7b8f",
+        "filename": "web/impl-jetty/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-04-17T16:26:12Z",
+      "side": 1,
+      "message": "It doesn\u0027t hurt? ;)  Could help detect problems in the future.  If you have a particular reason why you don\u0027t like this (explain?), then I don\u0027t mind to remove it either, if that\u0027s what it takes to get this in...",
+      "parentUuid": "4afae4d4_6e57d357",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 15
+      },
+      "revId": "be32d2eb9f70288a69e46823ae500ec6be2fb736",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec2db626_6145fd23",
         "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/JettyWebServer.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "55d39448_e1e70240",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/JettyWebServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-04-17T16:26:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec2db626_6145fd23",
+      "range": {
+        "startLine": 44,
+        "startChar": 30,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "be32d2eb9f70288a69e46823ae500ec6be2fb736",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f172944_9555d1da",
         "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/JettyWebServer.java",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2018-04-17T14:55:12Z",
       "side": 1,
       "message": "Would be more readable if this was a constant.",
+      "range": {
+        "startLine": 52,
+        "startChar": 28,
+        "endLine": 52,
+        "endChar": 33
+      },
+      "revId": "be32d2eb9f70288a69e46823ae500ec6be2fb736",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e452c188_1b3de4ab",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/JettyWebServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-04-17T16:26:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f172944_9555d1da",
       "range": {
         "startLine": 52,
         "startChar": 28,
