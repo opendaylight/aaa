@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4afae4d4_6e57d357",
+        "filename": "web/impl-jetty/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-04-17T14:55:12Z",
+      "side": 1,
+      "message": "Is this actually needed?",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 15
+      },
+      "revId": "be32d2eb9f70288a69e46823ae500ec6be2fb736",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec2db626_6145fd23",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/JettyWebServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-04-17T14:55:12Z",
+      "side": 1,
+      "message": "Should we do any input checking on httpPort?  I.e., range check?",
+      "range": {
+        "startLine": 44,
+        "startChar": 30,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "be32d2eb9f70288a69e46823ae500ec6be2fb736",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f172944_9555d1da",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/JettyWebServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-04-17T14:55:12Z",
+      "side": 1,
+      "message": "Would be more readable if this was a constant.",
+      "range": {
+        "startLine": 52,
+        "startChar": 28,
+        "endLine": 52,
+        "endChar": 33
+      },
+      "revId": "be32d2eb9f70288a69e46823ae500ec6be2fb736",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
