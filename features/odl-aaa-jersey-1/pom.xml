@@ -18,7 +18,7 @@
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>odl-aaa-jersey-1</artifactId>
-    <version>0.7.1-SNAPSHOT</version>
+    <version>0.7.1</version>
     <packaging>feature</packaging>
 
     <!-- odl-aaa-jersey-1 feature which provides Jersey 1 -->
