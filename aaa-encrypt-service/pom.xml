@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.opendaylight.controller</groupId>
         <artifactId>config-parent</artifactId>
-        <version>0.6.4-SNAPSHOT</version>
+        <version>0.6.4-Carbon</version>
         <relativePath/>
     </parent>
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>aaa-encrypt-service</artifactId>
-    <version>0.5.4-SNAPSHOT</version>
+    <version>0.5.4-Carbon</version>
     <name>ODL :: aaa :: ${project.artifactId}</name>
     <packaging>bundle</packaging>
     
