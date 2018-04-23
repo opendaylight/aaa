@@ -39,10 +39,14 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev1603
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.AaaCertServiceConfig;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertifcateInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertifcateOutput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateOutput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateReqInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateReqOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetNodeCertifcateInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetNodeCertifcateOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertifcateInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertifcateOutput;
 import org.opendaylight.yangtools.yang.common.RpcResult;
 
 public class AaaCertRpcServiceImplTest {
@@ -132,14 +136,15 @@ public class AaaCertRpcServiceImplTest {
         final SetODLCertifcateInput input = mock(SetODLCertifcateInput.class);
         when(input.getOdlCertAlias()).thenReturn(ALIAS);
         when(input.getOdlCert()).thenReturn(CERTIFICATE);
-        Future<RpcResult<Void>> result = new AaaCertRpcServiceImpl(aaaCertServiceConfig,
+        Future<RpcResult<SetODLCertifcateOutput>> result = new AaaCertRpcServiceImpl(aaaCertServiceConfig,
                 mockDataBroker(unsignedSslData), aaaEncryptionService).setODLCertifcate(input);
         assertTrue(result.get().isSuccessful());
     }
 
     @Test
     public void getODLCertificateTest() throws Exception {
-        Future<RpcResult<GetODLCertificateOutput>> result = aaaCertRpcService.getODLCertificate();
+        Future<RpcResult<GetODLCertificateOutput>> result = aaaCertRpcService.getODLCertificate(
+            new GetODLCertificateInputBuilder().build());
         assertTrue(result.get().isSuccessful());
         final String cert = result.get().getResult().getOdlCert();
         assertTrue(cert != null && !cert.isEmpty());
@@ -148,7 +153,8 @@ public class AaaCertRpcServiceImplTest {
 
     @Test
     public void getODLCertificateReq() throws Exception {
-        Future<RpcResult<GetODLCertificateReqOutput>> result = aaaCertRpcService.getODLCertificateReq();
+        Future<RpcResult<GetODLCertificateReqOutput>> result = aaaCertRpcService.getODLCertificateReq(
+            new GetODLCertificateReqInputBuilder().build());
         assertTrue(result.get().isSuccessful());
         final String cert = result.get().getResult().getOdlCertReq();
         assertTrue(cert != null && !cert.isEmpty());
@@ -160,7 +166,7 @@ public class AaaCertRpcServiceImplTest {
         final SetNodeCertifcateInput input = mock(SetNodeCertifcateInput.class);
         when(input.getNodeAlias()).thenReturn(ALIAS);
         when(input.getNodeCert()).thenReturn(CERTIFICATE);
-        Future<RpcResult<Void>> result = new AaaCertRpcServiceImpl(aaaCertServiceConfig,
+        Future<RpcResult<SetNodeCertifcateOutput>> result = new AaaCertRpcServiceImpl(aaaCertServiceConfig,
                 mockDataBroker(unsignedSslData), aaaEncryptionService).setNodeCertifcate(input);
         assertTrue(result.get().isSuccessful());
     }
