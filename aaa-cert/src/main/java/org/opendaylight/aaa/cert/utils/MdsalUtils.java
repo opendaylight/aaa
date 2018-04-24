@@ -12,6 +12,7 @@ import com.google.common.base.Optional;
 import com.google.common.util.concurrent.CheckedFuture;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.MoreExecutors;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
@@ -85,7 +86,7 @@ public final class MdsalUtils {
             public void onSuccess(final Void result) {
                 LOG.debug("initDatastore: transaction succeeded");
             }
-        });
+        }, MoreExecutors.directExecutor());
         LOG.info("initDatastore: data populated: {}, {}, {}", type, iid, object);
     }
 
