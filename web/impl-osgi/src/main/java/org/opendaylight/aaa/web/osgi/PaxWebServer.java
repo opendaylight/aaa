@@ -19,6 +19,7 @@ import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
+import org.opendaylight.aaa.web.ResourceDetails;
 import org.opendaylight.aaa.web.ServletDetails;
 import org.opendaylight.aaa.web.WebContext;
 import org.opendaylight.aaa.web.WebContextRegistration;
@@ -33,6 +34,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.http.HttpContext;
 import org.osgi.service.http.HttpService;
+import org.osgi.service.http.NamespaceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -139,6 +141,7 @@ public class PaxWebServer {
         private final List<Servlet> registeredServlets = new ArrayList<>();
         private final List<EventListener> registeredEventListeners = new ArrayList<>();
         private final List<Filter> registeredFilters = new ArrayList<>();
+        private final List<String> registeredResources = new ArrayList<>();
 
         WebContextImpl(WebContainer paxWeb, WebContext webContext) throws ServletException {
             // We ignore webContext.supportsSessions() because the OSGi HttpService / Pax Web API
@@ -174,7 +177,22 @@ public class PaxWebServer {
                         servlet.initParams());
             }
 
+            try {
+                for (ResourceDetails resource: webContext.resources()) {
+                    String alias = this.contextPath + ensurePrependedSlash(resource.alias());
+                    paxWeb.registerResources(ensurePrependedSlash(alias), ensurePrependedSlash(resource.name()),
+                            osgiHttpContext);
+                    registeredResources.add(resource.alias());
+                }
+            } catch (NamespaceException e) {
+                throw new ServletException("Error registering resources", e);
+            }
+
             paxWeb.end(osgiHttpContext);
+        }
+
+        private static String ensurePrependedSlash(String str) {
+            return !str.startsWith("/") ? "/" + str : str;
         }
 
         void registerFilter(HttpContext osgiHttpContext, List<String> urlPatterns, String name, Filter filter,
@@ -218,6 +236,9 @@ public class PaxWebServer {
             }
             for (EventListener eventListener : registeredEventListeners) {
                 paxWeb.unregisterEventListener(eventListener);
+            }
+            for (String alias : registeredResources) {
+                paxWeb.unregister(alias);
             }
         }
     }
