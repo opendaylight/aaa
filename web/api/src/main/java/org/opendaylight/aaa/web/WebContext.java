@@ -115,6 +115,11 @@ public abstract class WebContext {
     public abstract List<ServletContextListener> listeners();
 
     /**
+     * Registers resources (eg html files) that can be accessed via the URI namespace.
+     */
+    public abstract List<ResourceDetails> resources();
+
+    /**
      * Context params. NB: These are the web context's wide parameters; contrary to
      * individual {@link ServletDetails#initParams()} and
      * {@link FilterDetails#initParams()}.
