@@ -19,7 +19,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 
   <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-shiro</artifactId>
-  <version>0.6.3-SNAPSHOT</version>
+  <version>0.6.4-SNAPSHOT</version>
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>bundle</packaging>
 
