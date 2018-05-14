@@ -77,10 +77,6 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>aaa-shiro-act</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>aaa-shiro-api</artifactId>
         </dependency>
         <dependency>

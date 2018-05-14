@@ -29,7 +29,6 @@
         <module>odl-aaa-encryption-service</module>
         <module>odl-aaa-jersey-1</module>
         <module>odl-aaa-shiro</module>
-        <module>odl-aaa-shiro-act</module>
         <module>odl-aaa-web</module>
     </modules>
 

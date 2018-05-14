@@ -32,7 +32,6 @@
     <module>features</module>
     <module>parent</module>
     <module>aaa-shiro</module>
-    <module>aaa-shiro-act</module>
     <module>dependency-check</module>
     <module>web</module>
   </modules>
