@@ -36,15 +36,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <artifactId>jersey-client</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!-- OAuth2 dependencies for moon -->
-        <dependency>
-            <groupId>org.apache.oltu.oauth2</groupId>
-            <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.oltu.oauth2</groupId>
-            <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-cert</artifactId>
