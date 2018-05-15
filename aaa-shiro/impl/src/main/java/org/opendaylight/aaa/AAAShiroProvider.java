@@ -14,14 +14,11 @@ import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
-import org.opendaylight.aaa.api.IdMService;
-import org.opendaylight.aaa.api.IdMServiceImpl;
 import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.datastore.h2.H2TokenStore;
-import org.opendaylight.aaa.shiro.oauth2.OAuth2TokenServlet;
 import org.opendaylight.aaa.shiro.tokenauthrealm.auth.HttpBasicAuth;
 import org.opendaylight.aaa.shiro.tokenauthrealm.auth.TokenAuthenticators;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
@@ -87,7 +84,7 @@ public final class AAAShiroProvider {
         tokenAuthenticators = buildTokenAuthenticators(credentialAuth);
 
         try {
-            this.registerServletContexts(credentialAuth, authenticationService, iidmStore);
+            this.registerServletContexts();
         } catch (final ServletException | NamespaceException e) {
             LOG.warn("Could not initialize AAA servlet endpoints", e);
         }
@@ -99,18 +96,13 @@ public final class AAAShiroProvider {
         return new TokenAuthenticators(new HttpBasicAuth(credentialAuth));
     }
 
-    private void registerServletContexts(final CredentialAuth<PasswordCredentials> credentialAuth,
-            AuthenticationService authService, IIDMStore iidmStore) throws ServletException, NamespaceException {
-        LOG.info("attempting registration of AAA moon, oauth2 and auth servlets");
+    private void registerServletContexts() throws ServletException, NamespaceException {
+        LOG.info("attempting registration of AAA moon servlet");
 
         Preconditions.checkNotNull(httpService, "httpService cannot be null");
 
-        final IdMService idmService = new IdMServiceImpl(iidmStore);
-
         httpService.registerServlet(moonEndpointPath, new org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint(),
                 null, null);
-        httpService.registerServlet(oauth2EndpointPath, new OAuth2TokenServlet(credentialAuth, authService,
-                tokenStore, idmService), null, null);
     }
 
     private void initializeIIDMStore(final IIDMStore iidmStore) {

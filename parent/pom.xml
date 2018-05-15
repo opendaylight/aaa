@@ -15,10 +15,6 @@
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>pom</packaging>
 
-  <properties>
-    <!-- AuthN -->
-    <oltu.version>1.0.2</oltu.version>
-  </properties>
 
   <dependencyManagement>
     <dependencies>
@@ -40,6 +36,11 @@
 
       <!-- Third-party -->
       <dependency>
+        <groupId>net.sf.ehcache</groupId>
+        <artifactId>ehcache</artifactId>
+        <version>2.8.3</version>
+      </dependency>
+      <dependency>
         <groupId>org.glassfish</groupId>
         <artifactId>javax.json</artifactId>
         <version>1.0.4</version>
@@ -47,40 +48,6 @@
       <dependency>
         <groupId>org.apache.felix</groupId>
         <artifactId>org.apache.felix.metatype</artifactId>
-      </dependency>
-      <dependency>
-        <groupId>net.sf.ehcache</groupId>
-        <artifactId>ehcache</artifactId>
-        <version>2.8.3</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.oltu.oauth2</groupId>
-        <artifactId>org.apache.oltu.oauth2.common</artifactId>
-        <version>${oltu.version}</version>
-        <exclusions>
-          <exclusion>
-            <!-- This is clashing with jackson's view of org.json world -->
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.oltu.oauth2</groupId>
-        <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
-        <version>${oltu.version}</version>
-        <exclusions>
-          <exclusion>
-            <!-- This is clashing with jackson's view of org.json world -->
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.oltu.oauth2</groupId>
-        <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
-        <version>${oltu.version}</version>
       </dependency>
 
       <!-- Test stuff -->
