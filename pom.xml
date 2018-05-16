@@ -34,6 +34,7 @@
     <module>aaa-shiro</module>
     <module>dependency-check</module>
     <module>web</module>
+    <module>oltu</module>
   </modules>
 
   <profiles>
