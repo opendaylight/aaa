@@ -127,6 +127,18 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.opendaylight.aaa</groupId>
+                <artifactId>aaa-password-service-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.opendaylight.aaa</groupId>
+                <artifactId>aaa-password-service-impl</artifactId>
+                <version>${project.version}</version>
+                <classifier>aaa-password-service-config</classifier>
+                <type>xml</type>
+            </dependency>
+            <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>features-aaa</artifactId>
                 <version>${project.version}</version>
