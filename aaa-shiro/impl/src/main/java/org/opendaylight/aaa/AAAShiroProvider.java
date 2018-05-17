@@ -19,6 +19,7 @@ import org.opendaylight.aaa.api.IdMServiceImpl;
 import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.api.TokenStore;
+import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.datastore.h2.H2TokenStore;
 import org.opendaylight.aaa.shiro.oauth2.OAuth2TokenServlet;
@@ -50,6 +51,7 @@ public final class AAAShiroProvider {
     private final String oauth2EndpointPath;
     private final TokenAuthenticators tokenAuthenticators;
     private final AuthenticationService authenticationService;
+    private final PasswordHashService passwordHashService;
 
     /**
      * Constructor.
@@ -63,7 +65,8 @@ public final class AAAShiroProvider {
                             final String oauth2EndpointPath,
                             final DatastoreConfig datastoreConfig,
                             final IIDMStore iidmStore,
-                            final AuthenticationService authenticationService) {
+                            final AuthenticationService authenticationService,
+                            final PasswordHashService passwordHashService) {
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
         this.shiroConfiguration = shiroConfiguration;
@@ -71,6 +74,7 @@ public final class AAAShiroProvider {
         this.moonEndpointPath = moonEndpointPath;
         this.oauth2EndpointPath = oauth2EndpointPath;
         this.authenticationService = authenticationService;
+        this.passwordHashService = passwordHashService;
 
         if (datastoreConfig == null || !datastoreConfig.getStore().equals(DatastoreConfig.Store.H2DataStore)) {
             LOG.info("AAA Datastore has not been initialized");
@@ -176,5 +180,9 @@ public final class AAAShiroProvider {
 
     public AuthenticationService getAuthenticationService() {
         return authenticationService;
+    }
+
+    public PasswordHashService getPasswordHashService() {
+        return passwordHashService;
     }
 }

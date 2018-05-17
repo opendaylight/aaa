@@ -17,9 +17,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import org.apache.commons.text.StringEscapeUtils;
 import org.opendaylight.aaa.api.IDMStoreUtil;
-import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
+import org.opendaylight.aaa.api.password.service.PasswordHash;
+import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,8 +43,11 @@ public class UserStore extends AbstractStore<User> {
     public static final String SQL_SALT = "salt";
     private static final String TABLE_NAME = "USERS";
 
-    public UserStore(ConnectionProvider dbConnectionFactory) {
+    private final PasswordHashService passwordService;
+
+    public UserStore(ConnectionProvider dbConnectionFactory, final PasswordHashService passwordService) {
         super(dbConnectionFactory, TABLE_NAME);
+        this.passwordService = passwordService;
     }
 
     @Override
@@ -51,7 +55,7 @@ public class UserStore extends AbstractStore<User> {
         return "CREATE TABLE users " + "(userid    VARCHAR(128) PRIMARY KEY,"
                 + "name       VARCHAR(128)      NOT NULL, " + "domainid   VARCHAR(128)      NOT NULL, "
                 + "email      VARCHAR(128)      NOT NULL, " + "password   VARCHAR(128)      NOT NULL, "
-                + "description VARCHAR(128)     NOT NULL, " + "salt        VARCHAR(15)      NOT NULL, "
+                + "description VARCHAR(128)     NOT NULL, " + "salt        VARCHAR(128)      NOT NULL, "
                 + "enabled     INTEGER          NOT NULL)";
     }
 
@@ -111,7 +115,8 @@ public class UserStore extends AbstractStore<User> {
         Preconditions.checkNotNull(user.getName());
         Preconditions.checkNotNull(user.getDomainid());
 
-        user.setSalt(SHA256Calculator.generateSALT());
+        final PasswordHash passwordHash = passwordService.getPasswordHash(user.getPassword());
+        user.setSalt(passwordHash.getSalt());
         String query =
                 "insert into users"
                 + " (userid,domainid,name,email,password,description,enabled,salt) values(?,?,?,?,?,?,?,?)";
@@ -121,7 +126,7 @@ public class UserStore extends AbstractStore<User> {
             statement.setString(2, user.getDomainid());
             statement.setString(3, user.getName());
             statement.setString(4, user.getEmail());
-            statement.setString(5, SHA256Calculator.getSHA256(user.getPassword(), user.getSalt()));
+            statement.setString(5, passwordHash.getHashedPassword());
             statement.setString(6, user.getDescription());
             statement.setInt(7, user.isEnabled() ? 1 : 0);
             statement.setString(8, user.getSalt());
@@ -161,7 +166,8 @@ public class UserStore extends AbstractStore<User> {
             if (salt == null) {
                 salt = savedUser.getSalt();
             }
-            savedUser.setPassword(SHA256Calculator.getSHA256(user.getPassword(), salt));
+            final PasswordHash passwordHash = passwordService.getPasswordHash(user.getPassword(), salt);
+            savedUser.setPassword(passwordHash.getHashedPassword());
         }
 
         String query = "UPDATE users SET email = ?, password = ?, description = ?, enabled = ? WHERE userid = ?";

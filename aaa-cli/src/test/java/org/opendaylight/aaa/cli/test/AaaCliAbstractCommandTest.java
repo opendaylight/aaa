@@ -34,7 +34,7 @@ public class AaaCliAbstractCommandTest {
     class TestAaaCliAbstractCommand extends AaaCliAbstractCommand {
 
         TestAaaCliAbstractCommand() {
-            super();
+            super(null);
         }
 
         @Override

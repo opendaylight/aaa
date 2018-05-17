@@ -28,7 +28,7 @@ public class UserStoreTest {
 
     private final ConnectionProvider connectionFactoryMock = () -> connectionMock;
 
-    private final UserStore userStoreUnderTest = new UserStore(connectionFactoryMock);
+    private final UserStore userStoreUnderTest = new UserStore(connectionFactoryMock, null);
 
     @Test
     public void getUsersTest() throws SQLException, Exception {

@@ -45,6 +45,7 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
             ThreadLocals.AUTH_SETVICE_TL.set(provider.getAuthenticationService());
             ThreadLocals.TOKEN_AUTHENICATORS_TL.set(provider.getTokenAuthenticators());
             ThreadLocals.TOKEN_STORE_TL.set(provider.getTokenStore());
+            ThreadLocals.PASSWORD_HASH_SERVICE_TL.set(provider.getPasswordHashService());
 
             // Initialize the Shiro environment from clustered-app-config
             final Ini ini = AAAIniWebEnvironment.createIniFromClusteredAppConfig(provider.getShiroConfiguration());
@@ -61,6 +62,7 @@ public class KarafIniWebEnvironment extends IniWebEnvironment {
             ThreadLocals.AUTH_SETVICE_TL.remove();
             ThreadLocals.TOKEN_AUTHENICATORS_TL.remove();
             ThreadLocals.TOKEN_STORE_TL.remove();
+            ThreadLocals.PASSWORD_HASH_SERVICE_TL.remove();
         }
     }
 }

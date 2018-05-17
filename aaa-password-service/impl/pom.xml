@@ -38,6 +38,19 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-Name>${project.groupId}.${project.artifactId}</Bundle-Name>
+            <Export-Package>
+              org.opendaylight.aaa.impl.password.service.DefaultPasswordHashService
+            </Export-Package>
+          </instructions>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
         <executions>
@@ -49,7 +62,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             </goals>
             <configuration>
               <artifacts>
-                <!-- attach aaa-app-config.xml as an artifact -->
                 <artifact>
                   <file>${project.build.directory}/classes/initial/aaa-password-service-config.xml</file>
                   <type>xml</type>

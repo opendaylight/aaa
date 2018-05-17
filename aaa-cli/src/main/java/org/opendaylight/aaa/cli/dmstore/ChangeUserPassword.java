@@ -13,9 +13,9 @@ import org.apache.karaf.shell.commands.Option;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.api.IIDMStore;
-import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
+import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 
 @Command(name = "change-user-pwd", scope = "aaa", description = "Change the user password.")
@@ -35,9 +35,14 @@ public class ChangeUserPassword extends OsgiCommandSupport {
             "--userName" }, description = "The user name", required = true, multiValued = false)
     private String userName;
 
-    public ChangeUserPassword(IIDMStore identityStore, ClaimCache claimCache) {
+    private final PasswordHashService passwordService;
+
+    public ChangeUserPassword(final IIDMStore identityStore, final ClaimCache claimCache,
+                              final PasswordHashService passwordService) {
+
         this.identityStore = identityStore;
         this.claimCache = claimCache;
+        this.passwordService = passwordService;
     }
 
     @Override
@@ -49,8 +54,8 @@ public class ChangeUserPassword extends OsgiCommandSupport {
         final String newPwd = CliUtils.readPassword(this.session, "Enter new password:");
         final Users users = identityStore.getUsers();
         for (User usr : users.getUsers()) {
-            final String realPwd = SHA256Calculator.getSHA256(currentPwd, usr.getSalt());
-            if (usr.getName().equals(userName) && usr.getPassword().equals(realPwd)) {
+            if (usr.getName().equals(userName)
+                    && passwordService.passwordsMatch(currentPwd, usr.getPassword(), usr.getSalt())) {
                 claimCache.clear();
                 usr.setPassword(newPwd);
                 identityStore.updateUser(usr);
