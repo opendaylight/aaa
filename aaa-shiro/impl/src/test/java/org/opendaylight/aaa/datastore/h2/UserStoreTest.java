@@ -21,6 +21,7 @@ import java.sql.Statement;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.opendaylight.aaa.api.model.Users;
+import org.opendaylight.aaa.impl.password.service.DefaultPasswordHashService;
 
 public class UserStoreTest {
 
@@ -28,7 +29,8 @@ public class UserStoreTest {
 
     private final ConnectionProvider connectionFactoryMock = () -> connectionMock;
 
-    private final UserStore userStoreUnderTest = new UserStore(connectionFactoryMock);
+    private final UserStore userStoreUnderTest = new UserStore(connectionFactoryMock,
+            new DefaultPasswordHashService());
 
     @Test
     public void getUsersTest() throws SQLException, Exception {

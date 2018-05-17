@@ -38,6 +38,25 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <!--
+            DefaultPasswordHashService is intentionally exported here for internal use by aaa-cli-jar.  In general,
+            it is bad SOA practice to export implementation bundles.  This was done in order to fulfill a specific
+            non-OSGi requirement that uses this implementation directly.  Outside consumers should consider
+            getting the Service through querying the OSGi registry for
+            org.opendaylight.aaa.api.password.service.PasswordHashService implementations instead.
+            -->
+            <Export-Package>
+              org.opendaylight.aaa.impl.password.service.DefaultPasswordHashService
+            </Export-Package>
+          </instructions>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
         <executions>
@@ -49,7 +68,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             </goals>
             <configuration>
               <artifacts>
-                <!-- attach aaa-app-config.xml as an artifact -->
                 <artifact>
                   <file>${project.build.directory}/classes/initial/aaa-password-service-config.xml</file>
                   <type>xml</type>

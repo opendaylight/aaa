@@ -11,6 +11,7 @@ package org.opendaylight.aaa.cli.dmstore;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.opendaylight.aaa.api.ClaimCache;
+import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
@@ -29,7 +30,8 @@ public class RemoveUser extends AaaCliAbstractCommand {
             "--userName" }, description = "The user name", required = true, multiValued = false)
     private String userName;
 
-    public RemoveUser(ClaimCache claimCache) {
+    public RemoveUser(final ClaimCache claimCache, final PasswordHashService passwordService) {
+        super(passwordService);
         this.claimCache = claimCache;
     }
 

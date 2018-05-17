@@ -17,6 +17,7 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Before;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.StoreBuilder;
+import org.opendaylight.aaa.impl.password.service.DefaultPasswordHashService;
 import org.opendaylight.aaa.provider.GsonProvider;
 import org.opendaylight.aaa.shiro.idm.IdmLightApplication;
 import org.opendaylight.aaa.shiro.idm.IdmLightProxy;
@@ -28,7 +29,8 @@ public abstract class HandlerTest extends JerseyTest {
     @Override
     protected Application configure() {
         testStore = new IDMTestStore();
-        return ResourceConfig.forApplication(new IdmLightApplication(testStore, new IdmLightProxy(testStore)));
+        return ResourceConfig.forApplication(new IdmLightApplication(testStore,
+                new IdmLightProxy(testStore, new DefaultPasswordHashService())));
     }
 
     @Override

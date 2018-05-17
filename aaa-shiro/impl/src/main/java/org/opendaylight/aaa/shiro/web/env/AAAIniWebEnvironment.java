@@ -17,6 +17,7 @@ import org.apache.shiro.util.Factory;
 import org.apache.shiro.web.env.IniWebEnvironment;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.TokenStore;
+import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.shiro.tokenauthrealm.auth.TokenAuthenticators;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
@@ -48,16 +49,19 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
     private final AuthenticationService authenticationService;
     private final TokenAuthenticators tokenAuthenticators;
     private final TokenStore tokenStore;
+    private final PasswordHashService passwordHashService;
 
     AAAIniWebEnvironment(ShiroConfiguration shiroConfiguration, DataBroker dataBroker,
-            ICertificateManager certificateManager, AuthenticationService authenticationService,
-            TokenAuthenticators tokenAuthenticators, TokenStore tokenStore) {
+                         ICertificateManager certificateManager, AuthenticationService authenticationService,
+                         TokenAuthenticators tokenAuthenticators, TokenStore tokenStore,
+                         PasswordHashService passwordHashService) {
         this.shiroConfiguration = shiroConfiguration;
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
         this.authenticationService = authenticationService;
         this.tokenAuthenticators = tokenAuthenticators;
         this.tokenStore = tokenStore;
+        this.passwordHashService = passwordHashService;
         LOG.debug("AAAIniWebEnvironment created");
     }
 
@@ -91,6 +95,7 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
         ThreadLocals.AUTH_SETVICE_TL.set(authenticationService);
         ThreadLocals.TOKEN_AUTHENICATORS_TL.set(tokenAuthenticators);
         ThreadLocals.TOKEN_STORE_TL.set(tokenStore);
+        ThreadLocals.PASSWORD_HASH_SERVICE_TL.set(passwordHashService);
         try {
             // Initialize the Shiro environment from clustered-app-config
             final Ini ini = createIniFromClusteredAppConfig(shiroConfiguration);
@@ -105,6 +110,7 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
             ThreadLocals.AUTH_SETVICE_TL.remove();
             ThreadLocals.TOKEN_AUTHENICATORS_TL.remove();
             ThreadLocals.TOKEN_STORE_TL.remove();
+            ThreadLocals.PASSWORD_HASH_SERVICE_TL.remove();
         }
     }
 }

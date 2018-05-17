@@ -85,6 +85,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
       <groupId>org.opendaylight.yangtools</groupId>
       <artifactId>testutils</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-password-service-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-password-service-impl</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -150,6 +158,18 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
                     <include>org/h2/expression/**</include>
                     <include>org/h2/index/**</include>
                     <include>org/h2/constraint/**</include>
+                  </includes>
+                </filter>
+                <filter>
+                  <artifact>org.opendaylight.aaa:aaa-password-service-api</artifact>
+                  <includes>
+                    <include>org/opendaylight/**</include>
+                  </includes>
+                </filter>
+                <filter>
+                  <artifact>org.opendaylight.aaa:aaa-password-service-impl</artifact>
+                  <includes>
+                    <include>org/opendaylight/**</include>
                   </includes>
                 </filter>
               </filters>
