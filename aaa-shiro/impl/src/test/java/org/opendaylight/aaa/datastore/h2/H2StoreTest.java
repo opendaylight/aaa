@@ -22,6 +22,8 @@ import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.User;
+import org.opendaylight.aaa.api.password.service.PasswordHashService;
+import org.opendaylight.aaa.impl.password.service.DefaultPasswordHashService;
 
 public class H2StoreTest {
 
@@ -50,12 +52,13 @@ public class H2StoreTest {
     }
 
     private H2Store h2Store;
+    private PasswordHashService passwordService = new DefaultPasswordHashService();
 
     @Before
     public void before() throws StoreException, SQLException {
         IdmLightSimpleConnectionProvider dbConnectionFactory = new IdmLightSimpleConnectionProvider(
                 new IdmLightConfigBuilder().dbUser("foo").dbPwd("bar").build());
-        UserStore us = new UserStore(dbConnectionFactory);
+        UserStore us = new UserStore(dbConnectionFactory, passwordService);
         us.dbClean();
         DomainStore ds = new DomainStore(dbConnectionFactory);
         ds.dbClean();
@@ -64,7 +67,7 @@ public class H2StoreTest {
         GrantStore gs = new GrantStore(dbConnectionFactory);
         gs.dbClean();
 
-        h2Store = new H2Store("foo", "bar");
+        h2Store = new H2Store("foo", "bar", passwordService);
     }
 
     @Test
@@ -87,7 +90,8 @@ public class H2StoreTest {
 
     @Test
     public void testCreateUser() throws StoreException {
-        User user = h2Store.createUser("test", "pass", "domain", "desc", "email", true, "SALT");
+        User user = h2Store.createUser("test", "pass", "domain", "desc",
+                "email",true, "SALT");
         Assert.assertEquals(true, user != null);
     }
 
@@ -95,7 +99,8 @@ public class H2StoreTest {
     public void testCreateGrant() throws StoreException {
         Domain domain = h2Store.createDomain("sdn", true);
         Role role = h2Store.createRole("temp", "temp domain", "Temp Testing role");
-        User user = h2Store.createUser("test", "pass", "domain", "desc", "email", true, "SALT");
+        User user = h2Store.createUser("test", "pass", "domain", "desc",
+                "email", true, "SALT");
         Grant grant = h2Store.createGrant(domain.getDomainid(), user.getUserid(), role.getRoleid());
         Assert.assertEquals(true, grant != null);
     }
@@ -103,9 +108,11 @@ public class H2StoreTest {
     @Test
     public void testUpdatingUserEmail() throws StoreException {
         UserStore us = new UserStore(
-                new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().dbUser("foo").dbPwd("bar").build()));
+                new IdmLightSimpleConnectionProvider(
+                        new IdmLightConfigBuilder().dbUser("foo").dbPwd("bar").build()), passwordService);
         Domain domain = h2Store.createDomain("sdn", true);
-        User user = h2Store.createUser("test", "pass", domain.getDomainid(), "desc", "email", true, "SALT");
+        User user = h2Store.createUser("test", "pass", domain.getDomainid(), "desc",
+                "email", true, "SALT");
 
         user.setName("test");
         user = us.putUser(user);

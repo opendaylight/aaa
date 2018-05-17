@@ -11,6 +11,7 @@ import com.google.common.base.Preconditions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 import org.opendaylight.aaa.api.AuthenticationException;
@@ -22,13 +23,13 @@ import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.IdMServiceImpl;
 import org.opendaylight.aaa.api.PasswordCredentials;
-import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Grants;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
+import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.shiro.tokenauthrealm.auth.ClaimBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,9 +48,11 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
     private final Map<String, Map<PasswordCredentials, Claim>> claimCache = new ConcurrentHashMap<>();
 
     private final IIDMStore idmStore;
+    private final PasswordHashService passwordService;
 
-    public IdmLightProxy(IIDMStore idmStore) {
+    public IdmLightProxy(IIDMStore idmStore, PasswordHashService passwordService) {
         this.idmStore = idmStore;
+        this.passwordService = Objects.requireNonNull(passwordService);
     }
 
     @Override
@@ -100,8 +103,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
                         + " does not exist in domain " + credsDomain);
             }
             user = userList.get(0);
-            if (!SHA256Calculator.getSHA256(creds.password(), user.getSalt()).equals(
-                    user.getPassword())) {
+            if (!passwordService.passwordsMatch(creds.password(), user.getPassword(), user.getSalt())) {
                 throw new AuthenticationException("UserName / Password not found");
             }
             if (!user.isEnabled()) {

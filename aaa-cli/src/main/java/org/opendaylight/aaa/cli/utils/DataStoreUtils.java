@@ -11,13 +11,13 @@ package org.opendaylight.aaa.cli.utils;
 import java.util.List;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
-import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Domains;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
+import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,7 +62,8 @@ public final class DataStoreUtils {
         return null;
     }
 
-    public static String getGrantId(IIDMStore identityStore, String domainName, String roleName, String userName)
+    public static String getGrantId(IIDMStore identityStore, String domainName, String roleName,
+                                    String userName)
             throws IDMStoreException {
         final String domainId = getDomainId(identityStore, domainName);
         if (domainId == null) {
@@ -88,11 +89,13 @@ public final class DataStoreUtils {
         return null;
     }
 
-    public static User isAdminUser(IIDMStore identityStore, String userName, String password) throws IDMStoreException {
+    public static User isAdminUser(IIDMStore identityStore, PasswordHashService passwordService,
+                                   String userName, String password) throws IDMStoreException {
+
         final Users users = identityStore.getUsers();
         for (User usr : users.getUsers()) {
-            final String realPwd = SHA256Calculator.getSHA256(password, usr.getSalt());
-            if (usr.getName().equals(userName) && usr.getPassword().equals(realPwd)) {
+            if (usr.getName().equals(userName)
+                    && passwordService.passwordsMatch(password, usr.getPassword(), usr.getSalt())) {
                 List<Grant> grants = identityStore.getGrants(usr.getUserid()).getGrants();
                 if (grants != null && !grants.isEmpty()) {
                     final String adminRoleId = getRoleId(identityStore, ADMIN_ROLE);
