@@ -12,6 +12,7 @@ import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.User;
+import org.opendaylight.aaa.api.password.service.PasswordService;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
@@ -59,8 +60,8 @@ public class AddUser extends AaaCliAbstractCommand {
             multiValued = false)
     private String userEmail = "";
 
-    public AddUser() {
-        super();
+    public AddUser(final PasswordService passwordService) {
+        super(passwordService);
     }
 
     @Override

@@ -15,9 +15,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
-import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.api.model.User;
+import org.opendaylight.aaa.api.password.service.PasswordService;
 import org.opendaylight.aaa.datastore.h2.H2Store;
 import org.opendaylight.aaa.datastore.h2.IdmLightConfig;
 import org.opendaylight.aaa.datastore.h2.IdmLightConfigBuilder;
@@ -34,13 +34,16 @@ public class StandaloneCommandLineInterface {
     private final IIDMStore identityStore;
     private final StoreBuilder storeBuilder;
     private static final String DOMAIN = IIDMStore.DEFAULT_DOMAIN;
+    private final PasswordService passwordService;
 
     public StandaloneCommandLineInterface(File directoryWithDatabaseFile) throws IOException, IDMStoreException {
         IdmLightConfigBuilder configBuider = new IdmLightConfigBuilder();
         configBuider.dbDirectory(directoryWithDatabaseFile.getCanonicalPath()).dbUser("foo").dbPwd("bar");
         IdmLightConfig config = configBuider.build();
 
-        H2Store h2Store = new H2Store(new IdmLightSimpleConnectionProvider(config));
+        passwordService = null;
+
+        H2Store h2Store = new H2Store(new IdmLightSimpleConnectionProvider(config), passwordService);
         this.identityStore = h2Store;
 
         this.storeBuilder = new StoreBuilder(h2Store);
@@ -74,8 +77,7 @@ public class StandaloneCommandLineInterface {
             return false;
         } else {
             User user = optUser.get();
-            String realPwd = SHA256Calculator.getSHA256(password, user.getSalt());
-            return user.getPassword().equals(realPwd);
+            return passwordService.passwordsMatch(password, user.getPassword(), user.getSalt());
         }
     }
 

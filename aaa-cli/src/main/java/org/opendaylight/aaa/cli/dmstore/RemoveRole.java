@@ -11,6 +11,7 @@ package org.opendaylight.aaa.cli.dmstore;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.opendaylight.aaa.api.ClaimCache;
+import org.opendaylight.aaa.api.password.service.PasswordService;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
@@ -29,7 +30,8 @@ public class RemoveRole extends AaaCliAbstractCommand {
             "--roleName" }, description = "The role name", required = true, multiValued = false)
     private String roleName;
 
-    public RemoveRole(ClaimCache claimCache) {
+    public RemoveRole(final ClaimCache claimCache, final PasswordService passwordService) {
+        super(passwordService);
         this.claimCache = claimCache;
     }
 

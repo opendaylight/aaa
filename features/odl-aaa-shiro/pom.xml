@@ -76,8 +76,18 @@
         <!-- Existing AAA infrastructure -->
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-password-service-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-password-service-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
             <artifactId>odl-aaa-web</artifactId>
-            <version>0.8.0-SNAPSHOT</version>
+            <version>${project.version}</version>
             <classifier>features</classifier>
             <type>xml</type>
         </dependency>

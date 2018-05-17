@@ -9,6 +9,7 @@
 package org.opendaylight.aaa.cli.dmstore;
 
 import org.apache.karaf.shell.commands.Command;
+import org.opendaylight.aaa.api.password.service.PasswordService;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 
@@ -22,8 +23,8 @@ import org.opendaylight.aaa.cli.utils.CliUtils;
  */
 public class ListODLRoles extends AaaCliAbstractCommand {
 
-    public ListODLRoles() {
-        super();
+    public ListODLRoles(final PasswordService passwordService) {
+        super(passwordService);
     }
 
     @Override

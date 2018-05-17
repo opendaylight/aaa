@@ -55,7 +55,7 @@ public class H2StoreTest {
     public void before() throws StoreException, SQLException {
         IdmLightSimpleConnectionProvider dbConnectionFactory = new IdmLightSimpleConnectionProvider(
                 new IdmLightConfigBuilder().dbUser("foo").dbPwd("bar").build());
-        UserStore us = new UserStore(dbConnectionFactory);
+        UserStore us = new UserStore(dbConnectionFactory, null);
         us.dbClean();
         DomainStore ds = new DomainStore(dbConnectionFactory);
         ds.dbClean();
@@ -64,7 +64,7 @@ public class H2StoreTest {
         GrantStore gs = new GrantStore(dbConnectionFactory);
         gs.dbClean();
 
-        h2Store = new H2Store("foo", "bar");
+        h2Store = new H2Store("foo", "bar", null);
     }
 
     @Test
@@ -103,7 +103,7 @@ public class H2StoreTest {
     @Test
     public void testUpdatingUserEmail() throws StoreException {
         UserStore us = new UserStore(
-                new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().dbUser("foo").dbPwd("bar").build()));
+                new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().dbUser("foo").dbPwd("bar").build()), null);
         Domain domain = h2Store.createDomain("sdn", true);
         User user = h2Store.createUser("test", "pass", domain.getDomainid(), "desc", "email", true, "SALT");
 

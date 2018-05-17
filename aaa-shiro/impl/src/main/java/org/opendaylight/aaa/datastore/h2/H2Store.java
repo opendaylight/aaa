@@ -19,6 +19,7 @@ import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
+import org.opendaylight.aaa.api.password.service.PasswordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,14 +32,14 @@ public class H2Store implements IIDMStore {
     private final RoleStore roleStore;
     private final GrantStore grantStore;
 
-    public H2Store(String dbUsername, String dbPassword) {
+    public H2Store(final String dbUsername, final String dbPassword, final PasswordService passwordService) {
         this(new IdmLightSimpleConnectionProvider(
-                new IdmLightConfigBuilder().dbUser(dbUsername).dbPwd(dbPassword).build()));
+                new IdmLightConfigBuilder().dbUser(dbUsername).dbPwd(dbPassword).build()), passwordService);
     }
 
-    public H2Store(ConnectionProvider connectionFactory) {
+    public H2Store(ConnectionProvider connectionFactory, final PasswordService passwordService) {
         this.domainStore = new DomainStore(connectionFactory);
-        this.userStore = new UserStore(connectionFactory);
+        this.userStore = new UserStore(connectionFactory, passwordService);
         this.roleStore = new RoleStore(connectionFactory);
         this.grantStore = new GrantStore(connectionFactory);
     }

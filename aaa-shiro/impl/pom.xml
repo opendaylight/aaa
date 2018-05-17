@@ -90,6 +90,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <artifactId>aaa-filterchain</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-password-service-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-server</artifactId>
         </dependency>

@@ -16,13 +16,13 @@ import org.mockito.Mockito;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.PasswordCredentials;
-import org.opendaylight.aaa.api.SHA256Calculator;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Grants;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
+import org.opendaylight.aaa.api.password.service.PasswordService;
 import org.opendaylight.aaa.shiro.idm.IdmLightProxy;
 
 /*
@@ -31,6 +31,7 @@ import org.opendaylight.aaa.shiro.idm.IdmLightProxy;
 public class PasswordHashTest {
 
     private IIDMStore store;
+    private PasswordService passwordService;
 
     @Before
     public void before() throws IDMStoreException {
@@ -47,7 +48,7 @@ public class PasswordHashTest {
         user.setUserid(creds.username());
         user.setDomainid("sdn");
         user.setSalt("ABCD");
-        user.setPassword(SHA256Calculator.getSHA256(creds.password(), user.getSalt()));
+        user.setPassword(passwordService.getHashedPassword(creds.password(), user.getSalt()).getHashedPassword());
         List<User> lu = new LinkedList<>();
         lu.add(user);
         Users users = new Users();
@@ -71,7 +72,7 @@ public class PasswordHashTest {
 
     @Test
     public void testPasswordHash() {
-        IdmLightProxy proxy = new IdmLightProxy(store);
+        IdmLightProxy proxy = new IdmLightProxy(store, null);
         proxy.authenticate(new Creds());
     }
 
