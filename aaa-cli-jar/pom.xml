@@ -85,6 +85,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
       <groupId>org.opendaylight.yangtools</groupId>
       <artifactId>testutils</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-password-service-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-password-service-impl</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -150,6 +158,54 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
                     <include>org/h2/expression/**</include>
                     <include>org/h2/index/**</include>
                     <include>org/h2/constraint/**</include>
+                  </includes>
+                </filter>
+              </filters>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>org.opendaylight.aaa.cli.jar.Main</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+          <execution>
+            <id>shade-aaa-service-api</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <minimizeJar>true</minimizeJar>
+              <filters>
+                <filter>
+                  <artifact>org.opendaylight.aaa:aaa-password-service-api</artifact>
+                  <includes>
+                    <include>org/opendaylight/**</include>
+                  </includes>
+                </filter>
+              </filters>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>org.opendaylight.aaa.cli.jar.Main</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+          <execution>
+            <id>shade-aaa-service-impl</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <minimizeJar>true</minimizeJar>
+              <filters>
+                <filter>
+                  <artifact>org.opendaylight.aaa:aaa-password-service-impl</artifact>
+                  <includes>
+                    <include>org/opendaylight/**</include>
                   </includes>
                 </filter>
               </filters>

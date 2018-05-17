@@ -23,7 +23,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.opendaylight.aaa.api.SHA256Calculator;
+import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
 import org.opendaylight.aaa.shiro.realm.util.TokenUtils;
@@ -56,9 +56,11 @@ public class MdsalRealm extends AuthorizingRealm {
             InstanceIdentifier.builder(Authentication.class).build();
 
     private final DataBroker dataBroker;
+    private final PasswordHashService passwordHashService;
 
     public MdsalRealm() {
         this.dataBroker = Objects.requireNonNull(ThreadLocals.DATABROKER_TL.get());
+        this.passwordHashService = Objects.requireNonNull(ThreadLocals.PASSWORD_HASH_SERVICE_TL.get());
         LOG.info("MdsalRealm created");
     }
 
@@ -134,8 +136,7 @@ public class MdsalRealm extends AuthorizingRealm {
                 }
                 if (userEnabled && u.getUserid().equals(inputUserId)) {
                     final String inputPassword = TokenUtils.extractPassword(authenticationToken);
-                    final String hashedInputPassword = SHA256Calculator.getSHA256(inputPassword, u.getSalt());
-                    if (hashedInputPassword.equals(u.getPassword())) {
+                    if (passwordHashService.passwordsMatch(inputPassword, u.getPassword(), u.getSalt())) {
                         final ODLPrincipal odlPrincipal = ODLPrincipalImpl
                                 .createODLPrincipal(inputUsername, domainId, inputUserId);
                         return new SimpleAuthenticationInfo(odlPrincipal, inputPassword, getName());
