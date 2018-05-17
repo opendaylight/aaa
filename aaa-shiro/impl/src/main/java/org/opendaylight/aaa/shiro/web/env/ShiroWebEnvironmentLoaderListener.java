@@ -14,6 +14,7 @@ import org.apache.shiro.web.env.MutableWebEnvironment;
 import org.apache.shiro.web.env.WebEnvironment;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.TokenStore;
+import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.shiro.tokenauthrealm.auth.TokenAuthenticators;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
@@ -35,23 +36,27 @@ public class ShiroWebEnvironmentLoaderListener extends EnvironmentLoaderListener
     private final AuthenticationService authenticationService;
     private final TokenAuthenticators tokenAuthenticators;
     private final TokenStore tokenStore;
+    private final PasswordHashService passwordHashService;
 
     public ShiroWebEnvironmentLoaderListener(ShiroConfiguration shiroConfiguration, DataBroker dataBroker,
-            ICertificateManager certificateManager, AuthenticationService authenticationService,
-            TokenAuthenticators tokenAuthenticators, TokenStore tokenStore) {
+                                             ICertificateManager certificateManager,
+                                             AuthenticationService authenticationService,
+                                             TokenAuthenticators tokenAuthenticators, TokenStore tokenStore,
+                                             PasswordHashService passwordHashService) {
         this.shiroConfiguration = shiroConfiguration;
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
         this.authenticationService = authenticationService;
         this.tokenAuthenticators = tokenAuthenticators;
         this.tokenStore = tokenStore;
+        this.passwordHashService = passwordHashService;
         LOG.debug("ShiroWebEnvironmentLoaderListenerImpl created");
     }
 
     @Override
     protected WebEnvironment createEnvironment(ServletContext sc) {
         MutableWebEnvironment environment = new AAAIniWebEnvironment(shiroConfiguration, dataBroker,
-                certificateManager, authenticationService, tokenAuthenticators, tokenStore);
+                certificateManager, authenticationService, tokenAuthenticators, tokenStore, passwordHashService);
 
         // in newer Shiro version, there is a determineWebEnvironment() which should be
         // used instead of createEnvironment() but for 1.3.x we just copy/paste from parent and do:

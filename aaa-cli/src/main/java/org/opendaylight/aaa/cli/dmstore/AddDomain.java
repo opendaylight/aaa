@@ -11,6 +11,7 @@ package org.opendaylight.aaa.cli.dmstore;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.opendaylight.aaa.api.model.Domain;
+import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.slf4j.Logger;
@@ -34,8 +35,8 @@ public class AddDomain extends AaaCliAbstractCommand {
             "--domainDescription" }, description = "The domain Description", required = true, multiValued = false)
     private String domainDesc = "";
 
-    public AddDomain() {
-        super();
+    public AddDomain(final PasswordHashService passwordService) {
+        super(passwordService);
     }
 
     @Override

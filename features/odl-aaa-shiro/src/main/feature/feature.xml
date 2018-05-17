@@ -14,6 +14,9 @@
         <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-datastore-config.xml">
             mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/xml/aaa-datastore-config
         </configfile>
+        <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-password-service-config.xml">
+            mvn:org.opendaylight.aaa/aaa-password-service-impl/${project.version}/xml/aaa-password-service-config
+        </configfile>
         <configfile finalname="bin/idmtool">
             mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/py/idmtool
         </configfile>

@@ -26,11 +26,19 @@ public class DefaultPasswordHashService implements PasswordHashService {
     private static final Logger LOG = LoggerFactory.getLogger(DefaultPasswordHashService.class);
 
     public static final String DEFAULT_HASH_ALGORITHM = "SHA-512";
-    public static final int DEFAULT_NUM_ITERATIONS = 10000;
+    public static final int DEFAULT_NUM_ITERATIONS = 20000;
 
     private final DefaultHashService hashService = new DefaultHashService();
 
+    public DefaultPasswordHashService() {
+        hashService.setRandomNumberGenerator(new SecureRandomNumberGenerator());
+        hashService.setGeneratePublicSalt(true);
+        setNumIterations(Optional.of(DEFAULT_NUM_ITERATIONS));
+        setHashAlgorithm(Optional.of(DEFAULT_HASH_ALGORITHM));
+    }
+
     public DefaultPasswordHashService(final PasswordServiceConfig passwordServiceConfig) {
+        this();
         final Optional<Integer> numIterationsOptional = Optional.ofNullable(passwordServiceConfig.getIterations());
         setNumIterations(numIterationsOptional);
 
@@ -39,9 +47,6 @@ public class DefaultPasswordHashService implements PasswordHashService {
 
         final Optional<String> privateSaltOptional = Optional.ofNullable(passwordServiceConfig.getPrivateSalt());
         setPrivateSalt(privateSaltOptional);
-
-        hashService.setRandomNumberGenerator(new SecureRandomNumberGenerator());
-        hashService.setGeneratePublicSalt(true);
     }
 
     private void setNumIterations(final Optional<Integer> numIterationsOptional) {
