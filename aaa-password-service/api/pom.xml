@@ -23,6 +23,13 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>bundle</packaging>
 
+  <dependencies>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
+  </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -32,7 +39,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         <configuration>
           <instructions>
             <Export-Package>
-              org.opendaylight.aaa.api.password.service
+              org.opendaylight.aaa.api.password.service,
+              org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.password.service.config.rev170619
             </Export-Package>
           </instructions>
         </configuration>
