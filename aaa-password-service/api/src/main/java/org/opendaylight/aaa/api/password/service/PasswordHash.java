@@ -7,9 +7,12 @@
  */
 package org.opendaylight.aaa.api.password.service;
 
+import com.google.common.annotations.Beta;
+
 /**
  * Four-tuple representing a <code>PasswordHash</code>.
  */
+@Beta
 public interface PasswordHash {
 
     /**

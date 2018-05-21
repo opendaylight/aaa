@@ -7,9 +7,12 @@
  */
 package org.opendaylight.aaa.api.password.service;
 
+import com.google.common.annotations.Beta;
+
 /**
  * Service responsible for generating salts and comparing passwords.  This service is designed for one-way hashing only.
  */
+@Beta
 public interface PasswordHashService {
 
     /**
@@ -18,7 +21,7 @@ public interface PasswordHashService {
      * @param password a plaintext password
      * @return the result of hashing the password
      */
-    PasswordHash getHashedPassword(String password);
+    PasswordHash getPasswordHash(String password);
 
     /**
      * Extract a hashed password using an input salt.
@@ -27,7 +30,7 @@ public interface PasswordHashService {
      * @param salt the hash for <code>password</code>
      * @return the result of hashing the password
      */
-    PasswordHash getHashedPassword(String password, String salt);
+    PasswordHash getPasswordHash(String password, String salt);
 
     /**
      * Password comparison.
