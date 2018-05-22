@@ -26,8 +26,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import org.osgi.framework.Constants;
-import org.osgi.service.cm.ConfigurationException;
-import org.osgi.service.cm.ManagedService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +58,7 @@ import org.slf4j.LoggerFactory;
  * and objects can subscribe for changes through:
  * <code>CustomFilterAdapterConfiguration.registerCustomFilterAdapterConfigurationListener(...)</code>
  */
-public final class CustomFilterAdapterConfiguration implements ManagedService {
+public final class CustomFilterAdapterConfiguration {
 
     /**
      * Separates different filter definitions. For example:
@@ -115,6 +113,7 @@ public final class CustomFilterAdapterConfiguration implements ManagedService {
     private volatile List<FilterDTO> filterDTOs = Collections.emptyList();
 
     private CustomFilterAdapterConfiguration() {
+        LOG.info("init");
         // private for Singleton
     }
 
@@ -127,13 +126,17 @@ public final class CustomFilterAdapterConfiguration implements ManagedService {
         return INSTANCE;
     }
 
+    public static CustomFilterAdapterConfiguration getInstance(final Dictionary<String, ?> properties) {
+        INSTANCE.updated(properties);
+        return INSTANCE;
+    }
+
     public Dictionary<String, ?> getDefaultProperties() {
         return DEFAULT_CONFIGURATION;
     }
 
     // Invoked in response to configuration admin changes
-    @Override
-    public void updated(final Dictionary<String, ?> properties) throws ConfigurationException {
+    public void updated(final Dictionary<String, ?> properties) {
 
         if (properties == null) {
             updateListeners(DEFAULT_CONFIGURATION);

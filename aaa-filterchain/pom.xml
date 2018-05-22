@@ -58,7 +58,6 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Bundle-Activator>org.opendaylight.aaa.filterchain.Activator</Bundle-Activator>
             <Bundle-Name>${project.groupId}.${project.artifactId}</Bundle-Name>
             <DynamicImport-Package>*</DynamicImport-Package>
           </instructions>
