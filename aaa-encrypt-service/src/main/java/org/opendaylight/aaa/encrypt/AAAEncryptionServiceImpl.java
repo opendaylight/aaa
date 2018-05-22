@@ -50,6 +50,7 @@ import org.xml.sax.SAXException;
 /*
  *  @author - Sharon Aicler (saichler@gmail.com)
  */
+@Deprecated
 public class AAAEncryptionServiceImpl implements AAAEncryptionService {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAEncryptionServiceImpl.class);
