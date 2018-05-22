@@ -35,8 +35,6 @@ import org.opendaylight.aaa.shiro.tokenauthrealm.auth.HttpBasicAuth;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.DatastoreConfig;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration;
-import org.osgi.service.http.HttpService;
-import org.osgi.service.http.NamespaceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,16 +45,15 @@ public class AAAShiroProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
-    private static final CompletableFuture<AAAShiroProvider> INSTANCE_FUTURE = new CompletableFuture();
+    private static final CompletableFuture<AAAShiroProvider> INSTANCE_FUTURE = new CompletableFuture<>();
+
     private static volatile AAAShiroProvider INSTANCE;
+
     private static IIDMStore iidmStore;
 
     private final DataBroker dataBroker;
     private final ICertificateManager certificateManager;
-    private final HttpService httpService;
     private final ShiroConfiguration shiroConfiguration;
-    private final String moonEndpointPath;
-    private final String oauth2EndpointPath;
     private final TokenStore tokenStore;
 
     /**
@@ -67,23 +64,16 @@ public class AAAShiroProvider {
     private AAAShiroProvider(final DataBroker dataBroker, final ICertificateManager certificateManager,
                              final CredentialAuth<PasswordCredentials> credentialAuth,
                              final ShiroConfiguration shiroConfiguration,
-                             final HttpService httpService,
-                             final String moonEndpointPath,
-                             final String oauth2EndpointPath,
                              final DatastoreConfig datastoreConfig,
                              final String dbUsername,
                              final String dbPassword) {
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
         this.shiroConfiguration = shiroConfiguration;
-        this.httpService = httpService;
-        this.moonEndpointPath = moonEndpointPath;
-        this.oauth2EndpointPath = oauth2EndpointPath;
 
         if (datastoreConfig != null && datastoreConfig.getStore()
                 .equals(DatastoreConfig.Store.H2DataStore)) {
-            final IdmLightConfig config = new IdmLightConfigBuilder()
-                    .dbUser(dbUsername).dbPwd(dbPassword).build();
+            final IdmLightConfig config = new IdmLightConfigBuilder().dbUser(dbUsername).dbPwd(dbPassword).build();
             iidmStore = new H2Store(new IdmLightSimpleConnectionProvider(config));
             tokenStore = new H2TokenStore(datastoreConfig.getTimeToLive().longValue(),
                     datastoreConfig.getTimeToWait().longValue());
@@ -94,22 +84,6 @@ public class AAAShiroProvider {
             return;
         }
         this.initializeServices(credentialAuth, iidmStore, tokenStore);
-        try {
-            this.registerServletContexts(this.httpService, this.moonEndpointPath, this.oauth2EndpointPath);
-        } catch (final ServletException | NamespaceException e) {
-            LOG.warn("Could not initialize AAA servlet endpoints", e);
-        }
-    }
-
-    private void registerServletContexts(final HttpService httpService, final String moonEndpointPath,
-                                         final String oauth2EndpointPath)
-            throws ServletException, NamespaceException {
-        LOG.info("attempting registration of AAA moon, oauth2 and auth servlets");
-
-        Preconditions.checkNotNull(httpService, "httpService cannot be null");
-        httpService.registerServlet(moonEndpointPath, new org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint(),
-                null, null);
-        httpService.registerServlet(oauth2EndpointPath, new OAuth2TokenServlet(), null, null);
     }
 
     /**
@@ -122,7 +96,7 @@ public class AAAShiroProvider {
     private void initializeServices(final CredentialAuth<PasswordCredentials> credentialAuth,
                                     final IIDMStore iidmStore, final TokenStore tokenStore) {
         try {
-            new StoreBuilder(iidmStore).init();
+            new StoreBuilder(iidmStore).initWithDefaultUsers(IIDMStore.DEFAULT_DOMAIN);
         } catch (final IDMStoreException e) {
             LOG.error("Failed to initialize data in store", e);
         }
@@ -149,9 +123,6 @@ public class AAAShiroProvider {
      * @param certificateManager the certificate manager
      * @param credentialAuth The CredentialAuth
      * @param shiroConfiguration shiro config
-     * @param httpService http service
-     * @param moonEndpointPath moon path
-     * @param oauth2EndpointPath oauth path
      * @param datastoreConfig data store config
      * @return the Provider
      */
@@ -159,14 +130,11 @@ public class AAAShiroProvider {
                                                final ICertificateManager certificateManager,
                                                final CredentialAuth<PasswordCredentials> credentialAuth,
                                                final ShiroConfiguration shiroConfiguration,
-                                               final HttpService httpService,
-                                               final String moonEndpointPath,
-                                               final String oauth2EndpointPath,
                                                final DatastoreConfig datastoreConfig,
                                                final String dbUsername,
                                                final String dbPassword) {
         INSTANCE = new AAAShiroProvider(dataBroker, certificateManager, credentialAuth, shiroConfiguration,
-                httpService, moonEndpointPath, oauth2EndpointPath, datastoreConfig, dbUsername, dbPassword);
+                datastoreConfig, dbUsername, dbPassword);
         INSTANCE_FUTURE.complete(INSTANCE);
         return INSTANCE;
     }
@@ -207,17 +175,6 @@ public class AAAShiroProvider {
      */
     public void init() {
         LOG.info("AAAShiroProvider Session Initiated");
-    }
-
-    /**
-     * Method called when the blueprint container is destroyed.
-     */
-    public void close() {
-        LOG.info("AAAShiroProvider Closed");
-        if (httpService != null) {
-            httpService.unregister(moonEndpointPath);
-            httpService.unregister(oauth2EndpointPath);
-        }
     }
 
     /**
