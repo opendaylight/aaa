@@ -11,15 +11,13 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationService;
-import org.osgi.service.cm.ConfigurationException;
-import org.osgi.service.cm.ManagedService;
 
 /**
  * An {@link InheritableThreadLocal}-based {@link AuthenticationService}.
  *
  * @author liemmn
  */
-public class AuthenticationManager implements AuthenticationService, ManagedService {
+public class AuthenticationManager implements AuthenticationService {
     private static final String AUTH_ENABLED_ERR = "Error setting authEnabled";
 
     protected static final String AUTH_ENABLED = "authEnabled";
@@ -30,7 +28,7 @@ public class AuthenticationManager implements AuthenticationService, ManagedServ
     }
 
     // In non-Karaf environments, authEnabled is set to false by default
-    private static volatile boolean authEnabled = false;
+    private static volatile boolean IS_AUTH_ENABLED = false;
 
     private static final AuthenticationManager AUTHENTICATION_MANAGER = new AuthenticationManager();
     private final ThreadLocal<Authentication> auth = new InheritableThreadLocal<>();
@@ -48,7 +46,7 @@ public class AuthenticationManager implements AuthenticationService, ManagedServ
     }
 
     @Override
-    public void set(Authentication authentication) {
+    public void set(final Authentication authentication) {
         auth.set(authentication);
     }
 
@@ -59,20 +57,19 @@ public class AuthenticationManager implements AuthenticationService, ManagedServ
 
     @Override
     public boolean isAuthEnabled() {
-        return this.authEnabled;
+        return IS_AUTH_ENABLED;
     }
 
-    @Override
-    public void updated(Dictionary<String, ?> properties) throws ConfigurationException {
+    public void updated(final Dictionary<String, ?> properties) {
         if (properties == null) {
             return;
         }
 
-        String propertyValue = (String) properties.get(AUTH_ENABLED);
-        boolean isTrueString = Boolean.parseBoolean(propertyValue);
+        final String propertyValue = (String) properties.get(AUTH_ENABLED);
+        final boolean isTrueString = Boolean.parseBoolean(propertyValue);
         if (!isTrueString && !"false".equalsIgnoreCase(propertyValue)) {
-            throw new ConfigurationException(AUTH_ENABLED, AUTH_ENABLED_ERR);
+            throw new RuntimeException(AUTH_ENABLED_ERR);
         }
-        authEnabled = isTrueString;
+        IS_AUTH_ENABLED = isTrueString;
     }
 }
