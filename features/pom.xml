@@ -28,6 +28,7 @@
         <module>odl-aaa-cli</module>
         <module>odl-aaa-encryption-service</module>
         <module>odl-aaa-jersey-1</module>
+        <module>odl-aaa-password-service</module>
         <module>odl-aaa-shiro</module>
         <module>odl-aaa-web</module>
     </modules>
