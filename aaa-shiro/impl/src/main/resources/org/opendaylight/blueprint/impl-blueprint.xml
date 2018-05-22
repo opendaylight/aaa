@@ -45,19 +45,35 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     </cm:default-properties>
   </cm:property-placeholder>
 
-  <bean id="provider"
-        class="org.opendaylight.aaa.AAAShiroProvider" factory-method="newInstance"
-        init-method="init" destroy-method="close">
+  <bean id="customFilterAdapterConfiguration"
+      class="org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration"
+      factory-method="newInstance">
+    <cm:managed-properties persistent-id="cust.filt.adapt.config" update-strategy="container-managed"
+        update-method="updated"/>
+  </bean>
+
+  <bean id="authentiacationManager" class="org.opendaylight.aaa.shiro.tokenauthrealm.auth.AuthenticationManager">
+    <cm:managed-properties persistent-id="auth.manager.props" update-strategy="container-managed"
+        update-method="updated"/>
+  </bean>
+
+  <bean id="provider" class="org.opendaylight.aaa.AAAShiroProvider" factory-method="newInstance" init-method="init">
     <argument ref="dataBroker" />
     <argument ref="certManager" />
     <argument ref="IdmLightProxy" />
     <argument ref="shiroConfiguration" />
-    <argument ref="httpService" />
-    <argument value="/moon" />
-    <argument value="/oauth2" />
     <argument ref="datastoreConfig" />
     <argument value="${dbUsername}" />
     <argument value="${dbPassword}" />
+    <argument ref="authentiacationManager"/>
+  </bean>
+
+  <bean id="osgiHttpServiceProvder" class="org.opendaylight.aaa.osgi.OSGiHttpServiceProvider"
+      factory-method="newInstance"
+      destroy-method="close">
+    <argument ref="httpService" />
+    <argument value="/moon" />
+    <argument value="/oauth2" />
   </bean>
 
   <bean id="aaa" class="org.opendaylight.aaa.shiro.filters.AAAFilter" />
