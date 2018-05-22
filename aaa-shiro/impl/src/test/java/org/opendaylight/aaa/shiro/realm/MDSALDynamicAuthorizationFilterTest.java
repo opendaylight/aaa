@@ -8,20 +8,10 @@
 
 package org.opendaylight.aaa.shiro.realm;
 
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.CheckedFuture;
 import com.google.common.util.concurrent.Futures;
-import java.util.List;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.subject.Subject;
 import org.junit.After;
 import org.junit.Test;
@@ -33,7 +23,17 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev1
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.Policies;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.permission.Permissions;
 import org.opendaylight.yangtools.yang.binding.DataObject;
-import org.osgi.service.http.HttpService;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Tests the Dynamic Authorization Filter.
@@ -46,8 +46,8 @@ public class MDSALDynamicAuthorizationFilterTest {
     }
 
     private AAAShiroProvider newAAAShiroProvider(DataBroker dataBroker) {
-        return AAAShiroProvider.newInstance(dataBroker, null, null, null, mock(HttpService.class),
-                null, null, null, null, null);
+       return AAAShiroProvider.newInstance(dataBroker, null, null, null,
+               null,null, null, null);
     }
 
     // test helper method to generate some cool mdsal data
@@ -90,6 +90,9 @@ public class MDSALDynamicAuthorizationFilterTest {
 
     @Test
     public void testBasicAccessWithNoRules() throws Exception {
+        //
+        // Test Setup: No rules are added to the HttpAuthorization container.  Open access should be allowed.
+
         final HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getRequestURI()).thenReturn("abc");
         when(request.getMethod()).thenReturn("Put");
@@ -131,6 +134,11 @@ public class MDSALDynamicAuthorizationFilterTest {
 
     @Test
     public void testMDSALExceptionDuringRead() throws Exception {
+        //
+        // Test Setup: No rules are added to the HttpAuthorization container.  The MDSAL read
+        // is instructed to return an immediateFailedCheckedFuture, to emulate an error in reading
+        // the Data Store.
+
         final HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getRequestURI()).thenReturn("abc");
         when(request.getMethod()).thenReturn("Put");
@@ -146,9 +154,7 @@ public class MDSALDynamicAuthorizationFilterTest {
 
         newAAAShiroProvider(dataBroker);
 
-        // Test Setup: No rules are added to the HttpAuthorization container.  The MDSAL read
-        // is instructed to return an immediateFailedCheckedFuture, to emulate an error in reading
-        // the Data Store.
+        // Test Setup: No rules are added to the HttpAuthorization container.  Open access should be allowed.
         final Subject subject = mock(Subject.class);
         final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
             @Override
@@ -380,5 +386,6 @@ public class MDSALDynamicAuthorizationFilterTest {
         assertFalse(filter.isAccessAllowed(request, null, null));
         when(request.getMethod()).thenReturn("Get");
         assertTrue(filter.isAccessAllowed(request, null, null));
+
     }
 }

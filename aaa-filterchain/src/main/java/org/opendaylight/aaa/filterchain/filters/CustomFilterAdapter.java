@@ -9,10 +9,15 @@
 package org.opendaylight.aaa.filterchain.filters;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.MoreExecutors;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -21,6 +26,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration;
 import org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterListener;
+import org.opendaylight.aaa.filterchain.configuration.impl.CustomFilterAdapterConfigurationImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,12 +60,19 @@ public class CustomFilterAdapter implements Filter, CustomFilterAdapterListener 
 
     private static final Logger LOG = LoggerFactory.getLogger(CustomFilterAdapter.class);
 
+    private final ListenableFuture<CustomFilterAdapterConfiguration> customFilterAdapterConfigFuture;
+
     private FilterConfig filterConfig;
 
     /**
      * Stores the injected filter chain. TODO can this be an ArrayList?
      */
     private volatile List<Filter> injectedFilterChain = Collections.emptyList();
+
+    public CustomFilterAdapter() {
+        this.customFilterAdapterConfigFuture =
+                Futures.immediateFuture(CustomFilterAdapterConfigurationImpl.getInstance());
+    }
 
     @Override
     public void destroy() {
@@ -82,12 +95,23 @@ public class CustomFilterAdapter implements Filter, CustomFilterAdapterListener 
     }
 
     @Override
-    @SuppressWarnings("checkstyle:hiddenField")
-    public void init(final FilterConfig filterConfig) throws ServletException {
+    public void init(final FilterConfig newFilterConfig) throws ServletException {
         LOG.info("Initializing CustomFilterAdapter");
+
+        this.filterConfig = newFilterConfig;
+
         // register as a listener for config admin changes
-        CustomFilterAdapterConfiguration.getInstance().registerCustomFilterAdapterConfigurationListener(this);
-        this.filterConfig = filterConfig;
+        Futures.addCallback(customFilterAdapterConfigFuture, new FutureCallback<CustomFilterAdapterConfiguration>() {
+            @Override
+            public void onSuccess(@Nonnull CustomFilterAdapterConfiguration customFilterAdapterConfig) {
+                customFilterAdapterConfig.registerCustomFilterAdapterConfigurationListener(CustomFilterAdapter.this);
+            }
+
+            @Override
+            public void onFailure(Throwable ex) {
+                LOG.error("Error obtaining CustomFilterAdapterConfiguration", ex);
+            }
+        }, MoreExecutors.directExecutor());
     }
 
     /**
