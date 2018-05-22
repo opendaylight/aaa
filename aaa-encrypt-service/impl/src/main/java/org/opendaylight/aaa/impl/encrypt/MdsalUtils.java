@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.encrypt;
+package org.opendaylight.aaa.impl.encrypt;
 
 import com.google.common.base.Optional;
 import com.google.common.util.concurrent.CheckedFuture;
