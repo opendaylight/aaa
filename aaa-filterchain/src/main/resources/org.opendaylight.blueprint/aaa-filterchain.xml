@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0">
+
+  <cm:cm-properties id="initialProperties" persistent-id="org.opendaylight.aaa.filterchain"/>
+
+  <bean id="adapterConfig"
+      class="org.opendaylight.aaa.filterchain.configuration.impl.CustomFilterAdapterConfigurationImpl"
+      factory-method="newInstance"
+      destroy-method="close">
+    <cm:managed-properties persistent-id="org.opendaylight.aaa.filterchain"
+            update-strategy="component-managed" update-method="update" />
+    <argument ref="initialProperties" />
+  </bean>
+
+  <service ref="adapterConfig"
+      interface="org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration"/>
+
+</blueprint>

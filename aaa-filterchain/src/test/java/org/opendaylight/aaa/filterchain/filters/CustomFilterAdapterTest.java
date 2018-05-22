@@ -28,12 +28,14 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import org.junit.Test;
+import org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration;
 
 /**
  * Custom Filter Adapter Test Suite.
  */
 public class CustomFilterAdapterTest {
 
+    final CustomFilterAdapterConfiguration mockAdapterConfig = mock(CustomFilterAdapterConfiguration.class);
     final ServletRequest servletRequest = mock(ServletRequest.class);
     final ServletResponse servletResponse = mock(ServletResponse.class);
     final FilterChain filterChain = mock(FilterChain.class);
