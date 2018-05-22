@@ -8,7 +8,7 @@
         binding-class="org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig">
   </odl:clustered-app-config>
 
-  <bean id="encryptService" class="org.opendaylight.aaa.encrypt.AAAEncryptionServiceImpl">
+  <bean id="encryptService" class="AAAEncryptionServiceImpl">
     <argument ref="encryptConfig"/>
     <argument ref="dataBroker"/>
   </bean>

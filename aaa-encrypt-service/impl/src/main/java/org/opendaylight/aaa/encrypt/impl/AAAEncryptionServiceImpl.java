@@ -5,7 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.encrypt;
+package org.opendaylight.aaa.encrypt.impl;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,6 +37,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.opendaylight.aaa.encrypt.AAAEncryptionService;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
@@ -47,8 +48,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
-/*
- *  @author - Sharon Aicler (saichler@gmail.com)
+/**
+ * Provides a basic encryption service implementation with configuration knobs.
+ *
+ * @author - Sharon Aicler (saichler@gmail.com)
  */
 @Deprecated
 public class AAAEncryptionServiceImpl implements AAAEncryptionService {
@@ -154,33 +157,33 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     }
 
     @Override
-    public String decrypt(String encData) {
-        if (key == null || encData == null || encData.length() == 0) {
-            LOG.warn("String {} was not decrypted.", encData);
-            return encData;
+    public String decrypt(String encryptedData) {
+        if (key == null || encryptedData == null || encryptedData.length() == 0) {
+            LOG.warn("String {} was not decrypted.", encryptedData);
+            return encryptedData;
         }
         try {
-            byte[] cryptobytes = DatatypeConverter.parseBase64Binary(encData);
+            byte[] cryptobytes = DatatypeConverter.parseBase64Binary(encryptedData);
             byte[] clearbytes = decryptCipher.doFinal(cryptobytes);
             return new String(clearbytes, Charset.defaultCharset());
         } catch (IllegalBlockSizeException | BadPaddingException e) {
             LOG.error("Failed to decrypt encoded data", e);
         }
-        return encData;
+        return encryptedData;
     }
 
     @Override
-    public byte[] decrypt(byte[] encData) {
-        if (encData == null) {
-            LOG.warn("encData is null.");
-            return encData;
+    public byte[] decrypt(byte[] encryptedData) {
+        if (encryptedData == null) {
+            LOG.warn("encryptedData is null.");
+            return encryptedData;
         }
         try {
-            return decryptCipher.doFinal(encData);
+            return decryptCipher.doFinal(encryptedData);
         } catch (IllegalBlockSizeException | BadPaddingException e) {
             LOG.error("Failed to decrypt encoded data", e);
         }
-        return encData;
+        return encryptedData;
     }
 
     private void updateEncrySrvConfig(String newPwd, String newSalt) {
