@@ -33,7 +33,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev1
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.Policies;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.permission.Permissions;
 import org.opendaylight.yangtools.yang.binding.DataObject;
-import org.osgi.service.http.HttpService;
 
 /**
  * Tests the Dynamic Authorization Filter.
@@ -46,8 +45,8 @@ public class MDSALDynamicAuthorizationFilterTest {
     }
 
     private AAAShiroProvider newAAAShiroProvider(DataBroker dataBroker) {
-        return AAAShiroProvider.newInstance(dataBroker, null, null, null, mock(HttpService.class),
-                null, null, null, null, null);
+       return AAAShiroProvider.newInstance(dataBroker, null, null, null,
+               null,null, null);
     }
 
     // test helper method to generate some cool mdsal data
@@ -90,6 +89,9 @@ public class MDSALDynamicAuthorizationFilterTest {
 
     @Test
     public void testBasicAccessWithNoRules() throws Exception {
+        //
+        // Test Setup: No rules are added to the HttpAuthorization container.  Open access should be allowed.
+
         final HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getRequestURI()).thenReturn("abc");
         when(request.getMethod()).thenReturn("Put");
@@ -131,6 +133,11 @@ public class MDSALDynamicAuthorizationFilterTest {
 
     @Test
     public void testMDSALExceptionDuringRead() throws Exception {
+        //
+        // Test Setup: No rules are added to the HttpAuthorization container.  The MDSAL read
+        // is instructed to return an immediateFailedCheckedFuture, to emulate an error in reading
+        // the Data Store.
+
         final HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getRequestURI()).thenReturn("abc");
         when(request.getMethod()).thenReturn("Put");
@@ -146,9 +153,7 @@ public class MDSALDynamicAuthorizationFilterTest {
 
         newAAAShiroProvider(dataBroker);
 
-        // Test Setup: No rules are added to the HttpAuthorization container.  The MDSAL read
-        // is instructed to return an immediateFailedCheckedFuture, to emulate an error in reading
-        // the Data Store.
+        // Test Setup: No rules are added to the HttpAuthorization container.  Open access should be allowed.
         final Subject subject = mock(Subject.class);
         final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
             @Override
@@ -380,5 +385,6 @@ public class MDSALDynamicAuthorizationFilterTest {
         assertFalse(filter.isAccessAllowed(request, null, null));
         when(request.getMethod()).thenReturn("Get");
         assertTrue(filter.isAccessAllowed(request, null, null));
+
     }
 }

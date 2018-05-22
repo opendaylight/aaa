@@ -12,7 +12,9 @@
     <relativePath>../parent</relativePath>
   </parent>
 
+  <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-filterchain</artifactId>
+  <version>0.7.3-SNAPSHOT</version>
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>bundle</packaging>
 
@@ -58,7 +60,6 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Bundle-Activator>org.opendaylight.aaa.filterchain.Activator</Bundle-Activator>
             <Bundle-Name>${project.groupId}.${project.artifactId}</Bundle-Name>
             <DynamicImport-Package>*</DynamicImport-Package>
           </instructions>
