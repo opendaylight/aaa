@@ -18,6 +18,7 @@ import java.security.PublicKey;
 import org.bouncycastle.openssl.EncryptionException;
 import org.junit.Before;
 import org.junit.Test;
+import org.opendaylight.aaa.encrypt.impl.PKIUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

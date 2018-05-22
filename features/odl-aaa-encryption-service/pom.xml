@@ -23,6 +23,18 @@
 
     <name>ODL :: aaa :: ${project.artifactId}</name>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>aaa-artifacts</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <!-- MD-SAL -->
         <dependency>
@@ -43,13 +55,15 @@
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-encrypt-service</artifactId>
-            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-encrypt-service-impl</artifactId>
         </dependency>
         <dependency>
             <!-- finalname="etc/opendaylight/datastore/initial/config/aaa-encrypt-service-config.xml" -->
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-encrypt-service</artifactId>
-            <version>${project.version}</version>
             <type>xml</type>
             <classifier>config</classifier>
         </dependency>
