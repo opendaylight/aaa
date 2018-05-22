@@ -35,7 +35,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev1
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.Policies;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.permission.Permissions;
 import org.opendaylight.yangtools.yang.binding.DataObject;
-import org.osgi.service.http.HttpService;
 
 /**
  * Tests the Dynamic Authorization Filter.
@@ -44,7 +43,7 @@ public class MDSALDynamicAuthorizationFilterTest {
 
     @Before
     public void setup() {
-        AAAShiroProvider.newInstance(null, null, null, null, mock(HttpService.class), null, null, null, null, null);
+        AAAShiroProvider.newInstance(null, null, null, null, null, null, null);
     }
 
     // test helper method to generate some cool mdsal data
