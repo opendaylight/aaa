@@ -6,10 +6,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.opendaylight.aaa</groupId>
-    <artifactId>aaa-parent</artifactId>
-    <version>0.7.3-SNAPSHOT</version>
-    <relativePath>../parent</relativePath>
+    <groupId>org.opendaylight.odlparent</groupId>
+    <artifactId>bundle-parent</artifactId>
+    <version>3.1.1</version>
+    <relativePath/>
   </parent>
 
   <artifactId>aaa-filterchain</artifactId>
@@ -58,7 +58,6 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Bundle-Activator>org.opendaylight.aaa.filterchain.Activator</Bundle-Activator>
             <Bundle-Name>${project.groupId}.${project.artifactId}</Bundle-Name>
             <DynamicImport-Package>*</DynamicImport-Package>
           </instructions>
