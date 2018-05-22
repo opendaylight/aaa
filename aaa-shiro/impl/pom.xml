@@ -249,6 +249,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                             org.opendaylight.aaa.*,
                             org.opendaylight.aaa.api.*,
                             org.opendaylight.aaa.filterchain.filters,
+                            org.opendaylight.aaa.filterchain.configuration,
                             org.xml.sax,
                             org.apache.commons.text,
                             org.apache.felix.dm,
