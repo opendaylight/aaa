@@ -58,12 +58,12 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>aaa-encrypt-service</artifactId>
-            <classifier>config</classifier>
-            <type>xml</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>aaa-encrypt-service</artifactId>
+            <artifactId>aaa-encrypt-service-impl</artifactId>
+            <classifier>config</classifier>
+            <type>xml</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -74,6 +74,10 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>aaa-filterchain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>aaa-password-service-api</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -124,6 +128,22 @@
             <artifactId>odl-aaa-shiro</artifactId>
             <classifier>features</classifier>
             <type>xml</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}.web</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}.web</groupId>
+            <artifactId>servlet-jersey2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}.web</groupId>
+            <artifactId>web-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}.web</groupId>
+            <artifactId>web-osgi-impl</artifactId>
         </dependency>
 
     </dependencies>
