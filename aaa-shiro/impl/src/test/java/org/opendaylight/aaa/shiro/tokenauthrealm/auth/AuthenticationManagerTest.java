@@ -25,7 +25,6 @@ import java.util.concurrent.Future;
 import org.junit.Test;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationService;
-import org.osgi.service.cm.ConfigurationException;
 
 public class AuthenticationManagerTest {
     @Test
@@ -81,7 +80,7 @@ public class AuthenticationManagerTest {
     }
 
     @Test
-    public void testUpdatedValid() throws ConfigurationException {
+    public void testUpdatedValid() throws RuntimeException {
         Dictionary<String, String> props = new Hashtable<>();
         AuthenticationManager as = AuthenticationManager.instance();
 
@@ -97,7 +96,7 @@ public class AuthenticationManagerTest {
     }
 
     @Test
-    public void testUpdatedNullProperty() throws ConfigurationException {
+    public void testUpdatedNullProperty() throws RuntimeException {
         AuthenticationManager as = AuthenticationManager.instance();
 
         assertFalse(as.isAuthEnabled());
@@ -105,8 +104,8 @@ public class AuthenticationManagerTest {
         assertFalse(as.isAuthEnabled());
     }
 
-    @Test(expected = ConfigurationException.class)
-    public void testUpdatedInvalidValue() throws ConfigurationException {
+    @Test(expected = RuntimeException.class)
+    public void testUpdatedInvalidValue() throws RuntimeException {
         AuthenticationManager as = AuthenticationManager.instance();
         Dictionary<String, String> props = new Hashtable<>();
 
@@ -114,8 +113,8 @@ public class AuthenticationManagerTest {
         as.updated(props);
     }
 
-    @Test(expected = ConfigurationException.class)
-    public void testUpdatedInvalidKey() throws ConfigurationException {
+    @Test(expected = RuntimeException.class)
+    public void testUpdatedInvalidKey() throws RuntimeException {
         AuthenticationManager as = AuthenticationManager.instance();
         Dictionary<String, String> props = new Hashtable<>();
 
