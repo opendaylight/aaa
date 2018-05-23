@@ -8,14 +8,14 @@
 
 package org.opendaylight.aaa.shiro.realm.util.http;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.UniformInterfaceException;
-import com.sun.jersey.api.client.WebResource;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -48,21 +48,22 @@ public class SimpleHttpRequest<T> {
      *
      * @return the result of the http request.
      */
+    @SuppressWarnings("unchecked")
     public T execute() {
-        WebResource webResource = client.resource(uri).path(path);
+        WebTarget webTarget = client.target(uri).path(path);
 
         // add the query params
-        queryParams.forEach(webResource::queryParam);
+        queryParams.forEach(webTarget::queryParam);
 
         try {
             if (outputType == Response.class) {
-                ClientResponse output = webResource.type(mediaType).method(method, ClientResponse.class, entity);
-                return outputType.cast(clientResponseToResponse(output));
+                return (T) webTarget.request(mediaType)
+                        .method(method, Entity.entity(entity, mediaType), Response.class);
             } else {
-                return webResource.type(mediaType).method(method, outputType, entity);
+                return webTarget.request(mediaType).method(method, Entity.entity(entity, mediaType), outputType);
             }
-        } catch (UniformInterfaceException theException) {
-            throw new WebApplicationException(theException, clientResponseToResponse(theException.getResponse()));
+        } catch (ProcessingException e) {
+            throw new WebApplicationException(e);
         }
     }
 
@@ -77,13 +78,6 @@ public class SimpleHttpRequest<T> {
      */
     static <T> Builder<T> builder(Client client, Class<T> outputType) {
         return new Builder<>(client, outputType);
-    }
-
-    private static Response clientResponseToResponse(final ClientResponse clientResponse) {
-        Response.ResponseBuilder rb = Response.status(clientResponse.getStatus());
-        clientResponse.getHeaders().forEach((header, values) -> values.forEach(value -> rb.header(header, value)));
-        rb.entity(clientResponse.getEntityInputStream());
-        return rb.build();
     }
 
     public static class Builder<T> {

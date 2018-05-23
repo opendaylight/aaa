@@ -13,25 +13,23 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.UniformInterfaceException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.ws.rs.core.MediaType;
-import org.junit.Ignore;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import org.junit.Test;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
 
-@Ignore
 public class RoleHandlerTest extends HandlerTest {
 
     @Test
     public void testRoleHandler() {
         // check default roles
-        Roles roles = resource().path("/v1/roles").get(Roles.class);
+        Roles roles = target("/v1/roles").request().get(Roles.class);
         assertNotNull(roles);
         List<Role> roleList = roles.getRoles();
         assertEquals(2, roleList.size());
@@ -40,18 +38,16 @@ public class RoleHandlerTest extends HandlerTest {
         }
 
         // check existing role
-        Role role = resource().path("/v1/roles/0").get(Role.class);
+        Role role = target("/v1/roles/0").request().get(Role.class);
         assertNotNull(role);
         assertTrue(role.getName().equals("admin"));
 
         // check not exist Role
         try {
-            resource().path("/v1/roles/5").get(IDMError.class);
-            fail("Should failed with 404!");
-        } catch (UniformInterfaceException e) {
-            ClientResponse resp = e.getResponse();
-            assertEquals(404, resp.getStatus());
-            assertTrue(resp.getEntity(IDMError.class).getMessage().contains("role not found"));
+            target("/v1/roles/5").request().get(IDMError.class);
+            fail("Should fail with 404!");
+        } catch (NotFoundException e) {
+            // expected
         }
 
         // check create Role
@@ -59,42 +55,36 @@ public class RoleHandlerTest extends HandlerTest {
         roleData.put("name", "role1");
         roleData.put("description", "test Role");
         roleData.put("domainid", "0");
-        ClientResponse clientResponse = resource().path("/v1/roles").type(MediaType.APPLICATION_JSON)
-                .post(ClientResponse.class, roleData);
+        Response clientResponse = target("/v1/roles").request().post(entity(roleData));
         assertEquals(201, clientResponse.getStatus());
 
         // check create Role missing name data
         roleData.remove("name");
         try {
-            clientResponse = resource().path("/v1/roles").type(MediaType.APPLICATION_JSON).post(ClientResponse.class,
-                    roleData);
+            clientResponse = target("/v1/roles").request().post(entity(roleData));
             assertEquals(404, clientResponse.getStatus());
-        } catch (UniformInterfaceException e) {
-            ClientResponse resp = e.getResponse();
-            assertEquals(500, resp.getStatus());
+        } catch (WebApplicationException e) {
+            assertEquals(500, e.getResponse().getStatus());
         }
 
         // check update Role data
         roleData.put("name", "role1Update");
-        clientResponse = resource().path("/v1/roles/2").type(MediaType.APPLICATION_JSON).put(ClientResponse.class,
-                roleData);
+        clientResponse = target("/v1/roles/2").request().put(entity(roleData));
         assertEquals(200, clientResponse.getStatus());
-        role = resource().path("/v1/roles/2").get(Role.class);
+        role = target("/v1/roles/2").request().get(Role.class);
         assertNotNull(role);
         assertTrue(role.getName().equals("role1Update"));
 
         // check delete Role
-        clientResponse = resource().path("/v1/roles/2").delete(ClientResponse.class);
+        clientResponse = target("/v1/roles/2").request().delete();
         assertEquals(204, clientResponse.getStatus());
 
         // check delete not existing Role
         try {
-            resource().path("/v1/roles/2").delete(IDMError.class);
-            fail("Should failed with 404!");
-        } catch (UniformInterfaceException e) {
-            ClientResponse resp = e.getResponse();
-            assertEquals(404, resp.getStatus());
-            assertTrue(resp.getEntity(IDMError.class).getMessage().contains("role id not found"));
+            target("/v1/roles/2").request().delete(IDMError.class);
+            fail("Should fail with 404!");
+        } catch (NotFoundException e) {
+            // expected
         }
 
         // Bug 8382: if a role id is specified, 400 is returned
@@ -103,8 +93,7 @@ public class RoleHandlerTest extends HandlerTest {
         roleData.put("description", "test Role");
         roleData.put("domainid", "0");
         roleData.put("roleid", "roleid");
-        clientResponse = resource().path("/v1/roles").type(MediaType.APPLICATION_JSON).post(ClientResponse.class,
-                roleData);
+        clientResponse = target("/v1/roles").request().post(entity(roleData));
         assertEquals(400, clientResponse.getStatus());
     }
 }
