@@ -8,14 +8,13 @@
 
 package org.opendaylight.aaa.shiro.realm.util.http;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.client.urlconnection.HTTPSProperties;
 import java.util.HashSet;
 import java.util.Set;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import org.glassfish.jersey.client.ClientConfig;
 
 /**
  * An utility that represents an HTTP client that allows to make
@@ -99,12 +98,10 @@ public class SimpleHttpClient {
          * @return the client.
          */
         public SimpleHttpClient build() {
-            final ClientConfig clientConfig = new DefaultClientConfig();
-            clientConfig.getClasses().addAll(providers);
-            clientConfig.getProperties().put(
-                    HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
-                    new HTTPSProperties(hostnameVerifier, sslContext));
-            final Client client = Client.create(clientConfig);
+            final ClientConfig clientConfig = new ClientConfig();
+            providers.forEach(clientConfig::register);
+            Client client = ClientBuilder.newBuilder().sslContext(sslContext).hostnameVerifier(hostnameVerifier)
+                    .withConfig(clientConfig).build();
             return new SimpleHttpClient(client);
         }
 

@@ -20,6 +20,8 @@ import org.opendaylight.aaa.web.WebContextBuilder;
 import org.opendaylight.aaa.web.WebContextRegistration;
 import org.opendaylight.aaa.web.WebContextSecurer;
 import org.opendaylight.aaa.web.WebServer;
+import org.opendaylight.aaa.web.servlet.ServletSupport;
+import org.slf4j.LoggerFactory;
 
 /**
  * Initializer for web components.
@@ -34,15 +36,14 @@ public class WebInitializer {
     private final WebContextRegistration registraton;
 
     public WebInitializer(WebServer webServer, ClaimCache claimCache, IIDMStore iidMStore,
-            WebContextSecurer webContextSecurer,
+            WebContextSecurer webContextSecurer, ServletSupport servletSupport,
             CustomFilterAdapterConfiguration customFilterAdapterConfig) throws ServletException {
 
+        LoggerFactory.getLogger(WebInitializer.class).info("!!!!!!!ServletSupport {}", servletSupport);
         WebContextBuilder webContextBuilder = WebContext.builder().contextPath("auth").supportsSessions(true)
 
-            .addServlet(ServletDetails.builder().servlet(new com.sun.jersey.spi.container.servlet.ServletContainer(
-                    new IdmLightApplication(iidMStore, claimCache)))
-                .putInitParam("com.sun.jersey.api.json.POJOMappingFeature", "true")
-                .putInitParam("jersey.config.server.provider.packages", "org.opendaylight.aaa.impl.provider")
+            .addServlet(ServletDetails.builder().servlet(servletSupport.createHttpServletBuilder(
+                    new IdmLightApplication(iidMStore, claimCache)).build())
                 .addUrlPattern("/*").build())
 
             // Allows user to add javax.servlet.Filter(s) in front of REST services

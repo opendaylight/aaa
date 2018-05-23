@@ -44,17 +44,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <!-- We need to depend on a separate Jersey feature to ensure that
-                 it’s all initialised before we start using it; see also the
-                 prerequisite setup below -->
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>odl-aaa-jersey-1</artifactId>
-            <version>${project.version}</version>
-            <classifier>features</classifier>
-            <type>xml</type>
-        </dependency>
-
         <!-- OSGI -->
         <dependency>
             <groupId>org.apache.felix</groupId>
@@ -167,22 +156,6 @@
             <type>xml</type>
             <classifier>features</classifier>
         </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-servlet</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-        </dependency>
 
         <!-- EhCache -->
         <dependency>
@@ -239,11 +212,6 @@
                 <plugin>
                     <groupId>org.apache.karaf.tooling</groupId>
                     <artifactId>karaf-maven-plugin</artifactId>
-                    <configuration>
-                        <prerequisiteFeatures>
-                            <prerequisiteFeature>odl-aaa-jersey-1</prerequisiteFeature>
-                        </prerequisiteFeatures>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

@@ -13,42 +13,37 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.UniformInterfaceException;
 import java.util.HashMap;
 import java.util.Map;
-import javax.ws.rs.core.MediaType;
-import org.junit.Ignore;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.core.Response;
 import org.junit.Test;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Domains;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.Roles;
 
-@Ignore
 public class DomainHandlerTest extends HandlerTest {
 
     @Test
     public void testDomainHandler() {
         // check default domains
-        Domains domains = resource().path("/v1/domains").get(Domains.class);
+        Domains domains = target("/v1/domains").request().get(Domains.class);
         assertNotNull(domains);
         assertEquals(1, domains.getDomains().size());
         assertTrue(domains.getDomains().get(0).getName().equals("sdn"));
 
         // check existing domain
-        Domain domain = resource().path("/v1/domains/0").get(Domain.class);
+        Domain domain = target("/v1/domains/0").request().get(Domain.class);
         assertNotNull(domain);
         assertTrue(domain.getName().equals("sdn"));
 
         // check not exist domain
         try {
-            resource().path("/v1/domains/5").get(IDMError.class);
-            fail("Should failed with 404!");
-        } catch (UniformInterfaceException e) {
-            ClientResponse resp = e.getResponse();
-            assertEquals(404, resp.getStatus());
-            assertTrue(resp.getEntity(IDMError.class).getMessage().contains("Not found! domain id"));
+            target("/v1/domains/5").request().get(IDMError.class);
+            fail("Should fail with 404!");
+        } catch (NotFoundException e) {
+            // expected
         }
 
         // check create domain
@@ -56,84 +51,74 @@ public class DomainHandlerTest extends HandlerTest {
         domainData.put("name", "dom1");
         domainData.put("description", "test dom");
         domainData.put("enabled", "true");
-        ClientResponse clientResponse = resource().path("/v1/domains").type(MediaType.APPLICATION_JSON)
-                .post(ClientResponse.class, domainData);
+        Response clientResponse = target("/v1/domains").request().post(entity(domainData));
         assertEquals(201, clientResponse.getStatus());
 
         // check update domain data
         domainData.put("name", "dom1Update");
-        clientResponse = resource().path("/v1/domains/1").type(MediaType.APPLICATION_JSON).put(ClientResponse.class,
-                domainData);
+        clientResponse = target("/v1/domains/1").request().put(entity(domainData));
         assertEquals(200, clientResponse.getStatus());
-        domain = resource().path("/v1/domains/1").get(Domain.class);
+        domain = target("/v1/domains/1").request().get(Domain.class);
         assertNotNull(domain);
         assertTrue(domain.getName().equals("dom1Update"));
 
         // check create grant
         Map<String, String> grantData = new HashMap<>();
         grantData.put("roleid", "1");
-        clientResponse = resource().path("/v1/domains/1/users/0/roles").type(MediaType.APPLICATION_JSON)
-                .post(ClientResponse.class, grantData);
+        clientResponse = target("/v1/domains/1/users/0/roles").request().post(entity(grantData));
         assertEquals(201, clientResponse.getStatus());
 
         // check create existing grant
-        clientResponse = resource().path("/v1/domains/1/users/0/roles").type(MediaType.APPLICATION_JSON)
-                .post(ClientResponse.class, grantData);
+        clientResponse = target("/v1/domains/1/users/0/roles").request().post(entity(grantData));
         assertEquals(403, clientResponse.getStatus());
 
         // check create grant with invalid domain id
-        clientResponse = resource().path("/v1/domains/5/users/0/roles").type(MediaType.APPLICATION_JSON)
-                .post(ClientResponse.class, grantData);
+        clientResponse = target("/v1/domains/5/users/0/roles").request().post(entity(grantData));
         assertEquals(404, clientResponse.getStatus());
 
         // check validate user (admin)
         Map<String, String> usrPwdData = new HashMap<>();
         usrPwdData.put("username", "admin");
         usrPwdData.put("userpwd", "admin");
-        clientResponse = resource().path("/v1/domains/0/users/roles").type(MediaType.APPLICATION_JSON)
-                .post(ClientResponse.class, usrPwdData);
+        clientResponse = target("/v1/domains/0/users/roles").request().post(entity(usrPwdData));
         assertEquals(200, clientResponse.getStatus());
 
         // check validate user (admin) with wrong password
         usrPwdData.put("userpwd", "1234");
-        clientResponse = resource().path("/v1/domains/0/users/roles").type(MediaType.APPLICATION_JSON)
-                .post(ClientResponse.class, usrPwdData);
+        clientResponse = target("/v1/domains/0/users/roles").request().post(entity(usrPwdData));
         assertEquals(401, clientResponse.getStatus());
 
         // check get user (admin) roles
-        Roles usrRoles = resource().path("/v1/domains/0/users/0/roles").get(Roles.class);
+        Roles usrRoles = target("/v1/domains/0/users/0/roles").request().get(Roles.class);
         assertNotNull(usrRoles);
         assertTrue(usrRoles.getRoles().size() > 1);
 
         // check get invalid user roles
         try {
-            resource().path("/v1/domains/0/users/5/roles").get(IDMError.class);
-            fail("Should failed with 404!");
-        } catch (UniformInterfaceException e) {
-            ClientResponse resp = e.getResponse();
-            assertEquals(404, resp.getStatus());
+            target("/v1/domains/0/users/5/roles").request().get(IDMError.class);
+            fail("Should fail with 404!");
+        } catch (NotFoundException e) {
+            // expected
         }
 
         // check delete grant
-        clientResponse = resource().path("/v1/domains/0/users/0/roles/0").delete(ClientResponse.class);
+        clientResponse = target("/v1/domains/0/users/0/roles/0").request().delete();
         assertEquals(204, clientResponse.getStatus());
 
         // check delete grant for invalid domain
-        clientResponse = resource().path("/v1/domains/3/users/0/roles/0").delete(ClientResponse.class);
+        clientResponse = target("/v1/domains/3/users/0/roles/0").request().delete();
         assertEquals(404, clientResponse.getStatus());
 
         // check delete domain
-        clientResponse = resource().path("/v1/domains/1").delete(ClientResponse.class);
+        clientResponse = target("/v1/domains/1").request().delete();
         assertEquals(204, clientResponse.getStatus());
 
         // check delete not existing domain
         try {
-            resource().path("/v1/domains/1").delete(IDMError.class);
-            fail("Shoulda failed with 404!");
-        } catch (UniformInterfaceException e) {
-            ClientResponse resp = e.getResponse();
-            assertEquals(404, resp.getStatus());
-            assertTrue(resp.getEntity(IDMError.class).getMessage().contains("Not found! Domain id"));
+            target("/v1/domains/1").request().delete(IDMError.class);
+            fail("Should fail with 404!");
+        } catch (NotFoundException e) {
+            // expected
         }
 
         // Bug 8382: if a domain id is specified, 400 is returned
@@ -142,16 +127,14 @@ public class DomainHandlerTest extends HandlerTest {
         domainData.put("description", "test dom");
         domainData.put("domainid", "dom1");
         domainData.put("enabled", "true");
-        clientResponse = resource().path("/v1/domains").type(MediaType.APPLICATION_JSON).post(ClientResponse.class,
-                domainData);
+        clientResponse = target("/v1/domains").request().post(entity(domainData));
         assertEquals(400, clientResponse.getStatus());
 
         // Bug 8382: if a grant id is specified, 400 is returned
         grantData = new HashMap<>();
         grantData.put("roleid", "1");
         grantData.put("grantid", "grantid");
-        clientResponse = resource().path("/v1/domains/1/users/0/roles").type(MediaType.APPLICATION_JSON)
-                .post(ClientResponse.class, grantData);
+        clientResponse = target("/v1/domains/1/users/0/roles").request().post(entity(grantData));
         assertEquals(400, clientResponse.getStatus());
     }
 }
