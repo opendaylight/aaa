@@ -13,12 +13,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.UniformInterfaceException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.opendaylight.aaa.api.model.IDMError;
@@ -31,7 +31,7 @@ public class UserHandlerTest extends HandlerTest {
     @Test
     public void testUserHandler() {
         // check default users
-        Users users = resource().path("/v1/users").get(Users.class);
+        Users users = target("/v1/users").request().get(Users.class);
         assertNotNull(users);
         List<User> usrList = users.getUsers();
         assertEquals(1, usrList.size());
@@ -40,18 +40,16 @@ public class UserHandlerTest extends HandlerTest {
         }
 
         // check existing user
-        User usr = resource().path("/v1/users/0").get(User.class);
+        User usr = target("/v1/users/0").request().get(User.class);
         assertNotNull(usr);
         assertTrue(usr.getName().equals("admin"));
 
         // check not exist user
         try {
-            resource().path("/v1/users/5").get(IDMError.class);
-            fail("Should failed with 404!");
-        } catch (UniformInterfaceException e) {
-            ClientResponse resp = e.getResponse();
-            assertEquals(404, resp.getStatus());
-            assertTrue(resp.getEntity(IDMError.class).getMessage().contains("user not found"));
+            target("/v1/users/5").request().get(IDMError.class);
+            fail("Should fail with 404!");
+        } catch (NotFoundException e) {
+            // expected
         }
 
         // check create user
@@ -62,42 +60,36 @@ public class UserHandlerTest extends HandlerTest {
         usrData.put("email", "user1@usr.org");
         usrData.put("password", "ChangeZbadPa$$w0rd");
         usrData.put("domainid", "0");
-        ClientResponse clientResponse = resource().path("/v1/users").type(MediaType.APPLICATION_JSON)
-                .post(ClientResponse.class, usrData);
+        Response clientResponse = target("/v1/users").request().post(entity(usrData));
         assertEquals(201, clientResponse.getStatus());
 
         // check create user missing name data
         usrData.remove("name");
         try {
-            clientResponse = resource().path("/v1/users").type(MediaType.APPLICATION_JSON).post(ClientResponse.class,
-                    usrData);
+            clientResponse = target("/v1/users").request().post(entity(usrData));
             assertEquals(400, clientResponse.getStatus());
-        } catch (UniformInterfaceException e) {
-            ClientResponse resp = e.getResponse();
-            assertEquals(500, resp.getStatus());
+        } catch (WebApplicationException e) {
+            assertEquals(500, e.getResponse().getStatus());
         }
 
         // check update user data
         usrData.put("name", "usr1Update");
-        clientResponse = resource().path("/v1/users/1").type(MediaType.APPLICATION_JSON).put(ClientResponse.class,
-                usrData);
+        clientResponse = target("/v1/users/1").request().put(entity(usrData));
         assertEquals(200, clientResponse.getStatus());
-        usr = resource().path("/v1/users/1").get(User.class);
+        usr = target("/v1/users/1").request().get(User.class);
         assertNotNull(usr);
         assertTrue(usr.getName().equals("usr1Update"));
 
         // check delete user
-        clientResponse = resource().path("/v1/users/1").delete(ClientResponse.class);
+        clientResponse = target("/v1/users/1").request().delete();
         assertEquals(204, clientResponse.getStatus());
 
         // check delete not existing user
         try {
-            resource().path("/v1/users/1").delete(IDMError.class);
-            fail("Should failed with 404!");
-        } catch (UniformInterfaceException e) {
-            ClientResponse resp = e.getResponse();
-            assertEquals(404, resp.getStatus());
-            assertTrue(resp.getEntity(IDMError.class).getMessage().contains("Couldn't find user"));
+            target("/v1/users/1").request().delete(IDMError.class);
+            fail("Should fail with 404!");
+        } catch (NotFoundException e) {
+            // expected
         }
 
         // Bug 8382: if a user id is specified, 400 is returned
@@ -109,8 +101,7 @@ public class UserHandlerTest extends HandlerTest {
         usrData.put("password", "ChangeZbadPa$$w0rd");
         usrData.put("userid", "userid");
         usrData.put("domainid", "0");
-        clientResponse = resource().path("/v1/users").type(MediaType.APPLICATION_JSON).post(ClientResponse.class,
-                usrData);
+        clientResponse = target("/v1/users").request().post(entity(usrData));
         assertEquals(400, clientResponse.getStatus());
     }
 }

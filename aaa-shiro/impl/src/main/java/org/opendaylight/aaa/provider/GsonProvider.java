@@ -87,7 +87,8 @@ public class GsonProvider<T> implements MessageBodyReader<T>, MessageBodyWriter<
 
         try (PrintWriter printWriter = new PrintWriter(entityStream)) {
             String json;
-            if (ui.getQueryParameters().containsKey(PRETTY_PRINT)) {
+            final MultivaluedMap<String, String> queryParameters = ui != null ? ui.getQueryParameters() : null;
+            if (queryParameters != null && queryParameters.containsKey(PRETTY_PRINT)) {
                 json = prettyGson.toJson(type);
             } else {
                 json = gson.toJson(type);

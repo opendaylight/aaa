@@ -9,6 +9,7 @@
 package org.opendaylight.aaa.shiro.idm;
 
 import com.google.common.collect.ImmutableSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.ws.rs.core.Application;
 import org.opendaylight.aaa.api.ClaimCache;
@@ -46,8 +47,8 @@ public class IdmLightApplication extends Application {
     private final ClaimCache claimCache;
 
     public IdmLightApplication(IIDMStore iidMStore, ClaimCache claimCache) {
-        this.iidMStore = iidMStore;
-        this.claimCache = claimCache;
+        this.iidMStore = Objects.requireNonNull(iidMStore);
+        this.claimCache = Objects.requireNonNull(claimCache);
     }
 
     @Override

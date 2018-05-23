@@ -101,11 +101,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 
   <reference id="webServer" interface="org.opendaylight.aaa.web.WebServer" />
 
+  <reference id="servletSupport" interface="org.opendaylight.aaa.web.servlet.ServletSupport" />
+
   <bean id="webInitializer" class="org.opendaylight.aaa.shiro.web.env.WebInitializer" destroy-method="close">
     <argument ref="webServer"/>
     <argument ref="idmLightProxy"/>
     <argument ref="idmStore"/>
     <argument ref="webContextSecurer"/>
+    <argument ref="servletSupport"/>
     <argument ref="customFilterAdapterConfig"/>
   </bean>
 </blueprint>

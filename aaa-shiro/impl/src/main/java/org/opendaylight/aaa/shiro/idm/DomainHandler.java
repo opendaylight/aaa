@@ -9,6 +9,7 @@ package org.opendaylight.aaa.shiro.idm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -56,8 +57,8 @@ public class DomainHandler {
     private final ClaimCache claimCache;
 
     public DomainHandler(IIDMStore iidMStore, ClaimCache claimCache) {
-        this.iidMStore = iidMStore;
-        this.claimCache = claimCache;
+        this.iidMStore = Objects.requireNonNull(iidMStore);
+        this.claimCache = Objects.requireNonNull(claimCache);
     }
 
     /**
