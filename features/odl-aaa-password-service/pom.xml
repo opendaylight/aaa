@@ -53,11 +53,18 @@
             <classifier>aaa-password-service-config</classifier>
             <type>xml</type>
         </dependency>
+	<dependency>
+            <groupId>org.opendaylight.mdsal</groupId>
+            <artifactId>odl-mdsal-binding-base</artifactId>
+            <version>2.5.0-SNAPSHOT</version>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.3</version>
-        </dependency>
+	</dependency>
     </dependencies>
 
 </project>
