@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2f958cf_e3a088a0",
+        "filename": "aaa-encrypt-service/api/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-05-24T19:37:44Z",
+      "side": 1,
+      "message": "aaa-encrypt-service-api?",
+      "range": {
+        "startLine": 14,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "44561616b4c18cee764fdc6e8f4435ba90e7ed81",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ebc236a_bea808c2",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/impl/encrypt/AAAEncryptionServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-05-24T19:37:44Z",
+      "side": 1,
+      "message": "I think this should be \"encrypt.impl\" for consistency with other projects.",
+      "range": {
+        "startLine": 8,
+        "startChar": 29,
+        "endLine": 8,
+        "endChar": 41
+      },
+      "revId": "44561616b4c18cee764fdc6e8f4435ba90e7ed81",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
