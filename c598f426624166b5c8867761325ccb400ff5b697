@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c12246b8_ffe1749e",
+        "filename": "aaa-cli-jar/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-05-25T14:47:16Z",
+      "side": 1,
+      "message": "just but this as an additional \u003cfilter\u003e into the \u003cplugin\u003e above (where there already are 2...) - do not create an entire new \u003cexecution\u003e, that\u0027s wrong.",
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f39b79a_469547e6",
+        "filename": "aaa-cli-jar/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-05-25T14:47:16Z",
+      "side": 1,
+      "message": "as above, just put this as a new (4th) filter, only.",
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be29d8bb_8ddaba44",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/utils/DataStoreUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-05-25T14:47:16Z",
+      "side": 1,
+      "message": "IMHO doing this is ugly - FYI if you use infrautils:parent you get a correctly configured Error Prone with which instead of having final on all parameters and local variables, will assume final implicitily, fail if you modify it (and force you to use @Var for the exceptional case of local variables which you do want to modify).",
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2a8ad83_3a1172d8",
+        "filename": "aaa-password-service/impl/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-05-25T14:47:16Z",
+      "side": 1,
+      "message": "why do you need to customize this here?  It should, and normally is, just fine with the default... if there is a problem with the default, we should fix it more generally glboally instead of per bundle here?",
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "618368ec_58fba7fb",
+        "filename": "aaa-password-service/impl/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-05-25T14:47:16Z",
+      "side": 1,
+      "message": "why do you need to customize this here?  It should, and normally is, just fine with the default... By default, any packages are exported.  If you do not want other bundles to use your code, then you name the package .impl or .internal, and the maven-bundle-plugin won\u0027t Export-Package it.",
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2acca77b_1a4b560f",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-05-25T14:47:16Z",
+      "side": 1,
+      "message": "add aaa-password-service-api to aaa-artifacts instead so that you don\u0027t have to use \u003cversion\u003e${project.version} here (and downstream projects wanting to use it don\u0027t either)",
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
