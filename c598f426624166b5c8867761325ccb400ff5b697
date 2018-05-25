@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "4ef78fc8_1f612b1e",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/AaaCliAbstractCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-05-25T19:17:00Z",
+      "side": 1,
+      "message": "I think this should requireNonNull",
+      "range": {
+        "startLine": 32,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 46
+      },
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be29d8bb_8ddaba44",
         "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/utils/DataStoreUtils.java",
         "patchSetId": 2
@@ -98,6 +121,98 @@
       "writtenOn": "2018-05-25T14:47:16Z",
       "side": 1,
       "message": "add aaa-password-service-api to aaa-artifacts instead so that you don\u0027t have to use \u003cversion\u003e${project.version} here (and downstream projects wanting to use it don\u0027t either)",
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fcfda2c_b2a0ffa7",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/AAAShiroProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-05-25T19:17:00Z",
+      "side": 1,
+      "message": "This class doesn\u0027t this field so it shouldn\u0027t need to be injected and other components shouldn\u0027t need to get it from here (Law of Demeter).",
+      "range": {
+        "startLine": 54,
+        "startChar": 18,
+        "endLine": 54,
+        "endChar": 37
+      },
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db982d45_776f552a",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/datastore/h2/UserStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-05-25T19:17:00Z",
+      "side": 1,
+      "message": "requireNonNull",
+      "range": {
+        "startLine": 50,
+        "startChar": 31,
+        "endLine": 50,
+        "endChar": 46
+      },
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b078db1_1d5e1aae",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/idm/IdmLightProxy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-05-25T19:17:00Z",
+      "side": 1,
+      "message": "requireNonNull",
+      "range": {
+        "startLine": 54,
+        "startChar": 31,
+        "endLine": 54,
+        "endChar": 46
+      },
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e3d63b9_d1cc6ff2",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/datastore/h2/UserStoreTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-05-25T19:17:00Z",
+      "side": 1,
+      "message": "Pass a mock here or the real impl instead of null.",
+      "range": {
+        "startLine": 31,
+        "startChar": 86,
+        "endLine": 31,
+        "endChar": 90
+      },
       "revId": "c598f426624166b5c8867761325ccb400ff5b697",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
