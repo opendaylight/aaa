@@ -67,6 +67,10 @@
         <dependency>
             <groupId>org.glassfish.jersey.bundles.repackaged</groupId>
             <artifactId>jersey-guava</artifactId>
+            <!-- Keep this version in line with aaa.web:servlet-jersey2 -->
+            <!-- TODO remove dependency completely (not just version) when https://git.opendaylight.org/gerrit/72408 is available,
+                      because then it will be transitively inherited from aaa.web:servlet-jersey2; currently it also is, but with the
+                      wrong version, because odlparent's dependendencyManagement is stronger than the transitive dependency. -->
             <version>2.25.1</version>
         </dependency>
 
