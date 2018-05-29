@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3df16e78_2c8baceb",
+        "filename": "aaa-cli-jar/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-05-29T13:19:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c12246b8_ffe1749e",
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f39b79a_469547e6",
         "filename": "aaa-cli-jar/pom.xml",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-05-25T14:47:16Z",
       "side": 1,
       "message": "as above, just put this as a new (4th) filter, only.",
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ae9b581_13707bed",
+        "filename": "aaa-cli-jar/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-05-29T13:19:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f39b79a_469547e6",
       "revId": "c598f426624166b5c8867761325ccb400ff5b697",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6e74dcb6_64d123a4",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/AaaCliAbstractCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-05-29T13:19:29Z",
+      "side": 1,
+      "message": "It shouldn\u0027t be null, since blueprint should instantiate the PasswordService prior to instantiating the command, correct?  It is easy enough to add, this is just for my own clarification.",
+      "parentUuid": "4ef78fc8_1f612b1e",
+      "range": {
+        "startLine": 32,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 46
+      },
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be29d8bb_8ddaba44",
         "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/utils/DataStoreUtils.java",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2018-05-25T14:47:16Z",
       "side": 1,
       "message": "IMHO doing this is ugly - FYI if you use infrautils:parent you get a correctly configured Error Prone with which instead of having final on all parameters and local variables, will assume final implicitily, fail if you modify it (and force you to use @Var for the exceptional case of local variables which you do want to modify).",
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e497e11_e71b72fb",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/utils/DataStoreUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-05-29T13:19:29Z",
+      "side": 1,
+      "message": "We have had this argument ad-nauseam.  I don\u0027t really care, I am attempting to keep the code base consistent.  I can remove \"final\" additions in this patch, and eventually migrate the rest.  I agree, putting it everywhere has been a bad practice I adopted due to trying to emulate other projects\u0027 style in ODL.  However, the global change should be done in a separate patch.",
+      "parentUuid": "be29d8bb_8ddaba44",
       "revId": "c598f426624166b5c8867761325ccb400ff5b697",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "70ea3ff0_4628f906",
+        "filename": "aaa-password-service/impl/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-05-29T13:19:29Z",
+      "side": 1,
+      "message": "I can remove this.",
+      "parentUuid": "e2a8ad83_3a1172d8",
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "618368ec_58fba7fb",
         "filename": "aaa-password-service/impl/pom.xml",
         "patchSetId": 2
@@ -104,6 +200,24 @@
       "writtenOn": "2018-05-25T14:47:16Z",
       "side": 1,
       "message": "why do you need to customize this here?  It should, and normally is, just fine with the default... By default, any packages are exported.  If you do not want other bundles to use your code, then you name the package .impl or .internal, and the maven-bundle-plugin won\u0027t Export-Package it.",
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d0ff223_e7410804",
+        "filename": "aaa-password-service/impl/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-05-29T13:19:29Z",
+      "side": 1,
+      "message": "This is a special case since I am specifically exporting the DefaultPasswordHashService so it can be imported from a non-OSGI context (i.e., from the CLI you created).  It is purely being explicit about what we are exporting.  I can add a comment about it.  But you are right, it technically isn\u0027t needed.  I would rather just be very clear as to why we are allowing this to be exported.  I\u0027ll add a comment.",
+      "parentUuid": "618368ec_58fba7fb",
       "revId": "c598f426624166b5c8867761325ccb400ff5b697",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "45406383_6e1429de",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-05-29T13:19:29Z",
+      "side": 1,
+      "message": "API was already in artifacts so I just got rid of the version here.",
+      "parentUuid": "2acca77b_1a4b560f",
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fcfda2c_b2a0ffa7",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/AAAShiroProvider.java",
         "patchSetId": 2
@@ -138,6 +270,30 @@
       "writtenOn": "2018-05-25T19:17:00Z",
       "side": 1,
       "message": "This class doesn\u0027t this field so it shouldn\u0027t need to be injected and other components shouldn\u0027t need to get it from here (Law of Demeter).",
+      "range": {
+        "startLine": 54,
+        "startChar": 18,
+        "endLine": 54,
+        "endChar": 37
+      },
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ef8ac12_f3806292",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/AAAShiroProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-05-29T13:19:29Z",
+      "side": 1,
+      "message": "It is still used by KarafIniWebEnvironment to set up the thread locals.  I think it is needed for now until we remove that implementation.  Agreed?",
+      "parentUuid": "1fcfda2c_b2a0ffa7",
       "range": {
         "startLine": 54,
         "startChar": 18,
@@ -173,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "95def9f7_d7efad59",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/datastore/h2/UserStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-05-29T13:19:29Z",
+      "side": 1,
+      "message": "Again, shouldn\u0027t this be fine since this is coming from blueprint and not the ThreadLocal variables?  Added it anyway to be safe.",
+      "parentUuid": "db982d45_776f552a",
+      "range": {
+        "startLine": 50,
+        "startChar": 31,
+        "endLine": 50,
+        "endChar": 46
+      },
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b078db1_1d5e1aae",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/idm/IdmLightProxy.java",
         "patchSetId": 2
@@ -196,6 +376,30 @@
     },
     {
       "key": {
+        "uuid": "0a23240d_788ea4de",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/idm/IdmLightProxy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-05-29T13:19:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b078db1_1d5e1aae",
+      "range": {
+        "startLine": 54,
+        "startChar": 31,
+        "endLine": 54,
+        "endChar": 46
+      },
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3d63b9_d1cc6ff2",
         "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/datastore/h2/UserStoreTest.java",
         "patchSetId": 2
@@ -207,6 +411,30 @@
       "writtenOn": "2018-05-25T19:17:00Z",
       "side": 1,
       "message": "Pass a mock here or the real impl instead of null.",
+      "range": {
+        "startLine": 31,
+        "startChar": 86,
+        "endLine": 31,
+        "endChar": 90
+      },
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49ad3c9b_e270179a",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/datastore/h2/UserStoreTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-05-29T13:19:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e3d63b9_d1cc6ff2",
       "range": {
         "startLine": 31,
         "startChar": 86,
