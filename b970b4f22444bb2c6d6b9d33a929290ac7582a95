@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7b53a0f8_2db8f2da",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MoonRealm.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-05-29T14:14:23Z",
+      "side": 1,
+      "message": "it\u0027s from jersey-client - DefaultClientConfig is gone in jersey 2.",
+      "parentUuid": "a1d75c6f_9c4d34a7",
+      "revId": "b970b4f22444bb2c6d6b9d33a929290ac7582a95",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1188fa6_d7007245",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MoonRealm.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6a0ada7f_74205da1",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MoonRealm.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-05-29T14:14:23Z",
+      "side": 1,
+      "message": "this call chain does  a post and returns the response payload as a String.  \u0027input\u0027 is passed via the Entity below. This is the jersey 2 way of doing it.",
+      "parentUuid": "c1188fa6_d7007245",
+      "revId": "b970b4f22444bb2c6d6b9d33a929290ac7582a95",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2716655a_a18483b6",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/util/http/SimpleHttpClient.java",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2018-05-29T13:21:18Z",
       "side": 1,
       "message": "why does aaa-shiro even include an HTTP Client to begin with?  If this is just for DomainHandlerTest we really should move it from src/main to src/test ?",
+      "revId": "b970b4f22444bb2c6d6b9d33a929290ac7582a95",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5eea8c59_af3ff68a",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/util/http/SimpleHttpClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-05-29T14:14:23Z",
+      "side": 1,
+      "message": "This is used by KeystoneAuthRealm. I don\u0027t know why the author(s) wrapped Client... I just translated it to jersey 2 (and added better UTs).",
+      "parentUuid": "2716655a_a18483b6",
       "revId": "b970b4f22444bb2c6d6b9d33a929290ac7582a95",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false

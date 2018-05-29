@@ -22,6 +22,30 @@
       "revId": "064d9e1854efabf48a940c4f4cc7ed9c0e016dc8",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c2b2385_51e36fda",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/WebInitializer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-05-29T14:14:23Z",
+      "side": 0,
+      "message": "yeah I wondered that too but after some research I found the POJOMappingFeature is jersey 1.x - the equivalent in jersey 2 is to use Moxy or something else for json support. But we have our own GsonProvider. \n\nI\u0027m not sure if/why \"jersey.config.server.provider.packages\" was ever needed since we use an Application instance and the package doesn\u0027t even exist. Maybe it did at one time... \n\nI tested the Domain/User/RoleHandlers and they work fine.",
+      "parentUuid": "768dfbff_2d664783",
+      "range": {
+        "startLine": 44,
+        "startChar": 61,
+        "endLine": 45,
+        "endChar": 61
+      },
+      "revId": "064d9e1854efabf48a940c4f4cc7ed9c0e016dc8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
