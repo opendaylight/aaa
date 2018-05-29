@@ -27,3 +27,4 @@ data/
 hs_err_pid*
 
 .factorypath
+.apt_generated_tests/
