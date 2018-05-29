@@ -36,7 +36,7 @@ import org.apache.shiro.realm.ldap.LdapContextFactory;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.junit.Test;
 
-public class ODLJndiLdapRealmTest {
+public class ODLDefaultLdapRealmTest {
 
     /**
      * throw-away anonymous test class.
@@ -167,18 +167,18 @@ public class ODLJndiLdapRealmTest {
     @Test
     public void testGetUsernameAuthenticationToken() {
         AuthenticationToken authenticationToken = null;
-        assertNull(ODLJndiLdapRealm.getUsername(authenticationToken));
+        assertNull(ODLDefaultLdapRealm.getUsername(authenticationToken));
         AuthenticationToken validAuthenticationToken = new UsernamePasswordToken("test",
                 "testpassword");
-        assertEquals("test", ODLJndiLdapRealm.getUsername(validAuthenticationToken));
+        assertEquals("test", ODLDefaultLdapRealm.getUsername(validAuthenticationToken));
     }
 
     @Test
     public void testGetUsernamePrincipalCollection() {
         PrincipalCollection pc = null;
-        assertNull(new ODLJndiLdapRealm().getUsername(pc));
+        assertNull(new ODLDefaultLdapRealm().getUsername(pc));
         TestPrincipalCollection tpc = new TestPrincipalCollection("testuser");
-        String username = new ODLJndiLdapRealm().getUsername(tpc);
+        String username = new ODLDefaultLdapRealm().getUsername(tpc);
         assertEquals("testuser", username);
     }
 
@@ -192,7 +192,7 @@ public class ODLJndiLdapRealmTest {
                         any())).thenReturn(new TestNamingEnumeration());
         LdapContextFactory ldapContextFactory = mock(LdapContextFactory.class);
         when(ldapContextFactory.getSystemLdapContext()).thenReturn(ldapContext);
-        AuthorizationInfo authorizationInfo = new ODLJndiLdapRealm().queryForAuthorizationInfo(
+        AuthorizationInfo authorizationInfo = new ODLDefaultLdapRealm().queryForAuthorizationInfo(
                 new TestPrincipalCollection("testuser"), ldapContextFactory);
         assertNotNull(authorizationInfo);
         assertFalse(authorizationInfo.getRoles().isEmpty());
@@ -201,10 +201,10 @@ public class ODLJndiLdapRealmTest {
 
     @Test
     public void testBuildAuthorizationInfo() {
-        assertNull(ODLJndiLdapRealm.buildAuthorizationInfo(null));
+        assertNull(ODLDefaultLdapRealm.buildAuthorizationInfo(null));
         Set<String> roleNames = new HashSet<>();
         roleNames.add("engineering");
-        AuthorizationInfo authorizationInfo = ODLJndiLdapRealm.buildAuthorizationInfo(roleNames);
+        AuthorizationInfo authorizationInfo = ODLDefaultLdapRealm.buildAuthorizationInfo(roleNames);
         assertNotNull(authorizationInfo);
         assertFalse(authorizationInfo.getRoles().isEmpty());
         assertTrue(authorizationInfo.getRoles().contains("engineering"));
@@ -212,7 +212,7 @@ public class ODLJndiLdapRealmTest {
 
     @Test
     public void testGetRoleNamesForUser() throws NamingException {
-        ODLJndiLdapRealm ldapRealm = new ODLJndiLdapRealm();
+        ODLDefaultLdapRealm ldapRealm = new ODLDefaultLdapRealm();
         LdapContext ldapContext = mock(LdapContext.class);
 
         // emulates an ldap search and returns the mocked up test class
@@ -228,7 +228,7 @@ public class ODLJndiLdapRealmTest {
 
     @Test
     public void testCreateSearchControls() {
-        SearchControls searchControls = ODLJndiLdapRealm.createSearchControls();
+        SearchControls searchControls = ODLDefaultLdapRealm.createSearchControls();
         assertNotNull(searchControls);
         int expectedSearchScope = SearchControls.SUBTREE_SCOPE;
         int actualSearchScope = searchControls.getSearchScope();

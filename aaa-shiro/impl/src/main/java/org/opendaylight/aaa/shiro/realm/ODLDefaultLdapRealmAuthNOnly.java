@@ -1,60 +1,40 @@
 /*
- * Copyright (c) 2016 - 2017 Brocade Communications Systems, Inc. and others.  All rights reserved.
+ * Copyright (c) 2016 - 2018 Brocade Communications Systems, Inc. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.realm;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.realm.ldap.JndiLdapRealm;
+import org.apache.shiro.realm.ldap.DefaultLdapRealm;
 import org.opendaylight.aaa.shiro.accounting.Accounter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Wrapper class for <code>org.apache.shiro.realm.ldap.JndiLdapRealm</code>.
+ * Wrapper class for <code>org.apache.shiro.realm.ldap.DefaultLdapRealm</code>.
  * This implementation disables Authorization so any LDAP user is able to access
  * server resources. This is particularly useful for quickly prototyping ODL
  * without worrying about resolving LDAP attributes (groups) to OpenDaylight
  * roles.
- *
- * <p>
- * The motivation for subclassing Shiro's implementation is two-fold: 1) Enhance
- * the default logging of Shiro. This allows us to more easily log incoming
- * connections, providing some security auditing. 2) Provide a common package in
- * the classpath for ODL supported Realm implementations (i.e.,
- * <code>org.opendaylight.aaa.shiro.realm</code>), which consolidates the number
- * of <code>Import-Package</code> statements consumers need to enumerate. For
- * example, the netconf project only needs to import
- * <code>org.opendaylight.aaa.shiro.realm</code>, and does not need to worry
- * about importing Shiro packages.
  */
-public class ODLJndiLdapRealmAuthNOnly extends JndiLdapRealm {
+public class ODLDefaultLdapRealmAuthNOnly extends DefaultLdapRealm {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ODLJndiLdapRealmAuthNOnly.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ODLDefaultLdapRealmAuthNOnly.class);
 
     private static final String LDAP_CONNECTION_MESSAGE = "AAA LDAP connection from ";
 
     /*
-     * Adds debugging information surrounding creation of ODLJndiLdapRealm
+     * Adds debugging information surrounding creation of ODLDefaultLdapRealm
      */
-    public ODLJndiLdapRealmAuthNOnly() {
-        LOG.info("ODLJndiLdapRealmAuthNOnly realm created");
+    public ODLDefaultLdapRealmAuthNOnly() {
+        LOG.info("Creating {}", ODLDefaultLdapRealmAuthNOnly.class.getName());
     }
 
-    /*
-     * (non-Javadoc) Overridden to expose important audit trail information for
-     * accounting.
-     *
-     * @see
-     * org.apache.shiro.realm.ldap.JndiLdapRealm#doGetAuthenticationInfo(org
-     * .apache.shiro.authc.AuthenticationToken)
-     */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
             throws AuthenticationException {

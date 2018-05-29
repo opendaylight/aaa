@@ -50,18 +50,18 @@
 
     <!--
       ===================================================================================
-      ============================ ODLJndiLdapRealmAuthNOnly ============================
+      ============================ ODLDefaultLdapRealmAuthNOnly ============================
       ===================================================================================
       =                                                                                 =
       = Description:  A Realm implementation aimed at federating with an external LDAP  =
       =               server for authentication only.  For authorization support, refer =
-      =               to ODLJndiLdapRealm.                                              =
+      =               to ODLDefaultLdapRealm.                                              =
       ===================================================================================
     -->
     <!-- Start ldapRealm commented out
     <main>
         <pair-key>ldapRealm</pair-key>
-        <pair-value>org.opendaylight.aaa.shiro.realm.ODLJndiLdapRealmAuthNOnly</pair-value>
+        <pair-value>org.opendaylight.aaa.shiro.realm.ODLDefaultLdapRealmAuthNOnlyOnly/pair-value>
     </main>
     <main>
         <pair-key>ldapRealm.userDnTemplate</pair-key>
