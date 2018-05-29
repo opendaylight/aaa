@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An extended implementation of
- * <code>org.apache.shiro.realm.ldap.JndiLdapRealm</code> which includes
+ * <code>org.apache.shiro.realm.ldap.DefaultLdapRealm</code> which includes
  * additional Authorization capabilities.  To enable this Realm, add the
  * following to <code>shiro.ini</code>:
  *
