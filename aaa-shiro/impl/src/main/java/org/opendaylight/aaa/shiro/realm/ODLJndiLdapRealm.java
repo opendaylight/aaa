@@ -30,7 +30,6 @@ import org.apache.shiro.realm.ldap.DefaultLdapRealm;
 import org.apache.shiro.realm.ldap.LdapContextFactory;
 import org.apache.shiro.realm.ldap.LdapUtils;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.opendaylight.aaa.shiro.accounting.Accounter;
 import org.opendaylight.aaa.shiro.realm.mapping.api.GroupsToRolesMappingStrategy;
 import org.opendaylight.aaa.shiro.realm.mapping.impl.BestAttemptGroupToRolesMappingStrategy;
 import org.slf4j.Logger;
@@ -147,7 +146,6 @@ public class ODLJndiLdapRealm extends DefaultLdapRealm {
      */
     protected void logIncomingConnection(final String username) {
         LOG.info("AAA LDAP connection from {}", username);
-        Accounter.output("AAA LDAP connection from " + username);
     }
 
     /**
