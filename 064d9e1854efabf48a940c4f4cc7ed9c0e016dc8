@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "768dfbff_2d664783",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/web/env/WebInitializer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-05-29T13:21:18Z",
+      "side": 0,
+      "message": "are you 100% sure that you can dit these init params?  I\u0027m not, but if you are and everything still works... ;-) then fine I\u0027m sure.",
+      "range": {
+        "startLine": 44,
+        "startChar": 61,
+        "endLine": 45,
+        "endChar": 61
+      },
+      "revId": "064d9e1854efabf48a940c4f4cc7ed9c0e016dc8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1d75c6f_9c4d34a7",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MoonRealm.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-05-29T13:21:18Z",
+      "side": 1,
+      "message": "this doesn\u0027t look relatd to Jersey... Ryan, OK?",
+      "revId": "b970b4f22444bb2c6d6b9d33a929290ac7582a95",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1188fa6_d7007245",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MoonRealm.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-05-29T13:21:18Z",
+      "side": 1,
+      "message": "I\u0027ve no idea what this does, but aren\u0027t you loosing \u0027input\u0027 here?",
+      "revId": "b970b4f22444bb2c6d6b9d33a929290ac7582a95",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2716655a_a18483b6",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/util/http/SimpleHttpClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-05-29T13:21:18Z",
+      "side": 1,
+      "message": "why does aaa-shiro even include an HTTP Client to begin with?  If this is just for DomainHandlerTest we really should move it from src/main to src/test ?",
+      "revId": "b970b4f22444bb2c6d6b9d33a929290ac7582a95",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
