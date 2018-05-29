@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5ece97b7_1608b458",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/AaaCliAbstractCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-05-29T14:24:20Z",
+      "side": 1,
+      "message": "yeah - but UT\u0027s might - just a precaution but not a big deal.",
+      "parentUuid": "6e74dcb6_64d123a4",
+      "range": {
+        "startLine": 32,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 46
+      },
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be29d8bb_8ddaba44",
         "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/utils/DataStoreUtils.java",
         "patchSetId": 2
@@ -306,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "4069098f_55b07f7d",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/AAAShiroProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-05-29T14:24:20Z",
+      "side": 1,
+      "message": "ok I missed that. I think we can remove KarafIniWebEnvironment now but we can do that in another patch.",
+      "parentUuid": "5ef8ac12_f3806292",
+      "range": {
+        "startLine": 54,
+        "startChar": 18,
+        "endLine": 54,
+        "endChar": 37
+      },
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db982d45_776f552a",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/datastore/h2/UserStore.java",
         "patchSetId": 2
@@ -341,6 +389,30 @@
       "side": 1,
       "message": "Again, shouldn\u0027t this be fine since this is coming from blueprint and not the ThreadLocal variables?  Added it anyway to be safe.",
       "parentUuid": "db982d45_776f552a",
+      "range": {
+        "startLine": 50,
+        "startChar": 31,
+        "endLine": 50,
+        "endChar": 46
+      },
+      "revId": "c598f426624166b5c8867761325ccb400ff5b697",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "719254ed_b7e3529b",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/datastore/h2/UserStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-05-29T14:24:20Z",
+      "side": 1,
+      "message": "yeah but a UT was passing null.",
+      "parentUuid": "95def9f7_d7efad59",
       "range": {
         "startLine": 50,
         "startChar": 31,
