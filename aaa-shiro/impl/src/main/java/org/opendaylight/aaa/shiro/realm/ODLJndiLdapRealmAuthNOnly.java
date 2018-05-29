@@ -12,7 +12,6 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.realm.ldap.JndiLdapRealm;
-import org.opendaylight.aaa.shiro.accounting.Accounter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +77,6 @@ public class ODLJndiLdapRealmAuthNOnly extends JndiLdapRealm {
     protected void logIncomingConnection(final String username) {
         final String message = LDAP_CONNECTION_MESSAGE + username;
         LOG.info(message);
-        Accounter.output(message);
     }
 
     /**
