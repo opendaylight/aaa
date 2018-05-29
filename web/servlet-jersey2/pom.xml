@@ -22,19 +22,18 @@
     <name>ODL :: aaa :: ${project.artifactId}</name>
     <packaging>bundle</packaging>
 
-
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.glassfish.jersey</groupId>
                 <artifactId>jersey-bom</artifactId>
+                <!-- Keep this version in line with jersey-guava below and in odl-aaa-web-->
                 <version>2.25.1</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 
     <dependencies>
         <dependency>
@@ -56,6 +55,13 @@
         <dependency>
             <groupId>org.kohsuke.metainf-services</groupId>
             <artifactId>metainf-services</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.bundles.repackaged</groupId>
+            <artifactId>jersey-guava</artifactId>
+            <!-- Keep this version in line with jersey-bom above and in odl-aaa-web -->
+            <!-- TODO remove when https://git.opendaylight.org/gerrit/72408 is available -->
+            <version>2.25.1</version>
         </dependency>
     </dependencies>
 
