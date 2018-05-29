@@ -12,7 +12,7 @@
     <parent>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>single-feature-parent</artifactId>
-        <version>3.1.0</version>
+        <version>3.2.0-SNAPSHOT</version>
         <relativePath/>
     </parent>
 
@@ -46,7 +46,7 @@
         <dependency>
             <groupId>org.opendaylight.odlparent</groupId>
             <artifactId>odl-guava-23</artifactId>
-            <version>3.1.0</version>
+            <version>3.2.0-SNAPSHOT</version>
             <classifier>features</classifier>
             <type>xml</type>
         </dependency>
