@@ -6,7 +6,7 @@
  terms of the Eclipse Public License v1.0 which accompanies this distribution,
  and is available at http://www.eclipse.org/legal/epl-v10.html
  -->
-<features name="odl-aaa-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="odl-aaa-${project.version}">
     <feature name="odl-aaa-shiro" version="${project.version}">
         <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-app-config.xml">
             mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/xml/aaa-app-config
