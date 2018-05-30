@@ -8,38 +8,42 @@
 
 package org.opendaylight.aaa.shiro.idm.rest.test;
 
-import com.sun.jersey.spi.container.servlet.WebComponent;
-import com.sun.jersey.test.framework.AppDescriptor;
-import com.sun.jersey.test.framework.JerseyTest;
-import com.sun.jersey.test.framework.WebAppDescriptor;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Before;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.StoreBuilder;
+import org.opendaylight.aaa.provider.GsonProvider;
 import org.opendaylight.aaa.shiro.idm.IdmLightApplication;
-import org.slf4j.bridge.SLF4JBridgeHandler;
+import org.opendaylight.aaa.shiro.idm.IdmLightProxy;
 
 public abstract class HandlerTest extends JerseyTest {
 
-    protected IDMTestStore testStore = new IDMTestStore();
+    protected IDMTestStore testStore;
 
     @Override
-    protected AppDescriptor configure() {
-        return new WebAppDescriptor.Builder()
-                .initParam(WebComponent.RESOURCE_CONFIG_CLASS, IdmLightApplication.class.getName())
-                .initParam("com.sun.jersey.config.feature.Trace", "true")
-                .initParam("com.sun.jersey.spi.container.ContainerResponseFilters",
-                           "com.sun.jersey.api.container.filter.LoggingFilter")
-                .initParam("jersey.config.server.provider.packages",
-                        "org.opendaylight.aaa.impl.provider")
-                .build();
+    protected Application configure() {
+        testStore = new IDMTestStore();
+        return ResourceConfig.forApplication(new IdmLightApplication(testStore, new IdmLightProxy(testStore)));
+    }
+
+    @Override
+    protected void configureClient(final ClientConfig config) {
+        config.register(new GsonProvider<>());
     }
 
     @Before
     @Override
     public void setUp() throws Exception {
-        SLF4JBridgeHandler.removeHandlersForRootLogger();
-        SLF4JBridgeHandler.install();
         super.setUp();
         new StoreBuilder(testStore).initWithDefaultUsers(IIDMStore.DEFAULT_DOMAIN);
+    }
+
+    static <T> Entity<T> entity(T obj) {
+        return Entity.entity(obj, MediaType.APPLICATION_JSON);
     }
 }
