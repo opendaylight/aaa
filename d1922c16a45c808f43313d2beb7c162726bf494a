@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "053bb5ab_fe988241",
+        "filename": "aaa-password-service/impl/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-05-30T13:52:42Z",
+      "side": 1,
+      "message": "not sure I understand this, because aaa-cli-jar does not run under OSGi, so does not require an Export-Package.  Also as per https://git.opendaylight.org/gerrit/#/c/72169/2/aaa-password-service/impl/pom.xml@46 I expect maven-bundle-plugin anyway exports this package, because its named .impl or .internal.  Having said all that... it\u0027s not a reason to -1 - just don\u0027t think think this is useful or needed, but doesn\u0027t really do any harm, so - anyway.",
+      "revId": "d1922c16a45c808f43313d2beb7c162726bf494a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
