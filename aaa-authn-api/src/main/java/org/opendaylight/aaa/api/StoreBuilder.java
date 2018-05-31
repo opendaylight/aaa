@@ -56,20 +56,6 @@ public class StoreBuilder {
     }
 
     /**
-     * Initialize IIDMStore with some default entries.
-     *
-     * @deprecated Better explicitly use
-     *             {@link #initDomainAndRolesWithoutUsers(String)} or
-     *             {@link #initWithDefaultUsers(String)}
-     *
-     * @throws IDMStoreException for issues coming from the IIDMStore
-     */
-    @Deprecated
-    public void init() throws IDMStoreException {
-        initWithDefaultUsers(IIDMStore.DEFAULT_DOMAIN);
-    }
-
-    /**
      * Initialize IIDMStore with the default domain and the 'user' and 'admin' roles, if needed.
      * This does not create any default user entries (because they are an inherent security risk).
      *
