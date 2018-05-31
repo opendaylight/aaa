@@ -9,15 +9,15 @@
 package org.opendaylight.aaa.cert.utils;
 
 import com.google.common.base.Optional;
-import com.google.common.util.concurrent.CheckedFuture;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.MoreExecutors;
+import java.util.concurrent.ExecutionException;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
-import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
+import org.opendaylight.mdsal.common.api.CommitInfo;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
@@ -47,17 +47,15 @@ public final class MdsalUtils {
      */
     public static <D extends org.opendaylight.yangtools.yang.binding.DataObject> boolean delete(
             final DataBroker dataBroker, final LogicalDatastoreType store, final InstanceIdentifier<D> path)  {
-        boolean result = false;
         final WriteTransaction transaction = dataBroker.newWriteOnlyTransaction();
         transaction.delete(store, path);
-        final CheckedFuture<Void, TransactionCommitFailedException> future = transaction.submit();
         try {
-            future.checkedGet();
-            result = true;
-        } catch (final TransactionCommitFailedException e) {
+            transaction.commit().get();
+            return true;
+        } catch (InterruptedException | ExecutionException e) {
             LOG.warn("Failed to delete {} ", path, e);
         }
-        return result;
+        return false;
     }
 
     /**
@@ -74,18 +72,18 @@ public final class MdsalUtils {
         final WriteTransaction transaction = dataBroker.newWriteOnlyTransaction();
         transaction.put(type, iid, object);
 
-        // Perform the transaction.submit asynchronously
-        Futures.addCallback(transaction.submit(), new FutureCallback<Void>() {
+        // Perform the transaction.commit asynchronously
+        Futures.addCallback(transaction.commit(), new FutureCallback<CommitInfo>() {
             @Override
             public void onFailure(final Throwable throwable) {
                 LOG.error("initDatastore: transaction failed");
             }
 
             @Override
-            public void onSuccess(final Void result) {
+            public void onSuccess(final CommitInfo result) {
                 LOG.debug("initDatastore: transaction succeeded");
             }
-        });
+        }, MoreExecutors.directExecutor());
         LOG.info("initDatastore: data populated: {}, {}, {}", type, iid, object);
     }
 
@@ -101,17 +99,15 @@ public final class MdsalUtils {
     public static <D extends org.opendaylight.yangtools.yang.binding.DataObject> boolean merge(
             final DataBroker dataBroker, final LogicalDatastoreType logicalDatastoreType,
             final InstanceIdentifier<D> path, final D data) {
-        boolean result = false;
         final WriteTransaction transaction = dataBroker.newWriteOnlyTransaction();
         transaction.merge(logicalDatastoreType, path, data, true);
-        final CheckedFuture<Void, TransactionCommitFailedException> future = transaction.submit();
         try {
-            future.checkedGet();
-            result = true;
-        } catch (final TransactionCommitFailedException e) {
+            transaction.commit().get();
+            return true;
+        } catch (InterruptedException | ExecutionException e) {
             LOG.warn("Failed to merge {} ", path, e);
         }
-        return result;
+        return false;
     }
 
     /**
@@ -126,17 +122,15 @@ public final class MdsalUtils {
     public static <D extends org.opendaylight.yangtools.yang.binding.DataObject> boolean put(
             final DataBroker dataBroker, final LogicalDatastoreType logicalDatastoreType,
             final InstanceIdentifier<D> path, final D data) {
-        boolean result = false;
         final WriteTransaction transaction = dataBroker.newWriteOnlyTransaction();
         transaction.put(logicalDatastoreType, path, data, true);
-        final CheckedFuture<Void, TransactionCommitFailedException> future = transaction.submit();
         try {
-            future.checkedGet();
-            result = true;
-        } catch (final TransactionCommitFailedException e) {
+            transaction.commit().get();
+            return true;
+        } catch (InterruptedException | ExecutionException e) {
             LOG.warn("Failed to put {} ", path, e);
         }
-        return result;
+        return false;
     }
 
     /**
@@ -150,17 +144,14 @@ public final class MdsalUtils {
     public static <D extends org.opendaylight.yangtools.yang.binding.DataObject> D read(
             final DataBroker dataBroker, final LogicalDatastoreType store, final InstanceIdentifier<D> path)  {
         try (ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction()) {
-            final CheckedFuture<Optional<D>, ReadFailedException> future = transaction.read(store, path);
-            Optional<D> optionalDataObject = future.checkedGet();
+            Optional<D> optionalDataObject = transaction.read(store, path).get();
             if (optionalDataObject.isPresent()) {
                 return optionalDataObject.get();
-            } else {
-                LOG.debug("{}: Failed to read {}",
-                        Thread.currentThread().getStackTrace()[1], path);
             }
-        } catch (final ReadFailedException e) {
+        } catch (InterruptedException | ExecutionException e) {
             LOG.warn("Failed to read {} ", path, e);
         }
+
         return null;
     }
 }

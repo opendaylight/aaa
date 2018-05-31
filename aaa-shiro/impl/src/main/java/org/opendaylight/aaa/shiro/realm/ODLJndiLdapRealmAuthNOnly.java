@@ -11,7 +11,7 @@ package org.opendaylight.aaa.shiro.realm;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.realm.ldap.JndiLdapRealm;
+import org.apache.shiro.realm.ldap.DefaultLdapRealm;
 import org.opendaylight.aaa.shiro.accounting.Accounter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * <code>org.opendaylight.aaa.shiro.realm</code>, and does not need to worry
  * about importing Shiro packages.
  */
-public class ODLJndiLdapRealmAuthNOnly extends JndiLdapRealm {
+public class ODLJndiLdapRealmAuthNOnly extends DefaultLdapRealm {
 
     private static final Logger LOG = LoggerFactory.getLogger(ODLJndiLdapRealmAuthNOnly.class);
 

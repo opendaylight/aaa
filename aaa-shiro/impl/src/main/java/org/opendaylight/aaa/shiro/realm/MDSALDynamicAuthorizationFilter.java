@@ -9,7 +9,6 @@ package org.opendaylight.aaa.shiro.realm;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import com.google.common.util.concurrent.CheckedFuture;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
@@ -46,13 +45,19 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
     private static final InstanceIdentifier<HttpAuthorization> AUTHZ_CONTAINER_IID =
             InstanceIdentifier.builder(HttpAuthorization.class).build();
 
+    @SuppressWarnings("checkstyle:AvoidHidingCauseException")
     public static Optional<HttpAuthorization> getHttpAuthzContainer(final DataBroker dataBroker)
             throws ExecutionException, InterruptedException, ReadFailedException {
 
         try (ReadOnlyTransaction ro = dataBroker.newReadOnlyTransaction()) {
-            final CheckedFuture<Optional<HttpAuthorization>, ReadFailedException> result =
-                    ro.read(LogicalDatastoreType.CONFIGURATION, AUTHZ_CONTAINER_IID);
-            return result.get();
+            return ro.read(LogicalDatastoreType.CONFIGURATION, AUTHZ_CONTAINER_IID).get();
+        } catch (ExecutionException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ReadFailedException) {
+                throw (ReadFailedException)cause;
+            }
+
+            throw e;
         }
     }
 
