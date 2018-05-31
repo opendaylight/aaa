@@ -10,7 +10,6 @@ package org.opendaylight.aaa.shiro.realm;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
-import com.google.common.util.concurrent.CheckedFuture;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -32,7 +31,6 @@ import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.Authentication;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.Grant;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication.Grants;
@@ -103,11 +101,7 @@ public class MdsalRealm extends AuthorizingRealm {
      */
     private Optional<Authentication> getAuthenticationContainer() {
         try (ReadOnlyTransaction ro = dataBroker.newReadOnlyTransaction()) {
-            final CheckedFuture<Optional<Authentication>, ReadFailedException> result =
-                    ro.read(LogicalDatastoreType.CONFIGURATION, AUTH_IID);
-
-            final Optional<Authentication> authentication = result.get();
-            return authentication;
+            return ro.read(LogicalDatastoreType.CONFIGURATION, AUTH_IID).get();
         } catch (final InterruptedException | ExecutionException e) {
             LOG.error("Couldn't access authentication container", e);
         }
