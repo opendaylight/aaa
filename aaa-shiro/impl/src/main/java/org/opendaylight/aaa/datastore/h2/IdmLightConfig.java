@@ -111,15 +111,4 @@ public abstract class IdmLightConfig {
         LOG.info("DB Driver               : {}", getDbDriver());
         LOG.info("DB Valid Time Out       : {}", getDbValidTimeOut());
     }
-
-    /**
-     * Get database connection string.
-     *
-     * @deprecated use {@link #getDbConnectionString()}
-     * @return data base connection string
-     */
-    @Deprecated
-    public String getDbPath() {
-        return getDbConnectionString();
-    }
 }
