@@ -10,8 +10,6 @@ package org.opendaylight.aaa.filterchain.configuration.impl;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.SettableFuture;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -22,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicReference;
 import javax.servlet.Filter;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
@@ -44,9 +41,6 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      */
     private static final String FILTER_DTO_SEPARATOR = ",";
 
-    private static final AtomicReference<SettableFuture<CustomFilterAdapterConfiguration>> INSTANCE_FUTURE =
-            new AtomicReference<>();
-
     /**
      * <code>customFilterList</code> is the property advertised in the Karaf
      * configuration admin.
@@ -66,21 +60,9 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
 
     public CustomFilterAdapterConfigurationImpl(Map<String, String> properties) {
         update(properties);
-
-        INSTANCE_FUTURE.compareAndSet(null, SettableFuture.create());
-        INSTANCE_FUTURE.get().set(this);
-    }
-
-    public static ListenableFuture<CustomFilterAdapterConfiguration> instanceFuture() {
-        INSTANCE_FUTURE.compareAndSet(null, SettableFuture.create());
-        return INSTANCE_FUTURE.get();
     }
 
     public void close() {
-        SettableFuture<CustomFilterAdapterConfiguration> future = INSTANCE_FUTURE.getAndSet(null);
-        if (future != null) {
-            future.setException(new RuntimeException("CustomFilterAdapterConfiguration has been closed"));
-        }
     }
 
     // Invoked in response to configuration admin changes

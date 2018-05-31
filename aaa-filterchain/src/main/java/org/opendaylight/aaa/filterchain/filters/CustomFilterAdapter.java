@@ -26,7 +26,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration;
 import org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterListener;
-import org.opendaylight.aaa.filterchain.configuration.impl.CustomFilterAdapterConfigurationImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,16 +67,6 @@ public class CustomFilterAdapter implements Filter, CustomFilterAdapterListener 
      * Stores the injected filter chain. TODO can this be an ArrayList?
      */
     private volatile List<Filter> injectedFilterChain = Collections.emptyList();
-
-    /**
-     * Constructor that obtains the CustomFilterAdapterConfiguration instance statically.
-     *
-     * @deprecated kept for backwards compatibility where an instance is created via reflection via web.xml.
-     */
-    @Deprecated
-    public CustomFilterAdapter() {
-        customFilterAdapterConfigFuture = CustomFilterAdapterConfigurationImpl.instanceFuture();
-    }
 
     public CustomFilterAdapter(CustomFilterAdapterConfiguration customFilterAdapterConfig) {
         this.customFilterAdapterConfigFuture = Futures.immediateFuture(customFilterAdapterConfig);
