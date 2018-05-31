@@ -81,7 +81,7 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
         }
 
         final Factory<SecurityManager> factory = new IniSecurityManagerFactory(ini);
-        final SecurityManager securityManager = ClassLoaderUtils.withClassLoader(
+        final SecurityManager securityManager = ClassLoaderUtils.getWithClassLoader(
                 AAAIniWebEnvironment.class.getClassLoader(), (Supplier<SecurityManager>) factory::getInstance);
         SecurityUtils.setSecurityManager(securityManager);
 
@@ -100,7 +100,7 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
             // Initialize the Shiro environment from clustered-app-config
             final Ini ini = createIniFromClusteredAppConfig(shiroConfiguration);
             setIni(ini);
-            ClassLoaderUtils.withClassLoader(AAAIniWebEnvironment.class.getClassLoader(), (Supplier<Void>) () -> {
+            ClassLoaderUtils.getWithClassLoader(AAAIniWebEnvironment.class.getClassLoader(), (Supplier<Void>) () -> {
                 super.init();
                 return null;
             });
