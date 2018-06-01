@@ -8,11 +8,12 @@
 
 package org.opendaylight.aaa.cli.cert;
 
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.console.OsgiCommandSupport;
+import java.util.Arrays;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
-
-@Command(name = "get-tls-protocols", scope = "aaa", description = "Get the allowed TLS Protocols.")
 
 /**
  * GetCipherSuites get the allowed cipher suites for TLS communication.
@@ -20,17 +21,14 @@ import org.opendaylight.aaa.cert.api.ICertificateManager;
  * @author mserngawy
  *
  */
-public class GetTlsProtocols extends OsgiCommandSupport {
+@Service
+@Command(name = "get-tls-protocols", scope = "aaa", description = "Get the allowed TLS Protocols.")
+public class GetTlsProtocols implements Action {
 
-    protected volatile ICertificateManager certProvider;
-
-    public GetTlsProtocols(final ICertificateManager aaaCertProvider) {
-        this.certProvider = aaaCertProvider;
-    }
+    @Reference private ICertificateManager certProvider;
 
     @Override
-    protected Object doExecute() throws Exception {
-        return certProvider.getTlsProtocols();
+    public Object execute() throws Exception {
+        return "Protocols: " + Arrays.toString(certProvider.getTlsProtocols());
     }
-
 }

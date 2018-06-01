@@ -10,7 +10,6 @@ package org.opendaylight.aaa.cli.utils;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import org.apache.felix.service.command.CommandSession;
 
 /**
  * CliUtils has helper methods for CLI bundle.
@@ -18,6 +17,7 @@ import org.apache.felix.service.command.CommandSession;
  * @author mserngawy
  *
  */
+@SuppressWarnings("checkstyle:RegexpSingleLineJava")
 public final class CliUtils {
 
     public static final String LOGIN_FAILED_MESS = "User does not exist OR user name and passsword are not correct";
@@ -29,18 +29,15 @@ public final class CliUtils {
     /**
      * Retrieve the password from the user.
      *
-     * @param session
-     *            command line session
      * @param pwdPrintStr
      *            label for enter password
      * @return the new written password
      * @throws Exception
      *             exception reading the password
      */
-    public static String readPassword(final CommandSession session, final String pwdPrintStr) throws Exception {
-        session.getConsole().println(pwdPrintStr);
-        try (BufferedReader bReader = new BufferedReader(new InputStreamReader(session.getKeyboard(),
-                StandardCharsets.UTF_8))) {
+    public static String readPassword(final String pwdPrintStr) throws Exception {
+        System.out.println(pwdPrintStr);
+        try (BufferedReader bReader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8))) {
             return bReader.readLine();
         }
     }

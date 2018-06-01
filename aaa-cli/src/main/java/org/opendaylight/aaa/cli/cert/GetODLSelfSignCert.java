@@ -8,13 +8,12 @@
 
 package org.opendaylight.aaa.cli.cert;
 
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.console.OsgiCommandSupport;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.cli.utils.CliUtils;
-
-@Command(name = "get-odl-cert", scope = "aaa",
-    description = "get self sign certificate for the opendaylight controller.")
 
 /**
  * GetODLSelfSignCert get the ODL key store self sign certificate.
@@ -22,17 +21,16 @@ import org.opendaylight.aaa.cli.utils.CliUtils;
  * @author mserngawy
  *
  */
-public class GetODLSelfSignCert extends OsgiCommandSupport {
+@Service
+@Command(name = "get-odl-cert", scope = "aaa",
+        description = "get self sign certificate for the opendaylight controller.")
+public class GetODLSelfSignCert implements Action {
 
-    protected ICertificateManager certProvider;
-
-    public GetODLSelfSignCert(final ICertificateManager aaaCertProvider) {
-        this.certProvider = aaaCertProvider;
-    }
+    @Reference private ICertificateManager certProvider;
 
     @Override
-    protected Object doExecute() throws Exception {
-        final String pwd = CliUtils.readPassword(this.session, "Enter Keystore Password:");
+    public Object execute() throws Exception {
+        final String pwd = CliUtils.readPassword("Enter Keystore Password:");
         return certProvider.getODLKeyStoreCertificate(pwd, true);
     }
 }

@@ -8,38 +8,36 @@
 
 package org.opendaylight.aaa.cli.cert;
 
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
-import org.apache.karaf.shell.console.OsgiCommandSupport;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 
-@Command(name = "get-node-cert", scope = "aaa",
-    description = "get node certificate form the opendaylight trust keystore .")
-
 /**
  * GetTrustStoreCert get a certain certificate stored in the trust key store
- * using the its alias
+ * using the its alias.
  *
  * @author mserngawy
  *
  */
-public class GetTrustStoreCert extends OsgiCommandSupport {
+@Service
+@Command(name = "get-node-cert", scope = "aaa",
+        description = "get node certificate form the opendaylight trust keystore .")
+public class GetTrustStoreCert implements Action {
 
-    protected ICertificateManager certProvider;
+    @Reference private ICertificateManager certProvider;
 
     @Option(name = "-alias", aliases = {"--alias" },
             description = "The alias.\n-alias / --should be the node certificate alias",
             required = true, multiValued = false)
-    private String alias = "";
-
-    public GetTrustStoreCert(final ICertificateManager aaaCertProvider) {
-        this.certProvider = aaaCertProvider;
-    }
+    private String alias;
 
     @Override
-    protected Object doExecute() throws Exception {
-        final String pwd = CliUtils.readPassword(this.session, "Enter Keystore Password:");
+    public Object execute() throws Exception {
+        final String pwd = CliUtils.readPassword("Enter Keystore Password:");
         return certProvider.getCertificateTrustStore(pwd, alias, true);
     }
 }

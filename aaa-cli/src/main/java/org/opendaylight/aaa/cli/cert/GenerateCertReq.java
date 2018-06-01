@@ -8,32 +8,30 @@
 
 package org.opendaylight.aaa.cli.cert;
 
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.console.OsgiCommandSupport;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 
-@Command(name = "gen-cert-req", scope = "aaa",
-    description = "generate a certificate request for the opendaylight controller.")
-
 /**
  * GenerateCertReq from the ODL key store to be signed by the Certificate
- * Authority 'CA'
+ * Authority 'CA'.
  *
  * @author mserngawy
  *
  */
-public class GenerateCertReq extends OsgiCommandSupport {
+@Service
+@Command(name = "gen-cert-req", scope = "aaa",
+        description = "generate a certificate request for the opendaylight controller.")
+public class GenerateCertReq implements Action {
 
-    protected ICertificateManager certProvider;
-
-    public GenerateCertReq(final ICertificateManager aaaCertProvider) {
-        this.certProvider = aaaCertProvider;
-    }
+    @Reference private ICertificateManager certProvider;
 
     @Override
-    protected Object doExecute() throws Exception {
-        final String pwd = CliUtils.readPassword(this.session, "Enter Keystore Password:");
+    public Object execute() throws Exception {
+        final String pwd = CliUtils.readPassword("Enter Keystore Password:");
         return certProvider.genODLKeyStoreCertificateReq(pwd, true);
     }
 }
