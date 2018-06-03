@@ -8,9 +8,11 @@
 
 package org.opendaylight.aaa.cli.dmstore;
 
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
-import org.apache.karaf.shell.console.OsgiCommandSupport;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.User;
@@ -18,40 +20,31 @@ import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 
-@Command(name = "change-user-pwd", scope = "aaa", description = "Change the user password.")
-
 /**
  * ChangeUserPassword change the user password.
  *
  * @author mserngawy
- *
  */
-public class ChangeUserPassword extends OsgiCommandSupport {
+@Service
+@Command(name = "change-user-pwd", scope = "aaa", description = "Change the user password.")
+public class ChangeUserPassword implements Action {
 
-    private final IIDMStore identityStore;
-    private final ClaimCache claimCache;
+    @Reference private IIDMStore identityStore;
+    @Reference private ClaimCache claimCache;
 
     @Option(name = "-user", aliases = {
             "--userName" }, description = "The user name", required = true, multiValued = false)
     private String userName;
 
-    private final PasswordHashService passwordService;
-
-    public ChangeUserPassword(final IIDMStore identityStore, final ClaimCache claimCache,
-                              final PasswordHashService passwordService) {
-
-        this.identityStore = identityStore;
-        this.claimCache = claimCache;
-        this.passwordService = passwordService;
-    }
+    @Reference private PasswordHashService passwordService;
 
     @Override
-    protected Object doExecute() throws Exception {
+    public Object execute() throws Exception {
         if (identityStore == null) {
             return "Failed to access the users data store";
         }
-        final String currentPwd = CliUtils.readPassword(this.session, "Enter current password:");
-        final String newPwd = CliUtils.readPassword(this.session, "Enter new password:");
+        final String currentPwd = CliUtils.readPassword("Enter current password:");
+        final String newPwd = CliUtils.readPassword("Enter new password:");
         final Users users = identityStore.getUsers();
         for (User usr : users.getUsers()) {
             if (usr.getName().equals(userName)

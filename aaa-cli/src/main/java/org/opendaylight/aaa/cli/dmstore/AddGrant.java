@@ -8,41 +8,38 @@
 
 package org.opendaylight.aaa.cli.dmstore;
 
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.api.model.Grant;
-import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 
-@Command(name = "add-grant", scope = "aaa", description = "Add Grant.")
-
 /**
- * @author mserngawy
+ * Adds a grant.
  *
+ * @author mserngawy
  */
+@Service
+@Command(name = "add-grant", scope = "aaa", description = "Add Grant.")
 public class AddGrant extends AaaCliAbstractCommand {
 
     @Option(name = "-uname", aliases = {
             "--userName" }, description = "The user name", required = true, multiValued = false)
-    private String userName = "";
+    private String userName;
 
     @Option(name = "-dname", aliases = {
             "--domainName" }, description = "The domain name", required = true, multiValued = false)
-    private String domainName = "";
+    private String domainName;
 
     @Option(name = "-rname", aliases = {
             "--roleName" }, description = "The role name", required = false, multiValued = false)
-    private String roleName = "";
-
-    public AddGrant(final PasswordHashService passwordService) {
-        super(passwordService);
-    }
+    private String roleName;
 
     @Override
-    protected Object doExecute() throws Exception {
-        if (super.doExecute() == null) {
+    public Object execute() throws Exception {
+        if (super.execute() == null) {
             return CliUtils.LOGIN_FAILED_MESS;
         }
         final String domainId = DataStoreUtils.getDomainId(identityStore, domainName);

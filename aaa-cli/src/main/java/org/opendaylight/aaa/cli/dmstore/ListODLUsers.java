@@ -8,31 +8,26 @@
 
 package org.opendaylight.aaa.cli.dmstore;
 
-import org.apache.karaf.shell.commands.Command;
-import org.opendaylight.aaa.api.password.service.PasswordHashService;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
-
-@Command(name = "get-users", scope = "aaa", description = "get list of ODL users.")
 
 /**
  * ListODLDomains list the available users at ODL aaa data store.
  *
  * @author mserngawy
- *
  */
+@Service
+@Command(name = "get-users", scope = "aaa", description = "get list of ODL users.")
 public class ListODLUsers extends AaaCliAbstractCommand {
 
-    public ListODLUsers(final PasswordHashService passwordService) {
-        super(passwordService);
-    }
-
     @Override
-    protected Object doExecute() throws Exception {
-        if (super.doExecute() == null) {
+    public Object execute() throws Exception {
+        if (super.execute() == null) {
             return CliUtils.LOGIN_FAILED_MESS;
         }
-        return identityStore.getUsers().getUsers();
+        list("Users: ", identityStore.getUsers().getUsers());
+        return null;
     }
-
 }

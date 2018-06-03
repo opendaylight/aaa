@@ -8,23 +8,25 @@
 
 package org.opendaylight.aaa.cli.dmstore;
 
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.api.ClaimCache;
-import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 
-@Command(name = "remove-grant", scope = "aaa", description = "Remove grant.")
-
 /**
- * @author mserngawy
+ * Removes a grant.
  *
+ * @author mserngawy
  */
+@Service
+@Command(name = "remove-grant", scope = "aaa", description = "Remove grant.")
 public class RemoveGrant extends AaaCliAbstractCommand {
 
-    private final ClaimCache claimCache;
+    @Reference private ClaimCache claimCache;
 
     @Option(name = "-uname", aliases = {
             "--userName" }, description = "The user name", required = true, multiValued = false)
@@ -38,14 +40,9 @@ public class RemoveGrant extends AaaCliAbstractCommand {
             "--roleName" }, description = "The role name", required = false, multiValued = false)
     private String roleName;
 
-    public RemoveGrant(final ClaimCache claimCache, final PasswordHashService passwordService) {
-        super(passwordService);
-        this.claimCache = claimCache;
-    }
-
     @Override
-    protected Object doExecute() throws Exception {
-        if (super.doExecute() == null) {
+    public Object execute() throws Exception {
+        if (super.execute() == null) {
             return CliUtils.LOGIN_FAILED_MESS;
         }
         final String grantid = DataStoreUtils.getGrantId(identityStore, domainName, roleName, userName);

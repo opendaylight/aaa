@@ -8,31 +8,26 @@
 
 package org.opendaylight.aaa.cli.dmstore;
 
-import org.apache.karaf.shell.commands.Command;
-import org.opendaylight.aaa.api.password.service.PasswordHashService;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
-
-@Command(name = "get-roles", scope = "aaa", description = "get list of ODL roles.")
 
 /**
  * ListODLDomains list the available roles at ODL aaa data store.
  *
  * @author mserngawy
- *
  */
+@Service
+@Command(name = "get-roles", scope = "aaa", description = "get list of ODL roles.")
 public class ListODLRoles extends AaaCliAbstractCommand {
 
-    public ListODLRoles(final PasswordHashService passwordService) {
-        super(passwordService);
-    }
-
     @Override
-    protected Object doExecute() throws Exception {
-        if (super.doExecute() == null) {
+    public Object execute() throws Exception {
+        if (super.execute() == null) {
             return CliUtils.LOGIN_FAILED_MESS;
         }
-        return identityStore.getRoles().getRoles();
+        list("Roles: ", identityStore.getRoles().getRoles());
+        return null;
     }
-
 }

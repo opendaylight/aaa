@@ -8,36 +8,33 @@
 
 package org.opendaylight.aaa.cli.dmstore;
 
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.api.ClaimCache;
-import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 
-@Command(name = "remove-role", scope = "aaa", description = "Remove role.")
-
 /**
- * @author mserngawy
+ * Removes a role.
  *
+ * @author mserngawy
  */
+@Service
+@Command(name = "remove-role", scope = "aaa", description = "Remove role.")
 public class RemoveRole extends AaaCliAbstractCommand {
 
-    private final ClaimCache claimCache;
+    @Reference private ClaimCache claimCache;
 
     @Option(name = "-name", aliases = {
             "--roleName" }, description = "The role name", required = true, multiValued = false)
     private String roleName;
 
-    public RemoveRole(final ClaimCache claimCache, final PasswordHashService passwordService) {
-        super(passwordService);
-        this.claimCache = claimCache;
-    }
-
     @Override
-    protected Object doExecute() throws Exception {
-        if (super.doExecute() == null) {
+    public Object execute() throws Exception {
+        if (super.execute() == null) {
             return CliUtils.LOGIN_FAILED_MESS;
         }
         final String roleId = DataStoreUtils.getRoleId(identityStore, roleName);

@@ -8,21 +8,22 @@
 
 package org.opendaylight.aaa.cli.dmstore;
 
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.User;
-import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 
-@Command(name = "add-user", scope = "aaa", description = "Add user.")
-
 /**
- * @author mserngawy
+ * Adds a user.
  *
+ * @author mserngawy
  */
+@Service
+@Command(name = "add-user", scope = "aaa", description = "Add user.")
 public class AddUser extends AaaCliAbstractCommand {
 
     @Option(name = "-name",
@@ -30,43 +31,39 @@ public class AddUser extends AaaCliAbstractCommand {
             description = "The user name",
             required = true,
             multiValued = false)
-    private String userName = "";
+    private String userName;
 
     @Option(name = "-dname",
             aliases = { "--domainName" },
             description = "The domain name",
             required = true,
             multiValued = false)
-    private String domainName = "";
+    private String domainName;
 
     @Option(name = "-rname",
             aliases = { "--roleName" },
             description = "The role name",
             required = false,
             multiValued = false)
-    private String roleName = "";
+    private String roleName;
 
     @Option(name = "-desc",
             aliases = { "--userDescription" },
             description = "The user Description",
             required = false,
             multiValued = false)
-    private String userDesc = "";
+    private String userDesc;
 
     @Option(name = "-email",
             aliases = { "--userEmail" },
             description = "The user email",
             required = false,
             multiValued = false)
-    private String userEmail = "";
-
-    public AddUser(final PasswordHashService passwordService) {
-        super(passwordService);
-    }
+    private String userEmail;
 
     @Override
-    protected Object doExecute() throws Exception {
-        if (super.doExecute() == null) {
+    public Object execute() throws Exception {
+        if (super.execute() == null) {
             return CliUtils.LOGIN_FAILED_MESS;
         }
         final String domainId = DataStoreUtils.getDomainId(identityStore, domainName);
@@ -78,7 +75,7 @@ public class AddUser extends AaaCliAbstractCommand {
         usr.setDomainid(domainId);
         usr.setEnabled(true);
         usr.setEmail(userEmail);
-        final String pwd = CliUtils.readPassword(this.session, "Enter new user password: ");
+        final String pwd = CliUtils.readPassword("Enter new user password: ");
         if (pwd == null || pwd.isEmpty() || pwd.length() < 6) {
             return "Password should be at least 6 characters";
         }

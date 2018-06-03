@@ -8,40 +8,33 @@
 
 package org.opendaylight.aaa.cli.dmstore;
 
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.api.model.Domain;
-import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-@Command(name = "add-domain", scope = "aaa", description = "Add domain.")
 
 /**
- * @author mserngawy
+ * Adds a domain.
  *
+ * @author mserngawy
  */
+@Service
+@Command(name = "add-domain", scope = "aaa", description = "Add domain.")
 public class AddDomain extends AaaCliAbstractCommand {
-
-    private static final Logger LOG = LoggerFactory.getLogger(AddDomain.class);
 
     @Option(name = "-name", aliases = {
             "--domainName" }, description = "The domain name", required = true, multiValued = false)
-    private String domainName = "";
+    private String domainName;
 
     @Option(name = "-desc", aliases = {
             "--domainDescription" }, description = "The domain Description", required = true, multiValued = false)
-    private String domainDesc = "";
-
-    public AddDomain(final PasswordHashService passwordService) {
-        super(passwordService);
-    }
+    private String domainDesc;
 
     @Override
-    protected Object doExecute() throws Exception {
-        if (super.doExecute() == null) {
+    public Object execute() throws Exception {
+        if (super.execute() == null) {
             return CliUtils.LOGIN_FAILED_MESS;
         }
         Domain domain = new Domain();

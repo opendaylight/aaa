@@ -8,12 +8,12 @@
 
 package org.opendaylight.aaa.cli.cert;
 
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.console.OsgiCommandSupport;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
-
-@Command(name = "export-keystores", scope = "aaa", description = "Export default MD-SAL keystores to .jks files.")
 
 /**
  * Export default MD-SAL keystores to .jks files under default path.
@@ -21,16 +21,14 @@ import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
  * @author mserngawy
  *
  */
-public class ExportDefaultKeystores extends OsgiCommandSupport {
+@Service
+@Command(name = "export-keystores", scope = "aaa", description = "Export default MD-SAL keystores to .jks files.")
+public class ExportDefaultKeystores implements Action {
 
-    protected volatile ICertificateManager certProvider;
-
-    public ExportDefaultKeystores(final ICertificateManager aaaCertProvider) {
-        this.certProvider = aaaCertProvider;
-    }
+    @Reference private ICertificateManager certProvider;
 
     @Override
-    protected Object doExecute() throws Exception {
+    public Object execute() throws Exception {
         certProvider.exportSslDataKeystores();
         return "Default directory for keystores is " + KeyStoreConstant.KEY_STORE_PATH;
     }

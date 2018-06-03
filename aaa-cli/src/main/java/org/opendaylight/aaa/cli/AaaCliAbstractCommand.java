@@ -8,8 +8,9 @@
 package org.opendaylight.aaa.cli;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.Objects;
-import org.apache.karaf.shell.console.OsgiCommandSupport;
+import java.util.Collection;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
@@ -23,26 +24,20 @@ import org.opendaylight.aaa.cli.utils.DataStoreUtils;
  *
  */
 @SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-public abstract class AaaCliAbstractCommand extends OsgiCommandSupport {
+@SuppressWarnings("checkstyle:RegexpSingleLineJava")
+public abstract class AaaCliAbstractCommand implements Action {
 
     private static volatile String authUser = null;
-    protected IIDMStore identityStore;
-    private final PasswordHashService passwordService;
 
-    public AaaCliAbstractCommand(final PasswordHashService passwordService) {
-        Objects.requireNonNull(this.passwordService = passwordService);
-    }
-
-    public void setIdentityStore(IIDMStore identityStore) {
-        this.identityStore = identityStore;
-    }
+    @Reference protected IIDMStore identityStore;
+    @Reference private PasswordHashService passwordService;
 
     @Override
-    protected Object doExecute() throws Exception {
+    public Object execute() throws Exception {
         final User currentUser = SessionsManager.getInstance().getCurrentUser(authUser);
         if (currentUser == null) {
-            final String userName = CliUtils.readPassword(super.session, "Enter Username:");
-            final String passwd = CliUtils.readPassword(super.session, "Enter Password:");
+            final String userName = CliUtils.readPassword("Enter Username:");
+            final String passwd = CliUtils.readPassword("Enter Password:");
             final User usr = DataStoreUtils.isAdminUser(identityStore, passwordService, userName, passwd);
             if (usr != null) {
                 authUser = userName;
@@ -51,5 +46,10 @@ public abstract class AaaCliAbstractCommand extends OsgiCommandSupport {
             return usr;
         }
         return currentUser;
+    }
+
+    protected void list(String name, Collection<?> items) {
+        System.out.println(name);
+        items.forEach(i -> System.out.println("  " + i));
     }
 }

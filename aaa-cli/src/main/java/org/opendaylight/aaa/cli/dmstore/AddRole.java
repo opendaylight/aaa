@@ -8,41 +8,38 @@
 
 package org.opendaylight.aaa.cli.dmstore;
 
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.api.model.Role;
-import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 
-@Command(name = "add-role", scope = "aaa", description = "Add role.")
-
 /**
- * @author mserngawy
+ * Adds a role.
  *
+ * @author mserngawy
  */
+@Service
+@Command(name = "add-role", scope = "aaa", description = "Add role.")
 public class AddRole extends AaaCliAbstractCommand {
 
     @Option(name = "-name", aliases = {
             "--roleName" }, description = "The role name", required = true, multiValued = false)
-    private String roleName = "";
+    private String roleName;
 
     @Option(name = "-dname", aliases = {
             "--domainName" }, description = "The domain name", required = true, multiValued = false)
-    private String domainName = "";
+    private String domainName;
 
     @Option(name = "-desc", aliases = {
             "--roleDescription" }, description = "The role Description", required = true, multiValued = false)
-    private String roleDesc = "";
-
-    public AddRole(final PasswordHashService passwordService) {
-        super(passwordService);
-    }
+    private String roleDesc;
 
     @Override
-    protected Object doExecute() throws Exception {
-        if (super.doExecute() == null) {
+    public Object execute() throws Exception {
+        if (super.execute() == null) {
             return CliUtils.LOGIN_FAILED_MESS;
         }
         Role role = new Role();

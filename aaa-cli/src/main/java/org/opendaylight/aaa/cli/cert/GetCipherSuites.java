@@ -8,12 +8,12 @@
 
 package org.opendaylight.aaa.cli.cert;
 
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.console.OsgiCommandSupport;
+import java.util.Arrays;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
-
-@Command(name = "get-cipher-suites", scope = "aaa",
-    description = "Get the allowed cipher suites for TLS communication.")
 
 /**
  * GetCipherSuites get the allowed cipher suites for TLS communication.
@@ -21,16 +21,15 @@ import org.opendaylight.aaa.cert.api.ICertificateManager;
  * @author mserngawy
  *
  */
-public class GetCipherSuites extends OsgiCommandSupport {
+@Service
+@Command(name = "get-cipher-suites", scope = "aaa",
+        description = "Get the allowed cipher suites for TLS communication.")
+public class GetCipherSuites implements Action {
 
-    protected volatile ICertificateManager certProvider;
-
-    public GetCipherSuites(final ICertificateManager aaaCertProvider) {
-        this.certProvider = aaaCertProvider;
-    }
+    @Reference private ICertificateManager certProvider;
 
     @Override
-    protected Object doExecute() throws Exception {
-        return certProvider.getCipherSuites();
+    public Object execute() throws Exception {
+        return "Cipher suites: " + Arrays.toString(certProvider.getCipherSuites());
     }
 }
