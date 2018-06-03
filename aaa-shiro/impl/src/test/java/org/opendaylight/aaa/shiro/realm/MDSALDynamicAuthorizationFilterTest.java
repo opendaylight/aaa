@@ -13,12 +13,12 @@ import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
-import com.google.common.util.concurrent.CheckedFuture;
 import com.google.common.util.concurrent.Futures;
 import java.util.List;
 import javax.servlet.ServletRequest;
@@ -44,6 +44,34 @@ public class MDSALDynamicAuthorizationFilterTest {
 
     @Before
     public void setup() {
+    }
+
+    private static DataBroker mockDataBroker(Object readData) {
+        final ReadOnlyTransaction readOnlyTransaction = mock(ReadOnlyTransaction.class);
+
+        if (readData instanceof DataObject) {
+            doReturn(Futures.immediateCheckedFuture(Optional.of((DataObject)readData)))
+                    .when(readOnlyTransaction).read(any(), any());
+        } else if (readData instanceof Exception) {
+            doReturn(Futures.immediateFailedCheckedFuture((Exception)readData))
+                    .when(readOnlyTransaction).read(any(), any());
+        } else {
+            doReturn(Futures.immediateCheckedFuture(Optional.absent())).when(readOnlyTransaction).read(any(), any());
+        }
+
+        final DataBroker mockDataBroker = mock(DataBroker.class);
+        when(mockDataBroker.newReadOnlyTransaction()).thenReturn(readOnlyTransaction);
+        return mockDataBroker;
+    }
+
+    private static MDSALDynamicAuthorizationFilter newFilter(Subject subject, DataBroker dataBroker) {
+        ThreadLocals.DATABROKER_TL.set(dataBroker);
+        return new MDSALDynamicAuthorizationFilter() {
+            @Override
+            protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
+                return subject;
+            }
+        };
     }
 
     // test helper method to generate some cool mdsal data
@@ -75,17 +103,8 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(policies.getPolicies()).thenReturn(policiesList);
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
         when(httpAuthorization.getPolicies()).thenReturn(policies);
-        final Optional<DataObject> dataObjectOptional = mock(Optional.class);
-        when(dataObjectOptional.get()).thenReturn(httpAuthorization);
-        when(dataObjectOptional.isPresent()).thenReturn(true);
-        final CheckedFuture<Optional<DataObject>, ReadFailedException> cf = mock(CheckedFuture.class);
-        when(cf.get()).thenReturn(dataObjectOptional);
-        final ReadOnlyTransaction rot = mock(ReadOnlyTransaction.class);
-        when(rot.read(any(), any())).thenReturn(cf);
-        final DataBroker dataBroker = mock(DataBroker.class);
-        when(dataBroker.newReadOnlyTransaction()).thenReturn(rot);
 
-        return dataBroker;
+        return mockDataBroker(httpAuthorization);
     }
 
     @Test
@@ -106,42 +125,27 @@ public class MDSALDynamicAuthorizationFilterTest {
 
     @Test
     public void testBasicAccessWithNoRules() throws Exception {
-        //
-        // Test Setup: No rules are added to the HttpAuthorization container.  Open access should be allowed.
-        final Subject subject = mock(Subject.class);
-        ThreadLocals.DATABROKER_TL.set(getTestData());
-        final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
-            @Override
-            protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
-                return subject;
-            }
-        };
-
         final HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getRequestURI()).thenReturn("abc");
         when(request.getMethod()).thenReturn("Put");
-        final Optional<DataObject> dataObjectOptional = mock(Optional.class);
-        when(dataObjectOptional.isPresent()).thenReturn(false);
-        final CheckedFuture<Optional<DataObject>, ReadFailedException> cf = mock(CheckedFuture.class);
-        when(cf.get()).thenReturn(dataObjectOptional);
-        final ReadOnlyTransaction rot = mock(ReadOnlyTransaction.class);
-        when(rot.read(any(), any())).thenReturn(cf);
-        final DataBroker dataBroker = mock(DataBroker.class);
-        when(dataBroker.newReadOnlyTransaction()).thenReturn(rot);
 
         //
+        // Test Setup: No rules are added to the HttpAuthorization container.  Open access should be allowed.
+        MDSALDynamicAuthorizationFilter filter = newFilter(mock(Subject.class), mockDataBroker(null));
+
         // Ensure that access is allowed since no data is returned from the MDSAL read.
         // This is through making sure the Optional is not present.
         assertTrue(filter.isAccessAllowed(request, null, null));
 
         //
         // Same as above, but with an empty policy list returned.
+
         final Policies policies = mock(Policies.class);
         when(policies.getPolicies()).thenReturn(Lists.newArrayList());
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
         when(httpAuthorization.getPolicies()).thenReturn(policies);
-        when(dataObjectOptional.isPresent()).thenReturn(true);
-        when(dataObjectOptional.get()).thenReturn(httpAuthorization);
+        filter = newFilter(mock(Subject.class), mockDataBroker(httpAuthorization));
+
         assertTrue(filter.isAccessAllowed(request, null, null));
     }
 
@@ -155,23 +159,8 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(request.getRequestURI()).thenReturn("abc");
         when(request.getMethod()).thenReturn("Put");
 
-        final Optional<DataObject> dataObjectOptional = mock(Optional.class);
-        when(dataObjectOptional.isPresent()).thenReturn(false);
-        final CheckedFuture<Optional<DataObject>, ReadFailedException> cf = Futures
-                .immediateFailedCheckedFuture(new ReadFailedException("Test Fail"));
-        final ReadOnlyTransaction rot = mock(ReadOnlyTransaction.class);
-        when(rot.read(any(), any())).thenReturn(cf);
-        final DataBroker dataBroker = mock(DataBroker.class);
-        when(dataBroker.newReadOnlyTransaction()).thenReturn(rot);
-
-        final Subject subject = mock(Subject.class);
-        ThreadLocals.DATABROKER_TL.set(dataBroker);
-        final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
-            @Override
-            protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
-                return subject;
-            }
-        };
+        MDSALDynamicAuthorizationFilter filter = newFilter(mock(Subject.class),
+                mockDataBroker(new ReadFailedException("Test Fail")));
 
         // Ensure that if an error occurs while reading MD-SAL that access is denied.
         assertFalse(filter.isAccessAllowed(request, null, null));
@@ -185,14 +174,9 @@ public class MDSALDynamicAuthorizationFilterTest {
         //
         // A Rule is added to match /** allowing HTTP PUT for the admin role.
         // All other Methods are considered unauthorized.
+
         final Subject subject = mock(Subject.class);
-        ThreadLocals.DATABROKER_TL.set(getTestData());
-        final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
-            @Override
-            protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
-                return subject;
-            }
-        };
+        final MDSALDynamicAuthorizationFilter filter = newFilter(subject, getTestData());
 
         final HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getRequestURI()).thenReturn("abc");
@@ -283,24 +267,9 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(policies.getPolicies()).thenReturn(policiesList);
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
         when(httpAuthorization.getPolicies()).thenReturn(policies);
-        final Optional<DataObject> dataObjectOptional = mock(Optional.class);
-        when(dataObjectOptional.get()).thenReturn(httpAuthorization);
-        when(dataObjectOptional.isPresent()).thenReturn(true);
-        final CheckedFuture<Optional<DataObject>, ReadFailedException> cf = mock(CheckedFuture.class);
-        when(cf.get()).thenReturn(dataObjectOptional);
-        final ReadOnlyTransaction rot = mock(ReadOnlyTransaction.class);
-        when(rot.read(any(), any())).thenReturn(cf);
-        final DataBroker dataBroker = mock(DataBroker.class);
-        when(dataBroker.newReadOnlyTransaction()).thenReturn(rot);
 
         final Subject subject = mock(Subject.class);
-        ThreadLocals.DATABROKER_TL.set(dataBroker);
-        final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
-            @Override
-            protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
-                return subject;
-            }
-        };
+        final MDSALDynamicAuthorizationFilter filter = newFilter(subject, mockDataBroker(httpAuthorization));
 
         final HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getRequestURI()).thenReturn("/abc");
@@ -374,24 +343,9 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(policies.getPolicies()).thenReturn(policiesList);
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
         when(httpAuthorization.getPolicies()).thenReturn(policies);
-        final Optional<DataObject> dataObjectOptional = mock(Optional.class);
-        when(dataObjectOptional.get()).thenReturn(httpAuthorization);
-        when(dataObjectOptional.isPresent()).thenReturn(true);
-        final CheckedFuture<Optional<DataObject>, ReadFailedException> cf = mock(CheckedFuture.class);
-        when(cf.get()).thenReturn(dataObjectOptional);
-        final ReadOnlyTransaction rot = mock(ReadOnlyTransaction.class);
-        when(rot.read(any(), any())).thenReturn(cf);
-        final DataBroker dataBroker = mock(DataBroker.class);
-        when(dataBroker.newReadOnlyTransaction()).thenReturn(rot);
 
         final Subject subject = mock(Subject.class);
-        ThreadLocals.DATABROKER_TL.set(dataBroker);
-        final MDSALDynamicAuthorizationFilter filter = new MDSALDynamicAuthorizationFilter() {
-            @Override
-            protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
-                return subject;
-            }
-        };
+        final MDSALDynamicAuthorizationFilter filter = newFilter(subject, mockDataBroker(httpAuthorization));
 
         final HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getRequestURI()).thenReturn("/abc");

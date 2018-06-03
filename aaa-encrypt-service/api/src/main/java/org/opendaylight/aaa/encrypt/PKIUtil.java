@@ -47,7 +47,6 @@ import org.bouncycastle.openssl.jcajce.JcePEMDecryptorProviderBuilder;
 /**
  * PKI related utilities.
  */
-@Deprecated // TODO: abstract a service
 public class PKIUtil {
     private static final String KEY_FACTORY_TYPE_RSA = "RSA";
     private static final String KEY_FACTORY_TYPE_DSA = "DSA";
