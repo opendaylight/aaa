@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "593acaab_406997c6",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 7867
+      },
+      "writtenOn": "2018-06-14T12:47:23Z",
+      "side": 1,
+      "message": "is this really singleton ?",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 32
+      },
+      "revId": "ef181013776a7ac7106f7291b0051dde0acc4925",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "473764d5_61df1d96",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/CustomFilterAdapterConfiguration.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 7867
+      },
+      "writtenOn": "2018-06-14T12:47:23Z",
+      "side": 1,
+      "message": "singleton ?\nmaybe return INSTANCE;",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 54
+      },
+      "revId": "ef181013776a7ac7106f7291b0051dde0acc4925",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
