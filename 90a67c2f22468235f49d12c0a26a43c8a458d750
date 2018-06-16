@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c174201_0b98d111",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-06-16T12:21:54Z",
+      "side": 1,
+      "message": "This should be component-managed. Also it only handles updates - it doesn\u0027t notify on startup - see https://wiki.opendaylight.org/view/Using_Blueprint#Using_managed-properties for details and solution. Please test this functionality as well.",
+      "range": {
+        "startLine": 51,
+        "startChar": 83,
+        "endLine": 51,
+        "endChar": 100
+      },
+      "revId": "90a67c2f22468235f49d12c0a26a43c8a458d750",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93bfca03_bab2329e",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-06-16T12:21:54Z",
+      "side": 1,
+      "message": "authentication (sic)",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "90a67c2f22468235f49d12c0a26a43c8a458d750",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6971ace7_25d3bbca",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-06-16T12:21:54Z",
+      "side": 1,
+      "message": "component-managed - see above.",
+      "revId": "90a67c2f22468235f49d12c0a26a43c8a458d750",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
