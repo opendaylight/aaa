@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3fe0103_03ff6c0a",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/tokenauthrealm/auth/AuthenticationManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-06-21T21:23:11Z",
+      "side": 1,
+      "message": "Technically this should only be upper case if it\u0027s static final but not a big deal.",
+      "range": {
+        "startLine": 31,
+        "startChar": 36,
+        "endLine": 31,
+        "endChar": 51
+      },
+      "revId": "d4d743994d444ed6331ec109434660c7625b2b26",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0dd7a61_fb99b6f5",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-06-21T21:23:11Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right - the pid needs to match the pid on line 53. Also the pid should be org.opendaylight.aaa.filterchain as defined in CustomFilterAdapterConfiguration.",
+      "revId": "d4d743994d444ed6331ec109434660c7625b2b26",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7362ac1_49f2fa52",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-06-21T21:23:11Z",
+      "side": 1,
+      "message": "CustomFilterAdapterConfiguration lives in aaa-filterchain and was previously advertised from there and should remain so. This was already converted to BP in master so those changes should just be backported.",
+      "revId": "d4d743994d444ed6331ec109434660c7625b2b26",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d482fe14_5fe91717",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-06-21T21:23:11Z",
+      "side": 1,
+      "message": "AuthenticationManager has a static instance - this is creating a new local instance. Also where was the AuthenticationManager registered as a ManagedService previously? Why are you changing anything wrt AuthenticationManager in this patch?",
+      "revId": "d4d743994d444ed6331ec109434660c7625b2b26",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
