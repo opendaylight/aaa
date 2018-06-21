@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59b9c0f2_51e749c9",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 8125
+      },
+      "writtenOn": "2018-06-21T10:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c6c6f52_8f3de302",
+      "revId": "3bfb090d96bd8e6a7cbee2f0d9e1f67884805046",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80d16949_563f4d5a",
         "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
         "patchSetId": 11
@@ -30,6 +48,30 @@
       "writtenOn": "2018-06-18T22:56:11Z",
       "side": 1,
       "message": "authentication (sic)",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "3bfb090d96bd8e6a7cbee2f0d9e1f67884805046",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4921d4d6_13fd89cf",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 8125
+      },
+      "writtenOn": "2018-06-21T10:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d16949_563f4d5a",
       "range": {
         "startLine": 55,
         "startChar": 12,
