@@ -7,24 +7,33 @@
  */
 package org.opendaylight.aaa.shiro.realm;
 
+import static java.util.Objects.requireNonNull;
+
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Iterables;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+import javax.annotation.Nonnull;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
+import org.opendaylight.controller.md.sal.binding.api.ClusteredDataTreeChangeListener;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.binding.api.DataTreeIdentifier;
+import org.opendaylight.controller.md.sal.binding.api.DataTreeModification;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.HttpAuthorization;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.Policies;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.permission.Permissions;
+import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,29 +51,28 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
 
     private static final Logger LOG = LoggerFactory.getLogger(MDSALDynamicAuthorizationFilter.class);
 
-    private static final InstanceIdentifier<HttpAuthorization> AUTHZ_CONTAINER_IID =
-            InstanceIdentifier.builder(HttpAuthorization.class).build();
+    private static final DataTreeIdentifier<HttpAuthorization> AUTHZ_CONTAINER = new DataTreeIdentifier<>(
+            LogicalDatastoreType.CONFIGURATION, InstanceIdentifier.create(HttpAuthorization.class));
 
-    @SuppressWarnings("checkstyle:AvoidHidingCauseException")
-    public static Optional<HttpAuthorization> getHttpAuthzContainer(final DataBroker dataBroker)
-            throws ExecutionException, InterruptedException, ReadFailedException {
+    private final ListenerRegistration<?> reg;
 
-        try (ReadOnlyTransaction ro = dataBroker.newReadOnlyTransaction()) {
-            return ro.read(LogicalDatastoreType.CONFIGURATION, AUTHZ_CONTAINER_IID).get();
-        } catch (ExecutionException e) {
-            final Throwable cause = e.getCause();
-            if (cause instanceof ReadFailedException) {
-                throw (ReadFailedException)cause;
-            }
-
-            throw e;
-        }
-    }
-
-    private final DataBroker dataBroker;
+    private volatile ListenableFuture<Optional<HttpAuthorization>> authContainer;
 
     public MDSALDynamicAuthorizationFilter() {
-        this.dataBroker = Objects.requireNonNull(ThreadLocals.DATABROKER_TL.get());
+        final DataBroker dataBroker = requireNonNull(ThreadLocals.DATABROKER_TL.get());
+
+        try (ReadOnlyTransaction tx = dataBroker.newReadOnlyTransaction()) {
+            authContainer = tx.read(AUTHZ_CONTAINER.getDatastoreType(), AUTHZ_CONTAINER.getRootIdentifier());
+        }
+
+        this.reg = dataBroker.registerDataTreeChangeListener(
+            AUTHZ_CONTAINER, (ClusteredDataTreeChangeListener<HttpAuthorization>) this::onContainerChanged);
+    }
+
+    private void onContainerChanged(@Nonnull final Collection<DataTreeModification<HttpAuthorization>> changes) {
+        final HttpAuthorization newVal = Iterables.getLast(changes).getRootNode().getDataAfter();
+        LOG.debug("Updating authorization information to {}", newVal);
+        authContainer = Futures.immediateFuture(Optional.fromNullable(newVal));
     }
 
     @Override
@@ -80,13 +88,9 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
 
         final Optional<HttpAuthorization> authorizationOptional;
         try {
-            authorizationOptional = getHttpAuthzContainer(dataBroker);
+            authorizationOptional = authContainer.get();
         } catch (ExecutionException | InterruptedException e) {
             // Something went completely wrong trying to read the authz container.  Deny access.
-            LOG.debug("Error accessing the Http Authz Container", e);
-            return false;
-        } catch (final ReadFailedException e) {
-            // The MDSAL read attempt failed.  fail-closed to prevent unauthorized access
             LOG.warn("MDSAL attempt to read Http Authz Container failed, disallowing access", e);
             return false;
         }
@@ -97,7 +101,6 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
             LOG.debug("Authorization Container does not exist");
             return true;
         }
-
 
         final HttpAuthorization httpAuthorization = authorizationOptional.get();
         final Policies policies = httpAuthorization.getPolicies();
@@ -140,5 +143,11 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
         }
         LOG.debug("successfully authorized the user for access");
         return true;
+    }
+
+    @Override
+    public void destroy() {
+        reg.close();
+        super.destroy();
     }
 }
