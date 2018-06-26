@@ -108,22 +108,6 @@ public class MDSALDynamicAuthorizationFilterTest {
     }
 
     @Test
-    public void testGetHttpAuthzContainer() throws Exception {
-        //
-        // Test Setup:
-        //
-        // Ensure that data can be extracted appropriately.
-        final DataBroker dataBroker = getTestData();
-        final Optional<HttpAuthorization> httpAuthorizationOptional = MDSALDynamicAuthorizationFilter
-                .getHttpAuthzContainer(dataBroker);
-
-        assertNotNull(httpAuthorizationOptional);
-        final HttpAuthorization authz = httpAuthorizationOptional.get();
-        assertNotNull(authz);
-        assertEquals(1, authz.getPolicies().getPolicies().size());
-    }
-
-    @Test
     public void testBasicAccessWithNoRules() throws Exception {
         final HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getRequestURI()).thenReturn("abc");
