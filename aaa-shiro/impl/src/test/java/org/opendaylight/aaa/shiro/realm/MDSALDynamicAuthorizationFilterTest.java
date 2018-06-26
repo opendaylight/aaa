@@ -8,9 +8,7 @@
 
 package org.opendaylight.aaa.shiro.realm;
 
-import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -46,7 +44,7 @@ public class MDSALDynamicAuthorizationFilterTest {
     public void setup() {
     }
 
-    private static DataBroker mockDataBroker(Object readData) {
+    private static DataBroker mockDataBroker(final Object readData) {
         final ReadOnlyTransaction readOnlyTransaction = mock(ReadOnlyTransaction.class);
 
         if (readData instanceof DataObject) {
@@ -64,7 +62,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         return mockDataBroker;
     }
 
-    private static MDSALDynamicAuthorizationFilter newFilter(Subject subject, DataBroker dataBroker) {
+    private static MDSALDynamicAuthorizationFilter newFilter(final Subject subject, final DataBroker dataBroker) {
         ThreadLocals.DATABROKER_TL.set(dataBroker);
         return new MDSALDynamicAuthorizationFilter() {
             @Override
@@ -105,22 +103,6 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(httpAuthorization.getPolicies()).thenReturn(policies);
 
         return mockDataBroker(httpAuthorization);
-    }
-
-    @Test
-    public void testGetHttpAuthzContainer() throws Exception {
-        //
-        // Test Setup:
-        //
-        // Ensure that data can be extracted appropriately.
-        final DataBroker dataBroker = getTestData();
-        final Optional<HttpAuthorization> httpAuthorizationOptional = MDSALDynamicAuthorizationFilter
-                .getHttpAuthzContainer(dataBroker);
-
-        assertNotNull(httpAuthorizationOptional);
-        final HttpAuthorization authz = httpAuthorizationOptional.get();
-        assertNotNull(authz);
-        assertEquals(1, authz.getPolicies().getPolicies().size());
     }
 
     @Test
