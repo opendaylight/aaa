@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ee3b2b6_ae5a2f05",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MDSALDynamicAuthorizationFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-06-26T17:11:23Z",
+      "side": 1,
+      "message": "I think we should do the same as the clustered-app-config code, it also reads the data to ensure it gets the initial data if empty. The  authContainer could be a Future.  (This is actually a case where the onInitialData method on DTCL I\u0027ve been meaning to add would come into play.)",
+      "revId": "1e72177ae2f6c442824a8b2814ae7f0b9ede9e1a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e84d221_6c2d3756",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MDSALDynamicAuthorizationFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-06-26T17:11:23Z",
+      "side": 1,
+      "message": "This method looks unused now.",
+      "revId": "1e72177ae2f6c442824a8b2814ae7f0b9ede9e1a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
