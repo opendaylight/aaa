@@ -7,24 +7,34 @@
  */
 package org.opendaylight.aaa.shiro.realm;
 
+import static java.util.Objects.requireNonNull;
+
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Iterables;
+import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+import javax.annotation.Nonnull;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
+import org.opendaylight.controller.md.sal.binding.api.ClusteredDataTreeChangeListener;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.binding.api.DataTreeIdentifier;
+import org.opendaylight.controller.md.sal.binding.api.DataTreeModification;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.HttpAuthorization;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.Policies;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.permission.Permissions;
+import org.opendaylight.yangtools.concepts.ListenerRegistration;
+import org.opendaylight.yangtools.concepts.Registration;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,33 +48,27 @@ import org.slf4j.LoggerFactory;
  * <p>This mechanism will only work when put behind <code>authcBasic</code>.
  */
 @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
-public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
+public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter implements Registration {
 
     private static final Logger LOG = LoggerFactory.getLogger(MDSALDynamicAuthorizationFilter.class);
 
     private static final InstanceIdentifier<HttpAuthorization> AUTHZ_CONTAINER_IID =
             InstanceIdentifier.builder(HttpAuthorization.class).build();
 
-    @SuppressWarnings("checkstyle:AvoidHidingCauseException")
-    public static Optional<HttpAuthorization> getHttpAuthzContainer(final DataBroker dataBroker)
-            throws ExecutionException, InterruptedException, ReadFailedException {
+    private final ListenerRegistration<?> reg;
 
-        try (ReadOnlyTransaction ro = dataBroker.newReadOnlyTransaction()) {
-            return ro.read(LogicalDatastoreType.CONFIGURATION, AUTHZ_CONTAINER_IID).get();
-        } catch (ExecutionException e) {
-            final Throwable cause = e.getCause();
-            if (cause instanceof ReadFailedException) {
-                throw (ReadFailedException)cause;
-            }
-
-            throw e;
-        }
-    }
-
-    private final DataBroker dataBroker;
+    private volatile Optional<HttpAuthorization> authContainer;
 
     public MDSALDynamicAuthorizationFilter() {
-        this.dataBroker = Objects.requireNonNull(ThreadLocals.DATABROKER_TL.get());
+        this.reg = requireNonNull(ThreadLocals.DATABROKER_TL.get()).registerDataTreeChangeListener(
+            new DataTreeIdentifier<>(LogicalDatastoreType.CONFIGURATION, AUTHZ_CONTAINER_IID),
+            (ClusteredDataTreeChangeListener<HttpAuthorization>) this::onContainerChanged);
+    }
+
+    private void onContainerChanged(@Nonnull final Collection<DataTreeModification<HttpAuthorization>> changes) {
+        final HttpAuthorization newVal = Iterables.getLast(changes).getRootNode().getDataAfter();
+        LOG.debug("Updating authorization information to {}", newVal);
+        authContainer = Optional.fromNullable(newVal);
     }
 
     @Override
@@ -78,16 +82,9 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
         final String requestURI = httpServletRequest.getRequestURI();
         LOG.debug("isAccessAllowed for user={} to requestURI={}", subject, requestURI);
 
-        final Optional<HttpAuthorization> authorizationOptional;
-        try {
-            authorizationOptional = getHttpAuthzContainer(dataBroker);
-        } catch (ExecutionException | InterruptedException e) {
-            // Something went completely wrong trying to read the authz container.  Deny access.
-            LOG.debug("Error accessing the Http Authz Container", e);
-            return false;
-        } catch (final ReadFailedException e) {
-            // The MDSAL read attempt failed.  fail-closed to prevent unauthorized access
-            LOG.warn("MDSAL attempt to read Http Authz Container failed, disallowing access", e);
+        final Optional<HttpAuthorization> authorizationOptional = authContainer;
+        if (authorizationOptional == null) {
+            LOG.warn("Authorization information has not been fully propagated yet, disallowing access");
             return false;
         }
 
@@ -97,7 +94,6 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
             LOG.debug("Authorization Container does not exist");
             return true;
         }
-
 
         final HttpAuthorization httpAuthorization = authorizationOptional.get();
         final Policies policies = httpAuthorization.getPolicies();
@@ -140,5 +136,27 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
         }
         LOG.debug("successfully authorized the user for access");
         return true;
+    }
+
+    @Override
+    public void close() {
+        reg.close();
+    }
+
+    @SuppressWarnings("checkstyle:AvoidHidingCauseException")
+    @VisibleForTesting
+    static Optional<HttpAuthorization> getHttpAuthzContainer(final DataBroker dataBroker)
+            throws ExecutionException, InterruptedException, ReadFailedException {
+
+        try (ReadOnlyTransaction ro = dataBroker.newReadOnlyTransaction()) {
+            return ro.read(LogicalDatastoreType.CONFIGURATION, AUTHZ_CONTAINER_IID).get();
+        } catch (ExecutionException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ReadFailedException) {
+                throw (ReadFailedException)cause;
+            }
+
+            throw e;
+        }
     }
 }
