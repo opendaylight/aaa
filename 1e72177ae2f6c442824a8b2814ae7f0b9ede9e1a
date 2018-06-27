@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19ad651a_f6b96a0a",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MDSALDynamicAuthorizationFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2018-06-27T11:40:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ee3b2b6_ae5a2f05",
+      "revId": "1e72177ae2f6c442824a8b2814ae7f0b9ede9e1a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e84d221_6c2d3756",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MDSALDynamicAuthorizationFilter.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-06-26T17:11:23Z",
       "side": 1,
       "message": "This method looks unused now.",
+      "revId": "1e72177ae2f6c442824a8b2814ae7f0b9ede9e1a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "882ed6c2_ac338b8f",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MDSALDynamicAuthorizationFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2018-06-27T11:40:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e84d221_6c2d3756",
       "revId": "1e72177ae2f6c442824a8b2814ae7f0b9ede9e1a",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
