@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f505c39_1f96d610",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MDSALDynamicAuthorizationFilter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-07-05T14:43:22Z",
+      "side": 1,
+      "message": "Should we put a deadline on this - an upper limit like 30s? No DTCN\u0027s will occur on startup until shard leaders converge which theoretically could be indefinite. The read future *should* be completed after some upper limit deadline so it\u0027s probably OK to rely on that.",
+      "revId": "5e05f257a083b3c80700c66138c87ebbaa1a04f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
