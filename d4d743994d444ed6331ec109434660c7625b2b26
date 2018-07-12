@@ -91,6 +91,24 @@
       "revId": "d4d743994d444ed6331ec109434660c7625b2b26",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "602b0fb1_9835b42b",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 8125
+      },
+      "writtenOn": "2018-07-12T15:21:47Z",
+      "side": 1,
+      "message": "We are trying to change everything that has OSGi import. AuthenticationManager is causing problems when starting non OSGi project because it is importing:\n\nimport org.osgi.service.cm.ConfigurationException;\nimport org.osgi.service.cm.ManagedService;",
+      "parentUuid": "d482fe14_5fe91717",
+      "revId": "d4d743994d444ed6331ec109434660c7625b2b26",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
