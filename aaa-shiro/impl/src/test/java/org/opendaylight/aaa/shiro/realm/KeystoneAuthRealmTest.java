@@ -33,6 +33,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,10 +43,10 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.opendaylight.aaa.provider.GsonProvider;
 import org.opendaylight.aaa.AAAShiroProvider;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.provider.GsonProvider;
 import org.opendaylight.aaa.shiro.keystone.domain.KeystoneAuth;
 import org.opendaylight.aaa.shiro.keystone.domain.KeystoneToken;
 import org.opendaylight.aaa.shiro.realm.util.http.SimpleHttpClient;
@@ -114,6 +115,11 @@ public class KeystoneAuthRealmTest {
         when(response.getToken()).thenReturn(ksToken);
 
         keystoneAuthRealm.setUrl(testUrl);
+    }
+
+    @After
+    public void cleanup() {
+        AAAShiroProvider.clearInstance();
     }
 
     @Test
