@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41cb1e57_d7c878e7",
+        "filename": "aaa-filterchain/pom.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-07-16T12:57:00Z",
+      "side": 1,
+      "message": "Why are you changing the parent here?",
+      "revId": "4b3a545a4d2d053cea04be01f538d7eb4ec0f049",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e7fe283_f8f1f7a8",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-07-16T12:57:00Z",
+      "side": 1,
+      "message": "This is not correct in conjunction with the other code. I know this was copied from master but master was refactored to eliminate the static CustomFilterAdapterConfigurationImpl which can\u0027t be done in oxygen. You need to follow what https://git.opendaylight.org/gerrit/#/c/69643/ did. However this is not related to refactoring AAAShiroProvider as this patch summary describes so it should be done in a separate patch.",
+      "revId": "4b3a545a4d2d053cea04be01f538d7eb4ec0f049",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3edfb473_9e0be52e",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/tokenauthrealm/auth/AuthenticationManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-07-16T12:57:00Z",
+      "side": 1,
+      "message": "Why was this changed to upper-case? It should not be as it\u0027s not a constant.",
+      "range": {
+        "startLine": 31,
+        "startChar": 36,
+        "endLine": 31,
+        "endChar": 51
+      },
+      "revId": "4b3a545a4d2d053cea04be01f538d7eb4ec0f049",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8e0ce8c_7cdf4088",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/tokenauthrealm/auth/AuthenticationManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-07-16T12:57:00Z",
+      "side": 1,
+      "message": "This should be IllegalArgumentException.",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 38
+      },
+      "revId": "4b3a545a4d2d053cea04be01f538d7eb4ec0f049",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0858d102_ec820d42",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-07-16T12:57:00Z",
+      "side": 1,
+      "message": "From what I can see, AuthenticationManager isn\u0027t even used as a ManagedService anymore - this was removed by the refactoring in https://git.opendaylight.org/gerrit/#/c/58275/ whether inadvertent or not. So you can just remove the OSGi references from AuthenticationManager, in which case you don\u0027t need these changes.",
+      "revId": "4b3a545a4d2d053cea04be01f538d7eb4ec0f049",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dca27d6c_291769b0",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/MDSALDynamicAuthorizationFilterTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-07-16T12:57:00Z",
+      "side": 1,
+      "message": "This is incorrect re-ordering. Imports should be sorted alphabetically and all static imports before non-static.",
+      "revId": "4b3a545a4d2d053cea04be01f538d7eb4ec0f049",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
