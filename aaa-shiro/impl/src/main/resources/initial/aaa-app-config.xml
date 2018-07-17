@@ -310,7 +310,7 @@
     </urls>
     <urls>
         <pair-key>/**</pair-key>
-        <pair-value>authcBasic, dynamicAuthorization</pair-value>
+        <pair-value>authcBasic</pair-value>
     </urls>
 </shiro-configuration>
 
