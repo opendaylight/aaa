@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "7bba2f17_88908ef3",
+        "filename": "aaa-filterchain/pom.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-07-30T13:49:24Z",
+      "side": 1,
+      "message": "hmm... it\u0027s not a big deal to change the parent but I\u0027m curious what exactly failed and how that relates to BP and why the same failure doesn\u0027t occur in master.",
+      "parentUuid": "e3dda874_b7a27b70",
+      "revId": "4b3a545a4d2d053cea04be01f538d7eb4ec0f049",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e7fe283_f8f1f7a8",
         "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapter.java",
         "patchSetId": 16
