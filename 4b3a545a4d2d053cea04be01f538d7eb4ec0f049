@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "a1a63bc3_fb897e61",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 8125
+      },
+      "writtenOn": "2018-07-30T13:36:32Z",
+      "side": 1,
+      "message": "I ve done fix in here right now. Do you need us to move it to different patch or would it be enought to add some lines to commit message?",
+      "parentUuid": "5e7fe283_f8f1f7a8",
+      "revId": "4b3a545a4d2d053cea04be01f538d7eb4ec0f049",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3edfb473_9e0be52e",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/tokenauthrealm/auth/AuthenticationManager.java",
         "patchSetId": 16
@@ -83,6 +101,30 @@
       "writtenOn": "2018-07-16T12:57:00Z",
       "side": 1,
       "message": "Why was this changed to upper-case? It should not be as it\u0027s not a constant.",
+      "range": {
+        "startLine": 31,
+        "startChar": 36,
+        "endLine": 31,
+        "endChar": 51
+      },
+      "revId": "4b3a545a4d2d053cea04be01f538d7eb4ec0f049",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b040f505_f790c5cb",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/tokenauthrealm/auth/AuthenticationManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 8125
+      },
+      "writtenOn": "2018-07-30T13:36:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3edfb473_9e0be52e",
       "range": {
         "startLine": 31,
         "startChar": 36,
@@ -118,6 +160,30 @@
     },
     {
       "key": {
+        "uuid": "83451357_4e6fafe8",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/tokenauthrealm/auth/AuthenticationManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 8125
+      },
+      "writtenOn": "2018-07-30T13:36:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8e0ce8c_7cdf4088",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 38
+      },
+      "revId": "4b3a545a4d2d053cea04be01f538d7eb4ec0f049",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0858d102_ec820d42",
         "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
         "patchSetId": 16
@@ -135,6 +201,24 @@
     },
     {
       "key": {
+        "uuid": "c124eb88_eac1d316",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 8125
+      },
+      "writtenOn": "2018-07-30T13:36:32Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "0858d102_ec820d42",
+      "revId": "4b3a545a4d2d053cea04be01f538d7eb4ec0f049",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dca27d6c_291769b0",
         "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/MDSALDynamicAuthorizationFilterTest.java",
         "patchSetId": 16
@@ -146,6 +230,24 @@
       "writtenOn": "2018-07-16T12:57:00Z",
       "side": 1,
       "message": "This is incorrect re-ordering. Imports should be sorted alphabetically and all static imports before non-static.",
+      "revId": "4b3a545a4d2d053cea04be01f538d7eb4ec0f049",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57e039df_8d94a2af",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/MDSALDynamicAuthorizationFilterTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 8125
+      },
+      "writtenOn": "2018-07-30T13:36:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dca27d6c_291769b0",
       "revId": "4b3a545a4d2d053cea04be01f538d7eb4ec0f049",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
