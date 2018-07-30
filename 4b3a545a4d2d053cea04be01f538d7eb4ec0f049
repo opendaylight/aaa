@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be3f4f16_06645da0",
+        "filename": "aaa-filterchain/pom.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 7867
+      },
+      "writtenOn": "2018-07-30T13:28:03Z",
+      "side": 1,
+      "message": "Parent is changed because this artifact has blueprint now and ODL uses non-standard blueprint handling which is done by parent.",
+      "parentUuid": "41cb1e57_d7c878e7",
+      "revId": "4b3a545a4d2d053cea04be01f538d7eb4ec0f049",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e7fe283_f8f1f7a8",
         "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapter.java",
         "patchSetId": 16
