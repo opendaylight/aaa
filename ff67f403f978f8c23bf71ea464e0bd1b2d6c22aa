@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc24c66a_cb464b9e",
+        "filename": "aaa-filterchain/pom.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-07-30T20:19:41Z",
+      "side": 1,
+      "message": "This isn\u0027t needed it can just be inherited from the parent pom.",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 35
+      },
+      "revId": "ff67f403f978f8c23bf71ea464e0bd1b2d6c22aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa04845a_d4a8f152",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/AAAShiroProvider.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-07-30T20:19:41Z",
+      "side": 1,
+      "message": "There is an extra space here and the imports are now out of order.",
+      "revId": "ff67f403f978f8c23bf71ea464e0bd1b2d6c22aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c45dd8d_d6924dda",
+        "filename": "aaa-shiro/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3635
+      },
+      "writtenOn": "2018-07-30T20:19:41Z",
+      "side": 1,
+      "message": "Mispelling of \"Provider\"",
+      "revId": "ff67f403f978f8c23bf71ea464e0bd1b2d6c22aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
