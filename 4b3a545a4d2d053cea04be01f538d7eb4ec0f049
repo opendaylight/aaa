@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "33579385_e4d0686f",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-07-30T13:40:37Z",
+      "side": 1,
+      "message": "It\u0027s fine to leave it here - if you could update the commit message that would be great.",
+      "parentUuid": "a1a63bc3_fb897e61",
+      "revId": "4b3a545a4d2d053cea04be01f538d7eb4ec0f049",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3edfb473_9e0be52e",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/tokenauthrealm/auth/AuthenticationManager.java",
         "patchSetId": 16
