@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21232d55_d9fdf6ae",
+        "filename": "aaa-filterchain/src/main/resources/org.opendaylight.blueprint/aaa-filterchain.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-07-30T15:33:52Z",
+      "side": 1,
+      "message": "This method doesn\u0027t exist on CustomFilterAdapterConfigurationImpl. BP should fail but it doesn\u0027t run b/c the BP xml file is under org.opendaylight.blueprint instead of org/opendaylight/blueprint.\n\nWith that corrected, the pom parent change isn\u0027t needed although I\u0027m not sure why changing to bundle-parent somehow masked this issue (I didn\u0027t dig into that).\n\nI pushed a new patch set with this fix.",
+      "range": {
+        "startLine": 9,
+        "startChar": 22,
+        "endLine": 9,
+        "endChar": 33
+      },
+      "revId": "3d8261227d8d1102c51c445850932c4947e41ca5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
