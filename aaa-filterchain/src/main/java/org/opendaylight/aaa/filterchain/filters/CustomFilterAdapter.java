@@ -9,15 +9,10 @@
 package org.opendaylight.aaa.filterchain.filters;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.MoreExecutors;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -59,7 +54,7 @@ public class CustomFilterAdapter implements Filter, CustomFilterAdapterListener 
 
     private static final Logger LOG = LoggerFactory.getLogger(CustomFilterAdapter.class);
 
-    private final ListenableFuture<CustomFilterAdapterConfiguration> customFilterAdapterConfigFuture;
+    private final CustomFilterAdapterConfiguration customFilterAdapterConfig;
 
     private FilterConfig filterConfig;
 
@@ -69,7 +64,7 @@ public class CustomFilterAdapter implements Filter, CustomFilterAdapterListener 
     private volatile List<Filter> injectedFilterChain = Collections.emptyList();
 
     public CustomFilterAdapter(CustomFilterAdapterConfiguration customFilterAdapterConfig) {
-        this.customFilterAdapterConfigFuture = Futures.immediateFuture(customFilterAdapterConfig);
+        this.customFilterAdapterConfig = customFilterAdapterConfig;
     }
 
     @Override
@@ -99,17 +94,7 @@ public class CustomFilterAdapter implements Filter, CustomFilterAdapterListener 
         this.filterConfig = newFilterConfig;
 
         // register as a listener for config admin changes
-        Futures.addCallback(customFilterAdapterConfigFuture, new FutureCallback<CustomFilterAdapterConfiguration>() {
-            @Override
-            public void onSuccess(@Nonnull CustomFilterAdapterConfiguration customFilterAdapterConfig) {
-                customFilterAdapterConfig.registerCustomFilterAdapterConfigurationListener(CustomFilterAdapter.this);
-            }
-
-            @Override
-            public void onFailure(Throwable ex) {
-                LOG.error("Error obtaining CustomFilterAdapterConfiguration", ex);
-            }
-        }, MoreExecutors.directExecutor());
+        customFilterAdapterConfig.registerCustomFilterAdapterConfigurationListener(CustomFilterAdapter.this);
     }
 
     /**
