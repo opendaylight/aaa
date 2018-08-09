@@ -34,10 +34,10 @@ public class ShiroWebContextSecurer implements WebContextSecurer {
             .addListener(shiroEnvironmentLoaderListener)
 
             // AAA filter in front of these REST web services as well as for moon endpoints
-            .addFilter(FilterDetails.builder().filter(new AAAShiroFilter()).addUrlPattern(urlPatterns).build())
+            .addFilter(FilterDetails.builder().filter(new AAAShiroFilter()).addUrlPatterns(urlPatterns).build())
 
             // CORS filter
-            .addFilter(FilterDetails.builder().filter(new CrossOriginFilter()).addUrlPattern(urlPatterns)
+            .addFilter(FilterDetails.builder().filter(new CrossOriginFilter()).addUrlPatterns(urlPatterns)
                .putInitParam("allowedOrigins", "*")
                .putInitParam("allowedMethods", "GET,POST,OPTIONS,DELETE,PUT,HEAD")
                .putInitParam("allowedHeaders", "origin, content-type, accept, authorization")
