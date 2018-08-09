@@ -24,7 +24,7 @@ import org.opendaylight.aaa.web.ServletDetails;
 import org.opendaylight.aaa.web.WebContext;
 import org.opendaylight.aaa.web.WebContextRegistration;
 import org.opendaylight.aaa.web.WebServer;
-import org.ops4j.pax.cdi.api.OsgiService;
+import org.ops4j.pax.cdi.api.Service;
 import org.ops4j.pax.web.service.WebContainer;
 import org.ops4j.pax.web.service.WebContainerDTO;
 import org.osgi.framework.Bundle;
@@ -56,7 +56,7 @@ public class PaxWebServer {
     private final ServiceRegistration<?> serviceRegistration;
 
     @Inject
-    public PaxWebServer(@OsgiService WebContainer paxWebContainer, BundleContext bundleContext) {
+    public PaxWebServer(@Service WebContainer paxWebContainer, BundleContext bundleContext) {
         this.paxWeb = paxWebContainer;
 
         serviceRegistration = bundleContext.registerService(new String[]{WebServer.class.getName()},
