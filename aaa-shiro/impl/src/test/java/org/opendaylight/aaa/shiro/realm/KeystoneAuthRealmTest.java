@@ -11,8 +11,8 @@ import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.same;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -106,7 +106,6 @@ public class KeystoneAuthRealmTest {
         when(requestBuilder.entity(any())).thenReturn(requestBuilder);
         when(requestBuilder.queryParam("nocatalog", "")).thenReturn(requestBuilder);
         when(requestBuilder.build()).thenReturn(httpRequest);
-        when(builder.queryParam(any(String.class), any(String.class))).thenReturn(builder);
         when(httpRequest.execute()).thenReturn(response);
         when(response.getToken()).thenReturn(ksToken);
 
@@ -206,6 +205,8 @@ public class KeystoneAuthRealmTest {
     @Test(expected = AuthenticationException.class)
     public void doGetAuthenticationInfoUnknownTokenType() throws Exception {
         AuthenticationToken token = new AuthenticationToken() {
+            private static final long serialVersionUID = 1L;
+
             @Override
             public Object getPrincipal() {
                 return null;
