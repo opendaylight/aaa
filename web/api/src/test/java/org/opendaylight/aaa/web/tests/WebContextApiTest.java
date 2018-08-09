@@ -50,7 +50,7 @@ public class WebContextApiTest {
         assertThat(webContext.servlets()).hasSize(1);
         ServletDetails firstServletDetail = webContext.servlets().get(0);
         assertThat(firstServletDetail.name())
-                .startsWith("$javax.servlet.Servlet$$EnhancerByMockitoWithCGLIB$$");
+                .startsWith("org.mockito.codegen.Servlet$MockitoMock$");
         assertThat(firstServletDetail.initParams()).isEmpty();
     }
 
