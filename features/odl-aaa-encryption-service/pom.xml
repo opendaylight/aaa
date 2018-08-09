@@ -12,7 +12,7 @@
     <parent>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>single-feature-parent</artifactId>
-        <version>3.1.3</version>
+        <version>4.0.2</version>
         <relativePath/>
     </parent>
 
@@ -36,6 +36,13 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.opendaylight.odlparent</groupId>
+            <artifactId>odl-apache-sshd</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+
         <!-- MD-SAL -->
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
