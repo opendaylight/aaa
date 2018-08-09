@@ -18,7 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.Domain;
@@ -30,15 +30,13 @@ import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * Test Suite for the DataStore Utils.
  * @author mserngawy
  *
  */
-@RunWith(PowerMockRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class DataStoreUtilsTest {
 
     @Mock
@@ -51,7 +49,6 @@ public class DataStoreUtilsTest {
 
     @Before
     public void setUp() throws Exception {
-        identityStore = PowerMockito.mock(IIDMStore.class, Mockito.CALLS_REAL_METHODS);
         final Domains domains = new Domains();
         Domain domain = new Domain();
         domain.setName(domainName);
