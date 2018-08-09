@@ -4,19 +4,19 @@
   <parent>
     <groupId>org.opendaylight.mdsal</groupId>
     <artifactId>binding-parent</artifactId>
-    <version>0.12.3-SNAPSHOT</version>
+    <version>0.12.4-SNAPSHOT</version>
     <relativePath/>
   </parent>
 
   <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-parent</artifactId>
-  <version>0.7.3-SNAPSHOT</version>
+  <version>0.7.4-SNAPSHOT</version>
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>pom</packaging>
 
   <properties>
     <!-- AuthZ -->
-    <controller.mdsal.version>1.7.3-SNAPSHOT</controller.mdsal.version>
+    <controller.mdsal.version>1.7.4-SNAPSHOT</controller.mdsal.version>
 
     <!-- AuthN -->
     <glassfish.json.version>1.0.4</glassfish.json.version>
