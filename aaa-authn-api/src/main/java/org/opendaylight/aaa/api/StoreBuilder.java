@@ -159,7 +159,7 @@ public class StoreBuilder {
         newUser.setEmail("");
         newUser.setPassword(password);
         newUser = store.writeUser(newUser);
-        LOG.debug("Created '" + userName + "' user in domain '" + domainID + "'");
+        LOG.debug("Created '{}' user in domain '{}'", userName, domainID);
 
         String newUserID = newUser.getUserid();
         for (String roleID : roleIDs) {
@@ -194,6 +194,6 @@ public class StoreBuilder {
         grant.setUserid(userID);
         grant.setRoleid(roleID);
         store.writeGrant(grant);
-        LOG.debug("Granted '" + userID + "' user the '" + roleID + "' role in domain '" + domainID + "'");
+        LOG.debug("Granted '{}' user the '{}' role in domain '{}'", userID, roleID, domainID);
     }
 }
