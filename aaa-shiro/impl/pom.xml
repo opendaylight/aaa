@@ -211,8 +211,9 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                             org.opendaylight.aaa.datastore.h2.*,
                         </Export-Package>
                         <Import-Package>
-                           !javax.annotation,
-                           *
+                            !javax.annotation,
+                            !org.immutables.value,
+                            *
                         </Import-Package>
                     </instructions>
                 </configuration>
