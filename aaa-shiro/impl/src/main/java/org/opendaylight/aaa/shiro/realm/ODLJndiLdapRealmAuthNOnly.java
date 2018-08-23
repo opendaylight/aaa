@@ -37,8 +37,6 @@ public class ODLJndiLdapRealmAuthNOnly extends DefaultLdapRealm {
 
     private static final Logger LOG = LoggerFactory.getLogger(ODLJndiLdapRealmAuthNOnly.class);
 
-    private static final String LDAP_CONNECTION_MESSAGE = "AAA LDAP connection from ";
-
     /*
      * Adds debugging information surrounding creation of ODLJndiLdapRealm
      */
@@ -75,8 +73,7 @@ public class ODLJndiLdapRealmAuthNOnly extends DefaultLdapRealm {
      *            the requesting user
      */
     protected void logIncomingConnection(final String username) {
-        final String message = LDAP_CONNECTION_MESSAGE + username;
-        LOG.info(message);
+        LOG.info("AAA LDAP connection from {}", username);
     }
 
     /**

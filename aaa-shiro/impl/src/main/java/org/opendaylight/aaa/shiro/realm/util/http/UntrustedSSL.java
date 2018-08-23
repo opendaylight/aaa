@@ -17,7 +17,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
-import org.opendaylight.aaa.shiro.realm.TokenAuthRealm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,7 +61,7 @@ public final class UntrustedSSL {
     }
 
     private static final class InsecureSSLContext {
-        private static final Logger LOG = LoggerFactory.getLogger(TokenAuthRealm.class);
+        private static final Logger LOG = LoggerFactory.getLogger(InsecureSSLContext.class);
 
         private static final SSLContext INSTANCE = buildSSLContext();
 

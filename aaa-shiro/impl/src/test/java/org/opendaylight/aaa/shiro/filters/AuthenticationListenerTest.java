@@ -11,7 +11,6 @@ package org.opendaylight.aaa.shiro.filters;
 import static org.junit.Assert.assertEquals;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
-
 import java.util.List;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
@@ -40,7 +39,7 @@ public class AuthenticationListenerTest {
         // the latest logging event is the one we need to inspect
         final int whichLoggingEvent = loggingEvents.size() - 1;
         final LoggingEvent latestLoggingEvent = loggingEvents.get(whichLoggingEvent);
-        final String latestLogMessage = latestLoggingEvent.getMessage();
+        final String latestLogMessage = latestLoggingEvent.getFormattedMessage();
         assertEquals("Successful authentication attempt by successfulUser1 from successfulHost1",
                 latestLogMessage);
     }
@@ -61,7 +60,7 @@ public class AuthenticationListenerTest {
         final List<LoggingEvent> loggingEvents = TestAppender.getCurrentInstance().getEvents();
         final int whichLoggingEvent = loggingEvents.size() - 1;
         final LoggingEvent latestLoggingEvent = loggingEvents.get(whichLoggingEvent);
-        final String latestLogMessage = latestLoggingEvent.getMessage();
+        final String latestLogMessage = latestLoggingEvent.getFormattedMessage();
         assertEquals("Unsuccessful authentication attempt by unsuccessfulUser1 from unsuccessfulHost1",
                 latestLogMessage);
     }

@@ -71,7 +71,7 @@ public class GrantStore extends AbstractStore<Grant> {
                      .prepareStatement("SELECT * FROM grants WHERE domainid = ? AND userid = ?")) {
             pstmt.setString(1, did);
             pstmt.setString(2, uid);
-            LOG.debug("query string: {}", pstmt.toString());
+            LOG.debug("query string: {}", pstmt);
             grants.setGrants(listFromStatement(pstmt));
         } catch (SQLException e) {
             throw new StoreException("SQL Exception", e);
@@ -84,7 +84,7 @@ public class GrantStore extends AbstractStore<Grant> {
         try (Connection conn = dbConnect();
              PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM GRANTS WHERE userid = ? ")) {
             pstmt.setString(1, userid);
-            LOG.debug("query string: {}", pstmt.toString());
+            LOG.debug("query string: {}", pstmt);
             grants.setGrants(listFromStatement(pstmt));
         } catch (SQLException e) {
             throw new StoreException("SQL Exception", e);
@@ -96,7 +96,7 @@ public class GrantStore extends AbstractStore<Grant> {
         try (Connection conn = dbConnect();
              PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM GRANTS WHERE grantid = ? ")) {
             pstmt.setString(1, id);
-            LOG.debug("query string: ", pstmt.toString());
+            LOG.debug("query string: {}", pstmt);
             return firstFromStatement(pstmt);
         } catch (SQLException e) {
             throw new StoreException("SQL Exception", e);
@@ -110,7 +110,7 @@ public class GrantStore extends AbstractStore<Grant> {
             pstmt.setString(1, did);
             pstmt.setString(2, uid);
             pstmt.setString(3, rid);
-            LOG.debug("query string: {}", pstmt.toString());
+            LOG.debug("query string: {}", pstmt);
             return firstFromStatement(pstmt);
         } catch (SQLException e) {
             throw new StoreException("SQL Exception", e);

@@ -25,21 +25,22 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressFBWarnings("NM_SAME_SIMPLE_NAME_AS_INTERFACE")
 public class AuthenticationListener implements org.apache.shiro.authc.AuthenticationListener {
-
     private static final Logger LOG = LoggerFactory.getLogger(AuthenticationListener.class);
 
     @Override
+    @SuppressFBWarnings("SLF4J_SIGN_ONLY_FORMAT")
     public void onSuccess(final AuthenticationToken authenticationToken, final AuthenticationInfo authenticationInfo) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug(AuthenticationTokenUtils.generateSuccessfulAuthenticationMessage(authenticationToken));
+            LOG.debug("{}", AuthenticationTokenUtils.generateSuccessfulAuthenticationMessage(authenticationToken));
         }
     }
 
     @Override
+    @SuppressFBWarnings("SLF4J_SIGN_ONLY_FORMAT")
     public void onFailure(final AuthenticationToken authenticationToken,
                           final AuthenticationException authenticationException) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug(AuthenticationTokenUtils.generateUnsuccessfulAuthenticationMessage(authenticationToken));
+            LOG.debug("{}", AuthenticationTokenUtils.generateUnsuccessfulAuthenticationMessage(authenticationToken));
         }
     }
 
