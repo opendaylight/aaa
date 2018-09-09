@@ -28,3 +28,8 @@ hs_err_pid*
 
 .factorypath
 .apt_generated_tests/
+
+# Sphinx documentation
+.tox/
+docs/_build/
+
