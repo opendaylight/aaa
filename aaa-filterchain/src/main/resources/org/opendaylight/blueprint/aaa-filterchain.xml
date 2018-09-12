@@ -12,6 +12,11 @@
     <argument ref="initialProperties" />
   </bean>
 
+  <reference-list interface="javax.servlet.Filter" availability="optional">
+    <reference-listener bind-method="onFilterAdded" unbind-method="onFilterRemoved"
+        ref="adapterConfig"/>
+  </reference-list>
+
   <service ref="adapterConfig"
       interface="org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration"/>
 

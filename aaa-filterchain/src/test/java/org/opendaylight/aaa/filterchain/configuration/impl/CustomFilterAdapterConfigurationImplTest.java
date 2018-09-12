@@ -10,7 +10,10 @@ package org.opendaylight.aaa.filterchain.configuration.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.mockito.Mockito.mock;
 
+import com.google.common.collect.ImmutableMap;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -169,5 +172,18 @@ public class CustomFilterAdapterConfigurationImplTest {
                 "org.opendaylight.aaa.filterchain.filters.FilterInitThrowsException");
         config.update(initThrowsException);
         assertEquals(1, listener.updatedInjectedFilters.size());
+    }
+
+    @Test
+    public void testFilterAddedAndRemoved() {
+        Filter mockFilter = mock(Filter.class);
+        config.onFilterAdded(mockFilter, ImmutableMap.of());
+
+        assertEquals(1, listener.updatedInjectedFilters.size());
+        assertSame(mockFilter, listener.updatedInjectedFilters.get(0));
+
+        config.onFilterRemoved(mockFilter, ImmutableMap.of());
+
+        assertEquals(0, listener.updatedInjectedFilters.size());
     }
 }

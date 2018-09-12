@@ -25,16 +25,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Recreates the Chain of Responsibility pattern for
- * <code>javax.servlet.Filter</code>(s). Jersey 1.17 does not include the
- * ability to programmatically add Filter(s), as Filter chains are defined at
- * compile time within the <code>web.xml</code> file. This Adapter dynamically
- * adds the capability to dynamically insert links into the filter chain.
- *
- * <p>
- * This Adapter is enabled by placing the <code>CustomFilterAdapter</code> in
- * the Servlet's <code>web.xml</code> definition (ideally directly after the
- * <code>AAAFilter</code> Filter, as ordering is honored directly).
+ * Recreates the Chain of Responsibility pattern for <code>javax.servlet.Filter</code>(s). This Adapter adds the
+ * capability to dynamically insert links into the filter chain.
  *
  * <code>CustomFilterAdapter.doFilter(...)</code> calls
  * <code>AAAFilterChain.doFilter(...)</code>, which honors the injected filter
