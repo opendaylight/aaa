@@ -10,7 +10,13 @@ package org.opendaylight.aaa.filterchain.configuration.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
 
+import com.google.common.collect.ImmutableMap;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +26,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterListener;
 import org.opendaylight.aaa.filterchain.filters.ExtractFilterConfigFilter;
 
@@ -27,6 +34,8 @@ import org.opendaylight.aaa.filterchain.filters.ExtractFilterConfigFilter;
  * Custom Filter Adapter Configuration Test Suite.
  */
 public class CustomFilterAdapterConfigurationImplTest {
+
+    private static final String CONTEXT_PATH = "test";
 
     private static class TestCustomFilterAdapterListener implements CustomFilterAdapterListener {
         volatile List<Filter> updatedInjectedFilters;
@@ -169,5 +178,41 @@ public class CustomFilterAdapterConfigurationImplTest {
                 "org.opendaylight.aaa.filterchain.filters.FilterInitThrowsException");
         config.update(initThrowsException);
         assertEquals(1, listener.updatedInjectedFilters.size());
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Test
+    public void testFilterAddedAndRemoved() {
+        ServletContext mockServletContext = mock(ServletContext.class);
+        doReturn(CONTEXT_PATH).when(mockServletContext).getContextPath();
+
+        FilterConfig mockFilterConfig = mock(FilterConfig.class);
+        doReturn(mockServletContext).when(mockFilterConfig).getServletContext();
+
+        CustomFilterAdapterListener mockListener = mock(CustomFilterAdapterListener.class);
+
+        config.registerCustomFilterAdapterConfigurationListener(mockListener);
+        verify(mockListener).updateInjectedFilters(Collections.emptyList());
+
+        reset(mockListener);
+        doReturn(mockFilterConfig).when(mockListener).getFilterConfig();
+
+        Filter mockFilter = mock(Filter.class);
+        config.onFilterAdded(mockFilter, ImmutableMap.of(
+                CustomFilterAdapterConfigurationImpl.CUSTOM_FILTER_CONTEXT_PATH_PROP, CONTEXT_PATH));
+
+        ArgumentCaptor<List> filtersCaptor = ArgumentCaptor.forClass(List.class);
+        verify(mockListener).updateInjectedFilters(filtersCaptor.capture());
+        assertEquals(1, filtersCaptor.getValue().size());
+
+        assertEquals(0, listener.updatedInjectedFilters.size());
+
+        reset(mockListener);
+        doReturn(mockFilterConfig).when(mockListener).getFilterConfig();
+
+        config.onFilterRemoved(mockFilter, ImmutableMap.of(
+                CustomFilterAdapterConfigurationImpl.CUSTOM_FILTER_CONTEXT_PATH_PROP, CONTEXT_PATH));
+
+        verify(mockListener).updateInjectedFilters(Collections.emptyList());
     }
 }

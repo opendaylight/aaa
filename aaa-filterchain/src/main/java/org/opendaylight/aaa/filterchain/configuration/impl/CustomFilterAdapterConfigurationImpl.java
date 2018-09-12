@@ -8,6 +8,8 @@
 
 package org.opendaylight.aaa.filterchain.configuration.impl;
 
+import static java.util.Objects.requireNonNull;
+
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import java.util.Arrays;
@@ -19,7 +21,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import javax.annotation.Nullable;
 import javax.servlet.Filter;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
@@ -47,6 +54,8 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      */
     static final String CUSTOM_FILTER_LIST_KEY = "customFilterList";
 
+    static final String CUSTOM_FILTER_CONTEXT_PATH_PROP = "context-path";
+
     /**
      * List of listeners to notify upon config admin events.
      */
@@ -56,7 +65,9 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      * Saves a local copy of the most recent configuration so when a listener is
      * added, it can receive and initial update.
      */
-    private volatile List<FilterDTO> filterDTOs = Collections.emptyList();
+    private volatile List<FilterDTO> namedFilterDTOs = Collections.emptyList();
+
+    private volatile List<FilterDTO> instanceFilterDTOs = Collections.emptyList();
 
     public CustomFilterAdapterConfigurationImpl(Map<String, String> properties) {
         update(properties);
@@ -69,18 +80,47 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
     public void update(Map<String, String> properties) {
         if (properties != null) {
             LOG.info("Custom filter properties updated: {}", properties);
-            updateListeners(properties);
+
+            this.namedFilterDTOs = getCustomFilterList(properties);
+            updateListeners();
         }
+    }
+
+    // Invoked when a Filter OSGi service is added
+    public void onFilterAdded(Filter filter, Map<String, String> properties) {
+        final String contextPath = properties.get(CUSTOM_FILTER_CONTEXT_PATH_PROP);
+        if (filter == null || contextPath == null) {
+            return;
+        }
+
+        LOG.info("Custom Filter {} added, contextPath: {}", filter, contextPath);
+
+        this.instanceFilterDTOs = ImmutableList.<FilterDTO>builder().addAll(instanceFilterDTOs)
+                .add(FilterDTO.createFilterDTO(filter, contextPath)).build();
+        updateListeners();
+    }
+
+    // Invoked when a Filter OSGi service is removed
+    public void onFilterRemoved(Filter filter, Map<String, String> properties) {
+        final String contextPath = properties.get(CUSTOM_FILTER_CONTEXT_PATH_PROP);
+        if (filter == null || contextPath == null) {
+            return;
+        }
+
+        LOG.info("Custom Filter {} removed, contextPath: {}", filter, contextPath);
+
+        FilterDTO toRemove = FilterDTO.createFilterDTO(filter, contextPath);
+        this.instanceFilterDTOs = ImmutableList.copyOf(instanceFilterDTOs.stream().filter(dto -> !dto.equals(toRemove))
+                .collect(Collectors.toList()));
+        updateListeners();
     }
 
     /**
      * Notify all listeners of a change event.
      */
-    private void updateListeners(final Map<String, String> configuration) {
-        final List<FilterDTO> customFilterList = getCustomFilterList(configuration);
-        this.filterDTOs = customFilterList;
+    private void updateListeners() {
         for (CustomFilterAdapterListener listener : listeners) {
-            updateListener(listener, customFilterList);
+            updateListener(listener);
         }
     }
 
@@ -93,9 +133,9 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      * @param customFilterList
      *            The newly injected <code>FilterDTO</code> list
      */
-    private void updateListener(final CustomFilterAdapterListener listener, final List<FilterDTO> customFilterList) {
-        final ServletContext listenerServletContext = extractServletContext(listener);
-        final List<Filter> filterList = convertCustomFilterList(customFilterList, listenerServletContext);
+    private void updateListener(final CustomFilterAdapterListener listener) {
+        final Optional<ServletContext> listenerServletContext = extractServletContext(listener);
+        final List<Filter> filterList = convertCustomFilterList(listenerServletContext);
         listener.updateInjectedFilters(filterList);
     }
 
@@ -109,12 +149,10 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      * @return An extracted <code>ServletContext</code>, or null if either the
      *         <code>FilterConfig</code> of <code>ServletContext</code> is null
      */
-    private static ServletContext extractServletContext(final CustomFilterAdapterListener listener) {
+    private static Optional<ServletContext> extractServletContext(final CustomFilterAdapterListener listener) {
         final FilterConfig listenerFilterConfig = listener.getFilterConfig();
-        final ServletContext listenerServletContext = listenerFilterConfig != null
-                ? listenerFilterConfig.getServletContext()
-                : null;
-        return listenerServletContext;
+        return listenerFilterConfig != null ? Optional.ofNullable(listenerFilterConfig.getServletContext())
+                : Optional.empty();
     }
 
     /**
@@ -125,17 +163,11 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      *            a list of class names, ideally Filters
      * @return a list of derived Filter(s)
      */
-    private List<Filter> convertCustomFilterList(final List<FilterDTO> customFilterList,
-            final ServletContext servletContext) {
-
-        final ImmutableList.Builder<Filter> injectedFiltersBuilder = ImmutableList.builder();
-        for (FilterDTO customFilter : customFilterList) {
-            final Filter injectedFilter = injectAndInitializeCustomFilter(customFilter, servletContext);
-            if (injectedFilter != null) {
-                injectedFiltersBuilder.add(injectedFilter);
-            }
-        }
-        return injectedFiltersBuilder.build();
+    private List<Filter> convertCustomFilterList(final Optional<ServletContext> listenerServletContext) {
+        final List<Filter> filterList = ImmutableList.<FilterDTO>builder().addAll(namedFilterDTOs)
+            .addAll(instanceFilterDTOs).build().stream().flatMap(
+                filter -> injectAndInitializeCustomFilter(filter, listenerServletContext)).collect(Collectors.toList());
+        return Collections.unmodifiableList(filterList);
     }
 
     /**
@@ -146,48 +178,19 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      *            DTO containing Filter and properties path, if one exists.
      * @param servletContext
      *            Scoped to the listener
-     * @return A filter, or null if one cannot be instantiated.
+     * @return A Stream containing the Filter, or empty if one cannot be instantiated.
      */
-    private static Filter injectAndInitializeCustomFilter(final FilterDTO customFilter,
-            final ServletContext servletContext) {
-        LOG.info("Attempting to load Class.forName({})", customFilter);
-        try {
-            final Filter filter = newInstanceOf(customFilter.getClassName());
+    private static Stream<Filter> injectAndInitializeCustomFilter(final FilterDTO customFilter,
+            final Optional<ServletContext> servletContext) {
+        final Filter filter = customFilter.getInstance(servletContext);
+        if (filter != null) {
             initializeInjectedFilter(customFilter, filter, servletContext);
-            return filter;
-        } catch (final ClassNotFoundException e) {
-            LOG.error("skipping {} as it couldn't be found", customFilter, e);
-        } catch (final ClassCastException e) {
-            LOG.error("skipping {} as it could not be cast as javax.servlet.Filter", customFilter, e);
-        } catch (final InstantiationException | IllegalAccessException e) {
-            LOG.error("skipping {} as it cannot be instantiated", customFilter, e);
+            LOG.info("Successfully loaded custom Filter {} for context {}", filter,
+                    servletContext.map(ServletContext::getContextPath).orElse(""));
+            return Stream.of(filter);
         }
-        return null;
-    }
 
-    /**
-     * Utility to inject a custom filter into the classpath.
-     *
-     * @param customFilterClassName
-     *            fully qualified name of desired Filter
-     * @return The Filter instance
-     * @throws ClassNotFoundException
-     *             The class couldn't be found, possibly since dynamic imports
-     *             weren't enabled on the target bundle.
-     * @throws InstantiationException
-     *             The class couldn't be created
-     * @throws IllegalAccessException
-     *             Security manager ruled the class wasn't allowed to be
-     *             created.
-     */
-    private static Filter newInstanceOf(final String customFilterClassName)
-            throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-
-        final Class<?> clazz = Class.forName(customFilterClassName);
-        @SuppressWarnings("unchecked")
-        final Class<Filter> filterClazz = (Class<Filter>) clazz;
-        final Filter filter = filterClazz.newInstance();
-        return filter;
+        return Stream.empty();
     }
 
     /**
@@ -204,21 +207,19 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      *            Scoped to the listener.
      */
     private static void initializeInjectedFilter(final FilterDTO filterDTO, final Filter filter,
-            final ServletContext servletContext) {
+            final Optional<ServletContext> servletContext) {
         try {
             final Map<String, String> initParams = filterDTO.getInitParams();
             final FilterConfig filterConfig = InjectedFilterConfig.createInjectedFilterConfig(filter, servletContext,
                     initParams);
             filter.init(filterConfig);
         } catch (final ServletException e) {
-            LOG.error("Although {} was injected into the filter chain, {}.init() failed; continuing anyway",
-                    filterDTO.getClassName(), filterDTO.getClassName(), e);
+            LOG.error("Error injecting custom filter {} - continuing anyway", filter, e);
         }
     }
 
     /**
-     * Allows creation of <code>FilterConfig</code> from a key/value properties
-     * file.
+     * Allows creation of <code>FilterConfig</code> from a key/value properties file.
      */
     private static final class InjectedFilterConfig implements FilterConfig {
 
@@ -227,37 +228,29 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
         private final Map<String, String> filterConfig;
 
         // private for Factory Method pattern
-        private InjectedFilterConfig(final Filter filter, final ServletContext servletContext,
+        private InjectedFilterConfig(final Filter filter, final Optional<ServletContext> servletContext,
                 final Map<String, String> filterConfig) {
 
             this.filterName = filter.getClass().getSimpleName();
-            this.servletContext = servletContext;
+            this.servletContext = servletContext.orElse(null);
             this.filterConfig = filterConfig;
         }
 
-        public static InjectedFilterConfig createInjectedFilterConfig(final Filter filter,
-                final ServletContext servletContext, final Map<String, String> filterConfig) {
+        static InjectedFilterConfig createInjectedFilterConfig(final Filter filter,
+                final Optional<ServletContext> servletContext, final Map<String, String> filterConfig) {
             return new InjectedFilterConfig(filter, servletContext, filterConfig);
         }
 
-        // The following is implemented for conformance with the FilterConfig
-        // interface. It is never called.
         @Override
         public String getFilterName() {
             return filterName;
         }
 
-        // The following method is implemented for conformance with the
-        // FilterConfig
-        // interface. It is never called.
         @Override
         public String getInitParameter(final String paramName) {
             return filterConfig != null ? filterConfig.get(paramName) : null;
         }
 
-        // The following method is implemented for conformance with the
-        // FilterConfig
-        // interface. It is never called.
         @Override
         public Enumeration<String> getInitParameterNames() {
             return new Enumeration<String>() {
@@ -275,45 +268,9 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
             };
         }
 
-        // The following method is implemented for conformance with the
-        // FilterConfig
-        // interface. It is never called.
         @Override
         public ServletContext getServletContext() {
             return servletContext;
-        }
-    }
-
-    /**
-     * Essentially a tuple of (filterClassName, propertiesFileName). Allows
-     * quicker passing and return of Filter information.
-     */
-    private static final class FilterDTO {
-
-        private final String clazzName;
-        private final Map<String, String> initParams;
-
-        // private for factory method pattern
-        private FilterDTO(final String clazzName, final Map<String, String> initParams) {
-            this.clazzName = clazzName;
-            this.initParams = initParams;
-        }
-
-        public static FilterDTO createFilterDTO(final String clazzName, final Map<String, String> initParams) {
-            return new FilterDTO(clazzName, initParams);
-        }
-
-        String getClassName() {
-            return this.clazzName;
-        }
-
-        /**
-         * Attempts to extract a map of key/value pairs from a given file.
-         *
-         * @return map with the initialization parameters.
-         */
-        Map<String, String> getInitParams() {
-            return initParams;
         }
     }
 
@@ -387,7 +344,135 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
     public void registerCustomFilterAdapterConfigurationListener(final CustomFilterAdapterListener listener) {
         if (this.listeners.add(listener)) {
             LOG.debug("registerCustomFilterAdapterConfigurationListener: {}, updated set: {}", listener, listeners);
-            this.updateListener(listener, this.filterDTOs);
+            this.updateListener(listener);
+        }
+    }
+
+    private abstract static class FilterDTO {
+
+        private final Map<String, String> initParams;
+
+        protected FilterDTO(final Map<String, String> initParams) {
+            this.initParams = requireNonNull(initParams);
+        }
+
+        @Nullable
+        abstract Filter getInstance(Optional<ServletContext> servletContext);
+
+        static FilterDTO createFilterDTO(final String clazzName, final Map<String, String> initParams) {
+            return new NamedFilterDTO(clazzName, initParams);
+        }
+
+        static FilterDTO createFilterDTO(final Filter instance, final String contextPath) {
+            return new InstanceFilterDTO(instance, contextPath);
+        }
+
+        /**
+         * Attempts to extract a map of key/value pairs from a given file.
+         *
+         * @return map with the initialization parameters.
+         */
+        Map<String, String> getInitParams() {
+            return initParams;
+        }
+    }
+
+    /**
+     * Essentially a tuple of (filterClassName, propertiesFileName). Allows
+     * quicker passing and return of Filter information.
+     */
+    private static class NamedFilterDTO extends FilterDTO {
+        private final String clazzName;
+
+        NamedFilterDTO(String clazzName, Map<String, String> initParams) {
+            super(initParams);
+            this.clazzName = requireNonNull(clazzName);
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        Filter getInstance(Optional<ServletContext> servletContext) {
+            try {
+                final Class<Filter> filterClazz = (Class<Filter>) Class.forName(clazzName);
+                return filterClazz.newInstance();
+            } catch (ClassNotFoundException | ClassCastException | InstantiationException | IllegalAccessException e) {
+                LOG.error("Error loading  {}", this, e);
+            }
+
+            return null;
+        }
+
+        @Override
+        public int hashCode() {
+            return clazzName.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+
+            if (obj == null) {
+                return false;
+            }
+
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+
+            NamedFilterDTO other = (NamedFilterDTO) obj;
+            return clazzName.equals(other.clazzName);
+        }
+
+        @Override
+        public String toString() {
+            return "NamedFilterDTO [clazzName=" + clazzName + ", initParams=" + getInitParams() + "]";
+        }
+    }
+
+    private static class InstanceFilterDTO extends FilterDTO {
+        private final Filter instance;
+        private final String contextPath;
+
+        InstanceFilterDTO(Filter instance, String contextPath) {
+            super(Collections.emptyMap());
+            this.instance = requireNonNull(instance);
+            this.contextPath = requireNonNull(contextPath);
+        }
+
+        @Override
+        Filter getInstance(Optional<ServletContext> servletContext) {
+            return contextPath.equals(servletContext.map(ServletContext::getContextPath).orElse(null))
+                    ? instance : null;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(contextPath, instance);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+
+            if (obj == null) {
+                return false;
+            }
+
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+
+            InstanceFilterDTO other = (InstanceFilterDTO) obj;
+            return contextPath.equals(other.contextPath) && instance.equals(other.instance);
+        }
+
+        @Override
+        public String toString() {
+            return "InstanceFilterDTO [instance=" + instance + ", contextPath=" + contextPath + "]";
         }
     }
 }
