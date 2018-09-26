@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2273b76f_4559b427",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 21
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 491
+      },
+      "writtenOn": "2018-09-26T07:49:16Z",
+      "side": 1,
+      "message": "Should be updated to 4.0.1 since the patch is.",
+      "revId": "24d313629ea23031e66ab64a6620fff97d7f9f6e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
