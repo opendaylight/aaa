@@ -7,6 +7,9 @@
  */
 package org.opendaylight.aaa.shiro.web.env;
 
+import javax.annotation.PreDestroy;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.servlet.ServletException;
 import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.api.IIDMStore;
@@ -30,10 +33,12 @@ import org.opendaylight.aaa.web.servlet.ServletSupport;
  *
  * @author Michael Vorburger.ch
  */
+@Singleton
 public class WebInitializer {
 
     private final WebContextRegistration registraton;
 
+    @Inject
     public WebInitializer(WebServer webServer, ClaimCache claimCache, IIDMStore iidMStore,
             WebContextSecurer webContextSecurer, ServletSupport servletSupport,
             CustomFilterAdapterConfiguration customFilterAdapterConfig) throws ServletException {
@@ -53,8 +58,8 @@ public class WebInitializer {
         this.registraton = webServer.registerWebContext(webContextBuilder.build());
     }
 
+    @PreDestroy
     public void close() {
         registraton.close();
     }
-
 }
