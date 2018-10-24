@@ -13,6 +13,8 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.config.CacheConfiguration;
+import net.sf.ehcache.config.Configuration;
+import net.sf.ehcache.config.ConfigurationFactory;
 import org.opendaylight.aaa.api.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,8 +44,9 @@ public final class SessionsManager implements AutoCloseable {
         // When we restart, the cache manager and CLI cache are already there
         CacheManager cm = CacheManager.getCacheManager(CLI_CACHE_MANAGER);
         if (cm == null) {
+            Configuration configuration = ConfigurationFactory.parseConfiguration();
+            configuration.setName(CLI_CACHE_MANAGER);
             cm = CacheManager.newInstance();
-            cm.setName(CLI_CACHE_MANAGER);
         }
         Cache existingCache = cm.getCache(CLI_CACHE);
         if (existingCache != null) {
