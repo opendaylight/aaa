@@ -11,6 +11,8 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.config.CacheConfiguration;
+import net.sf.ehcache.config.Configuration;
+import net.sf.ehcache.config.ConfigurationFactory;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.TokenStore;
 import org.slf4j.Logger;
@@ -31,8 +33,9 @@ public class H2TokenStore implements AutoCloseable, TokenStore {
         // When we restart, the cache manager and token cache are already there
         CacheManager cm = CacheManager.getCacheManager(TOKEN_CACHE_MANAGER);
         if (cm == null) {
-            cm = CacheManager.newInstance();
-            cm.setName(TOKEN_CACHE_MANAGER);
+            Configuration configuration = ConfigurationFactory.parseConfiguration();
+            configuration.setName(TOKEN_CACHE_MANAGER);
+            cm = CacheManager.newInstance(configuration);
         }
         Cache existingCache = cm.getCache(TOKEN_CACHE);
         if (existingCache != null) {
