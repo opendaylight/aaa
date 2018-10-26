@@ -82,6 +82,18 @@
         <version>${oltu.version}</version>
       </dependency>
 
+      <!-- Enforce newer commons-beanutils and commons-collections versions -->
+      <dependency>
+        <groupId>commons-beanutils</groupId>
+        <artifactId>commons-beanutils</artifactId>
+        <version>1.9.3</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-collections</groupId>
+        <artifactId>commons-collections</artifactId>
+        <version>3.2.2</version>
+      </dependency>
+
       <!-- Test stuff -->
       <dependency>
         <groupId>org.opendaylight.odlparent</groupId>
