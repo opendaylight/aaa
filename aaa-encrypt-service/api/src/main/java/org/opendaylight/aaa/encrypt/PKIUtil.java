@@ -19,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.interfaces.DSAParams;
 import java.security.interfaces.DSAPublicKey;
@@ -31,7 +32,6 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.sshd.common.util.security.SecurityUtils;
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey;
 import org.bouncycastle.jce.ECNamedCurveTable;
 import org.bouncycastle.jce.ECPointUtil;
@@ -48,9 +48,30 @@ import org.bouncycastle.openssl.jcajce.JcePEMDecryptorProviderBuilder;
  * PKI related utilities.
  */
 public class PKIUtil {
+    @FunctionalInterface
+    private interface KeyFactorySupplier {
+        KeyFactory get() throws NoSuchAlgorithmException;
+    }
+
     private static final String KEY_FACTORY_TYPE_RSA = "RSA";
     private static final String KEY_FACTORY_TYPE_DSA = "DSA";
     private static final String KEY_FACTORY_TYPE_ECDSA = "EC";
+
+    private static final KeyFactorySupplier RSA_KEY_FACTORY_SUPPLIER = resolveKeyFactory(KEY_FACTORY_TYPE_RSA);
+    private static final KeyFactorySupplier DSA_KEY_FACTORY_SUPPLIER = resolveKeyFactory(KEY_FACTORY_TYPE_DSA);
+    private static final KeyFactorySupplier ECDSA_KEY_FACTORY_SUPPLIER = resolveKeyFactory(KEY_FACTORY_TYPE_ECDSA);
+
+    private static KeyFactorySupplier resolveKeyFactory(final String algorithm) {
+        final KeyFactory factory;
+        try {
+            factory = KeyFactory.getInstance(algorithm);
+        } catch (NoSuchAlgorithmException e) {
+            return () -> {
+                throw e;
+            };
+        }
+        return () -> factory;
+    }
 
     private static final Map<String, String> ECDSA_CURVES = new HashMap<>();
 
@@ -72,8 +93,7 @@ public class PKIUtil {
     private byte[] bytes = new byte[0];
     private int pos = 0;
 
-    public PublicKey decodePublicKey(
-            String keyLine) throws GeneralSecurityException {
+    public PublicKey decodePublicKey(final String keyLine) throws GeneralSecurityException {
 
         // look for the Base64 encoded part of the line to decode
         // both ssh-rsa and ssh-dss begin with "AAAA" due to the length bytes
@@ -101,7 +121,7 @@ public class PKIUtil {
 
     @SuppressWarnings("AbbreviationAsWordInName")
     private PublicKey decodeAsECDSA() throws GeneralSecurityException {
-        KeyFactory ecdsaFactory = SecurityUtils.getKeyFactory(KEY_FACTORY_TYPE_ECDSA);
+        KeyFactory ecdsaFactory = ECDSA_KEY_FACTORY_SUPPLIER.get();
 
         ECNamedCurveParameterSpec spec256r1 = ECNamedCurveTable.getParameterSpec(ECDSA_SUPPORTED_CURVE_NAME_SPEC);
         ECNamedCurveSpec params256r1 = new ECNamedCurveSpec(ECDSA_SUPPORTED_CURVE_NAME_SPEC, spec256r1.getCurve(),
@@ -115,7 +135,7 @@ public class PKIUtil {
     }
 
     private PublicKey decodeAsDSA() throws GeneralSecurityException {
-        KeyFactory dsaFactory = SecurityUtils.getKeyFactory(KEY_FACTORY_TYPE_DSA);
+        KeyFactory dsaFactory = DSA_KEY_FACTORY_SUPPLIER.get();
         BigInteger var1 = decodeBigInt();
         BigInteger var2 = decodeBigInt();
         BigInteger var3 = decodeBigInt();
@@ -126,7 +146,7 @@ public class PKIUtil {
     }
 
     private PublicKey decodeAsRSA() throws GeneralSecurityException {
-        KeyFactory rsaFactory = SecurityUtils.getKeyFactory(KEY_FACTORY_TYPE_RSA);
+        KeyFactory rsaFactory = RSA_KEY_FACTORY_SUPPLIER.get();
         BigInteger exponent = decodeBigInt();
         BigInteger modulus = decodeBigInt();
         RSAPublicKeySpec spec = new RSAPublicKeySpec(modulus, exponent);
@@ -154,7 +174,7 @@ public class PKIUtil {
         return new BigInteger(bigIntBytes);
     }
 
-    public String encodePublicKey(PublicKey publicKey) throws IOException {
+    public String encodePublicKey(final PublicKey publicKey) throws IOException {
         ByteArrayOutputStream byteOs = new ByteArrayOutputStream();
         if (publicKey instanceof RSAPublicKey && publicKey.getAlgorithm().equals(KEY_FACTORY_TYPE_RSA)) {
             RSAPublicKey rsaPublicKey = (RSAPublicKey) publicKey;
@@ -200,17 +220,17 @@ public class PKIUtil {
 
     }
 
-    public KeyPair decodePrivateKey(StringReader reader, String passphrase) throws IOException {
+    public KeyPair decodePrivateKey(final StringReader reader, final String passphrase) throws IOException {
         return doDecodePrivateKey(reader, passphrase);
     }
 
-    public KeyPair decodePrivateKey(String keyPath, String passphrase) throws IOException {
+    public KeyPair decodePrivateKey(final String keyPath, final String passphrase) throws IOException {
         try (Reader reader = new InputStreamReader(new FileInputStream(keyPath), StandardCharsets.UTF_8)) {
             return doDecodePrivateKey(reader, passphrase);
         }
     }
 
-    private KeyPair doDecodePrivateKey(Reader reader, String passphrase) throws IOException {
+    private static KeyPair doDecodePrivateKey(final Reader reader, final String passphrase) throws IOException {
         try (PEMParser keyReader = new PEMParser(reader)) {
             JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
             PEMDecryptorProvider decryptionProv = new JcePEMDecryptorProviderBuilder().build(passphrase.toCharArray());
