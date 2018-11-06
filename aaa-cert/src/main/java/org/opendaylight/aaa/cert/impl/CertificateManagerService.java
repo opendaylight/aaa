@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.cert.impl;
 
 import java.io.File;
@@ -31,7 +30,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.opendaylight.aaa.cert.api.IAaaCertProvider;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.AaaCertServiceConfig;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.AaaCertServiceConfigBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystore;
@@ -118,17 +117,17 @@ public class CertificateManagerService implements ICertificateManager {
     }
 
     @Override
-    public String getCertificateTrustStore(String storePasswd, String alias, boolean withTag) {
+    public String getCertificateTrustStore(final String storePasswd, final String alias, final boolean withTag) {
         return aaaCertProvider.getCertificateTrustStore(storePasswd, alias, withTag);
     }
 
     @Override
-    public String getODLKeyStoreCertificate(String storePasswd, boolean withTag) {
+    public String getODLKeyStoreCertificate(final String storePasswd, final boolean withTag) {
         return aaaCertProvider.getODLKeyStoreCertificate(storePasswd, withTag);
     }
 
     @Override
-    public String genODLKeyStoreCertificateReq(String storePasswd, boolean withTag) {
+    public String genODLKeyStoreCertificateReq(final String storePasswd, final boolean withTag) {
         return aaaCertProvider.genODLKeyStoreCertificateReq(storePasswd, withTag);
     }
 
@@ -161,8 +160,9 @@ public class CertificateManagerService implements ICertificateManager {
     }
 
     @Override
-    public boolean importSslDataKeystores(String odlKeystoreName, String odlKeystorePwd, String odlKeystoreAlias,
-            String trustKeystoreName, String trustKeystorePwd, String[] cipherSuites, String tlsProtocols) {
+    public boolean importSslDataKeystores(final String odlKeystoreName, final String odlKeystorePwd,
+            final String odlKeystoreAlias, final String trustKeystoreName, final String trustKeystorePwd,
+            final String[] cipherSuites, final String tlsProtocols) {
         DefaultMdsalSslData mdsalCertProvider = (DefaultMdsalSslData) aaaCertProvider;
         if (mdsalCertProvider == null) {
             LOG.debug("aaaCertProvider is not MD-Sal Certificate Provider");
@@ -182,7 +182,7 @@ public class CertificateManagerService implements ICertificateManager {
         mdsalCertProvider.exportSslDataKeystores();
     }
 
-    private void updateCertManagerSrvConfig(String ctlPwd, String trustPwd) {
+    private static void updateCertManagerSrvConfig(final String ctlPwd, final String trustPwd) {
         try {
             LOG.debug("Update Certificate manager service config file");
             final File configFile = new File(DEFAULT_CONFIG_FILE_PATH);

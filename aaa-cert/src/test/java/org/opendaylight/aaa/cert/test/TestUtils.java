@@ -7,19 +7,19 @@
  */
 package org.opendaylight.aaa.cert.test;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.google.common.base.Optional;
-import com.google.common.util.concurrent.Futures;
+import java.util.Optional;
 import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
-import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
+import org.opendaylight.mdsal.binding.api.DataBroker;
+import org.opendaylight.mdsal.binding.api.ReadTransaction;
+import org.opendaylight.mdsal.binding.api.WriteTransaction;
 import org.opendaylight.mdsal.common.api.CommitInfo;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslData;
+import org.opendaylight.yangtools.util.concurrent.FluentFutures;
 
 /**
  * Utilities for test, the certificate needs to be updated yearly.
@@ -53,9 +53,10 @@ public final class TestUtils {
 
     }
 
-    public static DataBroker mockDataBroker(SslData sslData) throws Exception {
-        final ReadOnlyTransaction readOnlyTransaction = mock(ReadOnlyTransaction.class);
-        when(readOnlyTransaction.read(any(), any())).thenReturn(Futures.immediateCheckedFuture(Optional.of(sslData)));
+    public static DataBroker mockDataBroker(final SslData sslData) throws Exception {
+        final ReadTransaction readOnlyTransaction = mock(ReadTransaction.class);
+        when(readOnlyTransaction.read(any(), any())).thenReturn(FluentFutures.immediateFluentFuture(
+            Optional.of(sslData)));
 
         final WriteTransaction writeTransaction = mock(WriteTransaction.class);
         doReturn(CommitInfo.emptyFluentFuture()).when(writeTransaction).commit();
