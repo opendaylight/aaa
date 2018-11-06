@@ -5,20 +5,20 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.realm;
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.opendaylight.yangtools.util.concurrent.FluentFutures.immediateFailedFluentFuture;
+import static org.opendaylight.yangtools.util.concurrent.FluentFutures.immediateFluentFuture;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
-import com.google.common.util.concurrent.Futures;
 import java.util.List;
+import java.util.Optional;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -26,9 +26,9 @@ import org.apache.shiro.subject.Subject;
 import org.junit.Before;
 import org.junit.Test;
 import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
-import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
+import org.opendaylight.mdsal.binding.api.DataBroker;
+import org.opendaylight.mdsal.binding.api.ReadTransaction;
+import org.opendaylight.mdsal.common.api.ReadFailedException;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.HttpAuthorization;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.Policies;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.permission.Permissions;
@@ -45,16 +45,15 @@ public class MDSALDynamicAuthorizationFilterTest {
     }
 
     private static DataBroker mockDataBroker(final Object readData) {
-        final ReadOnlyTransaction readOnlyTransaction = mock(ReadOnlyTransaction.class);
+        final ReadTransaction readOnlyTransaction = mock(ReadTransaction.class);
 
         if (readData instanceof DataObject) {
-            doReturn(Futures.immediateCheckedFuture(Optional.of((DataObject)readData)))
+            doReturn(immediateFluentFuture(Optional.of((DataObject)readData)))
                     .when(readOnlyTransaction).read(any(), any());
         } else if (readData instanceof Exception) {
-            doReturn(Futures.immediateFailedCheckedFuture((Exception)readData))
-                    .when(readOnlyTransaction).read(any(), any());
+            doReturn(immediateFailedFluentFuture((Exception)readData)).when(readOnlyTransaction).read(any(), any());
         } else {
-            doReturn(Futures.immediateCheckedFuture(Optional.absent())).when(readOnlyTransaction).read(any(), any());
+            doReturn(immediateFluentFuture(Optional.empty())).when(readOnlyTransaction).read(any(), any());
         }
 
         final DataBroker mockDataBroker = mock(DataBroker.class);
@@ -73,12 +72,12 @@ public class MDSALDynamicAuthorizationFilterTest {
     }
 
     // test helper method to generate some cool mdsal data
-    private DataBroker getTestData() throws Exception {
+    private static DataBroker getTestData() throws Exception {
         return getTestData("/**", "admin", "Default Test AuthZ Rule", Permissions.Actions.Put);
     }
 
     // test helper method to generate some cool mdsal data
-    private DataBroker getTestData(final String resource, final String role, final String description,
+    private static DataBroker getTestData(final String resource, final String role, final String description,
                                    final Permissions.Actions actions) throws Exception {
 
         final List<Permissions.Actions> actionsList = Lists.newArrayList(actions);
@@ -134,7 +133,7 @@ public class MDSALDynamicAuthorizationFilterTest {
     @Test
     public void testMDSALExceptionDuringRead() throws Exception {
         // Test Setup: No rules are added to the HttpAuthorization container.  The MDSAL read
-        // is instructed to return an immediateFailedCheckedFuture, to emulate an error in reading
+        // is instructed to return an immediateFailedFluentFuture, to emulate an error in reading
         // the Data Store.
 
         final HttpServletRequest request = mock(HttpServletRequest.class);

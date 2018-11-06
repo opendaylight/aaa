@@ -12,7 +12,7 @@ import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.shiro.tokenauthrealm.auth.TokenAuthenticators;
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.mdsal.binding.api.DataBroker;
 
 /**
  * Holds ThreadLocal variables used to indirectly inject instances into classes that are instantiated by the Shiro

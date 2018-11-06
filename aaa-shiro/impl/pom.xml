@@ -78,12 +78,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 
         <!--Yang Binding -->
         <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>sal-binding-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>sal-common-util</artifactId>
+            <groupId>org.opendaylight.mdsal</groupId>
+            <artifactId>mdsal-binding-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>

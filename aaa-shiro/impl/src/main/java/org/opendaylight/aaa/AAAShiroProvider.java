@@ -25,7 +25,7 @@ import org.opendaylight.aaa.datastore.h2.H2TokenStore;
 import org.opendaylight.aaa.shiro.oauth2.OAuth2TokenServlet;
 import org.opendaylight.aaa.shiro.tokenauthrealm.auth.HttpBasicAuth;
 import org.opendaylight.aaa.shiro.tokenauthrealm.auth.TokenAuthenticators;
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.DatastoreConfig;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration;
 import org.osgi.service.http.HttpService;
@@ -99,7 +99,7 @@ public final class AAAShiroProvider {
         INSTANCE_FUTURE.complete(this);
     }
 
-    private TokenAuthenticators buildTokenAuthenticators(CredentialAuth<PasswordCredentials> credentialAuth) {
+    private static TokenAuthenticators buildTokenAuthenticators(CredentialAuth<PasswordCredentials> credentialAuth) {
         return new TokenAuthenticators(new HttpBasicAuth(credentialAuth));
     }
 
@@ -117,7 +117,7 @@ public final class AAAShiroProvider {
                 tokenStore, idmService), null, null);
     }
 
-    private void initializeIIDMStore(final IIDMStore iidmStore) {
+    private static void initializeIIDMStore(final IIDMStore iidmStore) {
         try {
             new StoreBuilder(iidmStore).initWithDefaultUsers(IIDMStore.DEFAULT_DOMAIN);
         } catch (final IDMStoreException e) {

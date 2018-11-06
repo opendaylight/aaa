@@ -9,13 +9,13 @@ package org.opendaylight.aaa.shiro.realm;
 
 import static java.util.Objects.requireNonNull;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import javax.annotation.Nonnull;
 import javax.servlet.ServletRequest;
@@ -24,12 +24,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
-import org.opendaylight.controller.md.sal.binding.api.ClusteredDataTreeChangeListener;
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.binding.api.DataTreeIdentifier;
-import org.opendaylight.controller.md.sal.binding.api.DataTreeModification;
-import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
-import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.mdsal.binding.api.ClusteredDataTreeChangeListener;
+import org.opendaylight.mdsal.binding.api.DataBroker;
+import org.opendaylight.mdsal.binding.api.DataTreeIdentifier;
+import org.opendaylight.mdsal.binding.api.DataTreeModification;
+import org.opendaylight.mdsal.binding.api.ReadTransaction;
+import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.HttpAuthorization;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.Policies;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.permission.Permissions;
@@ -51,7 +51,7 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
 
     private static final Logger LOG = LoggerFactory.getLogger(MDSALDynamicAuthorizationFilter.class);
 
-    private static final DataTreeIdentifier<HttpAuthorization> AUTHZ_CONTAINER = new DataTreeIdentifier<>(
+    private static final DataTreeIdentifier<HttpAuthorization> AUTHZ_CONTAINER = DataTreeIdentifier.create(
             LogicalDatastoreType.CONFIGURATION, InstanceIdentifier.create(HttpAuthorization.class));
 
     private final ListenerRegistration<?> reg;
@@ -61,7 +61,7 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
     public MDSALDynamicAuthorizationFilter() {
         final DataBroker dataBroker = requireNonNull(ThreadLocals.DATABROKER_TL.get());
 
-        try (ReadOnlyTransaction tx = dataBroker.newReadOnlyTransaction()) {
+        try (ReadTransaction tx = dataBroker.newReadOnlyTransaction()) {
             authContainer = tx.read(AUTHZ_CONTAINER.getDatastoreType(), AUTHZ_CONTAINER.getRootIdentifier());
         }
 
@@ -72,7 +72,7 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
     private void onContainerChanged(@Nonnull final Collection<DataTreeModification<HttpAuthorization>> changes) {
         final HttpAuthorization newVal = Iterables.getLast(changes).getRootNode().getDataAfter();
         LOG.debug("Updating authorization information to {}", newVal);
-        authContainer = Futures.immediateFuture(Optional.fromNullable(newVal));
+        authContainer = Futures.immediateFuture(Optional.ofNullable(newVal));
     }
 
     @Override
