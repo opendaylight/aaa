@@ -5,19 +5,18 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.encrypt.impl;
 
-import com.google.common.base.Optional;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.MoreExecutors;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
-import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
-import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.mdsal.binding.api.DataBroker;
+import org.opendaylight.mdsal.binding.api.ReadTransaction;
+import org.opendaylight.mdsal.binding.api.WriteTransaction;
 import org.opendaylight.mdsal.common.api.CommitInfo;
+import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
@@ -28,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * MdsalUtils manages all the mdsal data operation.
  *
  * @author mserngawy
- *
  */
 public final class MdsalUtils {
     private static final Logger LOG = LoggerFactory.getLogger(MdsalUtils.class);
@@ -80,7 +78,7 @@ public final class MdsalUtils {
      */
     public static <D extends org.opendaylight.yangtools.yang.binding.DataObject> D read(
             final DataBroker dataBroker, final LogicalDatastoreType store, final InstanceIdentifier<D> path)  {
-        try (ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction()) {
+        try (ReadTransaction transaction = dataBroker.newReadOnlyTransaction()) {
             Optional<D> optionalDataObject = transaction.read(store, path).get();
             if (optionalDataObject.isPresent()) {
                 return optionalDataObject.get();

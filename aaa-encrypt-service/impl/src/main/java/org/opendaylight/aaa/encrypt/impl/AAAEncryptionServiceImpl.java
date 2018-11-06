@@ -38,8 +38,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.mdsal.binding.api.DataBroker;
+import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfigBuilder;
 import org.slf4j.Logger;
@@ -119,7 +119,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     }
 
     @Override
-    public String encrypt(String data) {
+    public String encrypt(final String data) {
         // We could not instantiate the encryption key, hence no encryption or
         // decryption will be done.
         if (key == null) {
@@ -139,7 +139,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     }
 
     @Override
-    public byte[] encrypt(byte[] data) {
+    public byte[] encrypt(final byte[] data) {
         // We could not instantiate the encryption key, hence no encryption or
         // decryption will be done.
         if (key == null) {
@@ -157,7 +157,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     }
 
     @Override
-    public String decrypt(String encryptedData) {
+    public String decrypt(final String encryptedData) {
         if (key == null || encryptedData == null || encryptedData.length() == 0) {
             LOG.warn("String {} was not decrypted.", encryptedData);
             return encryptedData;
@@ -173,7 +173,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     }
 
     @Override
-    public byte[] decrypt(byte[] encryptedData) {
+    public byte[] decrypt(final byte[] encryptedData) {
         if (encryptedData == null) {
             LOG.warn("encryptedData is null.");
             return encryptedData;
@@ -186,7 +186,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
         return encryptedData;
     }
 
-    private void updateEncrySrvConfig(String newPwd, String newSalt) {
+    private static void updateEncrySrvConfig(final String newPwd, final String newSalt) {
         try {
             final String encryptKeyTag = "encrypt-key";
             final String encryptSaltTag = "encrypt-salt";
@@ -213,7 +213,8 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
         }
     }
 
-    private void initializeConfigDataTree(final AaaEncryptServiceConfig encrySrvConfig, final DataBroker dataBroker) {
+    private static void initializeConfigDataTree(final AaaEncryptServiceConfig encrySrvConfig,
+            final DataBroker dataBroker) {
         if (MdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION,
                 MdsalUtils.getEncryptionSrvConfigIid()) == null) {
             MdsalUtils.initalizeDatastore(LogicalDatastoreType.CONFIGURATION, dataBroker,

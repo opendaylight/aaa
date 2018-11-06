@@ -13,8 +13,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.mdsal.binding.api.DataBroker;
+import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfigBuilder;
 import org.powermock.api.mockito.PowerMockito;
@@ -31,8 +31,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @PrepareForTest(MdsalUtils.class)
 public class AAAEncryptServiceImplTest {
 
-    private AAAEncryptionServiceImpl impl = null;
-    private DataBroker dataBroker = mock(DataBroker.class);
+    private AAAEncryptionServiceImpl impl;
+    private DataBroker dataBroker;
 
     @Before
     public void setup() {
@@ -41,6 +41,7 @@ public class AAAEncryptServiceImplTest {
                 .setEncryptKeyLength(128).setEncryptMethod("PBKDF2WithHmacSHA1").setEncryptSalt("")
                 .setEncryptType("AES").setPasswordLength(12).build();
 
+        dataBroker = mock(DataBroker.class);
         PowerMockito.mockStatic(MdsalUtils.class);
         PowerMockito.when(
                 MdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION, MdsalUtils.getEncryptionSrvConfigIid()))
