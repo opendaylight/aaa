@@ -12,7 +12,6 @@ import com.google.common.base.Strings;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import javax.annotation.Nonnull;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -93,7 +92,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
      * .shiro.subject.PrincipalCollection)
      */
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+    protected AuthorizationInfo doGetAuthorizationInfo(final PrincipalCollection principalCollection) {
         final Object primaryPrincipal = principalCollection.getPrimaryPrincipal();
         final ODLPrincipal odlPrincipal;
         try {
@@ -117,7 +116,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(
-            AuthenticationToken authenticationToken) throws AuthenticationException {
+            final AuthenticationToken authenticationToken) throws AuthenticationException {
 
         final String username;
         final String password;
@@ -173,7 +172,6 @@ public class TokenAuthRealm extends AuthorizingRealm {
         return null;
     }
 
-    @Nonnull
     private Authentication validate(final String token) {
         if (tokenStore == null) {
             throw new AuthenticationException("Token store not available, could not validate the token " + token);
@@ -186,6 +184,4 @@ public class TokenAuthRealm extends AuthorizingRealm {
         authenticationService.set(auth);
         return auth;
     }
-
-
 }

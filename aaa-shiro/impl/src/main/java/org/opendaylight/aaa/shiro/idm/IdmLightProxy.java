@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.annotation.Nonnull;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.ClaimCache;
@@ -50,13 +49,13 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
     private final IIDMStore idmStore;
     private final PasswordHashService passwordService;
 
-    public IdmLightProxy(IIDMStore idmStore, PasswordHashService passwordService) {
+    public IdmLightProxy(final IIDMStore idmStore, final PasswordHashService passwordService) {
         this.idmStore = idmStore;
         this.passwordService = Objects.requireNonNull(passwordService);
     }
 
     @Override
-    public Claim authenticate(PasswordCredentials creds) {
+    public Claim authenticate(final PasswordCredentials creds) {
         Preconditions.checkNotNull(creds);
         Preconditions.checkNotNull(creds.username());
         Preconditions.checkNotNull(creds.password());
@@ -76,8 +75,7 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
         claimCache.clear();
     }
 
-    @Nonnull
-    private Claim dbAuthenticate(PasswordCredentials creds) {
+    private Claim dbAuthenticate(final PasswordCredentials creds) {
         Domain domain = null;
         User user = null;
         String credsDomain = creds.domain() == null ? IIDMStore.DEFAULT_DOMAIN : creds.domain();
@@ -137,12 +135,12 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
     }
 
     @Override
-    public List<String> listDomains(String userId) {
+    public List<String> listDomains(final String userId) {
         return new IdMServiceImpl(idmStore).listDomains(userId);
     }
 
     @Override
-    public List<String> listRoles(String userId, String domainName) {
+    public List<String> listRoles(final String userId, final String domainName) {
         return new IdMServiceImpl(idmStore).listRoles(userId, domainName);
     }
 
