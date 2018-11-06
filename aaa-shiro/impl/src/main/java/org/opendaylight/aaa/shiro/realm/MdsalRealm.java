@@ -9,13 +9,13 @@ package org.opendaylight.aaa.shiro.realm;
 
 import static java.util.Objects.requireNonNull;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import org.apache.shiro.authc.AuthenticationException;
@@ -33,12 +33,12 @@ import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
 import org.opendaylight.aaa.shiro.realm.util.TokenUtils;
 import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
 import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
-import org.opendaylight.controller.md.sal.binding.api.ClusteredDataTreeChangeListener;
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.binding.api.DataTreeIdentifier;
-import org.opendaylight.controller.md.sal.binding.api.DataTreeModification;
-import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
-import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.mdsal.binding.api.ClusteredDataTreeChangeListener;
+import org.opendaylight.mdsal.binding.api.DataBroker;
+import org.opendaylight.mdsal.binding.api.DataTreeIdentifier;
+import org.opendaylight.mdsal.binding.api.DataTreeModification;
+import org.opendaylight.mdsal.binding.api.ReadTransaction;
+import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.Authentication;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.Grant;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication.Grants;
@@ -59,7 +59,7 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
     /**
      * InstanceIdentifier for the authentication container.
      */
-    private static final DataTreeIdentifier<Authentication> AUTH_TREE_ID = new DataTreeIdentifier<>(
+    private static final DataTreeIdentifier<Authentication> AUTH_TREE_ID = DataTreeIdentifier.create(
             LogicalDatastoreType.CONFIGURATION, InstanceIdentifier.create(Authentication.class));
 
     private final PasswordHashService passwordHashService;
@@ -71,7 +71,7 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
         this.passwordHashService = requireNonNull(ThreadLocals.PASSWORD_HASH_SERVICE_TL.get());
         final DataBroker dataBroker = requireNonNull(ThreadLocals.DATABROKER_TL.get());
 
-        try (ReadOnlyTransaction tx = dataBroker.newReadOnlyTransaction()) {
+        try (ReadTransaction tx = dataBroker.newReadOnlyTransaction()) {
             authentication = tx.read(AUTH_TREE_ID.getDatastoreType(), AUTH_TREE_ID.getRootIdentifier());
         }
 
@@ -84,7 +84,7 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
     private void onAuthenticationChanged(final Collection<DataTreeModification<Authentication>> changes) {
         final Authentication newVal = Iterables.getLast(changes).getRootNode().getDataAfter();
         LOG.debug("Updating authentication information to {}", newVal);
-        authentication = Futures.immediateFuture(Optional.fromNullable(newVal));
+        authentication = Futures.immediateFuture(Optional.ofNullable(newVal));
     }
 
     @Override
@@ -130,7 +130,7 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
         } catch (final InterruptedException | ExecutionException e) {
             LOG.error("Couldn't access authentication container", e);
         }
-        return Optional.absent();
+        return Optional.empty();
     }
 
     @Override

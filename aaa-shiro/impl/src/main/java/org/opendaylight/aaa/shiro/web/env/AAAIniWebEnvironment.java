@@ -20,7 +20,7 @@ import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.shiro.tokenauthrealm.auth.TokenAuthenticators;
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.shiro.configuration.Main;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.shiro.configuration.Urls;
@@ -51,10 +51,11 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
     private final TokenStore tokenStore;
     private final PasswordHashService passwordHashService;
 
-    AAAIniWebEnvironment(ShiroConfiguration shiroConfiguration, DataBroker dataBroker,
-                         ICertificateManager certificateManager, AuthenticationService authenticationService,
-                         TokenAuthenticators tokenAuthenticators, TokenStore tokenStore,
-                         PasswordHashService passwordHashService) {
+    AAAIniWebEnvironment(final ShiroConfiguration shiroConfiguration, final DataBroker dataBroker,
+                         final ICertificateManager certificateManager,
+                         final AuthenticationService authenticationService,
+                         final TokenAuthenticators tokenAuthenticators, final TokenStore tokenStore,
+                         final PasswordHashService passwordHashService) {
         this.shiroConfiguration = shiroConfiguration;
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
