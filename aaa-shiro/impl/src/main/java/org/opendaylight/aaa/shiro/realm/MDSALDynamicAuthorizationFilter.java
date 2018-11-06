@@ -17,7 +17,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
-import javax.annotation.Nonnull;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -69,7 +68,7 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
             AUTHZ_CONTAINER, (ClusteredDataTreeChangeListener<HttpAuthorization>) this::onContainerChanged);
     }
 
-    private void onContainerChanged(@Nonnull final Collection<DataTreeModification<HttpAuthorization>> changes) {
+    private void onContainerChanged(final Collection<DataTreeModification<HttpAuthorization>> changes) {
         final HttpAuthorization newVal = Iterables.getLast(changes).getRootNode().getDataAfter();
         LOG.debug("Updating authorization information to {}", newVal);
         authContainer = Futures.immediateFuture(Optional.ofNullable(newVal));
