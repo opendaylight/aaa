@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.filterchain.configuration.impl;
 
 import static java.util.Objects.requireNonNull;
@@ -25,11 +24,11 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.annotation.Nullable;
 import javax.servlet.Filter;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import org.eclipse.jdt.annotation.Nullable;
 import org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration;
 import org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterListener;
 import org.slf4j.Logger;
@@ -66,7 +65,7 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
 
     private volatile List<FilterDTO> instanceFilterDTOs = Collections.emptyList();
 
-    public CustomFilterAdapterConfigurationImpl(Map<String, String> properties) {
+    public CustomFilterAdapterConfigurationImpl(final Map<String, String> properties) {
         update(properties);
     }
 
@@ -74,7 +73,7 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
     }
 
     // Invoked in response to configuration admin changes
-    public void update(Map<String, String> properties) {
+    public void update(final Map<String, String> properties) {
         if (properties != null) {
             LOG.info("Custom filter properties updated: {}", properties);
 
@@ -84,7 +83,7 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
     }
 
     // Invoked when a Filter OSGi service is added
-    public void onFilterAdded(Filter filter, Map<String, String> properties) {
+    public void onFilterAdded(final Filter filter, final Map<String, String> properties) {
         if (filter == null) {
             return;
         }
@@ -97,7 +96,7 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
     }
 
     // Invoked when a Filter OSGi service is removed
-    public void onFilterRemoved(Filter filter, Map<String, String> properties) {
+    public void onFilterRemoved(final Filter filter, final Map<String, String> properties) {
         if (filter == null) {
             return;
         }
@@ -327,8 +326,7 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
             this.initParams = requireNonNull(initParams);
         }
 
-        @Nullable
-        abstract Filter getInstance(Optional<ServletContext> servletContext);
+        abstract @Nullable Filter getInstance(Optional<ServletContext> servletContext);
 
         static FilterDTO createFilterDTO(final String clazzName, final Map<String, String> initParams) {
             return new NamedFilterDTO(clazzName, initParams);
@@ -355,14 +353,14 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
     private static class NamedFilterDTO extends FilterDTO {
         private final String clazzName;
 
-        NamedFilterDTO(String clazzName, Map<String, String> initParams) {
+        NamedFilterDTO(final String clazzName, final Map<String, String> initParams) {
             super(initParams);
             this.clazzName = requireNonNull(clazzName);
         }
 
         @SuppressWarnings("unchecked")
         @Override
-        Filter getInstance(Optional<ServletContext> servletContext) {
+        Filter getInstance(final Optional<ServletContext> servletContext) {
             try {
                 final Class<Filter> filterClazz = (Class<Filter>) Class.forName(clazzName);
                 return init(filterClazz.newInstance(), servletContext);
@@ -373,7 +371,7 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
             return null;
         }
 
-        private Filter init(Filter filter, Optional<ServletContext> servletContext) {
+        private Filter init(final Filter filter, final Optional<ServletContext> servletContext) {
             try {
                 FilterConfig filterConfig = InjectedFilterConfig.createInjectedFilterConfig(filter, servletContext,
                         getInitParams());
@@ -391,7 +389,7 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
         }
 
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             if (this == obj) {
                 return true;
             }
@@ -417,13 +415,13 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
     private static class InstanceFilterDTO extends FilterDTO {
         private final Filter instance;
 
-        InstanceFilterDTO(Filter instance) {
+        InstanceFilterDTO(final Filter instance) {
             super(Collections.emptyMap());
             this.instance = requireNonNull(instance);
         }
 
         @Override
-        Filter getInstance(Optional<ServletContext> servletContext) {
+        Filter getInstance(final Optional<ServletContext> servletContext) {
             return instance;
         }
 
@@ -433,7 +431,7 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
         }
 
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             if (this == obj) {
                 return true;
             }
