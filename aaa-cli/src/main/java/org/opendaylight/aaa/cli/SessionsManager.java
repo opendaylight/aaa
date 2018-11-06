@@ -5,16 +5,15 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.cli;
 
-import javax.annotation.Nullable;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.config.Configuration;
 import net.sf.ehcache.config.ConfigurationFactory;
+import org.eclipse.jdt.annotation.Nullable;
 import org.opendaylight.aaa.api.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +69,7 @@ public final class SessionsManager implements AutoCloseable {
         CacheManager.getInstance().shutdown();
     }
 
-    public void addUserSession(String userName, User usr) {
+    public void addUserSession(final String userName, final User usr) {
         authUsers.put(new Element(userName, usr));
     }
 
@@ -80,7 +79,7 @@ public final class SessionsManager implements AutoCloseable {
      * @param userName The string to use for cache lookup
      * @return The {@link User} associated with the given user name, if not cached return null.
      */
-    public @Nullable User getCurrentUser(String userName) {
+    public @Nullable User getCurrentUser(final String userName) {
         Element elem = authUsers.get(userName);
         if (elem != null) {
             return (User) elem.getObjectValue();
