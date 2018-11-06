@@ -52,7 +52,8 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
     private final PasswordHashService passwordHashService;
 
     AAAIniWebEnvironment(final ShiroConfiguration shiroConfiguration, final DataBroker dataBroker,
-                         final ICertificateManager certificateManager, final AuthenticationService authenticationService,
+                         final ICertificateManager certificateManager,
+                         final AuthenticationService authenticationService,
                          final TokenAuthenticators tokenAuthenticators, final TokenStore tokenStore,
                          final PasswordHashService passwordHashService) {
         this.shiroConfiguration = shiroConfiguration;

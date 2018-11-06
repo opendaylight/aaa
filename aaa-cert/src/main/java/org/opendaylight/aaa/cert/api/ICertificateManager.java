@@ -5,12 +5,11 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.cert.api;
 
 import java.security.KeyStore;
-import javax.annotation.Nonnull;
 import javax.net.ssl.SSLContext;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * ICertifcateManager defines the basic functions that are consumed by other bundles to establish the SSLContext.
@@ -56,7 +55,7 @@ public interface ICertificateManager {
      * @param withTag return the certificate string with tag if true
      * @return the certificate
      */
-    @Nonnull String getCertificateTrustStore(@Nonnull String storePasswd, @Nonnull String alias, boolean withTag);
+    @NonNull String getCertificateTrustStore(@NonNull String storePasswd, @NonNull String alias, boolean withTag);
 
     /**
      * Get ODL keystore certificate.
@@ -65,7 +64,7 @@ public interface ICertificateManager {
      * @param withTag return certificate string with tag if true
      * @return the certificate
      */
-    @Nonnull String getODLKeyStoreCertificate(@Nonnull String storePasswd, boolean withTag);
+    @NonNull String getODLKeyStoreCertificate(@NonNull String storePasswd, boolean withTag);
 
     /**
      * Generate certificate request from the ODL keystore to be signed by a CA.
@@ -74,7 +73,7 @@ public interface ICertificateManager {
      * @param withTag return the certificate Req string with tag if true
      * @return the certificate request
      */
-    @Nonnull String genODLKeyStoreCertificateReq(@Nonnull String storePasswd, boolean withTag);
+    @NonNull String genODLKeyStoreCertificateReq(@NonNull String storePasswd, boolean withTag);
 
     /**
      * Get the SSL Context that will be used to establish the connection.
@@ -96,10 +95,10 @@ public interface ICertificateManager {
      *      protocols should be separated by ","
      * @return true if succeed
      */
-    boolean importSslDataKeystores(@Nonnull String odlKeystoreName, @Nonnull String odlKeystorePwd,
-                        @Nonnull String odlKeystoreAlias, @Nonnull String trustKeystoreName,
-                        @Nonnull String trustKeystorePwd, @Nonnull String[] cipherSuites,
-                                   @Nonnull String tlsProtocols);
+    boolean importSslDataKeystores(@NonNull String odlKeystoreName, @NonNull String odlKeystorePwd,
+                        @NonNull String odlKeystoreAlias, @NonNull String trustKeystoreName,
+                        @NonNull String trustKeystorePwd, @NonNull String[] cipherSuites,
+                        @NonNull String tlsProtocols);
 
     /**
      * Export the ODL keystore and Trust keystore to keystore files under configuration/ssl/ directory.
