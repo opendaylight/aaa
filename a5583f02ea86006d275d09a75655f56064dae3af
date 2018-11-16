@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c9dfd11_2ae47fc2",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/JettyWebServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-11-16T20:30:18Z",
+      "side": 1,
+      "message": "I\u0027m assuming that ServerConnector handles finding a free port when 0....",
+      "revId": "a5583f02ea86006d275d09a75655f56064dae3af",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
