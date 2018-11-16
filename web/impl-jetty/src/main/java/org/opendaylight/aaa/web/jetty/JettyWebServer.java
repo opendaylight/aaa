@@ -41,19 +41,23 @@ public class JettyWebServer implements WebServer {
 
     private static final int HTTP_SERVER_IDLE_TIMEOUT = 30000;
 
-    private final int httpPort;
+    private int httpPort;
     private final Server server;
+    private final ServerConnector http;
     private final ContextHandlerCollection contextHandlerCollection;
 
+    public JettyWebServer() {
+        this(0); // automatically choose free port
+    }
+
     public JettyWebServer(int httpPort) {
-        checkArgument(httpPort > 0, "httpPort must be positive");
+        checkArgument(httpPort >= 0, "httpPort must be positive");
         checkArgument(httpPort < 65536, "httpPort must < 65536");
 
-        this.httpPort = httpPort;
         this.server = new Server();
         server.setStopAtShutdown(true);
 
-        ServerConnector http = new ServerConnector(server);
+        http = new ServerConnector(server);
         http.setHost("localhost");
         http.setPort(httpPort);
         http.setIdleTimeout(HTTP_SERVER_IDLE_TIMEOUT);
@@ -65,6 +69,9 @@ public class JettyWebServer implements WebServer {
 
     @Override
     public String getBaseURL() {
+        if (httpPort == 0) {
+            throw new IllegalStateException("must start() before getBaseURL()");
+        }
         return "http://localhost:" + httpPort;
     }
 
@@ -72,6 +79,7 @@ public class JettyWebServer implements WebServer {
     @SuppressWarnings("checkstyle:IllegalThrows") // Jetty WebAppContext.getUnavailableException() throws Throwable
     public void start() throws Throwable {
         server.start();
+        this.httpPort = http.getLocalPort();
         LOG.info("Started Jetty-based HTTP web server on port {} ({}).", httpPort, hashCode());
     }
 

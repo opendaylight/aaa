@@ -25,7 +25,7 @@ public class JettyWebServerTest extends AbstractWebServerTest {
     @Before
     @SuppressWarnings("checkstyle:IllegalThrows") // Jetty throws Throwable
     public void beforeTest() throws Throwable {
-        webServer = new JettyWebServer(8282);
+        webServer = new JettyWebServer();
         webServer.start();
     }
 
