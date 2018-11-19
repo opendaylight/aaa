@@ -16,6 +16,24 @@
       "revId": "a5583f02ea86006d275d09a75655f56064dae3af",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac3971b2_e708254c",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/JettyWebServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5867
+      },
+      "writtenOn": "2018-11-19T08:12:50Z",
+      "side": 1,
+      "message": "yup, exactly. And the JettyWebServerTest proves that this actually works - note how I dropped the port there.",
+      "parentUuid": "9c9dfd11_2ae47fc2",
+      "revId": "a5583f02ea86006d275d09a75655f56064dae3af",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
