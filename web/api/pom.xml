@@ -13,13 +13,13 @@
   <parent>
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>aaa-parent</artifactId>
-    <version>0.8.1-SNAPSHOT</version>
+    <version>0.8.2-SNAPSHOT</version>
     <relativePath>../../parent</relativePath>
   </parent>
 
   <groupId>org.opendaylight.aaa.web</groupId>
   <artifactId>web-api</artifactId>
-  <version>0.8.1-SNAPSHOT</version>
+  <version>0.8.2-SNAPSHOT</version>
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>bundle</packaging>
 
@@ -44,7 +44,7 @@
     <dependency>
       <groupId>org.opendaylight.infrautils</groupId>
       <artifactId>infrautils-testutils</artifactId>
-      <version>1.4.1-SNAPSHOT</version>
+      <version>1.4.2-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
