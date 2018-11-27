@@ -21,6 +21,11 @@
   <packaging>pom</packaging>
   <name>aaa</name> <!-- Used by Sonar to set project name -->
 
+  <properties>
+    <maven.deploy.skip>true</maven.deploy.skip>
+    <maven.install.skip>true</maven.install.skip>
+  </properties>
+
   <modules>
     <module>aaa-authn-api</module>
     <module>aaa-encrypt-service</module>
@@ -86,25 +91,6 @@
       </build>
     </profile>
   </profiles>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-install-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 
   <scm>
     <connection>scm:git:ssh://git.opendaylight.org:29418/aaa.git</connection>
