@@ -28,6 +28,14 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>aaa-authn-api</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <!-- jaxb-api is providided by karaf boot classpath -->
+                    <!-- FIXME: remove with odlparent-4.0.3 -->
+                    <groupId>javax.xml.bind</groupId>
+                    <artifactId>jaxb-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.mdsal</groupId>

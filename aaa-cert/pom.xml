@@ -33,6 +33,19 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-text</artifactId>
     </dependency>
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <!-- FIXME: eliminate version/exclusions with odlparent-4.0.3 -->
+      <version>2.2.1</version>
+      <exclusions>
+        <exclusion>
+          <!-- Provided by JDK -->
+          <groupId>javax.xml.stream</groupId>
+          <artifactId>stax-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
     <!-- Bouncy Castle dependency -->
     <dependency>
