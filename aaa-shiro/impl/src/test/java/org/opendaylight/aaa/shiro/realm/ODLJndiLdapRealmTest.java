@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.realm;
 
 import static org.junit.Assert.assertEquals;
@@ -13,7 +12,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -111,7 +110,7 @@ public class ODLJndiLdapRealmTest {
 
         Vector<String> collection = new Vector<>();
 
-        TestPrincipalCollection(String element) {
+        TestPrincipalCollection(final String element) {
             collection.add(element);
         }
 
@@ -133,12 +132,12 @@ public class ODLJndiLdapRealmTest {
         }
 
         @Override
-        public <T> Collection<T> byType(Class<T> arg0) {
+        public <T> Collection<T> byType(final Class<T> arg0) {
             return null;
         }
 
         @Override
-        public Collection<String> fromRealm(String arg0) {
+        public Collection<String> fromRealm(final String arg0) {
             return collection;
         }
 
@@ -158,7 +157,7 @@ public class ODLJndiLdapRealmTest {
         }
 
         @Override
-        public <T> T oneByType(Class<T> arg0) {
+        public <T> T oneByType(final Class<T> arg0) {
             // TODO Auto-generated method stub
             return null;
         }
