@@ -47,6 +47,12 @@
       <optional>true</optional>
     </dependency>
     <dependency>
+      <groupId>javax.annotation</groupId>
+      <artifactId>javax.annotation-api</artifactId>
+      <version>1.2</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>org.osgi.core</artifactId>
     </dependency>
