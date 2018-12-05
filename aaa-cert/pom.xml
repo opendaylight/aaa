@@ -11,14 +11,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
   <parent>
     <groupId>org.opendaylight.mdsal</groupId>
     <artifactId>binding-parent</artifactId>
-    <version>0.12.4-SNAPSHOT</version>
+    <version>0.12.4</version>
     <relativePath />
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-cert</artifactId>
-  <version>0.7.4-SNAPSHOT</version>
+  <version>0.7.4</version>
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>bundle</packaging>
 
