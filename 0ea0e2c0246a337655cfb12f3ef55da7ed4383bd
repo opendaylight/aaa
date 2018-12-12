@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcb8595d_10b04ed1",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/provider/GsonProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-12-12T16:30:29Z",
+      "side": 1,
+      "message": "It seems this check should be moved prior to line 90 to also cover the PRETTY_PRINT case.",
+      "revId": "0ea0e2c0246a337655cfb12f3ef55da7ed4383bd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c954fc7e_590711da",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/provider/GsonProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1842
+      },
+      "writtenOn": "2018-12-12T16:30:29Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s valid to assume that if the type is a String that it actually contains JSON-formatted data.\n\nReading the JIRA, it seems that ApiDocServiceImpl.getListOfMounts should return an Object encapsulating the data instead of a JSON string and let the front-end properly format the data to the client\u0027s desired media type.",
+      "revId": "0ea0e2c0246a337655cfb12f3ef55da7ed4383bd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
