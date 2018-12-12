@@ -91,7 +91,11 @@ public class GsonProvider<T> implements MessageBodyReader<T>, MessageBodyWriter<
             if (queryParameters != null && queryParameters.containsKey(PRETTY_PRINT)) {
                 json = prettyGson.toJson(type);
             } else {
-                json = gson.toJson(type);
+                if (String.class.isAssignableFrom(type)) {
+                    json = (String)type;
+                } else {
+                    json = gson.toJson(type);
+                }
             }
             printWriter.write(json);
             printWriter.flush();
