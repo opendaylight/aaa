@@ -33,6 +33,24 @@
       "revId": "0ea0e2c0246a337655cfb12f3ef55da7ed4383bd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "860bc26b_81d197cc",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/provider/GsonProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 7614
+      },
+      "writtenOn": "2018-12-13T01:50:44Z",
+      "side": 1,
+      "message": "I agree with you. I will change the code according to your suggest. Thank you.",
+      "parentUuid": "c954fc7e_590711da",
+      "revId": "0ea0e2c0246a337655cfb12f3ef55da7ed4383bd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
