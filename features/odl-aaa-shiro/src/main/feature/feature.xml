@@ -25,5 +25,6 @@
         </configfile>
         <feature version="[4,5)">odl-karaf-feat-jdbc</feature>
         <feature version="[4,5)">odl-karaf-feat-jetty</feature>
+        <feature version="[4,5)">odl-apache-commons-codec</feature>
     </feature>
 </features>
