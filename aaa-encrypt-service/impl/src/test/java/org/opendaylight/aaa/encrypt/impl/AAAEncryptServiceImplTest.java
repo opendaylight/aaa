@@ -27,7 +27,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 
 @RunWith(PowerMockRunner.class)
-@PowerMockIgnore("javax.crypto.*")
+@PowerMockIgnore({ "javax.crypto.*", "javax.xml.*" })
 @PrepareForTest(MdsalUtils.class)
 public class AAAEncryptServiceImplTest {
 
