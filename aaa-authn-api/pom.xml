@@ -34,15 +34,6 @@
     <dependency>
       <groupId>javax.xml.bind</groupId>
       <artifactId>jaxb-api</artifactId>
-      <!-- FIXME: eliminate version/exclusions with odlparent-4.0.3 -->
-      <version>2.2.1</version>
-      <exclusions>
-        <exclusion>
-          <!-- Provided by JDK -->
-          <groupId>javax.xml.stream</groupId>
-          <artifactId>stax-api</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
 </project>
