@@ -35,6 +35,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <dependency>
       <groupId>org.apache.karaf.shell</groupId>
       <artifactId>org.apache.karaf.shell.core</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>net.sf.ehcache</groupId>
