@@ -29,5 +29,6 @@
     <module>impl-jetty</module>
     <module>servlet-api</module>
     <module>servlet-jersey2</module>
+    <module>testutils</module>
   </modules>
 </project>
