@@ -33,7 +33,7 @@
       <groupId>org.ops4j.pax.web</groupId>
       <artifactId>pax-web-api</artifactId>
       <!-- This version must be exactly the same as the one used in ODL's Karaf! -->
-      <version>6.0.9</version>
+      <version>6.0.11</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
