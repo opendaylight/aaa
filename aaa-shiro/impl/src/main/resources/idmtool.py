@@ -140,36 +140,36 @@ change_jolokia_password.set_defaults(func=change_jolokia_password)
 
 def process_result(r):
     ''' Generic method to print result of a REST call '''
-    print ''
+    print('')
     sc = r.status_code
     if sc >= 200 and sc < 300:
-        print "command succeeded!"
+        print("command succeeded!")
         try:
             res = r.json()
             if res is not None:
-                print '\njson:\n', json.dumps(res, indent=4, sort_keys=True)
+                print('\njson:\n', json.dumps(res, indent=4, sort_keys=True))
         except(ValueError):
             pass
     elif sc == 401:
-        print "Incorrect Credentials Provided"
+        print("Incorrect Credentials Provided")
     elif sc == 404:
-        print "RESTconf is either not installed or not initialized yet"
+        print("RESTconf is either not installed or not initialized yet")
     elif sc >= 500 and sc < 600:
-        print "Internal Server Error Ocurred"
+        print("Internal Server Error Ocurred")
     else:
-        print "Unknown error; HTTP status code: {}".format(sc)
+        print("Unknown error; HTTP status code: {}".format(sc))
 
 def handle_exception(e):
     exceptionType = type(e)
     if exceptionType is requests.exceptions.SSLError:
-        print "requests.exception.SSLError: Is HTTPS configured correctly?  To disable certificate verification, use the -k or --insecure flag"
+        print("requests.exception.SSLError: Is HTTPS configured correctly?  To disable certificate verification, use the -k or --insecure flag")
     else:
-        print "Unable to connect; are you sure the controller is up?"
+        print("Unable to connect; are you sure the controller is up?")
     sys.exit(1)
 
 def get_request(user, password, url, description, outputResult=True):
     if outputResult:
-        print description
+        print(description)
     try:
         r = requests.get(url, auth=(user,password), verify=verifyCertificates)
         if outputResult:
@@ -181,7 +181,7 @@ def get_request(user, password, url, description, outputResult=True):
         sys.exit(1)
 
 def post_request(user, password, url, description, payload, headers):
-    print description
+    print(description)
     try:
         r = requests.post(url, auth=(user,password), data=payload, headers=headers, verify=verifyCertificates)
         process_result(r)
@@ -193,7 +193,7 @@ def post_request_unauthenticated(url, description, payload, headers, params=''):
     Variation of POST without basic authentication
     '''
 
-    print description
+    print(description)
     try:
         r = requests.post(url, data=payload, headers=headers, verify=verifyCertificates,params=params)
         process_result(r)
@@ -201,7 +201,7 @@ def post_request_unauthenticated(url, description, payload, headers, params=''):
         handle_exception(e)
 
 def put_request(user, password, url, description, payload, params):
-    print description
+    print(description)
     try:
         r = requests.put(url, auth=(user,password), data=payload, headers=params, verify=verifyCertificates)
         process_result(r)
@@ -209,7 +209,7 @@ def put_request(user, password, url, description, payload, params):
         handle_exception(e)
 
 def delete_request(user, password, url, description, payload='', params={'Content-Type':'application/json'}):
-    print description
+    print(description)
     try:
         r = requests.delete(url, auth=(user,password), data=payload, headers=params, verify=verifyCertificates)
         process_result(r)
@@ -220,7 +220,7 @@ def poll_new_password():
     new_password = getpass.getpass(prompt="Enter new password: ")
     new_password_repeated = getpass.getpass(prompt="Re-enter password: ")
     if new_password != new_password_repeated:
-        print "Passwords did not match;  cancelling the add_user request"
+        print("Passwords did not match;  cancelling the add_user request")
         sys.exit(1)
     return new_password
 
@@ -255,7 +255,7 @@ def change_password(user, password, existingUserId):
         url = target_host + 'auth/v1/users/{}'.format(existingUserId)
         put_request(user, password, url, 'change_password({})'.format(user), json.dumps(existing), headers)
     except(AttributeError):
-        print "Unable to connect;  are you sure the controller is up?"
+        print("Unable to connect;  are you sure the controller is up?")
         sys.exit(1)
 
 def list_domains(user, password):
@@ -290,13 +290,13 @@ def get_grants(user, password, userid):
 
 def delete_grant(user, password, userid, roleid):
     url = target_host + 'auth/v1/domains/sdn/users/{}/roles/{}'.format(userid, roleid)
-    print url
+    print(url)
     description = 'delete_grant(userid={},roleid={})'.format(userid, roleid)
     delete_request(user, password, url, description)
 
 def get_oauth2_token(user, password, scope):
     url = target_host + 'oauth2/token'
-    print url
+    print(url)
     description = 'get_oauth2_token(scope={})'.format(scope)
     params = 'grant_type=password&username={}&password={}&scope={}'.format(user, password, scope)
     payload = {}
@@ -324,15 +324,15 @@ def change_jolokia_password():
                         f.write(line)
             f.close()
             if replaced:
-                print "Successfully updated the jolokia password!"
+                print("Successfully updated the jolokia password!")
             else:
-                print "ERROR: Some unknown issue occurred while attempting to set the new password"
+                print("ERROR: Some unknown issue occurred while attempting to set the new password")
                 sys.exit(1)
         else:
-            print "idmtool can only modify org.jolokia.osgi.cfg if authMode=basic at this time"
+            print("idmtool can only modify org.jolokia.osgi.cfg if authMode=basic at this time")
             sys.exit(1)
     except:
-        print "Unable to change the jolokia password, please check configuration."
+        print("Unable to change the jolokia password, please check configuration.")
         sys.exit(1)
 
 args = parser.parse_args()
@@ -346,8 +346,8 @@ if not verifyCertificates:
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", message=".*InsecurePlatformWarning.*")
     except:
-        print "Unable to supress SSL warnings in this particular environment"
-    print "Warning:  HTTPS certificate verification has been disabled.  Use at your own risk!"
+        print("Unable to supress SSL warnings in this particular environment")
+    print("Warning:  HTTPS certificate verification has been disabled.  Use at your own risk!")
 
 user = args.user[0]
 password = getpass.getpass()
