@@ -93,7 +93,9 @@ public class JettyWebServer implements WebServer {
 
     @Override
     public synchronized WebContextRegistration registerWebContext(WebContext webContext) throws ServletException {
-        ServletContextHandler handler = new ServletContextHandler(contextHandlerCollection, webContext.contextPath(),
+        String contextPathWithSlashPrefix = webContext.contextPath().startsWith("/")
+                ? webContext.contextPath() : "/" + webContext.contextPath();
+        ServletContextHandler handler = new ServletContextHandler(contextHandlerCollection, contextPathWithSlashPrefix,
                 webContext.supportsSessions() ? ServletContextHandler.SESSIONS : ServletContextHandler.NO_SESSIONS);
 
         // The order in which we do things here must be the same as

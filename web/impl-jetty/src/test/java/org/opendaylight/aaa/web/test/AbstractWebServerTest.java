@@ -46,6 +46,17 @@ public abstract class AbstractWebServerTest {
     }
 
     @Test
+    public void testAddAfterStartWithoutSlashOnContext() throws ServletException, IOException {
+        // NB subtle difference to previous test: contextPath("test1") instead of /test1 with slash!
+        WebContextBuilder webContextBuilder = WebContext.builder().contextPath("test1");
+        webContextBuilder.addServlet(
+                ServletDetails.builder().addUrlPattern("/*").name("Test").servlet(new TestServlet()).build());
+        WebContextRegistration webContextRegistration = getWebServer().registerWebContext(webContextBuilder.build());
+        checkTestServlet(getWebServer().getBaseURL() + "/test1");
+        webContextRegistration.close();
+    }
+
+    @Test
     public void testAddFilter() throws Exception {
         TestFilter testFilter = new TestFilter();
         WebContextBuilder webContextBuilder = WebContext.builder().contextPath("/testingFilters");
