@@ -9,7 +9,9 @@ package org.opendaylight.aaa.cert.test;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 import java.io.File;
@@ -17,16 +19,19 @@ import java.security.Security;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
 import org.opendaylight.aaa.cert.impl.ODLKeyTool;
 import org.opendaylight.aaa.cert.utils.KeyStoresDataUtils;
-import org.opendaylight.aaa.cert.utils.MdsalUtils;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
 import org.opendaylight.mdsal.binding.api.DataBroker;
+import org.opendaylight.mdsal.binding.api.ReadTransaction;
+import org.opendaylight.mdsal.binding.api.WriteTransaction;
+import org.opendaylight.mdsal.common.api.CommitInfo;
 import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.cipher.suite.CipherSuites;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.cipher.suite.CipherSuitesBuilder;
@@ -36,13 +41,10 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev1603
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.OdlKeystoreBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.TrustKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.TrustKeystoreBuilder;
+import org.opendaylight.yangtools.util.concurrent.FluentFutures;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(MdsalUtils.class)
+@RunWith(MockitoJUnitRunner.StrictStubs.class)
 public class KeyStoresDataUtilsTest {
 
     static {
@@ -85,18 +87,16 @@ public class KeyStoresDataUtilsTest {
         final KeyStoresDataUtils keyStoresDataUtils = new KeyStoresDataUtils(AAA_ENCRYPTION_SERVICE);
 
         // Mock setup
-        PowerMockito.mockStatic(MdsalUtils.class);
-        Mockito.when(MdsalUtils.put(isA(DataBroker.class), isA(LogicalDatastoreType.class),
-                isA(InstanceIdentifier.class), isA(SslData.class))).thenReturn(true);
-        Mockito.when(
-                MdsalUtils.read(isA(DataBroker.class), isA(LogicalDatastoreType.class), isA(InstanceIdentifier.class)))
-                .thenReturn(sslData);
-        Mockito.when(MdsalUtils.delete(isA(DataBroker.class), isA(LogicalDatastoreType.class),
-                isA(InstanceIdentifier.class))).thenReturn(true);
-        Mockito.when(MdsalUtils.merge(isA(DataBroker.class), isA(LogicalDatastoreType.class),
-                isA(InstanceIdentifier.class), isA(SslData.class))).thenReturn(true);
-        Mockito.when(AAA_ENCRYPTION_SERVICE.encrypt(isA(byte[].class))).thenReturn(ENCRYPTED_BYTE);
-        Mockito.when(AAA_ENCRYPTION_SERVICE.encrypt(isA(String.class))).thenReturn(ENCRYPTED_STRING);
+        final WriteTransaction wtx = mock(WriteTransaction.class);
+        doReturn(CommitInfo.emptyFluentFuture()).when(wtx).commit();
+        doReturn(wtx).when(dataBroker).newWriteOnlyTransaction();
+
+        final ReadTransaction rtx = mock(ReadTransaction.class);
+        doReturn(FluentFutures.immediateFluentFuture(Optional.of(sslData))).when(rtx).read(
+            any(LogicalDatastoreType.class), any(InstanceIdentifier.class));
+        doReturn(rtx).when(dataBroker).newReadOnlyTransaction();
+
+        doReturn(ENCRYPTED_STRING).when(AAA_ENCRYPTION_SERVICE).encrypt(isA(String.class));
 
         // getKeystoresIid
         InstanceIdentifier instanceIdentifierResult = KeyStoresDataUtils.getKeystoresIid();
