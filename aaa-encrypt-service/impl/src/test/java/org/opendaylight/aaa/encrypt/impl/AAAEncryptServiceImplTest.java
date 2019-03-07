@@ -7,31 +7,34 @@
  */
 package org.opendaylight.aaa.encrypt.impl;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.opendaylight.mdsal.binding.api.DataBroker;
+import org.opendaylight.mdsal.binding.api.ReadTransaction;
 import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfigBuilder;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.opendaylight.yangtools.util.concurrent.FluentFutures;
+import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 
 /*
  *  @author - Sharon Aicler (saichler@gmail.com)
  */
-
-@RunWith(PowerMockRunner.class)
-@PowerMockIgnore({ "javax.crypto.*", "javax.xml.*" })
-@PrepareForTest(MdsalUtils.class)
+@Deprecated
+@RunWith(MockitoJUnitRunner.StrictStubs.class)
 public class AAAEncryptServiceImplTest {
 
     private AAAEncryptionServiceImpl impl;
+    @Mock
     private DataBroker dataBroker;
 
     @Before
@@ -41,11 +44,11 @@ public class AAAEncryptServiceImplTest {
                 .setEncryptKeyLength(128).setEncryptMethod("PBKDF2WithHmacSHA1").setEncryptSalt("")
                 .setEncryptType("AES").setPasswordLength(12).build();
 
-        dataBroker = mock(DataBroker.class);
-        PowerMockito.mockStatic(MdsalUtils.class);
-        PowerMockito.when(
-                MdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION, MdsalUtils.getEncryptionSrvConfigIid()))
-                .thenReturn(module);
+        final ReadTransaction rtx = mock(ReadTransaction.class);
+        doReturn(rtx).when(dataBroker).newReadOnlyTransaction();
+        doReturn(FluentFutures.immediateFluentFuture(Optional.of(module))).when(rtx).read(
+            any(LogicalDatastoreType.class), any(InstanceIdentifier.class));
+
         impl = new AAAEncryptionServiceImpl(module, dataBroker);
     }
 
