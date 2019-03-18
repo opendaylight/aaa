@@ -52,8 +52,6 @@
       <groupId>javax.annotation</groupId>
       <artifactId>javax.annotation-api</artifactId>
       <optional>true</optional>
-      <!-- FIXME: remove version with odlparent-4.0.8 -->
-      <version>1.2</version>
     </dependency>
 
     <dependency>
