@@ -18,9 +18,7 @@ import java.sql.SQLException;
  * @author Michael Vorburger
  */
 public class IdmLightSimpleConnectionProvider implements ConnectionProvider {
-
     private final IdmLightConfig config;
-    private volatile Connection existingConnection;
 
     public IdmLightSimpleConnectionProvider(IdmLightConfig config) {
         new org.h2.Driver();
@@ -28,15 +26,11 @@ public class IdmLightSimpleConnectionProvider implements ConnectionProvider {
     }
 
     @Override
-    public Connection getConnection() throws StoreException {
+    public synchronized Connection getConnection() throws StoreException {
         try {
-            if (existingConnection == null || existingConnection.isClosed()) {
-                existingConnection = DriverManager.getConnection(config.getDbConnectionString(), config.getDbUser(),
-                        config.getDbPwd());
-            }
+            return DriverManager.getConnection(config.getDbConnectionString(), config.getDbUser(), config.getDbPwd());
         } catch (SQLException e) {
             throw new StoreException("Cannot connect to database server", e);
         }
-        return existingConnection;
     }
 }
