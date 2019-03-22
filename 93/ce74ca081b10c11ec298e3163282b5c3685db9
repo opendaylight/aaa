@@ -1,0 +1,8 @@
+Verified+1: jenkins-releng <jenkins-releng@opendaylight.org>
+Code-Review+1: Richard Kosegi <richard.kosegi@gmail.com>
+Code-Review+2: Robert Varga <nite@hq.sk>
+Submitted-by: Robert Varga <nite@hq.sk>
+Submitted-at: Fri, 22 Mar 2019 13:39:54 +0000
+Reviewed-on: https://git.opendaylight.org/gerrit/81112
+Project: aaa
+Branch: refs/heads/stable/fluorine
