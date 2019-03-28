@@ -13,7 +13,6 @@ import com.google.common.collect.ImmutableMap;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Map;
-import javax.annotation.concurrent.NotThreadSafe;
 
 /**
  * Bridge {@link Dictionary} to {@link Map}.
@@ -25,12 +24,10 @@ import javax.annotation.concurrent.NotThreadSafe;
  *
  * @author Michael Vorburger.ch
  */
-@NotThreadSafe
 class MapDictionary<K, V> extends Dictionary<K, V> {
-
     private final Map<K, V> map;
 
-    MapDictionary(Map<K, V> map) {
+    MapDictionary(final Map<K, V> map) {
         this.map = ImmutableMap.copyOf(map);
     }
 
@@ -55,18 +52,17 @@ class MapDictionary<K, V> extends Dictionary<K, V> {
     }
 
     @Override
-    public V get(Object key) {
+    public V get(final Object key) {
         return map.get(key);
     }
 
     @Override
-    public V put(K key, V value) {
+    public V put(final K key, final V value) {
         return map.put(key, value);
     }
 
     @Override
-    public V remove(Object key) {
+    public V remove(final Object key) {
         return map.remove(key);
     }
-
 }
