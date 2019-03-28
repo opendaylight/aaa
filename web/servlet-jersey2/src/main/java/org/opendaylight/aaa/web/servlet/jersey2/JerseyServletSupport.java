@@ -8,7 +8,6 @@
 package org.opendaylight.aaa.web.servlet.jersey2;
 
 import com.google.common.annotations.Beta;
-import javax.annotation.concurrent.ThreadSafe;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Application;
 import org.eclipse.jdt.annotation.NonNullByDefault;
@@ -20,7 +19,6 @@ import org.opendaylight.aaa.web.servlet.ServletSupport;
 @Beta
 @MetaInfServices
 @NonNullByDefault
-@ThreadSafe
 public final class JerseyServletSupport implements ServletSupport {
     @Override
     public HttpServletBuilder createHttpServletBuilder(final Application application) {

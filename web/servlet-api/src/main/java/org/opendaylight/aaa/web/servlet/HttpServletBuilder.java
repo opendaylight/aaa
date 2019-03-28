@@ -8,7 +8,6 @@
 package org.opendaylight.aaa.web.servlet;
 
 import com.google.common.annotations.Beta;
-import javax.annotation.concurrent.NotThreadSafe;
 import javax.servlet.http.HttpServlet;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Configurable;
@@ -16,12 +15,11 @@ import org.opendaylight.yangtools.concepts.Builder;
 
 /**
  * Utility methods for instantiating {@link HttpServlet}s from {@link Application}s, abstracting the servlet
- * implementation from application developers.
+ * implementation from application developers. Implementations of this interface are NOT thread-safe.
  *
  * @author Robert Varga
  */
 @Beta
-@NotThreadSafe
 public interface HttpServletBuilder extends Builder<HttpServlet>, Configurable<HttpServletBuilder> {
 
 }
