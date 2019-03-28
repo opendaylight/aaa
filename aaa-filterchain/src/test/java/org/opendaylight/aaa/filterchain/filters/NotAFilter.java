@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.filterchain.filters;
 
 import java.util.Vector;
@@ -13,6 +12,7 @@ import java.util.Vector;
 /**
  * A class that is not a Filter.  Used in JUnit tests.
  */
-@SuppressWarnings("unused")
 public class NotAFilter extends Vector<String> {
+    private static final long serialVersionUID = 1L;
+
 }

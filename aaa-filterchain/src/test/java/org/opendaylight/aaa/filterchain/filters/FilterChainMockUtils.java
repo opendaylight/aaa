@@ -5,10 +5,9 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.filterchain.filters;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 
@@ -95,8 +94,8 @@ public final class FilterChainMockUtils {
      * A holder class for the tuple <code>(filters,callStack)</code>.
      */
     static final class TestFilterDTO {
-        private List<Filter> filters;
-        private List<String> callStack;
+        private final List<Filter> filters;
+        private final List<String> callStack;
 
         TestFilterDTO(final List<Filter> filters, final List<String> callStack) {
             this.filters = filters;
