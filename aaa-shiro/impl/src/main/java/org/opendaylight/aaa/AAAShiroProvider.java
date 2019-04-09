@@ -131,7 +131,6 @@ public final class AAAShiroProvider {
         LOG.info("AAAShiroProvider Closed");
         if (httpService != null) {
             httpService.unregister(moonEndpointPath);
-            httpService.unregister(oauth2EndpointPath);
         }
     }
 
