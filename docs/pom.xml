@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vi: set et smarttab sw=4 tabstop=4: -->
+<!--
+ Copyright (c) 2019 PANTHEON.tech, s.r.o. and others.  All rights reserved.
+
+ This program and the accompanying materials are made available under the
+ terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ and is available at http://www.eclipse.org/legal/epl-v10.html
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.opendaylight.odlparent</groupId>
+        <artifactId>odlparent</artifactId>
+        <version>5.0.0</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>org.opendaylight.aaa</groupId>
+    <artifactId>aaa-docs</artifactId>
+    <packaging>jar</packaging>
+    <version>0.10.0-SNAPSHOT</version>
+    <name>${project.artifactId}</name>
+    <description>AAA documentation</description>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.opendaylight.aaa</groupId>
+                <artifactId>aaa-artifacts</artifactId>
+                <version>0.10.0-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>aaa-authn-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>aaa-cert</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>aaa-cli</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>aaa-cli-jar</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>aaa-encrypt-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-encrypt-service-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>aaa-filterchain</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>aaa-shiro-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>aaa-shiro</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}.web</groupId>
+            <artifactId>web-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}.web</groupId>
+            <artifactId>web-jetty-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}.web</groupId>
+            <artifactId>web-osgi-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}.web</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}.web</groupId>
+            <artifactId>servlet-jersey2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}.web</groupId>
+            <artifactId>testutils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>aaa-password-service-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-password-service-impl</artifactId>
+        </dependency>
+
+        <!-- Third-party dependencies -->
+        <dependency>
+            <groupId>org.apache.karaf.shell</groupId>
+            <artifactId>org.apache.karaf.shell.core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.aries.blueprint</groupId>
+            <artifactId>blueprint-maven-plugin-annotation</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.immutables</groupId>
+            <artifactId>value</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack-sources</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <silent>true</silent>
+                            <classifier>sources</classifier>
+                            <includes>org/opendaylight/**</includes>
+                            <includeGroupIds>org.opendaylight.aaa</includeGroupIds>
+                            <outputDirectory>${project.build.directory}/src</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <!-- post-compile, but before prepare-package -->
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/src</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <!-- prepare-package so we build the source package before javadoc -->
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>remove-undocumented-sources</id>
+                        <!-- Before javadoc runs -->
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <configuration>
+                            <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                            <filesets>
+                                <fileset>
+                                    <directory>${project.build.directory}/src</directory>
+                                    <includes>
+                                        <include>**/$YangModelBindingProvider.java</include>
+                                        <include>**/$YangModuleInfoImpl.java</include>
+                                    </includes>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <!-- FIXME: remove this section once we can activate javadoc-links profile -->
+                <configuration combine.children="append">
+                    <links>
+                        <link>https://junit.org/junit4/javadoc/4.11/</link>
+                        <link>http://hamcrest.org/JavaHamcrest/javadoc/1.3/</link>
+                        <link>http://google.github.io/truth/api/0.42/</link>
+                        <link>https://www.slf4j.org/apidocs/</link>
+                        <link>https://xerces.apache.org/xerces2-j/javadocs/api/</link>
+                        <link>https://google.github.io/guava/releases/25.1-jre/api/docs/</link>
+                        <link>http://doc.akka.io/japi/akka/2.5.19/</link>
+                        <link>http://netty.io/4.1/api/</link>
+                        <link>https://commons.apache.org/proper/commons-lang/javadocs/api-2.6/</link>
+                        <link>https://commons.apache.org/proper/commons-lang/javadocs/api-3.8.1/</link>
+                        <link>https://commons.apache.org/proper/commons-codec/apidocs/</link>
+                    </links>
+                    <!--groups>
+                        <group>
+                            <title>MD-SAL Tracing Utilities</title>
+                            <packages>org.opendaylight.controller.md.sal.trace.*:org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.mdsaltrace.rev160908*</packages>
+                        </group>
+                    </groups-->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

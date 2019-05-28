@@ -40,6 +40,7 @@
     <module>aaa-shiro</module>
     <module>dependency-check</module>
     <module>web</module>
+    <module>docs</module>
   </modules>
 
   <profiles>
