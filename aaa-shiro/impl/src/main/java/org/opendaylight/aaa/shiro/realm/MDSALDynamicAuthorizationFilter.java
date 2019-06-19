@@ -7,9 +7,9 @@
  */
 package org.opendaylight.aaa.shiro.realm;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -46,29 +46,42 @@ import org.slf4j.LoggerFactory;
  * <p>This mechanism will only work when put behind <code>authcBasic</code>.
  */
 @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
-public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
+public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter
+        implements ClusteredDataTreeChangeListener<HttpAuthorization> {
 
     private static final Logger LOG = LoggerFactory.getLogger(MDSALDynamicAuthorizationFilter.class);
 
     private static final DataTreeIdentifier<HttpAuthorization> AUTHZ_CONTAINER = DataTreeIdentifier.create(
             LogicalDatastoreType.CONFIGURATION, InstanceIdentifier.create(HttpAuthorization.class));
 
-    private final ListenerRegistration<?> reg;
+    private final DataBroker dataBroker;
 
+    private ListenerRegistration<?> reg;
     private volatile ListenableFuture<Optional<HttpAuthorization>> authContainer;
 
     public MDSALDynamicAuthorizationFilter() {
-        final DataBroker dataBroker = requireNonNull(ThreadLocals.DATABROKER_TL.get());
+        dataBroker = requireNonNull(ThreadLocals.DATABROKER_TL.get());
+    }
 
+    @Override
+    protected void onFilterConfigSet() throws Exception {
         try (ReadTransaction tx = dataBroker.newReadOnlyTransaction()) {
             authContainer = tx.read(AUTHZ_CONTAINER.getDatastoreType(), AUTHZ_CONTAINER.getRootIdentifier());
         }
-
-        this.reg = dataBroker.registerDataTreeChangeListener(
-            AUTHZ_CONTAINER, (ClusteredDataTreeChangeListener<HttpAuthorization>) this::onContainerChanged);
+        this.reg = dataBroker.registerDataTreeChangeListener(AUTHZ_CONTAINER, this);
     }
 
-    private void onContainerChanged(final Collection<DataTreeModification<HttpAuthorization>> changes) {
+    @Override
+    public void destroy() {
+        if (reg != null) {
+            reg.close();
+            reg = null;
+        }
+        super.destroy();
+    }
+
+    @Override
+    public void onDataTreeChanged(Collection<DataTreeModification<HttpAuthorization>> changes) {
         final HttpAuthorization newVal = Iterables.getLast(changes).getRootNode().getDataAfter();
         LOG.debug("Updating authorization information to {}", newVal);
         authContainer = Futures.immediateFuture(Optional.ofNullable(newVal));
@@ -77,8 +90,7 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
     @Override
     public boolean isAccessAllowed(final ServletRequest request, final ServletResponse response,
                                    final Object mappedValue) {
-        Preconditions.checkArgument(request instanceof HttpServletRequest,
-                "Expected HttpServletRequest, received {}", request);
+        checkArgument(request instanceof HttpServletRequest, "Expected HttpServletRequest, received {}", request);
 
         final Subject subject = getSubject(request, response);
         final HttpServletRequest httpServletRequest = (HttpServletRequest)request;
@@ -142,11 +154,5 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter {
         }
         LOG.debug("successfully authorized the user for access");
         return true;
-    }
-
-    @Override
-    public void destroy() {
-        reg.close();
-        super.destroy();
     }
 }
