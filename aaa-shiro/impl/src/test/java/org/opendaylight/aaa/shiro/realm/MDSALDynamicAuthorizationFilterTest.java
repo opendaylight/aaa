@@ -19,6 +19,8 @@ import static org.opendaylight.yangtools.util.concurrent.FluentFutures.immediate
 import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Optional;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -61,14 +63,23 @@ public class MDSALDynamicAuthorizationFilterTest {
         return mockDataBroker;
     }
 
-    private static MDSALDynamicAuthorizationFilter newFilter(final Subject subject, final DataBroker dataBroker) {
+    private static MDSALDynamicAuthorizationFilter newFilter(final Subject subject, final DataBroker dataBroker)
+            throws ServletException {
         ThreadLocals.DATABROKER_TL.set(dataBroker);
-        return new MDSALDynamicAuthorizationFilter() {
-            @Override
-            protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
-                return subject;
-            }
-        };
+        MDSALDynamicAuthorizationFilter ret;
+        try {
+            ret = new MDSALDynamicAuthorizationFilter() {
+                @Override
+                protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
+                    return subject;
+                }
+            };
+        } finally {
+            ThreadLocals.DATABROKER_TL.remove();
+        }
+
+        ret.init(mock(FilterConfig.class));
+        return ret;
     }
 
     // test helper method to generate some cool mdsal data
