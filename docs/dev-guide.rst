@@ -150,37 +150,9 @@ Then, restart the Karaf process.
 How application developers can leverage AAA to provide servlet security
 -----------------------------------------------------------------------
 
-In order to provide security to a servlet, add the following to the
-servlet’s web.xml file as the first filter definition:
+Previously the servlet's web.xml was edited to add the AAAShiroFilter. This has been replaced with programmatic initialization.
 
-.. code-block:: xml
-
-    <context-param>
-      <param-name>shiroEnvironmentClass</param-name>
-      <param-value>org.opendaylight.aaa.shiro.web.env.KarafIniWebEnvironment</param-value>
-    </context-param>
-
-    <listener>
-        <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
-    </listener>
-
-    <filter>
-        <filter-name>ShiroFilter</filter-name>
-        <filter-class>org.opendaylight.aaa.shiro.filters.AAAShiroFilter</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>AAAShiroFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
-.. note::
-
-    It is very important to place this AAAShiroFilter as the first
-    javax.servlet.Filter, as Jersey applies Filters in the order they
-    appear within web.xml. Placing the AAAShiroFilter first ensures
-    incoming HTTP/HTTPS requests have proper credentials before any
-    other filtering is attempted.
+The Neutron project uses this new style the `Neutron blueprint.xml<https://git.opendaylight.org/gerrit/gitweb?p=neutron.git;a=blob;f=northbound-api/src/main/resources/OSGI-INF/blueprint/blueprint.xml;h=a9dc57a97091d6c90da3e216a13523adbe698887;hb=refs/heads/master>`_ and `Neutron WebInitializer.java<https://git.opendaylight.org/gerrit/gitweb?p=neutron.git;a=blob;f=northbound-api/src/main/java/org/opendaylight/neutron/northbound/api/WebInitializer.java;h=a615d02343505cef0d4cdd54b2f07f2a9fee9b75;hb=refs/heads/master>`_ are helpful references.
 
 AAA Realms
 ----------
