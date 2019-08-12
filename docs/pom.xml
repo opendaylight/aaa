@@ -19,7 +19,7 @@
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>aaa-docs</artifactId>
     <packaging>jar</packaging>
-    <version>0.10.0-SNAPSHOT</version>
+    <version>0.11.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>AAA documentation</description>
 
@@ -28,7 +28,7 @@
             <dependency>
                 <groupId>org.opendaylight.aaa</groupId>
                 <artifactId>aaa-artifacts</artifactId>
-                <version>0.10.0-SNAPSHOT</version>
+                <version>0.11.0-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -111,13 +111,13 @@
         <dependency>
             <groupId>org.opendaylight.infrautils</groupId>
             <artifactId>infrautils-testutils</artifactId>
-            <version>1.6.0-SNAPSHOT</version>
+            <version>1.7.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.infrautils</groupId>
             <artifactId>inject.guice.testutils</artifactId>
-            <version>1.6.0-SNAPSHOT</version>
+            <version>1.7.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
