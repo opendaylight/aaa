@@ -8,7 +8,7 @@
  -->
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="odl-aaa-${project.version}">
     <feature name="odl-aaa-api" version="${project.version}">
-        <feature version="[5,6)">odl-servlet-api</feature>
-        <feature version="[5,6)">odl-ws-rs-api</feature>
+        <feature version="[6,7)">odl-servlet-api</feature>
+        <feature version="[6,7)">odl-ws-rs-api</feature>
     </feature>
 </features>
