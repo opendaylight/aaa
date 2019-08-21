@@ -9,7 +9,6 @@ package org.opendaylight.aaa.filterchain.filters;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
@@ -46,7 +45,6 @@ public class AAAFilterChainTest {
     public void testCreateAAAFilterChain() throws Exception {
         final AAAFilterChain aaaFilterChain = AAAFilterChain.createAAAFilterChain();
         assertNotNull(aaaFilterChain);
-        assertTrue(aaaFilterChain instanceof AAAFilterChain);
     }
 
     @Test
