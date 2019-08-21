@@ -7,7 +7,8 @@
  */
 package org.opendaylight.aaa.cli.jar;
 
-import com.google.common.base.Preconditions;
+import static java.util.Objects.requireNonNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -83,7 +84,7 @@ public class StandaloneCommandLineInterface {
     }
 
     private Optional<User> getSingleUser(String userIdWithoutDomain) throws IDMStoreException {
-        Preconditions.checkNotNull(userIdWithoutDomain, "userIdWithoutDomain == null");
+        requireNonNull(userIdWithoutDomain, "userIdWithoutDomain == null");
         List<User> users = identityStore.getUsers(userIdWithoutDomain, DOMAIN).getUsers();
         if (users.isEmpty()) {
             return Optional.empty();
@@ -95,12 +96,12 @@ public class StandaloneCommandLineInterface {
     }
 
     public void createNewUser(String userName, String password, boolean isAdmin) throws IDMStoreException {
-        Preconditions.checkNotNull(userName, "userName == null");
+        requireNonNull(userName, "userName == null");
         storeBuilder.createUser(DOMAIN, userName, password, isAdmin);
     }
 
     public boolean deleteUser(String userIdWithoutDomain) throws IDMStoreException {
-        Preconditions.checkNotNull(userIdWithoutDomain, "userIdWithoutDomain == null");
+        requireNonNull(userIdWithoutDomain, "userIdWithoutDomain == null");
         return storeBuilder.deleteUser(DOMAIN, userIdWithoutDomain);
     }
 }

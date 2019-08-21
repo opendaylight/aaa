@@ -17,6 +17,7 @@ import static org.opendaylight.yangtools.util.concurrent.FluentFutures.immediate
 import static org.opendaylight.yangtools.util.concurrent.FluentFutures.immediateFluentFuture;
 
 import com.google.common.collect.Lists;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.FilterConfig;
@@ -133,7 +134,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         // Same as above, but with an empty policy list returned.
 
         final Policies policies = mock(Policies.class);
-        when(policies.getPolicies()).thenReturn(Lists.newArrayList());
+        when(policies.getPolicies()).thenReturn(new ArrayList<>());
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
         when(httpAuthorization.getPolicies()).thenReturn(policies);
         filter = newFilter(mock(Subject.class), mockDataBroker(httpAuthorization));

@@ -5,10 +5,10 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.filters;
 
-import com.google.common.base.Preconditions;
+import static java.util.Objects.requireNonNull;
+
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 
@@ -113,15 +113,10 @@ public final class AuthenticationTokenUtils {
      * @param field A generic string, which is possibly null.
      * @param defaultValue A non-null value returned if <code>field</code> is null
      * @return <code>field</code> or <code>defaultValue</code> if field is null
-     * @throws IllegalArgumentException If <code>defaultValue</code> is null
+     * @throws NullPointerException If <code>defaultValue</code> is null
      */
-    private static String extractField(final String field, final String defaultValue)
-        throws IllegalArgumentException {
-
-        Preconditions.checkNotNull(defaultValue, "defaultValue can't be null");
-        if (field != null) {
-            return field;
-        }
-        return defaultValue;
+    private static String extractField(final String field, final String defaultValue) {
+        final String def = requireNonNull(defaultValue, "defaultValue can't be null");
+        return field != null ? field : def;
     }
 }

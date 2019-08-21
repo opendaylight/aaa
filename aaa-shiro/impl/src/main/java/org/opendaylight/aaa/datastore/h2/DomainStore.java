@@ -5,10 +5,10 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.datastore.h2;
 
-import com.google.common.base.Preconditions;
+import static java.util.Objects.requireNonNull;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,7 +36,7 @@ public class DomainStore extends AbstractStore<Domain> {
     public static final String SQL_ENABLED = "enabled";
     private static final String TABLE_NAME = "DOMAINS";
 
-    public DomainStore(ConnectionProvider dbConnectionFactory) {
+    public DomainStore(final ConnectionProvider dbConnectionFactory) {
         super(dbConnectionFactory, TABLE_NAME);
     }
 
@@ -50,7 +50,7 @@ public class DomainStore extends AbstractStore<Domain> {
     }
 
     @Override
-    protected Domain fromResultSet(ResultSet rs) throws SQLException {
+    protected Domain fromResultSet(final ResultSet rs) throws SQLException {
         Domain domain = new Domain();
         domain.setDomainid(rs.getString(SQL_ID));
         domain.setName(rs.getString(SQL_NAME));
@@ -65,7 +65,7 @@ public class DomainStore extends AbstractStore<Domain> {
         return domains;
     }
 
-    protected Domains getDomains(String domainName) throws StoreException {
+    protected Domains getDomains(final String domainName) throws StoreException {
         LOG.debug("getDomains for: {}", domainName);
         Domains domains = new Domains();
         try (Connection conn = dbConnect();
@@ -80,7 +80,7 @@ public class DomainStore extends AbstractStore<Domain> {
         return domains;
     }
 
-    protected Domain getDomain(String id) throws StoreException {
+    protected Domain getDomain(final String id) throws StoreException {
         try (Connection conn = dbConnect();
              PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM DOMAINS WHERE domainid = ? ")) {
             pstmt.setString(1, id);
@@ -92,10 +92,10 @@ public class DomainStore extends AbstractStore<Domain> {
         }
     }
 
-    public Domain createDomain(Domain domain) throws StoreException {
-        Preconditions.checkNotNull(domain);
-        Preconditions.checkNotNull(domain.getName());
-        Preconditions.checkNotNull(domain.isEnabled());
+    public Domain createDomain(final Domain domain) throws StoreException {
+        requireNonNull(domain);
+        requireNonNull(domain.getName());
+        requireNonNull(domain.isEnabled());
         String query = "insert into DOMAINS (domainid,name,description,enabled) values(?, ?, ?, ?)";
         try (Connection conn = dbConnect();
              PreparedStatement statement = conn.prepareStatement(query)) {
@@ -115,7 +115,7 @@ public class DomainStore extends AbstractStore<Domain> {
         }
     }
 
-    protected Domain putDomain(Domain domain) throws StoreException {
+    protected Domain putDomain(final Domain domain) throws StoreException {
         Domain savedDomain = this.getDomain(domain.getDomainid());
         if (savedDomain == null) {
             return null;

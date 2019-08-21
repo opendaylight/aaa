@@ -17,6 +17,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
@@ -52,38 +53,38 @@ public class GsonProvider<T> implements MessageBodyReader<T>, MessageBodyWriter<
     }
 
     @Override
-    public boolean isReadable(Class<?> type, Type genericType,
-                              Annotation[] annotations, MediaType mediaType) {
+    public boolean isReadable(final Class<?> type, final Type genericType,
+                              final Annotation[] annotations, final MediaType mediaType) {
         return true;
     }
 
     @Override
-    public T readFrom(Class<T> type, Type genericType, Annotation[] annotations,
-                      MediaType mediaType, MultivaluedMap<String, String> httpHeaders,
-                      InputStream entityStream) throws IOException, WebApplicationException {
+    public T readFrom(final Class<T> type, final Type genericType, final Annotation[] annotations,
+                      final MediaType mediaType, final MultivaluedMap<String, String> httpHeaders,
+                      final InputStream entityStream) throws IOException, WebApplicationException {
 
-        try (InputStreamReader reader = new InputStreamReader(entityStream, "UTF-8")) {
+        try (InputStreamReader reader = new InputStreamReader(entityStream, StandardCharsets.UTF_8)) {
             return gson.fromJson(reader, type);
         }
     }
 
     @Override
-    public boolean isWriteable(Class<?> type, Type genericType,
-                               Annotation[] annotations, MediaType mediaType) {
+    public boolean isWriteable(final Class<?> type, final Type genericType,
+                               final Annotation[] annotations, final MediaType mediaType) {
         return true;
     }
 
     @Override
-    public long getSize(T type, Class<?> theClass, Type genericType,
-                        Annotation[] annotations, MediaType mediaType) {
+    public long getSize(final T type, final Class<?> theClass, final Type genericType,
+                        final Annotation[] annotations, final MediaType mediaType) {
         return -1;
     }
 
     @Override
     @SuppressFBWarnings("DM_DEFAULT_ENCODING")
-    public void writeTo(T type, Class<?> theClass, Type genericType, Annotation[] annotations,
-                        MediaType mediaType, MultivaluedMap<String, Object> httpHeaders,
-                        OutputStream entityStream) throws WebApplicationException {
+    public void writeTo(final T type, final Class<?> theClass, final Type genericType, final Annotation[] annotations,
+                        final MediaType mediaType, final MultivaluedMap<String, Object> httpHeaders,
+                        final OutputStream entityStream) throws WebApplicationException {
 
         try (PrintWriter printWriter = new PrintWriter(entityStream)) {
             String json;
