@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.realm.util.http;
 
 import java.security.KeyManagementException;
@@ -25,13 +24,16 @@ import org.slf4j.LoggerFactory;
  * verifier that accepts any hostname.
  */
 public final class UntrustedSSL {
+    private UntrustedSSL() {
 
-    private UntrustedSSL() {}
+    }
 
     private static final class InsecureHostnameVerifier {
         private static final HostnameVerifier INSTANCE = (hostname, session) -> true;
 
-        private InsecureHostnameVerifier() {}
+        private InsecureHostnameVerifier() {
+
+        }
     }
 
     private static final class InsecureTrustManager {
@@ -57,7 +59,9 @@ public final class UntrustedSSL {
             }
         };
 
-        private InsecureTrustManager() {}
+        private InsecureTrustManager() {
+
+        }
     }
 
     private static final class InsecureSSLContext {
@@ -65,7 +69,9 @@ public final class UntrustedSSL {
 
         private static final SSLContext INSTANCE = buildSSLContext();
 
-        private InsecureSSLContext() {}
+        private InsecureSSLContext() {
+
+        }
 
         private static SSLContext buildSSLContext() {
             try {

@@ -17,7 +17,9 @@ import java.util.List;
 public class KeystoneToken {
     private Token token;
 
-    public KeystoneToken() {}
+    public KeystoneToken() {
+
+    }
 
     public KeystoneToken(Token theToken) {
         token = theToken;
@@ -32,10 +34,11 @@ public class KeystoneToken {
     }
 
     public static final class Token {
-
         private List<Role> roles = new ArrayList<>();
 
-        public Token() {}
+        public Token() {
+
+        }
 
         public Token(List<Role> theRoles) {
             roles.addAll(theRoles);
@@ -54,7 +57,9 @@ public class KeystoneToken {
 
             private String id;
 
-            public Role() {}
+            public Role() {
+
+            }
 
             public Role(String theRoleName, String theId) {
                 name = theRoleName;
