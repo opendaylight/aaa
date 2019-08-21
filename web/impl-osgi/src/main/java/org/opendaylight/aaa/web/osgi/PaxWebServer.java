@@ -80,7 +80,7 @@ public class PaxWebServer {
         serviceRegistration.unregister();
     }
 
-    private String getBaseURL() {
+    String getBaseURL() {
         WebContainerDTO details = paxWeb.getWebcontainerDTO();
         if (details.securePort != null && details.securePort > 0) {
             return "https://" + details.listeningAddresses[0] + ":" + details.securePort;
@@ -89,7 +89,7 @@ public class PaxWebServer {
         }
     }
 
-    private WebServer newWebServer(Bundle bundle) throws IllegalStateException {
+    WebServer newWebServer(Bundle bundle) {
         LOG.info("Creating WebServer instance for bundle {}", bundle);
 
         final BundleContext bundleContext = bundle.getBundleContext();
