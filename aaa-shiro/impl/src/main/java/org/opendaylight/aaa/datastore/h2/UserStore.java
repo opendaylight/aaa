@@ -5,10 +5,10 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.datastore.h2;
 
-import com.google.common.base.Preconditions;
+import static java.util.Objects.requireNonNull;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -46,7 +46,7 @@ public class UserStore extends AbstractStore<User> {
 
     private final PasswordHashService passwordService;
 
-    public UserStore(ConnectionProvider dbConnectionFactory, final PasswordHashService passwordService) {
+    public UserStore(final ConnectionProvider dbConnectionFactory, final PasswordHashService passwordService) {
         super(dbConnectionFactory, TABLE_NAME);
         this.passwordService = Objects.requireNonNull(passwordService);
     }
@@ -61,7 +61,7 @@ public class UserStore extends AbstractStore<User> {
     }
 
     @Override
-    protected User fromResultSet(ResultSet rs) throws SQLException {
+    protected User fromResultSet(final ResultSet rs) throws SQLException {
         User user = new User();
         try {
             user.setUserid(rs.getString(SQL_ID));
@@ -85,7 +85,7 @@ public class UserStore extends AbstractStore<User> {
         return users;
     }
 
-    protected Users getUsers(String username, String domain) throws StoreException {
+    protected Users getUsers(final String username, final String domain) throws StoreException {
         LOG.debug("getUsers for: {} in domain {}", username, domain);
 
         Users users = new Users();
@@ -100,7 +100,7 @@ public class UserStore extends AbstractStore<User> {
         return users;
     }
 
-    public User getUser(String id) throws StoreException {
+    public User getUser(final String id) throws StoreException {
         try (Connection conn = dbConnect();
                 PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM USERS WHERE userid = ? ")) {
             pstmt.setString(1, id);
@@ -111,10 +111,10 @@ public class UserStore extends AbstractStore<User> {
         }
     }
 
-    protected User createUser(User user) throws StoreException {
-        Preconditions.checkNotNull(user);
-        Preconditions.checkNotNull(user.getName());
-        Preconditions.checkNotNull(user.getDomainid());
+    protected User createUser(final User user) throws StoreException {
+        requireNonNull(user);
+        requireNonNull(user.getName());
+        requireNonNull(user.getDomainid());
 
         final PasswordHash passwordHash = passwordService.getPasswordHash(user.getPassword());
         user.setSalt(passwordHash.getSalt());
@@ -141,7 +141,7 @@ public class UserStore extends AbstractStore<User> {
         }
     }
 
-    public User putUser(User user) throws StoreException {
+    public User putUser(final User user) throws StoreException {
 
         User savedUser = this.getUser(user.getUserid());
         if (savedUser == null) {

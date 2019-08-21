@@ -5,10 +5,10 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.datastore.h2;
 
-import com.google.common.base.Preconditions;
+import static java.util.Objects.requireNonNull;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,7 +37,7 @@ public class RoleStore extends AbstractStore<Role> {
     public static final String SQL_DESCR = "description";
     private static final String TABLE_NAME = "ROLES";
 
-    public RoleStore(ConnectionProvider dbConnectionFactory) {
+    public RoleStore(final ConnectionProvider dbConnectionFactory) {
         super(dbConnectionFactory, TABLE_NAME);
     }
 
@@ -49,7 +49,7 @@ public class RoleStore extends AbstractStore<Role> {
     }
 
     @Override
-    protected Role fromResultSet(ResultSet rs) throws SQLException {
+    protected Role fromResultSet(final ResultSet rs) throws SQLException {
         Role role = new Role();
         try {
             role.setRoleid(rs.getString(SQL_ID));
@@ -69,7 +69,7 @@ public class RoleStore extends AbstractStore<Role> {
         return roles;
     }
 
-    protected Role getRole(String id) throws StoreException {
+    protected Role getRole(final String id) throws StoreException {
         try (Connection conn = dbConnect();
                 PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ROLES WHERE roleid = ? ")) {
             pstmt.setString(1, id);
@@ -80,10 +80,10 @@ public class RoleStore extends AbstractStore<Role> {
         }
     }
 
-    protected Role createRole(Role role) throws StoreException {
-        Preconditions.checkNotNull(role);
-        Preconditions.checkNotNull(role.getName());
-        Preconditions.checkNotNull(role.getDomainid());
+    protected Role createRole(final Role role) throws StoreException {
+        requireNonNull(role);
+        requireNonNull(role.getName());
+        requireNonNull(role.getDomainid());
         String query = "insert into roles (roleid,domainid,name,description) values(?,?,?,?)";
         try (Connection conn = dbConnect(); PreparedStatement statement = conn.prepareStatement(query)) {
             role.setRoleid(IDMStoreUtil.createRoleid(role.getName(), role.getDomainid()));
@@ -101,7 +101,7 @@ public class RoleStore extends AbstractStore<Role> {
         }
     }
 
-    protected Role putRole(Role role) throws StoreException {
+    protected Role putRole(final Role role) throws StoreException {
 
         Role savedRole = this.getRole(role.getRoleid());
         if (savedRole == null) {

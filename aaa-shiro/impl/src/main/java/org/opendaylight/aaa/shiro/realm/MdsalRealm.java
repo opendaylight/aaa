@@ -10,10 +10,10 @@ package org.opendaylight.aaa.shiro.realm;
 import static java.util.Objects.requireNonNull;
 
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -90,7 +90,7 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(final PrincipalCollection principalCollection) {
         // the final set or roles to return to the caller;  empty to start
-        final Set<String> authRoles = Sets.newHashSet();
+        final Set<String> authRoles = new HashSet<>();
         final ODLPrincipal odlPrincipal = (ODLPrincipal)principalCollection.getPrimaryPrincipal();
         final Optional<Authentication> opt = getAuthenticationContainer();
         if (opt.isPresent()) {

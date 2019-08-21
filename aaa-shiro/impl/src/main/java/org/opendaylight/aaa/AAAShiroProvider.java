@@ -7,7 +7,8 @@
  */
 package org.opendaylight.aaa;
 
-import com.google.common.base.Preconditions;
+import static java.util.Objects.requireNonNull;
+
 import java.util.concurrent.CompletableFuture;
 import javax.servlet.ServletException;
 import org.opendaylight.aaa.api.AuthenticationService;
@@ -45,7 +46,6 @@ public final class AAAShiroProvider {
     private final TokenStore tokenStore;
     private final ShiroConfiguration shiroConfiguration;
     private final String moonEndpointPath;
-    private final String oauth2EndpointPath;
     private final TokenAuthenticators tokenAuthenticators;
     private final AuthenticationService authenticationService;
     private final PasswordHashService passwordHashService;
@@ -69,7 +69,6 @@ public final class AAAShiroProvider {
         this.shiroConfiguration = shiroConfiguration;
         this.httpService = httpService;
         this.moonEndpointPath = moonEndpointPath;
-        this.oauth2EndpointPath = oauth2EndpointPath;
         this.authenticationService = authenticationService;
         this.passwordHashService = passwordHashService;
 
@@ -96,17 +95,15 @@ public final class AAAShiroProvider {
         INSTANCE_FUTURE.complete(this);
     }
 
-    private static TokenAuthenticators buildTokenAuthenticators(CredentialAuth<PasswordCredentials> credentialAuth) {
+    private static TokenAuthenticators buildTokenAuthenticators(
+            final CredentialAuth<PasswordCredentials> credentialAuth) {
         return new TokenAuthenticators(new HttpBasicAuth(credentialAuth));
     }
 
     private void registerServletContexts() throws ServletException, NamespaceException {
         LOG.info("attempting registration of AAA moon servlet");
-
-        Preconditions.checkNotNull(httpService, "httpService cannot be null");
-
-        httpService.registerServlet(moonEndpointPath, new org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint(),
-                null, null);
+        requireNonNull(httpService, "httpService cannot be null").registerServlet(moonEndpointPath,
+            new org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint(), null, null);
     }
 
     private static void initializeIIDMStore(final IIDMStore iidmStore) {

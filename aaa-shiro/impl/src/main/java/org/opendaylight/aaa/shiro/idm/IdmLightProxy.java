@@ -7,7 +7,8 @@
  */
 package org.opendaylight.aaa.shiro.idm;
 
-import com.google.common.base.Preconditions;
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -56,9 +57,9 @@ public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMSe
 
     @Override
     public Claim authenticate(final PasswordCredentials creds) {
-        Preconditions.checkNotNull(creds);
-        Preconditions.checkNotNull(creds.username());
-        Preconditions.checkNotNull(creds.password());
+        requireNonNull(creds);
+        requireNonNull(creds.username());
+        requireNonNull(creds.password());
         String domain = creds.domain() == null ? IIDMStore.DEFAULT_DOMAIN : creds.domain();
 
         // FIXME: Add cache invalidation
