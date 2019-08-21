@@ -16,12 +16,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.Vector;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.BasicAttributes;
@@ -108,7 +108,7 @@ public class ODLJndiLdapRealmTest {
     class TestPrincipalCollection implements PrincipalCollection {
         private static final long serialVersionUID = -1236759619455574475L;
 
-        Vector<String> collection = new Vector<>();
+        List<String> collection = new ArrayList<>();
 
         TestPrincipalCollection(final String element) {
             collection.add(element);
@@ -143,7 +143,7 @@ public class ODLJndiLdapRealmTest {
 
         @Override
         public Object getPrimaryPrincipal() {
-            return collection.firstElement();
+            return collection.get(0);
         }
 
         @Override

@@ -14,9 +14,9 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -53,9 +53,7 @@ public class AAAFilterChainTest {
         final ServletResponse response = mock(ServletResponse.class);
         final FilterChain filterChain = mock(FilterChain.class);
         doAnswer(invocationOnMock -> null).when(filterChain).doFilter(any(), any());
-        final List<Filter> injectedFilterChain = new Vector<>();
-        AAAFilterChain.createAAAFilterChain().doFilter(request, response, filterChain,
-                injectedFilterChain);
+        AAAFilterChain.createAAAFilterChain().doFilter(request, response, filterChain, new ArrayList<>());
     }
 
     @Test
