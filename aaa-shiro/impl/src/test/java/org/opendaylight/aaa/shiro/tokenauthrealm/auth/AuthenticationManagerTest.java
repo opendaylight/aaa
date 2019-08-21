@@ -22,6 +22,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import org.gaul.modernizer_maven_annotations.SuppressModernizer;
 import org.junit.Test;
 import org.opendaylight.aaa.api.Authentication;
 import org.osgi.service.cm.ConfigurationException;
@@ -78,6 +79,7 @@ public class AuthenticationManagerTest {
         }
     }
 
+    @SuppressModernizer
     @Test
     public void testUpdatedValid() throws ConfigurationException {
         Dictionary<String, String> props = new Hashtable<>();
@@ -101,6 +103,7 @@ public class AuthenticationManagerTest {
         assertFalse(authManager.isAuthEnabled());
     }
 
+    @SuppressModernizer
     @Test(expected = ConfigurationException.class)
     public void testUpdatedInvalidValue() throws ConfigurationException {
         Dictionary<String, String> props = new Hashtable<>();
@@ -109,6 +112,7 @@ public class AuthenticationManagerTest {
         authManager.updated(props);
     }
 
+    @SuppressModernizer
     @Test(expected = ConfigurationException.class)
     public void testUpdatedInvalidKey() throws ConfigurationException {
         Dictionary<String, String> props = new Hashtable<>();
