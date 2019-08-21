@@ -249,7 +249,7 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      * @return A <code>non-null</code> <code>List</code> of the custom filter
      *         fully qualified class names.
      */
-    private List<FilterDTO> getCustomFilterList(final Map<String, String> configuration) {
+    private static List<FilterDTO> getCustomFilterList(final Map<String, String> configuration) {
         final String customFilterListValue = configuration.get(CUSTOM_FILTER_LIST_KEY);
         final ImmutableList.Builder<FilterDTO> customFilterListBuilder = ImmutableList.builder();
         if (customFilterListValue != null) {
@@ -363,8 +363,8 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
         Filter getInstance(final Optional<ServletContext> servletContext) {
             try {
                 final Class<Filter> filterClazz = (Class<Filter>) Class.forName(clazzName);
-                return init(filterClazz.newInstance(), servletContext);
-            } catch (ClassNotFoundException | ClassCastException | InstantiationException | IllegalAccessException e) {
+                return init(filterClazz.getDeclaredConstructor().newInstance(), servletContext);
+            } catch (ReflectiveOperationException | ClassCastException e) {
                 LOG.error("Error loading  {}", this, e);
             }
 
