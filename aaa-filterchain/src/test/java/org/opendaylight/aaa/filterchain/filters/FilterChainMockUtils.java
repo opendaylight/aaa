@@ -12,8 +12,8 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -62,7 +62,7 @@ public final class FilterChainMockUtils {
      * @return A list of String events
      */
     static List<String> formExpectedCallStack(final int size) {
-        final List<String> expected = new Vector<>();
+        final List<String> expected = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             expected.add(String.format("filter%d ingress", i));
         }
@@ -80,8 +80,8 @@ public final class FilterChainMockUtils {
      * @return the test case
      */
     static TestFilterDTO createFilterChain(final int size) throws IOException, ServletException {
-        final List<Filter> filters = new Vector<>();
-        final List<String> callBack = new Vector<>();
+        final List<Filter> filters = new ArrayList<>();
+        final List<String> callBack = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             final Filter filter = createMockFilter(String.format("filter%d", i), callBack);
             filters.add(filter);

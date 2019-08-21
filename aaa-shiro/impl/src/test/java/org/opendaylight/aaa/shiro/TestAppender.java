@@ -5,14 +5,12 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
 import ch.qos.logback.core.AppenderBase;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * A custom slf4j <code>Appender</code> which stores <code>LoggingEvent</code>(s) in memory
@@ -24,7 +22,7 @@ public class TestAppender extends AppenderBase<LoggingEvent> {
     /**
      * stores all log events in memory, instead of file.
      */
-    private List<LoggingEvent> events = new Vector<>();
+    private final List<LoggingEvent> events = new ArrayList<>();
 
     /**
      * Since junit maven & junit instantiate the logging appender (as provided
@@ -41,7 +39,7 @@ public class TestAppender extends AppenderBase<LoggingEvent> {
     }
 
     @Override
-    protected void append(final LoggingEvent loggingEvent) {
+    protected synchronized void append(final LoggingEvent loggingEvent) {
         events.add(loggingEvent);
     }
 

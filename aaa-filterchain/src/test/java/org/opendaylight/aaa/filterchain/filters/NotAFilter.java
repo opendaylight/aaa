@@ -7,12 +7,12 @@
  */
 package org.opendaylight.aaa.filterchain.filters;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * A class that is not a Filter.  Used in JUnit tests.
  */
-public class NotAFilter extends Vector<String> {
+public class NotAFilter extends ArrayList<String> {
     private static final long serialVersionUID = 1L;
 
 }

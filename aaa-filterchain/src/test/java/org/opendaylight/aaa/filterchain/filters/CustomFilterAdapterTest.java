@@ -15,10 +15,10 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -116,7 +116,7 @@ public class CustomFilterAdapterTest {
     @Test
     public void testRealFilters() throws Exception {
         final CustomFilterAdapter customFilterAdapter = new CustomFilterAdapter(mockAdapterConfig);
-        final List<Filter> injectedFilters = new Vector<>();
+        final List<Filter> injectedFilters = new ArrayList<>(2);
         injectedFilters.add(new TestFilter1());
         injectedFilters.add(new TestFilter2());
         for (Filter filter : injectedFilters) {
