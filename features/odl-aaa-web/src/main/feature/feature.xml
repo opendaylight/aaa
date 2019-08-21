@@ -4,6 +4,6 @@
         <feature version="[6,7)">odl-karaf-feat-jetty</feature>
         <feature version="[6,7)">odl-guava</feature>
         <feature version="[6,7)">odl-jersey-2</feature>
-        <feature version="[3,4)">odl-yangtools-util</feature>
+        <feature version="[4,5)">odl-yangtools-util</feature>
     </feature>
 </features>
