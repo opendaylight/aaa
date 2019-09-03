@@ -13,6 +13,7 @@ import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRegistration;
+import org.eclipse.jdt.annotation.NonNull;
 import org.immutables.value.Value;
 import org.immutables.value.Value.Default;
 
@@ -125,6 +126,13 @@ public abstract class WebContext {
      * {@link FilterDetails#initParams()}.
      */
     public abstract Map<String, String> contextParams();
+
+    /**
+     * Common handlers for Jetty.
+     *
+     * @return not null list of registered handlers
+     */
+    public abstract @NonNull List<CommonHandler> commonHandlers();
 
     @Value.Check
     protected void check() {
