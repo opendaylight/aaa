@@ -15,9 +15,11 @@ import javax.annotation.PreDestroy;
 import javax.inject.Singleton;
 import javax.servlet.DispatcherType;
 import javax.servlet.ServletException;
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.eclipse.jetty.server.handler.HandlerWrapper;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -125,6 +127,18 @@ public class JettyWebServer implements WebServer {
             servlet.urlPatterns().forEach(
                 urlPattern -> handler.addServlet(servletHolder, urlPattern)
             );
+        });
+
+        webContext.commonHandlers().forEach(commonHandler -> {
+            final Object handlerElement = commonHandler.getHandler();
+            if (handlerElement instanceof HandlerWrapper) {
+                handler.insertHandler((HandlerWrapper) handlerElement);
+            } else if (handlerElement instanceof Handler) {
+                handler.setHandler((Handler) handlerElement);
+            } else {
+                LOG.warn("Bad handler type: {}, handler: {}.", handlerElement.getClass().toString(),
+                    commonHandler.toString());
+            }
         });
 
         restart(handler);
