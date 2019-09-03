@@ -9,10 +9,12 @@ package org.opendaylight.aaa.web;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRegistration;
+import org.eclipse.jdt.annotation.NonNull;
 import org.immutables.value.Value;
 import org.immutables.value.Value.Default;
 
@@ -125,6 +127,13 @@ public abstract class WebContext {
      * {@link FilterDetails#initParams()}.
      */
     public abstract Map<String, String> contextParams();
+
+    /**
+     * Settings for Jetty GzipHandler.
+     *
+     * @return not null optional {@link CommonGzipHandler}
+     */
+    public abstract @NonNull Optional<CommonGzipHandler> commonGzipHandler();
 
     @Value.Check
     protected void check() {
