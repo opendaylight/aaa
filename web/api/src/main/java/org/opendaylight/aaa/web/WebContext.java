@@ -126,6 +126,11 @@ public abstract class WebContext {
      */
     public abstract Map<String, String> contextParams();
 
+    /**
+     * Common handlers for Jetty.
+     */
+    public abstract List<CommonHandler> commonHandlers();
+
     @Value.Check
     protected void check() {
         servlets().forEach(servlet -> {

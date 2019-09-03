@@ -24,6 +24,8 @@ import org.opendaylight.aaa.web.WebContext;
 import org.opendaylight.aaa.web.WebContextBuilder;
 import org.opendaylight.aaa.web.WebContextRegistration;
 import org.opendaylight.aaa.web.WebServer;
+import org.opendaylight.aaa.web.jetty.CommonGzipHandler;
+import org.opendaylight.aaa.web.jetty.CommonGzipHandlerBuilder;
 
 /**
  * Test of {@link WebServer} API.
@@ -78,6 +80,20 @@ public abstract class AbstractWebServerTest {
         assertThat(testListener.isInitialized).isTrue();
         webContextRegistration.close();
         assertThat(testListener.isInitialized).isFalse();
+    }
+
+    @Test
+    public void testAddCommonHandler() throws Exception {
+        CommonGzipHandler commonGzipHandler = new CommonGzipHandlerBuilder().addIncludedMimeTypes("application/xml",
+            "application/yang.data+xml", "xml", "application/json",
+            "application/yang.data+json").addIncludedPaths("/*").build();
+        WebContextBuilder webContextBuilder = WebContext.builder().contextPath("/testingHandler");
+        webContextBuilder.addCommonHandler(commonGzipHandler);
+        WebContextRegistration webContextRegistration = getWebServer().registerWebContext(webContextBuilder.build());
+        assertThat(commonGzipHandler.getHandler().isRunning()).isTrue();
+        webContextRegistration.close();
+        assertThat(commonGzipHandler.getHandler().isRunning()).isFalse();
+
     }
 
     static void checkTestServlet(String urlPrefix) throws IOException {
