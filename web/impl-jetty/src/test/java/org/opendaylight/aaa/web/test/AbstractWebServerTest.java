@@ -18,6 +18,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import javax.servlet.ServletException;
 import org.junit.Test;
+import org.opendaylight.aaa.web.CommonGzipHandler;
+import org.opendaylight.aaa.web.CommonGzipHandlerBuilder;
 import org.opendaylight.aaa.web.FilterDetails;
 import org.opendaylight.aaa.web.ServletDetails;
 import org.opendaylight.aaa.web.WebContext;
@@ -80,9 +82,74 @@ public abstract class AbstractWebServerTest {
         assertThat(testListener.isInitialized).isFalse();
     }
 
+    @Test
+    public void testAddCommonGzipHandler() throws ServletException, IOException {
+        WebContextBuilder webContextBuilder = getWebContextBuilder();
+
+        CommonGzipHandler commonGzipHandler = new CommonGzipHandlerBuilder().setIncludedMimeTypes("text/html",
+            "text/plain", "application/xml", "application/yang.data+xml", "xml", "application/json",
+            "application/yang.data+json").setIncludedPaths("/*").build();
+
+        webContextBuilder.commonGzipHandler(commonGzipHandler);
+
+        registerAndTestCommonGzipHandler(webContextBuilder);
+    }
+
+    @Test
+    public void testAddCommonGzipHandlerNotSetMimeTypes() throws ServletException, IOException {
+        WebContextBuilder webContextBuilder = getWebContextBuilder();
+
+        CommonGzipHandler commonGzipHandler = new CommonGzipHandlerBuilder().setIncludedPaths("/*").build();
+
+        webContextBuilder.commonGzipHandler(commonGzipHandler);
+
+        registerAndTestCommonGzipHandler(webContextBuilder);
+    }
+
+    @Test
+    public void testAddCommonGzipHandlerNotSetPaths() throws ServletException, IOException {
+        WebContextBuilder webContextBuilder = getWebContextBuilder();
+
+        CommonGzipHandler commonGzipHandler = new CommonGzipHandlerBuilder().setIncludedMimeTypes("text/html",
+            "text/plain", "application/xml", "application/yang.data+xml", "xml", "application/json",
+            "application/yang.data+json").setIncludedPaths("/*").build();
+
+        webContextBuilder.commonGzipHandler(commonGzipHandler);
+
+        registerAndTestCommonGzipHandler(webContextBuilder);
+    }
+
+    @Test
+    public void testAddCommonGzipHandlerEmpty() throws ServletException, IOException {
+        WebContextBuilder webContextBuilder = getWebContextBuilder();
+
+        CommonGzipHandler commonGzipHandler = new CommonGzipHandlerBuilder().setIncludedMimeTypes("text/html",
+            "text/plain", "application/xml", "application/yang.data+xml", "xml", "application/json",
+            "application/yang.data+json").setIncludedPaths("/*").build();
+
+        webContextBuilder.commonGzipHandler(commonGzipHandler);
+
+        registerAndTestCommonGzipHandler(webContextBuilder);
+    }
+
+    private WebContextBuilder getWebContextBuilder() {
+        WebContextBuilder webContextBuilder = WebContext.builder().contextPath("/testGzipHandler");
+        webContextBuilder.addServlet(
+            ServletDetails.builder().addUrlPattern("/*").name("Test").servlet(new TestServlet()).build());
+        return webContextBuilder;
+    }
+
+    private void registerAndTestCommonGzipHandler(WebContextBuilder webContextBuilder)
+        throws ServletException, IOException {
+        WebContextRegistration webContextRegistration = getWebServer().registerWebContext(webContextBuilder.build());
+        checkTestServlet(getWebServer().getBaseURL() + "/testGzipHandler");
+        webContextRegistration.close();
+    }
+
     static void checkTestServlet(String urlPrefix) throws IOException {
         URL url = new URL(urlPrefix + "/something");
         URLConnection conn = url.openConnection();
+        conn.addRequestProperty("Accept-Encoding", "gzip");
         try (InputStream inputStream = conn.getInputStream()) {
             // The hard-coded ASCII here is strictly speaking wrong of course
             // (should interpret header from reply), but good enough for a test.

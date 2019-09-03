@@ -18,10 +18,12 @@ import javax.servlet.ServletException;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.component.AbstractLifeCycle;
+import org.opendaylight.aaa.web.CommonGzipHandler;
 import org.opendaylight.aaa.web.WebContext;
 import org.opendaylight.aaa.web.WebContextRegistration;
 import org.opendaylight.aaa.web.WebServer;
@@ -126,6 +128,17 @@ public class JettyWebServer implements WebServer {
                 urlPattern -> handler.addServlet(servletHolder, urlPattern)
             );
         });
+
+        // create GzipHandler, set it and add to handler
+        if (webContext.commonGzipHandler().isPresent()) {
+            final CommonGzipHandler commonGzipHandler = webContext.commonGzipHandler().get();
+            GzipHandler gzipHandler = new GzipHandler();
+            gzipHandler.setIncludedMimeTypes(commonGzipHandler.getIncludedMimeTypes().toArray(new String[0]));
+            gzipHandler.setIncludedPaths(commonGzipHandler.getIncludedPaths().toArray(new String[0]));
+            handler.setGzipHandler(gzipHandler);
+        } else {
+            LOG.debug("GzipHandler is not present here.");
+        }
 
         restart(handler);
 
