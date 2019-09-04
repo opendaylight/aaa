@@ -114,6 +114,167 @@
       "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3c53573_9e539de0",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2019-09-04T19:28:41Z",
+      "side": 1,
+      "message": "missing @return\n\nalso, is this guaranteed to be non-null or not?",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 7
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0664f055_08683019",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/CommonGzipHandlerBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2019-09-04T19:28:41Z",
+      "side": 1,
+      "message": "implies \u0027implements yang.common.concepts.Builder\u003cCommonGzipHandler\u003e\u0027",
+      "range": {
+        "startLine": 17,
+        "startChar": 30,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f07892f_1d61f6b9",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/CommonGzipHandlerBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2019-09-04T19:28:41Z",
+      "side": 1,
+      "message": "errr, no. We do not ever use arrays in builders. The best option here is to use ImmutableList and ...",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 35
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e8f0dd0_55ad678d",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/CommonGzipHandlerBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2019-09-04T19:28:41Z",
+      "side": 1,
+      "message": "this is deceptive. \"add\" prefix implies that:\n\nfoo.addIncludedMimeTypes(a, b).addIncludedMimeTypes(b, c)\n\nwould result in a, b, c being included, whereas only b and c would be excluded.\n\nThis either needs to be a \u0027set\u0027 method, or includedMimeTypes needs to be a mutable Set, which gets squashed in through toArray() when passed downstream.",
+      "range": {
+        "startLine": 27,
+        "startChar": 42,
+        "endLine": 27,
+        "endChar": 45
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4906dd4_cab8ec86",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/CommonGzipHandlerBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2019-09-04T19:28:41Z",
+      "side": 1,
+      "message": "ImmutableList.copyOf(elements)\n\nThat ensures isolation of passed array and non-nullness of individual elements.",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 42
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e0cc1c1_f9eea7d2",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/CommonGzipHandlerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2019-09-04T19:28:41Z",
+      "side": 1,
+      "message": "this is where arrays get dicey. Along the path from user, there is not a single guard around nullness of elements nor immutability.\n\nThat means an API user can pass in an array and attack",
+      "range": {
+        "startLine": 20,
+        "startChar": 26,
+        "endLine": 20,
+        "endChar": 76
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0917d75_93877628",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/CommonGzipHandlerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2019-09-04T19:28:41Z",
+      "side": 1,
+      "message": "this implies argument has really \u0027set\u0027 semantics and we really should not tolerate nulls",
+      "range": {
+        "startLine": 23,
+        "startChar": 20,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
