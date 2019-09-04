@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a25d380a_2d8d87b1",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/CommonHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2019-09-04T19:09:26Z",
+      "side": 1,
+      "message": "there should be a newline here.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 2
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5349ae2c_b164f0f2",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/CommonHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2019-09-04T19:09:26Z",
+      "side": 1,
+      "message": "hmm.. single getter, is this mean to be @FunctionalInterface?\n\nWhat is the mutability story?",
+      "range": {
+        "startLine": 14,
+        "startChar": 17,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c8c4a30_380b5cdc",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/CommonHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2019-09-04T19:09:26Z",
+      "side": 1,
+      "message": "superfluous empty line",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fdadd69f_c032a87f",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/CommonHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2019-09-04T19:09:26Z",
+      "side": 1,
+      "message": "nullable or not?",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 5
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7dc218d_c24b9a72",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/CommonHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2019-09-04T19:09:26Z",
+      "side": 1,
+      "message": "What is the contract, really? Can this be different instances? if so, are they interchangeable? If not, under what circumstances does that change?",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
