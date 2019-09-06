@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fdbda18e_f6a0e067",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/CommonHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 8510
+      },
+      "writtenOn": "2019-09-06T09:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a25d380a_2d8d87b1",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 2
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5349ae2c_b164f0f2",
         "filename": "web/api/src/main/java/org/opendaylight/aaa/web/CommonHandler.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "99e86dfa_4d7f771e",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/CommonHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 8510
+      },
+      "writtenOn": "2019-09-06T09:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5349ae2c_b164f0f2",
+      "range": {
+        "startLine": 14,
+        "startChar": 17,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c8c4a30_380b5cdc",
         "filename": "web/api/src/main/java/org/opendaylight/aaa/web/CommonHandler.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2019-09-04T19:09:26Z",
       "side": 1,
       "message": "superfluous empty line",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28915d06_3032ea64",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/CommonHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 8510
+      },
+      "writtenOn": "2019-09-06T09:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c8c4a30_380b5cdc",
       "range": {
         "startLine": 15,
         "startChar": 0,
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "282bdcdd_95b4e8d0",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/CommonHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 8510
+      },
+      "writtenOn": "2019-09-06T09:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdadd69f_c032a87f",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 5
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc0638a0_dad45e4e",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/CommonHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 8510
+      },
+      "writtenOn": "2019-09-06T09:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7dc218d_c24b9a72",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3c53573_9e539de0",
         "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2019-09-04T19:28:41Z",
       "side": 1,
       "message": "missing @return\n\nalso, is this guaranteed to be non-null or not?",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 7
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa272c42_79ce2410",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 8510
+      },
+      "writtenOn": "2019-09-06T09:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3c53573_9e539de0",
       "range": {
         "startLine": 129,
         "startChar": 0,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "414980fe_52603b93",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/CommonGzipHandlerBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 8510
+      },
+      "writtenOn": "2019-09-06T09:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0664f055_08683019",
+      "range": {
+        "startLine": 17,
+        "startChar": 30,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f07892f_1d61f6b9",
         "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/CommonGzipHandlerBuilder.java",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2019-09-04T19:28:41Z",
       "side": 1,
       "message": "errr, no. We do not ever use arrays in builders. The best option here is to use ImmutableList and ...",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 35
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71511512_cb98df81",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/CommonGzipHandlerBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 8510
+      },
+      "writtenOn": "2019-09-06T09:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f07892f_1d61f6b9",
       "range": {
         "startLine": 19,
         "startChar": 0,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "0c5dabdc_02905dce",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/CommonGzipHandlerBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 8510
+      },
+      "writtenOn": "2019-09-06T09:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e8f0dd0_55ad678d",
+      "range": {
+        "startLine": 27,
+        "startChar": 42,
+        "endLine": 27,
+        "endChar": 45
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4906dd4_cab8ec86",
         "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/CommonGzipHandlerBuilder.java",
         "patchSetId": 1
@@ -220,6 +436,30 @@
       "writtenOn": "2019-09-04T19:28:41Z",
       "side": 1,
       "message": "ImmutableList.copyOf(elements)\n\nThat ensures isolation of passed array and non-nullness of individual elements.",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 42
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b7dfe32_318a06c6",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/CommonGzipHandlerBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 8510
+      },
+      "writtenOn": "2019-09-06T09:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4906dd4_cab8ec86",
       "range": {
         "startLine": 28,
         "startChar": 33,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "4286dcc3_7d48a928",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/CommonGzipHandlerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 8510
+      },
+      "writtenOn": "2019-09-06T09:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e0cc1c1_f9eea7d2",
+      "range": {
+        "startLine": 20,
+        "startChar": 26,
+        "endLine": 20,
+        "endChar": 76
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0917d75_93877628",
         "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/CommonGzipHandlerImpl.java",
         "patchSetId": 1
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "867dc5ab_a600233e",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/CommonGzipHandlerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 8510
+      },
+      "writtenOn": "2019-09-06T09:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0917d75_93877628",
+      "range": {
+        "startLine": 23,
+        "startChar": 20,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "105e948f_3fb5092c",
         "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/JettyWebServer.java",
         "patchSetId": 1
@@ -289,6 +577,30 @@
       "writtenOn": "2019-09-04T19:33:34Z",
       "side": 1,
       "message": "right ... so we are expecting this to return a constant?\n\nin any case, commonHandlers() looks it like it should return unmasked getHandler().",
+      "range": {
+        "startLine": 135,
+        "startChar": 23,
+        "endLine": 135,
+        "endChar": 49
+      },
+      "revId": "60ff53bb44517af52c47554f4ae02cf9f0a8ab76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "973031a6_dc67f09f",
+        "filename": "web/impl-jetty/src/main/java/org/opendaylight/aaa/web/jetty/JettyWebServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 8510
+      },
+      "writtenOn": "2019-09-06T09:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "105e948f_3fb5092c",
       "range": {
         "startLine": 135,
         "startChar": 23,
