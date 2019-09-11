@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e4f3036_a9a67c59",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/CommonHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 8510
+      },
+      "writtenOn": "2019-09-11T09:38:10Z",
+      "side": 1,
+      "message": "I\u0027ve replaced interface with GzipHandler settings class.",
+      "parentUuid": "403123c5_181ae028",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 43
+      },
+      "revId": "574f1ae1c40c57b9fc756f39ad29aa0310e487c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d230c2f5_fad13b6f",
         "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
         "patchSetId": 3
