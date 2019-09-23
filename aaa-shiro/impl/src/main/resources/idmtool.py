@@ -138,55 +138,41 @@ get_oauth2_token.set_defaults(func=get_oauth2_token)
 change_jolokia_password = subparsers.add_parser('change-jolokia-password', help='change the jolokia specific password')
 change_jolokia_password.set_defaults(func=change_jolokia_password)
 
-def process_result(r):
+def process_result(r,outputResult=True):
     ''' Generic method to print result of a REST call '''
     print('')
-    sc = r.status_code
-    if sc >= 200 and sc < 300:
-        print("command succeeded!")
-        try:
-            res = r.json()
-            if res is not None:
-                print('\njson:\n', json.dumps(res, indent=4, sort_keys=True))
-        except(ValueError):
-            pass
-    elif sc == 401:
-        print("Incorrect Credentials Provided")
-    elif sc == 404:
-        print("RESTconf is either not installed or not initialized yet")
-    elif sc >= 500 and sc < 600:
-        print("Internal Server Error Ocurred")
-    else:
-        print("Unknown error; HTTP status code: {}".format(sc))
-
-def handle_exception(e):
-    exceptionType = type(e)
-    if exceptionType is requests.exceptions.SSLError:
-        print("requests.exception.SSLError: Is HTTPS configured correctly?  To disable certificate verification, use the -k or --insecure flag")
-    else:
-        print("Unable to connect; are you sure the controller is up?")
-    sys.exit(1)
+    success_status_codes=[200,201,202,204]
+    if  r.status_code in success_status_codes:
+        if outputResult:
+            print("command succeeded!!")
+            try:
+                res = r.json()
+                if res is not None:
+                    print("json:")
+                    print(json.dumps(res, indent=4, sort_keys=True))
+            except(ValueError):
+               pass
+        else:
+            return r
+    elif r.status_code >= 300:
+        print("Operation Failed")
+        print("Reason:   %s" %requests.status_codes._codes[r.status_code])
+        print("Some Suggestions to check if the error message is not helping..")
+        print("--> Check User Credentials and Other Required Permission")
+        print("--> In case of SSL Error,Is HTTPS configured correctly?  To disable certificate verification, use the -k or --insecure flag")
+        print("--> Non-SSL errors:Please Check if Controller is running...")
+        sys.exit(1)
 
 def get_request(user, password, url, description, outputResult=True):
     if outputResult:
         print(description)
-    try:
-        r = requests.get(url, auth=(user,password), verify=verifyCertificates)
-        if outputResult:
-            process_result(r)
-        return r
-    except requests.exceptions.ConnectionError as e:
-        if outputResult:
-            handle_exception(e)
-        sys.exit(1)
+    r = requests.get(url, auth=(user,password), verify=verifyCertificates)
+    return process_result(r,outputResult)
 
 def post_request(user, password, url, description, payload, headers):
     print(description)
-    try:
-        r = requests.post(url, auth=(user,password), data=payload, headers=headers, verify=verifyCertificates)
-        process_result(r)
-    except requests.exceptions.ConnectionError as e:
-        handle_exception(e)
+    r = requests.post(url, auth=(user,password), data=payload, headers=headers, verify=verifyCertificates)
+    process_result(r)
 
 def post_request_unauthenticated(url, description, payload, headers, params=''):
     '''
@@ -194,27 +180,18 @@ def post_request_unauthenticated(url, description, payload, headers, params=''):
     '''
 
     print(description)
-    try:
-        r = requests.post(url, data=payload, headers=headers, verify=verifyCertificates,params=params)
-        process_result(r)
-    except requests.exceptions.ConnectionError as e:
-        handle_exception(e)
+    r = requests.post(url, data=payload, headers=headers, verify=verifyCertificates,params=params)
+    process_result(r)
 
 def put_request(user, password, url, description, payload, params):
     print(description)
-    try:
-        r = requests.put(url, auth=(user,password), data=payload, headers=params, verify=verifyCertificates)
-        process_result(r)
-    except requests.exceptions.ConnectionError as e:
-        handle_exception(e)
+    r = requests.put(url, auth=(user,password), data=payload, headers=params, verify=verifyCertificates)
+    process_result(r)
 
 def delete_request(user, password, url, description, payload='', params={'Content-Type':'application/json'}):
     print(description)
-    try:
-        r = requests.delete(url, auth=(user,password), data=payload, headers=params, verify=verifyCertificates)
-        process_result(r)
-    except requests.exceptions.ConnectionError as e:
-        handle_exception(e)
+    r = requests.delete(url, auth=(user,password), data=payload, headers=params, verify=verifyCertificates)
+    process_result(r)
 
 def poll_new_password():
     new_password = getpass.getpass(prompt="Enter new password: ")
@@ -244,19 +221,15 @@ def delete_user(user, password, userid):
 def change_password(user, password, existingUserId):
     url = target_host + 'auth/v1/users/{}'.format(existingUserId)
     r = get_request(user, password, target_host + 'auth/v1/users/{}'.format(existingUserId), 'list_users', outputResult=False)
-    try:
-        existing = r.json()
-        del existing['salt']
-        del existing['password']
-        new_password = poll_new_password()
-        existing['password'] = new_password
-        description='change_password({})'.format(existingUserId)
-        headers={'Content-Type':'application/json'}
-        url = target_host + 'auth/v1/users/{}'.format(existingUserId)
-        put_request(user, password, url, 'change_password({})'.format(user), json.dumps(existing), headers)
-    except(AttributeError):
-        print("Unable to connect;  are you sure the controller is up?")
-        sys.exit(1)
+    existing = r.json()
+    del existing['salt']
+    del existing['password']
+    new_password = poll_new_password()
+    existing['password'] = new_password
+    description='change_password({})'.format(existingUserId)
+    headers={'Content-Type':'application/json'}
+    url = target_host + 'auth/v1/users/{}'.format(existingUserId)
+    put_request(user, password, url, 'change_password({})'.format(user), json.dumps(existing), headers)
 
 def list_domains(user, password):
     get_request(user, password, target_host + 'auth/v1/domains', 'list_domains')
