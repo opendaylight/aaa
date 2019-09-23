@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright (c) 2016 Brocade Communications Systems and others.  All rights reserved.
+# Copyright (c) 2016-2019 Brocade Communications Systems and others.  All rights reserved.
 #
 # This program and the accompanying materials are made available under the
 # terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -138,87 +138,117 @@ get_oauth2_token.set_defaults(func=get_oauth2_token)
 change_jolokia_password = subparsers.add_parser('change-jolokia-password', help='change the jolokia specific password')
 change_jolokia_password.set_defaults(func=change_jolokia_password)
 
-def process_result(r):
+def process_result(r, printOutput = True):
     ''' Generic method to print result of a REST call '''
     print('')
-    sc = r.status_code
-    if sc >= 200 and sc < 300:
-        print("command succeeded!")
-        try:
-            res = r.json()
-            if res is not None:
-                print('\njson:\n', json.dumps(res, indent=4, sort_keys=True))
-        except(ValueError):
-            pass
-    elif sc == 401:
-        print("Incorrect Credentials Provided")
-    elif sc == 404:
-        print("RESTconf is either not installed or not initialized yet")
-    elif sc >= 500 and sc < 600:
-        print("Internal Server Error Ocurred")
-    else:
-        print("Unknown error; HTTP status code: {}".format(sc))
+    success_status_codes = [200, 201, 202, 204]
+    if  r.status_code in success_status_codes:
+        if printOutput:
+            print("command succeeded!!")
+            try:
+                res = r.json()
+                if res is not None:
+                    print("json:")
+                    print(json.dumps(res, indent = 4, sort_keys = True))
+            except(ValueError):
+               pass
+        else:
+            return r
+    elif r.status_code >= 300 and r.status_code < 400:
+        print("Operation Failed")
+        print("Redirection Error")
+        print("Reason   :" + str(requests.status_codes._codes[r.status_code]))
+        sys.exit(1)
+    elif r.status_code >= 400 and r.status_code < 500:
+        print("Operation Failed")
+        print("Client Error")
+        print("Reason   :" + str(requests.status_codes._codes[r.status_code]))
+        sys.exit(1)
+    elif r.status_code >= 500:
+        print("Operation Failed")
+        print("Server Error")
+        print("Reason   :" + str(requests.status_codes._codes[r.status_code]))
+        sys.exit(1)
 
-def handle_exception(e):
+def invoke_requests_method(req_method, url, printOutput, **kwargs):
+    try:
+        response=req_method(url,**kwargs)
+        response.raise_for_status()
+    except Exception as err:
+        handle_requests_exception(err)
+    else:
+        return process_result(response, printOutput = printOutput)
+
+def handle_requests_exception(e):
     exceptionType = type(e)
-    if exceptionType is requests.exceptions.SSLError:
-        print("requests.exception.SSLError: Is HTTPS configured correctly?  To disable certificate verification, use the -k or --insecure flag")
-    else:
-        print("Unable to connect; are you sure the controller is up?")
-    sys.exit(1)
+    if exceptionType is requests.exceptions.HTTPError:
+        print("HTTP error occurred: ", e)
+    elif exceptionType is requests.exceptions.ConnectionError:
+        print("Connection Failed, Is the Controller running?")
+        print("Connection Error: ", e)
+    elif exceptionType is requests.exceptions.ProxyError:
+        print("Proxy Error, Please check Proxy ", e)
+    elif exceptionType is requests.exceptions.SSLError:
+        print("SSLError: ", e)
+        print("SSL Error,check if HTTPS is configured properly")
+        print("Also,to disable certificate verification, use the -k or --insecure flag")
+    elif exceptionType is requests.exceptions.Timeout:
+        print("Timeout during Operation ", e)
+    elif exceptionType is requests.exceptions.URLRequired:
+        print("A valid URL is required:", e)
+    elif exceptionType is requests.exceptions.TooManyRedirects:
+        print("Too May Redirects when fetching the URL: ", e)
+    elif exceptionType is requests.exceptions.MissingSchema:
+        print("The URL schema (e.g. http or https) is missing: ", e)
+    elif exceptionType is requests.exceptions.InvalidSchema:
+        print("Schema is invalid: ", e)
+    elif exceptionType is requests.exceptions.InvalidURL:
+        print("URL is invalid: ", e)
+    elif exceptionType is requests.exceptions.InvalidHeader:
+        print("Header was invalid: ", e )
+    elif exceptionType is requests.exceptions.InvalidProxyURL:
+        print("Invalid Proxy: ", e)
+    elif exceptionType is requests.exceptions.ChunkedEncodingError:
+        print("Protocol Error in Encoding: ", e)
+    elif exceptionType is requests.exceptions.ContentDecodingError:
+        print("Protocol Error in decoding: ", e)
+    elif exceptionType is requests.exceptions.StreamConsumedError:
+        print("Protocol Error in handling data streams: ", e)
+    elif exceptionType is requests.exceptions.RetryError:
+        print("Retries Failed: ", e)
+    elif exceptionType is requests.exceptions.UnrewindableBodyError:
+        print("Protocol Error in handling data :", e)
+    exit(1)
 
-def get_request(user, password, url, description, outputResult=True):
+def get_request(user, password, url, description, outputResult = True):
     if outputResult:
         print(description)
-    try:
-        r = requests.get(url, auth=(user,password), verify=verifyCertificates)
-        if outputResult:
-            process_result(r)
-        return r
-    except requests.exceptions.ConnectionError as e:
-        if outputResult:
-            handle_exception(e)
-        sys.exit(1)
+        print(url)
+    return invoke_requests_method(requests.get, url, outputResult, auth = (user, password), verify = verifyCertificates)
 
 def post_request(user, password, url, description, payload, headers):
     print(description)
-    try:
-        r = requests.post(url, auth=(user,password), data=payload, headers=headers, verify=verifyCertificates)
-        process_result(r)
-    except requests.exceptions.ConnectionError as e:
-        handle_exception(e)
+    invoke_requests_method(requests.post, url, True, auth = (user, password), data = payload, headers = headers, verify = verifyCertificates)
 
-def post_request_unauthenticated(url, description, payload, headers, params=''):
+def post_request_unauthenticated(url, description, payload, headers, params = ''):
     '''
     Variation of POST without basic authentication
     '''
 
     print(description)
-    try:
-        r = requests.post(url, data=payload, headers=headers, verify=verifyCertificates,params=params)
-        process_result(r)
-    except requests.exceptions.ConnectionError as e:
-        handle_exception(e)
+    invoke_requests_method(requests.post, url, True, data = payload, headers = headers, verify = verifyCertificates, params =  params)
 
 def put_request(user, password, url, description, payload, params):
     print(description)
-    try:
-        r = requests.put(url, auth=(user,password), data=payload, headers=params, verify=verifyCertificates)
-        process_result(r)
-    except requests.exceptions.ConnectionError as e:
-        handle_exception(e)
+    invoke_requests_method(requests.put, url, True, auth = (user, password), data = payload, headers = params, verify = verifyCertificates)
 
-def delete_request(user, password, url, description, payload='', params={'Content-Type':'application/json'}):
+def delete_request(user, password, url, description, payload = '', params = {'Content-Type':'application/json'}):
     print(description)
-    try:
-        r = requests.delete(url, auth=(user,password), data=payload, headers=params, verify=verifyCertificates)
-        process_result(r)
-    except requests.exceptions.ConnectionError as e:
-        handle_exception(e)
+    invoke_requests_method(requests.delete, url, True, auth = (user, password), data = payload, headers = params, verify = verifyCertificates)
 
 def poll_new_password():
-    new_password = getpass.getpass(prompt="Enter new password: ")
-    new_password_repeated = getpass.getpass(prompt="Re-enter password: ")
+    new_password = getpass.getpass(prompt = "Enter new password: ")
+    new_password_repeated = getpass.getpass(prompt = "Re-enter password: ")
     if new_password != new_password_repeated:
         print("Passwords did not match;  cancelling the add_user request")
         sys.exit(1)
@@ -244,19 +274,15 @@ def delete_user(user, password, userid):
 def change_password(user, password, existingUserId):
     url = target_host + 'auth/v1/users/{}'.format(existingUserId)
     r = get_request(user, password, target_host + 'auth/v1/users/{}'.format(existingUserId), 'list_users', outputResult=False)
-    try:
-        existing = r.json()
-        del existing['salt']
-        del existing['password']
-        new_password = poll_new_password()
-        existing['password'] = new_password
-        description='change_password({})'.format(existingUserId)
-        headers={'Content-Type':'application/json'}
-        url = target_host + 'auth/v1/users/{}'.format(existingUserId)
-        put_request(user, password, url, 'change_password({})'.format(user), json.dumps(existing), headers)
-    except(AttributeError):
-        print("Unable to connect;  are you sure the controller is up?")
-        sys.exit(1)
+    existing = r.json()
+    del existing['salt']
+    del existing['password']
+    new_password = poll_new_password()
+    existing['password'] = new_password
+    description='change_password({})'.format(existingUserId)
+    headers={'Content-Type':'application/json'}
+    url = target_host + 'auth/v1/users/{}'.format(existingUserId)
+    put_request(user, password, url, 'change_password({})'.format(user), json.dumps(existing), headers)
 
 def list_domains(user, password):
     get_request(user, password, target_host + 'auth/v1/domains', 'list_domains')
@@ -360,17 +386,17 @@ if temp_host_arr is not None:
             target_host += "/"
 
 if "list-users" in command:
-    list_users(user,password)
+    list_users(user, password)
 if "list-domains" in command:
-    list_domains(user,password)
+    list_domains(user, password)
 if "list-roles" in command:
-    list_roles(user,password)
+    list_roles(user, password)
 if "add-user" in command:
-    add_user(user,password, args.newUser[0])
+    add_user(user, password, args.newUser[0])
 if "add-grant" in command:
-    add_grant(user,password, args.userid[0], args.roleid[0])
+    add_grant(user, password, args.userid[0], args.roleid[0])
 if "get-grants" in command:
-    get_grants(user,password, args.userid[0])
+    get_grants(user, password, args.userid[0])
 if "change-password" in command:
     change_password(user, password, args.userid[0])
 if "delete-user" in command:
