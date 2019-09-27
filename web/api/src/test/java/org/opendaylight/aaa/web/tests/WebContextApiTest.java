@@ -8,8 +8,8 @@
 package org.opendaylight.aaa.web.tests;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
-import static org.opendaylight.infrautils.testutils.Asserts.assertThrows;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
@@ -19,6 +19,7 @@ import org.junit.Test;
 import org.opendaylight.aaa.web.FilterDetails;
 import org.opendaylight.aaa.web.ServletDetails;
 import org.opendaylight.aaa.web.WebContext;
+import org.opendaylight.aaa.web.WebContextBuilder;
 import org.opendaylight.aaa.web.WebServer;
 
 /**
@@ -32,7 +33,8 @@ public class WebContextApiTest {
 
     @Test
     public void testEmptyBuilder() {
-        assertThrows(IllegalStateException.class, () -> WebContext.builder().build());
+        final WebContextBuilder builder = WebContext.builder();
+        assertThrows(IllegalStateException.class, () -> builder.build());
     }
 
     @Test
@@ -80,8 +82,9 @@ public class WebContextApiTest {
     }
 
     @Test
-    @Ignore // TODO
+    @Ignore
     public void testBadContextPath() {
+        // FIXME: this is completely broken usage -- which call is expected to raise the exception?!
         assertThrows(IllegalArgumentException.class, () -> WebContext.builder().contextPath("test/sub").build());
         assertThrows(IllegalArgumentException.class, () -> WebContext.builder().contextPath("test space").build());
         assertThrows(IllegalArgumentException.class, () -> WebContext.builder().contextPath("/test").build());
@@ -89,17 +92,26 @@ public class WebContextApiTest {
     }
 
     @Test
-    @Ignore // TODO
     public void testBadServletWithoutAnyURL() {
-        assertThrows(IllegalArgumentException.class, () -> WebContext.builder().contextPath("test")
-                .addServlet(ServletDetails.builder().servlet(mock(Servlet.class)).build()).build());
+        final WebContextBuilder builder = WebContext.builder().contextPath("test")
+                .addServlet(ServletDetails.builder().servlet(mock(Servlet.class)).build());
+        assertThrows(IllegalArgumentException.class, () -> builder.build());
     }
 
     @Test
-    @Ignore // TODO
     public void testBadFilterWithoutAnyURL() {
-        assertThrows(IllegalArgumentException.class, () -> WebContext.builder().contextPath("test")
-                .addFilter(FilterDetails.builder().filter(mock(Filter.class)).build()).build());
+        final WebContextBuilder builder = WebContext.builder().contextPath("test")
+                .addFilter(FilterDetails.builder().filter(mock(Filter.class)).build());
+        assertThrows(IllegalArgumentException.class, () -> builder.build());
     }
 
+    @SuppressWarnings("checkstyle:illegalCatch")
+    private static <T extends RuntimeException> void assertThrows(final Class<T> clazz, final Runnable runnable) {
+        try {
+            runnable.run();
+            fail("Expected " + clazz.getName());
+        } catch (RuntimeException e) {
+            assertThat(e).isInstanceOf(clazz);
+        }
+    }
 }
