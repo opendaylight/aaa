@@ -12,7 +12,7 @@ import javax.net.ssl.SSLContext;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
- * ICertifcateManager defines the basic functions that are consumed by other bundles to establish the SSLContext.
+ * ICertificateManager defines the basic functions that are consumed by other bundles to establish the SSLContext.
  *
  * @author mserngawy
  *
