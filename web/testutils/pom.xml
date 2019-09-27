@@ -47,12 +47,11 @@
     </dependency>
     <dependency>
       <groupId>org.opendaylight.infrautils</groupId>
-      <artifactId>infrautils-testutils</artifactId>
-      <scope>compile</scope>
+      <artifactId>inject.guice</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.opendaylight.infrautils</groupId>
-      <artifactId>inject.guice</artifactId>
+      <groupId>com.google.truth</groupId>
+      <artifactId>truth</artifactId>
     </dependency>
     <dependency>
       <groupId>org.opendaylight.infrautils</groupId>
