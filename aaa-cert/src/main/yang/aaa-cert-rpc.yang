@@ -42,11 +42,11 @@ module aaa-cert-rpc {
         }
     }
 
-    rpc setODLCertifcate {
+    rpc setODLCertificate {
         description
-            "The certifcate should be generated based on
-            a certifcate request generated from the ctl.jks
-            keystore otherwise the certifcated will not be added to ctl keystore";
+            "The certificate should be generated based on
+            a certificate request generated from the ctl.jks
+            keystore otherwise the certificated will not be added to ctl keystore";
         input {
             leaf odl-cert-alias {
                 type string;
@@ -57,9 +57,9 @@ module aaa-cert-rpc {
         }
     }
 
-    rpc setNodeCertifcate {
+    rpc setNodeCertificate {
         description
-            "Set the certifcate of the network node that will communicate with opendaylight through TLS connection";
+            "Set the certificate of the network node that will communicate with opendaylight through TLS connection";
         input {
            leaf node-alias {
                type string;
@@ -70,7 +70,7 @@ module aaa-cert-rpc {
         }
     }
 
-    rpc getNodeCertifcate {
+    rpc getNodeCertificate {
         description
             "Get the network node certificate based on node alias";
         input {

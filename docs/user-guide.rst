@@ -982,7 +982,7 @@ Certificate Manager Service provides the following RPCs.
 
   a) Set the node certificate that will communicate with OpeDaylight through TLS
   connection.
-  POST /operations/aaa-cert-rpc:setNodeCertifcate
+  POST /operations/aaa-cert-rpc:setNodeCertificate
   {
     "input": {
       "node-cert": "string",
@@ -993,7 +993,7 @@ Certificate Manager Service provides the following RPCs.
 ::
 
   b) Get the node certificate based on node alias.
-  POST /operations/aaa-cert-rpc:getNodeCertifcate
+  POST /operations/aaa-cert-rpc:getNodeCertificate
   {
     "input": {
       "node-alias": "string"
