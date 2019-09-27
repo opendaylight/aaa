@@ -15,21 +15,21 @@ import org.opendaylight.aaa.encrypt.AAAEncryptionService;
 import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.AaaCertServiceConfig;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.AaaCertRpcService;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertifcateInput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertifcateOutput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertifcateOutputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertificateInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertificateOutput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertificateOutputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateOutputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateReqInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateReqOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateReqOutputBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetNodeCertifcateInput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetNodeCertifcateOutput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetNodeCertifcateOutputBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertifcateInput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertifcateOutput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertifcateOutputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetNodeCertificateInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetNodeCertificateOutput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetNodeCertificateOutputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertificateInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertificateOutput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertificateOutputBuilder;
 import org.opendaylight.yangtools.yang.common.RpcResult;
 import org.opendaylight.yangtools.yang.common.RpcResultBuilder;
 import org.slf4j.Logger;
@@ -73,26 +73,27 @@ public class AaaCertRpcServiceImpl implements AaaCertRpcService {
     }
 
     @Override
-    public ListenableFuture<RpcResult<GetNodeCertifcateOutput>> getNodeCertifcate(final GetNodeCertifcateInput input) {
-        final SettableFuture<RpcResult<GetNodeCertifcateOutput>> futureResult = SettableFuture.create();
+    public ListenableFuture<RpcResult<GetNodeCertificateOutput>> getNodeCertificate(
+           final GetNodeCertificateInput input) {
+        final SettableFuture<RpcResult<GetNodeCertificateOutput>> futureResult = SettableFuture.create();
         final String cert = aaaCertProvider.getCertificateTrustStore(input.getNodeAlias(), false);
         if (!Strings.isNullOrEmpty(cert)) {
-            final GetNodeCertifcateOutput nodeCertOutput = new GetNodeCertifcateOutputBuilder().setNodeCert(cert)
+            final GetNodeCertificateOutput nodeCertOutput = new GetNodeCertificateOutputBuilder().setNodeCert(cert)
                     .build();
             futureResult.set(RpcResultBuilder.success(nodeCertOutput).build());
         } else {
-            futureResult.set(RpcResultBuilder.<GetNodeCertifcateOutput>failed().build());
+            futureResult.set(RpcResultBuilder.<GetNodeCertificateOutput>failed().build());
         }
         return futureResult;
     }
 
     @Override
-    public ListenableFuture<RpcResult<SetODLCertifcateOutput>> setODLCertifcate(final SetODLCertifcateInput input) {
-        final SettableFuture<RpcResult<SetODLCertifcateOutput>> futureResult = SettableFuture.create();
+    public ListenableFuture<RpcResult<SetODLCertificateOutput>> setODLCertificate(final SetODLCertificateInput input) {
+        final SettableFuture<RpcResult<SetODLCertificateOutput>> futureResult = SettableFuture.create();
         if (aaaCertProvider.addCertificateODLKeyStore(input.getOdlCertAlias(), input.getOdlCert())) {
-            futureResult.set(RpcResultBuilder.success(new SetODLCertifcateOutputBuilder().build()).build());
+            futureResult.set(RpcResultBuilder.success(new SetODLCertificateOutputBuilder().build()).build());
         } else {
-            futureResult.set(RpcResultBuilder.<SetODLCertifcateOutput>failed().build());
+            futureResult.set(RpcResultBuilder.<SetODLCertificateOutput>failed().build());
             LOG.info("Error while adding ODL certificate");
         }
         return futureResult;
@@ -127,12 +128,13 @@ public class AaaCertRpcServiceImpl implements AaaCertRpcService {
     }
 
     @Override
-    public ListenableFuture<RpcResult<SetNodeCertifcateOutput>> setNodeCertifcate(final SetNodeCertifcateInput input) {
-        final SettableFuture<RpcResult<SetNodeCertifcateOutput>> futureResult = SettableFuture.create();
+    public ListenableFuture<RpcResult<SetNodeCertificateOutput>> setNodeCertificate(
+           final SetNodeCertificateInput input) {
+        final SettableFuture<RpcResult<SetNodeCertificateOutput>> futureResult = SettableFuture.create();
         if (aaaCertProvider.addCertificateTrustStore(input.getNodeAlias(), input.getNodeCert())) {
-            futureResult.set(RpcResultBuilder.success(new SetNodeCertifcateOutputBuilder().build()).build());
+            futureResult.set(RpcResultBuilder.success(new SetNodeCertificateOutputBuilder().build()).build());
         } else {
-            futureResult.set(RpcResultBuilder.<SetNodeCertifcateOutput>failed().build());
+            futureResult.set(RpcResultBuilder.<SetNodeCertificateOutput>failed().build());
             LOG.info("Error while adding the Node certificate");
         }
         return futureResult;
