@@ -10,6 +10,7 @@ package org.opendaylight.aaa.web.testutils.test;
 import static com.google.common.truth.Truth.assertThat;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +27,6 @@ import org.opendaylight.aaa.web.testutils.TestWebClient;
 import org.opendaylight.aaa.web.testutils.WebTestModule;
 import org.opendaylight.infrautils.inject.guice.testutils.AnnotationsModule;
 import org.opendaylight.infrautils.inject.guice.testutils.GuiceRule;
-import org.opendaylight.infrautils.testutils.web.TestWebClient.Method;
 
 /**
  * Test the {@link WebTestModule}.
@@ -41,20 +41,20 @@ public class WebTestModuleTest {
     @Inject TestWebClient webClient;
 
     @Test
-    public void testServlet() throws ServletException, IOException {
+    public void testServlet() throws ServletException, IOException, InterruptedException, URISyntaxException {
         WebContextBuilder webContextBuilder = WebContext.builder().contextPath("/test1");
         webContextBuilder.addServlet(
                 ServletDetails.builder().addUrlPattern("/hello").name("Test").servlet(new TestServlet()).build());
         try (WebContextRegistration webContextRegistration = webServer.registerWebContext(webContextBuilder.build())) {
-            assertThat(webClient.request(Method.GET, "test1/hello").getBody()).isEqualTo("hello, world");
-            assertThat(webClient.request(Method.GET, "/test1/hello").getBody()).isEqualTo("hello, world");
+            assertThat(webClient.request("GET", "test1/hello").body()).isEqualTo("hello, world");
+            assertThat(webClient.request("GET", "/test1/hello").body()).isEqualTo("hello, world");
         }
     }
 
     @SuppressWarnings("serial")
     class TestServlet extends HttpServlet {
         @Override
-        protected void doGet(HttpServletRequest req, HttpServletResponse response) throws IOException {
+        protected void doGet(final HttpServletRequest req, final HttpServletResponse response) throws IOException {
             response.getOutputStream().print("hello, world");
         }
     }
