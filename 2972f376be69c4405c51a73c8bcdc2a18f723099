@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeb2d729_5462c4ee",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2019-09-30T17:48:54Z",
+      "side": 1,
+      "message": "nit: white-space after comma",
+      "revId": "2972f376be69c4405c51a73c8bcdc2a18f723099",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab047571_6df81bd3",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2019-09-30T17:48:54Z",
+      "side": 1,
+      "message": "nit: white-space around equal",
+      "revId": "2972f376be69c4405c51a73c8bcdc2a18f723099",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89057da0_b124e267",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2019-09-30T17:48:54Z",
+      "side": 1,
+      "message": "nit: consistent use of upper and lower case, white-space (2 space after \"Reason\", no space after colon/comma, etc.)",
+      "revId": "2972f376be69c4405c51a73c8bcdc2a18f723099",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d9857d_f5b48d50",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2019-09-30T17:48:54Z",
+      "side": 1,
+      "message": "how is requests.exceptions.ConnectionError exception handled now? (same at other places below)",
+      "revId": "2972f376be69c4405c51a73c8bcdc2a18f723099",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92376858_66a41fd4",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2019-09-30T17:48:54Z",
+      "side": 1,
+      "message": "any specific reason to print user/password for post?",
+      "revId": "2972f376be69c4405c51a73c8bcdc2a18f723099",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb0df925_f9a59d01",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2019-09-30T17:48:54Z",
+      "side": 1,
+      "message": "nit: white-space after comma",
+      "revId": "2972f376be69c4405c51a73c8bcdc2a18f723099",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
