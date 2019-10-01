@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "99f078bb_5a239beb",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2019-10-01T10:01:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aeb2d729_5462c4ee",
+      "revId": "2972f376be69c4405c51a73c8bcdc2a18f723099",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab047571_6df81bd3",
         "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2019-09-30T17:48:54Z",
       "side": 1,
       "message": "nit: white-space around equal",
+      "revId": "2972f376be69c4405c51a73c8bcdc2a18f723099",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a97f9b7_d7313fef",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2019-10-01T10:01:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab047571_6df81bd3",
       "revId": "2972f376be69c4405c51a73c8bcdc2a18f723099",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "85024b90_b6eaefb8",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2019-10-01T10:01:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89057da0_b124e267",
+      "revId": "2972f376be69c4405c51a73c8bcdc2a18f723099",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99d9857d_f5b48d50",
         "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2019-09-30T17:48:54Z",
       "side": 1,
       "message": "how is requests.exceptions.ConnectionError exception handled now? (same at other places below)",
+      "revId": "2972f376be69c4405c51a73c8bcdc2a18f723099",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf9c3dc_c1547b3d",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2019-10-01T10:01:30Z",
+      "side": 1,
+      "message": "We are using the error descriptions as used in the requests library and exiting -[0]. Earlier, there was a try/catch which seemed to be not necessary.\n\n[0] - https://github.com/psf/requests/blob/master/requests/status_codes.py#L25",
+      "parentUuid": "99d9857d_f5b48d50",
       "revId": "2972f376be69c4405c51a73c8bcdc2a18f723099",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "344b3c67_d03b8218",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2019-10-01T10:01:30Z",
+      "side": 1,
+      "message": "added for debugging one failure, removed the same.",
+      "parentUuid": "92376858_66a41fd4",
+      "revId": "2972f376be69c4405c51a73c8bcdc2a18f723099",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb0df925_f9a59d01",
         "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2019-09-30T17:48:54Z",
       "side": 1,
       "message": "nit: white-space after comma",
+      "revId": "2972f376be69c4405c51a73c8bcdc2a18f723099",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5cd818c_e6daef6a",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2019-10-01T10:01:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb0df925_f9a59d01",
       "revId": "2972f376be69c4405c51a73c8bcdc2a18f723099",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
