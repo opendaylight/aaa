@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ee87a79_47e1c940",
+        "filename": "aaa-cert/src/main/yang/aaa-cert-rpc.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 8351
+      },
+      "writtenOn": "2019-10-07T04:44:23Z",
+      "side": 1,
+      "message": "certificated -\u003e certificate",
+      "revId": "cea04b7b5d082ff3af010f7a5ca70b9a082d4aa1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
