@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d103ac0_d51a6c37",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2019-10-07T21:40:26Z",
+      "side": 1,
+      "message": "on success, we say \"command succeeded\" whereas here it is \"Operation Failed\". Can it be consistent?",
+      "revId": "303fe03cc60788834f8a49ac5ce6f729aa30a3ea",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db0e96b9_ac02272f",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2019-10-07T21:40:26Z",
+      "side": 1,
+      "message": "above 2 lines are repeated, can they be moved out",
+      "revId": "303fe03cc60788834f8a49ac5ce6f729aa30a3ea",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccae863f_ce3f2c80",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2019-10-07T21:40:26Z",
+      "side": 1,
+      "message": "... Proxy\": \", e",
+      "revId": "303fe03cc60788834f8a49ac5ce6f729aa30a3ea",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b8cc9fc_4338d458",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2019-10-07T21:40:26Z",
+      "side": 1,
+      "message": "... Operation: \", e",
+      "revId": "303fe03cc60788834f8a49ac5ce6f729aa30a3ea",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4dbd08d_119ef8b8",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2019-10-07T21:40:26Z",
+      "side": 1,
+      "message": "... required: \", e",
+      "revId": "303fe03cc60788834f8a49ac5ce6f729aa30a3ea",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f9f0b9_a66b7130",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2019-10-07T21:40:26Z",
+      "side": 1,
+      "message": "required?",
+      "revId": "303fe03cc60788834f8a49ac5ce6f729aa30a3ea",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de75392_aa6855be",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2019-10-07T21:40:26Z",
+      "side": 1,
+      "message": "invoke_requests_method(requests.put, ...) ?",
+      "revId": "303fe03cc60788834f8a49ac5ce6f729aa30a3ea",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
