@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4789dbb8_81985fba",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2019-10-08T11:45:35Z",
+      "side": 1,
+      "message": "Added consistent changes for success/failure",
+      "parentUuid": "8d103ac0_d51a6c37",
+      "revId": "303fe03cc60788834f8a49ac5ce6f729aa30a3ea",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db0e96b9_ac02272f",
         "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2019-10-07T21:40:26Z",
       "side": 1,
       "message": "above 2 lines are repeated, can they be moved out",
+      "revId": "303fe03cc60788834f8a49ac5ce6f729aa30a3ea",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08703be1_948125a9",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2019-10-08T11:45:35Z",
+      "side": 1,
+      "message": "They have moved out as a seperate method",
+      "parentUuid": "db0e96b9_ac02272f",
       "revId": "303fe03cc60788834f8a49ac5ce6f729aa30a3ea",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "096e5c27_14d76b7b",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2019-10-08T11:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccae863f_ce3f2c80",
+      "revId": "303fe03cc60788834f8a49ac5ce6f729aa30a3ea",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b8cc9fc_4338d458",
         "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "eb92ec8f_86a8d292",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2019-10-08T11:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b8cc9fc_4338d458",
+      "revId": "303fe03cc60788834f8a49ac5ce6f729aa30a3ea",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4dbd08d_119ef8b8",
         "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2019-10-07T21:40:26Z",
       "side": 1,
       "message": "... required: \", e",
+      "revId": "303fe03cc60788834f8a49ac5ce6f729aa30a3ea",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c7f97a_9628c497",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2019-10-08T11:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4dbd08d_119ef8b8",
       "revId": "303fe03cc60788834f8a49ac5ce6f729aa30a3ea",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
@@ -115,6 +205,24 @@
       "writtenOn": "2019-10-07T21:40:26Z",
       "side": 1,
       "message": "invoke_requests_method(requests.put, ...) ?",
+      "revId": "303fe03cc60788834f8a49ac5ce6f729aa30a3ea",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633d153c_f9a517b1",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2019-10-08T11:45:35Z",
+      "side": 1,
+      "message": "The put_request will invoke the invoke_requests call. the invoke_requests was intended to be invoked from put/get/post methods.",
+      "parentUuid": "4de75392_aa6855be",
       "revId": "303fe03cc60788834f8a49ac5ce6f729aa30a3ea",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
