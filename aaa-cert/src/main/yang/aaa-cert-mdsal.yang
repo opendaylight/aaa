@@ -10,15 +10,15 @@ module aaa-cert-mdsal {
     namespace "urn:opendaylight:yang:aaa:cert:mdsal";
     prefix "aaa-cert-mdsal";
 
+    organization "The OpenDaylight Project";
+
+    contact "melserngawy@inocybe.com";
+
+    description "Yang model definition for aaa certificate using MDSAL";
+
     revision 2016-03-21 {
         description "Initial revision";
     }
-
-    description
-        "Yang model definition for aaa certificate using MDSAL";
-
-    contact
-        "melserngawy@inocybe.com";
 
     grouping node-certificate {
         leaf alias {
