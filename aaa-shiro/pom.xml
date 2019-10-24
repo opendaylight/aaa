@@ -21,35 +21,20 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>pom</packaging>
 
-  <scm>
-    <connection>scm:git:ssh://git.opendaylight.org:29418/aaa-shiro.git</connection>
-    <developerConnection>scm:git:ssh://git.opendaylight.org:29418/aaa-shiro.git</developerConnection>
-    <tag>HEAD</tag>
-    <url>https://wiki.opendaylight.org/view/aaa-shiro:Main</url>
-  </scm>
+  <properties>
+    <maven.deploy.skip>true</maven.deploy.skip>
+    <maven.install.skip>true</maven.install.skip>
+  </properties>
 
   <modules>
     <module>api</module>
     <module>impl</module>
   </modules>
 
-  <!-- DO NOT install or deploy the repo root pom as it's only needed to initiate a build -->
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-install-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+  <scm>
+    <connection>scm:git:ssh://git.opendaylight.org:29418/aaa.git</connection>
+    <developerConnection>scm:git:ssh://git.opendaylight.org:29418/aaa.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://wiki.opendaylight.org/view/AAA:Main</url>
+  </scm>
 </project>
