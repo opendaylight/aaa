@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * @author Michael Vorburger.ch
  */
 @Singleton
-@SuppressWarnings("checkstyle:IllegalCatch") // Jetty LifeCycle start() and stop() throws Exception
 public class JettyWebServer implements WebServer {
 
     private static final Logger LOG = LoggerFactory.getLogger(JettyWebServer.class);
@@ -50,7 +49,7 @@ public class JettyWebServer implements WebServer {
         this(0); // automatically choose free port
     }
 
-    public JettyWebServer(int httpPort) {
+    public JettyWebServer(final int httpPort) {
         checkArgument(httpPort >= 0, "httpPort must be positive");
         checkArgument(httpPort < 65536, "httpPort must < 65536");
 
@@ -76,8 +75,7 @@ public class JettyWebServer implements WebServer {
     }
 
     @PostConstruct
-    @SuppressWarnings("checkstyle:IllegalThrows") // Jetty WebAppContext.getUnavailableException() throws Throwable
-    public void start() throws Throwable {
+    public void start() throws Exception {
         server.start();
         this.httpPort = http.getLocalPort();
         LOG.info("Started Jetty-based HTTP web server on port {} ({}).", httpPort, hashCode());
@@ -92,7 +90,7 @@ public class JettyWebServer implements WebServer {
     }
 
     @Override
-    public synchronized WebContextRegistration registerWebContext(WebContext webContext) throws ServletException {
+    public synchronized WebContextRegistration registerWebContext(final WebContext webContext) throws ServletException {
         String contextPathWithSlashPrefix = webContext.contextPath().startsWith("/")
                 ? webContext.contextPath() : "/" + webContext.contextPath();
         ServletContextHandler handler = new ServletContextHandler(contextHandlerCollection, contextPathWithSlashPrefix,
@@ -132,24 +130,25 @@ public class JettyWebServer implements WebServer {
         return () -> close(handler);
     }
 
-    private void restart(AbstractLifeCycle lifecycle) throws ServletException {
+    @SuppressWarnings("checkstyle:IllegalCatch")
+    private static void restart(final AbstractLifeCycle lifecycle) throws ServletException {
         try {
             lifecycle.start();
+        } catch (ServletException | RuntimeException e) {
+            throw e;
         } catch (Exception e) {
-            if (e instanceof ServletException) {
-                throw (ServletException) e;
-            } else {
-                throw new ServletException("registerServlet() start failed", e);
-            }
+            throw new ServletException("registerServlet() start failed", e);
         }
     }
 
-    private void close(ServletContextHandler handler) {
+    @SuppressWarnings("checkstyle:IllegalCatch")
+    private void close(final ServletContextHandler handler) {
         try {
             handler.stop();
-            handler.destroy();
         } catch (Exception e) {
             LOG.error("close() failed", e);
+        } finally {
+            handler.destroy();
         }
         contextHandlerCollection.removeHandler(handler);
     }
