@@ -92,7 +92,7 @@ public class UserStore extends AbstractStore<User> {
         try (Connection conn = dbConnect();
                 PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM USERS WHERE userid = ? ")) {
             pstmt.setString(1, IDMStoreUtil.createUserid(username, domain));
-            LOG.debug("query string: {}", pstmt.toString());
+            LOG.debug("query string: {}", pstmt);
             users.setUsers(listFromStatement(pstmt));
         } catch (SQLException s) {
             throw new StoreException("SQL Exception : " + s);
@@ -104,7 +104,7 @@ public class UserStore extends AbstractStore<User> {
         try (Connection conn = dbConnect();
                 PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM USERS WHERE userid = ? ")) {
             pstmt.setString(1, id);
-            LOG.debug("query string: {}", pstmt.toString());
+            LOG.debug("query string: {}", pstmt);
             return firstFromStatement(pstmt);
         } catch (SQLException s) {
             throw new StoreException("SQL Exception : " + s);

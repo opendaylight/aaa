@@ -71,7 +71,7 @@ public class DomainStore extends AbstractStore<Domain> {
         try (Connection conn = dbConnect();
              PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM DOMAINS WHERE name = ?")) {
             pstmt.setString(1, domainName);
-            LOG.debug("query string: {}", pstmt.toString());
+            LOG.debug("query string: {}", pstmt);
             domains.setDomains(listFromStatement(pstmt));
         } catch (SQLException e) {
             LOG.error("Error listing domains matching {}", domainName, e);
@@ -84,7 +84,7 @@ public class DomainStore extends AbstractStore<Domain> {
         try (Connection conn = dbConnect();
              PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM DOMAINS WHERE domainid = ? ")) {
             pstmt.setString(1, id);
-            LOG.debug("query string: {}", pstmt.toString());
+            LOG.debug("query string: {}", pstmt);
             return firstFromStatement(pstmt);
         } catch (SQLException e) {
             LOG.error("Error retrieving domain {}", id, e);

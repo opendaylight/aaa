@@ -73,7 +73,7 @@ public class RoleStore extends AbstractStore<Role> {
         try (Connection conn = dbConnect();
                 PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ROLES WHERE roleid = ? ")) {
             pstmt.setString(1, id);
-            LOG.debug("query string: {}", pstmt.toString());
+            LOG.debug("query string: {}", pstmt);
             return firstFromStatement(pstmt);
         } catch (SQLException s) {
             throw new StoreException("SQL Exception: " + s);
