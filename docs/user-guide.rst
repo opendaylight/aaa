@@ -548,7 +548,6 @@ Create a User
     PAYLOAD:
     {
         "name": "ryan",
-        "userid": "ryan@sdn",
         "password": "ryan",
         "domainid": "sdn",
         "description": "Ryan's User Account",
@@ -1113,10 +1112,10 @@ user parameters can be specified.
 
 ::
 
-  aaa:add-user --name <user name>
+  aaa:add-user --userName <user name>
                --roleName <role>
                --userDescription <user description>
-               --email <user email>
+               --userEmail <user email>
                --domainName <domain name>
 
 List available Users
@@ -1150,7 +1149,7 @@ current password.
 
 ::
 
-  aaa:change-user-pwd -user admin
+  aaa:change-user-pwd --userName admin
     Enter current password:
     Enter new password:
     admin's password has been changed
@@ -1162,8 +1161,8 @@ The *add-role* command allows for adding a role to the Controller.
 
 ::
 
-  aaa:add-role --name <role name>
-               --desc <role description>
+  aaa:add-role --roleName <role name>
+               --roleDescription <role description>
                --domainName <domain name>
 
 List available Roles
@@ -1187,7 +1186,7 @@ have it.
 
 ::
 
-  aaa:remove-role --name <role name>
+  aaa:remove-role --roleName <role name>
 
 Add a Domain
 ^^^^^^^^^^^^
@@ -1196,8 +1195,8 @@ The *add-domain* command allows for adding a domain to the Controller.
 
 ::
 
-  aaa:add-domain --name <domain name>
-                 --desc <domain description>
+  aaa:add-domain --domainName <domain name>
+                 --domainDescription <domain description>
 
 List available Domains
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -1219,7 +1218,7 @@ needs the domain name as parameter.
 
 ::
 
-  aaa:remove-domain --name <domain name>
+  aaa:remove-domain --domainName <domain name>
 
 Add a Grant
 ^^^^^^^^^^^
