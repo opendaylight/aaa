@@ -41,7 +41,7 @@ public class MainIT {
                 "vorburger");
     }
 
-    private void runFatJAR(String... arguments) throws IOException, InterruptedException {
+    private static void runFatJAR(final String... arguments) throws IOException, InterruptedException {
         List<String> fullArguments = new ArrayList<>(Arrays.asList(
             findJava().getAbsolutePath(),
             "-jar",
@@ -60,20 +60,18 @@ public class MainIT {
         assertThat(process.exitValue()).isEqualTo(0);
     }
 
-    private File findExecutableFatJAR() {
+    private static File findExecutableFatJAR() {
         File targetDirectory = new File(".", "target");
-        File[] jarFiles = targetDirectory.listFiles((dir, name) ->
-            name.startsWith("aaa-cli-jar-") && name.endsWith(".jar") && !name.contains("-javadoc"));
+        File[] jarFiles = targetDirectory.listFiles((dir, name) -> name.startsWith("aaa-cli-jar-")
+            && name.endsWith(".jar")
+            && !name.contains("-javadoc")
+            && !name.contains("-sources"));
         assertThat(jarFiles).named("*jar-with-dependencies.jar files in " + targetDirectory).isNotNull();
         assertThat(jarFiles).named("*jar-with-dependencies.jar files in " + targetDirectory).hasLength(1);
         return jarFiles[0];
     }
 
-    private File findJava() {
-        File javaHome = new File(System.getProperty("java.home"));
-        File javaHomeBin = new File(javaHome, "bin");
-        File javaExecutable = new File(javaHomeBin, "java");
-        return javaExecutable;
+    private static File findJava() {
+        return new File(new File(new File(System.getProperty("java.home")), "bin"), "java");
     }
-
 }
