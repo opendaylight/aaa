@@ -157,6 +157,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
                     <include>org/h2/expression/**</include>
                     <include>org/h2/index/**</include>
                     <include>org/h2/constraint/**</include>
+                    <include>org/h2/pagestore/**</include>
                   </includes>
                 </filter>
                 <filter>
