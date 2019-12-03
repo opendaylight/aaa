@@ -315,6 +315,15 @@ def delete_grant(user, password, userid, roleid):
     description = 'delete_grant(userid={},roleid={})'.format(userid, roleid)
     delete_request(user, password, url, description)
 
+def get_oauth2_token(user, password, scope):
+    url = target_host + 'oauth2/token'
+    print(url)
+    description = 'get_oauth2_token(scope={})'.format(scope)
+    params = 'grant_type=password&username={}&password={}&scope={}'.format(user, password, scope)
+    payload = {}
+    headers = {'Content-Type':'application/x-www-form-urlencoded'}
+    post_request_unauthenticated(url, description, payload, headers, params)
+
 def change_jolokia_password():
     try:
         with open(JOLOKIA_FILE_LOCATION, "r") as f:
@@ -393,5 +402,7 @@ if "add-role" in command:
     add_role(user, password, args.role[0])
 if "delete-grant" in command:
     delete_grant(user, password, args.userid[0], args.roleid[0])
+if "get-oauth2-token" in command:
+    get_oauth2_token(user, password, args.scope[0])
 if "change-jolokia-password" in command:
     change_jolokia_password()
