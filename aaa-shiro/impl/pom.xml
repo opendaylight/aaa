@@ -97,6 +97,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         <dependency>
             <groupId>org.immutables</groupId>
             <artifactId>value</artifactId>
+            <classifier>annotations</classifier>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
