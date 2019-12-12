@@ -28,7 +28,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <dependency>
       <groupId>net.sf.jopt-simple</groupId>
       <artifactId>jopt-simple</artifactId>
-      <version>5.0.3</version>
+      <version>5.0.4</version>
     </dependency>
     <dependency>
       <groupId>org.opendaylight.aaa</groupId>
@@ -157,6 +157,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
                     <include>org/h2/expression/**</include>
                     <include>org/h2/index/**</include>
                     <include>org/h2/constraint/**</include>
+                    <include>org/h2/pagestore/**</include>
                   </includes>
                 </filter>
                 <filter>
