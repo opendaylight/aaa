@@ -43,7 +43,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-web</artifactId>
         </dependency>
+<<<<<<< HEAD
         <!-- Enforce newer commons-collections versions -->
+=======
+        <!-- Enforce newer commons-collections version -->
+>>>>>>> Do not override commons-beanutils version
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
