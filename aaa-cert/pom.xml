@@ -31,7 +31,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
-      <artifactId>commons-text</artifactId>
+      <artifactId>commons-lang3</artifactId>
     </dependency>
 
     <!-- Bouncy Castle dependency -->
