@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.cert.impl;
 
 import java.io.ByteArrayInputStream;
@@ -32,7 +31,6 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
 import java.util.Date;
-import javax.xml.bind.DatatypeConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.asn1.x509.X509Name;
 import org.bouncycastle.jce.PKCS10CertificationRequest;
@@ -46,10 +44,8 @@ import org.slf4j.LoggerFactory;
  * such as create, generate, add and delete certificates.
  *
  * @author mserngawy
- *
  */
 public class ODLKeyTool {
-
     private static final Logger LOG = LoggerFactory.getLogger(ODLKeyTool.class);
 
     private final String workingDir;
@@ -263,7 +259,7 @@ public class ODLKeyTool {
                 final String signatureAlgorithm = signAlg;
                 final PKCS10CertificationRequest csr = new PKCS10CertificationRequest(signatureAlgorithm, xname, pubKey,
                         null, privKey);
-                final String certReq = DatatypeConverter.printBase64Binary(csr.getEncoded());
+                final String certReq = Base64.getEncoder().encodeToString(csr.getEncoded());
                 if (withTag) {
                     final StringBuilder sb = new StringBuilder();
                     sb.append(KeyStoreConstant.BEGIN_CERTIFICATE_REQUEST);
@@ -299,7 +295,7 @@ public class ODLKeyTool {
         try {
             if (keyStore.containsAlias(certAlias)) {
                 final X509Certificate odlCert = (X509Certificate) keyStore.getCertificate(certAlias);
-                final String cert = DatatypeConverter.printBase64Binary(odlCert.getEncoded());
+                final String cert = Base64.getEncoder().encodeToString(odlCert.getEncoded());
                 if (withTag) {
                     final StringBuilder sb = new StringBuilder();
                     sb.append(KeyStoreConstant.BEGIN_CERTIFICATE);
@@ -327,7 +323,7 @@ public class ODLKeyTool {
      * @return X509Certificate if the certificate string is not well formated
      *         will return null
      */
-    private X509Certificate getCertificate(String certificate) {
+    private static X509Certificate getCertificate(String certificate) {
         if (certificate.isEmpty()) {
             return null;
         }
@@ -357,7 +353,7 @@ public class ODLKeyTool {
      *
      * @return secure random number as BigInteger.
      */
-    private BigInteger getSecureRandomeInt() {
+    private static BigInteger getSecureRandomeInt() {
         final SecureRandom secureRandom = new SecureRandom();
         final BigInteger bigInt = BigInteger.valueOf(secureRandom.nextInt());
         return new BigInteger(1, bigInt.toByteArray());

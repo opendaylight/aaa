@@ -27,7 +27,6 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -129,8 +128,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
         try {
             synchronized (encryptCipher) {
                 byte[] cryptobytes = encryptCipher.doFinal(data.getBytes(Charset.defaultCharset()));
-                String cryptostring = DatatypeConverter.printBase64Binary(cryptobytes);
-                return cryptostring;
+                return Base64.getEncoder().encodeToString(cryptobytes);
             }
         } catch (IllegalBlockSizeException | BadPaddingException e) {
             LOG.error("Failed to encrypt data.", e);
@@ -163,8 +161,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             return encryptedData;
         }
         try {
-            byte[] cryptobytes = DatatypeConverter.parseBase64Binary(encryptedData);
-            byte[] clearbytes = decryptCipher.doFinal(cryptobytes);
+            byte[] clearbytes = decryptCipher.doFinal(Base64.getDecoder().decode(encryptedData));
             return new String(clearbytes, Charset.defaultCharset());
         } catch (IllegalBlockSizeException | BadPaddingException e) {
             LOG.error("Failed to decrypt encoded data", e);
