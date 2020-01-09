@@ -8,7 +8,7 @@
 # and is available at http://www.eclipse.org/legal/epl-v10.html
 #
 
-'''
+"""
 idmtool
 
 Used to manipulate ODL AAA idm on a node-per-node basis.  Assumes only one domain (sdn)
@@ -19,7 +19,7 @@ The best way to find out how to use this script is to invoke the normal argparse
 
 This script attempts to determine whether HTTP or HTTPS is used through reading the
 org.ops4j.pax.web.cfg file, and determining whether HTTPS is enabled for the container.
-'''
+"""
 __copyright__ = "Copyright (c) 2016-2019 Brocade Communications Systems and others"
 __credits__ = "Ryan Goulding"
 __license__ = "EPL"
@@ -27,10 +27,15 @@ __version__ = "1.1"
 __maintainer__ = "aaa-dev@lists.opendaylight.org"
 __status__ = "Production"
 
-import argparse, getpass, json, os, requests, sys, warnings
+import argparse
+import getpass
+import json
+import os
+import requests
+import sys
+import warnings
 
 parser = argparse.ArgumentParser('idmtool')
-
 
 # Constants used to peek into the pax web config.  This is useful to determine whether HTTPS is enabled.
 PAX_WEB_CFG_FILENAME = 'org.ops4j.pax.web.cfg'
@@ -43,18 +48,21 @@ DEFAULT_PROTOCOL = 'http'
 HTTPS_PROTOCOL = 'https'
 
 # Jolokia related constants
-JOLOKIA_FILE_LOCATION = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "etc", "org.jolokia.osgi.cfg")
+JOLOKIA_FILE_LOCATION = os.path.join(os.path.dirname(
+    os.path.realpath(__file__)), "..", "etc", "org.jolokia.osgi.cfg")
+
 
 def setup_http():
-    '''
+    """
     Sets the default port to try based on org.ops4j.pax.web.cfg.  If HTTPS is enabled then the script attempts
     to determine the port from org.osgi.service.http.port.secure.  If no port is specified (perfectly valid),
     then the script assumes the default (8443).  This functionality can still be overriden through specifying
     the --target-host argument during idmtool invocation.
-    '''
+    """
 
     try:
-        pax_web_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "etc", PAX_WEB_CFG_FILENAME)
+        pax_web_path = os.path.join(os.path.dirname(
+            os.path.realpath(__file__)), "..", "etc", PAX_WEB_CFG_FILENAME)
         with open(pax_web_path) as f:
             # build up a dictionary of the properties specified in the pax config
             content = f.readlines()
@@ -76,16 +84,18 @@ def setup_http():
         return DEFAULT_HTTP_PORT, DEFAULT_PROTOCOL
 
 
-user=''
-hostname='localhost'
-port,protocol=setup_http()
-target_host='{}://{}:{}/'.format(protocol, hostname, port)
-verifyCertificates=True
+user = ''
+hostname = 'localhost'
+port, protocol = setup_http()
+target_host = '{}://{}:{}/'.format(protocol, hostname, port)
+verifyCertificates = True
 
 # main program arguments
-parser.add_argument('user',help='username for ODL node', nargs=1)
-parser.add_argument('--target-host', help="target host url in form protocol://host:port", nargs=1)
-parser.add_argument('-k', '--insecure', help="disable HTTPS certificate verification", action='store_false')
+parser.add_argument('user', help='username for ODL node', nargs=1)
+parser.add_argument(
+    '--target-host', help="target host url in form protocol://host:port", nargs=1)
+parser.add_argument('-k', '--insecure',
+                    help="disable HTTPS certificate verification", action='store_false')
 
 subparsers = parser.add_subparsers(help='sub-command help')
 
@@ -94,10 +104,12 @@ list_users = subparsers.add_parser('list-users', help='list all users')
 list_users.set_defaults(func=list_users)
 add_user = subparsers.add_parser('add-user', help='add a user')
 add_user.set_defaults(func=add_user)
-add_user.add_argument('newUser', help='new user name', nargs=1)
-change_password = subparsers.add_parser('change-password', help='change a password')
+add_user.add_argument('new_user', help='new user name', nargs=1)
+change_password = subparsers.add_parser(
+    'change-password', help='change a password')
 change_password.set_defaults(func=change_password)
-change_password.add_argument('userid', help='change the password for a particular userid', nargs=1)
+change_password.add_argument(
+    'userid', help='change the password for a particular userid', nargs=1)
 delete_user = subparsers.add_parser('delete-user', help='delete a user')
 delete_user.add_argument('userid', help='name@sdn', nargs=1)
 delete_user.set_defaults(func=delete_user)
@@ -121,7 +133,8 @@ add_grant = subparsers.add_parser('add-grant', help='add a grant')
 add_grant.set_defaults(func=add_grant)
 add_grant.add_argument('userid', help="username@sdn", nargs=1)
 add_grant.add_argument('roleid', help="role@sdn", nargs=1)
-get_grants = subparsers.add_parser('get-grants', help='get grants for userid on sdn')
+get_grants = subparsers.add_parser(
+    'get-grants', help='get grants for userid on sdn')
 get_grants.set_defaults(func=get_grants)
 get_grants.add_argument('userid', help="username@sdn", nargs=1)
 delete_grant = subparsers.add_parser('delete-grant', help='delete a grant')
@@ -130,33 +143,36 @@ delete_grant.add_argument('roleid', help='role@sdn', nargs=1)
 delete_grant.set_defaults(func=delete_grant)
 
 # jolokia password change related
-change_jolokia_password = subparsers.add_parser('change-jolokia-password', help='change the jolokia specific password')
+change_jolokia_password = subparsers.add_parser(
+    'change-jolokia-password', help='change the jolokia specific password')
 change_jolokia_password.set_defaults(func=change_jolokia_password)
 
-def process_result(r, printOutput = True):
-    ''' Generic method to print result of a REST call '''
+
+def process_result(r, print_output=True):
+    """ Generic method to print result of a REST call """
     print('')
     success_status_codes = [200, 201, 202, 204]
-    if  r.status_code in success_status_codes:
-        if printOutput:
+    if r.status_code in success_status_codes:
+        if print_output:
             print("Operation Successful!!")
             try:
                 res = r.json()
                 if res is not None:
                     print("json:")
-                    print(json.dumps(res, indent = 4, sort_keys = True))
-            except(ValueError):
-               pass
+                    print(json.dumps(res, indent=4, sort_keys=True))
+            except ValueError:
+                pass
         else:
             return r
     else:
         handle_errors(r.status_code)
 
+
 def handle_errors(status_code):
-    if status_code >= 300 and status_code < 400:
+    if 300 <= status_code < 400:
         print("Operation Failed")
         print("Redirection Error")
-    elif status_code >= 400 and status_code < 500:
+    elif 400 <= status_code < 500:
         print("Operation Failed")
         print("Client Error")
     elif status_code >= 500:
@@ -165,155 +181,184 @@ def handle_errors(status_code):
     print("Reason   :" + str(requests.status_codes._codes[status_code]))
     sys.exit(1)
 
-def invoke_requests_method(req_method, url, printOutput, **kwargs):
+
+def invoke_requests_method(req_method, url, print_output, **kwargs):
     try:
-        response=req_method(url,**kwargs)
+        response = req_method(url, **kwargs)
         response.raise_for_status()
     except Exception as err:
         handle_requests_exception(err)
     else:
-        return process_result(response, printOutput = printOutput)
+        return process_result(response, print_output=print_output)
+
 
 def handle_requests_exception(e):
-    exceptionType = type(e)
-    if exceptionType is requests.exceptions.HTTPError:
+    exception_type = type(e)
+    if exception_type is requests.exceptions.HTTPError:
         print("HTTP error occurred: ", e)
-    elif exceptionType is requests.exceptions.ConnectionError:
+    elif exception_type is requests.exceptions.ConnectionError:
         print("Connection Failed, Is the Controller running?")
         print("Connection Error: ", e)
-    elif exceptionType is requests.exceptions.ProxyError:
+    elif exception_type is requests.exceptions.ProxyError:
         print("Proxy Error, Please check Proxy: ", e)
-    elif exceptionType is requests.exceptions.SSLError:
+    elif exception_type is requests.exceptions.SSLError:
         print("SSLError: ", e)
         print("SSL Error,check if HTTPS is configured properly")
         print("Also,to disable certificate verification, use the -k or --insecure flag")
-    elif exceptionType is requests.exceptions.Timeout:
+    elif exception_type is requests.exceptions.Timeout:
         print("Timeout during Operation: ", e)
-    elif exceptionType is requests.exceptions.URLRequired:
+    elif exception_type is requests.exceptions.URLRequired:
         print("A valid URL is required: ", e)
-    elif exceptionType is requests.exceptions.TooManyRedirects:
+    elif exception_type is requests.exceptions.TooManyRedirects:
         print("Too May Redirects when fetching the URL: ", e)
-    elif exceptionType is requests.exceptions.MissingSchema:
+    elif exception_type is requests.exceptions.MissingSchema:
         print("The URL schema (e.g. http or https) is missing: ", e)
-    elif exceptionType is requests.exceptions.InvalidSchema:
+    elif exception_type is requests.exceptions.InvalidSchema:
         print("Schema is invalid: ", e)
-    elif exceptionType is requests.exceptions.InvalidURL:
+    elif exception_type is requests.exceptions.InvalidURL:
         print("URL is invalid: ", e)
-    elif exceptionType is requests.exceptions.InvalidHeader:
-        print("Header was invalid: ", e )
-    elif exceptionType is requests.exceptions.InvalidProxyURL:
+    elif exception_type is requests.exceptions.InvalidHeader:
+        print("Header was invalid: ", e)
+    elif exception_type is requests.exceptions.InvalidProxyURL:
         print("Invalid Proxy: ", e)
-    elif exceptionType is requests.exceptions.ChunkedEncodingError:
+    elif exception_type is requests.exceptions.ChunkedEncodingError:
         print("Protocol Error in Encoding: ", e)
-    elif exceptionType is requests.exceptions.ContentDecodingError:
+    elif exception_type is requests.exceptions.ContentDecodingError:
         print("Protocol Error in decoding: ", e)
-    elif exceptionType is requests.exceptions.StreamConsumedError:
+    elif exception_type is requests.exceptions.StreamConsumedError:
         print("Protocol Error in handling data streams: ", e)
-    elif exceptionType is requests.exceptions.RetryError:
+    elif exception_type is requests.exceptions.RetryError:
         print("Retries Failed: ", e)
-    elif exceptionType is requests.exceptions.UnrewindableBodyError:
+    elif exception_type is requests.exceptions.UnrewindableBodyError:
         print("Protocol Error in handling data :", e)
     exit(1)
 
-def get_request(user, password, url, description, outputResult = True):
-    if outputResult:
+
+def get_request(user, password, url, description, output_result=True):
+    if output_result:
         print(description)
         print(url)
-    return invoke_requests_method(requests.get, url, outputResult, auth = (user, password), verify = verifyCertificates)
+    return invoke_requests_method(requests.get, url, output_result, auth=(user, password), verify=verifyCertificates)
+
 
 def post_request(user, password, url, description, payload, headers):
     print(description)
-    invoke_requests_method(requests.post, url, True, auth = (user, password), data = payload, headers = headers, verify = verifyCertificates)
+    invoke_requests_method(requests.post, url, True, auth=(user, password), data=payload, headers=headers,
+                           verify=verifyCertificates)
 
-def post_request_unauthenticated(url, description, payload, headers, params = ''):
-    '''
+
+def post_request_unauthenticated(url, description, payload, headers, params=''):
+    """
     Variation of POST without basic authentication
-    '''
+    """
 
     print(description)
-    invoke_requests_method(requests.post, url, True, data = payload, headers = headers, verify = verifyCertificates, params =  params)
+    invoke_requests_method(requests.post, url, True, data=payload, headers=headers, verify=verifyCertificates,
+                           params=params)
+
 
 def put_request(user, password, url, description, payload, params):
     print(description)
-    invoke_requests_method(requests.put, url, True, auth = (user, password), data = payload, headers = params, verify = verifyCertificates)
+    invoke_requests_method(requests.put, url, True, auth=(user, password), data=payload, headers=params,
+                           verify=verifyCertificates)
 
-def delete_request(user, password, url, description, payload = '', params = {'Content-Type':'application/json'}):
+
+def delete_request(user, password, url, description, payload='', params={'Content-Type': 'application/json'}):
     print(description)
-    invoke_requests_method(requests.delete, url, True, auth = (user, password), data = payload, headers = params, verify = verifyCertificates)
+    invoke_requests_method(requests.delete, url, True, auth=(user, password), data=payload, headers=params,
+                           verify=verifyCertificates)
+
 
 def poll_new_password():
-    new_password = getpass.getpass(prompt = "Enter new password: ")
-    new_password_repeated = getpass.getpass(prompt = "Re-enter password: ")
+    new_password = getpass.getpass(prompt="Enter new password: ")
+    new_password_repeated = getpass.getpass(prompt="Re-enter password: ")
     if new_password != new_password_repeated:
         print("Passwords did not match;  cancelling the add_user request")
         sys.exit(1)
     return new_password
 
+
 def list_users(user, password):
     get_request(user, password, target_host + 'auth/v1/users', 'list_users')
 
-def add_user(user, password, newUser):
+
+def add_user(user, password, new_user):
     new_password = poll_new_password()
     description = 'add_user({})'.format(user)
     url = target_host + 'auth/v1/users'
-    payload =  {'name':newUser, 'password':new_password, 'description':'', "domainid":"sdn", 'email':''}
+    payload = {'name': new_user, 'password': new_password,
+               'description': '', "domainid": "sdn", 'email': ''}
     jsonpayload = json.dumps(payload)
-    headers={'Content-Type':'application/json'}
+    headers = {'Content-Type': 'application/json'}
     post_request(user, password, url, description, jsonpayload, headers)
+
 
 def delete_user(user, password, userid):
     url = target_host + 'auth/v1/users/{}'.format(userid)
     description = 'delete_user({})'.format(userid)
     delete_request(user, password, url, description)
 
-def change_password(user, password, existingUserId):
-    url = target_host + 'auth/v1/users/{}'.format(existingUserId)
-    r = get_request(user, password, target_host + 'auth/v1/users/{}'.format(existingUserId), 'list_users', outputResult=False)
+
+def change_password(user, password, existing_user_id):
+    url = target_host + 'auth/v1/users/{}'.format(existing_user_id)
+    r = get_request(user, password, target_host + 'auth/v1/users/{}'.format(existing_user_id), 'list_users',
+                    output_result=False)
     existing = r.json()
     del existing['salt']
     del existing['password']
     new_password = poll_new_password()
     existing['password'] = new_password
-    description='change_password({})'.format(existingUserId)
-    headers={'Content-Type':'application/json'}
-    url = target_host + 'auth/v1/users/{}'.format(existingUserId)
-    put_request(user, password, url, 'change_password({})'.format(user), json.dumps(existing), headers)
+    headers = {'Content-Type': 'application/json'}
+    url = target_host + 'auth/v1/users/{}'.format(existing_user_id)
+    put_request(user, password, url, 'change_password({})'.format(
+        user), json.dumps(existing), headers)
+
 
 def list_domains(user, password):
-    get_request(user, password, target_host + 'auth/v1/domains', 'list_domains')
+    get_request(user, password, target_host +
+                'auth/v1/domains', 'list_domains')
+
 
 def list_roles(user, password):
     get_request(user, password, target_host + 'auth/v1/roles', 'list_roles')
 
+
 def add_role(user, password, role):
     url = target_host + 'auth/v1/roles'
     description = 'add_role({})'.format(role)
-    payload = {'name':role, 'description':'', 'domainid':'sdn'}
+    payload = {'name': role, 'description': '', 'domainid': 'sdn'}
     data = json.dumps(payload)
-    headers={'Content-Type':'application/json'}
+    headers = {'Content-Type': 'application/json'}
     post_request(user, password, url, description, data, headers)
+
 
 def delete_role(user, password, roleid):
     url = target_host + 'auth/v1/roles/{}'.format(roleid)
     description = 'delete_role({})'.format(roleid)
     delete_request(user, password, url, description)
 
+
 def add_grant(user, password, userid, roleid):
     description = 'add_grant(userid={},roleid={})'.format(userid, roleid)
-    payload = {"roleid":roleid, "userid":userid, "domainid":"sdn"}
+    payload = {"roleid": roleid, "userid": userid, "domainid": "sdn"}
     url = target_host + 'auth/v1/domains/sdn/users/{}/roles'.format(userid)
-    data=json.dumps(payload)
-    headers={'Content-Type':'application/json'}
+    data = json.dumps(payload)
+    headers = {'Content-Type': 'application/json'}
     post_request(user, password, url, description, data, headers)
 
+
 def get_grants(user, password, userid):
-    get_request(user, password, target_host + 'auth/v1/domains/sdn/users/{}/roles'.format(userid), 'get_grants({})'.format(userid))
+    get_request(user, password, target_host + 'auth/v1/domains/sdn/users/{}/roles'.format(userid),
+                'get_grants({})'.format(userid))
+
 
 def delete_grant(user, password, userid, roleid):
-    url = target_host + 'auth/v1/domains/sdn/users/{}/roles/{}'.format(userid, roleid)
+    url = target_host + \
+        'auth/v1/domains/sdn/users/{}/roles/{}'.format(userid, roleid)
     print(url)
     description = 'delete_grant(userid={},roleid={})'.format(userid, roleid)
     delete_request(user, password, url, description)
+
 
 def change_jolokia_password():
     try:
@@ -338,25 +383,28 @@ def change_jolokia_password():
             if replaced:
                 print("Successfully updated the jolokia password!")
             else:
-                print("ERROR: Some unknown issue occurred while attempting to set the new password")
+                print(
+                    "ERROR: Some unknown issue occurred while attempting to set the new password")
                 sys.exit(1)
         else:
-            print("idmtool can only modify org.jolokia.osgi.cfg if authMode=basic at this time")
+            print(
+                "idmtool can only modify org.jolokia.osgi.cfg if authMode=basic at this time")
             sys.exit(1)
     except:
         print("Unable to change the jolokia password, please check configuration.")
         sys.exit(1)
 
+
 args = parser.parse_args()
 command = args.func.prog.split()[1:]
-
 
 verifyCertificates = args.insecure
 # disable SSL warning messages if --insecure option was chosen.
 if not verifyCertificates:
     try:
         with warnings.catch_warnings():
-            warnings.filterwarnings("ignore", message=".*InsecurePlatformWarning.*")
+            warnings.filterwarnings(
+                "ignore", message=".*InsecurePlatformWarning.*")
     except:
         print("Unable to supress SSL warnings in this particular environment")
     print("Warning:  HTTPS certificate verification has been disabled.  Use at your own risk!")
