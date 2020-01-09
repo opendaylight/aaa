@@ -31,7 +31,6 @@ import argparse, getpass, json, os, requests, sys, warnings
 
 parser = argparse.ArgumentParser('idmtool')
 
-
 # Constants used to peek into the pax web config.  This is useful to determine whether HTTPS is enabled.
 PAX_WEB_CFG_FILENAME = 'org.ops4j.pax.web.cfg'
 HTTP_SECURE_ENABLED_KEY = 'org.osgi.service.http.secure.enabled'
@@ -348,8 +347,17 @@ def change_jolokia_password():
         sys.exit(1)
 
 args = parser.parse_args()
+# python3 argparse has a bug [0] that does not catch the case of missing arguments
+# in parse_args() unless you use required=True in add_subparsers(). But, that required
+# argument is not available in python2. So, we'll catch that condition here to give
+# a more clean error message to the user:
+# [0] https://bugs.python.org/issue16308
+try:
+    a = getattr(args, "func")
+except AttributeError:
+    parser.print_help()
+    sys.exit(0)
 command = args.func.prog.split()[1:]
-
 
 verifyCertificates = args.insecure
 # disable SSL warning messages if --insecure option was chosen.
