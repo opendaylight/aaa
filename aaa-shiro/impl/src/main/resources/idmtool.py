@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 #
-# Copyright (c) 2016-2019 Brocade Communications Systems and others.  All rights reserved.
+# Copyright (c) Brocade Communications 2016-2017, Lumina Networks 2018-2020 and others.
+# All rights reserved.
 #
 # This program and the accompanying materials are made available under the
 # terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -30,7 +31,6 @@ __status__ = "Production"
 import argparse, getpass, json, os, requests, sys, warnings
 
 parser = argparse.ArgumentParser('idmtool')
-
 
 # Constants used to peek into the pax web config.  This is useful to determine whether HTTPS is enabled.
 PAX_WEB_CFG_FILENAME = 'org.ops4j.pax.web.cfg'
@@ -348,8 +348,17 @@ def change_jolokia_password():
         sys.exit(1)
 
 args = parser.parse_args()
+# python3 argparse has a bug [0] that does not catch the case of missing arguments
+# in parse_args() unless you use required=True in add_subparsers(). But, that required
+# argument is not available in python2. So, we'll catch that condition here to give
+# a more clean error message to the user:
+# [0] https://bugs.python.org/issue16308
+try:
+    a = getattr(args, "func")
+except AttributeError:
+    parser.print_help()
+    sys.exit(1)
 command = args.func.prog.split()[1:]
-
 
 verifyCertificates = args.insecure
 # disable SSL warning messages if --insecure option was chosen.
