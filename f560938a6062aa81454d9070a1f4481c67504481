@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f50f5f1c_59e6f1ff",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-01-10T06:57:43Z",
+      "side": 1,
+      "message": "exit(0), which might be interpreted as success right?\nexit(1)??",
+      "revId": "f560938a6062aa81454d9070a1f4481c67504481",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
