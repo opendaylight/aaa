@@ -16,6 +16,24 @@
       "revId": "4dc8790f4868f38aa3d03513a1b41f8d8e61957f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a1135a2_507561cc",
+        "filename": "aaa-shiro/impl/src/main/resources/idmtool.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2264
+      },
+      "writtenOn": "2020-01-10T16:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56f364de_2e1635ee",
+      "revId": "4dc8790f4868f38aa3d03513a1b41f8d8e61957f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
