@@ -8,7 +8,7 @@
 package org.opendaylight.aaa.web.tests;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.mock;
 
 import javax.servlet.Filter;
@@ -103,15 +103,5 @@ public class WebContextApiTest {
         final WebContextBuilder builder = WebContext.builder().contextPath("test")
                 .addFilter(FilterDetails.builder().filter(mock(Filter.class)).build());
         assertThrows(IllegalArgumentException.class, () -> builder.build());
-    }
-
-    @SuppressWarnings("checkstyle:illegalCatch")
-    private static <T extends RuntimeException> void assertThrows(final Class<T> clazz, final Runnable runnable) {
-        try {
-            runnable.run();
-            fail("Expected " + clazz.getName());
-        } catch (RuntimeException e) {
-            assertThat(e).isInstanceOf(clazz);
-        }
     }
 }
