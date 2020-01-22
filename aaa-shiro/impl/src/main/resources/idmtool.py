@@ -386,7 +386,7 @@ if "list-domains" in command:
 if "list-roles" in command:
     list_roles(user, password)
 if "add-user" in command:
-    add_user(user, password, args.newUser[0])
+    add_user(user, password, args.new_user[0])
 if "add-grant" in command:
     add_grant(user, password, args.userid[0], args.roleid[0])
 if "get-grants" in command:
