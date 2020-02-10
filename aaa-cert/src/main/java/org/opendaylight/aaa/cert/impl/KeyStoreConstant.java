@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.cert.impl;
 
 import java.io.BufferedWriter;
@@ -46,9 +45,13 @@ public final class KeyStoreConstant {
 
     }
 
+    public static File toAbsoluteFile(final String fileName, final String basePath) {
+        final File file = new File(fileName);
+        return file.isAbsolute() ? file : new File(basePath + fileName);
+    }
+
     public static boolean checkKeyStoreFile(final String fileName) {
-        final File file = new File(KEY_STORE_PATH + fileName);
-        return file.exists();
+        return toAbsoluteFile(fileName, KEY_STORE_PATH).exists();
     }
 
     public static String createDir(final String dir) {
@@ -65,8 +68,7 @@ public final class KeyStoreConstant {
         if (certFile == null || certFile.isEmpty()) {
             return null;
         }
-
-        final String path = KEY_STORE_PATH + certFile;
+        final File path = toAbsoluteFile(certFile, KEY_STORE_PATH);
         try (FileInputStream fInputStream = new FileInputStream(path)) {
             final int available = fInputStream.available();
             final byte[] certBytes = new byte[available];
@@ -84,9 +86,9 @@ public final class KeyStoreConstant {
         if (fileName == null || fileName.isEmpty()) {
             return false;
         }
-
+        final File path = toAbsoluteFile(fileName, KEY_STORE_PATH);
         try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(KEY_STORE_PATH + fileName), StandardCharsets.UTF_8))) {
+                new FileOutputStream(path), StandardCharsets.UTF_8))) {
             out.write(cert);
             return true;
         } catch (final IOException e) {
