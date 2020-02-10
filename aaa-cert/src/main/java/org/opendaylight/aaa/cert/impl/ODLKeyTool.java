@@ -5,11 +5,11 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.cert.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -46,17 +46,14 @@ import org.slf4j.LoggerFactory;
  * such as create, generate, add and delete certificates.
  *
  * @author mserngawy
- *
  */
 public class ODLKeyTool {
-
     private static final Logger LOG = LoggerFactory.getLogger(ODLKeyTool.class);
 
     private final String workingDir;
 
     protected ODLKeyTool() {
-        workingDir = KeyStoreConstant.KEY_STORE_PATH;
-        KeyStoreConstant.createDir(workingDir);
+        this(KeyStoreConstant.KEY_STORE_PATH);
     }
 
     public ODLKeyTool(final String workingDirectory) {
@@ -225,7 +222,9 @@ public class ODLKeyTool {
         if (keystore == null) {
             return false;
         }
-        try (FileOutputStream fOutputStream = new FileOutputStream(workingDir + fileName)) {
+
+        final File realPath = KeyStoreConstant.toAbsoluteFile(fileName, workingDir);
+        try (FileOutputStream fOutputStream = new FileOutputStream(realPath)) {
             keystore.store(fOutputStream, keystorePassword.toCharArray());
             return true;
         } catch (final KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
@@ -393,7 +392,8 @@ public class ODLKeyTool {
      * @return keystore object otherwise return null if it fails to load.
      */
     public KeyStore loadKeyStore(final String keyStoreName, final String keystorePassword) {
-        try (FileInputStream fInputStream = new FileInputStream(workingDir + keyStoreName)) {
+        final File realPath = KeyStoreConstant.toAbsoluteFile(keyStoreName, workingDir);
+        try (FileInputStream fInputStream = new FileInputStream(realPath)) {
             final KeyStore keyStore = KeyStore.getInstance("JKS");
             keyStore.load(fInputStream, keystorePassword.toCharArray());
             return keyStore;
