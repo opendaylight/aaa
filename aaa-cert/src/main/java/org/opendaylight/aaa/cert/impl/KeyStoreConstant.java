@@ -46,8 +46,18 @@ public final class KeyStoreConstant {
 
     }
 
+    public static boolean isAbsolute(final String fileName) {
+        final File file = new File(fileName);
+        return file.isAbsolute();
+    }
+
     public static boolean checkKeyStoreFile(final String fileName) {
-        final File file = new File(KEY_STORE_PATH + fileName);
+        final File file;
+        if (isAbsolute(fileName)) {
+            file = new File(fileName);
+        } else {
+            file = new File(KEY_STORE_PATH + fileName);
+        }
         return file.exists();
     }
 
@@ -65,8 +75,12 @@ public final class KeyStoreConstant {
         if (certFile == null || certFile.isEmpty()) {
             return null;
         }
-
-        final String path = KEY_STORE_PATH + certFile;
+        String path;
+        if (isAbsolute(certFile)) {
+            path = certFile;
+        } else {
+            path = KEY_STORE_PATH + certFile;
+        }
         try (FileInputStream fInputStream = new FileInputStream(path)) {
             final int available = fInputStream.available();
             final byte[] certBytes = new byte[available];
@@ -84,9 +98,15 @@ public final class KeyStoreConstant {
         if (fileName == null || fileName.isEmpty()) {
             return false;
         }
+        String path;
+        if (isAbsolute(fileName)) {
+            path = fileName;
+        } else {
+            path = KEY_STORE_PATH + fileName;
+        }
 
         try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(KEY_STORE_PATH + fileName), StandardCharsets.UTF_8))) {
+                new FileOutputStream(path), StandardCharsets.UTF_8))) {
             out.write(cert);
             return true;
         } catch (final IOException e) {
