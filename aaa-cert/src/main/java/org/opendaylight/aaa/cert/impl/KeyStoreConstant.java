@@ -48,6 +48,12 @@ public final class KeyStoreConstant {
 
     public static boolean checkKeyStoreFile(final String fileName) {
         final File file = new File(KEY_STORE_PATH + fileName);
+        // If file.exists() returns FALSE, assuming filename is realpath
+        // other than the default localtion of KEYSTORE_PATH
+        if (!file.exists()) {
+            File fileRealPath = new File(fileName);
+            return fileRealPath.exists();
+        }
         return file.exists();
     }
 
@@ -65,8 +71,12 @@ public final class KeyStoreConstant {
         if (certFile == null || certFile.isEmpty()) {
             return null;
         }
-
-        final String path = KEY_STORE_PATH + certFile;
+        String path = KEY_STORE_PATH + certFile;
+        // check if certFile contrains full path
+        // instead of just the name
+        if (certFile.contains(File.separator)) {
+            path = certFile;
+        }
         try (FileInputStream fInputStream = new FileInputStream(path)) {
             final int available = fInputStream.available();
             final byte[] certBytes = new byte[available];
@@ -84,9 +94,15 @@ public final class KeyStoreConstant {
         if (fileName == null || fileName.isEmpty()) {
             return false;
         }
+        String path = KEY_STORE_PATH + fileName;
+        // check if certFile contrains full path
+        // instead of just the name
+        if (fileName.contains(File.separator)) {
+            path = fileName;
+        }
 
         try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(KEY_STORE_PATH + fileName), StandardCharsets.UTF_8))) {
+                new FileOutputStream(path), StandardCharsets.UTF_8))) {
             out.write(cert);
             return true;
         } catch (final IOException e) {
