@@ -10,6 +10,7 @@ package org.opendaylight.aaa.cert.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -225,7 +226,12 @@ public class ODLKeyTool {
         if (keystore == null) {
             return false;
         }
-        try (FileOutputStream fOutputStream = new FileOutputStream(workingDir + fileName)) {
+        String realPath = workingDir + fileName;
+        if (fileName.contains(File.separator)) {
+            realPath = fileName;
+        }
+
+        try (FileOutputStream fOutputStream = new FileOutputStream(realPath)) {
             keystore.store(fOutputStream, keystorePassword.toCharArray());
             return true;
         } catch (final KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
@@ -393,7 +399,11 @@ public class ODLKeyTool {
      * @return keystore object otherwise return null if it fails to load.
      */
     public KeyStore loadKeyStore(final String keyStoreName, final String keystorePassword) {
-        try (FileInputStream fInputStream = new FileInputStream(workingDir + keyStoreName)) {
+        String realPath = workingDir + keyStoreName;
+        if (keyStoreName.contains(File.separator)) {
+            realPath = keyStoreName;
+        }
+        try (FileInputStream fInputStream = new FileInputStream(realPath)) {
             final KeyStore keyStore = KeyStore.getInstance("JKS");
             keyStore.load(fInputStream, keystorePassword.toCharArray());
             return keyStore;
