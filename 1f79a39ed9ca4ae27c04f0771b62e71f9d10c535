@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e23b817a_9c3b617a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreConstant.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2020-02-14T06:33:20Z",
+      "side": 1,
+      "message": "this can be refactored as below to be more readable:\n\nfinal File file;\nif (...) {\n  file \u003d ..\n} else {\n  file \u003d ..\n}\nreturn file.exists();",
+      "revId": "1f79a39ed9ca4ae27c04f0771b62e71f9d10c535",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24a0ea1_25082018",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreConstant.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2020-02-14T06:33:20Z",
+      "side": 1,
+      "message": "can use https://docs.oracle.com/javase/7/docs/api/java/nio/file/Path.html#isAbsolute() to decide if path is relative or absolute",
+      "revId": "1f79a39ed9ca4ae27c04f0771b62e71f9d10c535",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d600c8_6c2bbb98",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2020-02-14T06:33:20Z",
+      "side": 1,
+      "message": "same comment as in other file",
+      "revId": "1f79a39ed9ca4ae27c04f0771b62e71f9d10c535",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c90dc84_3964e815",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2020-02-14T06:33:20Z",
+      "side": 1,
+      "message": "refactor as:\nfile String realPath;\nif (...) {\n    realPath \u003d ..\n} else {\n    realPath \u003d ..\n}",
+      "revId": "1f79a39ed9ca4ae27c04f0771b62e71f9d10c535",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
