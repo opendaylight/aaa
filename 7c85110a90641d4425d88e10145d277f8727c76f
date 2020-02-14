@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e491692_50f15d6f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2020-02-14T06:44:20Z",
+      "side": 1,
+      "message": "typos: trials, method, ProcessPathConfig",
+      "revId": "7c85110a90641d4425d88e10145d277f8727c76f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c15d7e_3b83c586",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MDSALDynamicAuthorizationFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2020-02-14T06:44:20Z",
+      "side": 1,
+      "message": "try-with-resources used in earlier code will close the tx automatically once done which we are missing here",
+      "revId": "7c85110a90641d4425d88e10145d277f8727c76f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "872e6d35_71466734",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/MDSALDynamicAuthorizationFilterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2020-02-14T06:44:20Z",
+      "side": 1,
+      "message": "remove commented line",
+      "revId": "7c85110a90641d4425d88e10145d277f8727c76f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
