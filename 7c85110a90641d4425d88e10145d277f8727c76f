@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9eaa9f1c_28c2e96a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2020-02-14T17:56:58Z",
+      "side": 1,
+      "message": "You fixed the first but not the other two :) (method, ProcessPathConfig)",
+      "parentUuid": "d93e25e0_c4097230",
+      "revId": "7c85110a90641d4425d88e10145d277f8727c76f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54c15d7e_3b83c586",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MDSALDynamicAuthorizationFilter.java",
         "patchSetId": 1
