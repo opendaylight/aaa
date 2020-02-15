@@ -1,0 +1,9 @@
+Verified+1: jenkins-releng <jenkins-releng@opendaylight.org>
+Code-Review+1: Ajay Lele <ajayslele@gmail.com>
+Code-Review+1: Tejas Nevrekar <tejas.nevrekar@gmail.com>
+Code-Review+2: Robert Varga <nite@hq.sk>
+Submitted-by: Robert Varga <nite@hq.sk>
+Submitted-at: Sat, 15 Feb 2020 19:07:22 +0000
+Reviewed-on: https://git.opendaylight.org/gerrit/c/aaa/+/87660
+Project: aaa
+Branch: refs/heads/stable/sodium
