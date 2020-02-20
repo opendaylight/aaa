@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c723740_6588962c",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreConstant.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2020-02-20T16:29:52Z",
+      "side": 1,
+      "message": "comment is bit confusing, can get rid of it as logic is quite straight-fwd",
+      "revId": "669dbc600cf1d62e73dc415622fded45c6c0720d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1aa407_e823f163",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreConstant.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2020-02-20T16:29:52Z",
+      "side": 1,
+      "message": "typo: contains\nBtw is this comment really required, considering the logic is pretty straight-fwd. Also similar change in other file does not have this comment",
+      "revId": "669dbc600cf1d62e73dc415622fded45c6c0720d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de5e3868_13136184",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreConstant.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 7569
+      },
+      "writtenOn": "2020-02-20T16:29:52Z",
+      "side": 1,
+      "message": "typo: contains\nBtw is this comment really required, considering the logic is pretty straight-fwd. Also similar change in other file does not have this comment",
+      "revId": "669dbc600cf1d62e73dc415622fded45c6c0720d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
