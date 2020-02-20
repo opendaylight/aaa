@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2655ee9b_e24105a6",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreConstant.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-02-20T07:25:52Z",
+      "side": 1,
+      "message": "HAve revisited the code based on the suggestion, Please let me know if it is okay",
+      "parentUuid": "e23b817a_9c3b617a",
+      "revId": "1f79a39ed9ca4ae27c04f0771b62e71f9d10c535",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f24a0ea1_25082018",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreConstant.java",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "1f79a39ed9ca4ae27c04f0771b62e71f9d10c535",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13483bcc_a2f7e2bc",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreConstant.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-02-20T07:25:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f24a0ea1_25082018",
+      "revId": "1f79a39ed9ca4ae27c04f0771b62e71f9d10c535",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "296c2fc1_4ced7ca6",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-02-20T07:25:52Z",
+      "side": 1,
+      "message": "Have revisited the code as per suggestion. Please let me know if it is okay?",
+      "parentUuid": "99d600c8_6c2bbb98",
+      "revId": "1f79a39ed9ca4ae27c04f0771b62e71f9d10c535",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c90dc84_3964e815",
         "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "1f79a39ed9ca4ae27c04f0771b62e71f9d10c535",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e8e48d_4fb2e6b6",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/ODLKeyTool.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-02-20T07:25:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c90dc84_3964e815",
+      "revId": "1f79a39ed9ca4ae27c04f0771b62e71f9d10c535",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
