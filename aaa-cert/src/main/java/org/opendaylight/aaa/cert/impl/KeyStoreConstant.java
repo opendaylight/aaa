@@ -7,13 +7,10 @@
  */
 package org.opendaylight.aaa.cert.impl;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * Default values class for aaa-cert bundle.
  *
  * @author mserngawy
- *
  */
 public final class KeyStoreConstant {
     private static final Logger LOG = LoggerFactory.getLogger(KeyStoreConstant.class);
@@ -65,34 +61,27 @@ public final class KeyStoreConstant {
     }
 
     public static String readFile(final String certFile) {
-        if (certFile == null || certFile.isEmpty()) {
-            return null;
-        }
-        final File path = toAbsoluteFile(certFile, KEY_STORE_PATH);
-        try (FileInputStream fInputStream = new FileInputStream(path)) {
-            final int available = fInputStream.available();
-            final byte[] certBytes = new byte[available];
-            final int numRead = fInputStream.read(certBytes);
-            if (numRead != available) {
-                LOG.warn("Expected {} bytes read from {}, actual was {}", available, path, numRead);
+        if (certFile != null && !certFile.isEmpty()) {
+            final Path path = toAbsoluteFile(certFile, KEY_STORE_PATH).toPath();
+            try {
+                return Files.readString(path);
+            } catch (IOException e) {
+                LOG.info("Failed to read {}", path, e);
             }
-            return new String(certBytes, StandardCharsets.UTF_8);
-        } catch (final IOException e) {
-            return null;
         }
+        return null;
     }
 
     public static boolean saveCert(final String fileName, final String cert) {
-        if (fileName == null || fileName.isEmpty()) {
-            return false;
+        if (fileName != null && !fileName.isEmpty()) {
+            final Path path = toAbsoluteFile(fileName, KEY_STORE_PATH).toPath();
+            try {
+                Files.writeString(path, cert);
+                return true;
+            } catch (IOException e) {
+                LOG.info("Failed to write {}", path, e);
+            }
         }
-        final File path = toAbsoluteFile(fileName, KEY_STORE_PATH);
-        try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(path), StandardCharsets.UTF_8))) {
-            out.write(cert);
-            return true;
-        } catch (final IOException e) {
-            return false;
-        }
+        return false;
     }
 }
