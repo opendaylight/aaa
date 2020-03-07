@@ -5,19 +5,16 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.cert.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-
 import org.junit.Test;
 import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
 
 public class KeyStoreUtilisTest {
-
     private static final String FILE_NAME = "foo.pem";
     private static final String TXT = "test save text";
     private static final String KEYSTORE_PATH = "configuration" + File.separator + "ssl" + File.separator;
