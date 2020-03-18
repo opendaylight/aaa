@@ -17,7 +17,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
-import javax.servlet.Filter;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -65,12 +64,11 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter
     }
 
     @Override
-    public Filter processPathConfig(String path, String config) {
+    protected void onFilterConfigSet() throws Exception {
         try (ReadTransaction tx = dataBroker.newReadOnlyTransaction()) {
             authContainer = tx.read(AUTHZ_CONTAINER.getDatastoreType(), AUTHZ_CONTAINER.getRootIdentifier());
         }
         this.reg = dataBroker.registerDataTreeChangeListener(AUTHZ_CONTAINER, this);
-        return super.processPathConfig(path, config);
     }
 
     @Override
