@@ -20,6 +20,7 @@ import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -78,7 +79,7 @@ public class MDSALDynamicAuthorizationFilterTest {
             ThreadLocals.DATABROKER_TL.remove();
         }
 
-        ret.processPathConfig("test-path","test-config");
+        ret.init(mock(FilterConfig.class));
         return ret;
     }
 
