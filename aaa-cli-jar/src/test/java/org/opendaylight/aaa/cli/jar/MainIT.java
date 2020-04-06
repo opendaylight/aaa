@@ -8,6 +8,7 @@
 package org.opendaylight.aaa.cli.jar;
 
 import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.Truth.assertWithMessage;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,8 +67,8 @@ public class MainIT {
             && name.endsWith(".jar")
             && !name.contains("-javadoc")
             && !name.contains("-sources"));
-        assertThat(jarFiles).named("*jar-with-dependencies.jar files in " + targetDirectory).isNotNull();
-        assertThat(jarFiles).named("*jar-with-dependencies.jar files in " + targetDirectory).hasLength(1);
+        assertWithMessage("*jar-with-dependencies.jar files in " + targetDirectory).that(jarFiles).isNotNull();
+        assertWithMessage("*jar-with-dependencies.jar files in " + targetDirectory).that(jarFiles).hasLength(1);
         return jarFiles[0];
     }
 
