@@ -52,8 +52,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
       <artifactId>bcprov-jdk15on</artifactId>
     </dependency>
     <dependency>
-      <groupId>javax.xml.bind</groupId>
-      <artifactId>jaxb-api</artifactId>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
     </dependency>
   </dependencies>
 
