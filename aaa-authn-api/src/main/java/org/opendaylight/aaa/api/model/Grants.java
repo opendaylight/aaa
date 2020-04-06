@@ -7,16 +7,15 @@
  */
 package org.opendaylight.aaa.api.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Grants.
  *
  * @author peter.mellquist@hp.com
  */
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlRootElement;
-
 @XmlRootElement(name = "grants")
 public class Grants {
     private List<Grant> grants = new ArrayList<>();

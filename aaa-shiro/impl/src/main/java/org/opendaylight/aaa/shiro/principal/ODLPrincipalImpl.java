@@ -8,7 +8,6 @@
 package org.opendaylight.aaa.shiro.principal;
 
 import java.util.Set;
-
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 
