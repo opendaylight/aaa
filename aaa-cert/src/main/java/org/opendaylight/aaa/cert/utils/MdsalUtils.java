@@ -44,8 +44,8 @@ public final class MdsalUtils {
      * @param <D> the data object type
      * @return the result of the request
      */
-    public static <D extends org.opendaylight.yangtools.yang.binding.DataObject> boolean delete(
-            final DataBroker dataBroker, final LogicalDatastoreType store, final InstanceIdentifier<D> path)  {
+    public static <D extends DataObject> boolean delete(final DataBroker dataBroker, final LogicalDatastoreType store,
+            final InstanceIdentifier<D> path)  {
         final WriteTransaction transaction = dataBroker.newWriteOnlyTransaction();
         transaction.delete(store, path);
         try {
@@ -95,11 +95,10 @@ public final class MdsalUtils {
      * @param <D> the data object type
      * @return the result of the request
      */
-    public static <D extends org.opendaylight.yangtools.yang.binding.DataObject> boolean merge(
-            final DataBroker dataBroker, final LogicalDatastoreType logicalDatastoreType,
-            final InstanceIdentifier<D> path, final D data) {
+    public static <D extends DataObject> boolean merge(final DataBroker dataBroker,
+            final LogicalDatastoreType logicalDatastoreType, final InstanceIdentifier<D> path, final D data) {
         final WriteTransaction transaction = dataBroker.newWriteOnlyTransaction();
-        transaction.merge(logicalDatastoreType, path, data, true);
+        transaction.mergeParentStructureMerge(logicalDatastoreType, path, data);
         try {
             transaction.commit().get();
             return true;
@@ -118,11 +117,10 @@ public final class MdsalUtils {
      * @param <D> the data object type
      * @return the result of the request
      */
-    public static <D extends org.opendaylight.yangtools.yang.binding.DataObject> boolean put(
-            final DataBroker dataBroker, final LogicalDatastoreType logicalDatastoreType,
-            final InstanceIdentifier<D> path, final D data) {
+    public static <D extends DataObject> boolean put(final DataBroker dataBroker,
+            final LogicalDatastoreType logicalDatastoreType, final InstanceIdentifier<D> path, final D data) {
         final WriteTransaction transaction = dataBroker.newWriteOnlyTransaction();
-        transaction.put(logicalDatastoreType, path, data, true);
+        transaction.mergeParentStructurePut(logicalDatastoreType, path, data);
         try {
             transaction.commit().get();
             return true;
@@ -140,8 +138,8 @@ public final class MdsalUtils {
      * @param <D> the data object type
      * @return the result as the data object requested
      */
-    public static <D extends org.opendaylight.yangtools.yang.binding.DataObject> D read(
-            final DataBroker dataBroker, final LogicalDatastoreType store, final InstanceIdentifier<D> path)  {
+    public static <D extends DataObject> D read(final DataBroker dataBroker, final LogicalDatastoreType store,
+            final InstanceIdentifier<D> path)  {
         try (ReadTransaction transaction = dataBroker.newReadOnlyTransaction()) {
             Optional<D> optionalDataObject = transaction.read(store, path).get();
             if (optionalDataObject.isPresent()) {
