@@ -14,7 +14,6 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
@@ -53,7 +52,6 @@ import org.slf4j.LoggerFactory;
  * A Realm based on <code>aaa.yang</code> model.
  */
 public class MdsalRealm extends AuthorizingRealm implements Destroyable {
-
     private static final Logger LOG = LoggerFactory.getLogger(MdsalRealm.class);
 
     /**
@@ -98,16 +96,12 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
 
             // iterate through and determine the appropriate roles based on the programmed grants
             final Grants grants = auth.getGrants();
-            final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication
-                    .grants.Grants> grantsList = grants.getGrants();
-            for (Grant grant : grantsList) {
+            for (Grant grant : grants.nonnullGrants().values()) {
                 if (grant.getUserid().equals(odlPrincipal.getUserId())) {
                     final Roles roles = auth.getRoles();
                     if (roles != null) {
-                        final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214
-                                .authentication.roles.Roles> rolesList = roles.getRoles();
                         for (org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214
-                                .authentication.roles.Roles role : rolesList) {
+                                .authentication.roles.Roles role : roles.nonnullRoles().values()) {
                             if (role.getRoleid().equals(grant.getRoleid())) {
                                 authRoles.add(role.getRoleid());
                             }
@@ -142,10 +136,8 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
         if (opt.isPresent()) {
             final Authentication auth = opt.get();
             final Users users = auth.getUsers();
-            final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication
-                    .users.Users> usersList = users.getUsers();
             for (org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication.users
-                    .Users u : usersList) {
+                    .Users u : users.nonnullUsers().values()) {
                 final String inputUsername = HeaderUtils.extractUsername(username);
                 final String domainId = HeaderUtils.extractDomain(username);
                 final String inputUserId = String.format("%s@%s", inputUsername, domainId);
