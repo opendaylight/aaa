@@ -5,12 +5,10 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.realm.mapping.impl;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -22,13 +20,11 @@ import org.slf4j.LoggerFactory;
  * Maps groups to roles if any association exists.
  */
 public class BestAttemptGroupToRolesMappingStrategy implements GroupsToRolesMappingStrategy {
-
     private static final Logger LOG = LoggerFactory.getLogger(BestAttemptGroupToRolesMappingStrategy.class);
 
     @Override
     public Map<String, Set<String>> mapGroupsToRoles(final Collection<String> groupNames, final String delimiter,
                                                      final Map<String, String> groupRolesMap) {
-
         final ImmutableMap.Builder<String, Set<String>> roleNamesBuilder = ImmutableMap.builder();
 
         if (groupRolesMap != null) {
@@ -55,6 +51,5 @@ public class BestAttemptGroupToRolesMappingStrategy implements GroupsToRolesMapp
         }
 
         return roleNamesBuilder.build();
-
     }
 }
