@@ -5,11 +5,10 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.realm.util.http;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 
 import com.google.common.collect.ImmutableList;
 import javax.ws.rs.HttpMethod;
@@ -33,7 +32,7 @@ public class SimpleHttpRequestTest extends JerseyTest {
     @Path("keystone")
     public static class KeystoneHandler {
         @POST
-        public KeystoneToken keystoneToken(String input) {
+        public KeystoneToken keystoneToken(final String input) {
             return KEYSTONE_TOKEN;
         }
     }
@@ -41,7 +40,7 @@ public class SimpleHttpRequestTest extends JerseyTest {
     @Path("simple")
     public static class SimpleResponseHandler {
         @POST
-        public Response handle(String input) {
+        public Response handle(final String input) {
             return Response.ok("hello").build();
         }
     }
