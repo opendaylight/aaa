@@ -297,15 +297,15 @@
     </urls>
     End moonAuthRealm commented out-->
     <urls>
-        <pair-key>/operations/cluster-admin**</pair-key>
+        <pair-key>/**/operations/cluster-admin**</pair-key>
         <pair-value>authcBasic, roles[admin]</pair-value>
     </urls>
     <urls>
-        <pair-key>/v1/**</pair-key>
+        <pair-key>/**/v1/**</pair-key>
         <pair-value>authcBasic, roles[admin]</pair-value>
     </urls>
     <urls>
-        <pair-key>/config/aaa*/**</pair-key>
+        <pair-key>/**/config/aaa*/**</pair-key>
         <pair-value>authcBasic, roles[admin]</pair-value>
     </urls>
     <urls>
