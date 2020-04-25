@@ -8,7 +8,6 @@
 package org.opendaylight.aaa.web.osgi;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
@@ -56,21 +55,20 @@ public class PaxWebServer {
     private final ServiceRegistration<?> serviceRegistration;
 
     @Inject
-    public PaxWebServer(@Reference WebContainer paxWebContainer, BundleContext bundleContext) {
+    public PaxWebServer(final @Reference WebContainer paxWebContainer, final BundleContext bundleContext) {
         this.paxWeb = paxWebContainer;
 
-        serviceRegistration = bundleContext.registerService(new String[]{WebServer.class.getName()},
-            new ServiceFactory<WebServer>() {
+        serviceRegistration = bundleContext.registerService(WebServer.class, new ServiceFactory<WebServer>() {
                 @Override
-                public WebServer getService(Bundle bundle, ServiceRegistration<WebServer> registration) {
+                public WebServer getService(final Bundle bundle, final ServiceRegistration<WebServer> registration) {
                     return newWebServer(bundle);
                 }
 
                 @Override
-                public void ungetService(Bundle bundle, ServiceRegistration<WebServer> registration,
-                        WebServer service) {
+                public void ungetService(final Bundle bundle, final ServiceRegistration<WebServer> registration,
+                        final WebServer service) {
                 }
-            }, new MapDictionary<>(Collections.emptyMap()));
+            }, null);
 
         LOG.info("PaxWebServer initialized & WebServer service factory registered");
     }
@@ -89,7 +87,7 @@ public class PaxWebServer {
         }
     }
 
-    WebServer newWebServer(Bundle bundle) {
+    WebServer newWebServer(final Bundle bundle) {
         LOG.info("Creating WebServer instance for bundle {}", bundle);
 
         final BundleContext bundleContext = bundle.getBundleContext();
@@ -112,7 +110,7 @@ public class PaxWebServer {
 
         return new WebServer() {
             @Override
-            public WebContextRegistration registerWebContext(WebContext webContext) throws ServletException {
+            public WebContextRegistration registerWebContext(final WebContext webContext) throws ServletException {
                 return new WebContextImpl(bundleWebContainer, webContext) {
                     @Override
                     public void close() {
@@ -143,7 +141,7 @@ public class PaxWebServer {
         private final List<Filter> registeredFilters = new ArrayList<>();
         private final List<String> registeredResources = new ArrayList<>();
 
-        WebContextImpl(WebContainer paxWeb, WebContext webContext) throws ServletException {
+        WebContextImpl(final WebContainer paxWeb, final WebContext webContext) throws ServletException {
             // We ignore webContext.supportsSessions() because the OSGi HttpService / Pax Web API
             // does not seem to support not wanting session support on some web contexts
             // (it assumes always with session); but other implementation support without.
@@ -190,12 +188,12 @@ public class PaxWebServer {
             paxWeb.end(osgiHttpContext);
         }
 
-        private static String ensurePrependedSlash(String str) {
+        private static String ensurePrependedSlash(final String str) {
             return !str.startsWith("/") ? "/" + str : str;
         }
 
-        void registerFilter(HttpContext osgiHttpContext, List<String> urlPatterns, String name, Filter filter,
-                Map<String, String> params) {
+        void registerFilter(final HttpContext osgiHttpContext, final List<String> urlPatterns, final String name,
+                final Filter filter, final Map<String, String> params) {
             boolean asyncSupported = false;
             String[] absUrlPatterns = absolute(urlPatterns);
             LOG.info("Registering Filter for aliases {}: {}", absUrlPatterns, filter);
@@ -204,12 +202,12 @@ public class PaxWebServer {
             registeredFilters.add(filter);
         }
 
-        String[] absolute(List<String> relatives) {
+        String[] absolute(final List<String> relatives) {
             return relatives.stream().map(urlPattern -> contextPath + urlPattern).toArray(String[]::new);
         }
 
-        void registerServlet(HttpContext osgiHttpContext, List<String> urlPatterns, String name, Servlet servlet,
-                Map<String, String> params) throws ServletException {
+        void registerServlet(final HttpContext osgiHttpContext, final List<String> urlPatterns, final String name,
+                final Servlet servlet, final Map<String, String> params) throws ServletException {
             int loadOnStartup = 1;
             boolean asyncSupported = false;
             String[] absUrlPatterns = absolute(urlPatterns);
@@ -219,7 +217,7 @@ public class PaxWebServer {
             registeredServlets.add(servlet);
         }
 
-        void registerListener(HttpContext osgiHttpContext, ServletContextListener listener) {
+        void registerListener(final HttpContext osgiHttpContext, final ServletContextListener listener) {
             paxWeb.registerEventListener(listener, osgiHttpContext);
             registeredEventListeners.add(listener);
         }
