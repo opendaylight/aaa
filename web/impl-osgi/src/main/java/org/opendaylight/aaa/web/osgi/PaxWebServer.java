@@ -156,12 +156,15 @@ public class PaxWebServer implements ServiceFactory<WebServer> {
             paxWeb.setContextParam(new MapDictionary<>(webContext.contextParams()), osgiHttpContext);
 
             // 2. Listeners - because they could set up things that filters and servlets need
-            webContext.listeners().forEach(listener -> registerListener(osgiHttpContext, listener));
+            for (ServletContextListener listener : webContext.listeners()) {
+                registerListener(osgiHttpContext, listener);
+            }
 
             // 3. Filters - because subsequent servlets should already be covered by the filters
-            webContext.filters().forEach(filter ->
+            for (FilterDetails filter : webContext.filters()) {
                 registerFilter(osgiHttpContext, filter.urlPatterns(), filter.name(), filter.filter(),
-                        filter.initParams()));
+                        filter.initParams());
+            }
 
             // 4. servlets - 'bout time for 'em by now, don't you think? ;)
             for (ServletDetails servlet : webContext.servlets()) {
@@ -183,11 +186,11 @@ public class PaxWebServer implements ServiceFactory<WebServer> {
         }
 
         private static String ensurePrependedSlash(final String str) {
-            return !str.startsWith("/") ? "/" + str : str;
+            return str.startsWith("/") ? str : "/" + str;
         }
 
-        void registerFilter(final HttpContext osgiHttpContext, final List<String> urlPatterns, final String name,
-                final Filter filter, final Map<String, String> params) {
+        private void registerFilter(final HttpContext osgiHttpContext, final List<String> urlPatterns,
+                final String name, final Filter filter, final Map<String, String> params) {
             boolean asyncSupported = false;
             String[] absUrlPatterns = absolute(urlPatterns);
             LOG.info("Registering Filter for aliases {}: {}", absUrlPatterns, filter);
@@ -196,12 +199,12 @@ public class PaxWebServer implements ServiceFactory<WebServer> {
             registeredFilters.add(filter);
         }
 
-        String[] absolute(final List<String> relatives) {
+        private String[] absolute(final List<String> relatives) {
             return relatives.stream().map(urlPattern -> contextPath + urlPattern).toArray(String[]::new);
         }
 
-        void registerServlet(final HttpContext osgiHttpContext, final List<String> urlPatterns, final String name,
-                final Servlet servlet, final Map<String, String> params) throws ServletException {
+        private void registerServlet(final HttpContext osgiHttpContext, final List<String> urlPatterns,
+                final String name, final Servlet servlet, final Map<String, String> params) throws ServletException {
             int loadOnStartup = 1;
             boolean asyncSupported = false;
             String[] absUrlPatterns = absolute(urlPatterns);
@@ -211,7 +214,7 @@ public class PaxWebServer implements ServiceFactory<WebServer> {
             registeredServlets.add(servlet);
         }
 
-        void registerListener(final HttpContext osgiHttpContext, final ServletContextListener listener) {
+        private void registerListener(final HttpContext osgiHttpContext, final ServletContextListener listener) {
             paxWeb.registerEventListener(listener, osgiHttpContext);
             registeredEventListeners.add(listener);
         }
@@ -219,18 +222,10 @@ public class PaxWebServer implements ServiceFactory<WebServer> {
         @Override
         public void close() {
             // The order is relevant here.. Servlets first, then Filters, Listeners last; this is the inverse of above
-            for (Servlet registeredServlet : registeredServlets) {
-                paxWeb.unregisterServlet(registeredServlet);
-            }
-            for (Filter filter : registeredFilters) {
-                paxWeb.unregisterFilter(filter);
-            }
-            for (EventListener eventListener : registeredEventListeners) {
-                paxWeb.unregisterEventListener(eventListener);
-            }
-            for (String alias : registeredResources) {
-                paxWeb.unregister(alias);
-            }
+            registeredServlets.forEach(paxWeb::unregisterServlet);
+            registeredFilters.forEach(paxWeb::unregisterFilter);
+            registeredEventListeners.forEach(paxWeb::unregisterEventListener);
+            registeredResources.forEach(paxWeb::unregister);
         }
     }
 }
