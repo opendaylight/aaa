@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * @author Tom Pantelis - added ServiceFactory to solve possible class loading issues in web components
  */
 @Singleton
-public class PaxWebServer {
+public class PaxWebServer implements ServiceFactory<WebServer> {
 
     // TODO write an IT (using Pax Exam) which tests this, re-use JettyLauncherTest
 
@@ -57,19 +57,7 @@ public class PaxWebServer {
     @Inject
     public PaxWebServer(final @Reference WebContainer paxWebContainer, final BundleContext bundleContext) {
         this.paxWeb = paxWebContainer;
-
-        serviceRegistration = bundleContext.registerService(WebServer.class, new ServiceFactory<WebServer>() {
-                @Override
-                public WebServer getService(final Bundle bundle, final ServiceRegistration<WebServer> registration) {
-                    return newWebServer(bundle);
-                }
-
-                @Override
-                public void ungetService(final Bundle bundle, final ServiceRegistration<WebServer> registration,
-                        final WebServer service) {
-                }
-            }, null);
-
+        serviceRegistration = bundleContext.registerService(WebServer.class, this, null);
         LOG.info("PaxWebServer initialized & WebServer service factory registered");
     }
 
@@ -87,7 +75,8 @@ public class PaxWebServer {
         }
     }
 
-    WebServer newWebServer(final Bundle bundle) {
+    @Override
+    public WebServer getService(final Bundle bundle, final ServiceRegistration<WebServer> registration) {
         LOG.info("Creating WebServer instance for bundle {}", bundle);
 
         final BundleContext bundleContext = bundle.getBundleContext();
@@ -132,8 +121,13 @@ public class PaxWebServer {
         };
     }
 
-    private static class WebContextImpl implements WebContextRegistration {
+    @Override
+    public void ungetService(final Bundle bundle, final ServiceRegistration<WebServer> registration,
+            final WebServer service) {
+        // no-op
+    }
 
+    private static class WebContextImpl implements WebContextRegistration {
         private final String contextPath;
         private final WebContainer paxWeb;
         private final List<Servlet> registeredServlets = new ArrayList<>();
