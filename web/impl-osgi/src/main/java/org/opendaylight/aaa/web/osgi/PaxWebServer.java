@@ -7,18 +7,16 @@
  */
 package org.opendaylight.aaa.web.osgi;
 
+import static com.google.common.base.Verify.verifyNotNull;
+
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.PreDestroy;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
-import org.apache.aries.blueprint.annotation.service.Reference;
 import org.opendaylight.aaa.web.FilterDetails;
 import org.opendaylight.aaa.web.ResourceDetails;
 import org.opendaylight.aaa.web.ServletDetails;
@@ -29,9 +27,13 @@ import org.ops4j.pax.web.service.WebContainer;
 import org.ops4j.pax.web.service.WebContainerDTO;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceFactory;
 import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.http.HttpContext;
 import org.osgi.service.http.HttpService;
 import org.osgi.service.http.NamespaceException;
@@ -44,31 +46,25 @@ import org.slf4j.LoggerFactory;
  *
  * @author Michael Vorburger.ch - original author
  * @author Tom Pantelis - added ServiceFactory to solve possible class loading issues in web components
+ * @author Robert Varga - reworked to use OSGi DS, which cuts the implementation down to bare bones.
  */
-@Singleton
-public class PaxWebServer implements ServiceFactory<WebServer> {
-
-    // TODO write an IT (using Pax Exam) which tests this, re-use JettyLauncherTest
-
+// FIXME: this really acts as an extender and should really be eliminated in favor of such
+// FIXME: event if not, OSGi R7 is changing the picture and should allow us to work without this crud
+// TODO write an IT (using Pax Exam) which tests this, re-use JettyLauncherTest
+@Component(scope = ServiceScope.BUNDLE)
+public final class PaxWebServer implements WebServer {
     private static final Logger LOG = LoggerFactory.getLogger(PaxWebServer.class);
 
-    private final WebContainer paxWeb;
-    private final ServiceRegistration<?> serviceRegistration;
+    // Global reference, acts as an activation guard
+    @Reference
+    WebContainer global = null;
 
-    @Inject
-    public PaxWebServer(final @Reference WebContainer paxWebContainer, final BundleContext bundleContext) {
-        this.paxWeb = paxWebContainer;
-        serviceRegistration = bundleContext.registerService(WebServer.class, this, null);
-        LOG.info("PaxWebServer initialized & WebServer service factory registered");
-    }
+    private ServiceReference<WebContainer> ref;
+    private WebContainer local;
 
-    @PreDestroy
-    public void close() {
-        serviceRegistration.unregister();
-    }
-
-    String getBaseURL() {
-        WebContainerDTO details = paxWeb.getWebcontainerDTO();
+    @Override
+    public String getBaseURL() {
+        final WebContainerDTO details = local.getWebcontainerDTO();
         if (details.securePort != null && details.securePort > 0) {
             return "https://" + details.listeningAddresses[0] + ":" + details.securePort;
         } else {
@@ -77,55 +73,29 @@ public class PaxWebServer implements ServiceFactory<WebServer> {
     }
 
     @Override
-    public WebServer getService(final Bundle bundle, final ServiceRegistration<WebServer> registration) {
-        LOG.info("Creating WebServer instance for bundle {}", bundle);
-
-        final BundleContext bundleContext = bundle.getBundleContext();
-
-        // Get the WebContainer service using the given bundle's context so the WebContainer service instance uses
-        // the bundle's class loader.
-        final ServiceReference<WebContainer> webContainerServiceRef =
-                bundleContext.getServiceReference(WebContainer.class);
-
-        final WebContainer bundleWebContainer;
-        if (webContainerServiceRef != null) {
-            bundleWebContainer = bundleContext.getService(webContainerServiceRef);
-        } else {
-            bundleWebContainer = null;
-        }
-
-        if (bundleWebContainer == null) {
-            throw new IllegalStateException("WebContainer OSGi service not found using bundle: " + bundle.toString());
-        }
-
-        return new WebServer() {
-            @Override
-            public WebContextRegistration registerWebContext(final WebContext webContext) throws ServletException {
-                return new WebContextImpl(bundleWebContainer, webContext) {
-                    @Override
-                    public void close() {
-                        super.close();
-
-                        try {
-                            bundleContext.ungetService(webContainerServiceRef);
-                        } catch (IllegalStateException e) {
-                            LOG.debug("Error from ungetService", e);
-                        }
-                    }
-                };
-            }
-
-            @Override
-            public String getBaseURL() {
-                return PaxWebServer.this.getBaseURL();
-            }
-        };
+    public WebContextRegistration registerWebContext(final WebContext webContext) throws ServletException {
+        return new WebContextImpl(local, webContext);
     }
 
-    @Override
-    public void ungetService(final Bundle bundle, final ServiceRegistration<WebServer> registration,
-            final WebServer service) {
-        // no-op
+    @Activate
+    void activate(final ComponentContext componentContext) {
+        final Bundle bundle = componentContext.getUsingBundle();
+        final BundleContext bundleContext = bundle.getBundleContext();
+
+        ref =  verifyNotNull(bundle.getBundleContext().getServiceReference(WebContainer.class),
+            "Failed to locate WebContext from %s", bundle);
+        local = verifyNotNull(bundleContext.getService(ref), "Failed to get WebContext in %s", bundle);
+        LOG.info("Activated WebServer instance for {}", bundleContext);
+    }
+
+    @Deactivate
+    void deactivate(final ComponentContext componentContext) {
+        final Bundle bundle = componentContext.getUsingBundle();
+        final BundleContext bundleContext = bundle.getBundleContext();
+        local = null;
+        bundleContext.ungetService(ref);
+        ref = null;
+        LOG.info("Deactivated WebServer instance for {}", bundle);
     }
 
     private static class WebContextImpl implements WebContextRegistration {
