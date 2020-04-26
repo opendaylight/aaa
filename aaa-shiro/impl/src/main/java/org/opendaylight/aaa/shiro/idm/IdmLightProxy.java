@@ -17,11 +17,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.opendaylight.aaa.api.AuthenticationException;
 import org.opendaylight.aaa.api.Claim;
 import org.opendaylight.aaa.api.ClaimCache;
-import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.IdMService;
 import org.opendaylight.aaa.api.IdMServiceImpl;
+import org.opendaylight.aaa.api.PasswordCredentialAuth;
 import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Grant;
@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 /**
  * An OSGi proxy for the IdmLight server.
  */
-public class IdmLightProxy implements CredentialAuth<PasswordCredentials>, IdMService, ClaimCache {
+public class IdmLightProxy implements PasswordCredentialAuth, IdMService, ClaimCache {
 
     private static final Logger LOG = LoggerFactory.getLogger(IdmLightProxy.class);
 

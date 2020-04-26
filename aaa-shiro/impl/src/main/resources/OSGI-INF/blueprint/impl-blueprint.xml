@@ -41,8 +41,9 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <service ref="idmLightProxy" odl:type="default">
     <interfaces>
       <value>org.opendaylight.aaa.api.IdMService</value>
-      <value>org.opendaylight.aaa.api.CredentialAuth</value>
       <value>org.opendaylight.aaa.api.ClaimCache</value>
+      <value>org.opendaylight.aaa.api.CredentialAuth</value>
+      <value>org.opendaylight.aaa.api.PasswordCredentialAuth</value>
     </interfaces>
   </service>
 
