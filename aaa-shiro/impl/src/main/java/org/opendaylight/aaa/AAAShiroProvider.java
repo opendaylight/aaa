@@ -12,10 +12,9 @@ import static java.util.Objects.requireNonNull;
 import java.util.concurrent.CompletableFuture;
 import javax.servlet.ServletException;
 import org.opendaylight.aaa.api.AuthenticationService;
-import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
-import org.opendaylight.aaa.api.PasswordCredentials;
+import org.opendaylight.aaa.api.PasswordCredentialAuth;
 import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
@@ -55,7 +54,7 @@ public final class AAAShiroProvider {
      */
     public AAAShiroProvider(final DataBroker dataBroker,
                             final ICertificateManager certificateManager,
-                            final CredentialAuth<PasswordCredentials> credentialAuth,
+                            final PasswordCredentialAuth credentialAuth,
                             final ShiroConfiguration shiroConfiguration,
                             final HttpService httpService,
                             final String moonEndpointPath,
@@ -84,7 +83,7 @@ public final class AAAShiroProvider {
 
         initializeIIDMStore(iidmStore);
 
-        tokenAuthenticators = buildTokenAuthenticators(credentialAuth);
+        tokenAuthenticators = new TokenAuthenticators(new HttpBasicAuth(credentialAuth));
 
         try {
             this.registerServletContexts();
@@ -93,11 +92,6 @@ public final class AAAShiroProvider {
         }
 
         INSTANCE_FUTURE.complete(this);
-    }
-
-    private static TokenAuthenticators buildTokenAuthenticators(
-            final CredentialAuth<PasswordCredentials> credentialAuth) {
-        return new TokenAuthenticators(new HttpBasicAuth(credentialAuth));
     }
 
     private void registerServletContexts() throws ServletException, NamespaceException {
