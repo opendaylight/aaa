@@ -40,8 +40,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <artifactId>aaa-cert</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-web</artifactId>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>shiro</artifactId>
         </dependency>
         <!-- Enforce newer commons-collections versions -->
         <dependency>
@@ -55,11 +55,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <artifactId>gson</artifactId>
         </dependency>
 
-        <dependency>
+        <!--dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.dependencymanager</artifactId>
             <scope>provided</scope>
-        </dependency>
+        </dependency-->
 
         <!--Yang Binding -->
         <dependency>
