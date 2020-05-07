@@ -25,7 +25,6 @@
         </configfile>
         <feature version="[8.1,9)">odl-karaf-feat-jdbc</feature>
         <feature version="[8.1,9)">odl-karaf-feat-jetty</feature>
-        <feature version="[8.1,9)">odl-apache-commons-codec</feature>
         <feature version="[3,4)">odl-jolokia</feature>
     </feature>
 </features>
