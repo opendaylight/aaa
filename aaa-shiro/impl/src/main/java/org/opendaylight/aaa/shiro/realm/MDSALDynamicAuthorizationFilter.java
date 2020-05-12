@@ -13,6 +13,7 @@ import static java.util.Objects.requireNonNull;
 import com.google.common.collect.Iterables;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -120,6 +121,10 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter
         final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
                 .policies.Policies>
                 policiesList = policies.getPolicies();
+        final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
+                  .policies.Policies>
+                matchPolicy = new ArrayList<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa
+                .rev161214.http.authorization.policies.Policies>();
         if (policiesList.isEmpty()) {
             // The authorization container exists, but no rules are present.  Allow access.
             LOG.debug("Exiting successfully early since no authorization rules exist");
@@ -132,27 +137,33 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter
             final boolean pathsMatch = pathsMatch(resource, requestURI);
             if (pathsMatch) {
                 LOG.debug("paths match for pattern={} and requestURI={}", resource, requestURI);
-                final String method = httpServletRequest.getMethod();
-                LOG.trace("method={}", method);
-                final List<Permissions> permissions = policy.getPermissions();
-                for (Permissions permission : permissions) {
-                    final String role = permission.getRole();
-                    LOG.trace("role={}", role);
-                    final List<Permissions.Actions> actions = permission.getActions();
-                    for (Permissions.Actions action : actions) {
-                        LOG.trace("action={}", action.getName());
-                        if (action.getName().equalsIgnoreCase(method)) {
-                            final boolean hasRole = subject.hasRole(role);
-                            LOG.trace("hasRole({})={}", role, hasRole);
-                            if (hasRole) {
-                                return true;
-                            }
+                matchPolicy.add(policy);
+            }
+        }
+        for (org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
+                .policies.Policies policy : matchPolicy) {
+            final String method = httpServletRequest.getMethod();
+            LOG.trace("method={}", method);
+            final List<Permissions> permissions = policy.getPermissions();
+            for (Permissions permission : permissions) {
+                final String role = permission.getRole();
+                LOG.trace("role={}", role);
+                final List<Permissions.Actions> actions = permission.getActions();
+                for (Permissions.Actions action : actions) {
+                    LOG.trace("action={}", action.getName());
+                    if (action.getName().equalsIgnoreCase(method)) {
+                        final boolean hasRole = subject.hasRole(role);
+                        LOG.trace("hasRole({})={}", role, hasRole);
+                        if (hasRole) {
+                            return true;
                         }
                     }
                 }
-                LOG.debug("couldn't authorize the user for access");
-                return false;
             }
+        }
+        if (!matchPolicy.isEmpty()) {
+            LOG.debug("couldn't authorize the user for access");
+            return false;
         }
         LOG.debug("successfully authorized the user for access");
         return true;

@@ -292,7 +292,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         // Now reverse the ordering of the rules, and ensure that access is denied (except for
         // the first non-applicable rule, which should still be allowed).  This is
         // because the Subject making the request is not granted the "dog" role.
-        policiesList = Lists.newArrayList(innerPolicies2, innerPolicies);
+        policiesList = Lists.newArrayList(innerPolicies2);
         when(policies.getPolicies()).thenReturn(policiesList);
         when(request.getRequestURI()).thenReturn("/abc");
         assertTrue(filter.isAccessAllowed(request, null, null));
