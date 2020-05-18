@@ -36,4 +36,7 @@ public interface ServletDetails {
 
     Map<String, String> initParams();
 
+    @Default default Boolean getAsyncSupported() {
+        return false;
+    }
 }

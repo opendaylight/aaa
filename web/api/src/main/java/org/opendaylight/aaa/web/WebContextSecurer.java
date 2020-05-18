@@ -21,6 +21,8 @@ public interface WebContextSecurer {
      */
     void requireAuthentication(WebContextBuilder webContextBuilder, String... urlPatterns);
 
+    void requireAuthentication(WebContextBuilder webContextBuilder, boolean asyncSupported, String... urlPatterns);
+
     /**
      * Configures the WebContext so that all its URL patterns (<code>/**</code>) require authentication.
      * @see #requireAuthentication(WebContextBuilder, String...)
