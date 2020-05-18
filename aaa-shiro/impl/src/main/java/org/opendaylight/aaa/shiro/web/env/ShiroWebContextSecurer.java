@@ -29,19 +29,27 @@ public class ShiroWebContextSecurer implements WebContextSecurer {
     }
 
     @Override
-    public void requireAuthentication(WebContextBuilder webContextBuilder, String... urlPatterns) {
-        webContextBuilder
-            .addListener(shiroEnvironmentLoaderListener)
+    public void requireAuthentication(WebContextBuilder webContextBuilder, boolean asyncSupported,
+            String... urlPatterns) {
+        webContextBuilder.addListener(shiroEnvironmentLoaderListener)
 
-            // AAA filter in front of these REST web services as well as for moon endpoints
-            .addFilter(FilterDetails.builder().filter(new AAAShiroFilter()).addUrlPatterns(urlPatterns).build())
+                // AAA filter in front of these REST web services as well as for moon endpoints
+                .addFilter(FilterDetails.builder()
+                        .filter(new AAAShiroFilter())
+                        .addUrlPatterns(urlPatterns)
+                        .asyncSupported(asyncSupported)
+                        .build())
 
-            // CORS filter
-            .addFilter(FilterDetails.builder().filter(new CrossOriginFilter()).addUrlPatterns(urlPatterns)
-               .putInitParam("allowedOrigins", "*")
-               .putInitParam("allowedMethods", "GET,POST,OPTIONS,DELETE,PUT,HEAD")
-               .putInitParam("allowedHeaders", "origin, content-type, accept, authorization")
-               .build());
+                // CORS filter
+                .addFilter(FilterDetails.builder()
+                        .filter(new CrossOriginFilter())
+                        .addUrlPatterns(urlPatterns)
+                        .asyncSupported(asyncSupported)
+                        .putInitParam("allowedOrigins", "*")
+                        .putInitParam("allowedMethods", "GET,POST,OPTIONS,DELETE,PUT,HEAD")
+                        .putInitParam("allowedHeaders", "origin, content-type, accept, authorization")
+                        .build());
+
     }
 
 }

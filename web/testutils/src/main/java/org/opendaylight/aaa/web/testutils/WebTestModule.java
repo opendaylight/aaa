@@ -31,6 +31,6 @@ public class WebTestModule extends AbstractModule {
 
         // NB: This is a NOOP WebContextSecurer
         // TODO: LATER offer one with a fixed uid/pwd for HTTP BASIC, using Jetty's Filter
-        bind(WebContextSecurer.class).toInstance((webContextBuilder, urlPatterns) -> { });
+        bind(WebContextSecurer.class).toInstance((webContextBuilder, asyncSupported, urlPatterns) -> { });
     }
 }

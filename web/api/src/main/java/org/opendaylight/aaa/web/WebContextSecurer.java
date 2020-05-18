@@ -13,19 +13,34 @@ package org.opendaylight.aaa.web;
  * @author Michael Vorburger.ch
  */
 public interface WebContextSecurer {
-
     /**
-     * Configures the WebContext in an implementation specific manner so that it requires
-     * authentication to access the given URL Patterns.  Typically, this will be done by
-     * adding a <code>javax.servlet.Filter</code> (or several, and whatever else they need).
+     * Configures the WebContext in an implementation specific manner so that it requires authentication to access the
+     * given URL Patterns. Typically, this will be done by adding a {@code javax.servlet.Filter} (or several, and
+     * whatever else they need).
+     *
+     * @param webContextBuilder builder to secure
+     * @param asyncSupported true if asynchronous communication should also be supported
+     * @param urlPatterns URL patterns that require authentication
      */
-    void requireAuthentication(WebContextBuilder webContextBuilder, String... urlPatterns);
+    void requireAuthentication(WebContextBuilder webContextBuilder, boolean asyncSupported, String... urlPatterns);
 
     /**
-     * Configures the WebContext so that all its URL patterns (<code>/**</code>) require authentication.
+     * Configures the WebContext in an implementation specific manner so that it requires authentication to access the
+     * given URL Patterns. Typically, this will be done by adding a {@code javax.servlet.Filter} (or several, and
+     * whatever else they need).
+     *
+     * <p>
+     * This method is equivalent to {@code requireAuthentication(webContextBuilder, false, urlPatterns}.
+     */
+    default void requireAuthentication(final WebContextBuilder webContextBuilder, final String... urlPatterns) {
+        requireAuthentication(webContextBuilder, false, urlPatterns);
+    }
+
+    /**
+     * Configures the WebContext so that all its URL patterns ({@code/**}) require authentication.
      * @see #requireAuthentication(WebContextBuilder, String...)
      */
-    default void requireAuthentication(WebContextBuilder webContextBuilder) {
+    default void requireAuthentication(final WebContextBuilder webContextBuilder) {
         requireAuthentication(webContextBuilder, "/*");
     }
 }

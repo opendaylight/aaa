@@ -164,13 +164,13 @@ public class PaxWebServer implements ServiceFactory<WebServer> {
             // 3. Filters - because subsequent servlets should already be covered by the filters
             for (FilterDetails filter : webContext.filters()) {
                 registerFilter(osgiHttpContext, filter.urlPatterns(), filter.name(), filter.filter(),
-                        filter.initParams());
+                        filter.initParams(), filter.getAsyncSupported());
             }
 
             // 4. servlets - 'bout time for 'em by now, don't you think? ;)
             for (ServletDetails servlet : webContext.servlets()) {
                 registerServlet(osgiHttpContext, servlet.urlPatterns(), servlet.name(), servlet.servlet(),
-                        servlet.initParams());
+                        servlet.initParams(), servlet.getAsyncSupported());
             }
 
             try {
@@ -191,10 +191,11 @@ public class PaxWebServer implements ServiceFactory<WebServer> {
         }
 
         private void registerFilter(final HttpContext osgiHttpContext, final List<String> urlPatterns,
-                final String name, final Filter filter, final Map<String, String> params) {
-            boolean asyncSupported = false;
+                final String name, final Filter filter, final Map<String, String> params,
+                Boolean asyncSupported) {
             String[] absUrlPatterns = absolute(urlPatterns);
-            LOG.info("Registering Filter for aliases {}: {}", absUrlPatterns, filter);
+            LOG.info("Registering Filter for aliases {}: {} with async: {}", absUrlPatterns,
+                    filter, asyncSupported);
             paxWeb.registerFilter(filter, absUrlPatterns, new String[] { name }, new MapDictionary<>(params),
                     asyncSupported, osgiHttpContext);
             registeredFilters.add(filter);
@@ -205,11 +206,12 @@ public class PaxWebServer implements ServiceFactory<WebServer> {
         }
 
         private void registerServlet(final HttpContext osgiHttpContext, final List<String> urlPatterns,
-                final String name, final Servlet servlet, final Map<String, String> params) throws ServletException {
+                final String name, final Servlet servlet, final Map<String, String> params,
+                Boolean asyncSupported) throws ServletException {
             int loadOnStartup = 1;
-            boolean asyncSupported = false;
             String[] absUrlPatterns = absolute(urlPatterns);
-            LOG.info("Registering Servlet for aliases {}: {}", absUrlPatterns, servlet);
+            LOG.info("Registering Servlet for aliases {}: {} with async: {}", absUrlPatterns,
+                    servlet, asyncSupported);
             paxWeb.registerServlet(servlet, name, absUrlPatterns, new MapDictionary<>(params), loadOnStartup,
                     asyncSupported, osgiHttpContext);
             registeredServlets.add(servlet);
