@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -190,26 +191,52 @@ public class PaxWebServer implements ServiceFactory<WebServer> {
             return str.startsWith("/") ? str : "/" + str;
         }
 
+        private String[] absolute(final List<String> relatives) {
+            return relatives.stream().map(urlPattern -> contextPath + urlPattern).toArray(String[]::new);
+        }
+
+        /**
+         * Return true when at least one urlPatterns contains at least one assyncPattern.
+         * @param urlPatterns
+         *            url patterns in which we want search
+         * @param assyncPattern
+         *            url patterns which we want search
+         * @return
+         */
+        private boolean contain(String[] urlPatterns, String assyncPattern) {
+            for (String urlPattern:urlPatterns) {
+                StringTokenizer st = new StringTokenizer(assyncPattern,",");
+                while (st.hasMoreTokens()) {
+                    if (urlPattern.contains(st.nextToken())) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         private void registerFilter(final HttpContext osgiHttpContext, final List<String> urlPatterns,
                 final String name, final Filter filter, final Map<String, String> params) {
-            boolean asyncSupported = false;
             String[] absUrlPatterns = absolute(urlPatterns);
+            String propName = "org.opendaylight.aaa.web.osgi.filter.asyncPattern";
+            String asyncPattern = System.getProperty(propName, "");
+            LOG.debug("Use async mode for urlPatterns {} for aliases {}", absUrlPatterns, asyncPattern);
+            boolean asyncSupported = contain(absUrlPatterns, asyncPattern);
             LOG.info("Registering Filter for aliases {}: {}", absUrlPatterns, filter);
             paxWeb.registerFilter(filter, absUrlPatterns, new String[] { name }, new MapDictionary<>(params),
                     asyncSupported, osgiHttpContext);
             registeredFilters.add(filter);
         }
 
-        private String[] absolute(final List<String> relatives) {
-            return relatives.stream().map(urlPattern -> contextPath + urlPattern).toArray(String[]::new);
-        }
-
         private void registerServlet(final HttpContext osgiHttpContext, final List<String> urlPatterns,
                 final String name, final Servlet servlet, final Map<String, String> params) throws ServletException {
-            int loadOnStartup = 1;
-            boolean asyncSupported = false;
             String[] absUrlPatterns = absolute(urlPatterns);
+            String propName = "org.opendaylight.aaa.web.osgi.servlet.asyncPattern";
+            String asyncPattern = System.getProperty(propName, "");
+            LOG.debug("Use async mode for urlPatterns {} for aliases {}", absUrlPatterns, asyncPattern);
+            boolean asyncSupported = contain(absUrlPatterns, asyncPattern);
             LOG.info("Registering Servlet for aliases {}: {}", absUrlPatterns, servlet);
+            int loadOnStartup = 1;
             paxWeb.registerServlet(servlet, name, absUrlPatterns, new MapDictionary<>(params), loadOnStartup,
                     asyncSupported, osgiHttpContext);
             registeredServlets.add(servlet);
