@@ -18,8 +18,18 @@ public interface WebContextSecurer {
      * Configures the WebContext in an implementation specific manner so that it requires
      * authentication to access the given URL Patterns.  Typically, this will be done by
      * adding a <code>javax.servlet.Filter</code> (or several, and whatever else they need).
+     * Possibility to allow async mode for communication.
      */
-    void requireAuthentication(WebContextBuilder webContextBuilder, String... urlPatterns);
+    void requireAuthentication(WebContextBuilder webContextBuilder, boolean asyncSupported, String... urlPatterns);
+
+    /**
+     * Configures the WebContext in an implementation specific manner so that it requires
+     * authentication to access the given URL Patterns.  Typically, this will be done by
+     * adding a <code>javax.servlet.Filter</code> (or several, and whatever else they need).
+     */
+    default void requireAuthentication(WebContextBuilder webContextBuilder, String... urlPatterns) {
+        requireAuthentication(webContextBuilder, false, urlPatterns);
+    }
 
     /**
      * Configures the WebContext so that all its URL patterns (<code>/**</code>) require authentication.

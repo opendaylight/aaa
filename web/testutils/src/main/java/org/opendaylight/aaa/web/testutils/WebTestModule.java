@@ -8,6 +8,7 @@
 package org.opendaylight.aaa.web.testutils;
 
 import com.google.inject.AbstractModule;
+import org.opendaylight.aaa.web.WebContextBuilder;
 import org.opendaylight.aaa.web.WebContextSecurer;
 import org.opendaylight.aaa.web.WebServer;
 import org.opendaylight.aaa.web.jetty.JettyWebServer;
@@ -31,6 +32,15 @@ public class WebTestModule extends AbstractModule {
 
         // NB: This is a NOOP WebContextSecurer
         // TODO: LATER offer one with a fixed uid/pwd for HTTP BASIC, using Jetty's Filter
-        bind(WebContextSecurer.class).toInstance((webContextBuilder, urlPatterns) -> { });
+        bind(WebContextSecurer.class).toInstance(new WebContextSecurer() {
+            @Override
+            public void requireAuthentication(WebContextBuilder webContextBuilder, boolean asyncSupported,
+                    String... urlPatterns) {
+            }
+
+            @Override
+            public void requireAuthentication(WebContextBuilder webContextBuilder, String... urlPatterns) {
+            }
+        });
     }
 }
