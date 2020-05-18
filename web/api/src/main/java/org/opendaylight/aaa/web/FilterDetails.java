@@ -36,4 +36,8 @@ public interface FilterDetails {
 
     Map<String, String> initParams();
 
+    @Default default Boolean getAsyncSupported() {
+        return false;
+    }
+
 }
