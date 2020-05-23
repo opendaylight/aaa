@@ -35,6 +35,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev1
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.Policies;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.permission.Permissions;
 import org.opendaylight.yangtools.yang.binding.DataObject;
+import org.opendaylight.yangtools.yang.common.Uint32;
 
 /**
  * Tests the Dynamic Authorization Filter.
@@ -239,6 +240,7 @@ public class MDSALDynamicAuthorizationFilterTest {
                 org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
                         .policies.Policies.class);
         when(innerPolicies.getResource()).thenReturn(resource);
+        when(innerPolicies.getIndex()).thenReturn(Uint32.valueOf(5));
         when(innerPolicies.getDescription()).thenReturn(description);
         when(innerPolicies.getPermissions()).thenReturn(permissionsList);
         final org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
@@ -247,6 +249,7 @@ public class MDSALDynamicAuthorizationFilterTest {
                 org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
                         .policies.Policies.class);
         when(innerPolicies2.getResource()).thenReturn(resource2);
+        when(innerPolicies2.getIndex()).thenReturn(Uint32.valueOf(10));
         final Permissions permissions2 = mock(Permissions.class);
         when(permissions2.getRole()).thenReturn("dog");
         when(permissions2.getActions()).thenReturn(actionsList);
@@ -294,6 +297,9 @@ public class MDSALDynamicAuthorizationFilterTest {
         // because the Subject making the request is not granted the "dog" role.
         policiesList = Lists.newArrayList(innerPolicies2, innerPolicies);
         when(policies.getPolicies()).thenReturn(policiesList);
+        // Modify Index to ensure the innerPolicies2 actually gets
+        // used instead of innerPolicies
+        when(innerPolicies2.getIndex()).thenReturn(Uint32.valueOf(4));
         when(request.getRequestURI()).thenReturn("/abc");
         assertTrue(filter.isAccessAllowed(request, null, null));
         when(request.getRequestURI()).thenReturn("/specialendpoint");

@@ -14,6 +14,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
@@ -125,6 +126,11 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter
             LOG.debug("Exiting successfully early since no authorization rules exist");
             return true;
         }
+
+        // Sort the Policies list based on index
+        policiesList.sort(Comparator.comparing(org.opendaylight.yang.gen.v1.urn
+                          .opendaylight.params.xml.ns.yang.aaa.rev161214.http
+                          .authorization.policies.Policies::getIndex));
 
         for (org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
                 .policies.Policies policy : policiesList) {
