@@ -136,6 +136,10 @@ module aaa {
             type string;
             default "*";
         }
+        leaf index {
+            type uint32;
+            mandatory true;
+        }
         list permissions {
             leaf-list actions {
                 type enumeration {
@@ -161,6 +165,7 @@ module aaa {
         container policies {
             list policies {
                 key "resource";
+                unique "index";
                 uses http-permission;
                 ordered-by user;
             }
