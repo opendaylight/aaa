@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09fc958a_d9bc84f1",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MDSALDynamicAuthorizationFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-05-25T12:48:18Z",
+      "side": 1,
+      "message": "does this imply that index is mandatory?",
+      "range": {
+        "startLine": 131,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 25
+      },
+      "revId": "05714fef1453b0ae4fa51647a3b58cc80197e131",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
