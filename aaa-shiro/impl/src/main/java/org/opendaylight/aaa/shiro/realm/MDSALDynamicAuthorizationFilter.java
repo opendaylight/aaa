@@ -13,6 +13,7 @@ import static java.util.Objects.requireNonNull;
 import com.google.common.collect.Iterables;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -127,13 +128,17 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter
             return true;
         }
 
+        final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
+                .policies.Policies>
+                sortedPoliciesList = new ArrayList<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang
+                                                   .aaa.rev161214.http.authorization.policies.Policies>(policiesList);
         // Sort the Policies list based on index
-        policiesList.sort(Comparator.comparing(org.opendaylight.yang.gen.v1.urn
+        sortedPoliciesList.sort(Comparator.comparing(org.opendaylight.yang.gen.v1.urn
                           .opendaylight.params.xml.ns.yang.aaa.rev161214.http
                           .authorization.policies.Policies::getIndex));
 
         for (org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
-                .policies.Policies policy : policiesList) {
+                .policies.Policies policy : sortedPoliciesList) {
             final String resource = policy.getResource();
             final boolean pathsMatch = pathsMatch(resource, requestURI);
             if (pathsMatch) {
