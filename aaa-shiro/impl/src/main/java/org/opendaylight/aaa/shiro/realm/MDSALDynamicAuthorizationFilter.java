@@ -13,6 +13,7 @@ import static java.util.Objects.requireNonNull;
 import com.google.common.collect.Iterables;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -32,7 +33,7 @@ import org.opendaylight.mdsal.binding.api.DataTreeModification;
 import org.opendaylight.mdsal.binding.api.ReadTransaction;
 import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.HttpAuthorization;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.Policies;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies.Policies;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.permission.Permissions;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
@@ -66,7 +67,7 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter
     }
 
     @Override
-    public Filter processPathConfig(String path, String config) {
+    public Filter processPathConfig(final String path, final String config) {
         try (ReadTransaction tx = dataBroker.newReadOnlyTransaction()) {
             authContainer = tx.read(AUTHZ_CONTAINER.getDatastoreType(), AUTHZ_CONTAINER.getRootIdentifier());
         }
@@ -84,7 +85,7 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter
     }
 
     @Override
-    public void onDataTreeChanged(Collection<DataTreeModification<HttpAuthorization>> changes) {
+    public void onDataTreeChanged(final Collection<DataTreeModification<HttpAuthorization>> changes) {
         final HttpAuthorization newVal = Iterables.getLast(changes).getRootNode().getDataAfter();
         LOG.debug("Updating authorization information to {}", newVal);
         authContainer = Futures.immediateFuture(Optional.ofNullable(newVal));
@@ -117,10 +118,8 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter
         }
 
         final HttpAuthorization httpAuthorization = authorizationOptional.get();
-        final Policies policies = httpAuthorization.getPolicies();
-        final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
-                .policies.Policies>
-                policiesList = policies.getPolicies();
+        final var policies = httpAuthorization.getPolicies();
+        List<Policies> policiesList = policies != null ? policies.nonnullPolicies() : List.of();
         if (policiesList.isEmpty()) {
             // The authorization container exists, but no rules are present.  Allow access.
             LOG.debug("Exiting successfully early since no authorization rules exist");
@@ -128,12 +127,10 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter
         }
 
         // Sort the Policies list based on index
-        policiesList.sort(Comparator.comparing(org.opendaylight.yang.gen.v1.urn
-                          .opendaylight.params.xml.ns.yang.aaa.rev161214.http
-                          .authorization.policies.Policies::getIndex));
+        policiesList = new ArrayList<>(policiesList);
+        policiesList.sort(Comparator.comparing(Policies::getIndex));
 
-        for (org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
-                .policies.Policies policy : policiesList) {
+        for (Policies policy : policiesList) {
             final String resource = policy.getResource();
             final boolean pathsMatch = pathsMatch(resource, requestURI);
             if (pathsMatch) {
