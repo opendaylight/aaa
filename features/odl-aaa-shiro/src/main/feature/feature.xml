@@ -26,5 +26,6 @@
         <feature version="[7,8)">odl-karaf-feat-jdbc</feature>
         <feature version="[7,8)">odl-karaf-feat-jetty</feature>
         <feature version="[7,8)">odl-apache-commons-codec</feature>
+        <feature version="[2,3)">odl-jolokia</feature>
     </feature>
 </features>
