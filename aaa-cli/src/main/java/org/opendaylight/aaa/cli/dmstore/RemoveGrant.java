@@ -10,9 +10,7 @@ package org.opendaylight.aaa.cli.dmstore;
 
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
-import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
-import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
@@ -26,7 +24,6 @@ import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 @Command(name = "remove-grant", scope = "aaa", description = "Remove grant.")
 public class RemoveGrant extends AaaCliAbstractCommand {
 
-    @Reference private ClaimCache claimCache;
 
     @Option(name = "-uname", aliases = {
             "--userName" }, description = "The user name", required = true, multiValued = false)
@@ -52,7 +49,6 @@ public class RemoveGrant extends AaaCliAbstractCommand {
         if (identityStore.deleteGrant(grantid) == null) {
             return "Failed to delete grant " + userName + " " + roleName + " " + domainName;
         }
-        claimCache.clear();
         return "Grant has been deleted.";
     }
 }

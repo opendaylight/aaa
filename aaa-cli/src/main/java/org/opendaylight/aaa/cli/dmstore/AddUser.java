@@ -33,6 +33,13 @@ public class AddUser extends AaaCliAbstractCommand {
             multiValued = false)
     private String userName;
 
+    @Option(name = "-pass",
+            description = "Password for new User",
+            required = true,
+            censor = true,
+            multiValued = false)
+    private String passWord;
+
     @Option(name = "-dname",
             aliases = { "--domainName" },
             description = "The domain name",
@@ -75,11 +82,10 @@ public class AddUser extends AaaCliAbstractCommand {
         usr.setDomainid(domainId);
         usr.setEnabled(true);
         usr.setEmail(userEmail);
-        final String pwd = CliUtils.readPassword("Enter new user password: ");
-        if (pwd == null || pwd.isEmpty() || pwd.length() < 6) {
+        if (passWord.isEmpty() || passWord.length() < 6) {
             return "Password should be at least 6 characters";
         }
-        usr.setPassword(pwd);
+        usr.setPassword(passWord);
         usr.setName(userName);
         usr = identityStore.writeUser(usr);
         if (usr != null) {
