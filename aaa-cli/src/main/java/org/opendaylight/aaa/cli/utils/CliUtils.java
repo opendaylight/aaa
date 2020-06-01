@@ -10,6 +10,7 @@ package org.opendaylight.aaa.cli.utils;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 
 /**
  * CliUtils has helper methods for CLI bundle.
@@ -17,14 +18,10 @@ import java.nio.charset.StandardCharsets;
  * @author mserngawy
  *
  */
-@SuppressWarnings("checkstyle:RegexpSingleLineJava")
+@SuppressWarnings({"checkstyle:HideUtilityClassConstructor","checkstyle:RegexpSingleLineJava"})
 public final class CliUtils {
 
     public static final String LOGIN_FAILED_MESS = "User does not exist OR user name and passsword are not correct";
-
-    private CliUtils() {
-
-    }
 
     /**
      * Retrieve the password from the user.
@@ -41,4 +38,10 @@ public final class CliUtils {
             return bReader.readLine();
         }
     }
+
+    public static void list(String name, Collection<?> items) {
+        System.out.println(name);
+        items.forEach(i -> System.out.println("  " + i));
+    }
+
 }

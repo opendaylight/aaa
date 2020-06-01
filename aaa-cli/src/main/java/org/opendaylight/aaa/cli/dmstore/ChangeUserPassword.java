@@ -13,7 +13,6 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
-import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
@@ -30,11 +29,19 @@ import org.opendaylight.aaa.cli.utils.CliUtils;
 public class ChangeUserPassword implements Action {
 
     @Reference private IIDMStore identityStore;
-    @Reference private ClaimCache claimCache;
 
     @Option(name = "-user", aliases = {
             "--userName" }, description = "The user name", required = true, multiValued = false)
     private String userName;
+
+    @Option(name = "-pass", aliases = {
+            "--currPassWord" }, description = "User's Current Password", required = true,
+            censor = true, multiValued = false)
+    private String currentPwd;
+
+    @Option(name = "-newPass", aliases = {
+            "--newPassWord" }, description = "New Password", required = true, censor = true, multiValued = false)
+    private String newPwd;
 
     @Reference private PasswordHashService passwordService;
 
@@ -43,13 +50,10 @@ public class ChangeUserPassword implements Action {
         if (identityStore == null) {
             return "Failed to access the users data store";
         }
-        final String currentPwd = CliUtils.readPassword("Enter current password:");
-        final String newPwd = CliUtils.readPassword("Enter new password:");
         final Users users = identityStore.getUsers();
         for (User usr : users.getUsers()) {
             if (usr.getName().equals(userName)
                     && passwordService.passwordsMatch(currentPwd, usr.getPassword(), usr.getSalt())) {
-                claimCache.clear();
                 usr.setPassword(newPwd);
                 identityStore.updateUser(usr);
                 return userName + "'s password has been changed";

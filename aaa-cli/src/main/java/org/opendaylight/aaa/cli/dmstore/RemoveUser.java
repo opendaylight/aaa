@@ -10,9 +10,7 @@ package org.opendaylight.aaa.cli.dmstore;
 
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
-import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
-import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
@@ -26,7 +24,6 @@ import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 @Command(name = "remove-user", scope = "aaa", description = "Remove user.")
 public class RemoveUser extends AaaCliAbstractCommand {
 
-    @Reference private ClaimCache claimCache;
 
     @Option(name = "-name", aliases = {
             "--userName" }, description = "The user name", required = true, multiValued = false)
@@ -44,7 +41,6 @@ public class RemoveUser extends AaaCliAbstractCommand {
         if (identityStore.deleteUser(usrId) == null) {
             return "Failed to delete user " + userName;
         }
-        claimCache.clear();
         return "User " + userName + "has been deleted.";
     }
 }

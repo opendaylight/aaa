@@ -10,10 +10,10 @@ package org.opendaylight.aaa.cli.cert;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
-import org.opendaylight.aaa.cli.utils.CliUtils;
 
 /**
  * GetODLSelfSignCert get the ODL key store self sign certificate.
@@ -27,10 +27,16 @@ import org.opendaylight.aaa.cli.utils.CliUtils;
 public class GetODLSelfSignCert implements Action {
 
     @Reference private ICertificateManager certProvider;
+    @Option(name = "-keyStorePass",
+            aliases = { "--keyStorePassword" },
+            description = "Keystore Password",
+            required = true,
+            censor = true,
+            multiValued = false)
+    private String pwd;
 
     @Override
     public Object execute() throws Exception {
-        final String pwd = CliUtils.readPassword("Enter Keystore Password:");
         return certProvider.getODLKeyStoreCertificate(pwd, true);
     }
 }
