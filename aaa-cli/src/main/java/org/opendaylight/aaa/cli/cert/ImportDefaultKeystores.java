@@ -45,6 +45,7 @@ public class ImportDefaultKeystores implements Action {
             aliases = { "--" },
             description = "",
             required = true,
+            censor = true,
             multiValued = false)
     private String odlKeystorePwd;
 
@@ -59,6 +60,7 @@ public class ImportDefaultKeystores implements Action {
             aliases = { "--" },
             description = "",
             required = true,
+            censor = true,
             multiValued = false)
     private String trustKeystorePwd;
 

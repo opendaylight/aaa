@@ -14,7 +14,6 @@ import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
-import org.opendaylight.aaa.cli.utils.CliUtils;
 
 /**
  * GetTrustStoreCert get a certain certificate stored in the trust key store
@@ -35,9 +34,15 @@ public class GetTrustStoreCert implements Action {
             required = true, multiValued = false)
     private String alias;
 
+
+    @Option(name = "-keystorePass", aliases = {
+            "--keystorePassword" }, description = "Keystore Password",
+            required = true, censor = true, multiValued = false)
+    private String pwd;
+
+
     @Override
     public Object execute() throws Exception {
-        final String pwd = CliUtils.readPassword("Enter Keystore Password:");
         return certProvider.getCertificateTrustStore(pwd, alias, true);
     }
 }

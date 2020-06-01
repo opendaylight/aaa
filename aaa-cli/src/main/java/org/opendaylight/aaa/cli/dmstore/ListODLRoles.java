@@ -8,26 +8,58 @@
 
 package org.opendaylight.aaa.cli.dmstore;
 
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
-import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
+import org.opendaylight.aaa.api.IIDMStore;
+import org.opendaylight.aaa.api.model.User;
+import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cli.utils.CliUtils;
+import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 
 /**
- * ListODLDomains list the available roles at ODL aaa data store.
+ * ListODLDomains list the available users at ODL aaa data store.
  *
  * @author mserngawy
  */
+@SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+@SuppressWarnings("checkstyle:RegexpSingleLineJava")
 @Service
 @Command(name = "get-roles", scope = "aaa", description = "get list of ODL roles.")
-public class ListODLRoles extends AaaCliAbstractCommand {
+public class ListODLRoles implements Action {
+
+    @Reference protected IIDMStore identityStore;
+    @Reference private PasswordHashService passwordService;
+
+
+    @Option(name = "-aaaAdmin",
+            aliases = { "--aaaAdminUserName" },
+            description = "AAA admin user name",
+            required = true,
+            censor = true,
+            multiValued = false)
+    private String adminUserName;
+
+    @Option(name = "-aaaAdminPass",
+            aliases = { "--aaaAdminPassword" },
+            description = "AAA admin password",
+            required = true,
+            censor = true,
+            multiValued = false)
+    private String adminUserPass;
 
     @Override
     public Object execute() throws Exception {
-        if (super.execute() == null) {
+        final User usr = DataStoreUtils.isAdminUser(identityStore, passwordService, adminUserName, adminUserPass);
+        if (usr == null) {
             return CliUtils.LOGIN_FAILED_MESS;
         }
-        list("Roles: ", identityStore.getRoles().getRoles());
+
+        CliUtils.list("Roles: ", identityStore.getRoles().getRoles());
         return null;
     }
 }

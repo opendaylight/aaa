@@ -8,10 +8,16 @@
 
 package org.opendaylight.aaa.cli.dmstore;
 
+import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
-import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
+import org.opendaylight.aaa.api.IIDMStore;
+import org.opendaylight.aaa.api.model.User;
+import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cli.utils.CliUtils;
+import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 
 /**
  * ListODLDomains list the available domains at ODL aaa data store.
@@ -20,14 +26,37 @@ import org.opendaylight.aaa.cli.utils.CliUtils;
  */
 @Service
 @Command(name = "get-domains", scope = "aaa", description = "get list of ODL domains.")
-public class ListODLDomains extends AaaCliAbstractCommand {
+public class ListODLDomains implements Action {
+
+    @Reference protected IIDMStore identityStore;
+    @Reference private PasswordHashService passwordService;
+
+
+    @Option(name = "-aaaAdmin",
+            aliases = { "--aaaAdminUserName" },
+            description = "AAA admin user name",
+            required = true,
+            censor = true,
+            multiValued = false)
+    private String adminUserName;
+
+    @Option(name = "-aaaAdminPass",
+            aliases = { "--aaaAdminPassword" },
+            description = "AAA admin password",
+            required = true,
+            censor = true,
+            multiValued = false)
+    private String adminUserPass;
+
 
     @Override
     public Object execute() throws Exception {
-        if (super.execute() == null) {
+        final User usr = DataStoreUtils.isAdminUser(identityStore, passwordService, adminUserName, adminUserPass);
+        if (usr == null) {
             return CliUtils.LOGIN_FAILED_MESS;
         }
-        list("Domains: ", identityStore.getDomains().getDomains());
+
+        CliUtils.list("Domains: ", identityStore.getDomains().getDomains());
         return null;
     }
 }

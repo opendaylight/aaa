@@ -10,10 +10,10 @@ package org.opendaylight.aaa.cli.cert;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
-import org.opendaylight.aaa.cli.utils.CliUtils;
 
 /**
  * GenerateCertReq from the ODL key store to be signed by the Certificate
@@ -27,11 +27,15 @@ import org.opendaylight.aaa.cli.utils.CliUtils;
         description = "generate a certificate request for the opendaylight controller.")
 public class GenerateCertReq implements Action {
 
+    @Option(name = "-keystorePass", aliases = {
+            "--keystorePassword" }, description = "Keystore Password",
+            required = true, censor = true, multiValued = false)
+    private String pwd;
+
     @Reference private ICertificateManager certProvider;
 
     @Override
     public Object execute() throws Exception {
-        final String pwd = CliUtils.readPassword("Enter Keystore Password:");
         return certProvider.genODLKeyStoreCertificateReq(pwd, true);
     }
 }
