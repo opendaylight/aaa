@@ -10,11 +10,11 @@ package org.opendaylight.aaa.cli;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Collection;
 import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
-import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 
 /**
@@ -27,25 +27,22 @@ import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 @SuppressWarnings("checkstyle:RegexpSingleLineJava")
 public abstract class AaaCliAbstractCommand implements Action {
 
-    private static volatile String authUser = null;
+    @Option(name = "-aaaAdmin", aliases = {
+            "--aaaAdminName" }, description = "AAA admin username", required = true, censor = true,multiValued = false)
+    private String userName;
+
+    @Option(name = "-aaaAdminPass", aliases = {
+            "--aaaAdminPAssword" }, description = "AAA Admin password", required = true,
+            censor = true, multiValued = false)
+    private String passwd;
 
     @Reference protected IIDMStore identityStore;
     @Reference private PasswordHashService passwordService;
 
     @Override
     public Object execute() throws Exception {
-        final User currentUser = SessionsManager.getInstance().getCurrentUser(authUser);
-        if (currentUser == null) {
-            final String userName = CliUtils.readPassword("Enter Username:");
-            final String passwd = CliUtils.readPassword("Enter Password:");
-            final User usr = DataStoreUtils.isAdminUser(identityStore, passwordService, userName, passwd);
-            if (usr != null) {
-                authUser = userName;
-                SessionsManager.getInstance().addUserSession(userName, usr);
-            }
-            return usr;
-        }
-        return currentUser;
+        final User usr = DataStoreUtils.isAdminUser(identityStore, passwordService, userName, passwd);
+        return usr;
     }
 
     protected void list(String name, Collection<?> items) {
