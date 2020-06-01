@@ -10,11 +10,8 @@ package org.opendaylight.aaa.cli.dmstore;
 
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
-import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
-import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
-import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 
 /**
@@ -26,7 +23,6 @@ import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 @Command(name = "remove-role", scope = "aaa", description = "Remove role.")
 public class RemoveRole extends AaaCliAbstractCommand {
 
-    @Reference private ClaimCache claimCache;
 
     @Option(name = "-name", aliases = {
             "--roleName" }, description = "The role name", required = true, multiValued = false)
@@ -35,7 +31,7 @@ public class RemoveRole extends AaaCliAbstractCommand {
     @Override
     public Object execute() throws Exception {
         if (super.execute() == null) {
-            return CliUtils.LOGIN_FAILED_MESS;
+            return LOGIN_FAILED_MESS;
         }
         final String roleId = DataStoreUtils.getRoleId(identityStore, roleName);
         if (roleId == null) {
@@ -44,7 +40,6 @@ public class RemoveRole extends AaaCliAbstractCommand {
         if (identityStore.deleteRole(roleId) == null) {
             return "Failed to delete role " + roleName;
         }
-        claimCache.clear();
         return "Role " + roleName + "has been deleted.";
     }
 }

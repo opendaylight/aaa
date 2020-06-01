@@ -13,7 +13,6 @@ import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
-import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 
 /**
@@ -40,7 +39,7 @@ public class AddRole extends AaaCliAbstractCommand {
     @Override
     public Object execute() throws Exception {
         if (super.execute() == null) {
-            return CliUtils.LOGIN_FAILED_MESS;
+            return LOGIN_FAILED_MESS;
         }
         Role role = new Role();
         role.setDescription(roleDesc);

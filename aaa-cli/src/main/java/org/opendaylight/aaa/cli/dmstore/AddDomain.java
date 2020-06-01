@@ -13,7 +13,6 @@ import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
-import org.opendaylight.aaa.cli.utils.CliUtils;
 
 /**
  * Adds a domain.
@@ -35,7 +34,7 @@ public class AddDomain extends AaaCliAbstractCommand {
     @Override
     public Object execute() throws Exception {
         if (super.execute() == null) {
-            return CliUtils.LOGIN_FAILED_MESS;
+            return LOGIN_FAILED_MESS;
         }
         Domain domain = new Domain();
         domain.setDescription(domainDesc);

@@ -13,7 +13,6 @@ import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
-import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 
 /**
@@ -40,7 +39,7 @@ public class AddGrant extends AaaCliAbstractCommand {
     @Override
     public Object execute() throws Exception {
         if (super.execute() == null) {
-            return CliUtils.LOGIN_FAILED_MESS;
+            return LOGIN_FAILED_MESS;
         }
         final String domainId = DataStoreUtils.getDomainId(identityStore, domainName);
         if (domainId == null) {
