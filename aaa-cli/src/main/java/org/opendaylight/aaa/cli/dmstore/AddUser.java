@@ -8,12 +8,15 @@
 
 package org.opendaylight.aaa.cli.dmstore;
 
+import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
+import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.User;
-import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
+import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cli.utils.CliUtils;
 import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 
@@ -24,7 +27,23 @@ import org.opendaylight.aaa.cli.utils.DataStoreUtils;
  */
 @Service
 @Command(name = "add-user", scope = "aaa", description = "Add user.")
-public class AddUser extends AaaCliAbstractCommand {
+public class AddUser implements Action {
+
+    @Option(name = "-aaaAdmin",
+            aliases = { "--aaaAdminUserName" },
+            description = "AAA admin user name",
+            required = true,
+            censor = true,
+            multiValued = false)
+    private String adminUserName;
+
+    @Option(name = "-aaaAdminPass",
+            aliases = { "--aaaAdminPassword" },
+            description = "AAA admin password",
+            required = true,
+            censor = true,
+            multiValued = false)
+    private String adminUserPass;
 
     @Option(name = "-name",
             aliases = { "--userName" },
@@ -32,6 +51,14 @@ public class AddUser extends AaaCliAbstractCommand {
             required = true,
             multiValued = false)
     private String userName;
+
+    @Option(name = "-password",
+            aliases = { "--passWord" },
+            description = "The password",
+            required = true,
+            censor = true,
+            multiValued = false)
+    private String passWord;
 
     @Option(name = "-dname",
             aliases = { "--domainName" },
@@ -61,11 +88,17 @@ public class AddUser extends AaaCliAbstractCommand {
             multiValued = false)
     private String userEmail;
 
+    @Reference protected IIDMStore identityStore;
+    @Reference private PasswordHashService passwordService;
+
     @Override
     public Object execute() throws Exception {
-        if (super.execute() == null) {
+        final User usrAdmin = DataStoreUtils.isAdminUser(identityStore, passwordService,
+                                                    adminUserName, adminUserPass);
+        if (usrAdmin == null) {
             return CliUtils.LOGIN_FAILED_MESS;
         }
+
         final String domainId = DataStoreUtils.getDomainId(identityStore, domainName);
         if (domainId == null) {
             return "Domain does not exist";
@@ -75,11 +108,10 @@ public class AddUser extends AaaCliAbstractCommand {
         usr.setDomainid(domainId);
         usr.setEnabled(true);
         usr.setEmail(userEmail);
-        final String pwd = CliUtils.readPassword("Enter new user password: ");
-        if (pwd == null || pwd.isEmpty() || pwd.length() < 6) {
+        if (passWord == null || passWord.isEmpty() || passWord.length() < 6) {
             return "Password should be at least 6 characters";
         }
-        usr.setPassword(pwd);
+        usr.setPassword(passWord);
         usr.setName(userName);
         usr = identityStore.writeUser(usr);
         if (usr != null) {
