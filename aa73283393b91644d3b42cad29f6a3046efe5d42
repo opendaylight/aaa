@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b99bd0f1_0cb3d3a8",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/cert/GenerateCertReq.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 8351
+      },
+      "writtenOn": "2020-06-08T18:06:23Z",
+      "side": 1,
+      "message": "Please format like option in other files, one parameter per line",
+      "revId": "aa73283393b91644d3b42cad29f6a3046efe5d42",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13476c37_81ef99cc",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/cert/GetODLSelfSignCert.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 8351
+      },
+      "writtenOn": "2020-06-08T18:06:23Z",
+      "side": 1,
+      "message": "Please format like option in other files, one parameter per line",
+      "revId": "aa73283393b91644d3b42cad29f6a3046efe5d42",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19464ef5_d0d1f49c",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/cert/GetTrustStoreCert.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 8351
+      },
+      "writtenOn": "2020-06-08T18:06:23Z",
+      "side": 1,
+      "message": "Please format like option in other files, one parameter per line",
+      "revId": "aa73283393b91644d3b42cad29f6a3046efe5d42",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a30433_9b56fe69",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/dmstore/AddDomain.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 8351
+      },
+      "writtenOn": "2020-06-08T18:06:23Z",
+      "side": 1,
+      "message": "Can we keep the base class and add the Options there. That way child classes will not need to change at all.",
+      "revId": "aa73283393b91644d3b42cad29f6a3046efe5d42",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
