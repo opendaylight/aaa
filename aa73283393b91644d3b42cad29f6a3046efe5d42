@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "55222b54_76b06b88",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/cert/GenerateCertReq.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-06-11T18:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b99bd0f1_0cb3d3a8",
+      "revId": "aa73283393b91644d3b42cad29f6a3046efe5d42",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13476c37_81ef99cc",
         "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/cert/GetODLSelfSignCert.java",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "00884f65_d3080c19",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/cert/GetODLSelfSignCert.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-06-11T18:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13476c37_81ef99cc",
+      "revId": "aa73283393b91644d3b42cad29f6a3046efe5d42",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19464ef5_d0d1f49c",
         "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/cert/GetTrustStoreCert.java",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "aa73283393b91644d3b42cad29f6a3046efe5d42",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491a997d_0d162606",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/cert/GetTrustStoreCert.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-06-11T18:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19464ef5_d0d1f49c",
+      "revId": "aa73283393b91644d3b42cad29f6a3046efe5d42",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     },
     {
       "key": {
