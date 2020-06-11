@@ -67,6 +67,24 @@
       "revId": "aa73283393b91644d3b42cad29f6a3046efe5d42",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8315145b_f332b848",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/dmstore/AddDomain.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-06-11T15:29:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06a30433_9b56fe69",
+      "revId": "aa73283393b91644d3b42cad29f6a3046efe5d42",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
