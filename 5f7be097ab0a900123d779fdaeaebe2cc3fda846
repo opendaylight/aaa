@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a048b494_b2e6b956",
+        "filename": "web/api/src/test/java/org/opendaylight/aaa/web/tests/FilterDetailsTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 8737
+      },
+      "writtenOn": "2020-06-29T19:51:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c85bbdcc_b2cdad5c",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 15
+      },
+      "revId": "5f7be097ab0a900123d779fdaeaebe2cc3fda846",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ec37113_547ee999",
         "filename": "web/api/src/test/java/org/opendaylight/aaa/web/tests/FilterDetailsTest.java",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "966dd590_f4d34a06",
+        "filename": "web/api/src/test/java/org/opendaylight/aaa/web/tests/FilterDetailsTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 8737
+      },
+      "writtenOn": "2020-06-29T19:51:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ec37113_547ee999",
+      "range": {
+        "startLine": 67,
+        "startChar": 30,
+        "endLine": 67,
+        "endChar": 46
+      },
+      "revId": "5f7be097ab0a900123d779fdaeaebe2cc3fda846",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3c7e711_f4b91dbb",
         "filename": "web/api/src/test/java/org/opendaylight/aaa/web/tests/FilterDetailsTest.java",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "5f7be097ab0a900123d779fdaeaebe2cc3fda846",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7abee4f_c542f97c",
+        "filename": "web/api/src/test/java/org/opendaylight/aaa/web/tests/FilterDetailsTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 8737
+      },
+      "writtenOn": "2020-06-29T19:51:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3c7e711_f4b91dbb",
+      "range": {
+        "startLine": 65,
+        "startChar": 57,
+        "endLine": 70,
+        "endChar": 9
+      },
+      "revId": "5f7be097ab0a900123d779fdaeaebe2cc3fda846",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
