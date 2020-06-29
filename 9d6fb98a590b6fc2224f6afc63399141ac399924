@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d0bc8e7d_6a03783b",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContextSecurer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 8737
+      },
+      "writtenOn": "2020-06-29T10:35:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6035b813_f3789837",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "9d6fb98a590b6fc2224f6afc63399141ac399924",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fe8ff28_fca7612d",
         "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContextSecurer.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "9d6fb98a590b6fc2224f6afc63399141ac399924",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7951833_f9112071",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContextSecurer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 8737
+      },
+      "writtenOn": "2020-06-29T10:35:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fe8ff28_fca7612d",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 30
+      },
+      "revId": "9d6fb98a590b6fc2224f6afc63399141ac399924",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "73fa1b47_7fd74314",
+        "filename": "web/api/src/test/java/org/opendaylight/aaa/web/tests/ServletDetailsTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 8737
+      },
+      "writtenOn": "2020-06-29T10:35:55Z",
+      "side": 1,
+      "message": "Done for both Filter detail and Servlet detail",
+      "parentUuid": "40a8a381_71d35b25",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 49
+      },
+      "revId": "9d6fb98a590b6fc2224f6afc63399141ac399924",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fbb03bd_52fcd74a",
         "filename": "web/impl-osgi/src/main/java/org/opendaylight/aaa/web/osgi/PaxWebServer.java",
         "patchSetId": 7
@@ -85,6 +157,24 @@
       "revId": "9d6fb98a590b6fc2224f6afc63399141ac399924",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3727abfd_8ff0eb01",
+        "filename": "web/impl-osgi/src/main/java/org/opendaylight/aaa/web/osgi/PaxWebServer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 8737
+      },
+      "writtenOn": "2020-06-29T10:35:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fbb03bd_52fcd74a",
+      "revId": "9d6fb98a590b6fc2224f6afc63399141ac399924",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
