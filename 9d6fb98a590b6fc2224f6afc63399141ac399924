@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "6035b813_f3789837",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContextSecurer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-06-29T08:39:59Z",
+      "side": 1,
+      "message": "this should become a default method delegating to below",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "9d6fb98a590b6fc2224f6afc63399141ac399924",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe8ff28_fca7612d",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContextSecurer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-06-29T08:39:59Z",
+      "side": 1,
+      "message": "please add javadoc",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 30
+      },
+      "revId": "9d6fb98a590b6fc2224f6afc63399141ac399924",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a8a381_71d35b25",
+        "filename": "web/api/src/test/java/org/opendaylight/aaa/web/tests/ServletDetailsTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-06-29T08:39:59Z",
+      "side": 1,
+      "message": "use Assert.assertThrows() instead",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 49
+      },
+      "revId": "9d6fb98a590b6fc2224f6afc63399141ac399924",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fbb03bd_52fcd74a",
         "filename": "web/impl-osgi/src/main/java/org/opendaylight/aaa/web/osgi/PaxWebServer.java",
         "patchSetId": 7
