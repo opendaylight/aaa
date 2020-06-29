@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fbb03bd_52fcd74a",
+        "filename": "web/impl-osgi/src/main/java/org/opendaylight/aaa/web/osgi/PaxWebServer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-06-29T08:34:50Z",
+      "side": 1,
+      "message": "This is an existing method, can we make sure it does not show up as diff?",
+      "revId": "9d6fb98a590b6fc2224f6afc63399141ac399924",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
