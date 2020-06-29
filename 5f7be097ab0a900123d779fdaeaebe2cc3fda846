@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c85bbdcc_b2cdad5c",
+        "filename": "web/api/src/test/java/org/opendaylight/aaa/web/tests/FilterDetailsTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-06-29T19:31:02Z",
+      "side": 1,
+      "message": "static import instead",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 15
+      },
+      "revId": "5f7be097ab0a900123d779fdaeaebe2cc3fda846",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec37113_547ee999",
+        "filename": "web/api/src/test/java/org/opendaylight/aaa/web/tests/FilterDetailsTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-06-29T19:31:02Z",
+      "side": 1,
+      "message": "throws declaration should always be minimized, certainly Throwable should be avoided. But in this case ...",
+      "range": {
+        "startLine": 67,
+        "startChar": 30,
+        "endLine": 67,
+        "endChar": 46
+      },
+      "revId": "5f7be097ab0a900123d779fdaeaebe2cc3fda846",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c7e711_f4b91dbb",
+        "filename": "web/api/src/test/java/org/opendaylight/aaa/web/tests/FilterDetailsTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-06-29T19:31:02Z",
+      "side": 1,
+      "message": ".. just use a lambda:\n\n() -\u003e  FilterDetails.builder().build()",
+      "range": {
+        "startLine": 65,
+        "startChar": 57,
+        "endLine": 70,
+        "endChar": 9
+      },
+      "revId": "5f7be097ab0a900123d779fdaeaebe2cc3fda846",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
