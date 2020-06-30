@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4cafb36d_8916c24e",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/AaaCliAbstractCommand.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-06-30T16:15:09Z",
+      "side": 1,
+      "message": "just a plain return should be okay",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 18
+      },
+      "revId": "9f024a8136a86fec7c3192b0c3382a4eeed7e59d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e3e1c43_81855d53",
         "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/cert/GetTrustStoreCert.java",
         "patchSetId": 8
@@ -18,6 +41,76 @@
         "startChar": 12,
         "endLine": 41,
         "endChar": 27
+      },
+      "revId": "9f024a8136a86fec7c3192b0c3382a4eeed7e59d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c556f3b_4506261e",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/cert/GetTrustStoreCert.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-06-30T16:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e3e1c43_81855d53",
+      "range": {
+        "startLine": 41,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 27
+      },
+      "revId": "9f024a8136a86fec7c3192b0c3382a4eeed7e59d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cb493f8_64bebbc7",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/utils/CliUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-06-30T16:15:09Z",
+      "side": 1,
+      "message": "why would you need to remove the constructor?",
+      "range": {
+        "startLine": 21,
+        "startChar": 19,
+        "endLine": 21,
+        "endChar": 59
+      },
+      "revId": "9f024a8136a86fec7c3192b0c3382a4eeed7e59d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c134dc_5dd0a09a",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/utils/CliUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-06-30T16:15:09Z",
+      "side": 1,
+      "message": "this seems to be duplicated elsewhere",
+      "range": {
+        "startLine": 42,
+        "startChar": 23,
+        "endLine": 42,
+        "endChar": 28
       },
       "revId": "9f024a8136a86fec7c3192b0c3382a4eeed7e59d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
