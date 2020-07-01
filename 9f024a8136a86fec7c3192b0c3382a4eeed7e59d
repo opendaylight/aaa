@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "761cd615_84150855",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/AaaCliAbstractCommand.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-07-01T19:03:21Z",
+      "side": 1,
+      "message": "The returned object is validated for not null to allow the operation",
+      "parentUuid": "4cafb36d_8916c24e",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 18
+      },
+      "revId": "9f024a8136a86fec7c3192b0c3382a4eeed7e59d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e3e1c43_81855d53",
         "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/cert/GetTrustStoreCert.java",
         "patchSetId": 8
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4e13d271_e3e6f721",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/utils/CliUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-07-01T19:03:21Z",
+      "side": 1,
+      "message": "Removed the file as the methods in this file are not being used.",
+      "parentUuid": "5cb493f8_64bebbc7",
+      "range": {
+        "startLine": 21,
+        "startChar": 19,
+        "endLine": 21,
+        "endChar": 59
+      },
+      "revId": "9f024a8136a86fec7c3192b0c3382a4eeed7e59d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5c134dc_5dd0a09a",
         "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/utils/CliUtils.java",
         "patchSetId": 8
@@ -106,6 +154,30 @@
       "writtenOn": "2020-06-30T16:15:09Z",
       "side": 1,
       "message": "this seems to be duplicated elsewhere",
+      "range": {
+        "startLine": 42,
+        "startChar": 23,
+        "endLine": 42,
+        "endChar": 28
+      },
+      "revId": "9f024a8136a86fec7c3192b0c3382a4eeed7e59d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1a33d9f_f96e0807",
+        "filename": "aaa-cli/src/main/java/org/opendaylight/aaa/cli/utils/CliUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2020-07-01T19:03:21Z",
+      "side": 1,
+      "message": "Removed the file as the method is available in aaaAbstractclass",
+      "parentUuid": "a5c134dc_5dd0a09a",
       "range": {
         "startLine": 42,
         "startChar": 23,
