@@ -117,6 +117,30 @@
       "revId": "075f6fd75140d600509de2ef516225e46e8b6bcb",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ca90b4c_afe23867",
+        "filename": "INFO.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2020-07-08T20:53:27Z",
+      "side": 1,
+      "message": "This seems like its extracted from the email address.",
+      "parentUuid": "2304ff53_45aa0f8e",
+      "range": {
+        "startLine": 9,
+        "startChar": 14,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "075f6fd75140d600509de2ef516225e46e8b6bcb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
