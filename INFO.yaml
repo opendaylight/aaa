@@ -8,7 +8,7 @@ project_lead: &odl_aaa_ptl
     email: 'nite@hq.sk'
     company: 'hq'
     id: 'rovarga'
-    timezone: 'Unknown/Unknown'
+    timezone: 'Europe/Bratislava'
 primary_contact: *odl_aaa_ptl
 issue_tracking:
     type: 'jira'
