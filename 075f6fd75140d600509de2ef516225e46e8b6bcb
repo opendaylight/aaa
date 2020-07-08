@@ -45,6 +45,30 @@
       "revId": "075f6fd75140d600509de2ef516225e46e8b6bcb",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d667b413_0d29daa1",
+        "filename": "INFO.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2020-07-08T16:53:16Z",
+      "side": 1,
+      "message": "Not sure how this is keyed but I saw we used \"Linux Foundation\" and \"Lumina Networks\" in releng/builder (https://github.com/opendaylight/releng-builder/blob/master/INFO.yaml) which tells me this is probably a free form text field.",
+      "parentUuid": "aae6e9db_22654068",
+      "range": {
+        "startLine": 9,
+        "startChar": 14,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "075f6fd75140d600509de2ef516225e46e8b6bcb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
     }
   ]
 }
