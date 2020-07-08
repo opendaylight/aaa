@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea75e7fe_aba360a4",
+        "filename": "INFO.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2020-07-08T19:56:36Z",
+      "side": 1,
+      "message": "The email key is now optional (thanks to your GDPR comments in the TSC). At one point it _had_ to be the email address tied to your Linux Foundation Account (formerly known as Linux Foundation Identity / LFID) as we used it for sending invites to the groups and needed it for lookup, but we switched to requiring the the \u0027id\u0027 field instead so we can do direct adds and removals without having to do a lot of lookup contortions, especially since we really need it to be tied to an account id and not email address since people can change their email address but they can\u0027t change their id without setting up a completely new account.\n\nAt this point the only truly required fields for a committer / PTL record are name and id, all the rest are optional.",
+      "parentUuid": "7a86a61b_c181b333",
+      "range": {
+        "startLine": 8,
+        "startChar": 12,
+        "endLine": 8,
+        "endChar": 22
+      },
+      "revId": "075f6fd75140d600509de2ef516225e46e8b6bcb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aae6e9db_22654068",
         "filename": "INFO.yaml",
         "patchSetId": 2
@@ -69,6 +93,30 @@
       "revId": "075f6fd75140d600509de2ef516225e46e8b6bcb",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2304ff53_45aa0f8e",
+        "filename": "INFO.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2020-07-08T19:56:36Z",
+      "side": 1,
+      "message": "This is free form text. So, it can be \u0027\u0027, completely missing (the company key is part of the optional schema), or whatever.",
+      "parentUuid": "d667b413_0d29daa1",
+      "range": {
+        "startLine": 9,
+        "startChar": 14,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "075f6fd75140d600509de2ef516225e46e8b6bcb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
