@@ -11,7 +11,6 @@ package org.opendaylight.aaa.cli.dmstore;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
-import org.opendaylight.aaa.cli.utils.CliUtils;
 
 /**
  * ListODLDomains list the available roles at ODL aaa data store.
@@ -25,7 +24,7 @@ public class ListODLRoles extends AaaCliAbstractCommand {
     @Override
     public Object execute() throws Exception {
         if (super.execute() == null) {
-            return CliUtils.LOGIN_FAILED_MESS;
+            return LOGIN_FAILED_MESS;
         }
         list("Roles: ", identityStore.getRoles().getRoles());
         return null;
