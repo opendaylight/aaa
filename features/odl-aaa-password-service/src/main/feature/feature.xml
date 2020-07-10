@@ -11,5 +11,6 @@
         <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-password-service-config.xml">
             mvn:org.opendaylight.aaa/aaa-password-service-impl/${project.version}/xml/aaa-password-service-config
         </configfile>
+        <feature version="[5,6)">odl-mdsal-binding-base</feature>
     </feature>
 </features>
