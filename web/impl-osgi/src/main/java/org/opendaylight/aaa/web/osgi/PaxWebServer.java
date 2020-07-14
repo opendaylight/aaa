@@ -18,6 +18,7 @@ import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
+import net.sf.ehcache.constructs.web.filter.GzipFilter;
 import org.apache.aries.blueprint.annotation.service.Reference;
 import org.opendaylight.aaa.web.FilterDetails;
 import org.opendaylight.aaa.web.ResourceDetails;
@@ -167,7 +168,18 @@ public class PaxWebServer implements ServiceFactory<WebServer> {
                         filter.initParams(), filter.getAsyncSupported());
             }
 
-            // 4. servlets - 'bout time for 'em by now, don't you think? ;)
+            // 4. If there any settings for gzip compression register a gzip filter for it
+            if (webContext.commonGzipHandler().isPresent()) {
+                List<String> mimeTypes = webContext.commonGzipHandler().get().getIncludedMimeTypes();
+                List<String> includedPaths = webContext.commonGzipHandler().get().getIncludedPaths();
+                FilterDetails fd = FilterDetails.builder().filter(new GzipFilter())
+                    .putInitParam("mimeTypes", String.join(",", mimeTypes))
+                    .addUrlPattern(String.join(",", includedPaths)).build();
+                registerFilter(osgiHttpContext, fd.urlPatterns(), fd.name(), fd.filter(), fd.initParams(),
+                    fd.getAsyncSupported());
+            }
+
+            // 5. servlets - 'bout time for 'em by now, don't you think? ;)
             for (ServletDetails servlet : webContext.servlets()) {
                 registerServlet(osgiHttpContext, servlet.urlPatterns(), servlet.name(), servlet.servlet(),
                         servlet.initParams(), servlet.getAsyncSupported());
