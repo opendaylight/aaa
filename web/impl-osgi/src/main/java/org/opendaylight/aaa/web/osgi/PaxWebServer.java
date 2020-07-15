@@ -7,10 +7,12 @@
  */
 package org.opendaylight.aaa.web.osgi;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -54,10 +56,13 @@ public class PaxWebServer implements ServiceFactory<WebServer> {
 
     private final WebContainer paxWeb;
     private final ServiceRegistration<?> serviceRegistration;
+    private final JettyXmlGenerator jettyXmlGenerator;
 
     @Inject
-    public PaxWebServer(final @Reference WebContainer paxWebContainer, final BundleContext bundleContext) {
+    public PaxWebServer(final @Reference WebContainer paxWebContainer, final BundleContext bundleContext,
+                        final JettyXmlGenerator jettyXmlGenerator) {
         this.paxWeb = paxWebContainer;
+        this.jettyXmlGenerator = jettyXmlGenerator;
         serviceRegistration = bundleContext.registerService(WebServer.class, this, null);
         LOG.info("PaxWebServer initialized & WebServer service factory registered");
     }
@@ -101,7 +106,7 @@ public class PaxWebServer implements ServiceFactory<WebServer> {
         return new WebServer() {
             @Override
             public WebContextRegistration registerWebContext(final WebContext webContext) throws ServletException {
-                return new WebContextImpl(bundleWebContainer, webContext) {
+                return new WebContextImpl(bundleWebContainer, webContext, jettyXmlGenerator) {
                     @Override
                     public void close() {
                         super.close();
@@ -136,7 +141,8 @@ public class PaxWebServer implements ServiceFactory<WebServer> {
         private final List<Filter> registeredFilters = new ArrayList<>();
         private final List<String> registeredResources = new ArrayList<>();
 
-        WebContextImpl(final WebContainer paxWeb, final WebContext webContext) throws ServletException {
+        WebContextImpl(final WebContainer paxWeb, final WebContext webContext, final JettyXmlGenerator jettyXmlGen)
+            throws ServletException {
             // We ignore webContext.supportsSessions() because the OSGi HttpService / Pax Web API
             // does not seem to support not wanting session support on some web contexts
             // (it assumes always with session); but other implementation support without.
@@ -149,6 +155,18 @@ public class PaxWebServer implements ServiceFactory<WebServer> {
             String contextID = contextPath + ".id";
 
             HttpContext osgiHttpContext = paxWeb.createDefaultHttpContext(contextID);
+
+            // Registration of the jetty-web.xml is the only way to configure GzipHandler with Pax Web API,
+            // so we have to generate temporary XML configuration with values from webcontext.
+            // Note: Pax Web can use other web containers under the hood, besides Jetty, such containers
+            // will just ignore this configuration.
+            if (webContext.commonGzipHandler().isPresent()) {
+                final List<String> mimeTypes = webContext.commonGzipHandler().get().includedMimeTypes();
+                final List<String> includedPaths = webContext.commonGzipHandler().get().includedPaths();
+                final Optional<URL> xmlUrl = jettyXmlGen.generateGzipConfigXmlFile(mimeTypes, includedPaths);
+                xmlUrl.ifPresent(url -> paxWeb.registerJettyWebXml(url, osgiHttpContext));
+            }
+
             paxWeb.begin(osgiHttpContext);
 
             // The order in which we set things up here matters...
