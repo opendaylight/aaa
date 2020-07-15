@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_3.dtd">
+
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+
+    <!-- GZIP -->
+    <Get id="OldHandler" name="handler"/>
+
+    <Set name="handler">
+        <New id="GzipHandler" class="org.eclipse.jetty.server.handler.gzip.GzipHandler">
+            <Set name="handler">
+                <Ref id="OldHandler"/>
+            </Set>
+
+            <Set name="includedPaths">
+                <Array type="String">
+                    {includedPathItem}
+                </Array>
+            </Set>
+            <Call name="addIncludedMimeTypes">
+                <Arg>
+                    <Array type="String">
+                        {includedMimeTypeItem}
+                    </Array>
+                </Arg>
+            </Call>
+        </New>
+    </Set>
+</Configure>
