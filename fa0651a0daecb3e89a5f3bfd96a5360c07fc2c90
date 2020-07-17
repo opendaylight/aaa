@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ff38c63_d4298243",
+        "filename": "web/api/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-07-17T09:56:01Z",
+      "side": 1,
+      "message": "this is not needed",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "fa0651a0daecb3e89a5f3bfd96a5360c07fc2c90",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df0e3e3_3b7904d4",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/CommonGzipHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-07-17T09:56:01Z",
+      "side": 1,
+      "message": "unneeded empty line",
+      "revId": "fa0651a0daecb3e89a5f3bfd96a5360c07fc2c90",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c707a68_1c923fcd",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/CommonGzipHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-07-17T09:56:01Z",
+      "side": 1,
+      "message": "we are using immutables.org, make this an interface and generate builder/implementation?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "fa0651a0daecb3e89a5f3bfd96a5360c07fc2c90",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae596a1_0275e169",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/CommonGzipHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-07-17T09:56:01Z",
+      "side": 1,
+      "message": "final, \u0027other\u0027, not that",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 30
+      },
+      "revId": "fa0651a0daecb3e89a5f3bfd96a5360c07fc2c90",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7234d236_6ad512d9",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/CommonGzipHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-07-17T09:56:01Z",
+      "side": 1,
+      "message": "return includecMimeTypes.equals(...) \u0026\u0026",
+      "range": {
+        "startLine": 64,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 56
+      },
+      "revId": "fa0651a0daecb3e89a5f3bfd96a5360c07fc2c90",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
