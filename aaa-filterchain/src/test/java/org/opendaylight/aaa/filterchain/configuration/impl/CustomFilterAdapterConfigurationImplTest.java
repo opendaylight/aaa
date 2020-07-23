@@ -13,7 +13,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.mock;
 
-import com.google.common.collect.ImmutableMap;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +44,7 @@ public class CustomFilterAdapterConfigurationImplTest {
         }
     }
 
-    private final CustomFilterAdapterConfigurationImpl config = new CustomFilterAdapterConfigurationImpl(null);
+    private final CustomFilterAdapterConfigurationImpl config = new CustomFilterAdapterConfigurationImpl();
     private final TestCustomFilterAdapterListener listener = new TestCustomFilterAdapterListener();
 
     @Before
@@ -177,12 +176,12 @@ public class CustomFilterAdapterConfigurationImplTest {
     @Test
     public void testFilterAddedAndRemoved() {
         Filter mockFilter = mock(Filter.class);
-        config.onFilterAdded(mockFilter, ImmutableMap.of());
+        config.addFilter(mockFilter);
 
         assertEquals(1, listener.updatedInjectedFilters.size());
         assertSame(mockFilter, listener.updatedInjectedFilters.get(0));
 
-        config.onFilterRemoved(mockFilter, ImmutableMap.of());
+        config.removeFilter(mockFilter);
 
         assertEquals(0, listener.updatedInjectedFilters.size());
     }

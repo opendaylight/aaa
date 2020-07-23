@@ -31,12 +31,20 @@ import javax.servlet.ServletException;
 import org.eclipse.jdt.annotation.Nullable;
 import org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration;
 import org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterListener;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of CustomFilterAdapterConfiguration.
  */
+@Component(immediate = true, configurationPid = "org.opendaylight.aaa.filterchain")
 public final class CustomFilterAdapterConfigurationImpl implements CustomFilterAdapterConfiguration {
     private static final Logger LOG = LoggerFactory.getLogger(CustomFilterAdapterConfigurationImpl.class);
 
@@ -65,13 +73,12 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
 
     private volatile List<FilterDTO> instanceFilterDTOs = Collections.emptyList();
 
-    public CustomFilterAdapterConfigurationImpl(final Map<String, String> properties) {
+    @Activate
+    void activate(final Map<String, String> properties) {
         update(properties);
     }
 
-    public void close() {
-    }
-
+    @Modified
     // Invoked in response to configuration admin changes
     public void update(final Map<String, String> properties) {
         if (properties != null) {
@@ -83,26 +90,26 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
     }
 
     // Invoked when a Filter OSGi service is added
-    public void onFilterAdded(final Filter filter, final Map<String, String> properties) {
+    @Reference(cardinality = ReferenceCardinality.MULTIPLE,
+            policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY)
+    public void addFilter(final Filter filter) {
         if (filter == null) {
             return;
         }
 
         LOG.info("Custom Filter {} added", filter);
-
         this.instanceFilterDTOs = ImmutableList.<FilterDTO>builder().addAll(instanceFilterDTOs)
                 .add(FilterDTO.createFilterDTO(filter)).build();
         updateListeners();
     }
 
     // Invoked when a Filter OSGi service is removed
-    public void onFilterRemoved(final Filter filter, final Map<String, String> properties) {
+    public void removeFilter(final Filter filter) {
         if (filter == null) {
             return;
         }
 
         LOG.info("Custom Filter {} removed", filter);
-
         FilterDTO toRemove = FilterDTO.createFilterDTO(filter);
         this.instanceFilterDTOs = ImmutableList.copyOf(instanceFilterDTOs.stream().filter(dto -> !dto.equals(toRemove))
                 .collect(Collectors.toList()));
@@ -222,7 +229,7 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
 
         @Override
         public Enumeration<String> getInitParameterNames() {
-            return filterConfig != null ? new Enumeration<String>() {
+            return filterConfig != null ? new Enumeration<>() {
                 final Iterator<String> keySet = filterConfig.keySet().iterator();
 
                 @Override
