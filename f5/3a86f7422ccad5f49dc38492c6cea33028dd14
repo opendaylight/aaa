@@ -1,0 +1,8 @@
+Verified+1: jenkins-releng <jenkins-releng@opendaylight.org>
+Code-Review+1: Venkatrangan Govindarajan <gvrangan@gmail.com>
+Code-Review+2: Robert Varga <nite@hq.sk>
+Submitted-by: Robert Varga <nite@hq.sk>
+Submitted-at: Mon, 07 Sep 2020 10:56:18 +0000
+Reviewed-on: https://git.opendaylight.org/gerrit/c/aaa/+/91815
+Project: aaa
+Branch: refs/heads/stable/magnesium
