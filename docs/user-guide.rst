@@ -818,6 +818,10 @@ This an example on how to limit access to the modules endpoint:
     HTTP Operation:
     put URL: /restconf/config/aaa:http-authorization/policies
 
+    or
+
+    put RFC8040 URL: /rests/data/aaa:http-authorization/policies 
+
     headers: Content-Type: application/json Accept: application/json
 
     body:
