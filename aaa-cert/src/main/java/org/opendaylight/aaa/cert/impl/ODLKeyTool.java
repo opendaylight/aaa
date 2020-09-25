@@ -34,9 +34,15 @@ import java.util.Base64;
 import java.util.Date;
 import javax.xml.bind.DatatypeConverter;
 import org.apache.commons.lang3.StringUtils;
+import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.asn1.x509.X509Name;
 import org.bouncycastle.jce.PKCS10CertificationRequest;
 import org.bouncycastle.jce.X509Principal;
+import org.bouncycastle.operator.ContentSigner;
+import org.bouncycastle.operator.OperatorCreationException;
+import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
+import org.bouncycastle.pkcs.PKCS10CertificationRequestBuilder;
 import org.bouncycastle.x509.X509V3CertificateGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -258,11 +264,12 @@ public class ODLKeyTool {
                 final PublicKey pubKey = odlCert.getPublicKey();
                 final PrivateKey privKey = (PrivateKey) keyStore.getKey(keyAlias, keystorePassword.toCharArray());
                 final String subject = odlCert.getSubjectDN().getName();
-                final X509Name xname = new X509Name(subject);
-                final String signatureAlgorithm = signAlg;
-                final PKCS10CertificationRequest csr = new PKCS10CertificationRequest(signatureAlgorithm, xname, pubKey,
-                        null, privKey);
-                final String certReq = DatatypeConverter.printBase64Binary(csr.getEncoded());
+                final X500Name xName= new X500Name(subject);
+                final SubjectPublicKeyInfo subPubKeyInfo = SubjectPublicKeyInfo.getInstance(pubKey.getEncoded());
+                final PKCS10CertificationRequestBuilder csrb = new PKCS10CertificationRequestBuilder(xName,
+                        subPubKeyInfo);
+                final ContentSigner contSigner = new JcaContentSignerBuilder(signAlg).build(privKey);
+                final String certReq = DatatypeConverter.printBase64Binary(csrb.build(contSigner).getEncoded());
                 if (withTag) {
                     final StringBuilder sb = new StringBuilder();
                     sb.append(KeyStoreConstant.BEGIN_CERTIFICATE_REQUEST);
@@ -276,8 +283,8 @@ public class ODLKeyTool {
             }
             LOG.info("KeyStore does not contain alias {}", keyAlias);
             return StringUtils.EMPTY;
-        } catch (final NoSuchAlgorithmException | KeyStoreException | UnrecoverableKeyException | InvalidKeyException
-                | NoSuchProviderException | SignatureException e) {
+        } catch (final NoSuchAlgorithmException | KeyStoreException | UnrecoverableKeyException
+                | OperatorCreationException | IOException e) {
             LOG.error("Failed to generate certificate request", e);
             return StringUtils.EMPTY;
         }
