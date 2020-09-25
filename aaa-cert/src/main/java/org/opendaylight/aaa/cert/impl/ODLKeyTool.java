@@ -15,18 +15,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
-import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
-import java.security.SignatureException;
 import java.security.UnrecoverableKeyException;
+import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
@@ -34,10 +32,15 @@ import java.util.Base64;
 import java.util.Date;
 import javax.xml.bind.DatatypeConverter;
 import org.apache.commons.lang3.StringUtils;
-import org.bouncycastle.asn1.x509.X509Name;
-import org.bouncycastle.jce.PKCS10CertificationRequest;
-import org.bouncycastle.jce.X509Principal;
-import org.bouncycastle.x509.X509V3CertificateGenerator;
+import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
+import org.bouncycastle.cert.X509CertificateHolder;
+import org.bouncycastle.cert.X509v3CertificateBuilder;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
+import org.bouncycastle.operator.ContentSigner;
+import org.bouncycastle.operator.OperatorCreationException;
+import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
+import org.bouncycastle.pkcs.PKCS10CertificationRequestBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -167,23 +170,24 @@ public class ODLKeyTool {
             final KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(keyAlg);
             keyPairGenerator.initialize(keySize);
             final KeyPair keyPair = keyPairGenerator.generateKeyPair();
-            final X509V3CertificateGenerator x509V3CertGen = new X509V3CertificateGenerator();
-            x509V3CertGen.setSerialNumber(getSecureRandomeInt());
-            x509V3CertGen.setIssuerDN(new X509Principal(distinguishedName));
-            x509V3CertGen.setNotBefore(new Date(System.currentTimeMillis()));
-            x509V3CertGen.setNotAfter(new Date(System.currentTimeMillis() + KeyStoreConstant.DAY_TIME * validity));
-            x509V3CertGen.setSubjectDN(new X509Principal(distinguishedName));
-            x509V3CertGen.setPublicKey(keyPair.getPublic());
-            x509V3CertGen.setSignatureAlgorithm(signAlg);
-            final X509Certificate x509Cert = x509V3CertGen.generateX509Certificate(keyPair.getPrivate());
+            final long currTime = System.currentTimeMillis();
+            final SubjectPublicKeyInfo keyInfo = SubjectPublicKeyInfo.getInstance(keyPair.getPublic().getEncoded());
+            final X509v3CertificateBuilder x509V3CertBuilder =
+                    new X509v3CertificateBuilder(new X500Name(distinguishedName), getSecureRandomeInt(),
+                            new Date(currTime),
+                            new Date(currTime + KeyStoreConstant.DAY_TIME * validity),
+                            new X500Name(distinguishedName), keyInfo);
+            final X509CertificateHolder x509Cert = x509V3CertBuilder
+                    .build(new JcaContentSignerBuilder(signAlg).build(keyPair.getPrivate()));
             final KeyStore ctlKeyStore = KeyStore.getInstance("JKS");
             ctlKeyStore.load(null, keystorePassword.toCharArray());
-            ctlKeyStore.setKeyEntry(keyAlias, keyPair.getPrivate(), keystorePassword.toCharArray(),
-                    new java.security.cert.Certificate[] { x509Cert });
+            final Certificate[] chain = new Certificate[] { new JcaX509CertificateConverter()
+                    .getCertificate(x509Cert) };
+            ctlKeyStore.setKeyEntry(keyAlias, keyPair.getPrivate(), keystorePassword.toCharArray(), chain);
             LOG.info("{} is created", keyStoreName);
             return ctlKeyStore;
-        } catch (final NoSuchAlgorithmException | InvalidKeyException | SecurityException | SignatureException
-                | KeyStoreException | CertificateException | IOException e) {
+        } catch (final NoSuchAlgorithmException | SecurityException | KeyStoreException | CertificateException
+                | IOException | OperatorCreationException e) {
             LOG.error("Fatal error creating keystore", e);
             return null;
         }
@@ -258,11 +262,12 @@ public class ODLKeyTool {
                 final PublicKey pubKey = odlCert.getPublicKey();
                 final PrivateKey privKey = (PrivateKey) keyStore.getKey(keyAlias, keystorePassword.toCharArray());
                 final String subject = odlCert.getSubjectDN().getName();
-                final X509Name xname = new X509Name(subject);
-                final String signatureAlgorithm = signAlg;
-                final PKCS10CertificationRequest csr = new PKCS10CertificationRequest(signatureAlgorithm, xname, pubKey,
-                        null, privKey);
-                final String certReq = DatatypeConverter.printBase64Binary(csr.getEncoded());
+                final X500Name xName = new X500Name(subject);
+                final SubjectPublicKeyInfo subPubKeyInfo = SubjectPublicKeyInfo.getInstance(pubKey.getEncoded());
+                final PKCS10CertificationRequestBuilder csrb = new PKCS10CertificationRequestBuilder(xName,
+                        subPubKeyInfo);
+                final ContentSigner contSigner = new JcaContentSignerBuilder(signAlg).build(privKey);
+                final String certReq = DatatypeConverter.printBase64Binary(csrb.build(contSigner).getEncoded());
                 if (withTag) {
                     final StringBuilder sb = new StringBuilder();
                     sb.append(KeyStoreConstant.BEGIN_CERTIFICATE_REQUEST);
@@ -276,8 +281,8 @@ public class ODLKeyTool {
             }
             LOG.info("KeyStore does not contain alias {}", keyAlias);
             return StringUtils.EMPTY;
-        } catch (final NoSuchAlgorithmException | KeyStoreException | UnrecoverableKeyException | InvalidKeyException
-                | NoSuchProviderException | SignatureException e) {
+        } catch (final NoSuchAlgorithmException | KeyStoreException | UnrecoverableKeyException
+                | OperatorCreationException | IOException e) {
             LOG.error("Failed to generate certificate request", e);
             return StringUtils.EMPTY;
         }
