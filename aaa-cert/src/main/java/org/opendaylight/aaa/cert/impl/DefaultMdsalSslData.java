@@ -5,8 +5,9 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.cert.impl;
+
+import static java.util.Objects.requireNonNull;
 
 import com.google.common.base.MoreObjects;
 import java.security.KeyStore;
@@ -39,7 +40,7 @@ public class DefaultMdsalSslData implements IAaaCertProvider {
 
     public DefaultMdsalSslData(final AaaCertMdsalProvider aaaCertMdsalProv, final String bundleName,
             final CtlKeystore ctlKeyStore, final TrustKeystore trustKeystore) {
-        this.bundleName = bundleName;
+        this.bundleName = requireNonNull(bundleName);
         this.aaaCertMdsalProv = aaaCertMdsalProv;
         this.ctlKeyStore = ctlKeyStore;
         this.trustKeystore = trustKeystore;

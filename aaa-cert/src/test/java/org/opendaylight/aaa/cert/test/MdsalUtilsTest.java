@@ -47,7 +47,8 @@ public class MdsalUtilsTest {
         final TrustKeystore trustKeyStore = new TrustKeystoreBuilder().setName(TRUST_NAME).setStorePassword(PASSWORD)
                 .build();
 
-        sslData = new SslDataBuilder().setOdlKeystore(odlKeystore).setTrustKeystore(trustKeyStore).build();
+        sslData = new SslDataBuilder().setOdlKeystore(odlKeystore).setTrustKeystore(trustKeyStore)
+            .setBundleName("bundle").build();
 
         final SslDataKey sslDataKey = new SslDataKey(BUNDLE_NAME);
         instanceIdentifier = InstanceIdentifier.create(KeyStores.class).child(SslData.class, sslDataKey);

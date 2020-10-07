@@ -81,7 +81,7 @@ public class KeyStoresDataUtilsTest {
 
         final List<CipherSuites> cipherSuites = new ArrayList<>(Arrays.asList(cipherSuite));
         final SslData sslData = new SslDataBuilder().setOdlKeystore(odlKeystore).setTrustKeystore(trustKeyStore)
-                .build();
+                .setBundleName(BUNDLE_NAME).build();
 
         final ODLKeyTool odlKeyTool = new ODLKeyTool(TEST_PATH);
         final KeyStoresDataUtils keyStoresDataUtils = new KeyStoresDataUtils(AAA_ENCRYPTION_SERVICE);
