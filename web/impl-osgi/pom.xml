@@ -24,9 +24,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>org.opendaylight.aaa.web</groupId>
       <artifactId>web-api</artifactId>
-      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.web</groupId>
