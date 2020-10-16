@@ -7,9 +7,7 @@
  */
 package org.opendaylight.aaa.impl.password.service;
 
-import java.util.Optional;
 import org.apache.shiro.codec.Base64;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.DefaultHashService;
 import org.apache.shiro.crypto.hash.Hash;
 import org.apache.shiro.crypto.hash.HashRequest;
@@ -18,66 +16,25 @@ import org.apache.shiro.util.ByteSource;
 import org.opendaylight.aaa.api.password.service.PasswordHash;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.password.service.config.rev170619.PasswordServiceConfig;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.password.service.config.rev170619.PasswordServiceConfigBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DefaultPasswordHashService implements PasswordHashService {
-
     private static final Logger LOG = LoggerFactory.getLogger(DefaultPasswordHashService.class);
 
     public static final String DEFAULT_HASH_ALGORITHM = "SHA-512";
     public static final int DEFAULT_NUM_ITERATIONS = 20000;
 
-    private final DefaultHashService hashService = new DefaultHashService();
+    private final DefaultHashService hashService;
 
     public DefaultPasswordHashService() {
-        hashService.setRandomNumberGenerator(new SecureRandomNumberGenerator());
-        hashService.setGeneratePublicSalt(true);
-        setNumIterations(Optional.of(DEFAULT_NUM_ITERATIONS));
-        setHashAlgorithm(Optional.of(DEFAULT_HASH_ALGORITHM));
+        this(new PasswordServiceConfigBuilder().build());
     }
 
     public DefaultPasswordHashService(final PasswordServiceConfig passwordServiceConfig) {
-        this();
-        final Optional<Integer> numIterationsOptional = Optional.ofNullable(passwordServiceConfig.getIterations());
-        setNumIterations(numIterationsOptional);
-
-        final Optional<String> hashAlgorithmOptional = Optional.ofNullable(passwordServiceConfig.getAlgorithm());
-        setHashAlgorithm(hashAlgorithmOptional);
-
-        final Optional<String> privateSaltOptional = Optional.ofNullable(passwordServiceConfig.getPrivateSalt());
-        setPrivateSalt(privateSaltOptional);
-    }
-
-    private void setNumIterations(final Optional<Integer> numIterationsOptional) {
-        if (numIterationsOptional.isPresent()) {
-            final Integer numIterations = numIterationsOptional.get();
-            hashService.setHashIterations(numIterations);
-            LOG.info("DefaultPasswordHashService will utilize configured iteration count={}", numIterations);
-        } else {
-            hashService.setHashIterations(DEFAULT_NUM_ITERATIONS);
-            LOG.info("DefaultPasswordHashService will utilize default iteration count={}", DEFAULT_NUM_ITERATIONS);
-        }
-    }
-
-    private void setHashAlgorithm(final Optional<String> hashAlgorithmOptional) {
-        if (hashAlgorithmOptional.isPresent()) {
-            final String hashAlgorithm = hashAlgorithmOptional.get();
-            hashService.setHashAlgorithmName(hashAlgorithm);
-            LOG.info("DefaultPasswordHashService will utilize configured algorithm={}", hashAlgorithm);
-        } else {
-            hashService.setHashAlgorithmName(DEFAULT_HASH_ALGORITHM);
-            LOG.info("DefaultPasswordHashService will utilize default algorithm={}", DEFAULT_HASH_ALGORITHM);
-        }
-    }
-
-    private void setPrivateSalt(final Optional<String> privateSaltOptional) {
-        if (privateSaltOptional.isPresent()) {
-            hashService.setPrivateSalt(ByteSource.Util.bytes(privateSaltOptional.get()));
-            LOG.info("DefaultPasswordHashService will utilize a configured private salt");
-        } else {
-            LOG.info("DefaultPasswordHashService will not utilize a private salt, since none was configured");
-        }
+        hashService = createHashService(passwordServiceConfig.getIterations(), passwordServiceConfig.getAlgorithm(),
+            passwordServiceConfig.getPrivateSalt());
     }
 
     @Override
@@ -113,7 +70,37 @@ public class DefaultPasswordHashService implements PasswordHashService {
 
     @Override
     public boolean passwordsMatch(final String plaintext, final String stored, final String salt) {
-        final String hash = getPasswordHash(plaintext, salt).getHashedPassword();
-        return hash.equals(stored);
+        return getPasswordHash(plaintext, salt).getHashedPassword().equals(stored);
+    }
+
+    private static DefaultHashService createHashService(final Integer numIterations, final String hashAlgorithm,
+            final String privateSalt) {
+        final DefaultHashService hashService = new DefaultHashService();
+
+        if (numIterations != null) {
+            hashService.setHashIterations(numIterations);
+            LOG.info("DefaultPasswordHashService will utilize configured iteration count={}", numIterations);
+        } else {
+            hashService.setHashIterations(DEFAULT_NUM_ITERATIONS);
+            LOG.info("DefaultPasswordHashService will utilize default iteration count={}", DEFAULT_NUM_ITERATIONS);
+        }
+
+        if (hashAlgorithm != null) {
+            hashService.setHashAlgorithmName(hashAlgorithm);
+            LOG.info("DefaultPasswordHashService will utilize configured algorithm={}", hashAlgorithm);
+        } else {
+            hashService.setHashAlgorithmName(DEFAULT_HASH_ALGORITHM);
+            LOG.info("DefaultPasswordHashService will utilize default algorithm={}", DEFAULT_HASH_ALGORITHM);
+        }
+
+        if (privateSalt != null) {
+            hashService.setPrivateSalt(ByteSource.Util.bytes(privateSalt));
+            LOG.info("DefaultPasswordHashService will utilize a configured private salt");
+        } else {
+            hashService.setGeneratePublicSalt(true);
+            LOG.info("DefaultPasswordHashService will not utilize a private salt, since none was configured");
+        }
+
+        return hashService;
     }
 }
