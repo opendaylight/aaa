@@ -21,8 +21,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.DatastoreConfig" />
 
   <reference id="authService" interface="org.opendaylight.aaa.api.AuthenticationService"/>
-  <reference id="passwordService" interface="org.opendaylight.aaa.api.password.service.PasswordHashService"
-      odl:type="default"/>
+  <reference id="passwordService" interface="org.opendaylight.aaa.api.password.service.PasswordHashService"/>
 
   <bean id="idmStore" class="org.opendaylight.aaa.datastore.h2.H2Store">
     <argument value="${dbUsername}" />
