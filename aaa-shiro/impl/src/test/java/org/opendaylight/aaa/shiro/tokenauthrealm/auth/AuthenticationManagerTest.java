@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.tokenauthrealm.auth;
 
 import static org.junit.Assert.assertEquals;
@@ -13,21 +12,25 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doReturn;
 
 import java.util.Arrays;
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import org.gaul.modernizer_maven_annotations.SuppressModernizer;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.opendaylight.aaa.api.Authentication;
-import org.osgi.service.cm.ConfigurationException;
 
+@RunWith(MockitoJUnitRunner.StrictStubs.class)
 public class AuthenticationManagerTest {
+    @Mock
+    private AuthenticationManager.Configuration configuration;
+
     private final AuthenticationManager authManager = new AuthenticationManager();
 
     @Test
@@ -79,46 +82,17 @@ public class AuthenticationManagerTest {
         }
     }
 
-    @SuppressModernizer
     @Test
-    public void testUpdatedValid() throws ConfigurationException {
-        Dictionary<String, String> props = new Hashtable<>();
-
+    public void testUpdatedValid() {
         assertFalse(authManager.isAuthEnabled());
 
-        props.put(AuthenticationManager.AUTH_ENABLED, "TrUe");
-        authManager.updated(props);
+        doReturn(true).when(configuration).authEnabled();
+        authManager.modified(configuration);
         assertTrue(authManager.isAuthEnabled());
 
-        props.put(AuthenticationManager.AUTH_ENABLED, "FaLsE");
-        authManager.updated(props);
+        doReturn(false).when(configuration).authEnabled();
+        authManager.modified(configuration);
         assertFalse(authManager.isAuthEnabled());
-    }
-
-    @Test
-    public void testUpdatedNullProperty() throws ConfigurationException {
-
-        assertFalse(authManager.isAuthEnabled());
-        authManager.updated(null);
-        assertFalse(authManager.isAuthEnabled());
-    }
-
-    @SuppressModernizer
-    @Test(expected = ConfigurationException.class)
-    public void testUpdatedInvalidValue() throws ConfigurationException {
-        Dictionary<String, String> props = new Hashtable<>();
-
-        props.put(AuthenticationManager.AUTH_ENABLED, "yes");
-        authManager.updated(props);
-    }
-
-    @SuppressModernizer
-    @Test(expected = ConfigurationException.class)
-    public void testUpdatedInvalidKey() throws ConfigurationException {
-        Dictionary<String, String> props = new Hashtable<>();
-
-        props.put("Invalid Key", "true");
-        authManager.updated(props);
     }
 
     private class Worker implements Callable<Authentication> {
