@@ -31,15 +31,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
       <artifactId>mdsal-binding-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.dependencymanager</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.core</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
     </dependency>
@@ -59,16 +50,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Export-Package/>
-          </instructions>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
