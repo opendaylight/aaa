@@ -55,12 +55,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <artifactId>gson</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.dependencymanager</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
         <!--Yang Binding -->
         <dependency>
             <groupId>org.opendaylight.mdsal</groupId>
@@ -77,6 +71,12 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>osgi.cmpn</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <optional>true</optional>
+            <scope>provided</scope>
         </dependency>
 
         <!-- JSON JAXB Stuff -->
