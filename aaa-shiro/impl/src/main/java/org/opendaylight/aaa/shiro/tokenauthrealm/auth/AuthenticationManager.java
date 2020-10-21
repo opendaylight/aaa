@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2014, 2017 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2020 PANTHEON.tech, s.r.o.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -7,28 +8,56 @@
  */
 package org.opendaylight.aaa.shiro.tokenauthrealm.auth;
 
-import java.util.Dictionary;
+import javax.inject.Singleton;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationService;
-import org.osgi.service.cm.ConfigurationException;
-import org.osgi.service.cm.ManagedService;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.metatype.annotations.AttributeDefinition;
+import org.osgi.service.metatype.annotations.Designate;
+import org.osgi.service.metatype.annotations.ObjectClassDefinition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An {@link InheritableThreadLocal}-based {@link AuthenticationService}.
- *
- * @author liemmn
  */
-public class AuthenticationManager implements AuthenticationService, ManagedService {
-    private static final String AUTH_ENABLED_ERR = "Error setting authEnabled";
+@Singleton
+@Component(configurationPid = "org.opendaylight.aaa.authn")
+@Designate(ocd = AuthenticationManager.Configuration.class)
+public final class AuthenticationManager implements AuthenticationService {
+    @ObjectClassDefinition(name = "OpenDaylight AAA Authentication Configuration")
+    public @interface Configuration {
+        @AttributeDefinition(
+            name = "Enable authentication",
+            description =
+                "Enable authentication by setting it to the value 'true', or 'false' if bypassing authentication.\n"
+                    + "Note that bypassing authentication may result in your controller being more vulnerable to "
+                    + "unauthorized accesses.\n"
+                    + "Authorization, if enabled, will not work if authentication is disabled.")
+        boolean authEnabled() default true;
+    }
 
-    protected static final String AUTH_ENABLED = "authEnabled";
+    private static final Logger LOG = LoggerFactory.getLogger(AuthenticationManager.class);
 
     // In non-Karaf environments, authEnabled is set to false by default
-    private volatile boolean authEnabled = false;
+    private volatile boolean authEnabled;
 
     private final ThreadLocal<Authentication> auth = new InheritableThreadLocal<>();
 
     public AuthenticationManager() {
+        this(false);
+    }
+
+    public AuthenticationManager(final boolean authEnabled) {
+        this.authEnabled = authEnabled;
+    }
+
+    public void setAuthEnabled(final boolean authEnabled) {
+        this.authEnabled = authEnabled;
+        LOG.info("Authentication is now {}", authEnabled ? "enabled" : "disabled");
     }
 
     @Override
@@ -37,7 +66,7 @@ public class AuthenticationManager implements AuthenticationService, ManagedServ
     }
 
     @Override
-    public void set(Authentication authentication) {
+    public void set(final Authentication authentication) {
         auth.set(authentication);
     }
 
@@ -51,17 +80,21 @@ public class AuthenticationManager implements AuthenticationService, ManagedServ
         return authEnabled;
     }
 
-    @Override
-    public void updated(Dictionary<String, ?> properties) throws ConfigurationException {
-        if (properties == null) {
-            return;
-        }
+    @Activate
+    @SuppressWarnings("static-method")
+    void activate(final Configuration configuration) {
+        setAuthEnabled(configuration.authEnabled());
+        LOG.info("Authentication Manager activated");
+    }
 
-        String propertyValue = (String) properties.get(AUTH_ENABLED);
-        boolean isTrueString = Boolean.parseBoolean(propertyValue);
-        if (!isTrueString && !"false".equalsIgnoreCase(propertyValue)) {
-            throw new ConfigurationException(AUTH_ENABLED, AUTH_ENABLED_ERR);
-        }
-        authEnabled = isTrueString;
+    @Deactivate
+    @SuppressWarnings("static-method")
+    void deactivate() {
+        LOG.info("Authentication Manager deactivated");
+    }
+
+    @Modified
+    void modified(final Configuration configuration) {
+        setAuthEnabled(configuration.authEnabled());
     }
 }
