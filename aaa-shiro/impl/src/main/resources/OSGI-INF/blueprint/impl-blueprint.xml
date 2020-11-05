@@ -24,19 +24,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <reference id="passwordService" interface="org.opendaylight.aaa.api.password.service.PasswordHashService"/>
   <reference id="idmStore" interface ="org.opendaylight.aaa.api.IIDMStore"/>
 
-  <bean id="idmLightProxy" class="org.opendaylight.aaa.shiro.idm.IdmLightProxy">
-    <argument ref="idmStore" />
-    <argument ref="passwordService" />
-  </bean>
-
-  <service ref="idmLightProxy" odl:type="default">
-    <interfaces>
-      <value>org.opendaylight.aaa.api.IdMService</value>
-      <value>org.opendaylight.aaa.api.ClaimCache</value>
-      <value>org.opendaylight.aaa.api.CredentialAuth</value>
-      <value>org.opendaylight.aaa.api.PasswordCredentialAuth</value>
-    </interfaces>
-  </service>
+  <reference id="passwordCredentialAuth" interface="org.opendaylight.aaa.api.PasswordCredentialAuth"/>
+  <reference id="claimCache" interface="org.opendaylight.aaa.api.ClaimCache"/>
 
   <reference id="dataBroker"
     interface="org.opendaylight.mdsal.binding.api.DataBroker"
@@ -54,7 +43,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         init-method="init" destroy-method="close">
     <argument ref="dataBroker" />
     <argument ref="certManager" />
-    <argument ref="idmLightProxy" />
+    <argument ref="passwordCredentialAuth" />
     <argument ref="shiroConfiguration" />
     <argument ref="httpService" />
     <argument value="/moon" />
@@ -96,7 +85,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 
   <bean id="webInitializer" class="org.opendaylight.aaa.shiro.web.env.WebInitializer" destroy-method="close">
     <argument ref="webServer"/>
-    <argument ref="idmLightProxy"/>
+    <argument ref="claimCache"/>
     <argument ref="idmStore"/>
     <argument ref="webContextSecurer"/>
     <argument ref="servletSupport"/>
