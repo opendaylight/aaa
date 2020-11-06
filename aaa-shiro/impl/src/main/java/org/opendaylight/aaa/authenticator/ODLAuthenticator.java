@@ -8,7 +8,7 @@
 
 package org.opendaylight.aaa.authenticator;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.SecurityUtils;
@@ -40,7 +40,7 @@ public class ODLAuthenticator implements Authenticator {
 
         try {
             final String base64Creds = authorization.substring("Basic".length()).trim();
-            String credentials = new String(Base64.getDecoder().decode(base64Creds), Charset.forName("UTF-8"));
+            String credentials = new String(Base64.getDecoder().decode(base64Creds), StandardCharsets.UTF_8);
             final String[] values = credentials.split(":", 2);
             UsernamePasswordToken upt = new UsernamePasswordToken();
             upt.setUsername(values[0]);
