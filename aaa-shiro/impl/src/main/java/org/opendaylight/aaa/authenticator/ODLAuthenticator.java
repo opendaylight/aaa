@@ -5,11 +5,12 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.authenticator;
 
 import java.nio.charset.Charset;
 import java.util.Base64;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.ShiroException;
@@ -19,17 +20,25 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.subject.Subject;
 import org.jolokia.osgi.security.Authenticator;
+import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * AAA hook for <code>odl-jolokia</code> configured w/ <code>org.jolokia.authMode=service-all</code>.
  */
+@Singleton
+@Component(immediate = true)
 public class ODLAuthenticator implements Authenticator {
     private static final Logger LOG = LoggerFactory.getLogger(ODLAuthenticator.class);
 
+    @Inject
+    public ODLAuthenticator() {
+        // Exposed for DI
+    }
+
     @Override
-    public boolean authenticate(HttpServletRequest httpServletRequest) {
+    public boolean authenticate(final HttpServletRequest httpServletRequest) {
         final String authorization = httpServletRequest.getHeader("Authorization");
 
         LOG.trace("Incoming Jolokia authentication attempt: {}", authorization);
@@ -61,7 +70,7 @@ public class ODLAuthenticator implements Authenticator {
         return false;
     }
 
-    private void logout() {
+    private static void logout() {
         final Subject subject = SecurityUtils.getSubject();
         try {
             subject.logout();
@@ -74,7 +83,7 @@ public class ODLAuthenticator implements Authenticator {
         }
     }
 
-    private boolean login(UsernamePasswordToken upt) {
+    private static boolean login(final UsernamePasswordToken upt) {
         final Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(upt);
