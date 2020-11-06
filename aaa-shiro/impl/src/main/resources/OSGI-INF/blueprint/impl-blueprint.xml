@@ -21,21 +21,13 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.DatastoreConfig" />
 
   <reference id="authService" interface="org.opendaylight.aaa.api.AuthenticationService"/>
-  <reference id="passwordService" interface="org.opendaylight.aaa.api.password.service.PasswordHashService"
-      odl:type="default"/>
-
-  <bean id="idmStore" class="org.opendaylight.aaa.datastore.h2.H2Store">
-    <argument value="${dbUsername}" />
-    <argument value="${dbPassword}" />
-    <argument ref="passwordService" />
-  </bean>
+  <reference id="passwordService" interface="org.opendaylight.aaa.api.password.service.PasswordHashService"/>
+  <reference id="idmStore" interface ="org.opendaylight.aaa.api.IIDMStore"/>
 
   <bean id="idmLightProxy" class="org.opendaylight.aaa.shiro.idm.IdmLightProxy">
     <argument ref="idmStore" />
     <argument ref="passwordService" />
   </bean>
-
-  <service ref="idmStore" interface="org.opendaylight.aaa.api.IIDMStore" odl:type="default"/>
 
   <service ref="idmLightProxy" odl:type="default">
     <interfaces>
@@ -56,14 +48,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 
   <reference id="httpService"
              interface="org.osgi.service.http.HttpService"/>
-
-  <!-- TODO: when we migrate off h2 towards the MD-SAL DS, get rid of this. -->
-  <cm:property-placeholder persistent-id="org.opendaylight.aaa.h2">
-    <cm:default-properties>
-      <cm:property name="dbUsername" value="foo" />
-      <cm:property name="dbPassword" value="bar" />
-    </cm:default-properties>
-  </cm:property-placeholder>
 
   <bean id="provider"
         class="org.opendaylight.aaa.AAAShiroProvider"
