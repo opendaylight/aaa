@@ -16,7 +16,7 @@
       <argument ref="encryService"/>
   </bean>
 
-  <service ref="certManager" interface="org.opendaylight.aaa.cert.api.ICertificateManager" odl:type="default-certificate-manager"/>
+  <service ref="certManager" interface="org.opendaylight.aaa.cert.api.ICertificateManager"/>
 
   <bean id="aaaCertRpcService" class="org.opendaylight.aaa.cert.impl.AaaCertRpcServiceImpl">
       <argument ref="aaaCertDefaultConfig"/>

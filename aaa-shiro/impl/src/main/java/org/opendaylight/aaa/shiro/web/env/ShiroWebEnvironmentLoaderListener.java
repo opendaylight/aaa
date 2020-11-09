@@ -12,6 +12,7 @@ import org.apache.shiro.util.LifecycleUtils;
 import org.apache.shiro.web.env.EnvironmentLoaderListener;
 import org.apache.shiro.web.env.MutableWebEnvironment;
 import org.apache.shiro.web.env.WebEnvironment;
+import org.opendaylight.aaa.TokenProvider;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
@@ -41,14 +42,14 @@ public class ShiroWebEnvironmentLoaderListener extends EnvironmentLoaderListener
     public ShiroWebEnvironmentLoaderListener(final ShiroConfiguration shiroConfiguration, final DataBroker dataBroker,
                                              final ICertificateManager certificateManager,
                                              final AuthenticationService authenticationService,
-                                             final TokenAuthenticators tokenAuthenticators, final TokenStore tokenStore,
+                                             final TokenProvider tokenProvider,
                                              final PasswordHashService passwordHashService) {
         this.shiroConfiguration = shiroConfiguration;
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
         this.authenticationService = authenticationService;
-        this.tokenAuthenticators = tokenAuthenticators;
-        this.tokenStore = tokenStore;
+        this.tokenAuthenticators = tokenProvider.getTokenAuthenticators();
+        this.tokenStore = tokenProvider.getTokenStore();
         this.passwordHashService = passwordHashService;
         LOG.debug("ShiroWebEnvironmentLoaderListenerImpl created");
     }

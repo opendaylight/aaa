@@ -10,6 +10,8 @@ package org.opendaylight.aaa;
 import static java.util.Objects.requireNonNull;
 
 import java.util.concurrent.CompletableFuture;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.servlet.ServletException;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.IDMStoreException;
@@ -33,7 +35,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Provider for AAA shiro implementation.
  */
-public final class AAAShiroProvider {
+@Singleton
+public final class AAAShiroProvider implements TokenProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
@@ -52,6 +55,7 @@ public final class AAAShiroProvider {
     /**
      * Constructor.
      */
+    @Inject
     public AAAShiroProvider(final DataBroker dataBroker,
                             final ICertificateManager certificateManager,
                             final PasswordCredentialAuth credentialAuth,
