@@ -165,6 +165,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                            !javax.annotation,
                            *
                         </Import-Package>
+                        <_dsannotations-options>norequirements</_dsannotations-options>
                     </instructions>
                 </configuration>
             </plugin>
