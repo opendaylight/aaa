@@ -24,6 +24,9 @@ import org.opendaylight.aaa.web.WebContextRegistration;
 import org.opendaylight.aaa.web.WebContextSecurer;
 import org.opendaylight.aaa.web.WebServer;
 import org.opendaylight.aaa.web.servlet.ServletSupport;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Initializer for web components.
@@ -34,14 +37,18 @@ import org.opendaylight.aaa.web.servlet.ServletSupport;
  * @author Michael Vorburger.ch
  */
 @Singleton
+@Component(immediate = true)
 public class WebInitializer {
 
     private final WebContextRegistration registraton;
 
     @Inject
-    public WebInitializer(WebServer webServer, ClaimCache claimCache, IIDMStore iidMStore,
-            WebContextSecurer webContextSecurer, ServletSupport servletSupport,
-            CustomFilterAdapterConfiguration customFilterAdapterConfig) throws ServletException {
+    @Activate
+    public WebInitializer(@Reference WebServer webServer, @Reference ClaimCache claimCache,
+                          @Reference IIDMStore iidMStore, @Reference WebContextSecurer webContextSecurer,
+                          @Reference ServletSupport servletSupport,
+                          @Reference CustomFilterAdapterConfiguration customFilterAdapterConfig)
+            throws ServletException {
 
         WebContextBuilder webContextBuilder = WebContext.builder().contextPath("auth").supportsSessions(true)
 
