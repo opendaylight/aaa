@@ -34,6 +34,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
       <artifactId>commons-lang3</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>osgi.cmpn</artifactId>
+    </dependency>
+
     <!-- Bouncy Castle dependency -->
     <dependency>
       <groupId>org.bouncycastle</groupId>
@@ -49,6 +54,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
         <extensions>true</extensions>
         <configuration>
           <instructions>
+            <_dsannotations-options>norequirements</_dsannotations-options>
             <Export-Package>
               org.opendaylight.aaa.cert.api.*,
               org.opendaylight.aaa.cert.impl.*,
