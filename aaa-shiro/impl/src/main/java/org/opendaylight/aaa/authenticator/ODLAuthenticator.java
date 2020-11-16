@@ -11,6 +11,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.AuthenticationException;
@@ -20,18 +21,24 @@ import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.env.WebEnvironment;
 import org.jolokia.osgi.security.Authenticator;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * AAA hook for <code>odl-jolokia</code> configured w/ <code>org.jolokia.authMode=service-all</code>.
  */
+@Component(immediate = true, service = Authenticator.class)
 public class ODLAuthenticator implements Authenticator {
     private static final Logger LOG = LoggerFactory.getLogger(ODLAuthenticator.class);
 
     private final WebEnvironment env;
 
-    public ODLAuthenticator(final WebEnvironment env) {
+    @Inject
+    @Activate
+    public ODLAuthenticator(final @Reference WebEnvironment env) {
         this.env = requireNonNull(env);
     }
 
