@@ -139,6 +139,28 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <artifactId>aaa-password-service-impl</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>1.10.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.component.annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.component</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.metatype.annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.http</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -165,42 +187,9 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                            !javax.annotation,
                            *
                         </Import-Package>
+                        <_dsannotations-options>norequirements</_dsannotations-options>
                     </instructions>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-artifacts</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>attach-artifact</goal>
-                        </goals>
-                        <configuration>
-                            <artifacts>
-                                <!-- attach idmtool as an artifact -->
-                                <artifact>
-                                    <file>${project.build.directory}/classes/idmtool.py</file>
-                                    <type>py</type>
-                                    <classifier>idmtool</classifier>
-                                </artifact>
-                                <!-- attach aaa-app-config.xml as an artifact -->
-                                <artifact>
-                                    <file>${project.build.directory}/classes/initial/aaa-app-config.xml</file>
-                                    <type>xml</type>
-                                    <classifier>aaa-app-config</classifier>
-                                </artifact>
-                                <artifact>
-                                    <file>${project.build.directory}/classes/initial/aaa-datastore-config.xml</file>
-                                    <type>xml</type>
-                                    <classifier>aaa-datastore-config</classifier>
-                                </artifact>
-                            </artifacts>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
