@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provider for AAA shiro implementation.
  */
-public final class AAAShiroProvider {
+public final class AAAShiroProvider implements TokenProvider {
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
     private final TokenStore tokenStore;
@@ -31,9 +31,8 @@ public final class AAAShiroProvider {
     /**
      * Constructor.
      */
-    public AAAShiroProvider(final PasswordCredentialAuth credentialAuth,
-                            final DatastoreConfig datastoreConfig,
-                            final IIDMStore iidmStore) {
+    public AAAShiroProvider(final PasswordCredentialAuth credentialAuth, final DatastoreConfig datastoreConfig,
+            final IIDMStore iidmStore) {
         if (datastoreConfig == null || !datastoreConfig.getStore().equals(DatastoreConfig.Store.H2DataStore)) {
             LOG.info("AAA Datastore has not been initialized");
             tokenStore = null;

@@ -22,7 +22,6 @@ import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 @Beta
@@ -41,11 +40,6 @@ public class OSGIIdmLightProxy extends ForwardingObject implements PasswordCrede
     @Activate
     void activate() {
         delegate = new IdmLightProxy(iidmStore, passwordHashService);
-    }
-
-    @Deactivate
-    void deactivate() {
-        delegate = null;
     }
 
     @Override

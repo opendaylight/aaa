@@ -93,20 +93,6 @@
             <classifier>features</classifier>
         </dependency>
         <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-shiro</artifactId>
-            <version>${project.version}</version>
-            <type>xml</type>
-            <classifier>aaa-app-config</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-shiro</artifactId>
-            <version>${project.version}</version>
-            <type>xml</type>
-            <classifier>aaa-datastore-config</classifier>
-        </dependency>
-        <dependency>
             <groupId>org.opendaylight.odlparent</groupId>
             <artifactId>odl-karaf-feat-jetty</artifactId>
             <type>xml</type>

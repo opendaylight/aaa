@@ -8,10 +8,14 @@
  */
 package org.opendaylight.aaa.shiro.web.env;
 
+import javax.inject.Inject;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.web.env.IniWebEnvironment;
+import org.apache.shiro.web.env.WebEnvironment;
+import org.eclipse.jdt.annotation.NonNull;
+import org.opendaylight.aaa.OSGiAAAShiroConfig;
+import org.opendaylight.aaa.TokenProvider;
 import org.opendaylight.aaa.api.AuthenticationService;
-import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.shiro.realm.KeystoneAuthRealm;
@@ -19,11 +23,11 @@ import org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter;
 import org.opendaylight.aaa.shiro.realm.MdsalRealm;
 import org.opendaylight.aaa.shiro.realm.MoonRealm;
 import org.opendaylight.aaa.shiro.realm.TokenAuthRealm;
-import org.opendaylight.aaa.tokenauthrealm.auth.TokenAuthenticators;
 import org.opendaylight.aaa.web.servlet.ServletSupport;
 import org.opendaylight.mdsal.binding.api.DataBroker;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration;
 import org.opendaylight.yangtools.util.ClassLoaderUtils;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +36,7 @@ import org.slf4j.LoggerFactory;
  * Initialization happens in the context of this class's ClassLoader, with dependencies being injected into their
  * thread-local variables.
  */
+@Component(immediate = true, service = WebEnvironment.class)
 public final class AAAWebEnvironment extends IniWebEnvironment {
     private static final Logger LOG = LoggerFactory.getLogger(AAAWebEnvironment.class);
 
@@ -39,10 +44,12 @@ public final class AAAWebEnvironment extends IniWebEnvironment {
         setIni(ini);
     }
 
-    public static AAAWebEnvironment create(final ShiroConfiguration shiroConfiguration, final DataBroker dataBroker,
-            final ICertificateManager certificateManager, final AuthenticationService authenticationService,
-            final TokenAuthenticators tokenAuthenticators, final TokenStore tokenStore,
-            final PasswordHashService passwordHashService, final ServletSupport servletSupport) {
+    @Inject
+    @Reference
+    public static AAAWebEnvironment create(@NonNull final OSGiAAAShiroConfig shiroConfiguration,
+            @Reference final DataBroker dataBroker, @Reference final ICertificateManager certificateManager,
+            @Reference final AuthenticationService authenticationService, @Reference final TokenProvider tokenProvider,
+            @Reference final PasswordHashService passwordHashService, @Reference final ServletSupport servletSupport) {
         // Turn ShiroConfiguration into an Ini
         final var ini = new Ini();
 
@@ -67,8 +74,8 @@ public final class AAAWebEnvironment extends IniWebEnvironment {
                  var keyStoneLoad = KeystoneAuthRealm.prepareForLoad(certificateManager, servletSupport);
                  var mdsalLoad = MdsalRealm.prepareForLoad(passwordHashService, dataBroker);
                  var moonLoad = MoonRealm.prepareForLoad(servletSupport);
-                 var tokenAuthLoad = TokenAuthRealm.prepareForLoad(authenticationService, tokenAuthenticators,
-                     tokenStore)) {
+                 var tokenAuthLoad = TokenAuthRealm.prepareForLoad(authenticationService,
+                         tokenProvider.getTokenAuthenticators(), tokenProvider.getTokenStore())) {
                 ret.configure();
             }
         });
