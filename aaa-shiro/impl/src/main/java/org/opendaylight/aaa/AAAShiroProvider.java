@@ -7,22 +7,23 @@
  */
 package org.opendaylight.aaa;
 
-import org.opendaylight.aaa.api.IDMStoreException;
-import org.opendaylight.aaa.api.IIDMStore;
-import org.opendaylight.aaa.api.PasswordCredentialAuth;
-import org.opendaylight.aaa.api.StoreBuilder;
-import org.opendaylight.aaa.api.TokenStore;
+import org.opendaylight.aaa.api.*;
+import org.opendaylight.aaa.api.password.service.PasswordHashService;
+import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.datastore.h2.H2TokenStore;
 import org.opendaylight.aaa.tokenauthrealm.auth.HttpBasicAuth;
 import org.opendaylight.aaa.tokenauthrealm.auth.TokenAuthenticators;
+import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.DatastoreConfig;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration;
+import org.osgi.service.http.HttpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Provider for AAA shiro implementation.
  */
-public final class AAAShiroProvider {
+public final class AAAShiroProvider implements TokenProvider {
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
     private final TokenStore tokenStore;
@@ -31,9 +32,9 @@ public final class AAAShiroProvider {
     /**
      * Constructor.
      */
-    public AAAShiroProvider(final PasswordCredentialAuth credentialAuth,
-                            final DatastoreConfig datastoreConfig,
-                            final IIDMStore iidmStore) {
+    public AAAShiroProvider(DataBroker dataBroker, ICertificateManager certificateManager, final PasswordCredentialAuth credentialAuth,
+                            ShiroConfiguration shiroConfig, HttpService httpService, String moonEndpointPath, String oathEndpointPath, final DatastoreConfig datastoreConfig,
+                            final IIDMStore iidmStore, AuthenticationService authenticationService, PasswordHashService passwordHashService) {
         if (datastoreConfig == null || !datastoreConfig.getStore().equals(DatastoreConfig.Store.H2DataStore)) {
             LOG.info("AAA Datastore has not been initialized");
             tokenStore = null;
