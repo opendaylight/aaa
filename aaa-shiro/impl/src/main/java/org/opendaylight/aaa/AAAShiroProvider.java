@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provider for AAA shiro implementation.
  */
-public final class AAAShiroProvider {
+public final class AAAShiroProvider implements TokenProvider {
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
     private final TokenStore tokenStore;

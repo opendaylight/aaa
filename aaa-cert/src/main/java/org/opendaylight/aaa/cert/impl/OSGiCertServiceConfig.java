@@ -15,15 +15,12 @@ import com.google.common.collect.ForwardingObject;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Objects;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.gaul.modernizer_maven_annotations.SuppressModernizer;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.AaaCertServiceConfig;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystore;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystoreBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.TrustKeystore;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.TrustKeystoreBuilder;
 import org.opendaylight.yangtools.yang.binding.Augmentation;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -61,18 +58,8 @@ public final class OSGiCertServiceConfig extends ForwardingObject implements Aaa
     }
 
     @Override
-    public CtlKeystore nonnullCtlKeystore() {
-        return Objects.requireNonNullElse(getCtlKeystore(), CtlKeystoreBuilder.empty());
-    }
-
-    @Override
     public @Nullable TrustKeystore getTrustKeystore() {
         return delegate().getTrustKeystore();
-    }
-
-    @Override
-    public @NonNull TrustKeystore nonnullTrustKeystore() {
-        return Objects.requireNonNullElse(getTrustKeystore(), TrustKeystoreBuilder.empty());
     }
 
     @Override
