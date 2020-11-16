@@ -74,7 +74,7 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     private static final ThreadLocal<ICertificateManager> CERT_MANAGER_TL = new ThreadLocal<>();
     private static final ThreadLocal<Supplier<ClientBuilder>> SERVLET_SUPPORT_TL = new ThreadLocal<>();
 
-    private volatile URI serverUri = null;
+    private volatile URI serverUri;
     private volatile boolean sslVerification = true;
     private volatile String defaultDomain = DEFAULT_KEYSTONE_DOMAIN;
 
