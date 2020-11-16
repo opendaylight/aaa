@@ -8,12 +8,6 @@
  -->
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="odl-aaa-${project.version}">
     <feature name="odl-aaa-shiro" version="${project.version}">
-        <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-app-config.xml">
-            mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/xml/aaa-app-config
-        </configfile>
-        <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-datastore-config.xml">
-            mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/xml/aaa-datastore-config
-        </configfile>
         <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-password-service-config.xml">
             mvn:org.opendaylight.aaa/aaa-password-service-impl/${project.version}/xml/aaa-password-service-config
         </configfile>
