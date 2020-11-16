@@ -10,21 +10,28 @@ package org.opendaylight.aaa.shiro.web.env;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Arrays;
+import javax.inject.Inject;
 import org.apache.shiro.web.env.WebEnvironment;
 import org.opendaylight.aaa.shiro.filters.AAAShiroFilter;
 import org.opendaylight.aaa.web.FilterDetails;
 import org.opendaylight.aaa.web.WebContext;
 import org.opendaylight.aaa.web.WebContextSecurer;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Secures a {@link WebContext} using Shiro.
  *
  * @author Michael Vorburger.ch
  */
+@Component(immediate = true, service = WebContextSecurer.class)
 public class ShiroWebContextSecurer implements WebContextSecurer {
     private final WebEnvironment webEnvironment;
 
-    public ShiroWebContextSecurer(final WebEnvironment webEnvironment) {
+    @Inject
+    @Activate
+    public ShiroWebContextSecurer(final @Reference WebEnvironment webEnvironment) {
         this.webEnvironment = requireNonNull(webEnvironment);
     }
 
