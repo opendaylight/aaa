@@ -10,8 +10,5 @@
     <feature name="odl-aaa-cert" version="${project.version}">
         <feature version="[7,8)">odl-controller-blueprint</feature>
         <feature version="[7,8)">odl-mdsal-broker</feature>
-        <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-cert-config.xml">
-            mvn:org.opendaylight.aaa/aaa-cert/${project.version}/xml/config
-        </configfile>
     </feature>
 </features>
