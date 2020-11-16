@@ -38,15 +38,6 @@
             <type>xml</type>
             <classifier>features</classifier>
         </dependency>
-
-        <dependency>
-            <!-- finalname="etc/opendaylight/datastore/initial/config/aaa-cert-config.xml" -->
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-cert</artifactId>
-            <version>${project.version}</version>
-            <type>xml</type>
-            <classifier>config</classifier>
-        </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-cert</artifactId>
