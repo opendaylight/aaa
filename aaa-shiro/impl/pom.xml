@@ -139,6 +139,24 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <artifactId>aaa-password-service-impl</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>1.10.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.metatype.annotations</artifactId>
+            <version>1.4.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.http</artifactId>
+            <version>1.2.2</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -165,6 +183,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                            !javax.annotation,
                            *
                         </Import-Package>
+                        <_dsannotations-options>norequirements</_dsannotations-options>
                     </instructions>
                 </configuration>
             </plugin>
