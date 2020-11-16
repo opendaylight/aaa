@@ -23,6 +23,9 @@ import org.opendaylight.aaa.web.WebContextSecurer;
 import org.opendaylight.aaa.web.WebServer;
 import org.opendaylight.aaa.web.servlet.ServletSupport;
 import org.opendaylight.yangtools.concepts.Registration;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Initializer for web components.
@@ -33,14 +36,16 @@ import org.opendaylight.yangtools.concepts.Registration;
  * @author Michael Vorburger.ch
  */
 @Singleton
+@Component(immediate = true)
 public class WebInitializer {
     private final Registration registraton;
 
     @Inject
-    public WebInitializer(final WebServer webServer, final ClaimCache claimCache, final IIDMStore iidMStore,
-            final WebContextSecurer webContextSecurer, final ServletSupport servletSupport,
-            final CustomFilterAdapterConfiguration customFilterAdapterConfig) throws ServletException {
-
+    @Activate
+    public WebInitializer(final @Reference WebServer webServer, final @Reference ClaimCache claimCache,
+            final @Reference IIDMStore iidMStore, final @Reference WebContextSecurer webContextSecurer,
+            final @Reference ServletSupport servletSupport,
+            final @Reference CustomFilterAdapterConfiguration customFilterAdapterConfig) throws ServletException {
         final var webContextBuilder = WebContext.builder()
             .name("OpenDaylight IDM realm management")
             .contextPath("/auth")
