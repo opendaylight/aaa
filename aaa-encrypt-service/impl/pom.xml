@@ -46,6 +46,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
       <groupId>jakarta.xml.bind</groupId>
       <artifactId>jakarta.xml.bind-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>osgi.cmpn</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
