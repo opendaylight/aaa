@@ -10,8 +10,5 @@
     <feature name="odl-aaa-encryption-service" version="${project.version}">
         <feature version="[7,8)">odl-controller-blueprint</feature>
         <feature version="[7,8)">odl-mdsal-broker</feature>
-        <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-encrypt-service-config.xml">
-            mvn:org.opendaylight.aaa/aaa-encrypt-service-impl/${project.version}/xml/config
-        </configfile>
     </feature>
 </features>
