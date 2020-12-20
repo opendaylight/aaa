@@ -64,12 +64,6 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>aaa-encrypt-service-impl</artifactId>
-            <classifier>config</classifier>
-            <type>xml</type>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>aaa-filterchain</artifactId>
             <classifier>config</classifier>
             <type>cfg</type>
