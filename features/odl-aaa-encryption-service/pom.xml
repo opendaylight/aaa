@@ -65,12 +65,5 @@
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-encrypt-service-impl</artifactId>
         </dependency>
-        <dependency>
-            <!-- finalname="etc/opendaylight/datastore/initial/config/aaa-encrypt-service-config.xml" -->
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-encrypt-service-impl</artifactId>
-            <type>xml</type>
-            <classifier>config</classifier>
-        </dependency>
     </dependencies>
 </project>
