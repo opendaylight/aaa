@@ -109,8 +109,8 @@ public class AaaCertRpcServiceImplTest {
         aaaEncryptionService = aaaEncryptionServiceInit;
 
         final AaaCertServiceConfig aaaCertServiceConfigInit = mock(AaaCertServiceConfig.class);
-        when(aaaCertServiceConfigInit.isUseConfig()).thenReturn(true);
-        when(aaaCertServiceConfigInit.isUseMdsal()).thenReturn(true);
+        when(aaaCertServiceConfigInit.getUseConfig()).thenReturn(true);
+        when(aaaCertServiceConfigInit.getUseMdsal()).thenReturn(true);
         when(aaaCertServiceConfigInit.getBundleName()).thenReturn(BUNDLE_NAME);
         aaaCertServiceConfig = aaaCertServiceConfigInit;
 

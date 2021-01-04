@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.filters;
 
 import static org.junit.Assert.assertEquals;
@@ -20,11 +19,11 @@ import org.junit.Test;
  * Tests authentication token output utilities.
  */
 public class AuthenticationTokenUtilsTest {
-
     /**
      * A sample non-UsernamePasswordToken implementation for testing.
      */
     private final class NotUsernamePasswordToken implements AuthenticationToken {
+        private static final long serialVersionUID = -1L;
 
         @Override
         public Object getPrincipal() {
