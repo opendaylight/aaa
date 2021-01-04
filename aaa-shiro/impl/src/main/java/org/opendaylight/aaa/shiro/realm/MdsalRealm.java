@@ -141,7 +141,7 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
                 final String inputUsername = HeaderUtils.extractUsername(username);
                 final String domainId = HeaderUtils.extractDomain(username);
                 final String inputUserId = String.format("%s@%s", inputUsername, domainId);
-                final boolean userEnabled = u.isEnabled();
+                final boolean userEnabled = u.getEnabled();
                 if (!userEnabled) {
                     LOG.trace("userId={} is skipped because it is disabled", u.getUserid());
                 }
