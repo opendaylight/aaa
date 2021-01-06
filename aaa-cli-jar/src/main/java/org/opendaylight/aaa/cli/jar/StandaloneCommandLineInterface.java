@@ -19,10 +19,10 @@ import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
-import org.opendaylight.aaa.datastore.h2.H2Store;
-import org.opendaylight.aaa.datastore.h2.IdmLightConfig;
-import org.opendaylight.aaa.datastore.h2.IdmLightConfigBuilder;
-import org.opendaylight.aaa.datastore.h2.IdmLightSimpleConnectionProvider;
+import org.opendaylight.aaa.authn.h2.H2Store;
+import org.opendaylight.aaa.authn.h2.IdmLightConfig;
+import org.opendaylight.aaa.authn.h2.IdmLightConfigBuilder;
+import org.opendaylight.aaa.authn.h2.IdmLightSimpleConnectionProvider;
 import org.opendaylight.aaa.impl.password.service.DefaultPasswordHashService;
 
 /**
@@ -38,7 +38,7 @@ public class StandaloneCommandLineInterface {
     private static final String DOMAIN = IIDMStore.DEFAULT_DOMAIN;
     private final PasswordHashService passwordService;
 
-    public StandaloneCommandLineInterface(File directoryWithDatabaseFile) throws IOException, IDMStoreException {
+    public StandaloneCommandLineInterface(final File directoryWithDatabaseFile) throws IOException, IDMStoreException {
         IdmLightConfigBuilder configBuider = new IdmLightConfigBuilder();
         configBuider.dbDirectory(directoryWithDatabaseFile.getCanonicalPath()).dbUser("foo").dbPwd("bar");
         IdmLightConfig config = configBuider.build();
@@ -57,7 +57,7 @@ public class StandaloneCommandLineInterface {
         return users.stream().map(User::getName).collect(Collectors.toList());
     }
 
-    public boolean resetPassword(String userIdWithoutDomain, String newPassword) throws IDMStoreException {
+    public boolean resetPassword(final String userIdWithoutDomain, final String newPassword) throws IDMStoreException {
         Optional<User> optUser = getSingleUser(userIdWithoutDomain);
         if (!optUser.isPresent()) {
             return false;
@@ -73,7 +73,8 @@ public class StandaloneCommandLineInterface {
      * Check a user's password.
      * See <a href="https://bugs.opendaylight.org/show_bug.cgi?id=8721">Bug 8721 requirement</a>.
      */
-    public boolean checkUserPassword(String userIdWithoutDomain, String password) throws IDMStoreException {
+    public boolean checkUserPassword(final String userIdWithoutDomain, final String password)
+            throws IDMStoreException {
         Optional<User> optUser = getSingleUser(userIdWithoutDomain);
         if (!optUser.isPresent()) {
             return false;
@@ -83,7 +84,7 @@ public class StandaloneCommandLineInterface {
         }
     }
 
-    private Optional<User> getSingleUser(String userIdWithoutDomain) throws IDMStoreException {
+    private Optional<User> getSingleUser(final String userIdWithoutDomain) throws IDMStoreException {
         requireNonNull(userIdWithoutDomain, "userIdWithoutDomain == null");
         List<User> users = identityStore.getUsers(userIdWithoutDomain, DOMAIN).getUsers();
         if (users.isEmpty()) {
@@ -95,12 +96,13 @@ public class StandaloneCommandLineInterface {
         return Optional.of(users.get(0));
     }
 
-    public void createNewUser(String userName, String password, boolean isAdmin) throws IDMStoreException {
+    public void createNewUser(final String userName, final String password, final boolean isAdmin)
+            throws IDMStoreException {
         requireNonNull(userName, "userName == null");
         storeBuilder.createUser(DOMAIN, userName, password, isAdmin);
     }
 
-    public boolean deleteUser(String userIdWithoutDomain) throws IDMStoreException {
+    public boolean deleteUser(final String userIdWithoutDomain) throws IDMStoreException {
         requireNonNull(userIdWithoutDomain, "userIdWithoutDomain == null");
         return storeBuilder.deleteUser(DOMAIN, userIdWithoutDomain);
     }

@@ -5,7 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.datastore.h2;
+package org.opendaylight.aaa.authn.h2;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
@@ -51,7 +51,7 @@ abstract class AbstractStore<T> {
      * @param dbConnectionFactory factory to obtain JDBC Connections from
      * @param tableName The name of the table being managed.
      */
-    protected AbstractStore(ConnectionProvider dbConnectionFactory, String tableName) {
+    protected AbstractStore(final ConnectionProvider dbConnectionFactory, final String tableName) {
         this.dbConnectionFactory = dbConnectionFactory;
         this.tableName = tableName;
     }
@@ -145,7 +145,7 @@ abstract class AbstractStore<T> {
      *
      * @throws StoreException if an error occurs.
      */
-    protected List<T> listFromStatement(PreparedStatement ps) throws StoreException {
+    protected List<T> listFromStatement(final PreparedStatement ps) throws StoreException {
         List<T> result = new ArrayList<>();
         try (ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -167,7 +167,7 @@ abstract class AbstractStore<T> {
      *
      * @throws StoreException if an error occurs.
      */
-    protected T firstFromStatement(PreparedStatement ps) throws StoreException {
+    protected T firstFromStatement(final PreparedStatement ps) throws StoreException {
         try (ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 return fromResultSet(rs);

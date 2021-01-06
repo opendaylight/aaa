@@ -5,7 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.datastore.h2;
+package org.opendaylight.aaa.authn.h2;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -50,7 +50,7 @@ public class H2StoreTest {
     }
 
     private H2Store h2Store;
-    private PasswordHashService passwordService = new DefaultPasswordHashService();
+    private final PasswordHashService passwordService = new DefaultPasswordHashService();
 
     @Before
     public void before() throws StoreException, SQLException {
