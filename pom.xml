@@ -28,6 +28,7 @@
 
   <modules>
     <module>aaa-authn-api</module>
+    <module>aaa-authn-h2</module>
     <module>aaa-encrypt-service</module>
     <module>aaa-cert</module>
     <module>aaa-cli</module>

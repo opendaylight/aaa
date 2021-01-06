@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.datastore.h2;
+package org.opendaylight.aaa.authn.h2;
 
 /**
  * Exception indicating an error in an H2 data store.

@@ -5,8 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
-package org.opendaylight.aaa.datastore.h2;
+package org.opendaylight.aaa.authn.h2;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
@@ -36,7 +35,7 @@ public class GrantStore extends AbstractStore<Grant> {
     public static final String SQL_ROLEID = "roleid";
     private static final String TABLE_NAME = "GRANTS";
 
-    public GrantStore(ConnectionProvider dbConnectionFactory) {
+    public GrantStore(final ConnectionProvider dbConnectionFactory) {
         super(dbConnectionFactory, TABLE_NAME);
     }
 
@@ -50,7 +49,7 @@ public class GrantStore extends AbstractStore<Grant> {
     }
 
     @Override
-    protected Grant fromResultSet(ResultSet rs) throws SQLException {
+    protected Grant fromResultSet(final ResultSet rs) throws SQLException {
         Grant grant = new Grant();
         try {
             grant.setGrantid(rs.getString(SQL_ID));
@@ -64,7 +63,7 @@ public class GrantStore extends AbstractStore<Grant> {
         return grant;
     }
 
-    public Grants getGrants(String did, String uid) throws StoreException {
+    public Grants getGrants(final String did, final String uid) throws StoreException {
         Grants grants = new Grants();
         try (Connection conn = dbConnect();
              PreparedStatement pstmt = conn
@@ -79,7 +78,7 @@ public class GrantStore extends AbstractStore<Grant> {
         return grants;
     }
 
-    protected Grants getGrants(String userid) throws StoreException {
+    protected Grants getGrants(final String userid) throws StoreException {
         Grants grants = new Grants();
         try (Connection conn = dbConnect();
              PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM GRANTS WHERE userid = ? ")) {
@@ -92,7 +91,7 @@ public class GrantStore extends AbstractStore<Grant> {
         return grants;
     }
 
-    protected Grant getGrant(String id) throws StoreException {
+    protected Grant getGrant(final String id) throws StoreException {
         try (Connection conn = dbConnect();
              PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM GRANTS WHERE grantid = ? ")) {
             pstmt.setString(1, id);
@@ -103,7 +102,7 @@ public class GrantStore extends AbstractStore<Grant> {
         }
     }
 
-    protected Grant getGrant(String did, String uid, String rid) throws StoreException {
+    protected Grant getGrant(final String did, final String uid, final String rid) throws StoreException {
         try (Connection conn = dbConnect();
              PreparedStatement pstmt = conn
                      .prepareStatement("SELECT * FROM GRANTS WHERE domainid = ? AND userid = ? AND roleid = ? ")) {
@@ -117,7 +116,7 @@ public class GrantStore extends AbstractStore<Grant> {
         }
     }
 
-    protected Grant createGrant(Grant grant) throws StoreException {
+    protected Grant createGrant(final Grant grant) throws StoreException {
         String query = "insert into grants  (grantid,domainid,userid,roleid) values(?,?,?,?)";
         try (Connection conn = dbConnect();
              PreparedStatement statement = conn.prepareStatement(query)) {
