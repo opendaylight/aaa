@@ -47,13 +47,12 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
       <artifactId>aaa-authn-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-text</artifactId>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-authn-h2</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>compile</scope>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-text</artifactId>
     </dependency>
 
     <!-- Now for the FAT JAR we need to fix up some <scope>provided to be <scope>compile -->
