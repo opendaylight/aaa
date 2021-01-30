@@ -23,9 +23,9 @@
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">
             mvn:org.opendaylight.aaa/aaa-filterchain/${project.version}/cfg/config
         </configfile>
-        <feature version="[8,9)">odl-karaf-feat-jdbc</feature>
-        <feature version="[8,9)">odl-karaf-feat-jetty</feature>
-        <feature version="[8,9)">odl-apache-commons-codec</feature>
+        <feature version="[8.1,9)">odl-karaf-feat-jdbc</feature>
+        <feature version="[8.1,9)">odl-karaf-feat-jetty</feature>
+        <feature version="[8.1,9)">odl-apache-commons-codec</feature>
         <feature version="[3,4)">odl-jolokia</feature>
     </feature>
 </features>
