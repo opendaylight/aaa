@@ -34,11 +34,6 @@ repositories:
     - aaa
 committers:
     - <<: *odl_aaa_ptl
-    - name: 'Ryan Goulding'
-      email: 'ryandgoulding@gmail.com'
-      company: ''
-      id: 'rgoulding'
-      timezone: 'Unknown/Unknown'
     - name: 'Mohamed ElSerngawy'
       email: 'm.elserngawy@gmail.com'
       company: ''
