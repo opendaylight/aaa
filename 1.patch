@@ -1,0 +1,555 @@
+diff --git a/aaa-authn-api/pom.xml b/aaa-authn-api/pom.xml
+index 4c2bca11..3f693951 100644
+--- a/aaa-authn-api/pom.xml
++++ b/aaa-authn-api/pom.xml
+@@ -11,13 +11,13 @@
+   <parent>
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-parent</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <relativePath>../parent</relativePath>
+   </parent>
+ 
+   <groupId>org.opendaylight.aaa</groupId>
+   <artifactId>aaa-authn-api</artifactId>
+-  <version>0.13.2-SNAPSHOT</version>
++  <version>0.13.3-SNAPSHOT</version>
+   <name>ODL :: aaa :: ${project.artifactId}</name>
+   <packaging>bundle</packaging>
+ 
+diff --git a/aaa-cert/pom.xml b/aaa-cert/pom.xml
+index 69834544..586402da 100644
+--- a/aaa-cert/pom.xml
++++ b/aaa-cert/pom.xml
+@@ -10,7 +10,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
+   <parent>
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-parent</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <relativePath>../parent</relativePath>
+   </parent>
+ 
+diff --git a/aaa-cli-jar/pom.xml b/aaa-cli-jar/pom.xml
+index 6e73323d..744e41d9 100644
+--- a/aaa-cli-jar/pom.xml
++++ b/aaa-cli-jar/pom.xml
+@@ -12,7 +12,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
+   <parent>
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-parent</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <relativePath>../parent</relativePath>
+   </parent>
+ 
+diff --git a/aaa-cli/pom.xml b/aaa-cli/pom.xml
+index e543d052..eb6981dc 100644
+--- a/aaa-cli/pom.xml
++++ b/aaa-cli/pom.xml
+@@ -11,14 +11,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
+   <parent>
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-parent</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <relativePath>../parent</relativePath>
+   </parent>
+ 
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>org.opendaylight.aaa</groupId>
+   <artifactId>aaa-cli</artifactId>
+-  <version>0.13.2-SNAPSHOT</version>
++  <version>0.13.3-SNAPSHOT</version>
+   <name>ODL :: aaa :: ${project.artifactId}</name>
+   <packaging>bundle</packaging>
+ 
+diff --git a/aaa-encrypt-service/api/pom.xml b/aaa-encrypt-service/api/pom.xml
+index aa6c52a0..5e26969a 100644
+--- a/aaa-encrypt-service/api/pom.xml
++++ b/aaa-encrypt-service/api/pom.xml
+@@ -5,7 +5,7 @@
+   <parent>
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-parent</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <relativePath>../../parent</relativePath>
+   </parent>
+ 
+diff --git a/aaa-encrypt-service/impl/pom.xml b/aaa-encrypt-service/impl/pom.xml
+index 08bffd63..3a4405c5 100644
+--- a/aaa-encrypt-service/impl/pom.xml
++++ b/aaa-encrypt-service/impl/pom.xml
+@@ -12,7 +12,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
+   <parent>
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-parent</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <relativePath>../../parent</relativePath>
+   </parent>
+ 
+diff --git a/aaa-encrypt-service/pom.xml b/aaa-encrypt-service/pom.xml
+index 4dcf1aeb..c0e48493 100644
+--- a/aaa-encrypt-service/pom.xml
++++ b/aaa-encrypt-service/pom.xml
+@@ -16,7 +16,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
+ 
+   <groupId>org.opendaylight.aaa</groupId>
+   <artifactId>aaa-encryption-service-aggregator</artifactId>
+-  <version>0.13.2-SNAPSHOT</version>
++  <version>0.13.3-SNAPSHOT</version>
+   <name>ODL :: aaa :: ${project.artifactId}</name>
+   <packaging>pom</packaging>
+ 
+diff --git a/aaa-filterchain/pom.xml b/aaa-filterchain/pom.xml
+index 0084f690..453cc0d4 100644
+--- a/aaa-filterchain/pom.xml
++++ b/aaa-filterchain/pom.xml
+@@ -8,7 +8,7 @@
+   <parent>
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-parent</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <relativePath>../parent</relativePath>
+   </parent>
+ 
+diff --git a/aaa-password-service/api/pom.xml b/aaa-password-service/api/pom.xml
+index 8e3db40c..8ff23a2a 100644
+--- a/aaa-password-service/api/pom.xml
++++ b/aaa-password-service/api/pom.xml
+@@ -12,13 +12,13 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
+   <parent>
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-parent</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <relativePath>../../parent</relativePath>
+   </parent>
+ 
+   <groupId>org.opendaylight.aaa</groupId>
+   <artifactId>aaa-password-service-api</artifactId>
+-  <version>0.13.2-SNAPSHOT</version>
++  <version>0.13.3-SNAPSHOT</version>
+   <name>ODL :: aaa :: ${project.artifactId}</name>
+   <packaging>bundle</packaging>
+ 
+diff --git a/aaa-password-service/impl/pom.xml b/aaa-password-service/impl/pom.xml
+index 68151f98..65140d5f 100644
+--- a/aaa-password-service/impl/pom.xml
++++ b/aaa-password-service/impl/pom.xml
+@@ -12,13 +12,13 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
+   <parent>
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-parent</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <relativePath>../../parent</relativePath>
+   </parent>
+ 
+   <groupId>org.opendaylight.aaa</groupId>
+   <artifactId>aaa-password-service-impl</artifactId>
+-  <version>0.13.2-SNAPSHOT</version>
++  <version>0.13.3-SNAPSHOT</version>
+   <name>ODL :: aaa :: ${project.artifactId}</name>
+   <packaging>bundle</packaging>
+ 
+diff --git a/aaa-password-service/pom.xml b/aaa-password-service/pom.xml
+index 1efa0ee6..e0ad05d8 100644
+--- a/aaa-password-service/pom.xml
++++ b/aaa-password-service/pom.xml
+@@ -17,7 +17,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
+ 
+   <groupId>org.opendaylight.aaa</groupId>
+   <artifactId>aaa-password-service-aggregator</artifactId>
+-  <version>0.13.2-SNAPSHOT</version>
++  <version>0.13.3-SNAPSHOT</version>
+   <name>ODL :: aaa :: ${project.artifactId}</name>
+   <packaging>pom</packaging>
+ 
+diff --git a/aaa-shiro/api/pom.xml b/aaa-shiro/api/pom.xml
+index 91a17d4f..b2216b47 100644
+--- a/aaa-shiro/api/pom.xml
++++ b/aaa-shiro/api/pom.xml
+@@ -12,13 +12,13 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
+   <parent>
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-parent</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <relativePath>../../parent</relativePath>
+   </parent>
+ 
+   <groupId>org.opendaylight.aaa</groupId>
+   <artifactId>aaa-shiro-api</artifactId>
+-  <version>0.13.2-SNAPSHOT</version>
++  <version>0.13.3-SNAPSHOT</version>
+   <name>ODL :: aaa :: ${project.artifactId}</name>
+   <packaging>bundle</packaging>
+ 
+diff --git a/aaa-shiro/impl/pom.xml b/aaa-shiro/impl/pom.xml
+index a69068d8..fdc9f722 100644
+--- a/aaa-shiro/impl/pom.xml
++++ b/aaa-shiro/impl/pom.xml
+@@ -13,13 +13,13 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
+     <parent>
+         <groupId>org.opendaylight.aaa</groupId>
+         <artifactId>aaa-parent</artifactId>
+-        <version>0.13.2-SNAPSHOT</version>
++        <version>0.13.3-SNAPSHOT</version>
+         <relativePath>../../parent</relativePath>
+     </parent>
+ 
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-shiro</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <name>ODL :: aaa :: ${project.artifactId}</name>
+     <packaging>bundle</packaging>
+ 
+diff --git a/aaa-shiro/pom.xml b/aaa-shiro/pom.xml
+index 24aad4a8..94215309 100644
+--- a/aaa-shiro/pom.xml
++++ b/aaa-shiro/pom.xml
+@@ -17,7 +17,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
+ 
+   <groupId>org.opendaylight.aaa</groupId>
+   <artifactId>aaa-shiro-aggregator</artifactId>
+-  <version>0.13.2-SNAPSHOT</version>
++  <version>0.13.3-SNAPSHOT</version>
+   <name>ODL :: aaa :: ${project.artifactId}</name>
+   <packaging>pom</packaging>
+ 
+diff --git a/artifacts/pom.xml b/artifacts/pom.xml
+index 7f656ab2..d5d15ad1 100644
+--- a/artifacts/pom.xml
++++ b/artifacts/pom.xml
+@@ -19,7 +19,7 @@
+ 
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-artifacts</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <name>ODL :: aaa :: ${project.artifactId}</name>
+     <packaging>pom</packaging>
+ 
+diff --git a/dependency-check/pom.xml b/dependency-check/pom.xml
+index 1294d334..6d9aca6b 100644
+--- a/dependency-check/pom.xml
++++ b/dependency-check/pom.xml
+@@ -12,13 +12,13 @@
+     <parent>
+         <groupId>org.opendaylight.aaa</groupId>
+         <artifactId>aaa-artifacts</artifactId>
+-        <version>0.13.2-SNAPSHOT</version>
++        <version>0.13.3-SNAPSHOT</version>
+         <relativePath>../artifacts</relativePath>
+     </parent>
+ 
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>dependency-check</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <name>ODL :: aaa :: ${project.artifactId}</name>
+ 
+     <properties>
+diff --git a/docs/pom.xml b/docs/pom.xml
+index 59ff1afc..c050a054 100644
+--- a/docs/pom.xml
++++ b/docs/pom.xml
+@@ -19,7 +19,7 @@
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-docs</artifactId>
+     <packaging>jar</packaging>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <name>${project.artifactId}</name>
+     <description>AAA documentation</description>
+ 
+@@ -28,7 +28,7 @@
+             <dependency>
+                 <groupId>org.opendaylight.aaa</groupId>
+                 <artifactId>aaa-artifacts</artifactId>
+-                <version>0.13.2-SNAPSHOT</version>
++                <version>0.13.3-SNAPSHOT</version>
+                 <type>pom</type>
+                 <scope>import</scope>
+             </dependency>
+diff --git a/features/features-aaa/pom.xml b/features/features-aaa/pom.xml
+index abb0ad1f..998640c9 100644
+--- a/features/features-aaa/pom.xml
++++ b/features/features-aaa/pom.xml
+@@ -18,7 +18,7 @@
+ 
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>features-aaa</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <name>ODL :: aaa :: ${project.artifactId}</name>
+     <packaging>feature</packaging>
+ 
+diff --git a/features/odl-aaa-api/pom.xml b/features/odl-aaa-api/pom.xml
+index ac27a209..59f54f2c 100644
+--- a/features/odl-aaa-api/pom.xml
++++ b/features/odl-aaa-api/pom.xml
+@@ -18,7 +18,7 @@
+ 
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>odl-aaa-api</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <packaging>feature</packaging>
+ 
+     <name>ODL :: aaa :: ${project.artifactId}</name>
+diff --git a/features/odl-aaa-cert/pom.xml b/features/odl-aaa-cert/pom.xml
+index cf5a3342..ccc92648 100644
+--- a/features/odl-aaa-cert/pom.xml
++++ b/features/odl-aaa-cert/pom.xml
+@@ -18,7 +18,7 @@
+ 
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>odl-aaa-cert</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <packaging>feature</packaging>
+ 
+     <name>ODL :: aaa :: ${project.artifactId}</name>
+diff --git a/features/odl-aaa-cli/pom.xml b/features/odl-aaa-cli/pom.xml
+index d180c8eb..229af7eb 100644
+--- a/features/odl-aaa-cli/pom.xml
++++ b/features/odl-aaa-cli/pom.xml
+@@ -18,7 +18,7 @@
+ 
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>odl-aaa-cli</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <packaging>feature</packaging>
+ 
+     <name>ODL :: aaa :: ${project.artifactId}</name>
+diff --git a/features/odl-aaa-encryption-service/pom.xml b/features/odl-aaa-encryption-service/pom.xml
+index b6bf0728..2f4fb42c 100644
+--- a/features/odl-aaa-encryption-service/pom.xml
++++ b/features/odl-aaa-encryption-service/pom.xml
+@@ -18,7 +18,7 @@
+ 
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>odl-aaa-encryption-service</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <packaging>feature</packaging>
+ 
+     <name>ODL :: aaa :: ${project.artifactId}</name>
+diff --git a/features/odl-aaa-password-service/pom.xml b/features/odl-aaa-password-service/pom.xml
+index f00cac53..12591eff 100644
+--- a/features/odl-aaa-password-service/pom.xml
++++ b/features/odl-aaa-password-service/pom.xml
+@@ -19,7 +19,7 @@
+ 
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>odl-aaa-password-service</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <packaging>feature</packaging>
+ 
+     <name>ODL :: aaa :: ${project.artifactId}</name>
+diff --git a/features/odl-aaa-shiro/pom.xml b/features/odl-aaa-shiro/pom.xml
+index d35754ff..eca00172 100644
+--- a/features/odl-aaa-shiro/pom.xml
++++ b/features/odl-aaa-shiro/pom.xml
+@@ -18,7 +18,7 @@
+ 
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>odl-aaa-shiro</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <packaging>feature</packaging>
+ 
+     <!-- odl-aaa-shiro feature which combines all aspects of AAA into one feature -->
+diff --git a/features/odl-aaa-web/pom.xml b/features/odl-aaa-web/pom.xml
+index 1a47a52f..360b1155 100644
+--- a/features/odl-aaa-web/pom.xml
++++ b/features/odl-aaa-web/pom.xml
+@@ -18,7 +18,7 @@
+ 
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>odl-aaa-web</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <packaging>feature</packaging>
+ 
+     <name>ODL :: aaa :: ${project.artifactId}</name>
+diff --git a/features/pom.xml b/features/pom.xml
+index cc7247dd..b56bc4cc 100644
+--- a/features/pom.xml
++++ b/features/pom.xml
+@@ -17,7 +17,7 @@
+ 
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>features-aaa-aggregator</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <name>ODL :: aaa :: ${project.artifactId}</name>
+     <packaging>pom</packaging>
+ 
+diff --git a/karaf/pom.xml b/karaf/pom.xml
+index 2eeb3629..3b6ab006 100644
+--- a/karaf/pom.xml
++++ b/karaf/pom.xml
+@@ -18,7 +18,7 @@
+ 
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-karaf</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <name>ODL :: aaa :: ${project.artifactId}</name>
+     <packaging>pom</packaging>
+ 
+diff --git a/parent/pom.xml b/parent/pom.xml
+index de250d4a..bb1d4729 100644
+--- a/parent/pom.xml
++++ b/parent/pom.xml
+@@ -10,7 +10,7 @@
+ 
+   <groupId>org.opendaylight.aaa</groupId>
+   <artifactId>aaa-parent</artifactId>
+-  <version>0.13.2-SNAPSHOT</version>
++  <version>0.13.3-SNAPSHOT</version>
+   <name>ODL :: aaa :: ${project.artifactId}</name>
+   <packaging>pom</packaging>
+ 
+diff --git a/pom.xml b/pom.xml
+index 03663f5f..92137901 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -17,7 +17,7 @@
+ 
+   <groupId>org.opendaylight.aaa</groupId>
+   <artifactId>aaa.project</artifactId>
+-  <version>0.13.2-SNAPSHOT</version>
++  <version>0.13.3-SNAPSHOT</version>
+   <packaging>pom</packaging>
+   <name>aaa</name> <!-- Used by Sonar to set project name -->
+ 
+diff --git a/web/api/pom.xml b/web/api/pom.xml
+index c0aebae2..212cead5 100644
+--- a/web/api/pom.xml
++++ b/web/api/pom.xml
+@@ -12,13 +12,13 @@
+   <parent>
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-parent</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <relativePath>../../parent</relativePath>
+   </parent>
+ 
+   <groupId>org.opendaylight.aaa.web</groupId>
+   <artifactId>web-api</artifactId>
+-  <version>0.13.2-SNAPSHOT</version>
++  <version>0.13.3-SNAPSHOT</version>
+   <name>ODL :: aaa :: ${project.artifactId}</name>
+   <packaging>bundle</packaging>
+ 
+diff --git a/web/impl-jetty/pom.xml b/web/impl-jetty/pom.xml
+index 89669878..306d58a1 100644
+--- a/web/impl-jetty/pom.xml
++++ b/web/impl-jetty/pom.xml
+@@ -12,13 +12,13 @@
+   <parent>
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-parent</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <relativePath>../../parent</relativePath>
+   </parent>
+ 
+   <groupId>org.opendaylight.aaa.web</groupId>
+   <artifactId>web-jetty-impl</artifactId>
+-  <version>0.13.2-SNAPSHOT</version>
++  <version>0.13.3-SNAPSHOT</version>
+   <name>ODL :: aaa :: ${project.artifactId}</name>
+   <packaging>bundle</packaging>
+ 
+diff --git a/web/impl-osgi/pom.xml b/web/impl-osgi/pom.xml
+index b4dc8f65..d2e9f506 100644
+--- a/web/impl-osgi/pom.xml
++++ b/web/impl-osgi/pom.xml
+@@ -12,13 +12,13 @@
+   <parent>
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-parent</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <relativePath>../../parent</relativePath>
+   </parent>
+ 
+   <groupId>org.opendaylight.aaa.web</groupId>
+   <artifactId>web-osgi-impl</artifactId>
+-  <version>0.13.2-SNAPSHOT</version>
++  <version>0.13.3-SNAPSHOT</version>
+   <name>ODL :: aaa :: ${project.artifactId}</name>
+   <packaging>bundle</packaging>
+ 
+diff --git a/web/pom.xml b/web/pom.xml
+index 804f1d51..6f9e5483 100644
+--- a/web/pom.xml
++++ b/web/pom.xml
+@@ -19,7 +19,7 @@
+ 
+   <groupId>org.opendaylight.aaa.web</groupId>
+   <artifactId>web-aggregator</artifactId>
+-  <version>0.13.2-SNAPSHOT</version>
++  <version>0.13.3-SNAPSHOT</version>
+   <packaging>pom</packaging>
+   <name>ODL :: aaa :: ${project.artifactId}</name>
+ 
+diff --git a/web/servlet-api/pom.xml b/web/servlet-api/pom.xml
+index 1b37b10d..8d6c84cd 100644
+--- a/web/servlet-api/pom.xml
++++ b/web/servlet-api/pom.xml
+@@ -12,7 +12,7 @@
+     <parent>
+         <groupId>org.opendaylight.aaa</groupId>
+         <artifactId>aaa-parent</artifactId>
+-        <version>0.13.2-SNAPSHOT</version>
++        <version>0.13.3-SNAPSHOT</version>
+         <relativePath>../../parent</relativePath>
+     </parent>
+ 
+diff --git a/web/servlet-jersey2/pom.xml b/web/servlet-jersey2/pom.xml
+index 6dbac299..8a94b338 100644
+--- a/web/servlet-jersey2/pom.xml
++++ b/web/servlet-jersey2/pom.xml
+@@ -12,7 +12,7 @@
+     <parent>
+         <groupId>org.opendaylight.aaa</groupId>
+         <artifactId>aaa-parent</artifactId>
+-        <version>0.13.2-SNAPSHOT</version>
++        <version>0.13.3-SNAPSHOT</version>
+         <relativePath>../../parent</relativePath>
+     </parent>
+ 
+diff --git a/web/testutils/pom.xml b/web/testutils/pom.xml
+index 3274c0c5..2278de8f 100644
+--- a/web/testutils/pom.xml
++++ b/web/testutils/pom.xml
+@@ -12,13 +12,13 @@
+   <parent>
+     <groupId>org.opendaylight.aaa</groupId>
+     <artifactId>aaa-parent</artifactId>
+-    <version>0.13.2-SNAPSHOT</version>
++    <version>0.13.3-SNAPSHOT</version>
+     <relativePath>../../parent</relativePath>
+   </parent>
+ 
+   <groupId>org.opendaylight.aaa.web</groupId>
+   <artifactId>testutils</artifactId>
+-  <version>0.13.2-SNAPSHOT</version>
++  <version>0.13.3-SNAPSHOT</version>
+   <name>ODL :: aaa :: ${project.artifactId}</name>
+   <packaging>bundle</packaging>
+ 
