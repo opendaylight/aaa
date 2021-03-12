@@ -16,6 +16,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <relativePath>../../parent</relativePath>
   </parent>
 
+  <properties>
+    <odlparent.checkstyle.skip>true</odlparent.checkstyle.skip>
+    <odlparent.spotbugs.skip>true</odlparent.spotbugs.skip>
+  </properties>
+
   <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-encrypt-service-impl</artifactId>
   <name>ODL :: aaa :: ${project.artifactId}</name>

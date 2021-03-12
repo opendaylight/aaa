@@ -24,6 +24,8 @@
   <properties>
     <maven.deploy.skip>true</maven.deploy.skip>
     <maven.install.skip>true</maven.install.skip>
+    <odlparent.checkstyle.skip>true</odlparent.checkstyle.skip>
+    <odlparent.spotbugs.skip>true</odlparent.spotbugs.skip>
   </properties>
 
   <modules>
