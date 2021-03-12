@@ -64,6 +64,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     private final IvParameterSpec ivspec;
     private final Cipher encryptCipher;
     private final Cipher decryptCipher;
+    private long previousTime = System.currentTimeMillis();
 
     public AAAEncryptionServiceImpl(AaaEncryptServiceConfig encrySrvConfig, final DataBroker dataBroker) {
         SecretKey tempKey = null;
@@ -72,26 +73,43 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             throw new IllegalArgumentException(
                     "null encryptSalt in AaaEncryptServiceConfig: " + encrySrvConfig.toString());
         }
+        logWithExecutionTime("encrySrvConfig.getEncryptSalt() == null");
         if (encrySrvConfig.getEncryptKey() != null && encrySrvConfig.getEncryptKey().isEmpty()) {
-            LOG.debug("Set the Encryption service password and encrypt salt");
+            logWithExecutionTime("if (encrySrvConfig.getEncryptKey() != null && encrySrvConfig.ge");
+            LOG.debug("true Set the Encryption service password and encrypt salt");
             String newPwd = RandomStringUtils.random(encrySrvConfig.getPasswordLength(), true, true);
+            logWithExecutionTime("String newPwd = RandomStringUtils.random(encrySrvConfig.getPasswordLe");
             final Random random = new SecureRandom();
+            logWithExecutionTime("final Random random = new SecureRandom();");
             byte[] salt = new byte[16];
+            logWithExecutionTime("byte[] salt = new byte[16];");
             random.nextBytes(salt);
+            logWithExecutionTime("random.nextBytes(salt);");
             String encodedSalt = Base64.getEncoder().encodeToString(salt);
+            logWithExecutionTime("String encodedSalt = Base64.getEncoder().encodeToString(salt);");
             encrySrvConfig = new AaaEncryptServiceConfigBuilder(encrySrvConfig).setEncryptKey(newPwd)
                     .setEncryptSalt(encodedSalt).build();
+            logWithExecutionTime("encrySrvConfig = new AaaEncryptSer");
             updateEncrySrvConfig(newPwd, encodedSalt);
+            logWithExecutionTime("updateEncrySrvConfig(newPwd, encodedSalt)");
             initializeConfigDataTree(encrySrvConfig, dataBroker);
+            logWithExecutionTime("initializeConfigDataTree(encrySrvConfig, dataBroker);");
         }
+        logWithExecutionTime("false Set the Encryption service password and encrypt salt");
         final byte[] enryptionKeySalt = Base64.getDecoder().decode(encrySrvConfig.getEncryptSalt());
+        logWithExecutionTime("final byte[] enryptionKeySalt = Base64.g");
         try {
             final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(encrySrvConfig.getEncryptMethod());
+            logWithExecutionTime("final SecretKeyFactory keyFactory = SecretK");
             final KeySpec spec = new PBEKeySpec(encrySrvConfig.getEncryptKey().toCharArray(), enryptionKeySalt,
                     encrySrvConfig.getEncryptIterationCount(), encrySrvConfig.getEncryptKeyLength());
+            logWithExecutionTime("final KeySpec spec = new PBEKey");
             tempKey = keyFactory.generateSecret(spec);
+            logWithExecutionTime("tempKey = keyFactory.generateSecret(spec);");
             tempKey = new SecretKeySpec(tempKey.getEncoded(), encrySrvConfig.getEncryptType());
+            logWithExecutionTime(" tempKey = new SecretKeySpec(tempKe");
             tempIvSpec = new IvParameterSpec(enryptionKeySalt);
+            logWithExecutionTime(" tempIvSpec = new IvParameterSpec(enryptionKeySalt);");
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             LOG.error("Failed to initialize secret key", e);
         }
@@ -100,7 +118,9 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
         Cipher cipher = null;
         try {
             cipher = Cipher.getInstance(encrySrvConfig.getCipherTransforms());
+            logWithExecutionTime("cipher = Cipher.getInstance(encrySrvConfig.getCipherTransforms());");
             cipher.init(Cipher.ENCRYPT_MODE, key, ivspec);
+            logWithExecutionTime("cipher.init(Cipher.ENCRYPT_MODE, key, ivspec);");
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException
                 | InvalidKeyException e) {
             LOG.error("Failed to create encrypt cipher.", e);
@@ -109,7 +129,9 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
         cipher = null;
         try {
             cipher = Cipher.getInstance(encrySrvConfig.getCipherTransforms());
+            logWithExecutionTime("cipher = Cipher.getInstance(encrySrvConfig.getCipherTransforms());");
             cipher.init(Cipher.DECRYPT_MODE, key, ivspec);
+            logWithExecutionTime("cipher.init(Cipher.DECRYPT_MODE, key, ivspec);");
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException
                 | InvalidKeyException e) {
             LOG.error("Failed to create decrypt cipher.", e);
@@ -222,5 +244,12 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             MdsalUtils.initalizeDatastore(LogicalDatastoreType.CONFIGURATION, dataBroker,
                     MdsalUtils.getEncryptionSrvConfigIid(), encrySrvConfig);
         }
+    }
+
+    private void logWithExecutionTime(final String executedLine) {
+        LOG.error("Line: " + executedLine);
+        final long currentTime = System.currentTimeMillis();
+        LOG.error("Execution time: " + (currentTime - previousTime) * 1.0 / 1000 + " s");
+        previousTime = currentTime;
     }
 }
