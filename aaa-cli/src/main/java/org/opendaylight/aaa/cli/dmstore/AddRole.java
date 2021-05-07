@@ -23,17 +23,25 @@ import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 @Service
 @Command(name = "add-role", scope = "aaa", description = "Add role.")
 public class AddRole extends AaaCliAbstractCommand {
-
-    @Option(name = "-name", aliases = {
-            "--roleName" }, description = "The role name", required = true, multiValued = false)
+    @Option(name = "-name",
+            aliases = { "--roleName" },
+            description = "The role name",
+            required = true,
+            multiValued = false)
     private String roleName;
 
-    @Option(name = "-dname", aliases = {
-            "--domainName" }, description = "The domain name", required = true, multiValued = false)
+    @Option(name = "-dname",
+            aliases = { "--domainName" },
+            description = "The domain name",
+            required = true,
+            multiValued = false)
     private String domainName;
 
-    @Option(name = "-desc", aliases = {
-            "--roleDescription" }, description = "The role Description", required = true, multiValued = false)
+    @Option(name = "-desc",
+            aliases = { "--roleDescription" },
+            description = "The role Description",
+            required = true,
+            multiValued = false)
     private String roleDesc;
 
     @Override

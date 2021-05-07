@@ -26,12 +26,15 @@ import org.opendaylight.aaa.api.password.service.PasswordHashService;
 @Service
 @Command(name = "change-user-pwd", scope = "aaa", description = "Change the user password.")
 public class ChangeUserPassword implements Action {
-
     public static final String CHANGE_PASSWORD_FAIL = "Wrong username or current password";
+
     @Reference private IIDMStore identityStore;
 
-    @Option(name = "-user", aliases = {
-            "--userName" }, description = "The user name", required = true, multiValued = false)
+    @Option(name = "-user",
+            aliases = { "--userName" },
+            description = "The user name",
+            required = true,
+            multiValued = false)
     private String userName;
 
     @Option(name = "-pass",

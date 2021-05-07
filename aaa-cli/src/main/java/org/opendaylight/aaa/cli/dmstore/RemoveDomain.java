@@ -22,10 +22,11 @@ import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 @Service
 @Command(name = "remove-domain", scope = "aaa", description = "Remove domain.")
 public class RemoveDomain extends AaaCliAbstractCommand {
-
-
-    @Option(name = "-name", aliases = {
-            "--domainName" }, description = "The domain name", required = true, multiValued = false)
+    @Option(name = "-name",
+            aliases = { "--domainName" },
+            description = "The domain name",
+            required = true,
+            multiValued = false)
     private String domainName;
 
     @Override

@@ -22,18 +22,25 @@ import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 @Service
 @Command(name = "remove-grant", scope = "aaa", description = "Remove grant.")
 public class RemoveGrant extends AaaCliAbstractCommand {
-
-
-    @Option(name = "-uname", aliases = {
-            "--userName" }, description = "The user name", required = true, multiValued = false)
+    @Option(name = "-uname",
+            aliases = { "--userName" },
+            description = "The user name",
+            required = true,
+            multiValued = false)
     private String userName;
 
-    @Option(name = "-dname", aliases = {
-            "--domainName" }, description = "The domain name", required = true, multiValued = false)
+    @Option(name = "-dname",
+            aliases = { "--domainName" },
+            description = "The domain name",
+            required = true,
+            multiValued = false)
     private String domainName;
 
-    @Option(name = "-rname", aliases = {
-            "--roleName" }, description = "The role name", required = false, multiValued = false)
+    @Option(name = "-rname",
+            aliases = { "--roleName" },
+            description = "The role name",
+            required = false,
+            multiValued = false)
     private String roleName;
 
     @Override

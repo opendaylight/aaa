@@ -26,8 +26,8 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 @Beta
-@Component(immediate = true, service = {CredentialAuth.class, PasswordCredentialAuth.class, IdMService.class,
-        ClaimCache.class}, property = "type=default")
+@Component(immediate = true, property = "type=default",
+           service = { CredentialAuth.class, PasswordCredentialAuth.class, IdMService.class, ClaimCache.class })
 public class OSGIIdmLightProxy extends ForwardingObject implements PasswordCredentialAuth, IdMService, ClaimCache {
 
     @Reference

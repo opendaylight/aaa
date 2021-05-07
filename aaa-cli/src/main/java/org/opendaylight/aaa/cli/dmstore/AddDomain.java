@@ -22,13 +22,18 @@ import org.opendaylight.aaa.cli.AaaCliAbstractCommand;
 @Service
 @Command(name = "add-domain", scope = "aaa", description = "Add domain.")
 public class AddDomain extends AaaCliAbstractCommand {
-
-    @Option(name = "-name", aliases = {
-            "--domainName" }, description = "The domain name", required = true, multiValued = false)
+    @Option(name = "-name",
+            aliases = { "--domainName" },
+            description = "The domain name",
+            required = true,
+            multiValued = false)
     private String domainName;
 
-    @Option(name = "-desc", aliases = {
-            "--domainDescription" }, description = "The domain Description", required = true, multiValued = false)
+    @Option(name = "-desc",
+            aliases = { "--domainDescription" },
+            description = "The domain Description",
+            required = true,
+            multiValued = false)
     private String domainDesc;
 
     @Override

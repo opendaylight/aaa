@@ -22,10 +22,11 @@ import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 @Service
 @Command(name = "remove-user", scope = "aaa", description = "Remove user.")
 public class RemoveUser extends AaaCliAbstractCommand {
-
-
-    @Option(name = "-name", aliases = {
-            "--userName" }, description = "The user name", required = true, multiValued = false)
+    @Option(name = "-name",
+            aliases = { "--userName" },
+            description = "The user name",
+            required = true,
+            multiValued = false)
     private String userName;
 
     @Override

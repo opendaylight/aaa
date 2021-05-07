@@ -22,10 +22,11 @@ import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 @Service
 @Command(name = "remove-role", scope = "aaa", description = "Remove role.")
 public class RemoveRole extends AaaCliAbstractCommand {
-
-
-    @Option(name = "-name", aliases = {
-            "--roleName" }, description = "The role name", required = true, multiValued = false)
+    @Option(name = "-name",
+            aliases = { "--roleName" },
+            description = "The role name",
+            required = true,
+            multiValued = false)
     private String roleName;
 
     @Override
