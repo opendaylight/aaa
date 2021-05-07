@@ -114,11 +114,9 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
      * but using the provided {@link SimpleHttpClient} to reach
      * the Keystone server.
      *
-     * @param authenticationToken see
-     *  {@link AuthorizingRealm#doGetAuthenticationInfo(AuthenticationToken)}
+     * @param authenticationToken see {@link AuthorizingRealm#doGetAuthenticationInfo(AuthenticationToken)}
      * @param client the {@link SimpleHttpClient} to use.
-     * @return see
-     *  {@link AuthorizingRealm#doGetAuthenticationInfo(AuthenticationToken)}
+     * @return see {@link AuthorizingRealm#doGetAuthenticationInfo(AuthenticationToken)}
      */
     protected AuthenticationInfo doGetAuthenticationInfo(
             final AuthenticationToken authenticationToken,
