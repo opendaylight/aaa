@@ -119,6 +119,7 @@ public class JettyWebServer implements WebServer {
         webContext.servlets().forEach(servlet -> {
             ServletHolder servletHolder = new ServletHolder(servlet.name(), servlet.servlet());
             servletHolder.setInitParameters(servlet.initParams());
+            servletHolder.setAsyncSupported(servlet.getAsyncSupported());
             servletHolder.setInitOrder(1); // AKA <load-on-startup> 1
             servlet.urlPatterns().forEach(
                 urlPattern -> handler.addServlet(servletHolder, urlPattern)
