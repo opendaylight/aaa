@@ -92,7 +92,7 @@
                         </goals>
                         <configuration>
                             <classifier>sources</classifier>
-                            <includeArtifactIds>shiro-jar</includeArtifactIds>
+                            <includeArtifactIds>repackaged-shiro-jar</includeArtifactIds>
                             <outputDirectory>${project.build.directory}/shaded-sources</outputDirectory>
                         </configuration>
                     </execution>
