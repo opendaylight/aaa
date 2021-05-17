@@ -21,16 +21,15 @@ import org.opendaylight.aaa.web.WebContextSecurer;
  * @author Michael Vorburger.ch
  */
 public class ShiroWebContextSecurer implements WebContextSecurer {
-
     private final EnvironmentLoaderListener shiroEnvironmentLoaderListener;
 
-    public ShiroWebContextSecurer(EnvironmentLoaderListener shiroEnvironmentLoaderListener) {
+    public ShiroWebContextSecurer(final EnvironmentLoaderListener shiroEnvironmentLoaderListener) {
         this.shiroEnvironmentLoaderListener = shiroEnvironmentLoaderListener;
     }
 
     @Override
-    public void requireAuthentication(WebContextBuilder webContextBuilder, boolean asyncSupported,
-            String... urlPatterns) {
+    public void requireAuthentication(final WebContextBuilder webContextBuilder, final boolean asyncSupported,
+            final String... urlPatterns) {
         webContextBuilder.addListener(shiroEnvironmentLoaderListener)
 
                 // AAA filter in front of these REST web services as well as for moon endpoints
@@ -45,11 +44,10 @@ public class ShiroWebContextSecurer implements WebContextSecurer {
                         .filter(new CrossOriginFilter())
                         .addUrlPatterns(urlPatterns)
                         .asyncSupported(asyncSupported)
-                        .putInitParam("allowedOrigins", "*")
-                        .putInitParam("allowedMethods", "GET,POST,OPTIONS,DELETE,PUT,HEAD")
-                        .putInitParam("allowedHeaders", "origin, content-type, accept, authorization")
+                        .putInitParam(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*")
+                        .putInitParam(CrossOriginFilter.ALLOWED_METHODS_PARAM, "GET,POST,OPTIONS,DELETE,PUT,HEAD")
+                        .putInitParam(CrossOriginFilter.ALLOWED_HEADERS_PARAM,
+                            "origin, content-type, accept, authorization")
                         .build());
-
     }
-
 }
