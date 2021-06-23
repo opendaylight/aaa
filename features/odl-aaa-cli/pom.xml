@@ -65,16 +65,6 @@
             <classifier>features</classifier>
         </dependency>
         <dependency>
-            <groupId>net.sf.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-        </dependency>
-        <dependency>
-            <!-- This is necessary for a full javax.transaction.xa for ehcache -->
-            <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-jta_1.1_spec</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>aaa-cli</artifactId>
             <version>${project.version}</version>
