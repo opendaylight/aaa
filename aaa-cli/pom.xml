@@ -25,24 +25,20 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
   <dependencies>
     <dependency>
       <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-authn-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.aaa</groupId>
       <artifactId>aaa-cert</artifactId>
     </dependency>
     <dependency>
       <groupId>org.opendaylight.aaa</groupId>
-      <artifactId>aaa-authn-api</artifactId>
+      <artifactId>aaa-password-service-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.karaf.shell</groupId>
       <artifactId>org.apache.karaf.shell.core</artifactId>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>net.sf.ehcache</groupId>
-      <artifactId>ehcache</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.aaa</groupId>
-      <artifactId>aaa-shiro</artifactId>
     </dependency>
   </dependencies>
 
