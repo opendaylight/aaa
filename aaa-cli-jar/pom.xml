@@ -47,6 +47,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
       <artifactId>aaa-authn-api</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-idm-store-h2</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-text</artifactId>
     </dependency>
