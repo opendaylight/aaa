@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.shiro.tokenauthrealm.auth;
+package org.opendaylight.aaa.api.tokenauthrealm.auth;
 
 import static org.junit.Assert.assertEquals;
 

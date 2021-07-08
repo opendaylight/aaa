@@ -5,7 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.shiro.tokenauthrealm.auth;
+package org.opendaylight.aaa.api.tokenauthrealm.auth;
 
 import java.util.Objects;
 import org.opendaylight.aaa.api.PasswordCredentials;
