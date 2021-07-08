@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.shiro.codec.Base64;
-import org.opendaylight.aaa.shiro.tokenauthrealm.auth.HttpBasicAuth;
+import org.opendaylight.aaa.tokenauthrealm.auth.HttpBasicAuth;
 
 /**
  * Utilities for HTTP header manipulation.

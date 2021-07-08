@@ -28,8 +28,8 @@ import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
 import org.opendaylight.aaa.shiro.realm.util.TokenUtils;
 import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
-import org.opendaylight.aaa.shiro.tokenauthrealm.auth.TokenAuthenticators;
 import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
+import org.opendaylight.aaa.tokenauthrealm.auth.TokenAuthenticators;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
