@@ -18,6 +18,11 @@ import org.opendaylight.aaa.api.TokenStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * NOTE: test class {H2TokenStoreTest} is located in aaa-shiro module to avoid cyclic dependencies
+ * between aaa-idm-store-h2 and aaa-shiro modules.
+ */
+
 public class H2TokenStore implements AutoCloseable, TokenStore {
 
     private static final Logger LOG = LoggerFactory.getLogger(H2TokenStore.class);
