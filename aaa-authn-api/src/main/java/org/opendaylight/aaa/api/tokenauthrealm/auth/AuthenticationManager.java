@@ -6,7 +6,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.shiro.tokenauthrealm.auth;
+package org.opendaylight.aaa.api.tokenauthrealm.auth;
 
 import javax.inject.Singleton;
 import org.opendaylight.aaa.api.Authentication;
