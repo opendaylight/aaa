@@ -33,11 +33,13 @@
     <module>aaa-cli</module>
     <module>aaa-cli-jar</module>
     <module>aaa-filterchain</module>
+    <module>aaa-idm-store-h2</module>
     <module>aaa-password-service</module>
     <module>artifacts</module>
     <module>features</module>
     <module>parent</module>
     <module>aaa-shiro</module>
+    <module>aaa-tokenauthrealm</module>
     <module>dependency-check</module>
     <module>web</module>
     <module>docs</module>
