@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 @Beta
 @Component(immediate = true, configurationPid = "org.opendaylight.aaa.h2", property = "type=default")
 @Designate(ocd = OSGiH2Store.Configuration.class)
-// FIXME: merge this with H2Store when we have constructor injection
+// FIXME: merge this with org.opendaylight.aaa.idm.store.h2.H2Store when we have constructor injection
 public final class OSGiH2Store implements IIDMStore {
     @ObjectClassDefinition
     public @interface Configuration {

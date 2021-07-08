@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.datastore.h2;
 
 import org.opendaylight.aaa.api.IDMStoreException;
@@ -49,7 +48,7 @@ public class H2Store implements IIDMStore {
         try {
             return domainStore.createDomain(domain);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while writing domain", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while writing domain", e);
             throw new IDMStoreException(e);
         }
     }
@@ -59,7 +58,7 @@ public class H2Store implements IIDMStore {
         try {
             return domainStore.getDomain(domainid);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while reading domain", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while reading domain", e);
             throw new IDMStoreException(e);
         }
     }
@@ -69,7 +68,7 @@ public class H2Store implements IIDMStore {
         try {
             return domainStore.deleteDomain(domainid);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while deleting domain", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while deleting domain", e);
             throw new IDMStoreException(e);
         }
     }
@@ -79,7 +78,7 @@ public class H2Store implements IIDMStore {
         try {
             return domainStore.putDomain(domain);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while updating domain", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while updating domain", e);
             throw new IDMStoreException(e);
         }
     }
@@ -89,7 +88,7 @@ public class H2Store implements IIDMStore {
         try {
             return domainStore.getDomains();
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while reading domains", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while reading domains", e);
             throw new IDMStoreException(e);
         }
     }
@@ -99,7 +98,7 @@ public class H2Store implements IIDMStore {
         try {
             return roleStore.createRole(role);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while writing role", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while writing role", e);
             throw new IDMStoreException(e);
         }
     }
@@ -109,7 +108,7 @@ public class H2Store implements IIDMStore {
         try {
             return roleStore.getRole(roleid);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while reading role", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while reading role", e);
             throw new IDMStoreException(e);
         }
     }
@@ -119,7 +118,7 @@ public class H2Store implements IIDMStore {
         try {
             return roleStore.deleteRole(roleid);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while deleting role", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while deleting role", e);
             throw new IDMStoreException(e);
         }
     }
@@ -129,7 +128,7 @@ public class H2Store implements IIDMStore {
         try {
             return roleStore.putRole(role);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while updating role", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while updating role", e);
             throw new IDMStoreException(e);
         }
     }
@@ -139,7 +138,7 @@ public class H2Store implements IIDMStore {
         try {
             return roleStore.getRoles();
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while getting roles", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while getting roles", e);
             throw new IDMStoreException(e);
         }
     }
@@ -149,7 +148,7 @@ public class H2Store implements IIDMStore {
         try {
             return userStore.createUser(user);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while writing user", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while writing user", e);
             throw new IDMStoreException(e);
         }
     }
@@ -159,7 +158,7 @@ public class H2Store implements IIDMStore {
         try {
             return userStore.getUser(userid);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while reading user", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while reading user", e);
             throw new IDMStoreException(e);
         }
     }
@@ -169,7 +168,7 @@ public class H2Store implements IIDMStore {
         try {
             return userStore.deleteUser(userid);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while deleting user", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while deleting user", e);
             throw new IDMStoreException(e);
         }
     }
@@ -179,7 +178,7 @@ public class H2Store implements IIDMStore {
         try {
             return userStore.putUser(user);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while updating user", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while updating user", e);
             throw new IDMStoreException(e);
         }
     }
@@ -189,7 +188,7 @@ public class H2Store implements IIDMStore {
         try {
             return userStore.getUsers(username, domain);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while reading users", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while reading users", e);
             throw new IDMStoreException(e);
         }
     }
@@ -199,7 +198,7 @@ public class H2Store implements IIDMStore {
         try {
             return userStore.getUsers();
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while reading users", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while reading users", e);
             throw new IDMStoreException(e);
         }
     }
@@ -209,7 +208,7 @@ public class H2Store implements IIDMStore {
         try {
             return grantStore.createGrant(grant);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while writing grant", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while writing grant", e);
             throw new IDMStoreException(e);
         }
     }
@@ -219,7 +218,7 @@ public class H2Store implements IIDMStore {
         try {
             return grantStore.getGrant(grantid);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while reading grant", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while reading grant", e);
             throw new IDMStoreException(e);
         }
     }
@@ -234,7 +233,7 @@ public class H2Store implements IIDMStore {
         try {
             return grantStore.deleteGrant(grantid);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while deleting grant", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while deleting grant", e);
             throw new IDMStoreException(e);
         }
     }
@@ -244,7 +243,7 @@ public class H2Store implements IIDMStore {
         try {
             return grantStore.getGrants(domainid, userid);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while getting grants", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while getting grants", e);
             throw new IDMStoreException(e);
         }
     }
@@ -254,7 +253,7 @@ public class H2Store implements IIDMStore {
         try {
             return grantStore.getGrants(userid);
         } catch (StoreException e) {
-            LOG.error("StoreException encountered while getting grants", e);
+            LOG.error("org.opendaylight.aaa.idm.store.h2.StoreException encountered while getting grants", e);
             throw new IDMStoreException(e);
         }
     }
