@@ -32,6 +32,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-shiro-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-tokenauthrealm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-idm-store-h2</artifactId>
+        </dependency>
 
         <!-- jersey client for moon authN -->
         <dependency>
@@ -86,10 +94,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
         </dependency>
         <dependency>
             <groupId>org.immutables</groupId>
@@ -177,15 +181,12 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                             org.opendaylight.aaa,
                             org.opendaylight.aaa.shiro,
                             org.opendaylight.aaa.shiro.idm,
-                            org.opendaylight.aaa.shiro.tokenauthrealm,
-                            org.opendaylight.aaa.shiro.tokenauthrealm.auth,
                             org.opendaylight.aaa.shiro,
                             org.opendaylight.aaa.shiro.filters,
                             org.opendaylight.aaa.shiro.realm,
                             <!-- TODO: This is temporary until we can find a better spot for GsonProvider. -->
                             org.opendaylight.aaa.provider,
-                            org.opendaylight.aaa.shiro.web.env,
-                            org.opendaylight.aaa.datastore.h2.*,
+                            org.opendaylight.aaa.shiro.web.env
                         </Export-Package>
                         <Import-Package>
                            !javax.annotation,
