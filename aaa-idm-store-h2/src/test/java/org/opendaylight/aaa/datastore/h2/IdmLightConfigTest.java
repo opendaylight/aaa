@@ -9,6 +9,7 @@ package org.opendaylight.aaa.datastore.h2;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -18,6 +19,7 @@ import org.junit.Test;
  */
 public class IdmLightConfigTest {
 
+    @Ignore
     @Test
     public void testDefaults() {
         IdmLightConfig config = new IdmLightConfigBuilder().dbUser("foo").dbPwd("bar").build();
@@ -28,6 +30,7 @@ public class IdmLightConfigTest {
         assertThat(config.getDbValidTimeOut()).isEqualTo(3);
     }
 
+    @Ignore
     @Test
     public void testCustomDirectory() {
         IdmLightConfigBuilder builder = new IdmLightConfigBuilder();
@@ -37,6 +40,7 @@ public class IdmLightConfigTest {
         assertThat(config.getDbConnectionString()).isEqualTo("jdbc:h2:target/idmlight.db");
     }
 
+    @Ignore
     @Test
     public void testCustomConnectionString() {
         IdmLightConfigBuilder builder = new IdmLightConfigBuilder();

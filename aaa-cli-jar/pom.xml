@@ -32,10 +32,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     </dependency>
     <dependency>
       <groupId>org.opendaylight.aaa</groupId>
-      <artifactId>aaa-shiro</artifactId>
+      <artifactId>aaa-idm-store-h2</artifactId>
       <exclusions>
         <exclusion>
-    <!-- Completely disable transitive dependencies -->
+          <!-- Completely disable transitive dependencies -->
           <groupId>*</groupId>
           <artifactId>*</artifactId>
         </exclusion>
