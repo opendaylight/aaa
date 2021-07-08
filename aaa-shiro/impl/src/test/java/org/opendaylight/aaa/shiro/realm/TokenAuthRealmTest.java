@@ -23,9 +23,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.opendaylight.aaa.shiro.realm.util.TokenUtils;
 import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
-import org.opendaylight.aaa.shiro.tokenauthrealm.auth.AuthenticationManager;
-import org.opendaylight.aaa.shiro.tokenauthrealm.auth.TokenAuthenticators;
 import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
+import org.opendaylight.aaa.tokenauthrealm.auth.AuthenticationManager;
+import org.opendaylight.aaa.tokenauthrealm.auth.TokenAuthenticators;
 
 public class TokenAuthRealmTest {
 
