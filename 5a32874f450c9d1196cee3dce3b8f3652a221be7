@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03d8269c_b64ebf5e",
+        "filename": "aaa-idm-store-h2/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2021-07-09T12:16:02Z",
+      "side": 1,
+      "message": "Add copyright.",
+      "revId": "5a32874f450c9d1196cee3dce3b8f3652a221be7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7a8a6a0_c7dd42e3",
+        "filename": "aaa-idm-store-h2/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2021-07-09T12:16:02Z",
+      "side": 1,
+      "message": "It looks that artifactId, name and packaging is enough.",
+      "revId": "5a32874f450c9d1196cee3dce3b8f3652a221be7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61806424_568a8064",
+        "filename": "aaa-idm-store-h2/src/main/java/org/opendaylight/aaa/datastore/h2/H2TokenStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2021-07-09T12:16:02Z",
+      "side": 1,
+      "message": "IMHO: no, then I prefer to move some common parts from aaa-shiro to aaa-api.",
+      "revId": "5a32874f450c9d1196cee3dce3b8f3652a221be7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
