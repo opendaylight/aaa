@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c061bd05_c56c150d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2021-07-19T11:19:02Z",
+      "side": 1,
+      "message": "Please write something also about that you have moved some classes to aaa-api-authn",
+      "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fa01584_10063789",
+        "filename": "aaa-authn-api/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2021-07-19T11:19:02Z",
+      "side": 1,
+      "message": "Did you forget to export: org.opendaylight.aaa.shiro.tokenauthrealm,\norg.opendaylight.aaa.shiro.tokenauthrealm.auth?",
+      "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dbfdf22_c49fde87",
+        "filename": "aaa-cli-jar/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2021-07-19T11:19:02Z",
+      "side": 1,
+      "message": "replace with aaa-idm-store-h2",
+      "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "860b1d26_bb5e6d7c",
+        "filename": "aaa-cli-jar/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2021-07-19T11:19:02Z",
+      "side": 1,
+      "message": "and remove this..",
+      "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cfda95a_323cda1a",
+        "filename": "aaa-idm-store-h2/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2021-07-19T11:19:02Z",
+      "side": 1,
+      "message": "you can add comments like: opendaylight aaa dependencies, external dependencies, test...",
+      "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33768dd9_6416b633",
+        "filename": "aaa-idm-store-h2/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2021-07-19T11:19:02Z",
+      "side": 1,
+      "message": "Did you forget to export: org.opendaylight.aaa.datastore.h2.*?",
+      "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
