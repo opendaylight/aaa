@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6653b20c_24a6d825",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 8548
+      },
+      "writtenOn": "2021-07-21T08:34:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c061bd05_c56c150d",
+      "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fa01584_10063789",
         "filename": "aaa-authn-api/pom.xml",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab94004_80ab51d2",
+        "filename": "aaa-authn-api/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 8548
+      },
+      "writtenOn": "2021-07-21T08:34:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fa01584_10063789",
+      "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f4fb2077_c615163a",
+        "filename": "aaa-cli-jar/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 8548
+      },
+      "writtenOn": "2021-07-21T08:34:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dbfdf22_c49fde87",
+      "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "860b1d26_bb5e6d7c",
         "filename": "aaa-cli-jar/pom.xml",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe40569_9ef6c030",
+        "filename": "aaa-cli-jar/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 8548
+      },
+      "writtenOn": "2021-07-21T08:34:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "860b1d26_bb5e6d7c",
+      "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e789d5cc_69d26184",
+        "filename": "aaa-idm-store-h2/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 8548
+      },
+      "writtenOn": "2021-07-21T08:34:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cfda95a_323cda1a",
+      "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33768dd9_6416b633",
         "filename": "aaa-idm-store-h2/pom.xml",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f62a3c_50e31fc8",
+        "filename": "aaa-idm-store-h2/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 8548
+      },
+      "writtenOn": "2021-07-21T08:34:57Z",
+      "side": 1,
+      "message": "It is exported, you can check MANIFEST.MF",
+      "parentUuid": "33768dd9_6416b633",
+      "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
