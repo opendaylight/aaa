@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "511b7343_e68b2b58",
+        "filename": "aaa-authn-api/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2021-07-22T10:15:07Z",
+      "side": 1,
+      "message": "Yes, its included by default: https://felix.apache.org/documentation/faqs/apache-felix-bundle-plugin-faq.html#why-do-i-see-more-classes-in-my-bundle-after-upgrading-to-maven-bundle-plugin-200",
+      "parentUuid": "6ab94004_80ab51d2",
+      "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dbfdf22_c49fde87",
         "filename": "aaa-cli-jar/pom.xml",
         "patchSetId": 7
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "f32d8c7d_6c0e7097",
+        "filename": "aaa-cli-jar/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2021-07-22T10:15:07Z",
+      "side": 1,
+      "message": "without:\n      \u003cexclusions\u003e\n        \u003cexclusion\u003e\n          \u003c!-- Completely disable transitive dependencies --\u003e\n          \u003cgroupId\u003e*\u003c/groupId\u003e\n          \u003cartifactId\u003e*\u003c/artifactId\u003e\n        \u003c/exclusion\u003e\n      \u003c/exclusions\u003e\n\nThe size of aaa-cli-jar-0.14.1-SNAPSHOT.jar increases from 5.2MB to 12.4MB.",
+      "parentUuid": "dbe40569_9ef6c030",
+      "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cfda95a_323cda1a",
         "filename": "aaa-idm-store-h2/pom.xml",
         "patchSetId": 7
@@ -206,6 +242,24 @@
       "side": 1,
       "message": "It is exported, you can check MANIFEST.MF",
       "parentUuid": "33768dd9_6416b633",
+      "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27e724d9_be1d219f",
+        "filename": "aaa-idm-store-h2/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2021-07-22T10:15:07Z",
+      "side": 1,
+      "message": "Yes, its included by default: https://felix.apache.org/documentation/faqs/apache-felix-bundle-plugin-faq.html#why-do-i-see-more-classes-in-my-bundle-after-upgrading-to-maven-bundle-plugin-200",
+      "parentUuid": "18f62a3c_50e31fc8",
       "revId": "1b54fccdcc7381a23f6684facb589a0f39079c4d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
