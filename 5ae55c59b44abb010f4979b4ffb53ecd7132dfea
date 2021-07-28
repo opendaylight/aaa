@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6b93f125_d7ea02fd",
+        "filename": "aaa-authn-api/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 8548
+      },
+      "writtenOn": "2021-07-28T11:31:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af122453_4cde96ba",
+      "range": {
+        "startLine": 60,
+        "startChar": 13,
+        "endLine": 60,
+        "endChar": 27
+      },
+      "revId": "5ae55c59b44abb010f4979b4ffb53ecd7132dfea",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15355722_467eff4f",
         "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/tokenauthrealm/auth/AuthenticationManager.java",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "5ae55c59b44abb010f4979b4ffb53ecd7132dfea",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a66ca33_8aa55209",
+        "filename": "aaa-authn-api/src/main/java/org/opendaylight/aaa/api/tokenauthrealm/auth/AuthenticationManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 8548
+      },
+      "writtenOn": "2021-07-28T11:31:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15355722_467eff4f",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 12
+      },
+      "revId": "5ae55c59b44abb010f4979b4ffb53ecd7132dfea",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
