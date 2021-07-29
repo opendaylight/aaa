@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d96e9441_95ec82b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2021-07-29T14:47:03Z",
+      "side": 1,
+      "message": "We have also added new artifact, right?",
+      "revId": "9aac92b59cdd9c4ba60c0f4348b8c8f518633543",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50e2cf3d_e5698597",
         "filename": "aaa-idm-store-h2/pom.xml",
         "patchSetId": 12
