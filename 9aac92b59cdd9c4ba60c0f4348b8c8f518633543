@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50e2cf3d_e5698597",
+        "filename": "aaa-idm-store-h2/pom.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2021-07-29T11:13:01Z",
+      "side": 1,
+      "message": "The default export packages are the same without this config.\nYou can remove the configuration of export-package.",
+      "revId": "9aac92b59cdd9c4ba60c0f4348b8c8f518633543",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e1739f_c800d4a4",
+        "filename": "aaa-idm-store-h2/src/test/java/org/opendaylight/aaa/datastore/h2/IdmLightConfigTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2021-07-29T11:13:01Z",
+      "side": 1,
+      "message": "Why? I would prefer to do not ski tests which were working till now?",
+      "revId": "9aac92b59cdd9c4ba60c0f4348b8c8f518633543",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f72d5d_225a4d9d",
+        "filename": "aaa-tokenauthrealm/pom.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2021-07-29T11:13:01Z",
+      "side": 1,
+      "message": "Missing license header.",
+      "revId": "9aac92b59cdd9c4ba60c0f4348b8c8f518633543",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    }
+  ]
+}
