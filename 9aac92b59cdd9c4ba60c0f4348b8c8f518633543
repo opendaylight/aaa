@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f362210b_f16e9b08",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 8548
+      },
+      "writtenOn": "2021-07-30T06:23:19Z",
+      "side": 1,
+      "message": "Yeah, in artifacts/pom.xml",
+      "parentUuid": "d96e9441_95ec82b0",
+      "revId": "9aac92b59cdd9c4ba60c0f4348b8c8f518633543",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50e2cf3d_e5698597",
         "filename": "aaa-idm-store-h2/pom.xml",
         "patchSetId": 12
