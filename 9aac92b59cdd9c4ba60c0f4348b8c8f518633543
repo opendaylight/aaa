@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "07d428d1_95a860ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2021-07-30T11:39:05Z",
+      "side": 1,
+      "message": "I had a new artifact for aaa-tokenauthrealm on mind - things that cannot be moved to aaa.api because they contain implementations. Write that we have also that new artifact created.",
+      "parentUuid": "f362210b_f16e9b08",
+      "revId": "9aac92b59cdd9c4ba60c0f4348b8c8f518633543",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50e2cf3d_e5698597",
         "filename": "aaa-idm-store-h2/pom.xml",
         "patchSetId": 12
