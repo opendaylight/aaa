@@ -126,16 +126,17 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             LOG.warn("Encryption Key is NULL, will not encrypt data.");
             return data;
         }
+
+        final byte[] cryptobytes;
         try {
             synchronized (encryptCipher) {
-                byte[] cryptobytes = encryptCipher.doFinal(data.getBytes(Charset.defaultCharset()));
-                String cryptostring = DatatypeConverter.printBase64Binary(cryptobytes);
-                return cryptostring;
+                cryptobytes = encryptCipher.doFinal(data.getBytes(Charset.defaultCharset()));
             }
         } catch (IllegalBlockSizeException | BadPaddingException e) {
             LOG.error("Failed to encrypt data.", e);
+            return data;
         }
-        return data;
+        return DatatypeConverter.printBase64Binary(cryptobytes);
     }
 
     @Override
@@ -152,8 +153,8 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             }
         } catch (IllegalBlockSizeException | BadPaddingException e) {
             LOG.error("Failed to encrypt data.", e);
+            return data;
         }
-        return data;
     }
 
     @Override
