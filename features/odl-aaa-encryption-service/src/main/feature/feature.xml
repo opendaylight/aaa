@@ -8,6 +8,7 @@
  -->
 <features name="odl-aaa-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
     <feature name="odl-aaa-encryption-service" version="${project.version}">
+        <feature version="[9,10)">odl-jakarta-activation-api</feature>
         <feature version="[4,5)">odl-mdsal-broker</feature>
         <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-encrypt-service-config.xml">
             mvn:org.opendaylight.aaa/aaa-encrypt-service-impl/${project.version}/xml/config
