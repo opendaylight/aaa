@@ -89,6 +89,12 @@
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>aaa-idm-store-h2</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-shiro</artifactId>
                 <version>${project.version}</version>
                 <type>xml</type>
@@ -103,6 +109,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-shiro</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>aaa-tokenauthrealm</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

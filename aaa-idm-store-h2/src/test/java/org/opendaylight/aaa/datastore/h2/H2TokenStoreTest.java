@@ -14,8 +14,8 @@ import static org.junit.Assert.assertNull;
 import org.junit.After;
 import org.junit.Test;
 import org.opendaylight.aaa.api.Authentication;
-import org.opendaylight.aaa.shiro.tokenauthrealm.auth.AuthenticationBuilder;
-import org.opendaylight.aaa.shiro.tokenauthrealm.auth.ClaimBuilder;
+import org.opendaylight.aaa.tokenauthrealm.auth.AuthenticationBuilder;
+import org.opendaylight.aaa.tokenauthrealm.auth.ClaimBuilder;
 
 /**
  * Unit Test for H2TokenStore.
