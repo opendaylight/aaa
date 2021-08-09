@@ -36,13 +36,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>org.opendaylight.odlparent</groupId>
-            <artifactId>odl-jakarta-activation-api</artifactId>
-            <type>xml</type>
-            <classifier>features</classifier>
-        </dependency>
-
         <!-- MD-SAL -->
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
