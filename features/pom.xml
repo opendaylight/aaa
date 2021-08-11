@@ -17,7 +17,7 @@
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>features-aaa-aggregator</artifactId>
-    <version>0.13.5-SNAPSHOT</version>
+    <version>0.13.5</version>
     <name>ODL :: aaa :: ${project.artifactId}</name>
     <packaging>pom</packaging>
 
