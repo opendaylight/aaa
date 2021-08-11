@@ -19,7 +19,7 @@
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>odl-aaa-password-service</artifactId>
-    <version>0.13.5-SNAPSHOT</version>
+    <version>0.13.6-SNAPSHOT</version>
     <packaging>feature</packaging>
 
     <name>ODL :: aaa :: ${project.artifactId}</name>
