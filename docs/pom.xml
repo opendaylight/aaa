@@ -250,8 +250,8 @@
                         <link>https://www.javadoc.io/doc/org.opendaylight.odlparent/odlparent-docs/8.1.3/</link>
                         <link>https://www.javadoc.io/doc/org.opendaylight.infrautils/infrautils-docs/1.9.9/</link>
                         <link>https://www.javadoc.io/doc/org.opendaylight.yangtools/yangtools-docs/6.0.7/</link>
-                        <link>https://www.javadoc.io/doc/org.opendaylight.mdsal/mdsal-docs/7.0.8/</link>
-                        <link>https://www.javadoc.io/doc/org.opendaylight.controller/controller-docs/3.0.9/</link>
+                        <link>https://www.javadoc.io/doc/org.opendaylight.mdsal/mdsal-docs/7.0.9/</link>
+                        <link>https://www.javadoc.io/doc/org.opendaylight.controller/controller-docs/3.0.10/</link>
                     </links>
 
                     <!--groups>
