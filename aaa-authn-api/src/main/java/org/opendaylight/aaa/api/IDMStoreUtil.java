@@ -17,9 +17,8 @@ import javax.naming.OperationNotSupportedException;
  *  @author - Sharon Aicler (saichler@cisco.com)
  */
 public final class IDMStoreUtil {
-
-    private IDMStoreUtil() throws OperationNotSupportedException {
-        throw new OperationNotSupportedException();
+    private IDMStoreUtil() {
+        // Hidden on purpose
     }
 
     public static String createUserid(String username, String domainid) {
