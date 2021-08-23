@@ -39,10 +39,10 @@ public final class OSGiPasswordServiceConfigBootstrap
     DataBroker dataBroker = null;
 
     @Reference(target = "(component.factory=" + OSGiPasswordServiceConfig.FACTORY_NAME + ")")
-    ComponentFactory configFactory = null;
+    ComponentFactory<OSGiPasswordServiceConfig> configFactory = null;
 
     private ListenerRegistration<?> registration;
-    private ComponentInstance instance;
+    private ComponentInstance<?> instance;
 
     @Activate
     synchronized void activate() {
@@ -77,7 +77,7 @@ public final class OSGiPasswordServiceConfigBootstrap
     @Holding("this")
     private void updateInstance(final PasswordServiceConfig config) {
         if (registration != null) {
-            final ComponentInstance newInstance = configFactory.newInstance(
+            final ComponentInstance<?> newInstance = configFactory.newInstance(
                 OSGiPasswordServiceConfig.props(config != null ? config : new PasswordServiceConfigBuilder().build()));
             if (instance != null) {
                 instance.dispose();
