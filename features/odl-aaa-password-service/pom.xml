@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>single-feature-parent</artifactId>
-        <version>9.0.5</version>
+        <version>9.0.6</version>
         <relativePath/>
     </parent>
 
@@ -60,7 +60,7 @@
         <dependency>
             <groupId>org.opendaylight.mdsal</groupId>
             <artifactId>odl-mdsal-binding-base</artifactId>
-            <version>8.0.4</version>
+            <version>8.0.5</version>
             <type>xml</type>
             <classifier>features</classifier>
         </dependency>
