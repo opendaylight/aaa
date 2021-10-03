@@ -33,10 +33,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
     </dependency>
-    <dependency>
-      <groupId>jakarta.xml.bind</groupId>
-      <artifactId>jakarta.xml.bind-api</artifactId>
-    </dependency>
 
     <!-- Bouncy Castle dependency -->
     <dependency>
