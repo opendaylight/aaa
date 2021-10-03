@@ -30,7 +30,6 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
 import java.util.Date;
-import javax.xml.bind.DatatypeConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
@@ -267,7 +266,7 @@ public class ODLKeyTool {
                 final PKCS10CertificationRequestBuilder csrb = new PKCS10CertificationRequestBuilder(xName,
                         subPubKeyInfo);
                 final ContentSigner contSigner = new JcaContentSignerBuilder(signAlg).build(privKey);
-                final String certReq = DatatypeConverter.printBase64Binary(csrb.build(contSigner).getEncoded());
+                final String certReq = Base64.getEncoder().encodeToString(csrb.build(contSigner).getEncoded());
                 if (withTag) {
                     final StringBuilder sb = new StringBuilder();
                     sb.append(KeyStoreConstant.BEGIN_CERTIFICATE_REQUEST);
@@ -303,7 +302,7 @@ public class ODLKeyTool {
         try {
             if (keyStore.containsAlias(certAlias)) {
                 final X509Certificate odlCert = (X509Certificate) keyStore.getCertificate(certAlias);
-                final String cert = DatatypeConverter.printBase64Binary(odlCert.getEncoded());
+                final String cert = Base64.getEncoder().encodeToString(odlCert.getEncoded());
                 if (withTag) {
                     final StringBuilder sb = new StringBuilder();
                     sb.append(KeyStoreConstant.BEGIN_CERTIFICATE);
