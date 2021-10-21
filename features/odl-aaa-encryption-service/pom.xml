@@ -18,7 +18,7 @@
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>odl-aaa-encryption-service</artifactId>
-    <version>0.13.7-SNAPSHOT</version>
+    <version>0.13.7</version>
     <packaging>feature</packaging>
 
     <name>ODL :: aaa :: ${project.artifactId}</name>
