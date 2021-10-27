@@ -12,13 +12,13 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <parent>
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>aaa-parent</artifactId>
-    <version>0.14.5-SNAPSHOT</version>
+    <version>0.14.5</version>
     <relativePath>../../parent</relativePath>
   </parent>
 
   <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-shiro-api</artifactId>
-  <version>0.14.5-SNAPSHOT</version>
+  <version>0.14.5</version>
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>bundle</packaging>
 
