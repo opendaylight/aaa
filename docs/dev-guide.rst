@@ -133,7 +133,7 @@ is automatically installed as part of them.
 How to disable AAA
 ------------------
 
-Edit the “etc/shiro.ini” file and replace the following:
+Edit the “etc/opendaylight/datastore/initial/config/aaa-app-config.xml” file and replace the following:
 
 ::
 

@@ -93,7 +93,7 @@ protected by AAA, this will be noted in the per-project release notes.
 How to disable AAA
 ------------------
 
-Edit the “etc/shiro.ini” file and replace the following:
+Edit the “etc/opendaylight/datastore/initial/config/aaa-app-config.xml” file and replace the following:
 
 ::
 
