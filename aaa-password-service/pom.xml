@@ -17,7 +17,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
 
   <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-password-service-aggregator</artifactId>
-  <version>0.13.8-SNAPSHOT</version>
+  <version>0.13.8</version>
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>pom</packaging>
 
