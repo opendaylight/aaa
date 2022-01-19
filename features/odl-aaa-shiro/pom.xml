@@ -18,7 +18,7 @@
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>odl-aaa-shiro</artifactId>
-    <version>0.13.10-SNAPSHOT</version>
+    <version>0.13.10</version>
     <packaging>feature</packaging>
 
     <!-- odl-aaa-shiro feature which combines all aspects of AAA into one feature -->
