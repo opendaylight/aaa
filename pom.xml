@@ -17,7 +17,7 @@
 
   <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa.project</artifactId>
-  <version>0.14.8-SNAPSHOT</version>
+  <version>0.14.8</version>
   <packaging>pom</packaging>
   <name>aaa</name> <!-- Used by Sonar to set project name -->
 
