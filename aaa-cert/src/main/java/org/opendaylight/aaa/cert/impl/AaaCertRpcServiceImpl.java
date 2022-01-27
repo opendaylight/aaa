@@ -9,7 +9,6 @@ package org.opendaylight.aaa.cert.impl;
 
 import com.google.common.base.Strings;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.SettableFuture;
 import org.opendaylight.aaa.cert.api.IAaaCertProvider;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
 import org.opendaylight.mdsal.binding.api.DataBroker;
@@ -30,7 +29,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertificateInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertificateOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertificateOutputBuilder;
-import org.opendaylight.yangtools.yang.common.RpcError;
+import org.opendaylight.yangtools.yang.common.ErrorTag;
+import org.opendaylight.yangtools.yang.common.ErrorType;
 import org.opendaylight.yangtools.yang.common.RpcResult;
 import org.opendaylight.yangtools.yang.common.RpcResultBuilder;
 import org.slf4j.Logger;
@@ -75,71 +75,54 @@ public class AaaCertRpcServiceImpl implements AaaCertRpcService {
 
     @Override
     public ListenableFuture<RpcResult<GetNodeCertificateOutput>> getNodeCertificate(
-           final GetNodeCertificateInput input) {
-        final SettableFuture<RpcResult<GetNodeCertificateOutput>> futureResult = SettableFuture.create();
+            final GetNodeCertificateInput input) {
         final String cert = aaaCertProvider.getCertificateTrustStore(input.getNodeAlias(), false);
-        if (!Strings.isNullOrEmpty(cert)) {
-            final GetNodeCertificateOutput nodeCertOutput = new GetNodeCertificateOutputBuilder().setNodeCert(cert)
-                    .build();
-            futureResult.set(RpcResultBuilder.success(nodeCertOutput).build());
-        } else {
-            String errorMsg = "getNodeCertificate does not fetch certificate for the alias " + input.getNodeAlias();
-            futureResult.set(RpcResultBuilder.<GetNodeCertificateOutput>failed().withRpcError(RpcResultBuilder
-                .newError(RpcError.ErrorType.APPLICATION, "", errorMsg)).build());
+        if (Strings.isNullOrEmpty(cert)) {
+            return RpcResultBuilder.<GetNodeCertificateOutput>failed()
+                .withRpcError(RpcResultBuilder.newError(ErrorType.APPLICATION, ErrorTag.DATA_MISSING,
+                    "getNodeCertificate does not fetch certificate for the alias " + input.getNodeAlias()))
+                .buildFuture();
         }
-        return futureResult;
+
+        return RpcResultBuilder.success(new GetNodeCertificateOutputBuilder().setNodeCert(cert).build()).buildFuture();
     }
 
     @Override
     public ListenableFuture<RpcResult<SetODLCertificateOutput>> setODLCertificate(final SetODLCertificateInput input) {
-        final SettableFuture<RpcResult<SetODLCertificateOutput>> futureResult = SettableFuture.create();
         if (aaaCertProvider.addCertificateODLKeyStore(input.getOdlCertAlias(), input.getOdlCert())) {
-            futureResult.set(RpcResultBuilder.success(new SetODLCertificateOutputBuilder().build()).build());
-        } else {
-            futureResult.set(RpcResultBuilder.<SetODLCertificateOutput>failed().build());
-            LOG.info("Error while adding ODL certificate");
+            return RpcResultBuilder.success(new SetODLCertificateOutputBuilder().build()).buildFuture();
         }
-        return futureResult;
+        LOG.info("Error while adding ODL certificate");
+        return RpcResultBuilder.<SetODLCertificateOutput>failed().buildFuture();
     }
 
     @Override
     public ListenableFuture<RpcResult<GetODLCertificateOutput>> getODLCertificate(final GetODLCertificateInput input) {
-        final SettableFuture<RpcResult<GetODLCertificateOutput>> futureResult = SettableFuture.create();
         final String cert = aaaCertProvider.getODLKeyStoreCertificate(false);
-        if (!Strings.isNullOrEmpty(cert)) {
-            final GetODLCertificateOutput odlCertOutput = new GetODLCertificateOutputBuilder().setOdlCert(cert).build();
-            futureResult.set(RpcResultBuilder.success(odlCertOutput).build());
-        } else {
-            futureResult.set(RpcResultBuilder.<GetODLCertificateOutput>failed().build());
+        if (Strings.isNullOrEmpty(cert)) {
+            return RpcResultBuilder.<GetODLCertificateOutput>failed().buildFuture();
         }
-        return futureResult;
+        return RpcResultBuilder.success(new GetODLCertificateOutputBuilder().setOdlCert(cert).build()).buildFuture();
     }
 
     @Override
     public ListenableFuture<RpcResult<GetODLCertificateReqOutput>> getODLCertificateReq(
             final GetODLCertificateReqInput input) {
-        final SettableFuture<RpcResult<GetODLCertificateReqOutput>> futureResult = SettableFuture.create();
         final String certReq = aaaCertProvider.genODLKeyStoreCertificateReq(false);
-        if (!Strings.isNullOrEmpty(certReq)) {
-            final GetODLCertificateReqOutput odlCertReqOutput = new GetODLCertificateReqOutputBuilder()
-                    .setOdlCertReq(certReq).build();
-            futureResult.set(RpcResultBuilder.success(odlCertReqOutput).build());
-        } else {
-            futureResult.set(RpcResultBuilder.<GetODLCertificateReqOutput>failed().build());
+        if (Strings.isNullOrEmpty(certReq)) {
+            return RpcResultBuilder.<GetODLCertificateReqOutput>failed().buildFuture();
         }
-        return futureResult;
+        return RpcResultBuilder.success(new GetODLCertificateReqOutputBuilder().setOdlCertReq(certReq).build())
+            .buildFuture();
     }
 
     @Override
     public ListenableFuture<RpcResult<SetNodeCertificateOutput>> setNodeCertificate(
            final SetNodeCertificateInput input) {
-        final SettableFuture<RpcResult<SetNodeCertificateOutput>> futureResult = SettableFuture.create();
         if (aaaCertProvider.addCertificateTrustStore(input.getNodeAlias(), input.getNodeCert())) {
-            futureResult.set(RpcResultBuilder.success(new SetNodeCertificateOutputBuilder().build()).build());
-        } else {
-            futureResult.set(RpcResultBuilder.<SetNodeCertificateOutput>failed().build());
-            LOG.info("Error while adding the Node certificate");
+            return RpcResultBuilder.success(new SetNodeCertificateOutputBuilder().build()).buildFuture();
         }
-        return futureResult;
+        LOG.info("Error while adding the Node certificate");
+        return RpcResultBuilder.<SetNodeCertificateOutput>failed().buildFuture();
     }
 }
