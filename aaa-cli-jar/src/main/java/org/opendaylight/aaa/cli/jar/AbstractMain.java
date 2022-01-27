@@ -7,11 +7,8 @@
  */
 package org.opendaylight.aaa.cli.jar;
 
-import static java.util.Arrays.asList;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -48,7 +45,7 @@ public abstract class AbstractMain {
     protected static final int RETURN_PASSWORD_MISMATCH = -7;
 
     @SuppressWarnings({ "unchecked", "checkstyle:IllegalThrows", "checkstyle:IllegalCatch" })
-    public int parseArguments(String[] args) throws Exception {
+    public int parseArguments(final String[] args) throws Exception {
         boolean isInDebugLogging = false;
         try {
             OptionParser optionParser = getOptionParser();
@@ -69,14 +66,14 @@ public abstract class AbstractMain {
                         + ", -" + OPTION_NEW_USER);
                 return RETURN_ARGUMENTS_INCOMPATIBLE;
             } else if (optionSet.has(OPTION_PASS)
-                    && !(optionSet.has(OPTION_CHANGE_USER) || optionSet.has(OPTION_VERIFY_USER))
+                    && !optionSet.has(OPTION_CHANGE_USER) && !optionSet.has(OPTION_VERIFY_USER)
                     && !optionSet.has(OPTION_NEW_USER)) {
                 System.err.println("If passwords are specificied, then must use one or the other of these options: -"
                         + OPTION_CHANGE_USER + ", -" + OPTION_NEW_USER);
                 return RETURN_ARGUMENTS_MISSING;
             }
 
-            List<String> userNames = new ArrayList<>();
+            final List<String> userNames;
             if (optionSet.has(OPTION_CHANGE_USER)) {
                 userNames = (List<String>) optionSet.valuesOf(OPTION_CHANGE_USER);
             } else if (optionSet.has(OPTION_NEW_USER)) {
@@ -85,6 +82,8 @@ public abstract class AbstractMain {
                 userNames = (List<String>) optionSet.valuesOf(OPTION_DEL_USER);
             } else if (optionSet.has(OPTION_VERIFY_USER)) {
                 userNames = (List<String>) optionSet.valuesOf(OPTION_VERIFY_USER);
+            } else {
+                userNames = List.of();
             }
             List<String> passwords = (List<String>) optionSet.valuesOf(OPTION_PASS);
             if (!optionSet.has(OPTION_DEL_USER) && passwords.size() != userNames.size()) {
@@ -126,34 +125,34 @@ public abstract class AbstractMain {
         }
     }
 
-    private OptionParser getOptionParser() {
-        return new OptionParser() { {
-                acceptsAll(asList(OPTION_HELP, "?"), "Show help").forHelp();
-                accepts(OPTION_DB_DIR, "databaseDirectory").withRequiredArg().ofType(File.class)
-                        .defaultsTo(new File(".")).describedAs("path");
-                acceptsAll(asList(OPTION_LIST_USERS, "listUsers"), "List all existing users");
-                acceptsAll(asList(OPTION_NEW_USER, "newUser"), "New user to create").withRequiredArg();
-                acceptsAll(asList(OPTION_CHANGE_USER, "changeUser"), "Existing user name to change password")
-                        .withRequiredArg();
-                acceptsAll(asList(OPTION_DEL_USER, "deleteUser"), "Existing user name to delete")
-                        .withRequiredArg();
-                acceptsAll(asList(OPTION_VERIFY_USER, "verifyUser"), "Existing user name to verify password of")
-                        .withRequiredArg();
-                acceptsAll(asList(OPTION_PASS, "passwd"), "New password").withRequiredArg();
-                accepts(OPTION_ADMINS, "New User(s) added with 'admin' role");
-                // TODO accepts("v", "Display version information").forHelp();
-                acceptsAll(asList(OPTION_DEBUG, "debug"), "Produce execution debug output");
+    private static OptionParser getOptionParser() {
+        final var parser = new OptionParser();
 
-                allowsUnrecognizedOptions();
-            }
-        };
+        parser.acceptsAll(List.of(OPTION_HELP, "?"), "Show help").forHelp();
+        parser.accepts(OPTION_DB_DIR, "databaseDirectory").withRequiredArg().ofType(File.class)
+            .defaultsTo(new File(".")).describedAs("path");
+        parser.acceptsAll(List.of(OPTION_LIST_USERS, "listUsers"), "List all existing users");
+        parser.acceptsAll(List.of(OPTION_NEW_USER, "newUser"), "New user to create").withRequiredArg();
+        parser.acceptsAll(List.of(OPTION_CHANGE_USER, "changeUser"), "Existing user name to change password")
+            .withRequiredArg();
+        parser.acceptsAll(List.of(OPTION_DEL_USER, "deleteUser"), "Existing user name to delete")
+            .withRequiredArg();
+        parser.acceptsAll(List.of(OPTION_VERIFY_USER, "verifyUser"), "Existing user name to verify password of")
+            .withRequiredArg();
+        parser.acceptsAll(List.of(OPTION_PASS, "passwd"), "New password").withRequiredArg();
+        parser.accepts(OPTION_ADMINS, "New User(s) added with 'admin' role");
+        // TODO accepts("v", "Display version information").forHelp();
+        parser.acceptsAll(List.of(OPTION_DEBUG, "debug"), "Produce execution debug output");
+
+        parser.allowsUnrecognizedOptions();
+        return parser;
     }
 
-    protected void unrecognizedOptions(List<?> unrecognizedOptions) {
+    protected void unrecognizedOptions(final List<?> unrecognizedOptions) {
         System.err.println("Unrecognized options: " + unrecognizedOptions);
     }
 
-    protected void printHelp(OptionParser optionParser) throws IOException {
+    protected void printHelp(final OptionParser optionParser) throws IOException {
         optionParser.printHelpOn(System.out);
     }
 

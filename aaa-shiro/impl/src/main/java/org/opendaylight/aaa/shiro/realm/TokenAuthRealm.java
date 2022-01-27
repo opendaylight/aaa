@@ -115,8 +115,11 @@ public class TokenAuthRealm extends AuthorizingRealm {
      * .apache.shiro.authc.AuthenticationToken)
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(
-            final AuthenticationToken authenticationToken) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(final AuthenticationToken authenticationToken)
+            throws AuthenticationException {
+        if (authenticationToken == null) {
+            throw new AuthenticationException(FATAL_ERROR_DECODING_CREDENTIALS);
+        }
 
         final String username;
         final String password;
@@ -127,9 +130,6 @@ public class TokenAuthRealm extends AuthorizingRealm {
             username = HeaderUtils.extractUsername(possiblyQualifiedUser);
             domain = HeaderUtils.extractDomain(possiblyQualifiedUser);
             password = TokenUtils.extractPassword(authenticationToken);
-
-        } catch (NullPointerException e) {
-            throw new AuthenticationException(FATAL_ERROR_DECODING_CREDENTIALS, e);
         } catch (ClassCastException e) {
             throw new AuthenticationException(FATAL_ERROR_BASIC_AUTH_ONLY, e);
         }

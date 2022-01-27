@@ -16,10 +16,9 @@ import static org.mockito.Mockito.when;
 import static org.opendaylight.yangtools.util.concurrent.FluentFutures.immediateFailedFluentFuture;
 import static org.opendaylight.yangtools.util.concurrent.FluentFutures.immediateFluentFuture;
 
-import com.google.common.collect.Lists;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -84,32 +83,24 @@ public class MDSALDynamicAuthorizationFilterTest {
     }
 
     // test helper method to generate some cool mdsal data
-    private static DataBroker getTestData() throws Exception {
+    private static DataBroker getTestData() {
         return getTestData("/**", "admin", "Default Test AuthZ Rule", Permissions.Actions.Put);
     }
 
     // test helper method to generate some cool mdsal data
     private static DataBroker getTestData(final String resource, final String role, final String description,
-                                   final Permissions.Actions actions) throws Exception {
+            final Permissions.Actions actions) {
 
-        final List<Permissions.Actions> actionsList = Lists.newArrayList(actions);
         final Permissions permissions = mock(Permissions.class);
         when(permissions.getRole()).thenReturn(role);
-        when(permissions.getActions()).thenReturn(actionsList);
-        final List<Permissions> permissionsList = Lists.newArrayList(permissions);
-        final org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
-                .policies.Policies
-                innerPolicies = mock(
-                org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
-                        .policies.Policies.class);
+        when(permissions.getActions()).thenReturn(Set.of(actions));
+        final var innerPolicies = mock(org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214
+            .http.authorization.policies.Policies.class);
         when(innerPolicies.getResource()).thenReturn(resource);
         when(innerPolicies.getDescription()).thenReturn(description);
-        when(innerPolicies.getPermissions()).thenReturn(permissionsList);
-        final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
-                .policies.Policies>
-                policiesList = Lists.newArrayList(innerPolicies);
+        when(innerPolicies.getPermissions()).thenReturn(List.of(permissions));
         final Policies policies = mock(Policies.class);
-        when(policies.getPolicies()).thenReturn(policiesList);
+        when(policies.getPolicies()).thenReturn(List.of(innerPolicies));
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
         when(httpAuthorization.getPolicies()).thenReturn(policies);
 
@@ -134,7 +125,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         // Same as above, but with an empty policy list returned.
 
         final Policies policies = mock(Policies.class);
-        when(policies.getPolicies()).thenReturn(new ArrayList<>());
+        when(policies.getPolicies()).thenReturn(List.of());
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
         when(httpAuthorization.getPolicies()).thenReturn(policies);
         filter = newFilter(mock(Subject.class), mockDataBroker(httpAuthorization));
@@ -223,9 +214,8 @@ public class MDSALDynamicAuthorizationFilterTest {
         //
         // Create some mock data which has a couple of rules which may/may not match.  This
         // test ensures the correct application of said rules.
-        final List<Permissions.Actions> actionsList = Lists
-                .newArrayList(Permissions.Actions.Get, Permissions.Actions.Delete, Permissions.Actions.Patch,
-                              Permissions.Actions.Put, Permissions.Actions.Post);
+        final Set<Permissions.Actions> actionsList = Set.of(Permissions.Actions.Get, Permissions.Actions.Delete,
+            Permissions.Actions.Patch, Permissions.Actions.Put, Permissions.Actions.Post);
         final String role = "admin";
         final String resource = "/**";
         final String resource2 = "/specialendpoint/**";
@@ -233,33 +223,23 @@ public class MDSALDynamicAuthorizationFilterTest {
         final Permissions permissions = mock(Permissions.class);
         when(permissions.getRole()).thenReturn(role);
         when(permissions.getActions()).thenReturn(actionsList);
-        final List<Permissions> permissionsList = Lists.newArrayList(permissions);
-        final org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
-                .policies.Policies
-                innerPolicies = mock(
-                org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
-                        .policies.Policies.class);
+        final var innerPolicies = mock(org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214
+            .http.authorization.policies.Policies.class);
         when(innerPolicies.getResource()).thenReturn(resource);
         when(innerPolicies.getIndex()).thenReturn(Uint32.valueOf(5));
         when(innerPolicies.getDescription()).thenReturn(description);
-        when(innerPolicies.getPermissions()).thenReturn(permissionsList);
-        final org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
-                .policies.Policies
-                innerPolicies2 = mock(
-                org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
-                        .policies.Policies.class);
+        when(innerPolicies.getPermissions()).thenReturn(List.of(permissions));
+        final var innerPolicies2 = mock(org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214
+            .http.authorization.policies.Policies.class);
         when(innerPolicies2.getResource()).thenReturn(resource2);
-        when(innerPolicies2.getIndex()).thenReturn(Uint32.valueOf(10));
+        when(innerPolicies2.getIndex()).thenReturn(Uint32.TEN);
         final Permissions permissions2 = mock(Permissions.class);
         when(permissions2.getRole()).thenReturn("dog");
         when(permissions2.getActions()).thenReturn(actionsList);
-        when(innerPolicies2.getPermissions()).thenReturn(Lists.newArrayList(permissions2));
+        when(innerPolicies2.getPermissions()).thenReturn(List.of(permissions2));
         when(innerPolicies2.getDescription()).thenReturn("Specialized Rule");
-        List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
-                .policies.Policies>
-                policiesList = Lists.newArrayList(innerPolicies, innerPolicies2);
         final Policies policies = mock(Policies.class);
-        when(policies.getPolicies()).thenReturn(policiesList);
+        when(policies.getPolicies()).thenReturn(List.of(innerPolicies, innerPolicies2));
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
         when(httpAuthorization.getPolicies()).thenReturn(policies);
 
@@ -295,8 +275,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         // Now reverse the ordering of the rules, and ensure that access is denied (except for
         // the first non-applicable rule, which should still be allowed).  This is
         // because the Subject making the request is not granted the "dog" role.
-        policiesList = Lists.newArrayList(innerPolicies2, innerPolicies);
-        when(policies.getPolicies()).thenReturn(policiesList);
+        when(policies.getPolicies()).thenReturn(List.of(innerPolicies2, innerPolicies));
         // Modify Index to ensure the innerPolicies2 actually gets
         // used instead of innerPolicies
         when(innerPolicies2.getIndex()).thenReturn(Uint32.valueOf(4));
@@ -316,29 +295,20 @@ public class MDSALDynamicAuthorizationFilterTest {
         final String role = "admin";
         final String resource = "/**";
         final String description = "Test description";
-        final List<Permissions.Actions> actionsList = Lists
-                .newArrayList(Permissions.Actions.Get, Permissions.Actions.Put, Permissions.Actions.Delete,
-                              Permissions.Actions.Patch, Permissions.Actions.Post);
         final Permissions permissions = mock(Permissions.class);
         when(permissions.getRole()).thenReturn(role);
-        when(permissions.getActions()).thenReturn(actionsList);
+        when(permissions.getActions()).thenReturn(Set.of(Permissions.Actions.Get, Permissions.Actions.Put,
+            Permissions.Actions.Delete, Permissions.Actions.Patch, Permissions.Actions.Post));
         final Permissions permissions2 = mock(Permissions.class);
         when(permissions2.getRole()).thenReturn("user");
-        when(permissions2.getActions()).thenReturn(Lists.newArrayList(Permissions.Actions.Get));
-        final List<Permissions> permissionsList = Lists.newArrayList(permissions, permissions2);
-        final org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
-                .policies.Policies
-                innerPolicies = mock(
-                org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
-                        .policies.Policies.class);
+        when(permissions2.getActions()).thenReturn(Set.of(Permissions.Actions.Get));
+        final var innerPolicies = mock(org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214
+            .http.authorization.policies.Policies.class);
         when(innerPolicies.getResource()).thenReturn(resource);
         when(innerPolicies.getDescription()).thenReturn(description);
-        when(innerPolicies.getPermissions()).thenReturn(permissionsList);
-        final List<org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization
-                .policies.Policies>
-                policiesList = Lists.newArrayList(innerPolicies);
+        when(innerPolicies.getPermissions()).thenReturn(List.of(permissions, permissions2));
         final Policies policies = mock(Policies.class);
-        when(policies.getPolicies()).thenReturn(policiesList);
+        when(policies.getPolicies()).thenReturn(List.of(innerPolicies));
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
         when(httpAuthorization.getPolicies()).thenReturn(policies);
 
@@ -354,6 +324,5 @@ public class MDSALDynamicAuthorizationFilterTest {
         assertFalse(filter.isAccessAllowed(request, null, null));
         when(request.getMethod()).thenReturn("Get");
         assertTrue(filter.isAccessAllowed(request, null, null));
-
     }
 }
