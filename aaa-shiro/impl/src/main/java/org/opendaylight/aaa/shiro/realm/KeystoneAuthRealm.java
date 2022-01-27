@@ -7,16 +7,17 @@
  */
 package org.opendaylight.aaa.shiro.realm;
 
+import static java.util.Objects.requireNonNull;
+
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.util.concurrent.UncheckedExecutionException;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -49,11 +50,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * KeystoneAuthRealm is a Shiro Realm that authenticates users from
- * OpenStack Keystone.
+ * KeystoneAuthRealm is a Shiro Realm that authenticates users from OpenStack Keystone.
  */
+// Non-final for testing
 public class KeystoneAuthRealm extends AuthorizingRealm {
-
     private static final Logger LOG = LoggerFactory.getLogger(KeystoneAuthRealm.class);
 
     private static final String NO_CATALOG_OPTION = "nocatalog";
@@ -71,12 +71,14 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     private volatile boolean sslVerification = true;
     private volatile String defaultDomain = DEFAULT_KEYSTONE_DOMAIN;
 
-    private final LoadingCache<Boolean, SimpleHttpClient> clientCache = buildCache();
+    private final LoadingCache<Boolean, SimpleHttpClient> clientCache;
 
     private final ICertificateManager certManager;
 
+    @SuppressFBWarnings(value = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR", justification = "Legacy class layout")
     public KeystoneAuthRealm() {
-        this.certManager = Objects.requireNonNull(ThreadLocals.CERT_MANAGER_TL.get());
+        certManager = requireNonNull(ThreadLocals.CERT_MANAGER_TL.get());
+        clientCache = buildCache();
         LOG.info("KeystoneAuthRealm created");
     }
 
@@ -102,7 +104,7 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
             return doGetAuthenticationInfo(authenticationToken, client);
         } catch (UncheckedExecutionException e) {
             Throwable cause = e.getCause();
-            if (!Objects.isNull(cause) && cause instanceof AuthenticationException) {
+            if (cause instanceof AuthenticationException) {
                 throw (AuthenticationException) cause;
             }
             throw e;
@@ -130,7 +132,7 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
             throw new AuthenticationException(FATAL_ERROR_BASIC_AUTH_ONLY);
         }
 
-        if (Objects.isNull(theServerUri)) {
+        if (theServerUri == null) {
             LOG.error("Invalid URL to Keystone server");
             throw new AuthenticationException(FATAL_ERROR_INVALID_URL);
         }
@@ -183,7 +185,7 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
                 .expireAfterWrite(CLIENT_EXPIRE_AFTER_WRITE, TimeUnit.SECONDS)
                 .build(new CacheLoader<Boolean, SimpleHttpClient>() {
                     @Override
-                    public SimpleHttpClient load(Boolean withSslVerification) throws Exception {
+                    public SimpleHttpClient load(final Boolean withSslVerification) throws Exception {
                         return buildClient(withSslVerification, certManager, SimpleHttpClient.clientBuilder());
                     }
                 });
@@ -218,15 +220,16 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
                 .build();
     }
 
-    private SSLContext getSecureSSLContext(final ICertificateManager certificateManager) {
-        final SSLContext sslContext = Optional.ofNullable(certificateManager)
-                .map(ICertificateManager::getServerContext)
-                .orElse(null);
-        if (Objects.isNull(sslContext)) {
-            LOG.error("Could not get a valid SSL context from certificate manager");
-            throw new AuthenticationException(UNABLE_TO_AUTHENTICATE);
+    private static SSLContext getSecureSSLContext(final ICertificateManager certificateManager) {
+        if (certificateManager != null) {
+            final SSLContext sslContext = certificateManager.getServerContext();
+            if (sslContext != null) {
+                return sslContext;
+            }
         }
-        return sslContext;
+
+        LOG.error("Could not get a valid SSL context from certificate manager");
+        throw new AuthenticationException(UNABLE_TO_AUTHENTICATE);
     }
 
     /**
