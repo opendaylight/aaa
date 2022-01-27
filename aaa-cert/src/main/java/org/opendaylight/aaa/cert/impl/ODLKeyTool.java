@@ -51,6 +51,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ODLKeyTool {
     private static final Logger LOG = LoggerFactory.getLogger(ODLKeyTool.class);
+    private static final SecureRandom RANDOM = new SecureRandom();
 
     private final String workingDir;
 
@@ -320,7 +321,7 @@ public class ODLKeyTool {
      * @return X509Certificate if the certificate string is not well formated
      *         will return null
      */
-    private X509Certificate getCertificate(String certificate) {
+    private static X509Certificate getCertificate(String certificate) {
         if (certificate.isEmpty()) {
             return null;
         }
@@ -350,9 +351,8 @@ public class ODLKeyTool {
      *
      * @return secure random number as BigInteger.
      */
-    private BigInteger getSecureRandomeInt() {
-        final SecureRandom secureRandom = new SecureRandom();
-        final BigInteger bigInt = BigInteger.valueOf(secureRandom.nextInt());
+    private static BigInteger getSecureRandomeInt() {
+        final BigInteger bigInt = BigInteger.valueOf(RANDOM.nextInt());
         return new BigInteger(1, bigInt.toByteArray());
     }
 

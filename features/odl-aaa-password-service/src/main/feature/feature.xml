@@ -8,8 +8,8 @@
  -->
 <features name="odl-aaa-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
     <feature name="odl-aaa-password-service" version="${project.version}">
-        <feature version="[8,9)">odl-mdsal-binding-base</feature>
-        <feature version="[4,5)">odl-mdsal-broker</feature>
+        <feature version="[9,10)">odl-mdsal-binding-base</feature>
+        <feature version="[5,6)">odl-mdsal-broker</feature>
         <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-password-service-config.xml">
             mvn:org.opendaylight.aaa/aaa-password-service-impl/${project.version}/xml/aaa-password-service-config
         </configfile>

@@ -17,7 +17,6 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
-import java.util.Random;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -59,6 +58,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     private static final String DEFAULT_CONFIG_FILE_PATH = "etc" + File.separator + "opendaylight" + File.separator
             + "datastore" + File.separator + "initial" + File.separator + "config" + File.separator
             + "aaa-encrypt-service-config.xml";
+    private static final SecureRandom RANDOM = new SecureRandom();
 
     private final SecretKey key;
     private final IvParameterSpec ivspec;
@@ -75,9 +75,8 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
         if (encrySrvConfig.getEncryptKey() != null && encrySrvConfig.getEncryptKey().isEmpty()) {
             LOG.debug("Set the Encryption service password and encrypt salt");
             String newPwd = RandomStringUtils.random(encrySrvConfig.getPasswordLength(), true, true);
-            final Random random = new SecureRandom();
             byte[] salt = new byte[16];
-            random.nextBytes(salt);
+            RANDOM.nextBytes(salt);
             String encodedSalt = Base64.getEncoder().encodeToString(salt);
             encrySrvConfig = new AaaEncryptServiceConfigBuilder(encrySrvConfig).setEncryptKey(newPwd)
                     .setEncryptSalt(encodedSalt).build();
@@ -105,7 +104,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
                 | InvalidKeyException e) {
             LOG.error("Failed to create encrypt cipher.", e);
         }
-        this.encryptCipher = cipher;
+        encryptCipher = cipher;
         cipher = null;
         try {
             cipher = Cipher.getInstance(encrySrvConfig.getCipherTransforms());
@@ -114,7 +113,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
                 | InvalidKeyException e) {
             LOG.error("Failed to create decrypt cipher.", e);
         }
-        this.decryptCipher = cipher;
+        decryptCipher = cipher;
     }
 
     @Override
