@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.keystone.domain;
 
 /**
@@ -42,14 +41,16 @@ public class KeystoneAuth {
         public static final class Identity {
             private static final String METHOD_PASSWORD = "password";
 
+            private final String[] methods;
             private final Password password;
 
             private Identity(String username, String password, String domain) {
                 this.password = new Password(username, password, domain);
+                this.methods = new String[]{ METHOD_PASSWORD };
             }
 
             public String[] getMethods() {
-                return new String[]{METHOD_PASSWORD};
+                return methods == null ? null : methods.clone();
             }
 
             public Password getPassword() {
