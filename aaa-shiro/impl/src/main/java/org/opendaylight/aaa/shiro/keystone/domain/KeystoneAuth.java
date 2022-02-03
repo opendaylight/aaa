@@ -7,8 +7,9 @@
  */
 
 package org.opendaylight.aaa.shiro.keystone.domain;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-/**
+/*
  * This class is a representation of a Keystone API v3 Auth object.
  */
 public class KeystoneAuth {
@@ -42,14 +43,17 @@ public class KeystoneAuth {
         public static final class Identity {
             private static final String METHOD_PASSWORD = "password";
 
+            private final String[] methods;
             private final Password password;
 
             private Identity(String username, String password, String domain) {
+                this.methods = new String[]{METHOD_PASSWORD};
                 this.password = new Password(username, password, domain);
             }
 
+            @SuppressFBWarnings(value = {"EI_EXPOSE_REP", "EI_EXPOSE_REP2"})
             public String[] getMethods() {
-                return new String[]{METHOD_PASSWORD};
+                return methods;
             }
 
             public Password getPassword() {
