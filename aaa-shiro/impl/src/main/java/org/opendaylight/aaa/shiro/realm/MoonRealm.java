@@ -111,7 +111,7 @@ public class MoonRealm extends AuthorizingRealm {
         final String output = webTarget.request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(input, MediaType.APPLICATION_JSON), String.class);
 
-        final JsonElement element = new JsonParser().parse(output);
+        final JsonElement element = JsonParser.parseString(output);
         if (!element.isJsonObject()) {
             throw new IllegalStateException("Authentication error: returned output is not a JSON object");
         }
