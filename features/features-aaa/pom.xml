@@ -18,7 +18,7 @@
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>features-aaa</artifactId>
-    <version>0.14.9-SNAPSHOT</version>
+    <version>0.14.9</version>
     <name>ODL :: aaa :: ${project.artifactId}</name>
     <packaging>feature</packaging>
 
