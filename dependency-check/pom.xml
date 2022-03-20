@@ -12,13 +12,13 @@
     <parent>
         <groupId>org.opendaylight.aaa</groupId>
         <artifactId>aaa-artifacts</artifactId>
-        <version>0.15.0-SNAPSHOT</version>
+        <version>0.15.0</version>
         <relativePath>../artifacts</relativePath>
     </parent>
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>dependency-check</artifactId>
-    <version>0.15.0-SNAPSHOT</version>
+    <version>0.15.0</version>
     <name>ODL :: aaa :: ${project.artifactId}</name>
 
     <properties>
