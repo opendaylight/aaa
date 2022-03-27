@@ -20,7 +20,7 @@ import java.sql.SQLException;
 public class IdmLightSimpleConnectionProvider implements ConnectionProvider {
     private final IdmLightConfig config;
 
-    public IdmLightSimpleConnectionProvider(IdmLightConfig config) {
+    public IdmLightSimpleConnectionProvider(final IdmLightConfig config) {
         new org.h2.Driver();
         this.config = config;
     }
@@ -30,7 +30,7 @@ public class IdmLightSimpleConnectionProvider implements ConnectionProvider {
         try {
             return DriverManager.getConnection(config.getDbConnectionString(), config.getDbUser(), config.getDbPwd());
         } catch (SQLException e) {
-            throw new StoreException("Cannot connect to database server", e);
+            throw new StoreException("Cannot connect to database server " + config.getDbConnectionString(), e);
         }
     }
 }

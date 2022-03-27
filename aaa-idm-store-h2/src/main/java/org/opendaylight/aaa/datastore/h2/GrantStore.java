@@ -43,10 +43,10 @@ public class GrantStore extends AbstractStore<Grant> {
     @Override
     protected String getTableCreationStatement() {
         return "CREATE TABLE GRANTS "
-                + "(grantid    VARCHAR(128) PRIMARY KEY,"
-                + "domainid    VARCHAR(128)         NOT NULL, "
-                + "userid      VARCHAR(128)         NOT NULL, "
-                + "roleid      VARCHAR(128)         NOT NULL)";
+            + "(grantid    VARCHAR(128) PRIMARY KEY, "
+            + "domainid    VARCHAR(128) NOT NULL, "
+            + "userid      VARCHAR(128) NOT NULL, "
+            + "roleid      VARCHAR(128) NOT NULL)";
     }
 
     @Override
