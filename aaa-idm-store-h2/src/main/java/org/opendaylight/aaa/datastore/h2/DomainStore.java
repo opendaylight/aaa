@@ -43,10 +43,10 @@ public class DomainStore extends AbstractStore<Domain> {
     @Override
     protected String getTableCreationStatement() {
         return "CREATE TABLE DOMAINS "
-                + "(domainid   VARCHAR(128)      PRIMARY KEY,"
-                + "name        VARCHAR(128)      UNIQUE NOT NULL, "
-                + "description VARCHAR(128)      , "
-                + "enabled     INTEGER           NOT NULL)";
+            + "(domainid   VARCHAR(128)      PRIMARY KEY, "
+            + "name        VARCHAR(128)      UNIQUE NOT NULL, "
+            + "description VARCHAR(128)      , "
+            + "enabled     INTEGER           NOT NULL)";
     }
 
     @Override
