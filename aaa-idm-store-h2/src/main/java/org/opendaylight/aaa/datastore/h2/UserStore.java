@@ -53,11 +53,15 @@ public class UserStore extends AbstractStore<User> {
 
     @Override
     protected String getTableCreationStatement() {
-        return "CREATE TABLE users " + "(userid    VARCHAR(128) PRIMARY KEY,"
-                + "name       VARCHAR(128)      NOT NULL, " + "domainid   VARCHAR(128)      NOT NULL, "
-                + "email      VARCHAR(128)      NOT NULL, " + "password   VARCHAR(128)      NOT NULL, "
-                + "description VARCHAR(128)     NOT NULL, " + "salt        VARCHAR(128)      NOT NULL, "
-                + "enabled     INTEGER          NOT NULL)";
+        return "CREATE TABLE users "
+            + "(userid     VARCHAR(128) PRIMARY KEY, "
+            + "name        VARCHAR(128)      NOT NULL, "
+            + "domainid    VARCHAR(128)      NOT NULL, "
+            + "email       VARCHAR(128)      NOT NULL, "
+            + "password    VARCHAR(128)      NOT NULL, "
+            + "description VARCHAR(128)      NOT NULL, "
+            + "salt        VARCHAR(128)      NOT NULL, "
+            + "enabled     INTEGER           NOT NULL)";
     }
 
     @Override

@@ -43,9 +43,11 @@ public class RoleStore extends AbstractStore<Role> {
 
     @Override
     protected String getTableCreationStatement() {
-        return "CREATE TABLE ROLES " + "(roleid     VARCHAR(128)   PRIMARY KEY,"
-                + "name        VARCHAR(128)   NOT NULL, " + "domainid    VARCHAR(128)   NOT NULL, "
-                + "description VARCHAR(128)      NOT NULL)";
+        return "CREATE TABLE ROLES "
+            + "(roleid     VARCHAR(128)   PRIMARY KEY, "
+            + "name        VARCHAR(128)   NOT NULL, "
+            + "domainid    VARCHAR(128)   NOT NULL, "
+            + "description VARCHAR(128)   NOT NULL)";
     }
 
     @Override
