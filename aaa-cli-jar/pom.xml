@@ -124,28 +124,30 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
                 </filter>
                 <filter>
                   <artifact>com.h2database:h2</artifact>
+                  <!-- FIXME: switch to exclusions, as this list is not maintainable -->
                   <includes>
                     <include>org/h2/Driver.class</include>
                     <include>org/h2/JdbcDriverBackwardsCompat.class</include>
-                    <include>org/h2/upgrade/**</include>
-                    <include>org/h2/util/**</include>
-                    <include>org/h2/jdbc/**</include>
-                    <include>org/h2/message/**</include>
-                    <include>org/h2/value/**</include>
-                    <include>org/h2/engine/**</include>
-                    <include>org/h2/command/**</include>
-                    <include>org/h2/security/**</include>
-                    <include>org/h2/store/**</include>
-                    <include>org/h2/compress/**</include>
-                    <include>org/h2/schema/**</include>
-                    <include>org/h2/result/**</include>
                     <include>org/h2/api/**</include>
-                    <include>org/h2/mvstore/**</include>
-                    <include>org/h2/table/**</include>
+                    <include>org/h2/command/**</include>
+                    <include>org/h2/compress/**</include>
+                    <include>org/h2/constraint/**</include>
+                    <include>org/h2/engine/**</include>
                     <include>org/h2/expression/**</include>
                     <include>org/h2/index/**</include>
-                    <include>org/h2/constraint/**</include>
+                    <include>org/h2/jdbc/**</include>
+                    <include>org/h2/message/**</include>
+                    <include>org/h2/mode/**</include>
+                    <include>org/h2/mvstore/**</include>
                     <include>org/h2/pagestore/**</include>
+                    <include>org/h2/result/**</include>
+                    <include>org/h2/schema/**</include>
+                    <include>org/h2/security/**</include>
+                    <include>org/h2/store/**</include>
+                    <include>org/h2/table/**</include>
+                    <include>org/h2/upgrade/**</include>
+                    <include>org/h2/util/**</include>
+                    <include>org/h2/value/**</include>
                   </includes>
                 </filter>
                 <filter>
