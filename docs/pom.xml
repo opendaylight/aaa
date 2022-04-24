@@ -251,7 +251,7 @@
                         <link>https://www.javadoc.io/doc/org.opendaylight.infrautils/infrautils-docs/3.0.0/</link>
                         <link>https://www.javadoc.io/doc/org.opendaylight.yangtools/yangtools-docs/8.0.3/</link>
                         <link>https://www.javadoc.io/doc/org.opendaylight.mdsal/mdsal-docs/9.0.2/</link>
-                        <link>https://www.javadoc.io/doc/org.opendaylight.controller/controller-docs/5.0.2/</link>
+                        <link>https://www.javadoc.io/doc/org.opendaylight.controller/controller-docs/5.0.3/</link>
                     </links>
 
                     <!--groups>
