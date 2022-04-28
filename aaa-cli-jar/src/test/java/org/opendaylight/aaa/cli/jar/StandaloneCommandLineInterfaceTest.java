@@ -7,9 +7,14 @@
  */
 package org.opendaylight.aaa.cli.jar;
 
-import static com.google.common.truth.Truth.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +24,6 @@ import org.junit.Test;
  * @author Michael Vorburger.ch
  */
 public class StandaloneCommandLineInterfaceTest {
-
     private static final String DIR = "target/" + StandaloneCommandLineInterfaceTest.class.getSimpleName();
 
     StandaloneCommandLineInterface cli;
@@ -32,38 +36,37 @@ public class StandaloneCommandLineInterfaceTest {
 
     @Test
     public void testInitialEmptyDatabase() throws Exception {
-        assertThat(cli.getAllUserNames()).isEmpty();
+        assertEquals(List.of(), cli.getAllUserNames());
     }
 
     @Test
     public void testCreateNewUserAndSetPasswordAndDelete() throws Exception {
-        assertThat(cli.getAllUserNames()).isEmpty();
-        assertThat(cli.checkUserPassword("duh", "dah")).isFalse();
+        assertEquals(List.of(), cli.getAllUserNames());
+        assertFalse(cli.checkUserPassword("duh", "dah"));
 
         cli.createNewUser("test", "testpassword", false);
-        assertThat(cli.getAllUserNames()).hasSize(1);
-        assertThat(cli.getAllUserNames().get(0)).isEqualTo("test");
-        assertThat(cli.checkUserPassword("test", "testpassword")).isTrue();
+        assertThat(cli.getAllUserNames(), hasSize(1));
+        assertEquals("test", cli.getAllUserNames().get(0));
+        assertTrue(cli.checkUserPassword("test", "testpassword"));
 
-        assertThat(cli.resetPassword("test", "anothertestpassword")).isTrue();
-        assertThat(cli.checkUserPassword("test", "testpassword")).isFalse();
-        assertThat(cli.checkUserPassword("test", "anothertestpassword")).isTrue();
+        assertTrue(cli.resetPassword("test", "anothertestpassword"));
+        assertFalse(cli.checkUserPassword("test", "testpassword"));
+        assertTrue(cli.checkUserPassword("test", "anothertestpassword"));
 
-        assertThat(cli.deleteUser("test")).isTrue();
-        assertThat(cli.getAllUserNames()).hasSize(0);
-        assertThat(cli.checkUserPassword("test", "anothertestpassword")).isFalse();
+        assertTrue(cli.deleteUser("test"));
+        assertEquals(List.of(), cli.getAllUserNames());
+        assertFalse(cli.checkUserPassword("test", "anothertestpassword"));
     }
 
     @Test // https://bugs.opendaylight.org/show_bug.cgi?id=8157
     public void testCreateDeleteReCreateUserBug8157() throws Exception {
         cli.createNewUser("test", "testpassword", false);
-        assertThat(cli.deleteUser("test")).isTrue();
+        assertTrue(cli.deleteUser("test"));
         cli.createNewUser("test", "testpassword", false);
     }
 
     @Test
     public void testSetPasswordOnNonExistingUser() throws Exception {
-        assertThat(cli.resetPassword("noSuchUID", "...")).isFalse();
+        assertFalse(cli.resetPassword("noSuchUID", "..."));
     }
-
 }

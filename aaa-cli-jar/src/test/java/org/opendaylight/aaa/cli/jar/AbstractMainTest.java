@@ -7,15 +7,17 @@
  */
 package org.opendaylight.aaa.cli.jar;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.Mockito.any;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
-import com.google.common.collect.Lists;
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.opendaylight.yangtools.testutils.mockito.MoreAnswers;
 
 /**
@@ -24,24 +26,23 @@ import org.opendaylight.yangtools.testutils.mockito.MoreAnswers;
  * @author Michael Vorburger.ch
  */
 public class AbstractMainTest {
-
-    private AbstractMain mockedMain() {
-        return Mockito.mock(AbstractMain.class, MoreAnswers.realOrException());
+    private static AbstractMain mockedMain() {
+        return mock(AbstractMain.class, MoreAnswers.realOrException());
     }
 
     @Test
     public void noArguments() throws Exception {
-        AbstractMain main = Mockito.spy(AbstractMain.class);
-        assertThat(main.parseArguments(new String[] {})).isEqualTo(-1);
-        Mockito.verify(main).printHelp(any());
+        AbstractMain main = spy(AbstractMain.class);
+        assertEquals(-1, main.parseArguments(new String[] {}));
+        verify(main).printHelp(any());
     }
 
     @Test
     public void unrecognizedArgument() throws Exception {
-        AbstractMain main = Mockito.spy(AbstractMain.class);
-        assertThat(main.parseArguments(new String[] { "saywhat" })).isEqualTo(-1);
-        Mockito.verify(main).unrecognizedOptions(Collections.singletonList("saywhat"));
-        Mockito.verify(main).printHelp(any());
+        AbstractMain main = spy(AbstractMain.class);
+        assertEquals(-1, main.parseArguments(new String[] { "saywhat" }));
+        verify(main).unrecognizedOptions(List.of("saywhat"));
+        verify(main).printHelp(any());
     }
 
     /**
@@ -50,132 +51,126 @@ public class AbstractMainTest {
      */
     @Test
     public void parsingError() throws Exception {
-        AbstractMain main = Mockito.spy(AbstractMain.class);
-        assertThat(main.parseArguments(new String[] { "-d" })).isEqualTo(-1);
-        Mockito.verify(main).printHelp(any());
+        AbstractMain main = spy(AbstractMain.class);
+        assertEquals(-1, main.parseArguments(new String[] { "-d" }));
+        verify(main).printHelp(any());
     }
 
     @Test
     public void exceptionWithoutX() throws Exception {
         AbstractMain main = mockedMain();
-        Mockito.doThrow(new IllegalStateException()).when(main).printHelp(any());
-        assertThat(main.parseArguments(new String[] { "-?" })).isEqualTo(-2);
+        doThrow(new IllegalStateException()).when(main).printHelp(any());
+        assertEquals(-2, main.parseArguments(new String[] { "-?" }));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void exceptionWithX() throws Exception {
         AbstractMain main = mockedMain();
-        Mockito.doThrow(new IllegalStateException()).when(main).printHelp(any());
-        assertThat(main.parseArguments(new String[] { "-hX" })).isEqualTo(-2);
+        doThrow(new IllegalStateException()).when(main).printHelp(any());
+        assertThrows(IllegalStateException.class, () -> main.parseArguments(new String[] { "-hX" }));
     }
 
     @Test
     public void onlyAUser() throws Exception {
-        assertThat(mockedMain().parseArguments(new String[] { "-X", "--nu", "admin" })).isEqualTo(-3);
+        assertEquals(-3, mockedMain().parseArguments(new String[] { "-X", "--nu", "admin" }));
     }
 
     @Test
     public void onlyTwoUsers() throws Exception {
-        assertThat(mockedMain().parseArguments(new String[] { "-X", "-cu", "admin", "-cu", "auser" }))
-                .isEqualTo(-3);
+        assertEquals(-3, mockedMain().parseArguments(new String[] { "-X", "-cu", "admin", "-cu", "auser" }));
     }
 
     @Test
     public void userOptionWithoutArgument() throws Exception {
-        assertThat(mockedMain().parseArguments(new String[] { "-nu" })).isEqualTo(-2);
+        assertEquals(-2, mockedMain().parseArguments(new String[] { "-nu" }));
     }
 
     @Test
     public void ifPasswordsThenEitherCreateOrChangeUser() throws Exception {
-        assertThat(mockedMain().parseArguments(new String[] { "-X", "-p", "newpass" })).isEqualTo(-6);
+        assertEquals(-6, mockedMain().parseArguments(new String[] { "-X", "-p", "newpass" }));
     }
 
     @Test
     public void changeUserAndPassword() throws Exception {
-        AbstractMain main = Mockito.spy(AbstractMain.class);
-        assertThat(main.parseArguments(new String[] { "-X", "-cu", "user", "-p", "newpass" })).isEqualTo(0);
-        Mockito.verify(main).setDbDirectory(new File("."));
-        Mockito.verify(main).resetPasswords(Collections.singletonList("user"), Collections.singletonList("newpass"));
+        AbstractMain main = spy(AbstractMain.class);
+        assertEquals(0, main.parseArguments(new String[] { "-X", "-cu", "user", "-p", "newpass" }));
+        verify(main).setDbDirectory(new File("."));
+        verify(main).resetPasswords(List.of("user"), List.of("newpass"));
     }
 
     @Test
     public void addNewUser() throws Exception {
-        AbstractMain main = Mockito.spy(AbstractMain.class);
-        assertThat(main.parseArguments(new String[] { "-X", "-nu", "user", "-p", "newpass" })).isEqualTo(0);
-        Mockito.verify(main).setDbDirectory(new File("."));
-        Mockito.verify(main).addNewUsers(
-                Collections.singletonList("user"), Collections.singletonList("newpass"), false);
+        AbstractMain main = spy(AbstractMain.class);
+        assertEquals(0, main.parseArguments(new String[] { "-X", "-nu", "user", "-p", "newpass" }));
+        verify(main).setDbDirectory(new File("."));
+        verify(main).addNewUsers(List.of("user"), List.of("newpass"), false);
     }
 
     @Test
     public void addNewAdminUser() throws Exception {
-        AbstractMain main = Mockito.spy(AbstractMain.class);
-        assertThat(main.parseArguments(new String[] { "-X", "-nu", "user", "-p", "newpass", "-a" })).isEqualTo(0);
-        Mockito.verify(main).setDbDirectory(new File("."));
-        Mockito.verify(main).addNewUsers(Collections.singletonList("user"), Collections.singletonList("newpass"), true);
+        AbstractMain main = spy(AbstractMain.class);
+        assertEquals(0, main.parseArguments(new String[] { "-X", "-nu", "user", "-p", "newpass", "-a" }));
+        verify(main).setDbDirectory(new File("."));
+        verify(main).addNewUsers(List.of("user"), List.of("newpass"), true);
     }
 
     @Test
     public void changeUserAndPasswordInNonDefaultDatabase() throws Exception {
-        AbstractMain main = Mockito.spy(AbstractMain.class);
-        assertThat(main.parseArguments(new String[] { "-X", "--dbd", "altDbDir", "-cu", "user", "-p", "newpass" }))
-                .isEqualTo(0);
-        Mockito.verify(main).setDbDirectory(new File("altDbDir"));
-        Mockito.verify(main).resetPasswords(Collections.singletonList("user"), Collections.singletonList("newpass"));
+        AbstractMain main = spy(AbstractMain.class);
+        assertEquals(0,
+            main.parseArguments(new String[] { "-X", "--dbd", "altDbDir", "-cu", "user", "-p", "newpass" }));
+        verify(main).setDbDirectory(new File("altDbDir"));
+        verify(main).resetPasswords(List.of("user"), List.of("newpass"));
     }
 
     @Test
     public void changeTwoUsersAndPasswords() throws Exception {
-        AbstractMain main = Mockito.spy(AbstractMain.class);
-        assertThat(main.parseArguments(
-                new String[] { "-X", "-cu", "user1", "-p", "newpass1", "-cu", "user2", "-p", "newpass2" }))
-                        .isEqualTo(0);
-        Mockito.verify(main).resetPasswords(Arrays.asList("user1", "user2"), Arrays.asList("newpass1", "newpass2"));
+        AbstractMain main = spy(AbstractMain.class);
+        assertEquals(0, main.parseArguments(
+                new String[] { "-X", "-cu", "user1", "-p", "newpass1", "-cu", "user2", "-p", "newpass2" }));
+        verify(main).resetPasswords(List.of("user1", "user2"), List.of("newpass1", "newpass2"));
     }
 
     @Test
     public void morePasswordsThanUsers() throws Exception {
-        assertThat(mockedMain().parseArguments(new String[] { "-X", "-cu", "admin", "-p", "newpass1", "-cu", "auser",
-            "-p", "newpass2", "-p", "newpass3" })).isEqualTo(-3);
+        assertEquals(-3, mockedMain().parseArguments(new String[] {
+            "-X", "-cu", "admin", "-p", "newpass1", "-cu", "auser", "-p", "newpass2", "-p", "newpass3" }));
     }
 
     @Test
     public void cantAddAndChangeUsersTogether() throws Exception {
-        assertThat(
-                mockedMain().parseArguments(new String[] { "-X", "-cu", "admin", "-nu", "admin2", "-p", "newpass1" }))
-                        .isEqualTo(-5);
+        assertEquals(-5,
+            mockedMain().parseArguments(new String[] { "-X", "-cu", "admin", "-nu", "admin2", "-p", "newpass1" }));
     }
 
     @Test
     public void deleteSingleUser() throws Exception {
-        AbstractMain main = Mockito.spy(AbstractMain.class);
-        assertThat(main.parseArguments(new String[] { "-X", "-du", "duser" })).isEqualTo(0);
-        Mockito.verify(main).setDbDirectory(new File("."));
-        Mockito.verify(main).deleteUsers(Collections.singletonList("duser"));
+        AbstractMain main = spy(AbstractMain.class);
+        assertEquals(0, main.parseArguments(new String[] { "-X", "-du", "duser" }));
+        verify(main).setDbDirectory(new File("."));
+        verify(main).deleteUsers(List.of("duser"));
     }
 
     @Test
     public void verify1User1Password() throws Exception {
-        AbstractMain main = Mockito.spy(AbstractMain.class);
-        assertThat(main.parseArguments(new String[] { "-X", "-vu", "user", "-p", "pass" })).isEqualTo(0);
-        Mockito.verify(main).setDbDirectory(new File("."));
-        Mockito.verify(main).verifyUsers(Collections.singletonList("user"), Collections.singletonList("pass"));
+        AbstractMain main = spy(AbstractMain.class);
+        assertEquals(0, main.parseArguments(new String[] { "-X", "-vu", "user", "-p", "pass" }));
+        verify(main).setDbDirectory(new File("."));
+        verify(main).verifyUsers(List.of("user"), List.of("pass"));
     }
 
     @Test
     public void verify2User2Password() throws Exception {
-        AbstractMain main = Mockito.spy(AbstractMain.class);
-        assertThat(main.parseArguments(new String[] {
-            "-X", "-vu", "user1", "-p", "pass1", "-vu", "user2", "-p", "pass2" })).isEqualTo(0);
-        Mockito.verify(main).setDbDirectory(new File("."));
-        Mockito.verify(main).verifyUsers(Lists.newArrayList("user1", "user2"), Lists.newArrayList("pass1", "pass2"));
+        AbstractMain main = spy(AbstractMain.class);
+        assertEquals(0, main.parseArguments(new String[] {
+            "-X", "-vu", "user1", "-p", "pass1", "-vu", "user2", "-p", "pass2" }));
+        verify(main).setDbDirectory(new File("."));
+        verify(main).verifyUsers(List.of("user1", "user2"), List.of("pass1", "pass2"));
     }
 
     @Test
     public void verifyUserWithoutPassword() throws Exception {
-        AbstractMain main = Mockito.spy(AbstractMain.class);
-        assertThat(main.parseArguments(new String[] { "-X", "-vu", "user" })).isEqualTo(-3);
-
+        AbstractMain main = spy(AbstractMain.class);
+        assertEquals(-3, main.parseArguments(new String[] { "-X", "-vu", "user" }));
     }
-
 }
