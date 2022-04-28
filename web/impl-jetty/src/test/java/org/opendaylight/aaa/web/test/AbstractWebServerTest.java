@@ -7,15 +7,16 @@
  */
 package org.opendaylight.aaa.web.test;
 
-import static com.google.common.truth.Truth.assertThat;
-import static java.nio.charset.StandardCharsets.US_ASCII;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import com.google.common.io.CharStreams;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import javax.servlet.ServletException;
 import org.junit.Test;
 import org.opendaylight.aaa.web.FilterDetails;
@@ -64,7 +65,7 @@ public abstract class AbstractWebServerTest {
             .putContextParam("testParam1", "avalue")
             .addFilter(FilterDetails.builder().addUrlPattern("/*").name("Test").filter(testFilter).build());
         WebContextRegistration webContextRegistration = getWebServer().registerWebContext(webContextBuilder.build());
-        assertThat(testFilter.isInitialized).isTrue();
+        assertTrue(testFilter.isInitialized);
         webContextRegistration.close();
     }
 
@@ -73,24 +74,20 @@ public abstract class AbstractWebServerTest {
         WebContextBuilder webContextBuilder = WebContext.builder().contextPath("/testingListener");
         TestListener testListener = new TestListener();
         webContextBuilder.addListener(testListener);
-        assertThat(testListener.isInitialized).isFalse();
+        assertFalse(testListener.isInitialized);
         WebContextRegistration webContextRegistration = getWebServer().registerWebContext(webContextBuilder.build());
-        assertThat(testListener.isInitialized).isTrue();
+        assertTrue(testListener.isInitialized);
         webContextRegistration.close();
-        assertThat(testListener.isInitialized).isFalse();
+        assertFalse(testListener.isInitialized);
     }
 
     static void checkTestServlet(String urlPrefix) throws IOException {
-        URL url = new URL(urlPrefix + "/something");
-        URLConnection conn = url.openConnection();
-        try (InputStream inputStream = conn.getInputStream()) {
+        try (InputStream inputStream = new URL(urlPrefix + "/something").openConnection().getInputStream()) {
             // The hard-coded ASCII here is strictly speaking wrong of course
             // (should interpret header from reply), but good enough for a test.
-            try (InputStreamReader reader = new InputStreamReader(inputStream, US_ASCII)) {
-                String result = CharStreams.toString(reader);
-                assertThat(result).startsWith("hello, world");
+            try (InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.US_ASCII)) {
+                assertEquals("hello, world\r\n", CharStreams.toString(reader));
             }
         }
     }
-
 }

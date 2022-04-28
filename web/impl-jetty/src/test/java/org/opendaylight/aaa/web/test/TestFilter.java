@@ -7,7 +7,7 @@
  */
 package org.opendaylight.aaa.web.test;
 
-import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import javax.servlet.Filter;
@@ -18,12 +18,11 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 public class TestFilter implements Filter {
-
     public boolean isInitialized = false;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        assertThat(filterConfig.getServletContext().getAttribute("testParam1")).isEqualTo("avalue");
+        assertEquals("avalue", filterConfig.getServletContext().getAttribute("testParam1"));
         isInitialized = true;
     }
 
@@ -36,5 +35,4 @@ public class TestFilter implements Filter {
     @Override
     public void destroy() {
     }
-
 }

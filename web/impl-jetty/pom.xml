@@ -52,10 +52,5 @@
       <artifactId>javax.annotation-api</artifactId>
       <optional>true</optional>
     </dependency>
-
-    <dependency>
-      <groupId>com.google.truth</groupId>
-      <artifactId>truth</artifactId>
-    </dependency>
   </dependencies>
 </project>
