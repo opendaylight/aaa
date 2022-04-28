@@ -48,10 +48,6 @@
       <artifactId>inject.guice</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.google.truth</groupId>
-      <artifactId>truth</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.opendaylight.infrautils</groupId>
       <artifactId>inject.guice.testutils</artifactId>
       <scope>test</scope>
