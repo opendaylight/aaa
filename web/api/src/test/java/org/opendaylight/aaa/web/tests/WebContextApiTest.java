@@ -7,10 +7,15 @@
  */
 package org.opendaylight.aaa.web.tests;
 
-import static com.google.common.truth.Truth.assertThat;
+import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
+import java.util.Map;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
@@ -30,7 +35,6 @@ import org.opendaylight.aaa.web.WebServer;
  * @author Michael Vorburger.ch
  */
 public class WebContextApiTest {
-
     @Test
     public void testEmptyBuilder() {
         final WebContextBuilder builder = WebContext.builder();
@@ -39,9 +43,8 @@ public class WebContextApiTest {
 
     @Test
     public void testMinimalBuilder() {
-        assertThat(WebContext.builder().contextPath("test").build().supportsSessions()).isTrue();
-        assertThat(WebContext.builder().contextPath("test").supportsSessions(false).build().contextPath())
-                .isEqualTo("test");
+        assertTrue(WebContext.builder().contextPath("test").build().supportsSessions());
+        assertEquals("test", WebContext.builder().contextPath("test").supportsSessions(false).build().contextPath());
     }
 
     @Test
@@ -49,11 +52,10 @@ public class WebContextApiTest {
         WebContext webContext = WebContext.builder().contextPath("test")
                 .addServlet(ServletDetails.builder().servlet(mock(Servlet.class)).addUrlPattern("test").build())
                 .build();
-        assertThat(webContext.servlets()).hasSize(1);
+        assertThat(webContext.servlets(), hasSize(1));
         ServletDetails firstServletDetail = webContext.servlets().get(0);
-        assertThat(firstServletDetail.name())
-                .startsWith("org.mockito.codegen.Servlet$MockitoMock$");
-        assertThat(firstServletDetail.initParams()).isEmpty();
+        assertThat(firstServletDetail.name(), startsWith("org.mockito.codegen.Servlet$MockitoMock$"));
+        assertEquals(Map.of(), firstServletDetail.initParams());
     }
 
     @Test
@@ -72,13 +74,13 @@ public class WebContextApiTest {
     @Test
     public void testAddListener() {
         assertThat(WebContext.builder().contextPath("test").addListener(mock(ServletContextListener.class)).build()
-                .listeners()).isNotEmpty();
+                .listeners(), hasSize(1));
     }
 
     @Test
     public void testContextParam() {
-        assertThat(WebContext.builder().contextPath("test").putContextParam("key", "value").build().contextParams())
-                .containsExactly("key", "value").inOrder();
+        assertEquals(Map.of("key", "value"),
+            WebContext.builder().contextPath("test").putContextParam("key", "value").build().contextParams());
     }
 
     @Test

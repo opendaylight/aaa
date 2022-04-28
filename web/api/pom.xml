@@ -32,11 +32,5 @@
       <artifactId>value</artifactId>
       <classifier>annotations</classifier>
     </dependency>
-
-    <dependency>
-      <groupId>com.google.truth</groupId>
-      <artifactId>truth</artifactId>
-    </dependency>
   </dependencies>
-
 </project>
