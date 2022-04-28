@@ -7,7 +7,7 @@
  */
 package org.opendaylight.aaa.datastore.h2;
 
-import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -17,15 +17,14 @@ import org.junit.Test;
  * @author Michael Vorburger
  */
 public class IdmLightConfigTest {
-
     @Test
     public void testDefaults() {
         IdmLightConfig config = new IdmLightConfigBuilder().dbUser("foo").dbPwd("bar").build();
-        assertThat(config.getDbDriver()).isEqualTo("org.h2.Driver");
-        assertThat(config.getDbConnectionString()).isEqualTo("jdbc:h2:./data/idmlight.db");
-        assertThat(config.getDbUser()).isEqualTo("foo");
-        assertThat(config.getDbPwd()).isEqualTo("bar");
-        assertThat(config.getDbValidTimeOut()).isEqualTo(3);
+        assertEquals("org.h2.Driver", config.getDbDriver());
+        assertEquals("jdbc:h2:./data/idmlight.db", config.getDbConnectionString());
+        assertEquals("foo", config.getDbUser());
+        assertEquals("bar", config.getDbPwd());
+        assertEquals(3, config.getDbValidTimeOut());
     }
 
     @Test
@@ -34,7 +33,7 @@ public class IdmLightConfigTest {
         builder.dbUser("foo").dbPwd("bar");
         builder.dbDirectory("target");
         IdmLightConfig config = builder.build();
-        assertThat(config.getDbConnectionString()).isEqualTo("jdbc:h2:target/idmlight.db");
+        assertEquals("jdbc:h2:target/idmlight.db", config.getDbConnectionString());
     }
 
     @Test
@@ -43,7 +42,6 @@ public class IdmLightConfigTest {
         builder.dbUser("foo").dbPwd("bar");
         builder.dbConnectionString("jdbc:mysql://localhost/test");
         IdmLightConfig config = builder.build();
-        assertThat(config.getDbConnectionString()).isEqualTo("jdbc:mysql://localhost/test");
+        assertEquals("jdbc:mysql://localhost/test", config.getDbConnectionString());
     }
-
 }
