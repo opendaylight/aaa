@@ -113,19 +113,18 @@ public final class PaxWebServer implements WebServer {
             // (it assumes always with session); but other implementation support without.
 
             this.paxWeb = paxWeb;
-            this.contextPath = webContext.contextPath();
+            contextPath = webContext.contextPath();
 
             // NB This is NOT the URL prefix of the context, but the context.id which is
             // used while registering the HttpContext in the OSGi service registry.
             String contextID = contextPath + ".id";
 
             HttpContext osgiHttpContext = paxWeb.createDefaultHttpContext(contextID);
-            paxWeb.begin(osgiHttpContext);
 
             // The order in which we set things up here matters...
 
             // 1. Context parameters - because listeners, filters and servlets could need them
-            paxWeb.setContextParam(new MapDictionary<>(webContext.contextParams()), osgiHttpContext);
+            paxWeb.setContextParams(new MapDictionary<>(webContext.contextParams()), osgiHttpContext);
 
             // 2. Listeners - because they could set up things that filters and servlets need
             for (ServletContextListener listener : webContext.listeners()) {
@@ -146,15 +145,13 @@ public final class PaxWebServer implements WebServer {
 
             try {
                 for (ResourceDetails resource: webContext.resources()) {
-                    String alias = ensurePrependedSlash(this.contextPath + ensurePrependedSlash(resource.alias()));
+                    String alias = ensurePrependedSlash(contextPath + ensurePrependedSlash(resource.alias()));
                     paxWeb.registerResources(alias, ensurePrependedSlash(resource.name()), osgiHttpContext);
                     registeredResources.add(alias);
                 }
             } catch (NamespaceException e) {
                 throw new ServletException("Error registering resources", e);
             }
-
-            paxWeb.end(osgiHttpContext);
         }
 
         private static String ensurePrependedSlash(final String str) {
