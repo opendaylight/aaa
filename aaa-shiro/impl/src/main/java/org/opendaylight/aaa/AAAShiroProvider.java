@@ -55,7 +55,6 @@ public final class AAAShiroProvider {
                             final ShiroConfiguration shiroConfiguration,
                             final HttpService httpService,
                             final String moonEndpointPath,
-                            final String oauth2EndpointPath,
                             final DatastoreConfig datastoreConfig,
                             final IIDMStore iidmStore,
                             final AuthenticationService authenticationService,

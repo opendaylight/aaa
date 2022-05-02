@@ -47,7 +47,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="shiroConfiguration" />
     <argument ref="httpService" />
     <argument value="/moon" />
-    <argument value="/oauth2" />
     <argument ref="datastoreConfig" />
     <argument ref="idmStore" />
     <argument ref="authService" />
