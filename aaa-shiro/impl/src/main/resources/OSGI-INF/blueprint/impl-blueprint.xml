@@ -35,13 +35,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     interface="org.opendaylight.aaa.cert.api.ICertificateManager"
     odl:type="default-certificate-manager" />
 
-  <reference id="httpService"
-             interface="org.osgi.service.http.HttpService"/>
-
   <bean id="provider" class="org.opendaylight.aaa.AAAShiroProvider" init-method="init" destroy-method="close">
     <argument ref="passwordCredentialAuth" />
-    <argument ref="httpService" />
-    <argument value="/moon" />
     <argument ref="datastoreConfig" />
     <argument ref="idmStore" />
   </bean>

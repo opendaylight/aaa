@@ -7,21 +7,15 @@
  */
 package org.opendaylight.aaa;
 
-import static java.util.Objects.requireNonNull;
-
-import javax.servlet.ServletException;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.PasswordCredentialAuth;
 import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.datastore.h2.H2TokenStore;
-import org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint;
 import org.opendaylight.aaa.tokenauthrealm.auth.HttpBasicAuth;
 import org.opendaylight.aaa.tokenauthrealm.auth.TokenAuthenticators;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.DatastoreConfig;
-import org.osgi.service.http.HttpService;
-import org.osgi.service.http.NamespaceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,22 +25,15 @@ import org.slf4j.LoggerFactory;
 public final class AAAShiroProvider {
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
-    private final HttpService httpService;
     private final TokenStore tokenStore;
-    private final String moonEndpointPath;
     private final TokenAuthenticators tokenAuthenticators;
 
     /**
      * Constructor.
      */
     public AAAShiroProvider(final PasswordCredentialAuth credentialAuth,
-                            final HttpService httpService,
-                            final String moonEndpointPath,
                             final DatastoreConfig datastoreConfig,
                             final IIDMStore iidmStore) {
-        this.httpService = httpService;
-        this.moonEndpointPath = moonEndpointPath;
-
         if (datastoreConfig == null || !datastoreConfig.getStore().equals(DatastoreConfig.Store.H2DataStore)) {
             LOG.info("AAA Datastore has not been initialized");
             tokenStore = null;
@@ -60,18 +47,6 @@ public final class AAAShiroProvider {
         initializeIIDMStore(iidmStore);
 
         tokenAuthenticators = new TokenAuthenticators(new HttpBasicAuth(credentialAuth));
-
-        try {
-            registerServletContexts();
-        } catch (final ServletException | NamespaceException e) {
-            LOG.warn("Could not initialize AAA servlet endpoints", e);
-        }
-    }
-
-    private void registerServletContexts() throws ServletException, NamespaceException {
-        LOG.info("attempting registration of AAA moon servlet");
-        requireNonNull(httpService, "httpService cannot be null").registerServlet(moonEndpointPath,
-            new MoonTokenEndpoint(), null, null);
     }
 
     private static void initializeIIDMStore(final IIDMStore iidmStore) {
@@ -94,9 +69,6 @@ public final class AAAShiroProvider {
      */
     public void close() {
         LOG.info("AAAShiroProvider Closed");
-        if (httpService != null) {
-            httpService.unregister(moonEndpointPath);
-        }
     }
 
     public TokenStore getTokenStore() {
