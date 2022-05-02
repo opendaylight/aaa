@@ -8,7 +8,15 @@
 
 package org.opendaylight.aaa.shiro.filters;
 
+import javax.servlet.Filter;
+import javax.servlet.annotation.WebFilter;
 import org.apache.shiro.web.servlet.ShiroFilter;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ServiceScope;
+import org.osgi.service.http.whiteboard.annotations.RequireHttpWhiteboard;
+import org.osgi.service.http.whiteboard.propertytypes.HttpWhiteboardFilterAsyncSupported;
+import org.osgi.service.http.whiteboard.propertytypes.HttpWhiteboardFilterName;
+import org.osgi.service.http.whiteboard.propertytypes.HttpWhiteboardFilterPattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,11 +33,16 @@ import org.slf4j.LoggerFactory;
  *
  * <code>log:set DEBUG AAAShiroFilter</code>
  *
- * @see <code>javax.servlet.Filter</code>
- * @see <code>org.apache.shiro.web.servlet.ShiroFilter</code>
+ * @see javax.servlet.Filter
+ * @see ShiroFilter
  */
-public class AAAShiroFilter extends ShiroFilter {
-
+@WebFilter(urlPatterns = "/*", filterName = "AAAShiroFilter")
+@HttpWhiteboardFilterAsyncSupported
+@HttpWhiteboardFilterPattern("/*")
+@HttpWhiteboardFilterName("AAAShiroFilter")
+@RequireHttpWhiteboard
+@Component(service = Filter.class, scope = ServiceScope.PROTOTYPE)
+public final class AAAShiroFilter extends ShiroFilter {
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroFilter.class);
 
     public AAAShiroFilter() {
@@ -41,11 +54,11 @@ public class AAAShiroFilter extends ShiroFilter {
      *
      * Adds context clues that aid in debugging.
      *
-     * @see org.apache.shiro.web.servlet.ShiroFilter#init()
+     * @see ShiroFilter#init()
      */
     @Override
     public void init() throws Exception {
         super.init();
-        LOG.debug("Initializing the AAAShiroFilter");
+        LOG.debug("AAAShiroFilter initialized");
     }
 }
