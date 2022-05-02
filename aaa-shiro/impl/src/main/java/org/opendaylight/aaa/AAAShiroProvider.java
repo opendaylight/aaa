@@ -9,7 +9,6 @@ package org.opendaylight.aaa;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.concurrent.CompletableFuture;
 import javax.servlet.ServletException;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.IDMStoreException;
@@ -20,6 +19,7 @@ import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.datastore.h2.H2TokenStore;
+import org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint;
 import org.opendaylight.aaa.tokenauthrealm.auth.HttpBasicAuth;
 import org.opendaylight.aaa.tokenauthrealm.auth.TokenAuthenticators;
 import org.opendaylight.mdsal.binding.api.DataBroker;
@@ -34,10 +34,7 @@ import org.slf4j.LoggerFactory;
  * Provider for AAA shiro implementation.
  */
 public final class AAAShiroProvider {
-
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
-
-    public static final CompletableFuture<AAAShiroProvider> INSTANCE_FUTURE = new CompletableFuture<>();
 
     private final DataBroker dataBroker;
     private final ICertificateManager certificateManager;
@@ -86,18 +83,16 @@ public final class AAAShiroProvider {
         tokenAuthenticators = new TokenAuthenticators(new HttpBasicAuth(credentialAuth));
 
         try {
-            this.registerServletContexts();
+            registerServletContexts();
         } catch (final ServletException | NamespaceException e) {
             LOG.warn("Could not initialize AAA servlet endpoints", e);
         }
-
-        INSTANCE_FUTURE.complete(this);
     }
 
     private void registerServletContexts() throws ServletException, NamespaceException {
         LOG.info("attempting registration of AAA moon servlet");
         requireNonNull(httpService, "httpService cannot be null").registerServlet(moonEndpointPath,
-            new org.opendaylight.aaa.shiro.moon.MoonTokenEndpoint(), null, null);
+            new MoonTokenEndpoint(), null, null);
     }
 
     private static void initializeIIDMStore(final IIDMStore iidmStore) {
@@ -131,7 +126,7 @@ public final class AAAShiroProvider {
      * @return the data broker
      */
     public DataBroker getDataBroker() {
-        return this.dataBroker;
+        return dataBroker;
     }
 
     /**
@@ -149,7 +144,7 @@ public final class AAAShiroProvider {
      * @return Shiro related configuration.
      */
     public ShiroConfiguration getShiroConfiguration() {
-        return this.shiroConfiguration;
+        return shiroConfiguration;
     }
 
     public TokenStore getTokenStore() {
