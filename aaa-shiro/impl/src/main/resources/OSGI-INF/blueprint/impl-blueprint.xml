@@ -54,6 +54,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     </argument>
     <argument ref="passwordService" />
   </bean>
+  <service ref="shiroWebEnvLoader" interface="javax.servlet.ServletContextListener"/>
 
   <reference id="customFilterAdapterConfig"
       interface="org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration"/>
