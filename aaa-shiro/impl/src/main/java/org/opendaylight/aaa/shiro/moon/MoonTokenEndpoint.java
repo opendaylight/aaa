@@ -24,6 +24,7 @@ public class MoonTokenEndpoint extends HttpServlet {
         return MoonTokenEndpoint.class.getSimpleName();
     }
 
+    @Override
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws IOException {
         LOG.info("MoonTokenEndpoint Servlet doPost: {} {}", req.getServletPath(), req.getRequestURI());
     }
