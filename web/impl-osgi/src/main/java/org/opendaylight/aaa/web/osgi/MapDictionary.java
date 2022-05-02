@@ -27,7 +27,7 @@ import java.util.Map;
 class MapDictionary<K, V> extends Dictionary<K, V> {
     private final Map<K, V> map;
 
-    MapDictionary(final Map<K, V> map) {
+    MapDictionary(final Map<K, ? extends V> map) {
         this.map = ImmutableMap.copyOf(map);
     }
 
