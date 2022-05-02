@@ -11,7 +11,6 @@ import com.google.common.annotations.Beta;
 import javax.servlet.http.HttpServlet;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Configurable;
-import org.opendaylight.yangtools.concepts.Builder;
 
 /**
  * Utility methods for instantiating {@link HttpServlet}s from {@link Application}s, abstracting the servlet
@@ -20,6 +19,7 @@ import org.opendaylight.yangtools.concepts.Builder;
  * @author Robert Varga
  */
 @Beta
-public interface HttpServletBuilder extends Builder<HttpServlet>, Configurable<HttpServletBuilder> {
+public interface HttpServletBuilder extends Configurable<HttpServletBuilder> {
 
+    HttpServlet build();
 }
