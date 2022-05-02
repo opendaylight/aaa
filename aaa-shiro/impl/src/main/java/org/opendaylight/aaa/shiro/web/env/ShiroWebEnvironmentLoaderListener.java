@@ -25,7 +25,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Thomas Pantelis
  */
-public class ShiroWebEnvironmentLoaderListener extends EnvironmentLoaderListener {
+// FIXME: @WebListener and CDI (or whatever) injection?
+public final class ShiroWebEnvironmentLoaderListener extends EnvironmentLoaderListener {
     private static final Logger LOG = LoggerFactory.getLogger(ShiroWebEnvironmentLoaderListener.class);
 
     private final ShiroConfiguration shiroConfiguration;
