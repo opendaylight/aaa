@@ -80,7 +80,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         </dependency>
         <dependency>
             <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.service.http</artifactId>
+            <artifactId>org.osgi.service.http.whiteboard</artifactId>
         </dependency>
         <dependency>
             <groupId>com.guicedee.services</groupId>
