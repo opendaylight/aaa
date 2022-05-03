@@ -38,19 +38,12 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <reference id="httpService"
              interface="org.osgi.service.http.HttpService"/>
 
-  <bean id="provider"
-        class="org.opendaylight.aaa.AAAShiroProvider"
-        init-method="init" destroy-method="close">
-    <argument ref="dataBroker" />
-    <argument ref="certManager" />
+  <bean id="provider" class="org.opendaylight.aaa.AAAShiroProvider" init-method="init" destroy-method="close">
     <argument ref="passwordCredentialAuth" />
-    <argument ref="shiroConfiguration" />
     <argument ref="httpService" />
     <argument value="/moon" />
     <argument ref="datastoreConfig" />
     <argument ref="idmStore" />
-    <argument ref="authService" />
-    <argument ref="passwordService" />
   </bean>
 
   <bean id="shiroWebEnvLoader" class="org.opendaylight.aaa.shiro.web.env.ShiroWebEnvironmentLoaderListener">
