@@ -7,8 +7,7 @@
  */
 package org.opendaylight.aaa.tokenauthrealm.auth;
 
-import com.google.common.collect.ImmutableList;
-import java.util.Collection;
+import java.util.List;
 import org.opendaylight.aaa.api.TokenAuth;
 
 /**
@@ -16,14 +15,14 @@ import org.opendaylight.aaa.api.TokenAuth;
  *
  * @author Thomas Pantelis
  */
-public class TokenAuthenticators {
-    private final Collection<TokenAuth> tokenAuthCollection;
+public final class TokenAuthenticators {
+    private final List<TokenAuth> tokenAuthCollection;
 
     public TokenAuthenticators(TokenAuth... tokenAuths) {
-        tokenAuthCollection = new ImmutableList.Builder<TokenAuth>().add(tokenAuths).build();
+        tokenAuthCollection = List.of(tokenAuths);
     }
 
-    public Collection<TokenAuth> getTokenAuthCollection() {
+    public List<TokenAuth> getTokenAuthCollection() {
         return tokenAuthCollection;
     }
 }
