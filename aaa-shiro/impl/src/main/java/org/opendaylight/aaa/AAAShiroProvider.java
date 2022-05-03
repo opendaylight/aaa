@@ -7,13 +7,11 @@
  */
 package org.opendaylight.aaa;
 
-import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.PasswordCredentialAuth;
 import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.api.TokenStore;
-import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.datastore.h2.H2TokenStore;
 import org.opendaylight.aaa.tokenauthrealm.auth.HttpBasicAuth;
@@ -35,8 +33,6 @@ public final class AAAShiroProvider {
     private final TokenStore tokenStore;
     private final ShiroConfiguration shiroConfiguration;
     private final TokenAuthenticators tokenAuthenticators;
-    private final AuthenticationService authenticationService;
-    private final PasswordHashService passwordHashService;
 
     /**
      * Constructor.
@@ -46,14 +42,10 @@ public final class AAAShiroProvider {
                             final PasswordCredentialAuth credentialAuth,
                             final ShiroConfiguration shiroConfiguration,
                             final DatastoreConfig datastoreConfig,
-                            final IIDMStore iidmStore,
-                            final AuthenticationService authenticationService,
-                            final PasswordHashService passwordHashService) {
+                            final IIDMStore iidmStore) {
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
         this.shiroConfiguration = shiroConfiguration;
-        this.authenticationService = authenticationService;
-        this.passwordHashService = passwordHashService;
 
         if (datastoreConfig == null || !datastoreConfig.getStore().equals(DatastoreConfig.Store.H2DataStore)) {
             LOG.info("AAA Datastore has not been initialized");
@@ -125,13 +117,5 @@ public final class AAAShiroProvider {
 
     public TokenAuthenticators getTokenAuthenticators() {
         return tokenAuthenticators;
-    }
-
-    public AuthenticationService getAuthenticationService() {
-        return authenticationService;
-    }
-
-    public PasswordHashService getPasswordHashService() {
-        return passwordHashService;
     }
 }
