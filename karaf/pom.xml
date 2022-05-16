@@ -18,7 +18,7 @@
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>aaa-karaf</artifactId>
-    <version>0.14.11-SNAPSHOT</version>
+    <version>0.14.11</version>
     <name>ODL :: aaa :: ${project.artifactId}</name>
     <packaging>pom</packaging>
 
