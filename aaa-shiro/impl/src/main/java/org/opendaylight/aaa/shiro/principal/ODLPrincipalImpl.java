@@ -86,4 +86,9 @@ public final class ODLPrincipalImpl implements ODLPrincipal {
     public Set<String> getRoles() {
         return this.roles;
     }
+
+    @Override
+    public String getName() {
+        return this.toString();
+    }
 }
