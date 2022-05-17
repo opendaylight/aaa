@@ -8,12 +8,13 @@
 
 package org.opendaylight.aaa.api.shiro.principal;
 
+import java.security.Principal;
 import java.util.Set;
 
 /**
  * Principal for authentication.
  */
-public interface ODLPrincipal {
+public interface ODLPrincipal extends Principal {
 
     /**
      * Extract username that is making the request.
