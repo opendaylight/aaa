@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9b6b02a_4e6297ae",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/principal/ODLPrincipalImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 9055
+      },
+      "writtenOn": "2022-05-19T12:34:41Z",
+      "side": 1,
+      "message": "This should be unique now, propose something else if you think anything else is appropriate.",
+      "revId": "671e909aed32e3522139e98c0a73e850e0717a7b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
