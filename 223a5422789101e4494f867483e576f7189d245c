@@ -22,6 +22,30 @@
       },
       "revId": "223a5422789101e4494f867483e576f7189d245c",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9c0005a_ec9b1c8f",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/principal/ODLPrincipalImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 9055
+      },
+      "writtenOn": "2022-05-19T11:04:31Z",
+      "side": 1,
+      "message": "I mean we can put something custom here, but I am not sure what that should be, it should be something unique that identifies that concrete Principal.\nBy default, it seems that getName() returns toString() of that principal which means the name of the Object and its hashcode in memory when toString() is not overriden so I chose here to propagate that, as that is unique identifier.\nMaybe suitable would be something like user@sdn here.\nWhat do you think?",
+      "parentUuid": "4d02ebce_a2a62503",
+      "range": {
+        "startLine": 92,
+        "startChar": 15,
+        "endLine": 92,
+        "endChar": 31
+      },
+      "revId": "223a5422789101e4494f867483e576f7189d245c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
