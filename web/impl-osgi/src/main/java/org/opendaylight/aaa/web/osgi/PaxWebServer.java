@@ -26,7 +26,7 @@ import org.opendaylight.aaa.web.WebServer;
 import org.opendaylight.yangtools.concepts.AbstractRegistration;
 import org.opendaylight.yangtools.concepts.Registration;
 import org.ops4j.pax.web.service.WebContainer;
-import org.ops4j.pax.web.service.WebContainerDTO;
+import org.ops4j.pax.web.service.spi.model.views.WebAppWebContainerView;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -67,11 +67,14 @@ public final class PaxWebServer implements WebServer {
 
     @Override
     public String getBaseURL() {
-        final WebContainerDTO details = local.getWebcontainerDTO();
-        if (details.securePort != null && details.securePort > 0) {
-            return "https://" + details.listeningAddresses[0] + ":" + details.securePort;
+        final var serverConfig = local.adapt(WebAppWebContainerView.class).getConfiguration().server();
+        final var listeningAddresses = serverConfig.getListeningAddresses();
+        final var securePort = serverConfig.getHttpSecurePort();
+
+        if (securePort != null && securePort > 0) {
+            return "https://" + listeningAddresses[0] + ":" + securePort;
         } else {
-            return "http://" + details.listeningAddresses[0] + ":" + details.port;
+            return "http://" + listeningAddresses[0] + ":" + serverConfig.getHttpPort();
         }
     }
 
@@ -162,11 +165,11 @@ public final class PaxWebServer implements WebServer {
 
         private void registerFilter(final HttpContext osgiHttpContext, final List<String> urlPatterns,
                 final String name, final Filter filter, final Map<String, String> params,
-                final Boolean asyncSupported) {
+                final Boolean asyncSupported) throws ServletException {
             final String[] absUrlPatterns = absolute(urlPatterns);
             LOG.info("Registering Filter for aliases {}: {} with async: {}", Arrays.asList(absUrlPatterns),
                     filter, asyncSupported);
-            paxWeb.registerFilter(filter, absUrlPatterns, new String[] { name }, new MapDictionary<>(params),
+            paxWeb.registerFilter(filter, name, absUrlPatterns, new String[] { name }, new MapDictionary<>(params),
                     asyncSupported, osgiHttpContext);
             registeredFilters.add(filter);
         }
