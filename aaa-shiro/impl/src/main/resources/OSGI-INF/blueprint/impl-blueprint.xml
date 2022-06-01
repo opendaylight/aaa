@@ -24,7 +24,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <reference id="idmStore" interface ="org.opendaylight.aaa.api.IIDMStore"/>
 
   <reference id="passwordCredentialAuth" interface="org.opendaylight.aaa.api.PasswordCredentialAuth"/>
-  <reference id="claimCache" interface="org.opendaylight.aaa.api.ClaimCache"/>
 
   <reference id="dataBroker" interface="org.opendaylight.mdsal.binding.api.DataBroker"/>
 
@@ -53,25 +52,4 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="servletSupport"/>
   </bean>
   <service ref="shiroWebEnvLoader" interface="javax.servlet.ServletContextListener"/>
-
-  <reference id="customFilterAdapterConfig"
-      interface="org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration"/>
-
-  <bean id="webContextSecurer" class="org.opendaylight.aaa.shiro.web.env.ShiroWebContextSecurer">
-    <argument ref="shiroWebEnvLoader"/>
-  </bean>
-  <service ref="webContextSecurer" interface="org.opendaylight.aaa.web.WebContextSecurer" />
-
-  <reference id="webServer" interface="org.opendaylight.aaa.web.WebServer" />
-
-  <reference id="servletSupport" interface="org.opendaylight.aaa.web.servlet.ServletSupport" />
-
-  <bean id="webInitializer" class="org.opendaylight.aaa.shiro.web.env.WebInitializer" destroy-method="close">
-    <argument ref="webServer"/>
-    <argument ref="claimCache"/>
-    <argument ref="idmStore"/>
-    <argument ref="webContextSecurer"/>
-    <argument ref="servletSupport"/>
-    <argument ref="customFilterAdapterConfig"/>
-  </bean>
 </blueprint>
