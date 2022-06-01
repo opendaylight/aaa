@@ -8,6 +8,7 @@
 package org.opendaylight.aaa.web;
 
 import javax.servlet.ServletException;
+import org.opendaylight.yangtools.concepts.Registration;
 
 /**
  * Web server (HTTP). This service API allows ODL applications to register web
@@ -21,7 +22,6 @@ import javax.servlet.ServletException;
  * @author Michael Vorburger.ch
  */
 public interface WebServer {
-
     /**
      * Register a new web context.
      *
@@ -29,7 +29,7 @@ public interface WebServer {
      * @return registration which allows to close the context (and remove its servlets etc.)
      * @throws ServletException if registration of any of the components of the web context failed
      */
-    WebContextRegistration registerWebContext(WebContext webContext) throws ServletException;
+    Registration registerWebContext(WebContext webContext) throws ServletException;
 
     /**
      * Base URL of this web server, without any contexts. In production, this would
@@ -40,5 +40,4 @@ public interface WebServer {
      * @return base URL, with http[s] prefix and port, NOT ending in slash
      */
     String getBaseURL();
-
 }

@@ -23,8 +23,8 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.component.AbstractLifeCycle;
 import org.opendaylight.aaa.web.WebContext;
-import org.opendaylight.aaa.web.WebContextRegistration;
 import org.opendaylight.aaa.web.WebServer;
+import org.opendaylight.yangtools.concepts.Registration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +53,7 @@ public class JettyWebServer implements WebServer {
         checkArgument(httpPort >= 0, "httpPort must be positive");
         checkArgument(httpPort < 65536, "httpPort must < 65536");
 
-        this.server = new Server();
+        server = new Server();
         server.setStopAtShutdown(true);
 
         http = new ServerConnector(server);
@@ -62,7 +62,7 @@ public class JettyWebServer implements WebServer {
         http.setIdleTimeout(HTTP_SERVER_IDLE_TIMEOUT);
         server.addConnector(http);
 
-        this.contextHandlerCollection = new ContextHandlerCollection();
+        contextHandlerCollection = new ContextHandlerCollection();
         server.setHandler(contextHandlerCollection);
     }
 
@@ -77,7 +77,7 @@ public class JettyWebServer implements WebServer {
     @PostConstruct
     public void start() throws Exception {
         server.start();
-        this.httpPort = http.getLocalPort();
+        httpPort = http.getLocalPort();
         LOG.info("Started Jetty-based HTTP web server on port {} ({}).", httpPort, hashCode());
     }
 
@@ -90,7 +90,7 @@ public class JettyWebServer implements WebServer {
     }
 
     @Override
-    public synchronized WebContextRegistration registerWebContext(final WebContext webContext) throws ServletException {
+    public synchronized Registration registerWebContext(final WebContext webContext) throws ServletException {
         String contextPathWithSlashPrefix = webContext.contextPath().startsWith("/")
                 ? webContext.contextPath() : "/" + webContext.contextPath();
         ServletContextHandler handler = new ServletContextHandler(contextHandlerCollection, contextPathWithSlashPrefix,
