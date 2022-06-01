@@ -122,12 +122,11 @@ public final class PaxWebServer implements WebServer {
             String contextID = contextPath + ".id";
 
             HttpContext osgiHttpContext = paxWeb.createDefaultHttpContext(contextID);
-            paxWeb.begin(osgiHttpContext);
 
             // The order in which we set things up here matters...
 
             // 1. Context parameters - because listeners, filters and servlets could need them
-            paxWeb.setContextParam(new MapDictionary<>(webContext.contextParams()), osgiHttpContext);
+            paxWeb.setContextParams(new MapDictionary<>(webContext.contextParams()), osgiHttpContext);
 
             // 2. Listeners - because they could set up things that filters and servlets need
             for (ServletContextListener listener : webContext.listeners()) {
@@ -155,8 +154,6 @@ public final class PaxWebServer implements WebServer {
             } catch (NamespaceException e) {
                 throw new ServletException("Error registering resources", e);
             }
-
-            paxWeb.end(osgiHttpContext);
         }
 
         private static String ensurePrependedSlash(final String str) {
