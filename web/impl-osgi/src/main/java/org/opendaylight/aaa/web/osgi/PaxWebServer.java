@@ -26,7 +26,6 @@ import org.opendaylight.aaa.web.WebServer;
 import org.opendaylight.yangtools.concepts.AbstractRegistration;
 import org.opendaylight.yangtools.concepts.Registration;
 import org.ops4j.pax.web.service.WebContainer;
-import org.ops4j.pax.web.service.WebContainerDTO;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
