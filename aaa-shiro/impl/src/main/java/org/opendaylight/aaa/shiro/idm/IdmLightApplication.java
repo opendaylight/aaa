@@ -11,10 +11,16 @@ import static java.util.Objects.requireNonNull;
 
 import com.google.common.collect.ImmutableSet;
 import java.util.Set;
+import javax.inject.Inject;
+import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.provider.GsonProvider;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsApplicationBase;
 
 /**
  * A JAX-RS application for IdmLight. The REST endpoints delivered by this application are in the form:
@@ -31,6 +37,9 @@ import org.opendaylight.aaa.provider.GsonProvider;
  * @see RoleHandler
  * @author liemmn
  */
+@ApplicationPath("/auth")
+@JaxrsApplicationBase("/auth")
+@Component(immediate = true, service = Application.class)
 public class IdmLightApplication extends Application {
     // FIXME: create a bug to address the fact that the implementation assumes 128 as the max length, even though this
     //        claims 256.
@@ -42,7 +51,9 @@ public class IdmLightApplication extends Application {
     private final IIDMStore iidMStore;
     private final ClaimCache claimCache;
 
-    public IdmLightApplication(final IIDMStore iidMStore, final ClaimCache claimCache) {
+    @Activate
+    @Inject
+    public IdmLightApplication(@Reference final IIDMStore iidMStore, @Reference final ClaimCache claimCache) {
         this.iidMStore = requireNonNull(iidMStore);
         this.claimCache = requireNonNull(claimCache);
     }
