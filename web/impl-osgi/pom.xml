@@ -18,7 +18,6 @@
 
   <groupId>org.opendaylight.aaa.web</groupId>
   <artifactId>web-osgi-impl</artifactId>
-  <version>0.16.0-SNAPSHOT</version>
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>bundle</packaging>
 

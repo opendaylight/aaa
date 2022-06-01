@@ -18,11 +18,11 @@
 
   <groupId>org.opendaylight.aaa.web</groupId>
   <artifactId>web-api</artifactId>
-  <version>0.16.0-SNAPSHOT</version>
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>bundle</packaging>
 
   <dependencies>
+
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
