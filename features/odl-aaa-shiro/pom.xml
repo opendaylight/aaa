@@ -12,7 +12,7 @@
     <parent>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>single-feature-parent</artifactId>
-        <version>10.0.0</version>
+        <version>11.0.0</version>
         <relativePath/>
     </parent>
 
@@ -59,11 +59,6 @@
             <version>${project.version}</version>
             <classifier>features</classifier>
             <type>xml</type>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa.web</groupId>
-            <artifactId>web-osgi-impl</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
