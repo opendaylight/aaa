@@ -20,10 +20,10 @@ import org.opendaylight.aaa.web.FilterDetails;
 import org.opendaylight.aaa.web.ServletDetails;
 import org.opendaylight.aaa.web.WebContext;
 import org.opendaylight.aaa.web.WebContextBuilder;
-import org.opendaylight.aaa.web.WebContextRegistration;
 import org.opendaylight.aaa.web.WebContextSecurer;
 import org.opendaylight.aaa.web.WebServer;
 import org.opendaylight.aaa.web.servlet.ServletSupport;
+import org.opendaylight.yangtools.concepts.Registration;
 
 /**
  * Initializer for web components.
@@ -35,13 +35,12 @@ import org.opendaylight.aaa.web.servlet.ServletSupport;
  */
 @Singleton
 public class WebInitializer {
-
-    private final WebContextRegistration registraton;
+    private final Registration registraton;
 
     @Inject
-    public WebInitializer(WebServer webServer, ClaimCache claimCache, IIDMStore iidMStore,
-            WebContextSecurer webContextSecurer, ServletSupport servletSupport,
-            CustomFilterAdapterConfiguration customFilterAdapterConfig) throws ServletException {
+    public WebInitializer(final WebServer webServer, final ClaimCache claimCache, final IIDMStore iidMStore,
+            final WebContextSecurer webContextSecurer, final ServletSupport servletSupport,
+            final CustomFilterAdapterConfiguration customFilterAdapterConfig) throws ServletException {
 
         WebContextBuilder webContextBuilder = WebContext.builder().contextPath("auth").supportsSessions(true)
 
@@ -55,7 +54,7 @@ public class WebInitializer {
 
         webContextSecurer.requireAuthentication(webContextBuilder, "/*", "/moon/*");
 
-        this.registraton = webServer.registerWebContext(webContextBuilder.build());
+        registraton = webServer.registerWebContext(webContextBuilder.build());
     }
 
     @PreDestroy

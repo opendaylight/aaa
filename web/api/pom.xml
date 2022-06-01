@@ -32,5 +32,9 @@
       <artifactId>value</artifactId>
       <classifier>annotations</classifier>
     </dependency>
+    <dependency>
+      <groupId>org.opendaylight.yangtools</groupId>
+      <artifactId>concepts</artifactId>
+    </dependency>
   </dependencies>
 </project>

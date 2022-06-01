@@ -20,8 +20,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.opendaylight.aaa.web.ServletDetails;
 import org.opendaylight.aaa.web.WebContext;
-import org.opendaylight.aaa.web.WebContextBuilder;
-import org.opendaylight.aaa.web.WebContextRegistration;
 import org.opendaylight.aaa.web.WebServer;
 import org.opendaylight.aaa.web.testutils.TestWebClient;
 import org.opendaylight.aaa.web.testutils.WebTestModule;
@@ -42,10 +40,15 @@ public class WebTestModuleTest {
 
     @Test
     public void testServlet() throws ServletException, IOException, InterruptedException, URISyntaxException {
-        WebContextBuilder webContextBuilder = WebContext.builder().contextPath("/test1");
-        webContextBuilder.addServlet(
-                ServletDetails.builder().addUrlPattern("/hello").name("Test").servlet(new TestServlet()).build());
-        try (WebContextRegistration webContextRegistration = webServer.registerWebContext(webContextBuilder.build())) {
+        var webContext = WebContext.builder()
+            .contextPath("/test1")
+            .addServlet(ServletDetails.builder()
+                .addUrlPattern("/hello")
+                .name("Test")
+                .servlet(new TestServlet())
+                .build())
+            .build();
+        try (var webContextRegistration = webServer.registerWebContext(webContext)) {
             assertEquals("hello, world", webClient.request("GET", "test1/hello").body());
             assertEquals("hello, world", webClient.request("GET", "/test1/hello").body());
         }
