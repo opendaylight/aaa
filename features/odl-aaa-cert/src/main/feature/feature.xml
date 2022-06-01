@@ -8,7 +8,7 @@
  -->
 <features name="odl-aaa-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
     <feature name="odl-aaa-cert" version="${project.version}">
-        <feature version="[5,6)">odl-mdsal-broker</feature>
+        <feature version="[6,7)">odl-mdsal-broker</feature>
         <configfile finalname="etc/opendaylight/datastore/initial/config/aaa-cert-config.xml">
             mvn:org.opendaylight.aaa/aaa-cert/${project.version}/xml/config
         </configfile>
