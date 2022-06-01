@@ -13,7 +13,7 @@
     <parent>
       <groupId>org.opendaylight.odlparent</groupId>
       <artifactId>odlparent-lite</artifactId>
-      <version>10.0.0</version>
+      <version>11.0.0</version>
       <relativePath/>
     </parent>
 
@@ -122,7 +122,7 @@
                 <version>${project.version}</version>
             </dependency>
 
-            <dependency>
+            <!--dependency>
                 <groupId>${project.groupId}.web</groupId>
                 <artifactId>web-api</artifactId>
                 <version>${project.version}</version>
@@ -136,7 +136,7 @@
                 <groupId>${project.groupId}.web</groupId>
                 <artifactId>web-osgi-impl</artifactId>
                 <version>${project.version}</version>
-            </dependency>
+            </dependency-->
             <dependency>
                 <groupId>${project.groupId}.web</groupId>
                 <artifactId>servlet-api</artifactId>

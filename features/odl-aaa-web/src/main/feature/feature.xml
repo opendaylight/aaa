@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.4.0" name="odl-aaa-${project.version}">
     <feature name="odl-aaa-web" version="${project.version}">
-        <feature version="[10,11)">odl-karaf-feat-jetty</feature>
-        <feature version="[10,11)">odl-guava</feature>
-        <feature version="[10,11)">odl-jersey-2</feature>
-        <feature version="[8,9)">odl-yangtools-util</feature>
+        <feature version="[11,12)">odl-karaf-feat-jetty</feature>
+        <feature version="[11,12)">odl-guava</feature>
+        <feature version="[11,12)">odl-jersey-2</feature>
+        <feature version="[9,10)">odl-yangtools-util</feature>
     </feature>
 </features>
