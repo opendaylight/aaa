@@ -80,6 +80,10 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>aaa-idm-store-h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>aaa-password-service-api</artifactId>
         </dependency>
         <dependency>
@@ -95,6 +99,10 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>aaa-shiro</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>aaa-tokenauthrealm</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -129,6 +137,12 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>odl-aaa-shiro</artifactId>
+            <classifier>features</classifier>
+            <type>xml</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>odl-apache-shiro</artifactId>
             <classifier>features</classifier>
             <type>xml</type>
         </dependency>
