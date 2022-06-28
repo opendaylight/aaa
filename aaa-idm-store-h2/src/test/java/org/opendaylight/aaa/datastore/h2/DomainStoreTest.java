@@ -9,10 +9,10 @@ package org.opendaylight.aaa.datastore.h2;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -20,7 +20,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Domains;
 
@@ -36,24 +35,24 @@ public class DomainStoreTest {
     public void getDomainsTest() throws SQLException, Exception {
         // Setup Mock Behavior
         String[] tableTypes = { "TABLE" };
-        Mockito.when(connectionMock.isClosed()).thenReturn(false);
+        when(connectionMock.isClosed()).thenReturn(false);
         DatabaseMetaData dbmMock = mock(DatabaseMetaData.class);
-        Mockito.when(connectionMock.getMetaData()).thenReturn(dbmMock);
+        when(connectionMock.getMetaData()).thenReturn(dbmMock);
         ResultSet rsUserMock = mock(ResultSet.class);
-        Mockito.when(dbmMock.getTables(null, null, "DOMAINS", tableTypes)).thenReturn(rsUserMock);
-        Mockito.when(rsUserMock.next()).thenReturn(true);
+        when(dbmMock.getTables(null, null, "DOMAINS", tableTypes)).thenReturn(rsUserMock);
+        when(rsUserMock.next()).thenReturn(true);
 
         Statement stmtMock = mock(Statement.class);
-        Mockito.when(connectionMock.createStatement()).thenReturn(stmtMock);
+        when(connectionMock.createStatement()).thenReturn(stmtMock);
 
         ResultSet rsMock = getMockedResultSet();
-        Mockito.when(stmtMock.executeQuery(anyString())).thenReturn(rsMock);
+        when(stmtMock.executeQuery(anyString())).thenReturn(rsMock);
 
         // Run Test
         Domains domains = domainStoreUnderTest.getDomains();
 
         // Verify
-        assertTrue(domains.getDomains().size() == 1);
+        assertEquals(1, domains.getDomains().size());
         verify(stmtMock).close();
     }
 
@@ -78,11 +77,11 @@ public class DomainStoreTest {
 
     public ResultSet getMockedResultSet() throws SQLException {
         ResultSet rsMock = mock(ResultSet.class);
-        Mockito.when(rsMock.next()).thenReturn(true).thenReturn(false);
-        Mockito.when(rsMock.getInt(DomainStore.SQL_ID)).thenReturn(1);
-        Mockito.when(rsMock.getString(DomainStore.SQL_NAME)).thenReturn("DomainName_1");
-        Mockito.when(rsMock.getString(DomainStore.SQL_DESCR)).thenReturn("Desc_1");
-        Mockito.when(rsMock.getInt(DomainStore.SQL_ENABLED)).thenReturn(1);
+        when(rsMock.next()).thenReturn(true).thenReturn(false);
+        when(rsMock.getInt(DomainStore.SQL_ID)).thenReturn(1);
+        when(rsMock.getString(DomainStore.SQL_NAME)).thenReturn("DomainName_1");
+        when(rsMock.getString(DomainStore.SQL_DESCR)).thenReturn("Desc_1");
+        when(rsMock.getInt(DomainStore.SQL_ENABLED)).thenReturn(1);
         return rsMock;
     }
 }

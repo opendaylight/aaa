@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.datastore.h2;
 
 import static org.junit.Assert.assertEquals;
@@ -23,7 +22,6 @@ import org.opendaylight.aaa.tokenauthrealm.auth.ClaimBuilder;
  * @author mserngawy
  */
 public class H2TokenStoreTest {
-
     private final H2TokenStore h2TokenStore = new H2TokenStore(36000, 3600);
 
     @After

@@ -7,10 +7,11 @@
  */
 package org.opendaylight.aaa.datastore.h2;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -18,7 +19,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.impl.password.service.DefaultPasswordHashService;
 
@@ -35,36 +35,36 @@ public class UserStoreTest {
     public void getUsersTest() throws SQLException, Exception {
         // Setup Mock Behavior
         String[] tableTypes = { "TABLE" };
-        Mockito.when(connectionMock.isClosed()).thenReturn(false);
+        when(connectionMock.isClosed()).thenReturn(false);
         DatabaseMetaData dbmMock = mock(DatabaseMetaData.class);
-        Mockito.when(connectionMock.getMetaData()).thenReturn(dbmMock);
+        when(connectionMock.getMetaData()).thenReturn(dbmMock);
         ResultSet rsUserMock = mock(ResultSet.class);
-        Mockito.when(dbmMock.getTables(null, null, "USERS", tableTypes)).thenReturn(rsUserMock);
-        Mockito.when(rsUserMock.next()).thenReturn(true);
+        when(dbmMock.getTables(null, null, "USERS", tableTypes)).thenReturn(rsUserMock);
+        when(rsUserMock.next()).thenReturn(true);
 
         Statement stmtMock = mock(Statement.class);
-        Mockito.when(connectionMock.createStatement()).thenReturn(stmtMock);
+        when(connectionMock.createStatement()).thenReturn(stmtMock);
 
         ResultSet rsMock = getMockedResultSet();
-        Mockito.when(stmtMock.executeQuery(anyString())).thenReturn(rsMock);
+        when(stmtMock.executeQuery(anyString())).thenReturn(rsMock);
 
         // Run Test
         Users users = userStoreUnderTest.getUsers();
 
         // Verify
-        assertTrue(users.getUsers().size() == 1);
+        assertEquals(1, users.getUsers().size());
         verify(stmtMock).close();
     }
 
     public ResultSet getMockedResultSet() throws SQLException {
         ResultSet rsMock = mock(ResultSet.class);
-        Mockito.when(rsMock.next()).thenReturn(true).thenReturn(false);
-        Mockito.when(rsMock.getInt(UserStore.SQL_ID)).thenReturn(1);
-        Mockito.when(rsMock.getString(UserStore.SQL_NAME)).thenReturn("Name_1");
-        Mockito.when(rsMock.getString(UserStore.SQL_EMAIL)).thenReturn("Name_1@company.com");
-        Mockito.when(rsMock.getString(UserStore.SQL_PASSWORD)).thenReturn("Pswd_1");
-        Mockito.when(rsMock.getString(UserStore.SQL_DESCR)).thenReturn("Desc_1");
-        Mockito.when(rsMock.getInt(UserStore.SQL_ENABLED)).thenReturn(1);
+        when(rsMock.next()).thenReturn(true).thenReturn(false);
+        when(rsMock.getInt(UserStore.SQL_ID)).thenReturn(1);
+        when(rsMock.getString(UserStore.SQL_NAME)).thenReturn("Name_1");
+        when(rsMock.getString(UserStore.SQL_EMAIL)).thenReturn("Name_1@company.com");
+        when(rsMock.getString(UserStore.SQL_PASSWORD)).thenReturn("Pswd_1");
+        when(rsMock.getString(UserStore.SQL_DESCR)).thenReturn("Desc_1");
+        when(rsMock.getInt(UserStore.SQL_ENABLED)).thenReturn(1);
         return rsMock;
     }
 }

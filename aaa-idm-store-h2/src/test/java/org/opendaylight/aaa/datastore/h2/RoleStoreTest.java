@@ -7,10 +7,11 @@
  */
 package org.opendaylight.aaa.datastore.h2;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -18,7 +19,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.opendaylight.aaa.api.model.Roles;
 
 public class RoleStoreTest {
@@ -33,33 +33,33 @@ public class RoleStoreTest {
     public void getRolesTest() throws SQLException, Exception {
         // Setup Mock Behavior
         String[] tableTypes = { "TABLE" };
-        Mockito.when(connectionMock.isClosed()).thenReturn(false);
+        when(connectionMock.isClosed()).thenReturn(false);
         DatabaseMetaData dbmMock = mock(DatabaseMetaData.class);
-        Mockito.when(connectionMock.getMetaData()).thenReturn(dbmMock);
+        when(connectionMock.getMetaData()).thenReturn(dbmMock);
         ResultSet rsUserMock = mock(ResultSet.class);
-        Mockito.when(dbmMock.getTables(null, null, "ROLES", tableTypes)).thenReturn(rsUserMock);
-        Mockito.when(rsUserMock.next()).thenReturn(true);
+        when(dbmMock.getTables(null, null, "ROLES", tableTypes)).thenReturn(rsUserMock);
+        when(rsUserMock.next()).thenReturn(true);
 
         Statement stmtMock = mock(Statement.class);
-        Mockito.when(connectionMock.createStatement()).thenReturn(stmtMock);
+        when(connectionMock.createStatement()).thenReturn(stmtMock);
 
         ResultSet rsMock = getMockedResultSet();
-        Mockito.when(stmtMock.executeQuery(anyString())).thenReturn(rsMock);
+        when(stmtMock.executeQuery(anyString())).thenReturn(rsMock);
 
         // Run Test
         Roles roles = roleStoreUnderTest.getRoles();
 
         // Verify
-        assertTrue(roles.getRoles().size() == 1);
+        assertEquals(1, roles.getRoles().size());
         verify(stmtMock).close();
     }
 
     public ResultSet getMockedResultSet() throws SQLException {
         ResultSet rsMock = mock(ResultSet.class);
-        Mockito.when(rsMock.next()).thenReturn(true).thenReturn(false);
-        Mockito.when(rsMock.getInt(RoleStore.SQL_ID)).thenReturn(1);
-        Mockito.when(rsMock.getString(RoleStore.SQL_NAME)).thenReturn("RoleName_1");
-        Mockito.when(rsMock.getString(RoleStore.SQL_DESCR)).thenReturn("Desc_1");
+        when(rsMock.next()).thenReturn(true).thenReturn(false);
+        when(rsMock.getInt(RoleStore.SQL_ID)).thenReturn(1);
+        when(rsMock.getString(RoleStore.SQL_NAME)).thenReturn("RoleName_1");
+        when(rsMock.getString(RoleStore.SQL_DESCR)).thenReturn("Desc_1");
         return rsMock;
     }
 }

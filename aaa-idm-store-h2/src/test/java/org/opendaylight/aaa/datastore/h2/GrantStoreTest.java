@@ -7,10 +7,11 @@
  */
 package org.opendaylight.aaa.datastore.h2;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -18,7 +19,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.opendaylight.aaa.api.model.Grants;
 
 public class GrantStoreTest {
@@ -36,34 +36,34 @@ public class GrantStoreTest {
     public void getGrantsTest() throws Exception {
         // Setup Mock Behavior
         String[] tableTypes = { "TABLE" };
-        Mockito.when(connectionMock.isClosed()).thenReturn(false);
+        when(connectionMock.isClosed()).thenReturn(false);
         DatabaseMetaData dbmMock = mock(DatabaseMetaData.class);
-        Mockito.when(connectionMock.getMetaData()).thenReturn(dbmMock);
+        when(connectionMock.getMetaData()).thenReturn(dbmMock);
         ResultSet rsUserMock = mock(ResultSet.class);
-        Mockito.when(dbmMock.getTables(null, null, "GRANTS", tableTypes)).thenReturn(rsUserMock);
-        Mockito.when(rsUserMock.next()).thenReturn(true);
+        when(dbmMock.getTables(null, null, "GRANTS", tableTypes)).thenReturn(rsUserMock);
+        when(rsUserMock.next()).thenReturn(true);
 
         PreparedStatement pstmtMock = mock(PreparedStatement.class);
-        Mockito.when(connectionMock.prepareStatement(anyString())).thenReturn(pstmtMock);
+        when(connectionMock.prepareStatement(anyString())).thenReturn(pstmtMock);
 
         ResultSet rsMock = getMockedResultSet();
-        Mockito.when(pstmtMock.executeQuery()).thenReturn(rsMock);
+        when(pstmtMock.executeQuery()).thenReturn(rsMock);
 
         // Run Test
         Grants grants = grantStoreUnderTest.getGrants(did, uid);
 
         // Verify
-        assertTrue(grants.getGrants().size() == 1);
+        assertEquals(1, grants.getGrants().size());
         verify(pstmtMock).close();
     }
 
     public ResultSet getMockedResultSet() throws SQLException {
         ResultSet rsMock = mock(ResultSet.class);
-        Mockito.when(rsMock.next()).thenReturn(true).thenReturn(false);
-        Mockito.when(rsMock.getInt(GrantStore.SQL_ID)).thenReturn(1);
-        Mockito.when(rsMock.getString(GrantStore.SQL_TENANTID)).thenReturn(did);
-        Mockito.when(rsMock.getString(GrantStore.SQL_USERID)).thenReturn(uid);
-        Mockito.when(rsMock.getString(GrantStore.SQL_ROLEID)).thenReturn("Role_1");
+        when(rsMock.next()).thenReturn(true).thenReturn(false);
+        when(rsMock.getInt(GrantStore.SQL_ID)).thenReturn(1);
+        when(rsMock.getString(GrantStore.SQL_TENANTID)).thenReturn(did);
+        when(rsMock.getString(GrantStore.SQL_USERID)).thenReturn(uid);
+        when(rsMock.getString(GrantStore.SQL_ROLEID)).thenReturn("Role_1");
 
         return rsMock;
     }
