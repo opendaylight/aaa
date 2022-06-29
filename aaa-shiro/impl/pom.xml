@@ -88,13 +88,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <optional>true</optional>
         </dependency>
 
-        <!-- JSON JAXB Stuff -->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlets</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>

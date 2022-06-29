@@ -10,7 +10,6 @@ package org.opendaylight.aaa.shiro.web.env;
 import static java.util.Objects.requireNonNull;
 
 import javax.servlet.ServletContextListener;
-import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.opendaylight.aaa.shiro.filters.AAAShiroFilter;
 import org.opendaylight.aaa.web.FilterDetails;
 import org.opendaylight.aaa.web.WebContext;
@@ -39,17 +38,6 @@ public class ShiroWebContextSecurer implements WebContextSecurer {
                         .filter(new AAAShiroFilter())
                         .addUrlPatterns(urlPatterns)
                         .asyncSupported(asyncSupported)
-                        .build())
-
-                // CORS filter
-                .addFilter(FilterDetails.builder()
-                        .filter(new CrossOriginFilter())
-                        .addUrlPatterns(urlPatterns)
-                        .asyncSupported(asyncSupported)
-                        .putInitParam(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*")
-                        .putInitParam(CrossOriginFilter.ALLOWED_METHODS_PARAM, "GET,POST,OPTIONS,DELETE,PUT,HEAD")
-                        .putInitParam(CrossOriginFilter.ALLOWED_HEADERS_PARAM,
-                            "origin, content-type, accept, authorization")
                         .build());
     }
 }
