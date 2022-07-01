@@ -15,16 +15,13 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 
 /**
- * An utility that represents an HTTP client that allows to make
- * HTTP requests.
+ * An utility that represents an HTTP client that allows to make HTTP requests.
  */
-//Suppressed so UT's can mock it using Mockito.
-@SuppressWarnings("checkstyle:FinalClass")
+// Non-final for mocking
 public class SimpleHttpClient {
-
     private final Client client;
 
-    private SimpleHttpClient(final Client client) {
+    SimpleHttpClient(final Client client) {
         this.client = client;
     }
 
