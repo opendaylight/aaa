@@ -53,9 +53,6 @@ import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
 public class KeystoneAuthRealmTest {
 
     @Mock
-    private SimpleHttpRequest.Builder<KeystoneToken> builder;
-
-    @Mock
     private ICertificateManager certificateManager;
 
     @Mock

@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.realm.util.http;
 
 import java.net.URI;
@@ -19,16 +18,15 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
 /**
  * Basic utility to do an HTTP request. See {@link
  * SimpleHttpClient#requestBuilder(Class)} on how to obtain a request builder.
  *
  * @param <T> the return type of the request.
  */
-// Suppressed so UT's can mock it using Mockito.
-@SuppressWarnings("checkstyle:FinalClass")
+// Non-final for mocking
 public class SimpleHttpRequest<T> {
+    private final Map<String, String> queryParams = new HashMap<>();
     private final Client client;
     private final Class<T> outputType;
     private URI uri;
@@ -36,9 +34,8 @@ public class SimpleHttpRequest<T> {
     private String method;
     private MediaType mediaType;
     private Object entity;
-    private final Map<String, String> queryParams = new HashMap<>();
 
-    private SimpleHttpRequest(final Client client, final Class<T> outputType) {
+    SimpleHttpRequest(final Client client, final Class<T> outputType) {
         this.client = client;
         this.outputType = outputType;
     }
@@ -76,14 +73,15 @@ public class SimpleHttpRequest<T> {
      *
      * @return the builder.
      */
-    static <T> Builder<T> builder(Client client, Class<T> outputType) {
+    static <T> Builder<T> builder(final Client client, final Class<T> outputType) {
         return new Builder<>(client, outputType);
     }
 
+    // Non-final for mocking
     public static class Builder<T> {
         private final SimpleHttpRequest<T> request;
 
-        Builder(Client client, Class<T> outputType) {
+        Builder(final Client client, final Class<T> outputType) {
             request = new SimpleHttpRequest<>(client, outputType);
         }
 
@@ -93,7 +91,7 @@ public class SimpleHttpRequest<T> {
          * @param uri the URI.
          * @return self, the request builder.
          */
-        public Builder<T> uri(URI uri) {
+        public Builder<T> uri(final URI uri) {
             request.uri = uri;
             return this;
         }
@@ -104,7 +102,7 @@ public class SimpleHttpRequest<T> {
          * @param path the path.
          * @return self, the request builder.
          */
-        public Builder<T> path(String path) {
+        public Builder<T> path(final String path) {
             request.path = path;
             return this;
         }
@@ -115,7 +113,7 @@ public class SimpleHttpRequest<T> {
          * @param method the method.
          * @return self, the request builder.
          */
-        public Builder<T> method(String method) {
+        public Builder<T> method(final String method) {
             request.method = method;
             return this;
         }
@@ -126,7 +124,7 @@ public class SimpleHttpRequest<T> {
          * @param mediaType the media type.
          * @return self, the request builder.
          */
-        public Builder<T> mediaType(MediaType mediaType) {
+        public Builder<T> mediaType(final MediaType mediaType) {
             request.mediaType = mediaType;
             return this;
         }
@@ -137,7 +135,7 @@ public class SimpleHttpRequest<T> {
          * @param input the input payload.
          * @return self, the request builder.
          */
-        public Builder<T> entity(Object input) {
+        public Builder<T> entity(final Object input) {
             request.entity = input;
             return this;
         }
@@ -151,7 +149,7 @@ public class SimpleHttpRequest<T> {
          * @param theParamValue the parameter value
          * @return  self, the request builder
          */
-        public Builder<T> queryParam(String theQueryParam, String theParamValue) {
+        public Builder<T> queryParam(final String theQueryParam, final String theParamValue) {
             request.queryParams.put(theQueryParam, theParamValue);
             return this;
         }
