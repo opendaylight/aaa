@@ -7,6 +7,9 @@
  */
 package org.opendaylight.aaa.shiro.idm;
 
+import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
+import static javax.ws.rs.core.Response.Status.CREATED;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -135,7 +138,7 @@ public class UserHandler {
             LOG.debug(errorMessage);
             final IDMError idmError = new IDMError();
             idmError.setMessage(errorMessage);
-            return Response.status(400).entity(idmError).build();
+            return Response.status(BAD_REQUEST).entity(idmError).build();
         }
 
         // The "enabled" field is optional, and defaults to true.
@@ -202,7 +205,7 @@ public class UserHandler {
         // Redact the password and salt for security reasons.
         redactUserPasswordInfo(user);
         // FIXME: report back to the client a warning message to change the default password if none was specified.
-        return Response.status(201).entity(user).build();
+        return Response.status(CREATED).entity(user).build();
     }
 
     /**
@@ -260,7 +263,7 @@ public class UserHandler {
 
         // Redact the password and salt for security reasons.
         redactUserPasswordInfo(newUser);
-        return Response.status(200).entity(newUser).build();
+        return Response.ok(newUser).build();
     }
 
     /**
@@ -290,7 +293,7 @@ public class UserHandler {
 
         // Successfully deleted the user; report success to the client.
         claimCache.clear();
-        return Response.status(204).build();
+        return Response.noContent().build();
     }
 
     /**
