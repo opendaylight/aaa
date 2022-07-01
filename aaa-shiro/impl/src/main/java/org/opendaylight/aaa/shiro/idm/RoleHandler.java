@@ -17,6 +17,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.api.IDMStoreException;
@@ -119,7 +120,7 @@ public class RoleHandler {
             LOG.debug(errorMessage);
             final IDMError idmError = new IDMError();
             idmError.setMessage(errorMessage);
-            return Response.status(400).entity(idmError).build();
+            return Response.status(Status.BAD_REQUEST).entity(idmError).build();
         }
 
         // TODO: role names should be unique!
@@ -155,7 +156,7 @@ public class RoleHandler {
             LOG.error("Internal error creating role", e);
             return new IDMError(500, "internal error creating role", e.getMessage()).response();
         }
-        return Response.status(201).entity(newRole).build();
+        return Response.status(Status.CREATED).entity(newRole).build();
     }
 
     /**
@@ -204,7 +205,7 @@ public class RoleHandler {
             return new IDMError(404, "role id not found :" + id, "").response();
         }
         claimCache.clear();
-        return Response.status(200).entity(newRole).build();
+        return Response.ok(newRole).build();
     }
 
     /**
@@ -235,6 +236,6 @@ public class RoleHandler {
         }
 
         claimCache.clear();
-        return Response.status(204).build();
+        return Response.noContent().build();
     }
 }
