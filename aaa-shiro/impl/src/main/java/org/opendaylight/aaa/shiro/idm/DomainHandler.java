@@ -7,9 +7,10 @@
  */
 package org.opendaylight.aaa.shiro.idm;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -28,7 +29,6 @@ import org.opendaylight.aaa.api.model.Claim;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Domains;
 import org.opendaylight.aaa.api.model.Grant;
-import org.opendaylight.aaa.api.model.Grants;
 import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
@@ -50,15 +50,14 @@ import org.slf4j.LoggerFactory;
  */
 @Path("/v1/domains")
 public class DomainHandler {
-
     private static final Logger LOG = LoggerFactory.getLogger(DomainHandler.class);
 
     private final IIDMStore iidMStore;
     private final ClaimCache claimCache;
 
-    public DomainHandler(IIDMStore iidMStore, ClaimCache claimCache) {
-        this.iidMStore = Objects.requireNonNull(iidMStore);
-        this.claimCache = Objects.requireNonNull(claimCache);
+    public DomainHandler(final IIDMStore iidMStore, final ClaimCache claimCache) {
+        this.iidMStore = requireNonNull(iidMStore);
+        this.claimCache = requireNonNull(claimCache);
     }
 
     /**
@@ -70,7 +69,7 @@ public class DomainHandler {
     @Produces("application/json")
     public Response getDomains() {
         LOG.info("Get /domains");
-        Domains domains = null;
+        final Domains domains;
         try {
             domains = iidMStore.getDomains();
         } catch (IDMStoreException e) {
@@ -93,9 +92,9 @@ public class DomainHandler {
     @GET
     @Path("/{id}")
     @Produces("application/json")
-    public Response getDomain(@PathParam("id") String domainId) {
+    public Response getDomain(@PathParam("id") final String domainId) {
         LOG.info("Get /domains/{}", domainId);
-        Domain domain = null;
+        final Domain domain;
         try {
             domain = iidMStore.readDomain(domainId);
         } catch (IDMStoreException e) {
@@ -129,28 +128,30 @@ public class DomainHandler {
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public Response createDomain(@Context UriInfo info, Domain domain) {
+    public Response createDomain(@Context final UriInfo info, final Domain domain) {
         LOG.info("Post /domains");
+
+        // Bug 8382: domain id is an implementation detail and isn't specifiable
+        if (domain.getDomainid() != null) {
+            final String errorMessage = "do not specify domainId, it will be assigned automatically for you";
+            LOG.debug(errorMessage);
+            final IDMError idmError = new IDMError();
+            idmError.setMessage(errorMessage);
+            return Response.status(400).entity(idmError).build();
+        }
+        if (domain.isEnabled() == null) {
+            domain.setEnabled(false);
+        }
+        if (domain.getName() == null) {
+            domain.setName("");
+        }
+        if (domain.getDescription() == null) {
+            domain.setDescription("");
+        }
+
+        final Domain newDomain;
         try {
-            // Bug 8382: domain id is an implementation detail and isn't
-            // specifiable
-            if (domain.getDomainid() != null) {
-                final String errorMessage = "do not specify domainId, it will be assigned automatically for you";
-                LOG.debug(errorMessage);
-                final IDMError idmError = new IDMError();
-                idmError.setMessage(errorMessage);
-                return Response.status(400).entity(idmError).build();
-            }
-            if (domain.isEnabled() == null) {
-                domain.setEnabled(false);
-            }
-            if (domain.getName() == null) {
-                domain.setName("");
-            }
-            if (domain.getDescription() == null) {
-                domain.setDescription("");
-            }
-            domain = iidMStore.writeDomain(domain);
+            newDomain = iidMStore.writeDomain(domain);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -158,7 +159,7 @@ public class DomainHandler {
             idmerror.setDetails(e.getMessage());
             return Response.status(500).entity(idmerror).build();
         }
-        return Response.status(201).entity(domain).build();
+        return Response.status(201).entity(newDomain).build();
     }
 
     /**
@@ -176,18 +177,14 @@ public class DomainHandler {
     @Path("/{id}")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response putDomain(@Context UriInfo info, Domain domain, @PathParam("id") String domainId) {
+    public Response putDomain(@Context final UriInfo info, final Domain domain,
+            @PathParam("id") final String domainId) {
         LOG.info("Put /domains/{}", domainId);
+
+        domain.setDomainid(domainId);
+        final Domain newDomain;
         try {
-            domain.setDomainid(domainId);
-            domain = iidMStore.updateDomain(domain);
-            if (domain == null) {
-                IDMError idmerror = new IDMError();
-                idmerror.setMessage("Not found! Domain id:" + domainId);
-                return Response.status(404).entity(idmerror).build();
-            }
-            claimCache.clear();
-            return Response.status(200).entity(domain).build();
+            newDomain = iidMStore.updateDomain(domain);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -195,6 +192,14 @@ public class DomainHandler {
             idmerror.setDetails(e.getMessage());
             return Response.status(500).entity(idmerror).build();
         }
+
+        if (newDomain == null) {
+            IDMError idmerror = new IDMError();
+            idmerror.setMessage("Not found! Domain id:" + domainId);
+            return Response.status(404).entity(idmerror).build();
+        }
+        claimCache.clear();
+        return Response.status(200).entity(newDomain).build();
     }
 
     /**
@@ -208,22 +213,24 @@ public class DomainHandler {
      */
     @DELETE
     @Path("/{id}")
-    public Response deleteDomain(@Context UriInfo info, @PathParam("id") String domainId) {
+    public Response deleteDomain(@Context final UriInfo info, @PathParam("id") final String domainId) {
         LOG.info("Delete /domains/{}", domainId);
 
+        final Domain domain;
         try {
-            Domain domain = iidMStore.deleteDomain(domainId);
-            if (domain == null) {
-                IDMError idmerror = new IDMError();
-                idmerror.setMessage("Not found! Domain id:" + domainId);
-                return Response.status(404).entity(idmerror).build();
-            }
+            domain = iidMStore.deleteDomain(domainId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error deleting Domain");
             idmerror.setDetails(e.getMessage());
             return Response.status(500).entity(idmerror).build();
+        }
+
+        if (domain == null) {
+            IDMError idmerror = new IDMError();
+            idmerror.setMessage("Not found! Domain id:" + domainId);
+            return Response.status(404).entity(idmerror).build();
         }
         claimCache.clear();
         return Response.status(204).build();
@@ -249,8 +256,8 @@ public class DomainHandler {
     @Path("/{did}/users/{uid}/roles")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response createGrant(@Context UriInfo info, @PathParam("did") String domainId,
-            @PathParam("uid") String userId, Grant grant) {
+    public Response createGrant(@Context final UriInfo info, @PathParam("did") final String domainId,
+            @PathParam("uid") final String userId, final Grant grant) {
         LOG.info("Post /domains/{}/users/{}/roles", domainId, userId);
 
         // Bug 8382: grant id is an implementation detail and isn't specifiable
@@ -262,12 +269,8 @@ public class DomainHandler {
             return Response.status(400).entity(idmError).build();
         }
 
-        Domain domain = null;
-        User user;
-        Role role;
-        String roleId;
-
         // validate domain id
+        final Domain domain;
         try {
             domain = iidMStore.readDomain(domainId);
         } catch (IDMStoreException e) {
@@ -284,6 +287,7 @@ public class DomainHandler {
         }
         grant.setDomainid(domainId);
 
+        final User user;
         try {
             user = iidMStore.readUser(userId);
         } catch (IDMStoreException e) {
@@ -301,14 +305,17 @@ public class DomainHandler {
         grant.setUserid(userId);
 
         // validate role id
+        final String roleId;
         try {
             roleId = grant.getRoleid();
-            LOG.info("roleid = {}", roleId);
         } catch (NumberFormatException nfe) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Invalid Role id:" + grant.getRoleid());
             return Response.status(404).entity(idmerror).build();
         }
+        LOG.info("roleid = {}", roleId);
+
+        final Role role;
         try {
             role = iidMStore.readRole(roleId);
         } catch (IDMStoreException e) {
@@ -325,13 +332,9 @@ public class DomainHandler {
         }
 
         // see if grant already exists for this
+        final Grant existingGrant;
         try {
-            Grant existingGrant = iidMStore.readGrant(domainId, userId, roleId);
-            if (existingGrant != null) {
-                IDMError idmerror = new IDMError();
-                idmerror.setMessage("Grant already exists for did:" + domainId + " uid:" + userId + " rid:" + roleId);
-                return Response.status(403).entity(idmerror).build();
-            }
+            existingGrant = iidMStore.readGrant(domainId, userId, roleId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -339,10 +342,16 @@ public class DomainHandler {
             idmerror.setDetails(e.getMessage());
             return Response.status(500).entity(idmerror).build();
         }
+        if (existingGrant != null) {
+            IDMError idmerror = new IDMError();
+            idmerror.setMessage("Grant already exists for did:" + domainId + " uid:" + userId + " rid:" + roleId);
+            return Response.status(403).entity(idmerror).build();
+        }
 
         // create grant
+        final Grant newGrant;
         try {
-            grant = iidMStore.writeGrant(grant);
+            newGrant = iidMStore.writeGrant(grant);
         } catch (IDMStoreException e) {
             LOG.error("StoreException: ", e);
             IDMError idmerror = new IDMError();
@@ -352,7 +361,7 @@ public class DomainHandler {
         }
 
         claimCache.clear();
-        return Response.status(201).entity(grant).build();
+        return Response.status(201).entity(newGrant).build();
     }
 
     /**
@@ -370,12 +379,11 @@ public class DomainHandler {
     @Path("/{did}/users/roles")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response validateUser(@Context UriInfo info, @PathParam("did") String domainId, UserPwd userpwd) {
+    public Response validateUser(@Context final UriInfo info, @PathParam("did") final String domainId,
+            final UserPwd userpwd) {
         LOG.info("GET /domains/{}/users", domainId);
-        Domain domain = null;
-        Claim claim = new Claim();
-        List<Role> roleList = new ArrayList<>();
 
+        final Domain domain;
         try {
             domain = iidMStore.readDomain(domainId);
         } catch (IDMStoreException se) {
@@ -392,13 +400,13 @@ public class DomainHandler {
         }
 
         // check request body for username and pwd
-        String username = userpwd.getUsername();
+        final String username = userpwd.getUsername();
         if (username == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("username not specfied in request body");
             return Response.status(400).entity(idmerror).build();
         }
-        String pwd = userpwd.getUserpwd();
+        final String pwd = userpwd.getUserpwd();
         if (pwd == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("userpwd not specfied in request body");
@@ -406,39 +414,9 @@ public class DomainHandler {
         }
 
         // find userid for user
+        final Users users;
         try {
-            Users users = iidMStore.getUsers(username, domainId);
-            List<User> userList = users.getUsers();
-            if (userList.size() == 0) {
-                IDMError idmerror = new IDMError();
-                idmerror.setMessage("did not find username: " + username);
-                return Response.status(404).entity(idmerror).build();
-            }
-            User user = userList.get(0);
-            String userPwd = user.getPassword();
-            String reqPwd = userpwd.getUserpwd();
-            if (!userPwd.equals(reqPwd)) {
-                IDMError idmerror = new IDMError();
-                idmerror.setMessage("password does not match for username: " + username);
-                return Response.status(401).entity(idmerror).build();
-            }
-            claim.setDomainid(domainId);
-            claim.setUsername(username);
-            claim.setUserid(user.getUserid());
-            try {
-                Grants grants = iidMStore.getGrants(domainId, user.getUserid());
-                for (Grant grant : grants.getGrants()) {
-                    Role role = iidMStore.readRole(grant.getRoleid());
-                    roleList.add(role);
-                }
-            } catch (IDMStoreException e) {
-                LOG.error("StoreException", e);
-                IDMError idmerror = new IDMError();
-                idmerror.setMessage("Internal error getting Roles");
-                idmerror.setDetails(e.getMessage());
-                return Response.status(500).entity(idmerror).build();
-            }
-            claim.setRoles(roleList);
+            users = iidMStore.getUsers(username, domainId);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -446,6 +424,41 @@ public class DomainHandler {
             idmerror.setDetails(e.getMessage());
             return Response.status(500).entity(idmerror).build();
         }
+
+        final List<User> userList = users.getUsers();
+        if (userList.isEmpty()) {
+            IDMError idmerror = new IDMError();
+            idmerror.setMessage("did not find username: " + username);
+            return Response.status(404).entity(idmerror).build();
+        }
+
+        final User user = userList.get(0);
+        final String userPwd = user.getPassword();
+        final String reqPwd = userpwd.getUserpwd();
+        if (!userPwd.equals(reqPwd)) {
+            IDMError idmerror = new IDMError();
+            idmerror.setMessage("password does not match for username: " + username);
+            return Response.status(401).entity(idmerror).build();
+        }
+
+        List<Role> roleList = new ArrayList<>();
+        try {
+            for (Grant grant : iidMStore.getGrants(domainId, user.getUserid()).getGrants()) {
+                roleList.add(iidMStore.readRole(grant.getRoleid()));
+            }
+        } catch (IDMStoreException e) {
+            LOG.error("StoreException", e);
+            IDMError idmerror = new IDMError();
+            idmerror.setMessage("Internal error getting Roles");
+            idmerror.setDetails(e.getMessage());
+            return Response.status(500).entity(idmerror).build();
+        }
+
+        Claim claim = new Claim();
+        claim.setDomainid(domainId);
+        claim.setUsername(username);
+        claim.setUserid(user.getUserid());
+        claim.setRoles(roleList);
 
         return Response.ok(claim).build();
     }
@@ -464,8 +477,8 @@ public class DomainHandler {
     @GET
     @Path("/{did}/users/{uid}/roles")
     @Produces("application/json")
-    public Response getRoles(@Context UriInfo info, @PathParam("did") String domainId,
-            @PathParam("uid") String userId) {
+    public Response getRoles(@Context final UriInfo info, @PathParam("did") final String domainId,
+            @PathParam("uid") final String userId) {
         LOG.info("GET /domains/{}/users/{}/roles", domainId, userId);
         Domain domain = null;
         User user;
@@ -502,10 +515,8 @@ public class DomainHandler {
         }
 
         try {
-            Grants grants = iidMStore.getGrants(domainId, userId);
-            for (Grant grant : grants.getGrants()) {
-                Role role = iidMStore.readRole(grant.getRoleid());
-                roleList.add(role);
+            for (Grant grant : iidMStore.getGrants(domainId, userId).getGrants()) {
+                roleList.add(iidMStore.readRole(grant.getRoleid()));
             }
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
@@ -534,12 +545,9 @@ public class DomainHandler {
      */
     @DELETE
     @Path("/{did}/users/{uid}/roles/{rid}")
-    public Response deleteGrant(@Context UriInfo info, @PathParam("did") String domainId,
-            @PathParam("uid") String userId, @PathParam("rid") String roleId) {
-        Domain domain = null;
-        User user;
-        Role role;
-
+    public Response deleteGrant(@Context final UriInfo info, @PathParam("did") final String domainId,
+            @PathParam("uid") final String userId, @PathParam("rid") final String roleId) {
+        final Domain domain;
         try {
             domain = iidMStore.readDomain(domainId);
         } catch (IDMStoreException e) {
@@ -555,6 +563,7 @@ public class DomainHandler {
             return Response.status(404).entity(idmerror).build();
         }
 
+        final User user;
         try {
             user = iidMStore.readUser(userId);
         } catch (IDMStoreException e) {
@@ -570,6 +579,7 @@ public class DomainHandler {
             return Response.status(404).entity(idmerror).build();
         }
 
+        final Role role;
         try {
             role = iidMStore.readRole(roleId);
         } catch (IDMStoreException e) {
