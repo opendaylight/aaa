@@ -13,7 +13,6 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import org.glassfish.jersey.client.ClientConfig;
 
 /**
  * An utility that represents an HTTP client that allows to make
@@ -45,7 +44,7 @@ public class SimpleHttpClient {
      * @param <T> the return type of the request.
      * @return the request builder.
      */
-    public <T> SimpleHttpRequest.Builder<T> requestBuilder(Class<T> outputType) {
+    public <T> SimpleHttpRequest.Builder<T> requestBuilder(final Class<T> outputType) {
         return new SimpleHttpRequest.Builder<>(client, outputType);
     }
 
@@ -66,7 +65,7 @@ public class SimpleHttpClient {
          * @return self, the client builder.
          */
         public Builder sslContext(final SSLContext context) {
-            this.sslContext = context;
+            sslContext = context;
             return this;
         }
 
@@ -77,7 +76,7 @@ public class SimpleHttpClient {
          * @return self, the client builder.
          */
         public Builder hostnameVerifier(final HostnameVerifier verifier) {
-            this.hostnameVerifier = verifier;
+            hostnameVerifier = verifier;
             return this;
         }
 
@@ -99,11 +98,13 @@ public class SimpleHttpClient {
          * @return the client.
          */
         public SimpleHttpClient build() {
-            final ClientConfig clientConfig = new ClientConfig();
-            providers.forEach(clientConfig::register);
-            Client client = ClientBuilder.newBuilder().sslContext(sslContext).hostnameVerifier(hostnameVerifier)
-                    .withConfig(clientConfig).build();
-            return new SimpleHttpClient(client);
+            final ClientBuilder clientBuilder = ClientBuilder.newBuilder()
+                .sslContext(sslContext)
+                .hostnameVerifier(hostnameVerifier);
+
+            providers.forEach(clientBuilder::register);
+
+            return new SimpleHttpClient(clientBuilder.build());
         }
 
     }
