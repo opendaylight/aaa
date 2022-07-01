@@ -20,16 +20,20 @@ import org.opendaylight.mdsal.binding.api.DataBroker;
  *
  * @author Thomas Pantelis
  */
-public interface ThreadLocals {
-    ThreadLocal<DataBroker> DATABROKER_TL = new ThreadLocal<>();
+public final class ThreadLocals {
+    public static final ThreadLocal<DataBroker> DATABROKER_TL = new ThreadLocal<>();
 
-    ThreadLocal<ICertificateManager> CERT_MANAGER_TL = new ThreadLocal<>();
+    public static final ThreadLocal<ICertificateManager> CERT_MANAGER_TL = new ThreadLocal<>();
 
-    ThreadLocal<AuthenticationService> AUTH_SETVICE_TL = new ThreadLocal<>();
+    public static final ThreadLocal<AuthenticationService> AUTH_SETVICE_TL = new ThreadLocal<>();
 
-    ThreadLocal<TokenStore> TOKEN_STORE_TL = new ThreadLocal<>();
+    public static final ThreadLocal<TokenStore> TOKEN_STORE_TL = new ThreadLocal<>();
 
-    ThreadLocal<TokenAuthenticators> TOKEN_AUTHENICATORS_TL = new ThreadLocal<>();
+    public static final ThreadLocal<TokenAuthenticators> TOKEN_AUTHENICATORS_TL = new ThreadLocal<>();
 
-    ThreadLocal<PasswordHashService> PASSWORD_HASH_SERVICE_TL = new ThreadLocal<>();
+    public static final ThreadLocal<PasswordHashService> PASSWORD_HASH_SERVICE_TL = new ThreadLocal<>();
+
+    private ThreadLocals() {
+        // Hidden on purpose
+    }
 }
