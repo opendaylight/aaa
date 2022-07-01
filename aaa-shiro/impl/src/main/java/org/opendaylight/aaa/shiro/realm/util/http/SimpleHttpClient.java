@@ -15,16 +15,13 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 
 /**
- * An utility that represents an HTTP client that allows to make
- * HTTP requests.
+ * An utility that represents an HTTP client that allows to make HTTP requests.
  */
-//Suppressed so UT's can mock it using Mockito.
-@SuppressWarnings("checkstyle:FinalClass")
+// Non-final for mocking
 public class SimpleHttpClient {
-
     private final Client client;
 
-    private SimpleHttpClient(final Client client) {
+    SimpleHttpClient(final Client client) {
         this.client = client;
     }
 
@@ -44,15 +41,14 @@ public class SimpleHttpClient {
      * @param <T> the return type of the request.
      * @return the request builder.
      */
-    public <T> SimpleHttpRequest.Builder<T> requestBuilder(Class<T> outputType) {
+    public <T> SimpleHttpRequest.Builder<T> requestBuilder(final Class<T> outputType) {
         return new SimpleHttpRequest.Builder<>(client, outputType);
     }
 
-    public static class Builder {
-
+    public static final class Builder {
+        private final Set<Class<?>> providers = new HashSet<>();
         private SSLContext sslContext;
         private HostnameVerifier hostnameVerifier;
-        private final Set<Class<?>> providers = new HashSet<>();
 
         private Builder() {
 
@@ -65,7 +61,7 @@ public class SimpleHttpClient {
          * @return self, the client builder.
          */
         public Builder sslContext(final SSLContext context) {
-            this.sslContext = context;
+            sslContext = context;
             return this;
         }
 
@@ -76,7 +72,7 @@ public class SimpleHttpClient {
          * @return self, the client builder.
          */
         public Builder hostnameVerifier(final HostnameVerifier verifier) {
-            this.hostnameVerifier = verifier;
+            hostnameVerifier = verifier;
             return this;
         }
 
