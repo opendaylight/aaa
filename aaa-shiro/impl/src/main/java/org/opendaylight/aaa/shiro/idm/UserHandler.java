@@ -17,6 +17,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.api.IDMStoreException;
@@ -134,7 +135,7 @@ public class UserHandler {
             LOG.debug(errorMessage);
             final IDMError idmError = new IDMError();
             idmError.setMessage(errorMessage);
-            return Response.status(400).entity(idmError).build();
+            return Response.status(Status.BAD_REQUEST).entity(idmError).build();
         }
 
         // The "enabled" field is optional, and defaults to true.
@@ -201,7 +202,7 @@ public class UserHandler {
         // Redact the password and salt for security reasons.
         redactUserPasswordInfo(user);
         // FIXME: report back to the client a warning message to change the default password if none was specified.
-        return Response.status(201).entity(user).build();
+        return Response.status(Status.CREATED).entity(user).build();
     }
 
     /**
@@ -259,7 +260,7 @@ public class UserHandler {
 
         // Redact the password and salt for security reasons.
         redactUserPasswordInfo(newUser);
-        return Response.status(200).entity(newUser).build();
+        return Response.ok(newUser).build();
     }
 
     /**
@@ -289,7 +290,7 @@ public class UserHandler {
 
         // Successfully deleted the user; report success to the client.
         claimCache.clear();
-        return Response.status(204).build();
+        return Response.noContent().build();
     }
 
     /**
