@@ -21,6 +21,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.api.IDMStoreException;
@@ -77,7 +78,7 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting domains");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
         return Response.ok(domains).build();
     }
@@ -102,13 +103,13 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting domain");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
 
         if (domain == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! domain id :" + domainId);
-            return Response.status(404).entity(idmerror).build();
+            return Response.status(Status.NOT_FOUND).entity(idmerror).build();
         }
         return Response.ok(domain).build();
     }
@@ -137,7 +138,7 @@ public class DomainHandler {
             LOG.debug(errorMessage);
             final IDMError idmError = new IDMError();
             idmError.setMessage(errorMessage);
-            return Response.status(400).entity(idmError).build();
+            return Response.status(Status.BAD_REQUEST).entity(idmError).build();
         }
         if (domain.isEnabled() == null) {
             domain.setEnabled(false);
@@ -157,9 +158,9 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error creating domain");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
-        return Response.status(201).entity(newDomain).build();
+        return Response.status(Status.CREATED).entity(newDomain).build();
     }
 
     /**
@@ -190,16 +191,16 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error putting domain");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
 
         if (newDomain == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! Domain id:" + domainId);
-            return Response.status(404).entity(idmerror).build();
+            return Response.status(Status.NOT_FOUND).entity(idmerror).build();
         }
         claimCache.clear();
-        return Response.status(200).entity(newDomain).build();
+        return Response.ok(newDomain).build();
     }
 
     /**
@@ -224,16 +225,16 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error deleting Domain");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
 
         if (domain == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! Domain id:" + domainId);
-            return Response.status(404).entity(idmerror).build();
+            return Response.status(Status.NOT_FOUND).entity(idmerror).build();
         }
         claimCache.clear();
-        return Response.status(204).build();
+        return Response.noContent().build();
     }
 
     /**
@@ -266,7 +267,7 @@ public class DomainHandler {
             LOG.debug(errorMessage);
             final IDMError idmError = new IDMError();
             idmError.setMessage(errorMessage);
-            return Response.status(400).entity(idmError).build();
+            return Response.status(Status.BAD_REQUEST).entity(idmError).build();
         }
 
         // validate domain id
@@ -278,12 +279,12 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting domain");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
         if (domain == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! domain id :" + domainId);
-            return Response.status(404).entity(idmerror).build();
+            return Response.status(Status.NOT_FOUND).entity(idmerror).build();
         }
         grant.setDomainid(domainId);
 
@@ -295,12 +296,12 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting user");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
         if (user == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! User id:" + userId);
-            return Response.status(404).entity(idmerror).build();
+            return Response.status(Status.NOT_FOUND).entity(idmerror).build();
         }
         grant.setUserid(userId);
 
@@ -311,7 +312,7 @@ public class DomainHandler {
         } catch (NumberFormatException nfe) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Invalid Role id:" + grant.getRoleid());
-            return Response.status(404).entity(idmerror).build();
+            return Response.status(Status.NOT_FOUND).entity(idmerror).build();
         }
         LOG.info("roleid = {}", roleId);
 
@@ -323,12 +324,12 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting role");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
         if (role == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! role:" + grant.getRoleid());
-            return Response.status(404).entity(idmerror).build();
+            return Response.status(Status.NOT_FOUND).entity(idmerror).build();
         }
 
         // see if grant already exists for this
@@ -340,12 +341,12 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error creating grant");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
         if (existingGrant != null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Grant already exists for did:" + domainId + " uid:" + userId + " rid:" + roleId);
-            return Response.status(403).entity(idmerror).build();
+            return Response.status(Status.FORBIDDEN).entity(idmerror).build();
         }
 
         // create grant
@@ -357,11 +358,11 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error creating grant");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
 
         claimCache.clear();
-        return Response.status(201).entity(newGrant).build();
+        return Response.status(Status.CREATED).entity(newGrant).build();
     }
 
     /**
@@ -391,12 +392,12 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting domain");
             idmerror.setDetails(se.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
         if (domain == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! Domain id:" + domainId);
-            return Response.status(404).entity(idmerror).build();
+            return Response.status(Status.NOT_FOUND).entity(idmerror).build();
         }
 
         // check request body for username and pwd
@@ -404,13 +405,13 @@ public class DomainHandler {
         if (username == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("username not specfied in request body");
-            return Response.status(400).entity(idmerror).build();
+            return Response.status(Status.BAD_REQUEST).entity(idmerror).build();
         }
         final String pwd = userpwd.getUserpwd();
         if (pwd == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("userpwd not specfied in request body");
-            return Response.status(400).entity(idmerror).build();
+            return Response.status(Status.BAD_REQUEST).entity(idmerror).build();
         }
 
         // find userid for user
@@ -422,14 +423,14 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting user");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
 
         final List<User> userList = users.getUsers();
         if (userList.isEmpty()) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("did not find username: " + username);
-            return Response.status(404).entity(idmerror).build();
+            return Response.status(Status.NOT_FOUND).entity(idmerror).build();
         }
 
         final User user = userList.get(0);
@@ -438,7 +439,7 @@ public class DomainHandler {
         if (!userPwd.equals(reqPwd)) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("password does not match for username: " + username);
-            return Response.status(401).entity(idmerror).build();
+            return Response.status(Status.UNAUTHORIZED).entity(idmerror).build();
         }
 
         List<Role> roleList = new ArrayList<>();
@@ -451,7 +452,7 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting Roles");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
 
         Claim claim = new Claim();
@@ -491,12 +492,12 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting domain");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
         if (domain == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! Domain id:" + domainId);
-            return Response.status(404).entity(idmerror).build();
+            return Response.status(Status.NOT_FOUND).entity(idmerror).build();
         }
 
         try {
@@ -506,12 +507,12 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting user");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
         if (user == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! User id:" + userId);
-            return Response.status(404).entity(idmerror).build();
+            return Response.status(Status.NOT_FOUND).entity(idmerror).build();
         }
 
         try {
@@ -523,7 +524,7 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting Roles");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
         Roles roles = new Roles();
         roles.setRoles(roleList);
@@ -555,12 +556,12 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting domain");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
         if (domain == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! Domain id:" + domainId);
-            return Response.status(404).entity(idmerror).build();
+            return Response.status(Status.NOT_FOUND).entity(idmerror).build();
         }
 
         final User user;
@@ -571,12 +572,12 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting user");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
         if (user == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! User id:" + userId);
-            return Response.status(404).entity(idmerror).build();
+            return Response.status(Status.NOT_FOUND).entity(idmerror).build();
         }
 
         final Role role;
@@ -587,12 +588,12 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error getting Role");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
         if (role == null) {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Not found! Role id:" + roleId);
-            return Response.status(404).entity(idmerror).build();
+            return Response.status(Status.NOT_FOUND).entity(idmerror).build();
         }
 
         // see if grant already exists
@@ -601,7 +602,7 @@ public class DomainHandler {
             if (existingGrant == null) {
                 IDMError idmerror = new IDMError();
                 idmerror.setMessage("Grant does not exist for did:" + domainId + " uid:" + userId + " rid:" + roleId);
-                return Response.status(404).entity(idmerror).build();
+                return Response.status(Status.NOT_FOUND).entity(idmerror).build();
             }
             iidMStore.deleteGrant(existingGrant.getGrantid());
         } catch (IDMStoreException e) {
@@ -609,9 +610,9 @@ public class DomainHandler {
             IDMError idmerror = new IDMError();
             idmerror.setMessage("Internal error creating grant");
             idmerror.setDetails(e.getMessage());
-            return Response.status(500).entity(idmerror).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(idmerror).build();
         }
         claimCache.clear();
-        return Response.status(204).build();
+        return Response.noContent().build();
     }
 }
