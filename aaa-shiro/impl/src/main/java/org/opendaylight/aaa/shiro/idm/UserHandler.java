@@ -7,7 +7,6 @@
  */
 package org.opendaylight.aaa.shiro.idm;
 
-import java.util.Collection;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -29,56 +28,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * REST application used to manipulate the H2 database users table. The REST
- * endpoint is <code>/auth/v1/users</code>.
+ * REST application used to manipulate the H2 database users table. The REST endpoint is <code>/auth/v1/users</code>.
  *
  * <p>
- * A wrapper script called <code>idmtool</code> is provided to manipulate AAA
- * data.
+ * A wrapper script called <code>idmtool</code> is provided to manipulate AAA data.
  *
  * @author peter.mellquist@hp.com
  */
 @Path("/v1/users")
 public class UserHandler {
-
     private static final Logger LOG = LoggerFactory.getLogger(UserHandler.class);
-
-    /**
-     * If a user is created through the <code>/auth/v1/users</code> rest
-     * endpoint without a password, the default password is assigned to the
-     * user.
-     */
-    private static final String DEFAULT_PWD = "changeme";
-
-    /**
-     * When an HTTP GET is performed on <code>/auth/v1/users</code>, the
-     * password field is replaced with <code>REDACTED_PASSWORD</code> for
-     * security reasons.
-     */
-    private static final String REDACTED_PASSWORD = "**********";
-
-    /**
-     * When an HTTP GET is performed on <code>/auth/v1/users</code>, the salt
-     * field is replaced with <code>REDACTED_SALT</code> for security reasons.
-     */
-    private static final String REDACTED_SALT = "**********";
-
-    /**
-     * When creating a user, the description is optional and defaults to an
-     * empty string.
-     */
-    private static final String DEFAULT_DESCRIPTION = "";
-
-    /**
-     * When creating a user, the email is optional and defaults to an empty
-     * string.
-     */
-    private static final String DEFAULT_EMAIL = "";
 
     private final IIDMStore iidMStore;
     private final ClaimCache claimCache;
 
-    public UserHandler(IIDMStore iidMStore, ClaimCache claimCache) {
+    public UserHandler(final IIDMStore iidMStore, final ClaimCache claimCache) {
         this.iidMStore = iidMStore;
         this.claimCache = claimCache;
     }
@@ -94,19 +58,17 @@ public class UserHandler {
     public Response getUsers() {
         LOG.info("GET /auth/v1/users  (extracts all users)");
 
+        final Users users;
         try {
-            final Users users = iidMStore.getUsers();
-
-            // Redact the password and salt for security purposes.
-            final Collection<User> usersList = users.getUsers();
-            for (User user : usersList) {
-                redactUserPasswordInfo(user);
-            }
-
-            return Response.ok(users).build();
+            users = iidMStore.getUsers();
         } catch (IDMStoreException se) {
             return internalError("getting", se);
         }
+
+        // Redact the password and salt for security purposes.
+        users.getUsers().forEach(UserHandler::redactUserPasswordInfo);
+
+        return Response.ok(users).build();
     }
 
     /**
@@ -121,24 +83,25 @@ public class UserHandler {
     @GET
     @Path("/{id}")
     @Produces("application/json")
-    public Response getUser(@PathParam("id") String id) {
+    public Response getUser(@PathParam("id") final String id) {
         LOG.info("GET auth/v1/users/ {}  (extract user with specified id)", id);
 
+        final User user;
         try {
-            final User user = iidMStore.readUser(id);
-
-            if (user == null) {
-                final String error = "user not found! id: " + id;
-                return new IDMError(404, error, "").response();
-            }
-
-            // Redact the password and salt for security purposes.
-            redactUserPasswordInfo(user);
-
-            return Response.ok(user).build();
+            user = iidMStore.readUser(id);
         } catch (IDMStoreException se) {
             return internalError("getting", se);
         }
+
+        if (user == null) {
+            final String error = "user not found! id: " + id;
+            return new IDMError(404, error, "").response();
+        }
+
+        // Redact the password and salt for security purposes.
+        redactUserPasswordInfo(user);
+
+        return Response.ok(user).build();
     }
 
     /**
@@ -163,7 +126,7 @@ public class UserHandler {
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public Response createUser(@Context UriInfo info, User user) {
+    public Response createUser(@Context final UriInfo info, final User user) {
         LOG.info("POST /auth/v1/users  (create a user with the specified payload");
 
         // Bug 8382: user id is an implementation detail and isn't specifiable
@@ -203,7 +166,7 @@ public class UserHandler {
         // The "description" field is optional and defaults to "".
         String userDescription = user.getDescription();
         if (userDescription == null) {
-            user.setDescription(DEFAULT_DESCRIPTION);
+            user.setDescription("");
         } else  if (userDescription.length() > IdmLightApplication.MAX_FIELD_LEN) {
             // The "description" field has a maximum length.
             return providedFieldTooLong("description", IdmLightApplication.MAX_FIELD_LEN);
@@ -212,7 +175,7 @@ public class UserHandler {
         // The "email" field is optional and defaults to "".
         final String userEmail = user.getEmail();
         if (userEmail == null) {
-            user.setEmail(DEFAULT_EMAIL);
+            user.setEmail("");
         } else if (userEmail.length() > IdmLightApplication.MAX_FIELD_LEN) {
             return providedFieldTooLong("email", IdmLightApplication.MAX_FIELD_LEN);
         }
@@ -221,24 +184,24 @@ public class UserHandler {
         // The "password" field is optional and defaults to "changeme".
         final String userPassword = user.getPassword();
         if (userPassword == null) {
-            user.setPassword(DEFAULT_PWD);
+            user.setPassword("changeme");
         } else if (userPassword.length() > IdmLightApplication.MAX_FIELD_LEN) {
             return providedFieldTooLong("password", IdmLightApplication.MAX_FIELD_LEN);
         }
 
+        final User createdUser;
         try {
-            // At this point, fields have been properly verified. Create the
-            // user account
-            final User createdUser = iidMStore.writeUser(user);
-            user.setUserid(createdUser.getUserid());
+            // At this point, fields have been properly verified. Create the user account
+            createdUser = iidMStore.writeUser(user);
         } catch (IDMStoreException se) {
             return internalError("creating", se);
         }
 
+        user.setUserid(createdUser.getUserid());
+
         // Redact the password and salt for security reasons.
         redactUserPasswordInfo(user);
-        // TODO report back to the client a warning message to change the
-        // default password if none was specified.
+        // FIXME: report back to the client a warning message to change the default password if none was specified.
         return Response.status(201).entity(user).build();
     }
 
@@ -257,46 +220,47 @@ public class UserHandler {
     @Path("/{id}")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response putUser(@Context UriInfo info, User user, @PathParam("id") String id) {
-
+    public Response putUser(@Context final UriInfo info, final User user, @PathParam("id") final String id) {
         LOG.info("PUT /auth/v1/users/{}  (Updates a user account)", id);
 
+        user.setUserid(id);
+
+        if (checkInputFieldLength(user.getPassword())) {
+            return providedFieldTooLong("password", IdmLightApplication.MAX_FIELD_LEN);
+        }
+
+        if (checkInputFieldLength(user.getName())) {
+            return providedFieldTooLong("name", IdmLightApplication.MAX_FIELD_LEN);
+        }
+
+        if (checkInputFieldLength(user.getDescription())) {
+            return providedFieldTooLong("description", IdmLightApplication.MAX_FIELD_LEN);
+        }
+
+        if (checkInputFieldLength(user.getEmail())) {
+            return providedFieldTooLong("email", IdmLightApplication.MAX_FIELD_LEN);
+        }
+
+        if (checkInputFieldLength(user.getDomainid())) {
+            return providedFieldTooLong("domain", IdmLightApplication.MAX_FIELD_LEN);
+        }
+
+        final User newUser;
         try {
-            user.setUserid(id);
-
-            if (checkInputFieldLength(user.getPassword())) {
-                return providedFieldTooLong("password", IdmLightApplication.MAX_FIELD_LEN);
-            }
-
-            if (checkInputFieldLength(user.getName())) {
-                return providedFieldTooLong("name", IdmLightApplication.MAX_FIELD_LEN);
-            }
-
-            if (checkInputFieldLength(user.getDescription())) {
-                return providedFieldTooLong("description", IdmLightApplication.MAX_FIELD_LEN);
-            }
-
-            if (checkInputFieldLength(user.getEmail())) {
-                return providedFieldTooLong("email", IdmLightApplication.MAX_FIELD_LEN);
-            }
-
-            if (checkInputFieldLength(user.getDomainid())) {
-                return providedFieldTooLong("domain", IdmLightApplication.MAX_FIELD_LEN);
-            }
-
-            user = iidMStore.updateUser(user);
-            if (user == null) {
-                return new IDMError(404, String.format("User not found for id %s", id), "").response();
-            }
-
-            claimCache.clear();
-
-            // Redact the password and salt for security reasons.
-            redactUserPasswordInfo(user);
-            return Response.status(200).entity(user).build();
+            newUser = iidMStore.updateUser(user);
         } catch (IDMStoreException se) {
             return internalError("updating", se);
         }
+
+        if (newUser == null) {
+            return new IDMError(404, String.format("User not found for id %s", id), "").response();
+        }
+
+        claimCache.clear();
+
+        // Redact the password and salt for security reasons.
+        redactUserPasswordInfo(newUser);
+        return Response.status(200).entity(newUser).build();
     }
 
     /**
@@ -310,18 +274,19 @@ public class UserHandler {
      */
     @DELETE
     @Path("/{id}")
-    public Response deleteUser(@Context UriInfo info, @PathParam("id") String id) {
+    public Response deleteUser(@Context final UriInfo info, @PathParam("id") final String id) {
         LOG.info("DELETE /auth/v1/users/{}  (Delete a user account)", id);
 
+        final User user;
         try {
-            final User user = iidMStore.deleteUser(id);
-
-            if (user == null) {
-                return new IDMError(404, String.format("Error deleting user.  " + "Couldn't find user with id %s", id),
-                        "").response();
-            }
+            user = iidMStore.deleteUser(id);
         } catch (IDMStoreException se) {
             return internalError("deleting", se);
+        }
+
+        if (user == null) {
+            return new IDMError(404, String.format("Error deleting user.  " + "Couldn't find user with id %s", id), "")
+                .response();
         }
 
         // Successfully deleted the user; report success to the client.
@@ -338,10 +303,9 @@ public class UserHandler {
      *            The exception, which is logged locally
      * @return A response containing internal error with specific reasoning
      */
-    private Response internalError(final String verbal, final Exception ex) {
+    private static Response internalError(final String verbal, final Exception ex) {
         LOG.error("There was an internal error {} the user", verbal, ex);
-        return new IDMError(500, String.format("There was an internal error %s the user", verbal))
-                .response();
+        return new IDMError(500, String.format("There was an internal error %s the user", verbal)).response();
     }
 
     /**
@@ -352,12 +316,10 @@ public class UserHandler {
      *            the name of the field which is missing
      * @return A response explaining that the request is missing a field
      */
-    private Response missingRequiredField(final String fieldName) {
-
-        return new IDMError(400,
-                String.format("%s is required to create the user account.  " + "Please provide a %s in your payload.",
-                        fieldName, fieldName),
-                "").response();
+    private static Response missingRequiredField(final String fieldName) {
+        return new IDMError(400, String.format(
+            "%s is required to create the user account.  Please provide a %s in your payload.", fieldName, fieldName),
+            "").response();
     }
 
     /**
@@ -370,7 +332,7 @@ public class UserHandler {
      *            the maximum length of <code>fieldName</code>
      * @return A response containing the bad field and the maximum field length
      */
-    private Response providedFieldTooLong(final String fieldName, final int maxFieldLength) {
+    private static Response providedFieldTooLong(final String fieldName, final int maxFieldLength) {
         return new IDMError(400, getProvidedFieldTooLongMessage(fieldName, maxFieldLength), "").response();
     }
 
@@ -385,21 +347,18 @@ public class UserHandler {
      * @return a response containing the too long field and its length
      */
     private static String getProvidedFieldTooLongMessage(final String fieldName, final int maxFieldLength) {
-
-        return String.format("The provided %s field is too long.  " + "The max length is %s.", fieldName,
-                maxFieldLength);
+        return String.format("The provided %s field is too long.  The max length is %s.", fieldName, maxFieldLength);
     }
 
     /**
      * Prepares a user account for output by redacting the appropriate fields.
      * This method side-effects the <code>user</code> parameter.
      *
-     * @param user
-     *            the user account which will have fields redacted
+     * @param user the user account which will have fields redacted
      */
     private static void redactUserPasswordInfo(final User user) {
-        user.setPassword(REDACTED_PASSWORD);
-        user.setSalt(REDACTED_SALT);
+        user.setPassword("**********");
+        user.setSalt("**********");
     }
 
     /**
@@ -409,7 +368,7 @@ public class UserHandler {
      *            the field to check
      * @return true if input field bigger than the MAX_FIELD_LEN
      */
-    private boolean checkInputFieldLength(final String inputField) {
+    private static boolean checkInputFieldLength(final String inputField) {
         return inputField != null && inputField.length() > IdmLightApplication.MAX_FIELD_LEN;
     }
 }
