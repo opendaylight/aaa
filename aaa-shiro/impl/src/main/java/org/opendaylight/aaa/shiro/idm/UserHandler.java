@@ -16,6 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
@@ -55,7 +56,7 @@ public class UserHandler {
      * @return A response containing the users, or internal error if one occurs
      */
     @GET
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getUsers() {
         LOG.info("GET /auth/v1/users  (extracts all users)");
 
@@ -83,7 +84,7 @@ public class UserHandler {
      */
     @GET
     @Path("/{id}")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@PathParam("id") final String id) {
         LOG.info("GET auth/v1/users/ {}  (extract user with specified id)", id);
 
@@ -124,8 +125,8 @@ public class UserHandler {
      * @return A response stating success or failure of user creation
      */
     @POST
-    @Consumes("application/json")
-    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response createUser(@Context final UriInfo info, final User user) {
         LOG.info("POST /auth/v1/users  (create a user with the specified payload");
 
@@ -218,8 +219,8 @@ public class UserHandler {
      */
     @PUT
     @Path("/{id}")
-    @Consumes("application/json")
-    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response putUser(@Context final UriInfo info, final User user, @PathParam("id") final String id) {
         LOG.info("PUT /auth/v1/users/{}  (Updates a user account)", id);
 
