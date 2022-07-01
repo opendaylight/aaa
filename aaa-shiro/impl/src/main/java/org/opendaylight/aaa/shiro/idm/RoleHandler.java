@@ -16,6 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import org.opendaylight.aaa.api.ClaimCache;
@@ -56,7 +57,7 @@ public class RoleHandler {
      *         if one is encountered
      */
     @GET
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getRoles() {
         LOG.info("get /roles");
         final Roles roles;
@@ -79,7 +80,7 @@ public class RoleHandler {
      */
     @GET
     @Path("/{id}")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getRole(@PathParam("id") final String id) {
         LOG.info("get /roles/{}", id);
 
@@ -108,8 +109,8 @@ public class RoleHandler {
      *         internal error if one is encountered
      */
     @POST
-    @Consumes("application/json")
-    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response createRole(@Context final UriInfo info, final Role role) {
         LOG.info("Post /roles");
 
@@ -169,8 +170,8 @@ public class RoleHandler {
      */
     @PUT
     @Path("/{id}")
-    @Consumes("application/json")
-    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response putRole(@Context final UriInfo info, final Role role, @PathParam("id") final String id) {
         LOG.info("put /roles/{}", id);
 

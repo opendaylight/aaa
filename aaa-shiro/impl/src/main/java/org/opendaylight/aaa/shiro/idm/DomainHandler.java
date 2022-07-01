@@ -19,6 +19,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import org.opendaylight.aaa.api.ClaimCache;
@@ -65,7 +66,7 @@ public class DomainHandler {
      * @return a response with all domains stored in the H2 database
      */
     @GET
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getDomains() {
         LOG.info("Get /domains");
         final Domains domains;
@@ -90,7 +91,7 @@ public class DomainHandler {
      */
     @GET
     @Path("/{id}")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getDomain(@PathParam("id") final String domainId) {
         LOG.info("Get /domains/{}", domainId);
         final Domain domain;
@@ -125,8 +126,8 @@ public class DomainHandler {
      * @return A response stating success or failure of domain creation.
      */
     @POST
-    @Consumes("application/json")
-    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response createDomain(@Context final UriInfo info, final Domain domain) {
         LOG.info("Post /domains");
 
@@ -174,8 +175,8 @@ public class DomainHandler {
      */
     @PUT
     @Path("/{id}")
-    @Consumes("application/json")
-    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response putDomain(@Context final UriInfo info, final Domain domain,
             @PathParam("id") final String domainId) {
         LOG.info("Put /domains/{}", domainId);
@@ -253,8 +254,8 @@ public class DomainHandler {
      */
     @POST
     @Path("/{did}/users/{uid}/roles")
-    @Consumes("application/json")
-    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response createGrant(@Context final UriInfo info, @PathParam("did") final String domainId,
             @PathParam("uid") final String userId, final Grant grant) {
         LOG.info("Post /domains/{}/users/{}/roles", domainId, userId);
@@ -376,8 +377,8 @@ public class DomainHandler {
      */
     @POST
     @Path("/{did}/users/roles")
-    @Consumes("application/json")
-    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response validateUser(@Context final UriInfo info, @PathParam("did") final String domainId,
             final UserPwd userpwd) {
         LOG.info("GET /domains/{}/users", domainId);
@@ -475,7 +476,7 @@ public class DomainHandler {
      */
     @GET
     @Path("/{did}/users/{uid}/roles")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getRoles(@Context final UriInfo info, @PathParam("did") final String domainId,
             @PathParam("uid") final String userId) {
         LOG.info("GET /domains/{}/users/{}/roles", domainId, userId);
