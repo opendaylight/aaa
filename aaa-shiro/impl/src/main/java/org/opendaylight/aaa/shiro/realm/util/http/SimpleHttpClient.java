@@ -13,7 +13,6 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import org.glassfish.jersey.client.ClientConfig;
 
 /**
  * An utility that represents an HTTP client that allows to make
@@ -99,11 +98,13 @@ public class SimpleHttpClient {
          * @return the client.
          */
         public SimpleHttpClient build() {
-            final ClientConfig clientConfig = new ClientConfig();
-            providers.forEach(clientConfig::register);
-            Client client = ClientBuilder.newBuilder().sslContext(sslContext).hostnameVerifier(hostnameVerifier)
-                    .withConfig(clientConfig).build();
-            return new SimpleHttpClient(client);
+            final ClientBuilder clientBuilder = ClientBuilder.newBuilder()
+                .sslContext(sslContext)
+                .hostnameVerifier(hostnameVerifier);
+
+            providers.forEach(clientBuilder::register);
+
+            return new SimpleHttpClient(clientBuilder.build());
         }
 
     }

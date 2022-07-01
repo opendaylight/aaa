@@ -41,12 +41,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <artifactId>aaa-idm-store-h2</artifactId>
         </dependency>
 
-        <!-- jersey client for moon authN -->
-        <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-client</artifactId>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-cert</artifactId>
@@ -81,6 +75,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.service.http</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.guicedee.services</groupId>

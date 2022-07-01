@@ -27,7 +27,6 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.glassfish.jersey.client.ClientConfig;
 import org.opendaylight.aaa.shiro.moon.MoonPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,8 +81,7 @@ public class MoonRealm extends AuthorizingRealm {
     }
 
     public MoonPrincipal moonAuthenticate(final String username, final String password, final String domain) {
-        final ClientConfig config = new ClientConfig();
-        final Client client = ClientBuilder.newClient(config);
+        final Client client = ClientBuilder.newClient();
 
         final String hostFromShiro = moonServerURL != null ? moonServerURL.getHost() : null;
         final String server;
