@@ -39,13 +39,12 @@ import org.slf4j.LoggerFactory;
  */
 @Path("/v1/roles")
 public class RoleHandler {
-
     private static final Logger LOG = LoggerFactory.getLogger(RoleHandler.class);
 
     private final IIDMStore iidMStore;
     private final ClaimCache claimCache;
 
-    public RoleHandler(IIDMStore iidMStore, ClaimCache claimCache) {
+    public RoleHandler(final IIDMStore iidMStore, final ClaimCache claimCache) {
         this.iidMStore = iidMStore;
         this.claimCache = claimCache;
     }
@@ -60,7 +59,7 @@ public class RoleHandler {
     @Produces("application/json")
     public Response getRoles() {
         LOG.info("get /roles");
-        Roles roles = null;
+        final Roles roles;
         try {
             roles = iidMStore.getRoles();
         } catch (IDMStoreException e) {
@@ -81,10 +80,10 @@ public class RoleHandler {
     @GET
     @Path("/{id}")
     @Produces("application/json")
-    public Response getRole(@PathParam("id") String id) {
+    public Response getRole(@PathParam("id") final String id) {
         LOG.info("get /roles/{}", id);
-        Role role = null;
 
+        final Role role;
         try {
             role = iidMStore.readRole(id);
         } catch (IDMStoreException e) {
@@ -111,52 +110,53 @@ public class RoleHandler {
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public Response createRole(@Context UriInfo info, Role role) {
+    public Response createRole(@Context final UriInfo info, final Role role) {
         LOG.info("Post /roles");
+
+        // Bug 8382: role id is an implementation detail and isn't specifiable
+        if (role.getRoleid() != null) {
+            final String errorMessage = "do not specify roleId, it will be assigned automatically for you";
+            LOG.debug(errorMessage);
+            final IDMError idmError = new IDMError();
+            idmError.setMessage(errorMessage);
+            return Response.status(400).entity(idmError).build();
+        }
+
+        // TODO: role names should be unique!
+        // name
+        if (role.getName() == null) {
+            return new IDMError(404, "name must be defined on role create", "").response();
+        } else if (role.getName().length() > IdmLightApplication.MAX_FIELD_LEN) {
+            return new IDMError(400, "role name max length is :" + IdmLightApplication.MAX_FIELD_LEN, "")
+                .response();
+        }
+
+        // domain
+        if (role.getDomainid() == null) {
+            return new IDMError(404, "The role's domain must be defined on role when creating a role.", "")
+                .response();
+        } else if (role.getDomainid().length() > IdmLightApplication.MAX_FIELD_LEN) {
+            return new IDMError(400, "role domain max length is :" + IdmLightApplication.MAX_FIELD_LEN, "")
+                .response();
+        }
+
+        // description
+        if (role.getDescription() == null) {
+            role.setDescription("");
+        } else if (role.getDescription().length() > IdmLightApplication.MAX_FIELD_LEN) {
+            return new IDMError(400, "role description max length is :" + IdmLightApplication.MAX_FIELD_LEN, "")
+                .response();
+        }
+
+
+        final Role newRole;
         try {
-
-            // Bug 8382: role id is an implementation detail and isn't
-            // specifiable
-            if (role.getRoleid() != null) {
-                final String errorMessage = "do not specify roleId, it will be assigned automatically for you";
-                LOG.debug(errorMessage);
-                final IDMError idmError = new IDMError();
-                idmError.setMessage(errorMessage);
-                return Response.status(400).entity(idmError).build();
-            }
-
-            // TODO: role names should be unique!
-            // name
-            if (role.getName() == null) {
-                return new IDMError(404, "name must be defined on role create", "").response();
-            } else if (role.getName().length() > IdmLightApplication.MAX_FIELD_LEN) {
-                return new IDMError(400, "role name max length is :" + IdmLightApplication.MAX_FIELD_LEN, "")
-                        .response();
-            }
-
-            // domain
-            if (role.getDomainid() == null) {
-                return new IDMError(404, "The role's domain must be defined on role when creating a role.", "")
-                        .response();
-            } else if (role.getDomainid().length() > IdmLightApplication.MAX_FIELD_LEN) {
-                return new IDMError(400, "role domain max length is :" + IdmLightApplication.MAX_FIELD_LEN, "")
-                        .response();
-            }
-
-            // description
-            if (role.getDescription() == null) {
-                role.setDescription("");
-            } else if (role.getDescription().length() > IdmLightApplication.MAX_FIELD_LEN) {
-                return new IDMError(400, "role description max length is :" + IdmLightApplication.MAX_FIELD_LEN, "")
-                        .response();
-            }
-
-            role = iidMStore.writeRole(role);
+            newRole = iidMStore.writeRole(role);
         } catch (IDMStoreException e) {
             LOG.error("Internal error creating role", e);
             return new IDMError(500, "internal error creating role", e.getMessage()).response();
         }
-        return Response.status(201).entity(role).build();
+        return Response.status(201).entity(newRole).build();
     }
 
     /**
@@ -175,36 +175,37 @@ public class RoleHandler {
     @Path("/{id}")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response putRole(@Context UriInfo info, Role role, @PathParam("id") String id) {
+    public Response putRole(@Context final UriInfo info, final Role role, @PathParam("id") final String id) {
         LOG.info("put /roles/{}", id);
 
+        role.setRoleid(id);
+
+        // name
+        // TODO: names should be unique
+        if (role.getName() != null && role.getName().length() > IdmLightApplication.MAX_FIELD_LEN) {
+            return new IDMError(400, "role name max length is :" + IdmLightApplication.MAX_FIELD_LEN, "")
+                .response();
+        }
+
+        // description
+        if (role.getDescription() != null && role.getDescription().length() > IdmLightApplication.MAX_FIELD_LEN) {
+            return new IDMError(400, "role description max length is :" + IdmLightApplication.MAX_FIELD_LEN, "")
+                .response();
+        }
+
+        final Role newRole;
         try {
-            role.setRoleid(id);
-
-            // name
-            // TODO: names should be unique
-            if (role.getName() != null && role.getName().length() > IdmLightApplication.MAX_FIELD_LEN) {
-                return new IDMError(400, "role name max length is :" + IdmLightApplication.MAX_FIELD_LEN, "")
-                        .response();
-            }
-
-            // description
-            if (role.getDescription() != null
-                    && role.getDescription().length() > IdmLightApplication.MAX_FIELD_LEN) {
-                return new IDMError(400, "role description max length is :" + IdmLightApplication.MAX_FIELD_LEN, "")
-                        .response();
-            }
-
-            role = iidMStore.updateRole(role);
-            if (role == null) {
-                return new IDMError(404, "role id not found :" + id, "").response();
-            }
-            claimCache.clear();
-            return Response.status(200).entity(role).build();
+            newRole = iidMStore.updateRole(role);
         } catch (IDMStoreException e) {
             LOG.error("Internal error putting role", e);
             return new IDMError(500, "internal error putting role", e.getMessage()).response();
         }
+
+        if (newRole == null) {
+            return new IDMError(404, "role id not found :" + id, "").response();
+        }
+        claimCache.clear();
+        return Response.status(200).entity(newRole).build();
     }
 
     /**
@@ -219,18 +220,21 @@ public class RoleHandler {
      */
     @DELETE
     @Path("/{id}")
-    public Response deleteRole(@Context UriInfo info, @PathParam("id") String id) {
+    public Response deleteRole(@Context final UriInfo info, @PathParam("id") final String id) {
         LOG.info("Delete /roles/{}", id);
 
+        final Role role;
         try {
-            Role role = iidMStore.deleteRole(id);
-            if (role == null) {
-                return new IDMError(404, "role id not found :" + id, "").response();
-            }
+            role = iidMStore.deleteRole(id);
         } catch (IDMStoreException e) {
             LOG.error("Internal error deleting role", e);
             return new IDMError(500, "internal error deleting role", e.getMessage()).response();
         }
+
+        if (role == null) {
+            return new IDMError(404, "role id not found :" + id, "").response();
+        }
+
         claimCache.clear();
         return Response.status(204).build();
     }
