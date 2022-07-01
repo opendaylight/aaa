@@ -115,11 +115,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlets</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.kohsuke.metainf-services</groupId>
             <artifactId>metainf-services</artifactId>
             <scope>provided</scope>
