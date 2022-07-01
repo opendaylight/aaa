@@ -5,12 +5,10 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.filterchain.filters;
 
 import com.google.common.collect.ImmutableList;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.Filter;
@@ -43,7 +41,6 @@ import org.slf4j.LoggerFactory;
  * middle of requests, causing inconsistent behavior.
  */
 public class CustomFilterAdapter implements Filter, CustomFilterAdapterListener {
-
     private static final Logger LOG = LoggerFactory.getLogger(CustomFilterAdapter.class);
 
     private final CustomFilterAdapterConfiguration customFilterAdapterConfig;
@@ -51,11 +48,11 @@ public class CustomFilterAdapter implements Filter, CustomFilterAdapterListener 
     private FilterConfig filterConfig;
 
     /**
-     * Stores the injected filter chain. TODO can this be an ArrayList?
+     * Stores the injected filter chain.
      */
-    private volatile List<Filter> injectedFilterChain = Collections.emptyList();
+    private volatile ImmutableList<Filter> injectedFilterChain = ImmutableList.of();
 
-    public CustomFilterAdapter(CustomFilterAdapterConfiguration customFilterAdapterConfig) {
+    public CustomFilterAdapter(final CustomFilterAdapterConfiguration customFilterAdapterConfig) {
         this.customFilterAdapterConfig = customFilterAdapterConfig;
     }
 
@@ -83,32 +80,23 @@ public class CustomFilterAdapter implements Filter, CustomFilterAdapterListener 
     public void init(final FilterConfig newFilterConfig) throws ServletException {
         LOG.info("Initializing CustomFilterAdapter");
 
-        this.filterConfig = newFilterConfig;
+        filterConfig = newFilterConfig;
 
         // register as a listener for config admin changes
-        customFilterAdapterConfig.registerCustomFilterAdapterConfigurationListener(CustomFilterAdapter.this);
-    }
-
-    /**
-     * Updates the injected filter chain.
-     *
-     * @param filterChain
-     *            The injected chain
-     */
-    private void setInjectedFilterChain(final List<Filter> filterChain) {
-        this.injectedFilterChain = ImmutableList.copyOf(filterChain);
-        final String commaSeperatedFilterChain = this.injectedFilterChain.stream()
-                .map(i -> i.getClass().getSimpleName()).collect(Collectors.joining(","));
-        LOG.info("Injecting a new filter chain with {} Filters: {}", filterChain.size(), commaSeperatedFilterChain);
+        customFilterAdapterConfig.registerCustomFilterAdapterConfigurationListener(this);
     }
 
     @Override
     public void updateInjectedFilters(final List<Filter> injectedFilters) {
-        this.setInjectedFilterChain(injectedFilters);
+        injectedFilterChain = ImmutableList.copyOf(injectedFilters);
+        if (LOG.isInfoEnabled()) {
+            LOG.info("Injecting a new filter chain with {} Filters: {}", injectedFilters.size(),
+                injectedFilterChain.stream().map(i -> i.getClass().getSimpleName()).collect(Collectors.joining(",")));
+        }
     }
 
     @Override
     public FilterConfig getFilterConfig() {
-        return this.filterConfig;
+        return filterConfig;
     }
 }
