@@ -8,8 +8,7 @@ terms of the Eclipse Public License v1.0 which accompanies this distribution,
 and is available at http://www.eclipse.org/legal/epl-v10.html
 -->
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
-  xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0"
-  odl:use-default-for-reference-types="true">
+  xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0">
 
   <odl:clustered-app-config
           binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration"
@@ -26,13 +25,9 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <reference id="passwordCredentialAuth" interface="org.opendaylight.aaa.api.PasswordCredentialAuth"/>
   <reference id="claimCache" interface="org.opendaylight.aaa.api.ClaimCache"/>
 
-  <reference id="dataBroker"
-    interface="org.opendaylight.mdsal.binding.api.DataBroker"
-    odl:type="default" />
+  <reference id="dataBroker" interface="org.opendaylight.mdsal.binding.api.DataBroker"/>
 
-  <reference id="certManager"
-    interface="org.opendaylight.aaa.cert.api.ICertificateManager"
-    odl:type="default-certificate-manager" />
+  <reference id="certManager" interface="org.opendaylight.aaa.cert.api.ICertificateManager"/>
 
   <bean id="provider" class="org.opendaylight.aaa.AAAShiroProvider" init-method="init" destroy-method="close">
     <argument ref="passwordCredentialAuth" />
