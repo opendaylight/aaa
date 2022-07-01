@@ -5,11 +5,11 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.idm;
 
+import static java.util.Objects.requireNonNull;
+
 import com.google.common.collect.ImmutableSet;
-import java.util.Objects;
 import java.util.Set;
 import javax.ws.rs.core.Application;
 import org.opendaylight.aaa.api.ClaimCache;
@@ -17,27 +17,23 @@ import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.provider.GsonProvider;
 
 /**
- * A JAX-RS application for IdmLight. The REST endpoints delivered by this
- * application are in the form: <code>http://{HOST}:{PORT}/auth/v1/</code>
+ * A JAX-RS application for IdmLight. The REST endpoints delivered by this application are in the form:
+ * <code>http://{HOST}:{PORT}/auth/v1/</code>
  *
  * <p>
- * For example, the users REST endpoint is:
- * <code>http://{HOST}:{PORT}/auth/v1/users</code>
+ * For example, the users REST endpoint is: <code>http://{HOST}:{PORT}/auth/v1/users</code>
  *
  * <p>
- * This application is responsible for interaction with the backing h2 database
- * store.
+ * This application is responsible for interaction with the backing h2 database store.
  *
+ * @see DomainHandler
+ * @see UserHandler
+ * @see RoleHandler
  * @author liemmn
- *
- * @see org.opendaylight.aaa.shiro.idm.DomainHandler
- * @see org.opendaylight.aaa.shiro.idm.UserHandler
- * @see org.opendaylight.aaa.shiro.idm.RoleHandler
  */
 public class IdmLightApplication extends Application {
-
-    // TODO create a bug to address the fact that the implementation assumes 128
-    // as the max length, even though this claims 256.
+    // FIXME: create a bug to address the fact that the implementation assumes 128 as the max length, even though this
+    //        claims 256.
     /**
      * The maximum field length for identity fields.
      */
@@ -46,18 +42,17 @@ public class IdmLightApplication extends Application {
     private final IIDMStore iidMStore;
     private final ClaimCache claimCache;
 
-    public IdmLightApplication(IIDMStore iidMStore, ClaimCache claimCache) {
-        this.iidMStore = Objects.requireNonNull(iidMStore);
-        this.claimCache = Objects.requireNonNull(claimCache);
+    public IdmLightApplication(final IIDMStore iidMStore, final ClaimCache claimCache) {
+        this.iidMStore = requireNonNull(iidMStore);
+        this.claimCache = requireNonNull(claimCache);
     }
 
     @Override
     public Set<Object> getSingletons() {
-        return ImmutableSet.builderWithExpectedSize(4)
-                    .add(new GsonProvider<>())
-                    .add(new DomainHandler(iidMStore, claimCache))
-                    .add(new RoleHandler(iidMStore, claimCache))
-                    .add(new UserHandler(iidMStore, claimCache))
-                    .build();
+        return ImmutableSet.of(
+            new GsonProvider<>(),
+            new DomainHandler(iidMStore, claimCache),
+            new RoleHandler(iidMStore, claimCache),
+            new UserHandler(iidMStore, claimCache));
     }
 }
