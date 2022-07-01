@@ -7,9 +7,10 @@
  */
 package org.opendaylight.aaa.shiro.idm;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -50,15 +51,14 @@ import org.slf4j.LoggerFactory;
  */
 @Path("/v1/domains")
 public class DomainHandler {
-
     private static final Logger LOG = LoggerFactory.getLogger(DomainHandler.class);
 
     private final IIDMStore iidMStore;
     private final ClaimCache claimCache;
 
-    public DomainHandler(IIDMStore iidMStore, ClaimCache claimCache) {
-        this.iidMStore = Objects.requireNonNull(iidMStore);
-        this.claimCache = Objects.requireNonNull(claimCache);
+    public DomainHandler(final IIDMStore iidMStore, final ClaimCache claimCache) {
+        this.iidMStore = requireNonNull(iidMStore);
+        this.claimCache = requireNonNull(claimCache);
     }
 
     /**
@@ -70,7 +70,7 @@ public class DomainHandler {
     @Produces("application/json")
     public Response getDomains() {
         LOG.info("Get /domains");
-        Domains domains = null;
+        final Domains domains;
         try {
             domains = iidMStore.getDomains();
         } catch (IDMStoreException e) {
@@ -93,9 +93,9 @@ public class DomainHandler {
     @GET
     @Path("/{id}")
     @Produces("application/json")
-    public Response getDomain(@PathParam("id") String domainId) {
+    public Response getDomain(@PathParam("id") final String domainId) {
         LOG.info("Get /domains/{}", domainId);
-        Domain domain = null;
+        final Domain domain;
         try {
             domain = iidMStore.readDomain(domainId);
         } catch (IDMStoreException e) {
@@ -129,8 +129,10 @@ public class DomainHandler {
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public Response createDomain(@Context UriInfo info, Domain domain) {
+    public Response createDomain(@Context final UriInfo info, final Domain domain) {
         LOG.info("Post /domains");
+
+        final Domain newDomain;
         try {
             // Bug 8382: domain id is an implementation detail and isn't
             // specifiable
@@ -150,7 +152,7 @@ public class DomainHandler {
             if (domain.getDescription() == null) {
                 domain.setDescription("");
             }
-            domain = iidMStore.writeDomain(domain);
+            newDomain = iidMStore.writeDomain(domain);
         } catch (IDMStoreException e) {
             LOG.error("StoreException", e);
             IDMError idmerror = new IDMError();
@@ -158,7 +160,7 @@ public class DomainHandler {
             idmerror.setDetails(e.getMessage());
             return Response.status(500).entity(idmerror).build();
         }
-        return Response.status(201).entity(domain).build();
+        return Response.status(201).entity(newDomain).build();
     }
 
     /**
@@ -176,7 +178,7 @@ public class DomainHandler {
     @Path("/{id}")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response putDomain(@Context UriInfo info, Domain domain, @PathParam("id") String domainId) {
+    public Response putDomain(@Context final UriInfo info, Domain domain, @PathParam("id") final String domainId) {
         LOG.info("Put /domains/{}", domainId);
         try {
             domain.setDomainid(domainId);
@@ -208,7 +210,7 @@ public class DomainHandler {
      */
     @DELETE
     @Path("/{id}")
-    public Response deleteDomain(@Context UriInfo info, @PathParam("id") String domainId) {
+    public Response deleteDomain(@Context final UriInfo info, @PathParam("id") final String domainId) {
         LOG.info("Delete /domains/{}", domainId);
 
         try {
@@ -249,8 +251,8 @@ public class DomainHandler {
     @Path("/{did}/users/{uid}/roles")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response createGrant(@Context UriInfo info, @PathParam("did") String domainId,
-            @PathParam("uid") String userId, Grant grant) {
+    public Response createGrant(@Context final UriInfo info, @PathParam("did") final String domainId,
+            @PathParam("uid") final String userId, final Grant grant) {
         LOG.info("Post /domains/{}/users/{}/roles", domainId, userId);
 
         // Bug 8382: grant id is an implementation detail and isn't specifiable
@@ -341,8 +343,9 @@ public class DomainHandler {
         }
 
         // create grant
+        final Grant newGrant;
         try {
-            grant = iidMStore.writeGrant(grant);
+            newGrant = iidMStore.writeGrant(grant);
         } catch (IDMStoreException e) {
             LOG.error("StoreException: ", e);
             IDMError idmerror = new IDMError();
@@ -352,7 +355,7 @@ public class DomainHandler {
         }
 
         claimCache.clear();
-        return Response.status(201).entity(grant).build();
+        return Response.status(201).entity(newGrant).build();
     }
 
     /**
@@ -370,7 +373,8 @@ public class DomainHandler {
     @Path("/{did}/users/roles")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response validateUser(@Context UriInfo info, @PathParam("did") String domainId, UserPwd userpwd) {
+    public Response validateUser(@Context final UriInfo info, @PathParam("did") final String domainId,
+            final UserPwd userpwd) {
         LOG.info("GET /domains/{}/users", domainId);
         Domain domain = null;
         Claim claim = new Claim();
@@ -464,8 +468,8 @@ public class DomainHandler {
     @GET
     @Path("/{did}/users/{uid}/roles")
     @Produces("application/json")
-    public Response getRoles(@Context UriInfo info, @PathParam("did") String domainId,
-            @PathParam("uid") String userId) {
+    public Response getRoles(@Context final UriInfo info, @PathParam("did") final String domainId,
+            @PathParam("uid") final String userId) {
         LOG.info("GET /domains/{}/users/{}/roles", domainId, userId);
         Domain domain = null;
         User user;
@@ -534,8 +538,8 @@ public class DomainHandler {
      */
     @DELETE
     @Path("/{did}/users/{uid}/roles/{rid}")
-    public Response deleteGrant(@Context UriInfo info, @PathParam("did") String domainId,
-            @PathParam("uid") String userId, @PathParam("rid") String roleId) {
+    public Response deleteGrant(@Context final UriInfo info, @PathParam("did") final String domainId,
+            @PathParam("uid") final String userId, @PathParam("rid") final String roleId) {
         Domain domain = null;
         User user;
         Role role;
