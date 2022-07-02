@@ -99,14 +99,10 @@ public class JettyWebServer implements WebServer {
         // The order in which we do things here must be the same as
         // the equivalent in org.opendaylight.aaa.web.osgi.PaxWebServer
 
-        // 1. Context parameters - because listeners, filters and servlets could need them
-        webContext.contextParams().entrySet().forEach(entry -> handler.setAttribute(entry.getKey(), entry.getValue()));
-        // also handler.getServletContext().setAttribute(name, value), both seem work
-
-        // 2. Listeners - because they could set up things that filters and servlets need
+        // 1. Listeners - because they could set up things that filters and servlets need
         webContext.listeners().forEach(listener -> handler.addEventListener(listener));
 
-        // 3. Filters - because subsequent servlets should already be covered by the filters
+        // 2. Filters - because subsequent servlets should already be covered by the filters
         webContext.filters().forEach(filter -> {
             FilterHolder filterHolder = new FilterHolder(filter.filter());
             filterHolder.setInitParameters(filter.initParams());
@@ -115,7 +111,7 @@ public class JettyWebServer implements WebServer {
             );
         });
 
-        // 4. servlets - 'bout time for 'em by now, don't you think? ;)
+        // 3. servlets - 'bout time for 'em by now, don't you think? ;)
         webContext.servlets().forEach(servlet -> {
             ServletHolder servletHolder = new ServletHolder(servlet.name(), servlet.servlet());
             servletHolder.setInitParameters(servlet.initParams());

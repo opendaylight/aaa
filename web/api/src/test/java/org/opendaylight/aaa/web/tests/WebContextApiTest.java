@@ -78,12 +78,6 @@ public class WebContextApiTest {
     }
 
     @Test
-    public void testContextParam() {
-        assertEquals(Map.of("key", "value"),
-            WebContext.builder().contextPath("test").putContextParam("key", "value").build().contextParams());
-    }
-
-    @Test
     @Ignore
     public void testBadContextPath() {
         // FIXME: this is completely broken usage -- which call is expected to raise the exception?!

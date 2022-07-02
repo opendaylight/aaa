@@ -7,8 +7,6 @@
  */
 package org.opendaylight.aaa.web.test;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -21,18 +19,18 @@ public class TestFilter implements Filter {
     public boolean isInitialized = false;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        assertEquals("avalue", filterConfig.getServletContext().getAttribute("testParam1"));
+    public void init(final FilterConfig filterConfig) throws ServletException {
         isInitialized = true;
     }
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain)
+    public void doFilter(final ServletRequest req, final ServletResponse resp, final FilterChain filterChain)
             throws IOException, ServletException {
         filterChain.doFilter(req, resp);
     }
 
     @Override
     public void destroy() {
+        // No-op
     }
 }
