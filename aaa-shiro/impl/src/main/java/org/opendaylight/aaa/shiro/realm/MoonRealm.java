@@ -7,17 +7,12 @@
  */
 package org.opendaylight.aaa.shiro.realm;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonParser;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -37,10 +32,9 @@ import org.slf4j.LoggerFactory;
  * @author Alioune BA alioune.ba@orange.com
  */
 public class MoonRealm extends AuthorizingRealm {
-
     private static final Logger LOG = LoggerFactory.getLogger(MoonRealm.class);
-
     private static final String MOON_DEFAULT_DOMAIN = "sdn";
+
     private URL moonServerURL;
 
     @Override
@@ -49,109 +43,92 @@ public class MoonRealm extends AuthorizingRealm {
     }
 
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(
-            final AuthenticationToken authenticationToken) throws AuthenticationException {
-        final String username;
-        final String password;
-        final String domain = MOON_DEFAULT_DOMAIN;
-
-        try {
-            username = (String) authenticationToken.getPrincipal();
-        } catch (final ClassCastException e) {
-            LOG.debug("doGetAuthenticationInfo() failed because the principal couldn't be cast as a String", e);
-            throw e;
+    protected AuthenticationInfo doGetAuthenticationInfo(final AuthenticationToken authenticationToken)
+            throws AuthenticationException {
+        final var principal = authenticationToken.getPrincipal();
+        if (!(principal instanceof String)) {
+            throw new AuthenticationException("Non-string principal " + principal);
         }
 
-        final UsernamePasswordToken upt;
-        try {
-            upt = (UsernamePasswordToken) authenticationToken;
-        } catch (final ClassCastException e) {
-            LOG.debug("doGetAuthenticationInfo() failed because the token was not a UsernamePasswordToken", e);
-            throw e;
+        if (!(authenticationToken instanceof UsernamePasswordToken)) {
+            throw new AuthenticationException("Token is not UsernamePasswordToken: " + authenticationToken);
         }
 
-        password = new String(upt.getPassword());
-
-        final MoonPrincipal moonPrincipal = moonAuthenticate(username, password, domain);
-        if (moonPrincipal != null) {
-            return new SimpleAuthenticationInfo(moonPrincipal, password.toCharArray(), getName());
-        } else {
-            return null;
-        }
+        final var password = new String(((UsernamePasswordToken) authenticationToken).getPassword());
+        // FIXME: make the domain name configurable
+        final var moonPrincipal = moonAuthenticate((String) principal, password, MOON_DEFAULT_DOMAIN);
+        return moonPrincipal == null ? null
+            : new SimpleAuthenticationInfo(moonPrincipal, password.toCharArray(), getName());
     }
 
     public MoonPrincipal moonAuthenticate(final String username, final String password, final String domain) {
-        final Client client = ClientBuilder.newClient();
-
-        final String hostFromShiro = moonServerURL != null ? moonServerURL.getHost() : null;
-        final String server;
-        if (hostFromShiro != null) {
-            server = hostFromShiro;
-        } else {
+        final String server = moonServerURL != null ? moonServerURL.getHost() : null;
+        if (server == null) {
             LOG.debug("moon server was not specified appropriately, cannot authenticate");
             return null;
         }
 
         final int portFromShiro = moonServerURL != null ? moonServerURL.getPort() : -1;
-        final String port;
-        if (portFromShiro > 0) {
-            port = Integer.toString(portFromShiro);
-        } else {
+        if (portFromShiro <= 0) {
             LOG.debug("moon server was not specified appropriately, cannot authetnicate");
             return null;
         }
 
-        final String url = String.format("http://%s:%s/moon/auth/tokens", server, port);
+        final var port = Integer.toString(portFromShiro);
+        final var url = String.format("http://%s:%s/moon/auth/tokens", server, port);
         LOG.debug("Moon server is at: {}:{} and will be accessed through {}", server, port, url);
-        WebTarget webTarget = client.target(url);
-        final String input = "{\"username\": \"" + username + "\"," + "\"password\":" + "\"" + password + "\","
-                + "\"project\":" + "\"" + domain + "\"" + "}";
-        final String output = webTarget.request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(input, MediaType.APPLICATION_JSON), String.class);
 
-        final JsonElement element = JsonParser.parseString(output);
+        final String output = ClientBuilder.newClient()
+            .target(url)
+            .request(MediaType.APPLICATION_JSON)
+            .post(
+                // FIXME: String literal when we have JDK17
+                Entity.entity("{\"username\": \"" + username + "\",\n"
+                    + "  \"password\": \"" + password + "\",\n"
+                    + "  \"project\": \"" + domain + "\"\n}",
+                    MediaType.APPLICATION_JSON),
+                String.class);
+
+        final var element = JsonParser.parseString(output);
         if (!element.isJsonObject()) {
             throw new IllegalStateException("Authentication error: returned output is not a JSON object");
         }
 
-        final JsonObject object = element.getAsJsonObject();
-        final JsonObject error = object.get("error").getAsJsonObject();
+        final var object = element.getAsJsonObject();
+        final var error = object.get("error").getAsJsonObject();
         if (error != null) {
             throw new IllegalStateException("Authentication Error : " + error.get("title").getAsString());
         }
 
-        final JsonElement token = object.get("token");
+        final var token = object.get("token");
         if (token == null) {
             return null;
         }
 
-        final String tokenValue = token.getAsString();
-        final String userID = username + "@" + domain;
-
-        final Set<String> userRoles = new LinkedHashSet<>();
-        final JsonElement roles = object.get("roles");
+        final var userRoles = ImmutableSet.<String>builder();
+        final var roles = object.get("roles");
         if (roles != null) {
-            for (JsonElement role : roles.getAsJsonArray()) {
+            for (var role : roles.getAsJsonArray()) {
                 try {
                     userRoles.add(role.getAsString());
-                } catch (final ClassCastException e) {
+                } catch (ClassCastException e) {
                     LOG.debug("Unable to cast role as String, skipping {}", role, e);
                 }
             }
         }
-        return new MoonPrincipal(username, domain, userID, userRoles, tokenValue);
+        return new MoonPrincipal(username, domain, username + "@" + domain, userRoles.build(), token.getAsString());
     }
 
     /**
-     * Injected from <code>shiro.ini</code>.
+     * Injected from {@code shiro.ini}.
      *
-     * @param moonServerURL specified in <code>shiro.ini</code>
+     * @param moonServerURL specified in {@code shiro.ini}
      */
     public void setMoonServerURL(final String moonServerURL) {
         try {
             this.moonServerURL = new URL(moonServerURL);
-        } catch (final MalformedURLException e) {
-            LOG.warn("The moon server URL could not be parsed", e);
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException("Cannot parse moon server URL \"" + moonServerURL + "\"", e);
         }
     }
 }
