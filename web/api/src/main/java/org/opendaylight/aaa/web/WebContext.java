@@ -8,7 +8,6 @@
 package org.opendaylight.aaa.web;
 
 import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
@@ -118,13 +117,6 @@ public abstract class WebContext {
      * Registers resources (eg html files) that can be accessed via the URI namespace.
      */
     public abstract List<ResourceDetails> resources();
-
-    /**
-     * Context params. NB: These are the web context's wide parameters; contrary to
-     * individual {@link ServletDetails#initParams()} and
-     * {@link FilterDetails#initParams()}.
-     */
-    public abstract Map<String, String> contextParams();
 
     @Value.Check
     protected void check() {

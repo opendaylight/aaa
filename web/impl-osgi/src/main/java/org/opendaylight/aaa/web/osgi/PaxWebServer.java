@@ -126,21 +126,18 @@ public final class PaxWebServer implements WebServer {
 
             // The order in which we set things up here matters...
 
-            // 1. Context parameters - because listeners, filters and servlets could need them
-            paxWeb.setContextParam(new MapDictionary<>(webContext.contextParams()), osgiHttpContext);
-
-            // 2. Listeners - because they could set up things that filters and servlets need
+            // 1. Listeners - because they could set up things that filters and servlets need
             for (ServletContextListener listener : webContext.listeners()) {
                 registerListener(osgiHttpContext, listener);
             }
 
-            // 3. Filters - because subsequent servlets should already be covered by the filters
+            // 2. Filters - because subsequent servlets should already be covered by the filters
             for (FilterDetails filter : webContext.filters()) {
                 registerFilter(osgiHttpContext, filter.urlPatterns(), filter.name(), filter.filter(),
                         filter.initParams(), filter.getAsyncSupported());
             }
 
-            // 4. servlets - 'bout time for 'em by now, don't you think? ;)
+            // 3. servlets - 'bout time for 'em by now, don't you think? ;)
             for (ServletDetails servlet : webContext.servlets()) {
                 registerServlet(osgiHttpContext, servlet.urlPatterns(), servlet.name(), servlet.servlet(),
                         servlet.initParams(), servlet.getAsyncSupported());
