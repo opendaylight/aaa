@@ -60,7 +60,6 @@ public abstract class AbstractWebServerTest {
         var testFilter = new TestFilter();
         var webContext = WebContext.builder()
             .contextPath("/testingFilters")
-            .putContextParam("testParam1", "avalue")
             .addFilter(FilterDetails.builder().addUrlPattern("/*").name("Test").filter(testFilter).build())
             .build();
         try (var webContextRegistration = getWebServer().registerWebContext(webContext)) {
