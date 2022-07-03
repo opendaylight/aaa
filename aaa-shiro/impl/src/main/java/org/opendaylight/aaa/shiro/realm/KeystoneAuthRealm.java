@@ -9,6 +9,7 @@ package org.opendaylight.aaa.shiro.realm;
 
 import static java.util.Objects.requireNonNull;
 
+import com.google.common.base.Throwables;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -96,19 +97,15 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     }
 
     @Override
-    @SuppressWarnings("checkstyle:AvoidHidingCauseException")
     protected AuthenticationInfo doGetAuthenticationInfo(final AuthenticationToken authenticationToken) {
+        final SimpleHttpClient client;
         try {
-            final boolean hasSslVerification = getSslVerification();
-            final SimpleHttpClient client = clientCache.getUnchecked(hasSslVerification);
-            return doGetAuthenticationInfo(authenticationToken, client);
+            client = clientCache.getUnchecked(getSslVerification());
         } catch (UncheckedExecutionException e) {
-            Throwable cause = e.getCause();
-            if (cause instanceof AuthenticationException) {
-                throw (AuthenticationException) cause;
-            }
+            Throwables.throwIfInstanceOf(e.getCause(), AuthenticationException.class);
             throw e;
         }
+        return doGetAuthenticationInfo(authenticationToken, client);
     }
 
     /**
