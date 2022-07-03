@@ -77,11 +77,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <artifactId>org.osgi.service.http.whiteboard</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
             <groupId>com.guicedee.services</groupId>
             <artifactId>javax.inject</artifactId>
             <optional>true</optional>
