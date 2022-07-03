@@ -39,7 +39,8 @@ public final class ShiroWebEnvironmentLoaderListener extends EnvironmentLoaderLi
     private final PasswordHashService passwordHashService;
 
     // FIXME: @Inject for CDI, except we have ShiroConfiguration injected
-    // FIXME: @Activate for OSGi @Component, except we have ShiroConfiguration which needs to come from somewhere
+    // FIXME: @Activate for OSGi @Component
+    // Both of these have problem with how do we inject ShiroConfiguration?
     public ShiroWebEnvironmentLoaderListener(final ShiroConfiguration shiroConfiguration, final DataBroker dataBroker,
                                              final ICertificateManager certificateManager,
                                              final AuthenticationService authenticationService,
