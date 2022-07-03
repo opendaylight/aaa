@@ -19,7 +19,9 @@ import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.shiro.realm.MoonRealm;
 import org.opendaylight.aaa.tokenauthrealm.auth.TokenAuthenticators;
+import org.opendaylight.aaa.web.servlet.ServletSupport;
 import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.shiro.configuration.Main;
@@ -50,12 +52,13 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
     private final TokenAuthenticators tokenAuthenticators;
     private final TokenStore tokenStore;
     private final PasswordHashService passwordHashService;
+    private final ServletSupport servletSupport;
 
     AAAIniWebEnvironment(final ShiroConfiguration shiroConfiguration, final DataBroker dataBroker,
                          final ICertificateManager certificateManager,
                          final AuthenticationService authenticationService,
                          final TokenAuthenticators tokenAuthenticators, final TokenStore tokenStore,
-                         final PasswordHashService passwordHashService) {
+                         final PasswordHashService passwordHashService, final ServletSupport servletSupport) {
         this.shiroConfiguration = shiroConfiguration;
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
@@ -63,6 +66,7 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
         this.tokenAuthenticators = tokenAuthenticators;
         this.tokenStore = tokenStore;
         this.passwordHashService = passwordHashService;
+        this.servletSupport = servletSupport;
         LOG.debug("AAAIniWebEnvironment created");
     }
 
@@ -97,7 +101,7 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
         ThreadLocals.TOKEN_AUTHENICATORS_TL.set(tokenAuthenticators);
         ThreadLocals.TOKEN_STORE_TL.set(tokenStore);
         ThreadLocals.PASSWORD_HASH_SERVICE_TL.set(passwordHashService);
-        try {
+        try (var moonLoad = MoonRealm.prepareForLoad(servletSupport)) {
             // Initialize the Shiro environment from clustered-app-config
             final Ini ini = createIniFromClusteredAppConfig(shiroConfiguration);
             setIni(ini);
