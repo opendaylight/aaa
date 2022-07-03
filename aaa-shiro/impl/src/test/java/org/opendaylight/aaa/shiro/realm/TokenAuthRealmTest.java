@@ -19,24 +19,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.junit.Before;
 import org.junit.Test;
 import org.opendaylight.aaa.shiro.realm.util.TokenUtils;
 import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
-import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
 import org.opendaylight.aaa.tokenauthrealm.auth.AuthenticationManager;
 import org.opendaylight.aaa.tokenauthrealm.auth.TokenAuthenticators;
 
 public class TokenAuthRealmTest {
-
-    private TokenAuthRealm testRealm;
-
-    @Before
-    public void setup() {
-        ThreadLocals.AUTH_SETVICE_TL.set(new AuthenticationManager());
-        ThreadLocals.TOKEN_AUTHENICATORS_TL.set(new TokenAuthenticators());
-        testRealm = new TokenAuthRealm();
-    }
+    private final TokenAuthRealm testRealm = new TokenAuthRealm(new AuthenticationManager(), new TokenAuthenticators());
 
     @Test
     public void testTokenAuthRealm() {
