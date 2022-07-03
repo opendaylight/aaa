@@ -8,12 +8,13 @@
 package org.opendaylight.aaa.shiro.realm;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Verify.verifyNotNull;
+import static java.util.Objects.requireNonNull;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonParser;
 import java.net.MalformedURLException;
 import java.net.URL;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -26,6 +27,8 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.opendaylight.aaa.shiro.moon.MoonPrincipal;
+import org.opendaylight.aaa.web.servlet.ServletSupport;
+import org.opendaylight.yangtools.concepts.Registration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +41,23 @@ public class MoonRealm extends AuthorizingRealm {
     private static final Logger LOG = LoggerFactory.getLogger(MoonRealm.class);
     private static final String MOON_DEFAULT_DOMAIN = "sdn";
 
+    private static final ThreadLocal<ServletSupport> SERVLET_SUPPORT_TL = new ThreadLocal<>();
+
+    private final ServletSupport servletSupport;
     private volatile WebTarget moonServer;
+
+    public MoonRealm() {
+        this(verifyNotNull(SERVLET_SUPPORT_TL.get(), "MoonRealm loading not prepared"));
+    }
+
+    public MoonRealm(final ServletSupport servletSupport) {
+        this.servletSupport = requireNonNull(servletSupport);
+    }
+
+    public static Registration prepareForLoad(final ServletSupport jaxrsSupport) {
+        SERVLET_SUPPORT_TL.set(requireNonNull(jaxrsSupport));
+        return () -> SERVLET_SUPPORT_TL.remove();
+    }
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(final PrincipalCollection principalCollection) {
@@ -133,6 +152,6 @@ public class MoonRealm extends AuthorizingRealm {
         // FIXME: allow authentication: and that really means configuring a Client!
         final var server = String.format("http://%s:%s/moon/auth/tokens", uriHost, port);
         LOG.debug("Moon server is at: {}:{} and will be accessed through {}", uriHost, port, server);
-        moonServer = ClientBuilder.newClient().target(server);
+        moonServer = servletSupport.newClientBuilder().build().target(server);
     }
 }
