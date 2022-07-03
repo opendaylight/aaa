@@ -51,10 +51,9 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="passwordService"/>
     <argument ref="servletSupport"/>
   </bean>
-  <service ref="shiroWebEnvLoader" interface="javax.servlet.ServletContextListener"/>
-
-  <bean id="webContextSecurer" class="org.opendaylight.aaa.shiro.web.env.ShiroWebContextSecurer">
-    <argument ref="shiroWebEnvLoader"/>
-  </bean>
-  <service ref="webContextSecurer" interface="org.opendaylight.aaa.web.WebContextSecurer" />
+  <service ref="shiroWebEnvLoader" interface="javax.servlet.ServletContextListener">
+    <service-properties>
+       <entry key="osgi.http.whiteboard.listener" value="true"/>
+    </service-properties>
+  </service>
 </blueprint>
