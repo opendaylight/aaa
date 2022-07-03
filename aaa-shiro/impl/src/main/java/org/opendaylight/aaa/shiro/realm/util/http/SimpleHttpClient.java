@@ -7,8 +7,8 @@
  */
 package org.opendaylight.aaa.shiro.realm.util.http;
 
-import java.util.HashSet;
-import java.util.Set;
+import static java.util.Objects.requireNonNull;
+
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Client;
@@ -28,10 +28,20 @@ public class SimpleHttpClient {
     /**
      * Obtain a builder for {@code SimpleHttpClient}.
      *
-     * @return the client builder.
+     * @return the {@link Builder}.
      */
     public static Builder clientBuilder() {
-        return new Builder();
+        return clientBuilder(ClientBuilder.newBuilder());
+    }
+
+    /**
+     * Obtain a builder for {@code SimpleHttpClient}.
+     *
+     * @param clientBuilder a {@link ClientBuilder}
+     * @return the {@link Builder}.
+     */
+    public static Builder clientBuilder(final ClientBuilder clientBuilder) {
+        return new Builder(clientBuilder);
     }
 
     /**
@@ -47,12 +57,10 @@ public class SimpleHttpClient {
 
     // Non-final for mocking
     public static class Builder {
-        private final Set<Class<?>> providers = new HashSet<>();
-        private SSLContext sslContext;
-        private HostnameVerifier hostnameVerifier;
+        private final ClientBuilder clientBuilder;
 
-        Builder() {
-
+        Builder(final ClientBuilder clientBuilder) {
+            this.clientBuilder = requireNonNull(clientBuilder);
         }
 
         /**
@@ -62,7 +70,7 @@ public class SimpleHttpClient {
          * @return self, the client builder.
          */
         public Builder sslContext(final SSLContext context) {
-            sslContext = context;
+            clientBuilder.sslContext(context);
             return this;
         }
 
@@ -73,7 +81,7 @@ public class SimpleHttpClient {
          * @return self, the client builder.
          */
         public Builder hostnameVerifier(final HostnameVerifier verifier) {
-            hostnameVerifier = verifier;
+            clientBuilder.hostnameVerifier(verifier);
             return this;
         }
 
@@ -85,7 +93,7 @@ public class SimpleHttpClient {
          * @return self, the client builder.
          */
         public Builder provider(final Class<?> provider) {
-            providers.add(provider);
+            clientBuilder.register(provider);
             return this;
         }
 
@@ -95,12 +103,6 @@ public class SimpleHttpClient {
          * @return the client.
          */
         public SimpleHttpClient build() {
-            final ClientBuilder clientBuilder = ClientBuilder.newBuilder()
-                .sslContext(sslContext)
-                .hostnameVerifier(hostnameVerifier);
-
-            providers.forEach(clientBuilder::register);
-
             return new SimpleHttpClient(clientBuilder.build());
         }
     }
