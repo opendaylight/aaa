@@ -24,9 +24,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.subject.Subject;
-import org.junit.Before;
 import org.junit.Test;
-import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
 import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.mdsal.binding.api.ReadTransaction;
 import org.opendaylight.mdsal.common.api.ReadFailedException;
@@ -41,10 +39,6 @@ import org.opendaylight.yangtools.yang.common.Uint32;
  */
 @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
 public class MDSALDynamicAuthorizationFilterTest {
-
-    @Before
-    public void setup() {
-    }
 
     private static DataBroker mockDataBroker(final Object readData) {
         final ReadTransaction readOnlyTransaction = mock(ReadTransaction.class);
@@ -65,18 +59,12 @@ public class MDSALDynamicAuthorizationFilterTest {
 
     private static MDSALDynamicAuthorizationFilter newFilter(final Subject subject, final DataBroker dataBroker)
             throws ServletException {
-        ThreadLocals.DATABROKER_TL.set(dataBroker);
-        MDSALDynamicAuthorizationFilter ret;
-        try {
-            ret = new MDSALDynamicAuthorizationFilter() {
-                @Override
-                protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
-                    return subject;
-                }
-            };
-        } finally {
-            ThreadLocals.DATABROKER_TL.remove();
-        }
+        final var ret = new MDSALDynamicAuthorizationFilter(dataBroker) {
+            @Override
+            protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
+                return subject;
+            }
+        };
 
         ret.processPathConfig("test-path","test-config");
         return ret;
