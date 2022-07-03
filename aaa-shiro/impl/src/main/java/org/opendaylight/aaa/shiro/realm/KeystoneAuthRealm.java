@@ -85,14 +85,12 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(final PrincipalCollection principalCollection) {
-        final Object primaryPrincipal = getAvailablePrincipal(principalCollection);
-        final ODLPrincipal odlPrincipal;
-        try {
-            odlPrincipal = (ODLPrincipal) primaryPrincipal;
-            return new SimpleAuthorizationInfo(odlPrincipal.getRoles());
-        } catch (ClassCastException e) {
-            LOG.error("Couldn't decode authorization request", e);
+        final var primaryPrincipal = getAvailablePrincipal(principalCollection);
+        if (primaryPrincipal instanceof ODLPrincipal) {
+            return new SimpleAuthorizationInfo(((ODLPrincipal) primaryPrincipal).getRoles());
         }
+
+        LOG.error("Unsupported principal {}", primaryPrincipal);
         return new SimpleAuthorizationInfo();
     }
 
