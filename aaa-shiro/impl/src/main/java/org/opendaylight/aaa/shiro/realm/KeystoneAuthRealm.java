@@ -7,6 +7,7 @@
  */
 package org.opendaylight.aaa.shiro.realm;
 
+import static com.google.common.base.Verify.verifyNotNull;
 import static java.util.Objects.requireNonNull;
 
 import com.google.common.base.Throwables;
@@ -45,7 +46,7 @@ import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
 import org.opendaylight.aaa.shiro.realm.util.http.SimpleHttpClient;
 import org.opendaylight.aaa.shiro.realm.util.http.SimpleHttpRequest;
 import org.opendaylight.aaa.shiro.realm.util.http.UntrustedSSL;
-import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
+import org.opendaylight.yangtools.concepts.Registration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,6 +68,8 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     private static final int CLIENT_EXPIRE_AFTER_ACCESS = 1;
     private static final int CLIENT_EXPIRE_AFTER_WRITE = 10;
 
+    private static final ThreadLocal<ICertificateManager> CERT_MANAGER_TL = new ThreadLocal<>();
+
     private volatile URI serverUri = null;
     private volatile boolean sslVerification = true;
     private volatile String defaultDomain = DEFAULT_KEYSTONE_DOMAIN;
@@ -83,8 +86,17 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
         });
 
     public KeystoneAuthRealm() {
-        certManager = requireNonNull(ThreadLocals.CERT_MANAGER_TL.get());
+        this(verifyNotNull(CERT_MANAGER_TL.get(), "KeystoneAuthRealm loading not prepared"));
+    }
+
+    public KeystoneAuthRealm(final ICertificateManager certManager) {
+        this.certManager = requireNonNull(certManager);
         LOG.info("KeystoneAuthRealm created");
+    }
+
+    public static Registration prepareForLoad(final ICertificateManager certManager) {
+        CERT_MANAGER_TL.set(requireNonNull(certManager));
+        return CERT_MANAGER_TL::remove;
     }
 
     @Override
