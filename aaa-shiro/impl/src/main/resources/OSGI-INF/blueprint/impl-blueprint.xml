@@ -12,7 +12,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 
   <odl:clustered-app-config
           binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration"
-          id="shiroConfiguration" default-config-file-name="aaa-app-config.xml" />
+          id="shiroConfiguration"
+          default-config-file-name="aaa-app-config.xml"/>
 
   <odl:clustered-app-config id="datastoreConfig"
         default-config-file-name="aaa-datastore-config.xml"
@@ -30,23 +31,26 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <reference id="certManager" interface="org.opendaylight.aaa.cert.api.ICertificateManager"/>
 
   <bean id="provider" class="org.opendaylight.aaa.AAAShiroProvider" init-method="init" destroy-method="close">
-    <argument ref="passwordCredentialAuth" />
-    <argument ref="datastoreConfig" />
-    <argument ref="idmStore" />
+    <argument ref="passwordCredentialAuth"/>
+    <argument ref="datastoreConfig"/>
+    <argument ref="idmStore"/>
   </bean>
+
+  <reference id="servletSupport" interface="org.opendaylight.aaa.web.servlet.ServletSupport"/>
 
   <bean id="shiroWebEnvLoader" class="org.opendaylight.aaa.shiro.web.env.ShiroWebEnvironmentLoaderListener">
     <argument ref="shiroConfiguration"/>
     <argument ref="dataBroker"/>
     <argument ref="certManager"/>
-    <argument ref="authService" />
+    <argument ref="authService"/>
     <argument>
       <bean factory-ref="provider" factory-method="getTokenAuthenticators"/>
     </argument>
     <argument>
       <bean factory-ref="provider" factory-method="getTokenStore"/>
     </argument>
-    <argument ref="passwordService" />
+    <argument ref="passwordService"/>
+    <argument ref="servletSupport"/>
   </bean>
   <service ref="shiroWebEnvLoader" interface="javax.servlet.ServletContextListener"/>
 
