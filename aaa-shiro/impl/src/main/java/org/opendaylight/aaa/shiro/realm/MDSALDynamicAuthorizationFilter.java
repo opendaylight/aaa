@@ -8,6 +8,7 @@
 package org.opendaylight.aaa.shiro.realm;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Verify.verifyNotNull;
 import static java.util.Objects.requireNonNull;
 
 import com.google.common.collect.Iterables;
@@ -25,7 +26,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;
-import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
 import org.opendaylight.mdsal.binding.api.ClusteredDataTreeChangeListener;
 import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.mdsal.binding.api.DataTreeIdentifier;
@@ -36,6 +36,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev1
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies.Policies;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.permission.Permissions;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
+import org.opendaylight.yangtools.concepts.Registration;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,13 +58,24 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter
     private static final DataTreeIdentifier<HttpAuthorization> AUTHZ_CONTAINER = DataTreeIdentifier.create(
             LogicalDatastoreType.CONFIGURATION, InstanceIdentifier.create(HttpAuthorization.class));
 
+    private static final ThreadLocal<DataBroker> DATABROKER_TL = new ThreadLocal<>();
+
     private final DataBroker dataBroker;
 
     private ListenerRegistration<?> reg;
     private volatile ListenableFuture<Optional<HttpAuthorization>> authContainer;
 
     public MDSALDynamicAuthorizationFilter() {
-        dataBroker = requireNonNull(ThreadLocals.DATABROKER_TL.get());
+        this(verifyNotNull(DATABROKER_TL.get(), "MDSALDynamicAuthorizationFilter loading not prepared"));
+    }
+
+    public MDSALDynamicAuthorizationFilter(final DataBroker dataBroker) {
+        this.dataBroker = requireNonNull(dataBroker);
+    }
+
+    public static Registration prepareForLoad(final DataBroker dataBroker) {
+        DATABROKER_TL.set(requireNonNull(dataBroker));
+        return DATABROKER_TL::remove;
     }
 
     @Override
@@ -71,7 +83,7 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter
         try (ReadTransaction tx = dataBroker.newReadOnlyTransaction()) {
             authContainer = tx.read(AUTHZ_CONTAINER.getDatastoreType(), AUTHZ_CONTAINER.getRootIdentifier());
         }
-        this.reg = dataBroker.registerDataTreeChangeListener(AUTHZ_CONTAINER, this);
+        reg = dataBroker.registerDataTreeChangeListener(AUTHZ_CONTAINER, this);
         return super.processPathConfig(path, config);
     }
 

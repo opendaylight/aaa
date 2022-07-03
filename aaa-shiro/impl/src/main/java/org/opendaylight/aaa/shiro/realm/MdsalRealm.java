@@ -7,6 +7,7 @@
  */
 package org.opendaylight.aaa.shiro.realm;
 
+import static com.google.common.base.Verify.verifyNotNull;
 import static java.util.Objects.requireNonNull;
 
 import com.google.common.collect.Iterables;
@@ -31,7 +32,6 @@ import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
 import org.opendaylight.aaa.shiro.realm.util.TokenUtils;
 import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
-import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
 import org.opendaylight.mdsal.binding.api.ClusteredDataTreeChangeListener;
 import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.mdsal.binding.api.DataTreeIdentifier;
@@ -44,6 +44,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev1
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication.Roles;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication.Users;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
+import org.opendaylight.yangtools.concepts.Registration;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,14 +61,24 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
     private static final DataTreeIdentifier<Authentication> AUTH_TREE_ID = DataTreeIdentifier.create(
             LogicalDatastoreType.CONFIGURATION, InstanceIdentifier.create(Authentication.class));
 
+    public static final ThreadLocal<PasswordHashService> PASSWORD_HASH_SERVICE_TL = new ThreadLocal<>();
+    public static final ThreadLocal<DataBroker> DATABROKER_TL = new ThreadLocal<>();
+
     private final PasswordHashService passwordHashService;
     private final ListenerRegistration<?> reg;
 
     private volatile ListenableFuture<Optional<Authentication>> authentication;
 
     public MdsalRealm() {
-        this.passwordHashService = requireNonNull(ThreadLocals.PASSWORD_HASH_SERVICE_TL.get());
-        final DataBroker dataBroker = requireNonNull(ThreadLocals.DATABROKER_TL.get());
+        this(verifyLoad(PASSWORD_HASH_SERVICE_TL), verifyLoad(DATABROKER_TL));
+    }
+
+    private static <T> T verifyLoad(final ThreadLocal<T> threadLocal) {
+        return verifyNotNull(threadLocal.get(), "MdsalRealm not prepared for loading");
+    }
+
+    public MdsalRealm(final PasswordHashService passwordHashService, final DataBroker dataBroker) {
+        this.passwordHashService = requireNonNull(passwordHashService);
 
         try (ReadTransaction tx = dataBroker.newReadOnlyTransaction()) {
             authentication = tx.read(AUTH_TREE_ID.getDatastoreType(), AUTH_TREE_ID.getRootIdentifier());
@@ -77,6 +88,16 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
             (ClusteredDataTreeChangeListener<Authentication>) this::onAuthenticationChanged);
 
         LOG.info("MdsalRealm created");
+    }
+
+    public static Registration prepareForLoad(final PasswordHashService passwordHashService,
+            final DataBroker dataBroker) {
+        PASSWORD_HASH_SERVICE_TL.set(requireNonNull(passwordHashService));
+        DATABROKER_TL.set(requireNonNull(dataBroker));
+        return () -> {
+            PASSWORD_HASH_SERVICE_TL.remove();
+            DATABROKER_TL.remove();
+        };
     }
 
     private void onAuthenticationChanged(final Collection<DataTreeModification<Authentication>> changes) {

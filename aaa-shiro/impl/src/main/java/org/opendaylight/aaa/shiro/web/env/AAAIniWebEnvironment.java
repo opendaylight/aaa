@@ -19,6 +19,8 @@ import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.shiro.realm.KeystoneAuthRealm;
+import org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter;
+import org.opendaylight.aaa.shiro.realm.MdsalRealm;
 import org.opendaylight.aaa.shiro.realm.MoonRealm;
 import org.opendaylight.aaa.shiro.realm.TokenAuthRealm;
 import org.opendaylight.aaa.tokenauthrealm.auth.TokenAuthenticators;
@@ -94,23 +96,19 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
 
     @Override
     public void init() {
-        ThreadLocals.DATABROKER_TL.set(dataBroker);
-        ThreadLocals.PASSWORD_HASH_SERVICE_TL.set(passwordHashService);
-        try (var keyStoneLoad = KeystoneAuthRealm.prepareForLoad(certificateManager)) {
-            try (var moonLoad = MoonRealm.prepareForLoad(servletSupport)) {
-                try (var tokenAuthLoad = TokenAuthRealm.prepareForLoad(authenticationService, tokenStore)) {
-                    // Initialize the Shiro environment from clustered-app-config
-                    final Ini ini = createIniFromClusteredAppConfig(shiroConfiguration);
-                    setIni(ini);
-                    ClassLoaderUtils.getWithClassLoader(AAAIniWebEnvironment.class.getClassLoader(), () -> {
-                        super.init();
-                        return null;
-                    });
-                }
-            }
-        } finally {
-            ThreadLocals.DATABROKER_TL.remove();
-            ThreadLocals.PASSWORD_HASH_SERVICE_TL.remove();
+        try (
+            var filterLoad = MDSALDynamicAuthorizationFilter.prepareForLoad(dataBroker);
+            var keyStoneLoad = KeystoneAuthRealm.prepareForLoad(certificateManager);
+            var mdsalLoad = MdsalRealm.prepareForLoad(passwordHashService, dataBroker);
+            var moonLoad = MoonRealm.prepareForLoad(servletSupport);
+            var tokenAuthLoad = TokenAuthRealm.prepareForLoad(authenticationService, tokenStore)) {
+            // Initialize the Shiro environment from clustered-app-config
+            final Ini ini = createIniFromClusteredAppConfig(shiroConfiguration);
+            setIni(ini);
+            ClassLoaderUtils.getWithClassLoader(AAAIniWebEnvironment.class.getClassLoader(), () -> {
+                super.init();
+                return null;
+            });
         }
     }
 }
