@@ -18,6 +18,7 @@ import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.shiro.realm.KeystoneAuthRealm;
 import org.opendaylight.aaa.shiro.realm.MoonRealm;
 import org.opendaylight.aaa.tokenauthrealm.auth.TokenAuthenticators;
 import org.opendaylight.aaa.web.servlet.ServletSupport;
@@ -93,26 +94,26 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
     @Override
     public void init() {
         ThreadLocals.DATABROKER_TL.set(dataBroker);
-        ThreadLocals.CERT_MANAGER_TL.set(certificateManager);
         ThreadLocals.AUTH_SETVICE_TL.set(authenticationService);
         ThreadLocals.TOKEN_AUTHENICATORS_TL.set(tokenAuthenticators);
         ThreadLocals.TOKEN_STORE_TL.set(tokenStore);
         ThreadLocals.PASSWORD_HASH_SERVICE_TL.set(passwordHashService);
-        try (var moonLoad = MoonRealm.prepareForLoad(servletSupport)) {
-            // Initialize the Shiro environment from clustered-app-config
-            final Ini ini = createIniFromClusteredAppConfig(shiroConfiguration);
-            setIni(ini);
-            ClassLoaderUtils.getWithClassLoader(AAAIniWebEnvironment.class.getClassLoader(), (Supplier<Void>) () -> {
-                super.init();
-                return null;
-            });
+        try (var keyStoneLoad = KeystoneAuthRealm.prepareForLoad(certificateManager)) {
+            try (var moonLoad = MoonRealm.prepareForLoad(servletSupport)) {
+                // Initialize the Shiro environment from clustered-app-config
+                final Ini ini = createIniFromClusteredAppConfig(shiroConfiguration);
+                setIni(ini);
+                ClassLoaderUtils.getWithClassLoader(AAAIniWebEnvironment.class.getClassLoader(), () -> {
+                    super.init();
+                    return null;
+                });
+            }
         } finally {
-            ThreadLocals.DATABROKER_TL.remove();
-            ThreadLocals.CERT_MANAGER_TL.remove();
-            ThreadLocals.AUTH_SETVICE_TL.remove();
-            ThreadLocals.TOKEN_AUTHENICATORS_TL.remove();
-            ThreadLocals.TOKEN_STORE_TL.remove();
-            ThreadLocals.PASSWORD_HASH_SERVICE_TL.remove();
+                ThreadLocals.DATABROKER_TL.remove();
+                ThreadLocals.AUTH_SETVICE_TL.remove();
+                ThreadLocals.TOKEN_AUTHENICATORS_TL.remove();
+                ThreadLocals.TOKEN_STORE_TL.remove();
+                ThreadLocals.PASSWORD_HASH_SERVICE_TL.remove();
         }
     }
 }
