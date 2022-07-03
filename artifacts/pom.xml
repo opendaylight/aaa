@@ -134,11 +134,6 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}.web</groupId>
-                <artifactId>web-osgi-impl</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}.web</groupId>
                 <artifactId>servlet-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
