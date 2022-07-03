@@ -7,7 +7,6 @@
  */
 package org.opendaylight.aaa.shiro.web.env;
 
-import java.util.List;
 import java.util.function.Supplier;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.config.Ini;
@@ -70,14 +69,12 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
         final Ini ini = new Ini();
 
         final Ini.Section mainSection = ini.addSection(MAIN_SECTION_HEADER);
-        final List<Main> mains = shiroConfiguration.getMain();
-        for (final Main main : mains) {
+        for (final Main main : shiroConfiguration.nonnullMain()) {
             mainSection.put(main.getPairKey(), main.getPairValue());
         }
 
         final Ini.Section urlsSection = ini.addSection(URLS_SECTION_HEADER);
-        final List<Urls> urls = shiroConfiguration.getUrls();
-        for (final Urls url : urls) {
+        for (final Urls url : shiroConfiguration.nonnullUrls()) {
             urlsSection.put(url.getPairKey(), url.getPairValue());
         }
 
