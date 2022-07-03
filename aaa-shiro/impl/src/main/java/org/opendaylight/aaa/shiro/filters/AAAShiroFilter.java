@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.filters;
 
 import javax.servlet.Filter;
@@ -13,7 +12,6 @@ import javax.servlet.annotation.WebFilter;
 import org.apache.shiro.web.servlet.ShiroFilter;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
-import org.osgi.service.http.whiteboard.annotations.RequireHttpWhiteboard;
 import org.osgi.service.http.whiteboard.propertytypes.HttpWhiteboardFilterAsyncSupported;
 import org.osgi.service.http.whiteboard.propertytypes.HttpWhiteboardFilterName;
 import org.osgi.service.http.whiteboard.propertytypes.HttpWhiteboardFilterPattern;
@@ -33,14 +31,13 @@ import org.slf4j.LoggerFactory;
  *
  * <code>log:set DEBUG AAAShiroFilter</code>
  *
- * @see javax.servlet.Filter
+ * @see Filter
  * @see ShiroFilter
  */
 @WebFilter(urlPatterns = "/*", filterName = "AAAShiroFilter")
 @HttpWhiteboardFilterAsyncSupported
 @HttpWhiteboardFilterPattern("/*")
 @HttpWhiteboardFilterName("AAAShiroFilter")
-@RequireHttpWhiteboard
 @Component(service = Filter.class, scope = ServiceScope.PROTOTYPE)
 public final class AAAShiroFilter extends ShiroFilter {
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroFilter.class);
