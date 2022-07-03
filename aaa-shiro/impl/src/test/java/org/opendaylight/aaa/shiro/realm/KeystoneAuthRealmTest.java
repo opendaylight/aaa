@@ -13,6 +13,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.same;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -37,7 +38,6 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
@@ -47,7 +47,6 @@ import org.opendaylight.aaa.shiro.keystone.domain.KeystoneToken;
 import org.opendaylight.aaa.shiro.realm.util.http.SimpleHttpClient;
 import org.opendaylight.aaa.shiro.realm.util.http.SimpleHttpRequest;
 import org.opendaylight.aaa.shiro.realm.util.http.UntrustedSSL;
-import org.opendaylight.aaa.shiro.web.env.ThreadLocals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class KeystoneAuthRealmTest {
@@ -78,17 +77,14 @@ public class KeystoneAuthRealmTest {
 
     private KeystoneAuthRealm keystoneAuthRealm;
 
-    private KeystoneToken.Token ksToken;
+    // a token for a user without roles
+    private KeystoneToken.Token ksToken = new KeystoneToken.Token();
 
     @Before
     public void setup() throws MalformedURLException, URISyntaxException {
-        ThreadLocals.CERT_MANAGER_TL.set(certificateManager);
-
-        keystoneAuthRealm = Mockito.spy(new KeystoneAuthRealm());
+        keystoneAuthRealm = spy(new KeystoneAuthRealm(certificateManager));
 
         final String testUrl = "http://example.com";
-        // a token for a user without roles
-        ksToken = new KeystoneToken.Token();
 
         when(certificateManager.getServerContext()).thenReturn(sslContext);
         when(client.requestBuilder(KeystoneToken.class)).thenReturn(requestBuilder);
