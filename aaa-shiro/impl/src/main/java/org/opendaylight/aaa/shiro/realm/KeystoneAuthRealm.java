@@ -72,14 +72,20 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     private volatile boolean sslVerification = true;
     private volatile String defaultDomain = DEFAULT_KEYSTONE_DOMAIN;
 
-    private final LoadingCache<Boolean, SimpleHttpClient> clientCache;
-
     private final ICertificateManager certManager;
+    private final LoadingCache<Boolean, SimpleHttpClient> clientCache = CacheBuilder.newBuilder()
+        .expireAfterAccess(CLIENT_EXPIRE_AFTER_ACCESS, TimeUnit.SECONDS)
+        .expireAfterWrite(CLIENT_EXPIRE_AFTER_WRITE, TimeUnit.SECONDS)
+        .build(new CacheLoader<>() {
+            @Override
+            public SimpleHttpClient load(final Boolean withSslVerification) {
+                return buildClient(withSslVerification, certManager, SimpleHttpClient.clientBuilder());
+            }
+        });
 
     @SuppressFBWarnings(value = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR", justification = "Legacy class layout")
     public KeystoneAuthRealm() {
         certManager = requireNonNull(ThreadLocals.CERT_MANAGER_TL.get());
-        clientCache = buildCache();
         LOG.info("KeystoneAuthRealm created");
     }
 
@@ -165,25 +171,6 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
         final String userId = username + USERNAME_DOMAIN_SEPARATOR + domain;
         final ODLPrincipal odlPrincipal = ODLPrincipalImpl.createODLPrincipal(username, domain, userId, theRoles);
         return new SimpleAuthenticationInfo(odlPrincipal, password.toCharArray(), getName());
-    }
-
-    /**
-     * Used to build a cache of {@link SimpleHttpClient}. In practice, only one
-     * client instance is used at a time but SSL verification flag is used as
-     * key for convenience.
-     *
-     * @return the cache.
-     */
-    protected LoadingCache<Boolean, SimpleHttpClient> buildCache() {
-        return CacheBuilder.newBuilder()
-                .expireAfterAccess(CLIENT_EXPIRE_AFTER_ACCESS, TimeUnit.SECONDS)
-                .expireAfterWrite(CLIENT_EXPIRE_AFTER_WRITE, TimeUnit.SECONDS)
-                .build(new CacheLoader<Boolean, SimpleHttpClient>() {
-                    @Override
-                    public SimpleHttpClient load(final Boolean withSslVerification) throws Exception {
-                        return buildClient(withSslVerification, certManager, SimpleHttpClient.clientBuilder());
-                    }
-                });
     }
 
     /**
