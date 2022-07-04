@@ -9,7 +9,7 @@ package org.opendaylight.aaa.shiro.web.env;
 
 import static java.util.Objects.requireNonNull;
 
-import javax.servlet.ServletContextListener;
+import org.apache.shiro.web.env.EnvironmentLoaderListener;
 import org.opendaylight.aaa.shiro.filters.AAAShiroFilter;
 import org.opendaylight.aaa.web.FilterDetails;
 import org.opendaylight.aaa.web.WebContext;
@@ -22,22 +22,22 @@ import org.opendaylight.aaa.web.WebContextSecurer;
  * @author Michael Vorburger.ch
  */
 public class ShiroWebContextSecurer implements WebContextSecurer {
-    private final ServletContextListener shiroEnvironmentLoaderListener;
+    private final EnvironmentLoaderListener environmentLoaderListener;
 
-    public ShiroWebContextSecurer(final ServletContextListener shiroEnvironmentLoaderListener) {
-        this.shiroEnvironmentLoaderListener = requireNonNull(shiroEnvironmentLoaderListener);
+    public ShiroWebContextSecurer(final EnvironmentLoaderListener environmentLoaderListener) {
+        this.environmentLoaderListener = requireNonNull(environmentLoaderListener);
     }
 
     @Override
     public void requireAuthentication(final WebContextBuilder webContextBuilder, final boolean asyncSupported,
             final String... urlPatterns) {
-        webContextBuilder.addListener(shiroEnvironmentLoaderListener)
-
-                // AAA filter in front of these REST web services as well as for moon endpoints
-                .addFilter(FilterDetails.builder()
-                        .filter(new AAAShiroFilter())
-                        .addUrlPatterns(urlPatterns)
-                        .asyncSupported(asyncSupported)
-                        .build());
+        webContextBuilder
+            .addListener(environmentLoaderListener)
+            // AAA filter in front of these REST web services as well as for moon endpoints
+            .addFilter(FilterDetails.builder()
+                .filter(new AAAShiroFilter())
+                .addUrlPatterns(urlPatterns)
+                .asyncSupported(asyncSupported)
+                .build());
     }
 }
