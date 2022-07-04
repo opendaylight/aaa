@@ -75,10 +75,10 @@ public final class WhiteboardWebServer implements WebServer {
     @Override
     public String getBaseURL() {
         final var endpoint = serviceRuntime.getProperty(HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT);
-        if (endpoint instanceof String) {
-            return (String) endpoint;
-        } else if (endpoint instanceof String[]) {
-            return getBaseURL(Arrays.asList((String[]) endpoint));
+        if (endpoint instanceof String str) {
+            return str;
+        } else if (endpoint instanceof String[] endpoints) {
+            return getBaseURL(Arrays.asList(endpoints));
         } else if (endpoint instanceof Collection) {
             // Safe as per OSGi Compendium R7 section 140.15.3.1
             @SuppressWarnings("unchecked")
