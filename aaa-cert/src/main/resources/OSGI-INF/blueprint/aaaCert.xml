@@ -6,7 +6,7 @@
                             binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.AaaCertServiceConfig">
   </odl:clustered-app-config>
 
-  <reference id="dataBroker" interface="org.opendaylight.mdsal.binding.api.DataBroker" odl:type="default"/>
+  <reference id="dataBroker" interface="org.opendaylight.mdsal.binding.api.DataBroker"/>
 
   <reference id="encryService" interface="org.opendaylight.aaa.encrypt.AAAEncryptionService"/>
 
