@@ -58,8 +58,7 @@ public final class AuthenticationTokenUtils {
      * @return the username, <code>DEFAULT_USERNAME</code> or <code>DEFAULT_TOKEN</code> depending on input
      */
     public static String extractUsername(final AuthenticationToken token) {
-        if (isUsernamePasswordToken(token)) {
-            final UsernamePasswordToken upt = (UsernamePasswordToken) token;
+        if (token instanceof UsernamePasswordToken upt) {
             return extractField(upt.getUsername(), DEFAULT_USERNAME);
         }
         return DEFAULT_TOKEN;
@@ -76,8 +75,7 @@ public final class AuthenticationTokenUtils {
      * @return the hostname, or <code>DEFAULT_USERNAME</code> depending on input
      */
     public static String extractHostname(final AuthenticationToken token) {
-        if (isUsernamePasswordToken(token)) {
-            final UsernamePasswordToken upt = (UsernamePasswordToken) token;
+        if (token instanceof UsernamePasswordToken upt) {
             return extractField(upt.getHost(), DEFAULT_HOSTNAME);
         }
         return DEFAULT_HOSTNAME;
