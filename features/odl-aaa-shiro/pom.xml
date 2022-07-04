@@ -56,14 +56,8 @@
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>odl-aaa-web</artifactId>
-            <version>${project.version}</version>
             <classifier>features</classifier>
             <type>xml</type>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa.web</groupId>
-            <artifactId>web-osgi-impl</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
