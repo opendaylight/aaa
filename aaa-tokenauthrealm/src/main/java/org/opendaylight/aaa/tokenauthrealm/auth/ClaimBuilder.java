@@ -31,7 +31,7 @@ public class ClaimBuilder {
     public ClaimBuilder() {
     }
 
-    public ClaimBuilder(Claim claim) {
+    public ClaimBuilder(final Claim claim) {
         clientId = claim.clientId();
         userId = claim.userId();
         user = claim.user();
@@ -39,34 +39,34 @@ public class ClaimBuilder {
         roles.addAll(claim.roles());
     }
 
-    public ClaimBuilder setClientId(String clientId) {
+    public ClaimBuilder setClientId(final String clientId) {
         this.clientId = Strings.nullToEmpty(clientId).trim();
         return this;
     }
 
-    public ClaimBuilder setUserId(String userId) {
+    public ClaimBuilder setUserId(final String userId) {
         this.userId = Strings.nullToEmpty(userId).trim();
         return this;
     }
 
-    public ClaimBuilder setUser(String userName) {
+    public ClaimBuilder setUser(final String userName) {
         user = Strings.nullToEmpty(userName).trim();
         return this;
     }
 
-    public ClaimBuilder setDomain(String domain) {
+    public ClaimBuilder setDomain(final String domain) {
         this.domain = Strings.nullToEmpty(domain).trim();
         return this;
     }
 
-    public ClaimBuilder addRoles(Set<String> theRoles) {
+    public ClaimBuilder addRoles(final Set<String> theRoles) {
         for (String role : theRoles) {
             addRole(role);
         }
         return this;
     }
 
-    public ClaimBuilder addRole(String role) {
+    public ClaimBuilder addRole(final String role) {
         roles.add(Strings.nullToEmpty(role).trim());
         return this;
     }
@@ -84,7 +84,7 @@ public class ClaimBuilder {
         protected String domain;
         protected ImmutableSet<String> roles;
 
-        protected ImmutableClaim(ClaimBuilder base) {
+        protected ImmutableClaim(final ClaimBuilder base) {
             clientId = base.clientId;
             userId = base.userId;
             user = base.user;
@@ -123,19 +123,13 @@ public class ClaimBuilder {
         }
 
         @Override
-        public boolean equals(Object object) {
-            if (this == object) {
-                return true;
-            }
-            if (!(object instanceof Claim)) {
-                return false;
-            }
-            Claim claim = (Claim) object;
-            return Objects.equals(roles, claim.roles())
-                    && Objects.equals(domain, claim.domain())
-                    && Objects.equals(userId, claim.userId())
-                    && Objects.equals(user, claim.user())
-                    && Objects.equals(clientId, claim.clientId());
+        public boolean equals(final Object obj) {
+            return this == obj || obj instanceof Claim other
+                && Objects.equals(roles, other.roles())
+                && Objects.equals(domain, other.domain())
+                && Objects.equals(userId, other.userId())
+                && Objects.equals(user, other.user())
+                && Objects.equals(clientId, other.clientId());
         }
 
         @Override

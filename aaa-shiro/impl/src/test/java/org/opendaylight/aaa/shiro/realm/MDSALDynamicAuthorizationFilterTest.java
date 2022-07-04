@@ -43,11 +43,11 @@ public class MDSALDynamicAuthorizationFilterTest {
     private static DataBroker mockDataBroker(final Object readData) {
         final ReadTransaction readOnlyTransaction = mock(ReadTransaction.class);
 
-        if (readData instanceof DataObject) {
-            doReturn(immediateFluentFuture(Optional.of((DataObject)readData)))
+        if (readData instanceof DataObject dataObject) {
+            doReturn(immediateFluentFuture(Optional.of(dataObject)))
                     .when(readOnlyTransaction).read(any(), any());
-        } else if (readData instanceof Exception) {
-            doReturn(immediateFailedFluentFuture((Exception)readData)).when(readOnlyTransaction).read(any(), any());
+        } else if (readData instanceof Exception cause) {
+            doReturn(immediateFailedFluentFuture(cause)).when(readOnlyTransaction).read(any(), any());
         } else {
             doReturn(immediateFluentFuture(Optional.empty())).when(readOnlyTransaction).read(any(), any());
         }
