@@ -26,9 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Thomas Pantelis
  */
-// FIXME: @WebListener and CDI (or whatever) injection?
-// FIXME: @Component with ServletContextListener
-public final class ShiroWebEnvironmentLoaderListener extends EnvironmentLoaderListener {
+public class ShiroWebEnvironmentLoaderListener extends EnvironmentLoaderListener {
     private static final Logger LOG = LoggerFactory.getLogger(ShiroWebEnvironmentLoaderListener.class);
 
     private final ShiroConfiguration shiroConfiguration;
@@ -40,15 +38,10 @@ public final class ShiroWebEnvironmentLoaderListener extends EnvironmentLoaderLi
     private final PasswordHashService passwordHashService;
     private final ServletSupport servletSupport;
 
-    // FIXME: @Inject for CDI, except we have ShiroConfiguration injected
-    // FIXME: @Activate for OSGi @Component
-    // Both of these have problem with how do we inject ShiroConfiguration?
     public ShiroWebEnvironmentLoaderListener(final ShiroConfiguration shiroConfiguration, final DataBroker dataBroker,
-                                             final ICertificateManager certificateManager,
-                                             final AuthenticationService authenticationService,
-                                             final TokenAuthenticators tokenAuthenticators, final TokenStore tokenStore,
-                                             final PasswordHashService passwordHashService,
-                                             final ServletSupport servletSupport) {
+            final ICertificateManager certificateManager, final AuthenticationService authenticationService,
+            final TokenAuthenticators tokenAuthenticators, final TokenStore tokenStore,
+            final PasswordHashService passwordHashService, final ServletSupport servletSupport) {
         this.shiroConfiguration = shiroConfiguration;
         this.dataBroker = dataBroker;
         this.certificateManager = certificateManager;
