@@ -8,13 +8,7 @@
 package org.opendaylight.aaa.shiro.filters;
 
 import javax.servlet.Filter;
-import javax.servlet.annotation.WebFilter;
 import org.apache.shiro.web.servlet.ShiroFilter;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ServiceScope;
-import org.osgi.service.http.whiteboard.propertytypes.HttpWhiteboardFilterAsyncSupported;
-import org.osgi.service.http.whiteboard.propertytypes.HttpWhiteboardFilterName;
-import org.osgi.service.http.whiteboard.propertytypes.HttpWhiteboardFilterPattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,11 +28,6 @@ import org.slf4j.LoggerFactory;
  * @see Filter
  * @see ShiroFilter
  */
-@WebFilter(urlPatterns = "/*", filterName = "AAAShiroFilter")
-@HttpWhiteboardFilterAsyncSupported
-@HttpWhiteboardFilterPattern("/*")
-@HttpWhiteboardFilterName("AAAShiroFilter")
-@Component(service = Filter.class, scope = ServiceScope.PROTOTYPE)
 public final class AAAShiroFilter extends ShiroFilter {
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroFilter.class);
 
@@ -46,16 +35,9 @@ public final class AAAShiroFilter extends ShiroFilter {
         LOG.debug("Creating the AAAShiroFilter");
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * Adds context clues that aid in debugging.
-     *
-     * @see ShiroFilter#init()
-     */
     @Override
     public void init() throws Exception {
         super.init();
-        LOG.debug("AAAShiroFilter initialized");
+        LOG.debug("Initializing the AAAShiroFilter");
     }
 }
