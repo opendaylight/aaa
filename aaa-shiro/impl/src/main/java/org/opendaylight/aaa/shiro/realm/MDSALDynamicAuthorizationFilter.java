@@ -7,7 +7,6 @@
  */
 package org.opendaylight.aaa.shiro.realm;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Verify.verifyNotNull;
 import static java.util.Objects.requireNonNull;
 
@@ -106,10 +105,11 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter
     @Override
     public boolean isAccessAllowed(final ServletRequest request, final ServletResponse response,
                                    final Object mappedValue) {
-        checkArgument(request instanceof HttpServletRequest, "Expected HttpServletRequest, received {}", request);
+        if (!(request instanceof HttpServletRequest httpServletRequest)) {
+            throw new IllegalArgumentException("Expected HttpServletRequest, received " + request);
+        }
 
         final Subject subject = getSubject(request, response);
-        final HttpServletRequest httpServletRequest = (HttpServletRequest)request;
         final String requestURI = httpServletRequest.getRequestURI();
         LOG.debug("isAccessAllowed for user={} to requestURI={}", subject, requestURI);
 

@@ -186,8 +186,8 @@ public class PKIUtil {
 
     public String encodePublicKey(final PublicKey publicKey) throws IOException {
         ByteArrayOutputStream byteOs = new ByteArrayOutputStream();
-        if (publicKey instanceof RSAPublicKey && publicKey.getAlgorithm().equals(KEY_FACTORY_TYPE_RSA)) {
-            RSAPublicKey rsaPublicKey = (RSAPublicKey) publicKey;
+        if (publicKey instanceof RSAPublicKey rsaPublicKey
+            && rsaPublicKey.getAlgorithm().equals(KEY_FACTORY_TYPE_RSA)) {
             DataOutputStream dataOutputStream = new DataOutputStream(byteOs);
             dataOutputStream.writeInt(KEY_TYPE_RSA.getBytes(StandardCharsets.UTF_8).length);
             dataOutputStream.write(KEY_TYPE_RSA.getBytes(StandardCharsets.UTF_8));
@@ -195,8 +195,8 @@ public class PKIUtil {
             dataOutputStream.write(rsaPublicKey.getPublicExponent().toByteArray());
             dataOutputStream.writeInt(rsaPublicKey.getModulus().toByteArray().length);
             dataOutputStream.write(rsaPublicKey.getModulus().toByteArray());
-        } else if (publicKey instanceof DSAPublicKey && publicKey.getAlgorithm().equals(KEY_FACTORY_TYPE_DSA)) {
-            DSAPublicKey dsaPublicKey = (DSAPublicKey) publicKey;
+        } else if (publicKey instanceof DSAPublicKey dsaPublicKey
+            && dsaPublicKey.getAlgorithm().equals(KEY_FACTORY_TYPE_DSA)) {
             DSAParams dsaParams = dsaPublicKey.getParams();
             DataOutputStream dataOutputStream = new DataOutputStream(byteOs);
             dataOutputStream.writeInt(KEY_TYPE_DSA.getBytes(StandardCharsets.UTF_8).length);
@@ -209,8 +209,8 @@ public class PKIUtil {
             dataOutputStream.write(dsaParams.getG().toByteArray());
             dataOutputStream.writeInt(dsaPublicKey.getY().toByteArray().length);
             dataOutputStream.write(dsaPublicKey.getY().toByteArray());
-        } else if (publicKey instanceof BCECPublicKey && publicKey.getAlgorithm().equals(KEY_FACTORY_TYPE_ECDSA)) {
-            BCECPublicKey ecPublicKey = (BCECPublicKey) publicKey;
+        } else if (publicKey instanceof BCECPublicKey ecPublicKey
+            && ecPublicKey.getAlgorithm().equals(KEY_FACTORY_TYPE_ECDSA)) {
             DataOutputStream dataOutputStream = new DataOutputStream(byteOs);
             dataOutputStream.writeInt(KEY_TYPE_ECDSA.getBytes(StandardCharsets.UTF_8).length);
             dataOutputStream.write(KEY_TYPE_ECDSA.getBytes(StandardCharsets.UTF_8));
@@ -248,9 +248,8 @@ public class PKIUtil {
 
             Object privateKey = keyReader.readObject();
             KeyPair keyPair;
-            if (privateKey instanceof PEMEncryptedKeyPair) {
-                PEMKeyPair decryptedKeyPair = ((PEMEncryptedKeyPair) privateKey).decryptKeyPair(decryptionProv);
-                keyPair = converter.getKeyPair(decryptedKeyPair);
+            if (privateKey instanceof PEMEncryptedKeyPair pemPrivateKey) {
+                keyPair = converter.getKeyPair(pemPrivateKey.decryptKeyPair(decryptionProv));
             } else {
                 keyPair = converter.getKeyPair((PEMKeyPair) privateKey);
             }
