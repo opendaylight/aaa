@@ -119,8 +119,8 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(final PrincipalCollection principalCollection) {
         final var primaryPrincipal = getAvailablePrincipal(principalCollection);
-        if (primaryPrincipal instanceof ODLPrincipal) {
-            return new SimpleAuthorizationInfo(((ODLPrincipal) primaryPrincipal).getRoles());
+        if (primaryPrincipal instanceof ODLPrincipal odlPrincipal) {
+            return new SimpleAuthorizationInfo(odlPrincipal.getRoles());
         }
 
         LOG.error("Unsupported principal {}", primaryPrincipal);
@@ -151,26 +151,22 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(
             final AuthenticationToken authenticationToken,
             final SimpleHttpClient client) {
-
-        final URI theServerUri = getServerUri();
-        final String theDefaultDomain = getDefaultDomain();
-
-        if (!(authenticationToken instanceof UsernamePasswordToken)) {
+        if (!(authenticationToken instanceof UsernamePasswordToken usernamePasswordToken)) {
             LOG.error("Only basic authentication is supported");
             throw new AuthenticationException(FATAL_ERROR_BASIC_AUTH_ONLY);
         }
 
+        final URI theServerUri = getServerUri();
         if (theServerUri == null) {
             LOG.error("Invalid URL to Keystone server");
             throw new AuthenticationException(FATAL_ERROR_INVALID_URL);
         }
 
-        final UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) authenticationToken;
         final String qualifiedUser = usernamePasswordToken.getUsername();
         final String password = new String(usernamePasswordToken.getPassword());
         final String[] qualifiedUserArray = qualifiedUser.split(USERNAME_DOMAIN_SEPARATOR, 2);
         final String username = qualifiedUserArray.length > 0 ? qualifiedUserArray[0] : qualifiedUser;
-        final String domain = qualifiedUserArray.length > 1 ? qualifiedUserArray[1] : theDefaultDomain;
+        final String domain = qualifiedUserArray.length > 1 ? qualifiedUserArray[1] : getDefaultDomain();
 
         final KeystoneAuth keystoneAuth = new KeystoneAuth(username, password, domain);
         final SimpleHttpRequest<KeystoneToken> httpRequest = client.requestBuilder(KeystoneToken.class)

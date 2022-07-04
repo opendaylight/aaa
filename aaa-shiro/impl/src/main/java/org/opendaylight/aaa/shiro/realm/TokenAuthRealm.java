@@ -90,8 +90,8 @@ public class TokenAuthRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(final PrincipalCollection principalCollection) {
         final var primaryPrincipal = principalCollection.getPrimaryPrincipal();
-        if (primaryPrincipal instanceof ODLPrincipal) {
-            return new SimpleAuthorizationInfo(((ODLPrincipal) primaryPrincipal).getRoles());
+        if (primaryPrincipal instanceof ODLPrincipal odlPrincipal) {
+            return new SimpleAuthorizationInfo(odlPrincipal.getRoles());
         }
 
         LOG.error("Could not decode authorization request: {} is not a known principal type", primaryPrincipal);
