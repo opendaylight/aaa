@@ -26,6 +26,7 @@ import org.opendaylight.aaa.web.WebServer;
 import org.opendaylight.yangtools.concepts.AbstractRegistration;
 import org.opendaylight.yangtools.concepts.Registration;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
@@ -112,7 +113,7 @@ public final class WhiteboardWebServer implements WebServer {
         final var contextProps = contextProperties(contextName, contextPath, webContext.contextParams());
         LOG.debug("Registering context {} with properties {}", contextName, contextProps);
         builder.add(bundleContext.registerService(ServletContextHelper.class,
-            new WhiteboardServletContextHelper(bundle), new MapDictionary<>(contextProps)));
+            new WhiteboardServletContextHelper(bundle), FrameworkUtil.asDictionary(contextProps)));
 
         // 2. Listeners - because they could set up things that filters and servlets need
         final var contextSelect = "(" + HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME + "=" + contextName + ")";
@@ -122,21 +123,23 @@ public final class WhiteboardWebServer implements WebServer {
                 HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER, Boolean.TRUE);
             LOG.debug("Registering listener {} with properties {}", listener, props);
             builder.add(bundleContext.registerService(ServletContextListener.class, listener,
-                new MapDictionary<>(props)));
+                FrameworkUtil.asDictionary(props)));
         }
 
         // 3. Filters - because subsequent servlets should already be covered by the filters
         for (var filter : webContext.filters()) {
             final var props = filterProperties(contextPath, contextSelect, filter);
             LOG.debug("Registering filter {} with properties {}", filter, props);
-            builder.add(bundleContext.registerService(Filter.class, filter.filter(), new MapDictionary<>(props)));
+            builder.add(bundleContext.registerService(Filter.class, filter.filter(),
+                FrameworkUtil.asDictionary(props)));
         }
 
         // 4. Servlets - 'bout time for 'em by now, don't you think? ;)
         for (var servlet : webContext.servlets()) {
             final var props = servletProperties(contextPath, contextSelect, servlet);
             LOG.debug("Registering servlet {} with properties {}", servlet, props);
-            builder.add(bundleContext.registerService(Servlet.class, servlet.servlet(), new MapDictionary<>(props)));
+            builder.add(bundleContext.registerService(Servlet.class, servlet.servlet(),
+                FrameworkUtil.asDictionary(props)));
         }
 
         // 5. Resources
@@ -144,7 +147,7 @@ public final class WhiteboardWebServer implements WebServer {
             final var props = resourceProperties(contextPath, contextSelect, resource);
             LOG.debug("Registering resource {} with properties {}", resource, props);
             builder.add(bundleContext.registerService(Object.class, WhiteboardResource.INSTANCE,
-                new MapDictionary<>(props)));
+                FrameworkUtil.asDictionary(props)));
         }
 
         final var services = builder.build();
