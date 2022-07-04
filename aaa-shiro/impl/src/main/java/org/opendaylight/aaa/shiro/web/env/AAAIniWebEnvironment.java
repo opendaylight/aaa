@@ -98,7 +98,7 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
     public void init() {
         try (
             var filterLoad = MDSALDynamicAuthorizationFilter.prepareForLoad(dataBroker);
-            var keyStoneLoad = KeystoneAuthRealm.prepareForLoad(certificateManager);
+            var keyStoneLoad = KeystoneAuthRealm.prepareForLoad(certificateManager, servletSupport);
             var mdsalLoad = MdsalRealm.prepareForLoad(passwordHashService, dataBroker);
             var moonLoad = MoonRealm.prepareForLoad(servletSupport);
             var tokenAuthLoad = TokenAuthRealm.prepareForLoad(authenticationService, tokenAuthenticators, tokenStore)) {
