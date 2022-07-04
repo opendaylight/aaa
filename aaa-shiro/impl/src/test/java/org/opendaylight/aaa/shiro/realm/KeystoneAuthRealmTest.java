@@ -26,6 +26,7 @@ import java.util.stream.Stream;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.HttpMethod;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -82,7 +83,7 @@ public class KeystoneAuthRealmTest {
 
     @Before
     public void setup() throws MalformedURLException, URISyntaxException {
-        keystoneAuthRealm = spy(new KeystoneAuthRealm(certificateManager));
+        keystoneAuthRealm = spy(new KeystoneAuthRealm(certificateManager, ClientBuilder::newBuilder));
 
         final String testUrl = "http://example.com";
 

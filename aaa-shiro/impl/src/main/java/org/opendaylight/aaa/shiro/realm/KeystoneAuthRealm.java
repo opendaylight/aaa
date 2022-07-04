@@ -21,12 +21,14 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -46,6 +48,7 @@ import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
 import org.opendaylight.aaa.shiro.realm.util.http.SimpleHttpClient;
 import org.opendaylight.aaa.shiro.realm.util.http.SimpleHttpRequest;
 import org.opendaylight.aaa.shiro.realm.util.http.UntrustedSSL;
+import org.opendaylight.aaa.web.servlet.ServletSupport;
 import org.opendaylight.yangtools.concepts.Registration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,11 +72,13 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     private static final int CLIENT_EXPIRE_AFTER_WRITE = 10;
 
     private static final ThreadLocal<ICertificateManager> CERT_MANAGER_TL = new ThreadLocal<>();
+    private static final ThreadLocal<Supplier<ClientBuilder>> SERVLET_SUPPORT_TL = new ThreadLocal<>();
 
     private volatile URI serverUri = null;
     private volatile boolean sslVerification = true;
     private volatile String defaultDomain = DEFAULT_KEYSTONE_DOMAIN;
 
+    private final Supplier<ClientBuilder> clientBuilderFactory;
     private final ICertificateManager certManager;
     private final LoadingCache<Boolean, SimpleHttpClient> clientCache = CacheBuilder.newBuilder()
         .expireAfterAccess(CLIENT_EXPIRE_AFTER_ACCESS, TimeUnit.SECONDS)
@@ -81,22 +86,34 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
         .build(new CacheLoader<>() {
             @Override
             public SimpleHttpClient load(final Boolean withSslVerification) {
-                return buildClient(withSslVerification, certManager, SimpleHttpClient.clientBuilder());
+                return buildClient(withSslVerification, certManager,
+                    SimpleHttpClient.clientBuilder(clientBuilderFactory.get()));
             }
         });
 
     public KeystoneAuthRealm() {
-        this(verifyNotNull(CERT_MANAGER_TL.get(), "KeystoneAuthRealm loading not prepared"));
+        this(requireThreadLocal(CERT_MANAGER_TL), requireThreadLocal(SERVLET_SUPPORT_TL));
     }
 
-    public KeystoneAuthRealm(final ICertificateManager certManager) {
+    private static <T> T requireThreadLocal(final ThreadLocal<T> threadLocal) {
+        return verifyNotNull(threadLocal.get(), "KeystoneAuthRealm loading not prepared");
+    }
+
+    public KeystoneAuthRealm(final ICertificateManager certManager,
+            final Supplier<ClientBuilder> clientBuilderFactory) {
         this.certManager = requireNonNull(certManager);
+        this.clientBuilderFactory = requireNonNull(clientBuilderFactory);
         LOG.info("KeystoneAuthRealm created");
     }
 
-    public static Registration prepareForLoad(final ICertificateManager certManager) {
+    public static Registration prepareForLoad(final ICertificateManager certManager,
+            final ServletSupport servletSupport) {
         CERT_MANAGER_TL.set(requireNonNull(certManager));
-        return CERT_MANAGER_TL::remove;
+        SERVLET_SUPPORT_TL.set(requireNonNull(servletSupport)::newClientBuilder);
+        return () -> {
+            CERT_MANAGER_TL.remove();
+            SERVLET_SUPPORT_TL.remove();
+        };
     }
 
     @Override
