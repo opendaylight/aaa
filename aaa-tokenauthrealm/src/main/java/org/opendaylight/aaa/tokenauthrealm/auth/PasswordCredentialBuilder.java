@@ -18,17 +18,17 @@ import org.opendaylight.aaa.api.PasswordCredentials;
 public class PasswordCredentialBuilder {
     private final MutablePasswordCredentials pc = new MutablePasswordCredentials();
 
-    public PasswordCredentialBuilder setUserName(String username) {
+    public PasswordCredentialBuilder setUserName(final String username) {
         pc.username = username;
         return this;
     }
 
-    public PasswordCredentialBuilder setPassword(String password) {
+    public PasswordCredentialBuilder setPassword(final String password) {
         pc.password = password;
         return this;
     }
 
-    public PasswordCredentialBuilder setDomain(String domain) {
+    public PasswordCredentialBuilder setDomain(final String domain) {
         pc.domain = domain;
         return this;
     }
@@ -59,17 +59,11 @@ public class PasswordCredentialBuilder {
         }
 
         @Override
-        public boolean equals(Object object) {
-            if (this == object) {
-                return true;
-            }
-            if (!(object instanceof PasswordCredentials)) {
-                return false;
-            }
-            PasswordCredentials passwordCredentials = (PasswordCredentials) object;
-            return Objects.equals(username, passwordCredentials.username())
-                    && Objects.equals(password, passwordCredentials.password())
-                    && Objects.equals(domain, passwordCredentials.domain());
+        public boolean equals(final Object obj) {
+            return this == obj || obj instanceof PasswordCredentials other
+                && Objects.equals(username, other.username())
+                && Objects.equals(password, other.password())
+                && Objects.equals(domain, other.domain());
         }
 
         @Override

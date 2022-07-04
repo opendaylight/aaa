@@ -26,11 +26,11 @@ public class AuthenticationBuilder {
     private long expiration = 0L;
     private final Claim claim;
 
-    public AuthenticationBuilder(Claim claim) {
+    public AuthenticationBuilder(final Claim claim) {
         this.claim = claim;
     }
 
-    public AuthenticationBuilder setExpiration(long expiration) {
+    public AuthenticationBuilder setExpiration(final long expiration) {
         this.expiration = expiration;
         return this;
     }
@@ -45,7 +45,7 @@ public class AuthenticationBuilder {
         long expiration = 0L;
         Claim claim;
 
-        private ImmutableAuthentication(AuthenticationBuilder base) {
+        private ImmutableAuthentication(final AuthenticationBuilder base) {
             if (base.claim == null) {
                 throw new IllegalStateException("The Claim is null.");
             }
@@ -88,20 +88,14 @@ public class AuthenticationBuilder {
         }
 
         @Override
-        public boolean equals(Object object) {
-            if (this == object) {
-                return true;
-            }
-            if (!(object instanceof Authentication)) {
-                return false;
-            }
-            Authentication authentication = (Authentication) object;
-            return expiration == authentication.expiration()
-                    && Objects.equals(claim.roles(), authentication.roles())
-                    && Objects.equals(claim.domain(), authentication.domain())
-                    && Objects.equals(claim.userId(), authentication.userId())
-                    && Objects.equals(claim.user(), authentication.user())
-                    && Objects.equals(claim.clientId(), authentication.clientId());
+        public boolean equals(final Object obj) {
+            return this == obj || obj instanceof Authentication other
+                && expiration == other.expiration()
+                && Objects.equals(claim.roles(), other.roles())
+                && Objects.equals(claim.domain(), other.domain())
+                && Objects.equals(claim.userId(), other.userId())
+                && Objects.equals(claim.user(), other.user())
+                && Objects.equals(claim.clientId(), other.clientId());
         }
 
         @Override
