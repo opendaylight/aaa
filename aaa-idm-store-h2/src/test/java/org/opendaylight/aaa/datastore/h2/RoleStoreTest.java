@@ -37,7 +37,7 @@ public class RoleStoreTest {
         DatabaseMetaData dbmMock = mock(DatabaseMetaData.class);
         when(connectionMock.getMetaData()).thenReturn(dbmMock);
         ResultSet rsUserMock = mock(ResultSet.class);
-        when(dbmMock.getTables(null, null, "ROLES", tableTypes)).thenReturn(rsUserMock);
+        when(dbmMock.getTables(null, null, RoleStore.TABLE_NAME, tableTypes)).thenReturn(rsUserMock);
         when(rsUserMock.next()).thenReturn(true);
 
         Statement stmtMock = mock(Statement.class);
