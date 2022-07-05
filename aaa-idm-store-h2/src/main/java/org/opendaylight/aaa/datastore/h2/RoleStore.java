@@ -9,9 +9,9 @@ package org.opendaylight.aaa.datastore.h2;
 
 import static java.util.Objects.requireNonNull;
 
+import com.google.common.annotations.VisibleForTesting;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,26 +26,32 @@ import org.slf4j.LoggerFactory;
  * Store for roles.
  *
  * @author peter.mellquist@hp.com
- *
  */
-public class RoleStore extends AbstractStore<Role> {
+final class RoleStore extends AbstractStore<Role> {
     private static final Logger LOG = LoggerFactory.getLogger(RoleStore.class);
 
-    public static final String SQL_ID = "roleid";
-    protected static final String SQL_DOMAIN_ID = "domainid";
-    public static final String SQL_NAME = "name";
-    public static final String SQL_DESCR = "description";
-    private static final String TABLE_NAME = "ROLES";
+    @VisibleForTesting
+    static final String TABLE_NAME = "ROLES";
+    @VisibleForTesting
+    static final String SQL_ID = "roleid";
+    @VisibleForTesting
+    static final String SQL_NAME = "name";
+    private static final String SQL_DOMAIN_ID = "domainid";
+    @VisibleForTesting
+    static final String SQL_DESCR = "description";
 
-    public RoleStore(final ConnectionProvider dbConnectionFactory) {
+    RoleStore(final ConnectionProvider dbConnectionFactory) {
         super(dbConnectionFactory, TABLE_NAME);
     }
 
     @Override
     protected String getTableCreationStatement() {
-        return "CREATE TABLE ROLES " + "(roleid     VARCHAR(128)   PRIMARY KEY,"
-                + "name        VARCHAR(128)   NOT NULL, " + "domainid    VARCHAR(128)   NOT NULL, "
-                + "description VARCHAR(128)      NOT NULL)";
+        return "CREATE TABLE " + TABLE_NAME + " (\n"
+            + SQL_ID        + " VARCHAR(128)   PRIMARY KEY,\n"
+            + SQL_NAME      + " VARCHAR(128)   NOT NULL,\n"
+            + SQL_DOMAIN_ID + " VARCHAR(128)   NOT NULL,\n"
+            + SQL_DESCR     + " VARCHAR(128)   NOT NULL\n"
+            + ")";
     }
 
     @Override
@@ -63,36 +69,43 @@ public class RoleStore extends AbstractStore<Role> {
         return role;
     }
 
-    public Roles getRoles() throws StoreException {
+    Roles getRoles() throws StoreException {
         Roles roles = new Roles();
         roles.setRoles(listAll());
         return roles;
     }
 
-    protected Role getRole(final String id) throws StoreException {
-        try (Connection conn = dbConnect();
-                PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ROLES WHERE roleid = ? ")) {
-            pstmt.setString(1, id);
-            LOG.debug("query string: {}", pstmt);
-            return firstFromStatement(pstmt);
+    Role getRole(final String id) throws StoreException {
+        try (var conn = dbConnect();
+             var stmt = conn.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE " + SQL_ID + " = ?")) {
+            stmt.setString(1, id);
+
+            LOG.debug("getRole() request: {}", stmt);
+            return firstFromStatement(stmt);
         } catch (SQLException s) {
             throw new StoreException("SQL Exception: " + s);
         }
     }
 
-    protected Role createRole(final Role role) throws StoreException {
+    Role createRole(final Role role) throws StoreException {
         requireNonNull(role);
         requireNonNull(role.getName());
         requireNonNull(role.getDomainid());
-        String query = "insert into roles (roleid,domainid,name,description) values(?,?,?,?)";
-        try (Connection conn = dbConnect(); PreparedStatement statement = conn.prepareStatement(query)) {
+
+        try (var conn = dbConnect();
+             var stmt = conn.prepareStatement("INSERT INTO " + TABLE_NAME + " ("
+                + SQL_ID + ", "
+                + SQL_DOMAIN_ID + ", "
+                + SQL_NAME + ", "
+                + SQL_DESCR + ") values(?, ?, ?, ?)")) {
             role.setRoleid(IDMStoreUtil.createRoleid(role.getName(), role.getDomainid()));
-            statement.setString(1, role.getRoleid());
-            statement.setString(2, role.getDomainid());
-            statement.setString(3, role.getName());
-            statement.setString(4, role.getDescription());
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows == 0) {
+            stmt.setString(1, role.getRoleid());
+            stmt.setString(2, role.getDomainid());
+            stmt.setString(3, role.getName());
+            stmt.setString(4, role.getDescription());
+
+            LOG.debug("createRole() request: {}", stmt);
+            if (stmt.executeUpdate() == 0) {
                 throw new StoreException("Creating role failed, no rows affected.");
             }
             return role;
@@ -101,9 +114,8 @@ public class RoleStore extends AbstractStore<Role> {
         }
     }
 
-    protected Role putRole(final Role role) throws StoreException {
-
-        Role savedRole = this.getRole(role.getRoleid());
+    Role putRole(final Role role) throws StoreException {
+        Role savedRole = getRole(role.getRoleid());
         if (savedRole == null) {
             return null;
         }
@@ -115,11 +127,14 @@ public class RoleStore extends AbstractStore<Role> {
             savedRole.setName(role.getName());
         }
 
-        String query = "UPDATE roles SET description = ? WHERE roleid = ?";
-        try (Connection conn = dbConnect(); PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setString(1, savedRole.getDescription());
-            statement.setString(2, savedRole.getRoleid());
-            statement.executeUpdate();
+        try (var conn = dbConnect();
+             var stmt = conn.prepareStatement(
+                 "UPDATE " + TABLE_NAME + " SET " + SQL_DESCR + " = ? WHERE " + SQL_ID + " = ?")) {
+            stmt.setString(1, savedRole.getDescription());
+            stmt.setString(2, savedRole.getRoleid());
+
+            LOG.debug("putRole() request: {}", stmt);
+            stmt.executeUpdate();
         } catch (SQLException s) {
             throw new StoreException("SQL Exception : " + s);
         }
@@ -128,14 +143,15 @@ public class RoleStore extends AbstractStore<Role> {
     }
 
     @SuppressFBWarnings("SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE")
-    protected Role deleteRole(String roleid) throws StoreException {
-        roleid = StringEscapeUtils.escapeHtml4(roleid);
-        Role savedRole = this.getRole(roleid);
+    Role deleteRole(final String roleid) throws StoreException {
+        // FIXME: remove this once we have a more modern H2
+        final String escaped = StringEscapeUtils.escapeHtml4(roleid);
+        Role savedRole = getRole(roleid);
         if (savedRole == null) {
             return null;
         }
 
-        String query = String.format("DELETE FROM ROLES WHERE roleid = '%s'", roleid);
+        final String query = String.format("DELETE FROM " + TABLE_NAME + " WHERE " + SQL_ID + " = '%s'", escaped);
         try (Connection conn = dbConnect(); Statement statement = conn.createStatement()) {
             int deleteCount = statement.executeUpdate(query);
             LOG.debug("deleted {} records", deleteCount);
