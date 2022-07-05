@@ -19,25 +19,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.opendaylight.aaa.api.model.Roles;
 
+@RunWith(MockitoJUnitRunner.StrictStubs.class)
 public class RoleStoreTest {
-
     private final Connection connectionMock = mock(Connection.class);
-
-    private final ConnectionProvider connectionFactoryMock = () -> connectionMock;
-
-    private final RoleStore roleStoreUnderTest = new RoleStore(connectionFactoryMock);
+    private final RoleStore roleStoreUnderTest = new RoleStore(() -> connectionMock);
 
     @Test
-    public void getRolesTest() throws SQLException, Exception {
+    public void getRolesTest() throws Exception {
         // Setup Mock Behavior
-        String[] tableTypes = { "TABLE" };
-        when(connectionMock.isClosed()).thenReturn(false);
         DatabaseMetaData dbmMock = mock(DatabaseMetaData.class);
         when(connectionMock.getMetaData()).thenReturn(dbmMock);
         ResultSet rsUserMock = mock(ResultSet.class);
-        when(dbmMock.getTables(null, null, "ROLES", tableTypes)).thenReturn(rsUserMock);
+        when(dbmMock.getTables(null, null, RoleStore.TABLE, AbstractStore.TABLE_TYPES)).thenReturn(rsUserMock);
         when(rsUserMock.next()).thenReturn(true);
 
         Statement stmtMock = mock(Statement.class);
@@ -54,12 +51,13 @@ public class RoleStoreTest {
         verify(stmtMock).close();
     }
 
-    public ResultSet getMockedResultSet() throws SQLException {
+    private static ResultSet getMockedResultSet() throws SQLException {
         ResultSet rsMock = mock(ResultSet.class);
         when(rsMock.next()).thenReturn(true).thenReturn(false);
-        when(rsMock.getInt(RoleStore.SQL_ID)).thenReturn(1);
-        when(rsMock.getString(RoleStore.SQL_NAME)).thenReturn("RoleName_1");
-        when(rsMock.getString(RoleStore.SQL_DESCR)).thenReturn("Desc_1");
+        when(rsMock.getString(RoleStore.COL_ID)).thenReturn("1");
+        when(rsMock.getString(RoleStore.COL_NAME)).thenReturn("RoleName_1");
+        when(rsMock.getString(RoleStore.COL_DOMAIN_ID)).thenReturn("Domain_1");
+        when(rsMock.getString(RoleStore.COL_DESC)).thenReturn("Desc_1");
         return rsMock;
     }
 }
