@@ -9,12 +9,10 @@ package org.opendaylight.aaa.datastore.h2;
 
 import static java.util.Objects.requireNonNull;
 
+import com.google.common.annotations.VisibleForTesting;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import org.apache.commons.text.StringEscapeUtils;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Domains;
@@ -27,26 +25,32 @@ import org.slf4j.LoggerFactory;
  * @author peter.mellquist@hp.com
  *
  */
-public class DomainStore extends AbstractStore<Domain> {
+final class DomainStore extends AbstractStore<Domain> {
     private static final Logger LOG = LoggerFactory.getLogger(DomainStore.class);
 
-    public static final String SQL_ID = "domainid";
-    public static final String SQL_NAME = "name";
-    public static final String SQL_DESCR = "description";
-    public static final String SQL_ENABLED = "enabled";
     private static final String TABLE_NAME = "DOMAINS";
+    @VisibleForTesting
+    static final String SQL_ID = "domainid";
+    @VisibleForTesting
+    static final String SQL_NAME = "name";
+    @VisibleForTesting
+    static final String SQL_DESCR = "description";
+    @VisibleForTesting
+    static final String SQL_ENABLED = "enabled";
 
-    public DomainStore(final ConnectionProvider dbConnectionFactory) {
+    DomainStore(final ConnectionProvider dbConnectionFactory) {
         super(dbConnectionFactory, TABLE_NAME);
     }
 
     @Override
     protected String getTableCreationStatement() {
-        return "CREATE TABLE DOMAINS "
-                + "(domainid   VARCHAR(128)      PRIMARY KEY,"
-                + "name        VARCHAR(128)      UNIQUE NOT NULL, "
-                + "description VARCHAR(128)      , "
-                + "enabled     INTEGER           NOT NULL)";
+        return "CREATE TABLE " + TABLE_NAME + "(\n"
+            + SQL_ID      + " VARCHAR(128) PRIMARY KEY,\n"
+            + SQL_NAME    + " VARCHAR(128) UNIQUE NOT NULL,\n"
+            + SQL_DESCR   + " VARCHAR(128),\n"
+            // FIXME: boolean?
+            + SQL_ENABLED + " INTEGER      NOT NULL\n"
+            + ")";
     }
 
     @Override
@@ -59,20 +63,21 @@ public class DomainStore extends AbstractStore<Domain> {
         return domain;
     }
 
-    public Domains getDomains() throws StoreException {
+    Domains getDomains() throws StoreException {
         Domains domains = new Domains();
         domains.setDomains(listAll());
         return domains;
     }
 
-    protected Domains getDomains(final String domainName) throws StoreException {
+    // FIXME: seems to be unused
+    Domains getDomains(final String domainName) throws StoreException {
         LOG.debug("getDomains for: {}", domainName);
         Domains domains = new Domains();
-        try (Connection conn = dbConnect();
-             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM DOMAINS WHERE name = ?")) {
-            pstmt.setString(1, domainName);
-            LOG.debug("query string: {}", pstmt);
-            domains.setDomains(listFromStatement(pstmt));
+        try (var conn = dbConnect();
+             var stmt = conn.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE " + SQL_NAME + " = ?")) {
+            stmt.setString(1, domainName);
+            LOG.debug("query string: {}", stmt);
+            domains.setDomains(listFromStatement(stmt));
         } catch (SQLException e) {
             LOG.error("Error listing domains matching {}", domainName, e);
             throw new StoreException("Error listing domains", e);
@@ -80,31 +85,36 @@ public class DomainStore extends AbstractStore<Domain> {
         return domains;
     }
 
-    protected Domain getDomain(final String id) throws StoreException {
-        try (Connection conn = dbConnect();
-             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM DOMAINS WHERE domainid = ? ")) {
-            pstmt.setString(1, id);
-            LOG.debug("query string: {}", pstmt);
-            return firstFromStatement(pstmt);
+    Domain getDomain(final String id) throws StoreException {
+        try (var conn = dbConnect();
+             var stmt = conn.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE " + SQL_ID + " = ?")) {
+            stmt.setString(1, id);
+
+            LOG.debug("getDomain() request: {}", stmt);
+            return firstFromStatement(stmt);
         } catch (SQLException e) {
             LOG.error("Error retrieving domain {}", id, e);
             throw new StoreException("Error loading domain", e);
         }
     }
 
-    public Domain createDomain(final Domain domain) throws StoreException {
+    Domain createDomain(final Domain domain) throws StoreException {
         requireNonNull(domain);
         requireNonNull(domain.getName());
         requireNonNull(domain.isEnabled());
-        String query = "insert into DOMAINS (domainid,name,description,enabled) values(?, ?, ?, ?)";
-        try (Connection conn = dbConnect();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setString(1, domain.getName());
-            statement.setString(2, domain.getName());
-            statement.setString(3, domain.getDescription());
-            statement.setInt(4, domain.isEnabled() ? 1 : 0);
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows == 0) {
+        try (var conn = dbConnect();
+             var stmt = conn.prepareStatement("INSERT INTO " + TABLE_NAME + " ("
+                 + SQL_ID + ", "
+                 + SQL_NAME + ", "
+                 + SQL_DESCR + ", "
+                 + SQL_ENABLED + ") values(?, ?, ?, ?)")) {
+            stmt.setString(1, domain.getName());
+            stmt.setString(2, domain.getName());
+            stmt.setString(3, domain.getDescription());
+            stmt.setInt(4, domain.isEnabled() ? 1 : 0);
+
+            LOG.debug("createDomain() request: {}", stmt);
+            if (stmt.executeUpdate() == 0) {
                 throw new StoreException("Creating domain failed, no rows affected.");
             }
             domain.setDomainid(domain.getName());
@@ -115,8 +125,8 @@ public class DomainStore extends AbstractStore<Domain> {
         }
     }
 
-    protected Domain putDomain(final Domain domain) throws StoreException {
-        Domain savedDomain = this.getDomain(domain.getDomainid());
+    Domain putDomain(final Domain domain) throws StoreException {
+        final Domain savedDomain = getDomain(domain.getDomainid());
         if (savedDomain == null) {
             return null;
         }
@@ -131,14 +141,20 @@ public class DomainStore extends AbstractStore<Domain> {
             savedDomain.setEnabled(domain.isEnabled());
         }
 
-        String query = "UPDATE domains SET description = ?, enabled = ?, name = ? WHERE domainid = ?";
-        try (Connection conn = dbConnect();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setString(1, savedDomain.getDescription());
-            statement.setInt(2, savedDomain.isEnabled() ? 1 : 0);
-            statement.setString(3, savedDomain.getName());
-            statement.setString(4, savedDomain.getDomainid());
-            statement.executeUpdate();
+        try (var conn = dbConnect();
+             var stmt = conn.prepareStatement("UPDATE " + TABLE_NAME
+                 + " SET "
+                 + SQL_NAME + " = ?, "
+                 + SQL_DESCR + " = ?, "
+                 + SQL_ENABLED + " = ? "
+                 + "WHERE " + SQL_ID + " = ?")) {
+            stmt.setString(1, savedDomain.getName());
+            stmt.setString(2, savedDomain.getDescription());
+            stmt.setInt(3, savedDomain.isEnabled() ? 1 : 0);
+            stmt.setString(4, savedDomain.getDomainid());
+
+            LOG.debug("putDomain() request: {}", stmt);
+            stmt.executeUpdate();
         } catch (SQLException e) {
             LOG.error("Error updating domain {}", domain.getDomainid(), e);
             throw new StoreException("Error updating domain", e);
@@ -148,16 +164,21 @@ public class DomainStore extends AbstractStore<Domain> {
     }
 
     @SuppressFBWarnings("SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE")
-    protected Domain deleteDomain(String domainid) throws StoreException {
-        domainid = StringEscapeUtils.escapeHtml4(domainid);
-        Domain deletedDomain = this.getDomain(domainid);
+    Domain deleteDomain(final String domainid) throws StoreException {
+        // FIXME: remove this once we have a more modern H2
+        final String escaped = StringEscapeUtils.escapeHtml4(domainid);
+        Domain deletedDomain = getDomain(escaped);
         if (deletedDomain == null) {
             return null;
         }
-        String query = String.format("DELETE FROM DOMAINS WHERE domainid = '%s'", domainid);
-        try (Connection conn = dbConnect();
-             Statement statement = conn.createStatement()) {
-            int deleteCount = statement.executeUpdate(query);
+
+        // FIXME: prepare statement instead
+        final String query = String.format("DELETE FROM " + TABLE_NAME + " WHERE " + SQL_ID + " = '%s'", escaped);
+        try (var conn = dbConnect();
+             var stmt = conn.createStatement()) {
+
+            LOG.debug("deleteDomain() request: {}", query);
+            int deleteCount = stmt.executeUpdate(query);
             LOG.debug("deleted {} records", deleteCount);
             return deletedDomain;
         } catch (SQLException e) {
