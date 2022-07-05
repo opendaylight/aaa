@@ -60,10 +60,10 @@ public class GrantStoreTest {
     public ResultSet getMockedResultSet() throws SQLException {
         ResultSet rsMock = mock(ResultSet.class);
         when(rsMock.next()).thenReturn(true).thenReturn(false);
-        when(rsMock.getInt(GrantStore.SQL_ID)).thenReturn(1);
-        when(rsMock.getString(GrantStore.SQL_TENANTID)).thenReturn(did);
-        when(rsMock.getString(GrantStore.SQL_USERID)).thenReturn(uid);
-        when(rsMock.getString(GrantStore.SQL_ROLEID)).thenReturn("Role_1");
+        when(rsMock.getInt(GrantStore.COL_ID)).thenReturn(1);
+        when(rsMock.getString(GrantStore.COL_TENANTID)).thenReturn(did);
+        when(rsMock.getString(GrantStore.COL_USERID)).thenReturn(uid);
+        when(rsMock.getString(GrantStore.COL_ROLEID)).thenReturn("Role_1");
 
         return rsMock;
     }

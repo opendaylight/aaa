@@ -8,9 +8,8 @@
 
 package org.opendaylight.aaa.datastore.h2;
 
+import com.google.common.annotations.VisibleForTesting;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,38 +24,59 @@ import org.slf4j.LoggerFactory;
  * Grant store.
  *
  * @author peter.mellquist@hp.com
- *
  */
-public class GrantStore extends AbstractStore<Grant> {
+final class GrantStore extends AbstractStore<Grant> {
     private static final Logger LOG = LoggerFactory.getLogger(GrantStore.class);
 
-    public static final String SQL_ID = "grantid";
-    public static final String SQL_TENANTID = "domainid";
-    public static final String SQL_USERID = "userid";
-    public static final String SQL_ROLEID = "roleid";
-    private static final String TABLE_NAME = "GRANTS";
+    static final String TABLE = "GRANTS";
 
-    public GrantStore(ConnectionProvider dbConnectionFactory) {
-        super(dbConnectionFactory, TABLE_NAME);
+    static {
+        SQLTable.GRANT.verifyTable(TABLE);
+    }
+
+    // FIXME: javadoc
+    static final String COL_ID = "grantid";
+
+    // FIXME: javadoc
+    // FIXME: 'tenant' vs 'domain' ?
+    @VisibleForTesting
+    static final String COL_TENANTID = "domainid";
+
+    // FIXME: javadoc
+    @VisibleForTesting
+    static final String COL_USERID = "userid";
+    // FIXME: javadoc
+    @VisibleForTesting
+    static final String COL_ROLEID = "roleid";
+
+    GrantStore(final ConnectionProvider dbConnectionFactory) {
+        super(dbConnectionFactory, TABLE);
     }
 
     @Override
-    protected String getTableCreationStatement() {
-        return "CREATE TABLE GRANTS "
-                + "(grantid    VARCHAR(128) PRIMARY KEY,"
-                + "domainid    VARCHAR(128)         NOT NULL, "
-                + "userid      VARCHAR(128)         NOT NULL, "
-                + "roleid      VARCHAR(128)         NOT NULL)";
+    void createTable(final Statement stmt) throws SQLException {
+        stmt.executeUpdate("CREATE TABLE " + TABLE + " (\n"
+            + COL_ID       + " VARCHAR(128) PRIMARY KEY,\n"
+            // FIXME: foreign key to DomainStore.COL_ID?
+            + COL_TENANTID + " VARCHAR(128) NOT NULL,\n"
+            // FIXME: foreign key to UserStore.COL_ID?
+            + COL_USERID   + " VARCHAR(128) NOT NULL,\n"
+            // FIXME: foreign key to RoleStore.COL_ID?
+            + COL_ROLEID   + " VARCHAR(128) NOT NULL");
     }
 
     @Override
-    protected Grant fromResultSet(ResultSet rs) throws SQLException {
+    void cleanTable(final Statement stmt) throws SQLException {
+        stmt.execute("DELETE FROM " + TABLE);
+    }
+    @Override
+    protected Grant fromResultSet(final ResultSet rs) throws SQLException {
         Grant grant = new Grant();
         try {
-            grant.setGrantid(rs.getString(SQL_ID));
-            grant.setDomainid(rs.getString(SQL_TENANTID));
-            grant.setUserid(rs.getString(SQL_USERID));
-            grant.setRoleid(rs.getString(SQL_ROLEID));
+            grant.setGrantid(rs.getString(COL_ID));
+            grant.setDomainid(rs.getString(COL_TENANTID));
+            grant.setUserid(rs.getString(COL_USERID));
+            grant.setRoleid(rs.getString(COL_ROLEID));
         } catch (SQLException sqle) {
             LOG.error("SQL Exception: ", sqle);
             throw sqle;
@@ -64,71 +84,78 @@ public class GrantStore extends AbstractStore<Grant> {
         return grant;
     }
 
-    public Grants getGrants(String did, String uid) throws StoreException {
-        Grants grants = new Grants();
-        try (Connection conn = dbConnect();
-             PreparedStatement pstmt = conn
-                     .prepareStatement("SELECT * FROM grants WHERE domainid = ? AND userid = ?")) {
-            pstmt.setString(1, did);
-            pstmt.setString(2, uid);
-            LOG.debug("query string: {}", pstmt);
-            grants.setGrants(listFromStatement(pstmt));
+    Grants getGrants(final String domainId, final String userId) throws StoreException {
+        final Grants grants;
+        try (var conn = dbConnect();
+             var stmt = conn.prepareStatement("SELECT * FROM " + TABLE
+                 + " WHERE " + COL_TENANTID + " = ? AND " + COL_USERID + " = ?")) {
+            stmt.setString(1, domainId);
+            stmt.setString(2, userId);
+            LOG.debug("getGrants() request: {}", stmt);
+
+            grants = new Grants();
+            grants.setGrants(listFromStatement(stmt));
         } catch (SQLException e) {
             throw new StoreException("SQL Exception", e);
         }
         return grants;
     }
 
-    protected Grants getGrants(String userid) throws StoreException {
-        Grants grants = new Grants();
-        try (Connection conn = dbConnect();
-             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM GRANTS WHERE userid = ? ")) {
-            pstmt.setString(1, userid);
-            LOG.debug("query string: {}", pstmt);
-            grants.setGrants(listFromStatement(pstmt));
+    Grants getGrants(final String userid) throws StoreException {
+        final Grants grants;
+        try (var conn = dbConnect();
+             var stmt = conn.prepareStatement("SELECT * FROM " + TABLE + " WHERE " + COL_USERID + " = ?")) {
+            stmt.setString(1, userid);
+            LOG.debug("getGrants() request: {}", stmt);
+
+            grants = new Grants();
+            grants.setGrants(listFromStatement(stmt));
         } catch (SQLException e) {
             throw new StoreException("SQL Exception", e);
         }
         return grants;
     }
 
-    protected Grant getGrant(String id) throws StoreException {
-        try (Connection conn = dbConnect();
-             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM GRANTS WHERE grantid = ? ")) {
-            pstmt.setString(1, id);
-            LOG.debug("query string: {}", pstmt);
-            return firstFromStatement(pstmt);
+    Grant getGrant(final String id) throws StoreException {
+        try (var conn = dbConnect();
+             var stmt = conn.prepareStatement("SELECT * FROM " + TABLE + " WHERE " + COL_ID + " = ?")) {
+            stmt.setString(1, id);
+            LOG.debug("getGrant() request: {}", stmt);
+
+            return firstFromStatement(stmt);
         } catch (SQLException e) {
             throw new StoreException("SQL Exception", e);
         }
     }
 
-    protected Grant getGrant(String did, String uid, String rid) throws StoreException {
-        try (Connection conn = dbConnect();
-             PreparedStatement pstmt = conn
-                     .prepareStatement("SELECT * FROM GRANTS WHERE domainid = ? AND userid = ? AND roleid = ? ")) {
-            pstmt.setString(1, did);
-            pstmt.setString(2, uid);
-            pstmt.setString(3, rid);
-            LOG.debug("query string: {}", pstmt);
-            return firstFromStatement(pstmt);
+    // FIXME: seems to be unused
+    Grant getGrant(final String did, final String uid, final String rid) throws StoreException {
+        try (var conn = dbConnect();
+             var stmt = conn.prepareStatement("SELECT * FROM " + TABLE
+                 + " WHERE " + COL_TENANTID + " = ? AND " + COL_USERID + " = ? AND " + COL_ROLEID + " = ?")) {
+            stmt.setString(1, did);
+            stmt.setString(2, uid);
+            stmt.setString(3, rid);
+            LOG.debug("getGrant() request: {}", stmt);
+
+            return firstFromStatement(stmt);
         } catch (SQLException e) {
             throw new StoreException("SQL Exception", e);
         }
     }
 
-    protected Grant createGrant(Grant grant) throws StoreException {
-        String query = "insert into grants  (grantid,domainid,userid,roleid) values(?,?,?,?)";
-        try (Connection conn = dbConnect();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setString(
+    Grant createGrant(final Grant grant) throws StoreException {
+        try (var conn = dbConnect();
+             var stmt = conn.prepareStatement("INSER INTO " + TABLE + " ("
+                 + COL_ID + ", " + COL_TENANTID + ", " + COL_USERID + ", " + COL_ROLEID + ") values (?, ?, ?, ?)")) {
+            stmt.setString(
                     1,
                     IDMStoreUtil.createGrantid(grant.getUserid(), grant.getDomainid(),
                             grant.getRoleid()));
-            statement.setString(2, grant.getDomainid());
-            statement.setString(3, grant.getUserid());
-            statement.setString(4, grant.getRoleid());
-            int affectedRows = statement.executeUpdate();
+            stmt.setString(2, grant.getDomainid());
+            stmt.setString(3, grant.getUserid());
+            stmt.setString(4, grant.getRoleid());
+            int affectedRows = stmt.executeUpdate();
             if (affectedRows == 0) {
                 throw new StoreException("Creating grant failed, no rows affected.");
             }
@@ -141,18 +168,19 @@ public class GrantStore extends AbstractStore<Grant> {
     }
 
     @SuppressFBWarnings("SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE")
-    protected Grant deleteGrant(String grantid) throws StoreException {
-        grantid = StringEscapeUtils.escapeHtml4(grantid);
-        Grant savedGrant = this.getGrant(grantid);
+    Grant deleteGrant(final String grantid) throws StoreException {
+        final String escaped = StringEscapeUtils.escapeHtml4(grantid);
+        final var savedGrant = getGrant(escaped);
         if (savedGrant == null) {
             return null;
         }
 
-        String query = String.format("DELETE FROM GRANTS WHERE grantid = '%s'", grantid);
-        try (Connection conn = dbConnect();
-             Statement statement = conn.createStatement()) {
+        final String query = String.format("DELETE FROM GRANTS WHERE grantid = '%s'", escaped);
+        try (var conn = dbConnect();
+             var statement = conn.createStatement()) {
             int deleteCount = statement.executeUpdate(query);
             LOG.debug("deleted {} records", deleteCount);
+
             return savedGrant;
         } catch (SQLException e) {
             throw new StoreException("SQL Exception", e);

@@ -78,10 +78,10 @@ public class DomainStoreTest {
     public ResultSet getMockedResultSet() throws SQLException {
         ResultSet rsMock = mock(ResultSet.class);
         when(rsMock.next()).thenReturn(true).thenReturn(false);
-        when(rsMock.getInt(DomainStore.SQL_ID)).thenReturn(1);
-        when(rsMock.getString(DomainStore.SQL_NAME)).thenReturn("DomainName_1");
-        when(rsMock.getString(DomainStore.SQL_DESCR)).thenReturn("Desc_1");
-        when(rsMock.getInt(DomainStore.SQL_ENABLED)).thenReturn(1);
+        when(rsMock.getInt(DomainStore.COL_ID)).thenReturn(1);
+        when(rsMock.getString(DomainStore.COL_NAME)).thenReturn("DomainName_1");
+        when(rsMock.getString(DomainStore.COL_DESC)).thenReturn("Desc_1");
+        when(rsMock.getInt(DomainStore.COL_ENABLED)).thenReturn(1);
         return rsMock;
     }
 }

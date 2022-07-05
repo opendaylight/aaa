@@ -59,12 +59,12 @@ public class UserStoreTest {
     public ResultSet getMockedResultSet() throws SQLException {
         ResultSet rsMock = mock(ResultSet.class);
         when(rsMock.next()).thenReturn(true).thenReturn(false);
-        when(rsMock.getInt(UserStore.SQL_ID)).thenReturn(1);
-        when(rsMock.getString(UserStore.SQL_NAME)).thenReturn("Name_1");
-        when(rsMock.getString(UserStore.SQL_EMAIL)).thenReturn("Name_1@company.com");
-        when(rsMock.getString(UserStore.SQL_PASSWORD)).thenReturn("Pswd_1");
-        when(rsMock.getString(UserStore.SQL_DESCR)).thenReturn("Desc_1");
-        when(rsMock.getInt(UserStore.SQL_ENABLED)).thenReturn(1);
+        when(rsMock.getInt(UserStore.COL_ID)).thenReturn(1);
+        when(rsMock.getString(UserStore.COL_NAME)).thenReturn("Name_1");
+        when(rsMock.getString(UserStore.COL_EMAIL)).thenReturn("Name_1@company.com");
+        when(rsMock.getString(UserStore.COL_PASSWORD)).thenReturn("Pswd_1");
+        when(rsMock.getString(UserStore.COL_DESC)).thenReturn("Desc_1");
+        when(rsMock.getInt(UserStore.COL_ENABLED)).thenReturn(1);
         return rsMock;
     }
 }
