@@ -19,28 +19,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.opendaylight.aaa.api.model.Grants;
 
+@RunWith(MockitoJUnitRunner.StrictStubs.class)
 public class GrantStoreTest {
+    private static final String DOMAIN_ID = "5";
+    private static final String USER_ID = "5";
 
     private final Connection connectionMock = mock(Connection.class);
-
-    private final ConnectionProvider connectionFactoryMock = () -> connectionMock;
-
-    private final GrantStore grantStoreUnderTest = new GrantStore(connectionFactoryMock);
-
-    private final String did = "5";
-    private final String uid = "5";
+    private final GrantStore grantStoreUnderTest = new GrantStore(() -> connectionMock);
 
     @Test
     public void getGrantsTest() throws Exception {
         // Setup Mock Behavior
-        String[] tableTypes = { "TABLE" };
-        when(connectionMock.isClosed()).thenReturn(false);
         DatabaseMetaData dbmMock = mock(DatabaseMetaData.class);
         when(connectionMock.getMetaData()).thenReturn(dbmMock);
         ResultSet rsUserMock = mock(ResultSet.class);
-        when(dbmMock.getTables(null, null, "GRANTS", tableTypes)).thenReturn(rsUserMock);
+        when(dbmMock.getTables(null, null, GrantStore.TABLE, AbstractStore.TABLE_TYPES)).thenReturn(rsUserMock);
         when(rsUserMock.next()).thenReturn(true);
 
         PreparedStatement pstmtMock = mock(PreparedStatement.class);
@@ -50,22 +47,20 @@ public class GrantStoreTest {
         when(pstmtMock.executeQuery()).thenReturn(rsMock);
 
         // Run Test
-        Grants grants = grantStoreUnderTest.getGrants(did, uid);
+        Grants grants = grantStoreUnderTest.getGrants(DOMAIN_ID, USER_ID);
 
         // Verify
         assertEquals(1, grants.getGrants().size());
         verify(pstmtMock).close();
     }
 
-    public ResultSet getMockedResultSet() throws SQLException {
+    private static ResultSet getMockedResultSet() throws SQLException {
         ResultSet rsMock = mock(ResultSet.class);
         when(rsMock.next()).thenReturn(true).thenReturn(false);
-        when(rsMock.getInt(GrantStore.SQL_ID)).thenReturn(1);
-        when(rsMock.getString(GrantStore.SQL_TENANTID)).thenReturn(did);
-        when(rsMock.getString(GrantStore.SQL_USERID)).thenReturn(uid);
-        when(rsMock.getString(GrantStore.SQL_ROLEID)).thenReturn("Role_1");
-
+        when(rsMock.getString(GrantStore.COL_ID)).thenReturn("1");
+        when(rsMock.getString(GrantStore.COL_TENANTID)).thenReturn(DOMAIN_ID);
+        when(rsMock.getString(GrantStore.COL_USERID)).thenReturn(USER_ID);
+        when(rsMock.getString(GrantStore.COL_ROLEID)).thenReturn("Role_1");
         return rsMock;
     }
-
 }
