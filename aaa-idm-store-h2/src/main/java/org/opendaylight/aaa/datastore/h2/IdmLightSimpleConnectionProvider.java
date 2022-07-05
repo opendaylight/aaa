@@ -10,10 +10,10 @@ package org.opendaylight.aaa.datastore.h2;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import org.h2.jdbcx.JdbcConnectionPool;
 
 /**
- * Simple Provider of JDBC Connections, based on an {@link IdmLightConfig} and
- * {@link DriverManager}.
+ * Simple Provider of JDBC Connections, based on an {@link IdmLightConfig} and {@link DriverManager}.
  *
  * @author Michael Vorburger
  */
@@ -25,6 +25,15 @@ public class IdmLightSimpleConnectionProvider implements ConnectionProvider {
         this.config = config;
     }
 
+
+    /**
+     * {@inheritDoc}
+     *
+     * @implSpec This implemenation always opens a new connection.
+     *
+     *     FIXME: Integrate a {@link JdbcConnectionPool}, as {@link #config} is guaranteed to be constant. This is
+     *            needlessly heavy, as we are locating the driver.
+     */
     @Override
     public Connection getConnection() throws StoreException {
         try {

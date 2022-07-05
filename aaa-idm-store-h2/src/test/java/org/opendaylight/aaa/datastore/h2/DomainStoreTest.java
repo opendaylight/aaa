@@ -24,22 +24,17 @@ import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Domains;
 
 public class DomainStoreTest {
-
     private final Connection connectionMock = mock(Connection.class);
-
-    private final ConnectionProvider connectionFactoryMock = () -> connectionMock;
-
-    private final DomainStore domainStoreUnderTest = new DomainStore(connectionFactoryMock);
+    private final DomainStore domainStoreUnderTest = new DomainStore(() -> connectionMock);
 
     @Test
     public void getDomainsTest() throws SQLException, Exception {
         // Setup Mock Behavior
-        String[] tableTypes = { "TABLE" };
         when(connectionMock.isClosed()).thenReturn(false);
         DatabaseMetaData dbmMock = mock(DatabaseMetaData.class);
         when(connectionMock.getMetaData()).thenReturn(dbmMock);
         ResultSet rsUserMock = mock(ResultSet.class);
-        when(dbmMock.getTables(null, null, "DOMAINS", tableTypes)).thenReturn(rsUserMock);
+        when(dbmMock.getTables(null, null, DomainStore.TABLE, AbstractStore.TABLE_TYPES)).thenReturn(rsUserMock);
         when(rsUserMock.next()).thenReturn(true);
 
         Statement stmtMock = mock(Statement.class);
@@ -78,10 +73,10 @@ public class DomainStoreTest {
     public ResultSet getMockedResultSet() throws SQLException {
         ResultSet rsMock = mock(ResultSet.class);
         when(rsMock.next()).thenReturn(true).thenReturn(false);
-        when(rsMock.getInt(DomainStore.SQL_ID)).thenReturn(1);
-        when(rsMock.getString(DomainStore.SQL_NAME)).thenReturn("DomainName_1");
-        when(rsMock.getString(DomainStore.SQL_DESCR)).thenReturn("Desc_1");
-        when(rsMock.getInt(DomainStore.SQL_ENABLED)).thenReturn(1);
+        when(rsMock.getInt(DomainStore.COL_ID)).thenReturn(1);
+        when(rsMock.getString(DomainStore.COL_NAME)).thenReturn("DomainName_1");
+        when(rsMock.getString(DomainStore.COL_DESC)).thenReturn("Desc_1");
+        when(rsMock.getInt(DomainStore.COL_ENABLED)).thenReturn(1);
         return rsMock;
     }
 }

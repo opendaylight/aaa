@@ -22,12 +22,8 @@ import org.junit.Test;
 import org.opendaylight.aaa.api.model.Grants;
 
 public class GrantStoreTest {
-
     private final Connection connectionMock = mock(Connection.class);
-
-    private final ConnectionProvider connectionFactoryMock = () -> connectionMock;
-
-    private final GrantStore grantStoreUnderTest = new GrantStore(connectionFactoryMock);
+    private final GrantStore grantStoreUnderTest = new GrantStore(() -> connectionMock);
 
     private final String did = "5";
     private final String uid = "5";
@@ -35,12 +31,11 @@ public class GrantStoreTest {
     @Test
     public void getGrantsTest() throws Exception {
         // Setup Mock Behavior
-        String[] tableTypes = { "TABLE" };
         when(connectionMock.isClosed()).thenReturn(false);
         DatabaseMetaData dbmMock = mock(DatabaseMetaData.class);
         when(connectionMock.getMetaData()).thenReturn(dbmMock);
         ResultSet rsUserMock = mock(ResultSet.class);
-        when(dbmMock.getTables(null, null, "GRANTS", tableTypes)).thenReturn(rsUserMock);
+        when(dbmMock.getTables(null, null, GrantStore.TABLE, AbstractStore.TABLE_TYPES)).thenReturn(rsUserMock);
         when(rsUserMock.next()).thenReturn(true);
 
         PreparedStatement pstmtMock = mock(PreparedStatement.class);
@@ -60,12 +55,11 @@ public class GrantStoreTest {
     public ResultSet getMockedResultSet() throws SQLException {
         ResultSet rsMock = mock(ResultSet.class);
         when(rsMock.next()).thenReturn(true).thenReturn(false);
-        when(rsMock.getInt(GrantStore.SQL_ID)).thenReturn(1);
-        when(rsMock.getString(GrantStore.SQL_TENANTID)).thenReturn(did);
-        when(rsMock.getString(GrantStore.SQL_USERID)).thenReturn(uid);
-        when(rsMock.getString(GrantStore.SQL_ROLEID)).thenReturn("Role_1");
+        when(rsMock.getInt(GrantStore.COL_ID)).thenReturn(1);
+        when(rsMock.getString(GrantStore.COL_TENANTID)).thenReturn(did);
+        when(rsMock.getString(GrantStore.COL_USERID)).thenReturn(uid);
+        when(rsMock.getString(GrantStore.COL_ROLEID)).thenReturn("Role_1");
 
         return rsMock;
     }
-
 }

@@ -23,23 +23,18 @@ import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.impl.password.service.DefaultPasswordHashService;
 
 public class UserStoreTest {
-
     private final Connection connectionMock = mock(Connection.class);
-
-    private final ConnectionProvider connectionFactoryMock = () -> connectionMock;
-
-    private final UserStore userStoreUnderTest = new UserStore(connectionFactoryMock,
+    private final UserStore userStoreUnderTest = new UserStore(() -> connectionMock,
             new DefaultPasswordHashService());
 
     @Test
     public void getUsersTest() throws SQLException, Exception {
         // Setup Mock Behavior
-        String[] tableTypes = { "TABLE" };
         when(connectionMock.isClosed()).thenReturn(false);
         DatabaseMetaData dbmMock = mock(DatabaseMetaData.class);
         when(connectionMock.getMetaData()).thenReturn(dbmMock);
         ResultSet rsUserMock = mock(ResultSet.class);
-        when(dbmMock.getTables(null, null, "USERS", tableTypes)).thenReturn(rsUserMock);
+        when(dbmMock.getTables(null, null, UserStore.TABLE, AbstractStore.TABLE_TYPES)).thenReturn(rsUserMock);
         when(rsUserMock.next()).thenReturn(true);
 
         Statement stmtMock = mock(Statement.class);
@@ -59,12 +54,12 @@ public class UserStoreTest {
     public ResultSet getMockedResultSet() throws SQLException {
         ResultSet rsMock = mock(ResultSet.class);
         when(rsMock.next()).thenReturn(true).thenReturn(false);
-        when(rsMock.getInt(UserStore.SQL_ID)).thenReturn(1);
-        when(rsMock.getString(UserStore.SQL_NAME)).thenReturn("Name_1");
-        when(rsMock.getString(UserStore.SQL_EMAIL)).thenReturn("Name_1@company.com");
-        when(rsMock.getString(UserStore.SQL_PASSWORD)).thenReturn("Pswd_1");
-        when(rsMock.getString(UserStore.SQL_DESCR)).thenReturn("Desc_1");
-        when(rsMock.getInt(UserStore.SQL_ENABLED)).thenReturn(1);
+        when(rsMock.getInt(UserStore.COL_ID)).thenReturn(1);
+        when(rsMock.getString(UserStore.COL_NAME)).thenReturn("Name_1");
+        when(rsMock.getString(UserStore.COL_EMAIL)).thenReturn("Name_1@company.com");
+        when(rsMock.getString(UserStore.COL_PASSWORD)).thenReturn("Pswd_1");
+        when(rsMock.getString(UserStore.COL_DESC)).thenReturn("Desc_1");
+        when(rsMock.getInt(UserStore.COL_ENABLED)).thenReturn(1);
         return rsMock;
     }
 }
