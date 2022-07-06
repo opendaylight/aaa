@@ -76,7 +76,7 @@ public class DomainStoreTest {
         when(rsMock.getInt(DomainStore.COL_ID)).thenReturn(1);
         when(rsMock.getString(DomainStore.COL_NAME)).thenReturn("DomainName_1");
         when(rsMock.getString(DomainStore.COL_DESC)).thenReturn("Desc_1");
-        when(rsMock.getInt(DomainStore.COL_ENABLED)).thenReturn(1);
+        when(rsMock.getBoolean(DomainStore.COL_ENABLED)).thenReturn(true);
         return rsMock;
     }
 }
