@@ -7,37 +7,37 @@
  */
 package org.opendaylight.aaa.shiro.filters;
 
+import static java.util.Objects.requireNonNull;
+
 import javax.servlet.Filter;
-import org.apache.shiro.web.servlet.ShiroFilter;
+import org.apache.shiro.web.env.WebEnvironment;
+import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The default AAA JAX-RS 1.X Web Filter.  Unlike AAAFilter, which is aimed towards
- * supporting RESTCONF and its existing API mechanisms, AAAShiroFilter is a generic
- * <code>ShiroFilter</code> for use with any other ODL Servlets.  The main difference
- * is that <code>AAAFilter</code> was designed to support the existing noauth
- * mechanism, while this filter cannot be disabled.
- *
- * <p>
- * This class is also responsible for delivering debug information; to enable these
- * debug statements, please issue the following in the karaf shell:
- *
- * <code>log:set DEBUG AAAShiroFilter</code>
- *
- * @see Filter
- * @see ShiroFilter
+ * The default AAA JAX-RS Web {@link Filter} based on {@link AbstractShiroFilter}. It gets a constant reference
+ * to a Shiro {@link WebEnvironment} at instantiation time and it during {@link #init()}.
  */
-public final class AAAShiroFilter extends ShiroFilter {
+public final class AAAShiroFilter extends AbstractShiroFilter {
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroFilter.class);
 
-    public AAAShiroFilter() {
-        LOG.debug("Creating the AAAShiroFilter");
+    private final WebEnvironment env;
+
+    public AAAShiroFilter(final WebEnvironment env) {
+        this.env = requireNonNull(env);
+        LOG.debug("Instantiated AAAShiroFilter for {}", env);
     }
 
     @Override
-    public void init() throws Exception {
-        super.init();
-        LOG.debug("Initializing the AAAShiroFilter");
+    public void init() {
+        LOG.debug("Initializing AAAShiroFilter");
+        setSecurityManager(env.getWebSecurityManager());
+
+        final var resolver = env.getFilterChainResolver();
+        if (resolver != null) {
+            setFilterChainResolver(resolver);
+        }
+        LOG.debug("AAAShiroFilter initialized");
     }
 }
