@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 final class GrantStore extends AbstractStore<Grant> {
     private static final Logger LOG = LoggerFactory.getLogger(GrantStore.class);
 
-    static final String TABLE = "GRANTS";
+    static final String TABLE = "AAA_GRANTS";
 
     static {
         SQLTable.GRANT.verifyTable(TABLE);

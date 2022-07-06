@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 final class UserStore extends AbstractStore<User> {
     private static final Logger LOG = LoggerFactory.getLogger(UserStore.class);
 
-    static final String TABLE = "USERS";
+    static final String TABLE = "AAA_USERS";
 
     static {
         SQLTable.USER.verifyTable(TABLE);
@@ -82,8 +82,7 @@ final class UserStore extends AbstractStore<User> {
             // FIXME: is 'salt' even used? Some comparators are not storing hashes, either
             + COL_PASSWORD  + " VARCHAR(128) NOT NULL, "
             + COL_SALT      + " VARCHAR(128) NOT NULL, "
-            // FIXME: boolean
-            + COL_ENABLED   + " INTEGER      NOT NULL)");
+            + COL_ENABLED   + " BOOLEAN      NOT NULL)");
     }
 
     @Override
@@ -101,7 +100,7 @@ final class UserStore extends AbstractStore<User> {
             user.setEmail(rs.getString(COL_EMAIL));
             user.setPassword(rs.getString(COL_PASSWORD));
             user.setDescription(rs.getString(COL_DESC));
-            user.setEnabled(rs.getInt(COL_ENABLED) == 1);
+            user.setEnabled(rs.getBoolean(COL_ENABLED));
             user.setSalt(rs.getString(COL_SALT));
         } catch (SQLException e) {
             LOG.error("SQL Exception: ", e);
@@ -162,7 +161,7 @@ final class UserStore extends AbstractStore<User> {
             stmt.setString(4, user.getEmail());
             stmt.setString(5, passwordHash.getHashedPassword());
             stmt.setString(6, user.getDescription());
-            stmt.setInt(7, user.isEnabled() ? 1 : 0);
+            stmt.setBoolean(7, user.isEnabled());
             stmt.setString(8, user.getSalt());
             LOG.debug("createUser() request: {}", stmt);
 
@@ -209,7 +208,7 @@ final class UserStore extends AbstractStore<User> {
             stmt.setString(1, savedUser.getEmail());
             stmt.setString(2, savedUser.getPassword());
             stmt.setString(3, savedUser.getDescription());
-            stmt.setInt(4, savedUser.isEnabled() ? 1 : 0);
+            stmt.setBoolean(4, savedUser.isEnabled());
             stmt.setString(5, savedUser.getUserid());
             LOG.debug("putUser() request: {}", stmt);
 

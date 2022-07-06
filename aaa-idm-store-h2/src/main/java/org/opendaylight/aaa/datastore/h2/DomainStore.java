@@ -31,8 +31,7 @@ final class DomainStore extends AbstractStore<Domain> {
     /**
      * Name of our SQL table. This constant lives here rather than in {@link SQLTable} for brevity.
      */
-    // FIXME: AAA-221: this is a system table
-    static final @NonNull String TABLE = "DOMAINS";
+    static final @NonNull String TABLE = "AAA_DOMAINS";
 
     static {
         SQLTable.DOMAIN.verifyTable(TABLE);
@@ -72,8 +71,7 @@ final class DomainStore extends AbstractStore<Domain> {
             + COL_ID      + " VARCHAR(128) PRIMARY KEY, "
             + COL_NAME    + " VARCHAR(128) UNIQUE NOT NULL, "
             + COL_DESC    + " VARCHAR(128), "
-            // FIXME: change boolean
-            + COL_ENABLED + " INTEGER      NOT NULL)");
+            + COL_ENABLED + " BOOLEAN      NOT NULL)");
     }
 
     @Override
@@ -87,7 +85,7 @@ final class DomainStore extends AbstractStore<Domain> {
         domain.setDomainid(rs.getString(COL_ID));
         domain.setName(rs.getString(COL_NAME));
         domain.setDescription(rs.getString(COL_DESC));
-        domain.setEnabled(rs.getInt(COL_ENABLED) == 1);
+        domain.setEnabled(rs.getBoolean(COL_ENABLED));
         return domain;
     }
 
@@ -137,7 +135,7 @@ final class DomainStore extends AbstractStore<Domain> {
             stmt.setString(1, domain.getName());
             stmt.setString(2, domain.getName());
             stmt.setString(3, domain.getDescription());
-            stmt.setInt(4, domain.isEnabled() ? 1 : 0);
+            stmt.setBoolean(4, domain.isEnabled());
 
             LOG.debug("createDomain() request: {}", stmt);
             if (stmt.executeUpdate() == 0) {
@@ -171,7 +169,7 @@ final class DomainStore extends AbstractStore<Domain> {
                  + COL_NAME + " = ?, " + COL_DESC + " = ?, " + COL_ENABLED + " = ? WHERE " + COL_ID + " = ?")) {
             stmt.setString(1, savedDomain.getName());
             stmt.setString(2, savedDomain.getDescription());
-            stmt.setInt(3, savedDomain.isEnabled() ? 1 : 0);
+            stmt.setBoolean(3, savedDomain.isEnabled());
             stmt.setString(4, savedDomain.getDomainid());
 
             LOG.debug("putDomain() request: {}", stmt);
