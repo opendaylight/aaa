@@ -7,7 +7,6 @@
  */
 package org.opendaylight.aaa.shiro.web.env;
 
-import java.util.function.Supplier;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.IniSecurityManagerFactory;
@@ -88,7 +87,7 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
 
         final Factory<SecurityManager> factory = new IniSecurityManagerFactory(ini);
         final SecurityManager securityManager = ClassLoaderUtils.getWithClassLoader(
-                AAAIniWebEnvironment.class.getClassLoader(), (Supplier<SecurityManager>) factory::getInstance);
+                AAAIniWebEnvironment.class.getClassLoader(), factory::getInstance);
         SecurityUtils.setSecurityManager(securityManager);
 
         return ini;
@@ -105,10 +104,7 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
             // Initialize the Shiro environment from clustered-app-config
             final Ini ini = createIniFromClusteredAppConfig(shiroConfiguration);
             setIni(ini);
-            ClassLoaderUtils.getWithClassLoader(AAAIniWebEnvironment.class.getClassLoader(), () -> {
-                super.init();
-                return null;
-            });
+            ClassLoaderUtils.runWithClassLoader(AAAIniWebEnvironment.class.getClassLoader(), super::init);
         }
     }
 }
