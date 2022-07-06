@@ -121,10 +121,9 @@ public abstract class WebContext {
 
     /**
      * Context params. NB: These are the web context's wide parameters; contrary to
-     * individual {@link ServletDetails#initParams()} and
-     * {@link FilterDetails#initParams()}.
+     * individual {@link ServletDetails#initParams()} and {@link FilterDetails#initParams()}.
      */
-    public abstract Map<String, String> contextParams();
+    public abstract Map<String, Object> contextParams();
 
     @Value.Check
     protected void check() {

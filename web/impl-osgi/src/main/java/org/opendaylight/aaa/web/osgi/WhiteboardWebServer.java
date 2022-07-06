@@ -163,7 +163,7 @@ public final class WhiteboardWebServer implements WebServer {
     }
 
     private static Map<String, Object> contextProperties(final String contextName, final String contextPath,
-            final Map<String, String> params) {
+            final Map<String, Object> params) {
         final var builder = ImmutableMap.<String, Object>builder()
             .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME, contextName)
             .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, contextPath);
