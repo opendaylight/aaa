@@ -7,6 +7,8 @@
  */
 package org.opendaylight.aaa.shiro.web.env;
 
+import static java.util.Objects.requireNonNull;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.IniSecurityManagerFactory;
@@ -41,7 +43,7 @@ import org.slf4j.LoggerFactory;
  * @author Thomas Pantelis
  * @author Michael Vorburger - use of TCCL for ShiroWebContextSecurer
  */
-class AAAIniWebEnvironment extends IniWebEnvironment {
+public final class AAAIniWebEnvironment extends IniWebEnvironment {
     private static final Logger LOG = LoggerFactory.getLogger(AAAIniWebEnvironment.class);
 
     private static final String MAIN_SECTION_HEADER = "main";
@@ -56,19 +58,18 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
     private final PasswordHashService passwordHashService;
     private final ServletSupport servletSupport;
 
-    AAAIniWebEnvironment(final ShiroConfiguration shiroConfiguration, final DataBroker dataBroker,
-                         final ICertificateManager certificateManager,
-                         final AuthenticationService authenticationService,
-                         final TokenAuthenticators tokenAuthenticators, final TokenStore tokenStore,
-                         final PasswordHashService passwordHashService, final ServletSupport servletSupport) {
-        this.shiroConfiguration = shiroConfiguration;
-        this.dataBroker = dataBroker;
-        this.certificateManager = certificateManager;
-        this.authenticationService = authenticationService;
-        this.tokenAuthenticators = tokenAuthenticators;
-        this.tokenStore = tokenStore;
-        this.passwordHashService = passwordHashService;
-        this.servletSupport = servletSupport;
+    public AAAIniWebEnvironment(final ShiroConfiguration shiroConfiguration, final DataBroker dataBroker,
+            final ICertificateManager certificateManager, final AuthenticationService authenticationService,
+            final TokenAuthenticators tokenAuthenticators, final TokenStore tokenStore,
+            final PasswordHashService passwordHashService, final ServletSupport servletSupport) {
+        this.shiroConfiguration = requireNonNull(shiroConfiguration);
+        this.dataBroker = requireNonNull(dataBroker);
+        this.certificateManager = requireNonNull(certificateManager);
+        this.authenticationService = requireNonNull(authenticationService);
+        this.tokenAuthenticators = requireNonNull(tokenAuthenticators);
+        this.tokenStore = requireNonNull(tokenStore);
+        this.passwordHashService = requireNonNull(passwordHashService);
+        this.servletSupport = requireNonNull(servletSupport);
         LOG.debug("AAAIniWebEnvironment created");
     }
 
@@ -88,6 +89,7 @@ class AAAIniWebEnvironment extends IniWebEnvironment {
         final Factory<SecurityManager> factory = new IniSecurityManagerFactory(ini);
         final SecurityManager securityManager = ClassLoaderUtils.getWithClassLoader(
                 AAAIniWebEnvironment.class.getClassLoader(), factory::getInstance);
+        // FIXME: do not set global security manager
         SecurityUtils.setSecurityManager(securityManager);
 
         return ini;
