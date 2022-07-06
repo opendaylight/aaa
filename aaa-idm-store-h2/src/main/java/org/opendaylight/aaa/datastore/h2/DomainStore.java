@@ -31,8 +31,7 @@ final class DomainStore extends AbstractStore<Domain> {
     /**
      * Name of our SQL table. This constant lives here rather than in {@link SQLTable} for brevity.
      */
-    // FIXME: AAA-221: this is a system table
-    static final @NonNull String TABLE = "DOMAINS";
+    static final @NonNull String TABLE = "AAA_DOMAINS";
 
     static {
         SQLTable.DOMAIN.verifyTable(TABLE);

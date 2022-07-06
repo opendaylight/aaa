@@ -59,7 +59,7 @@ public class UserStoreTest {
         when(rsMock.getString(UserStore.COL_EMAIL)).thenReturn("Name_1@company.com");
         when(rsMock.getString(UserStore.COL_PASSWORD)).thenReturn("Pswd_1");
         when(rsMock.getString(UserStore.COL_DESC)).thenReturn("Desc_1");
-        when(rsMock.getInt(UserStore.COL_ENABLED)).thenReturn(1);
+        when(rsMock.getBoolean(UserStore.COL_ENABLED)).thenReturn(true);
         return rsMock;
     }
 }
