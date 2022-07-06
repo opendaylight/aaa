@@ -33,8 +33,7 @@ final class RoleStore extends AbstractStore<Role> {
     /**
      * Name of our SQL table. This constant lives here rather than in {@link SQLTable} for brevity.
      */
-    // FIXME: AAA-221: this is a system table
-    static final @NonNull String TABLE = "ROLES";
+    static final @NonNull String TABLE = "AAA_ROLES";
 
     static {
         SQLTable.ROLE.verifyTable(TABLE);
