@@ -120,9 +120,10 @@ public abstract class WebContext {
     public abstract List<ResourceDetails> resources();
 
     /**
-     * Context params. NB: These are the web context's wide parameters; contrary to
-     * individual {@link ServletDetails#initParams()} and
-     * {@link FilterDetails#initParams()}.
+     * Context params. These are the {@link ServletContext}s initial parameters; contrary to individual
+     * {@link ServletDetails#initParams()} and {@link FilterDetails#initParams()}. While a ServletContext accepts
+     * any Object as a parameter, that is not accepted in all implementations. Most notably OSGi HTTP Whiteboard
+     * specification allows only String values, hence we are enforcing that.
      */
     public abstract Map<String, String> contextParams();
 
