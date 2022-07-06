@@ -38,7 +38,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 
   <reference id="servletSupport" interface="org.opendaylight.aaa.web.servlet.ServletSupport"/>
 
-  <bean id="shiroWebEnvLoader" class="org.opendaylight.aaa.shiro.web.env.ShiroWebEnvironmentLoaderListener">
+  <bean id="webEnvironment" class="org.opendaylight.aaa.shiro.web.env.AAAWebEnvironment" factory-method="create">
     <argument ref="shiroConfiguration"/>
     <argument ref="dataBroker"/>
     <argument ref="certManager"/>
@@ -53,14 +53,13 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="servletSupport"/>
   </bean>
 
-  <reference id="customFilterAdapterConfig"
-      interface="org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration"/>
-
   <bean id="webContextSecurer" class="org.opendaylight.aaa.shiro.web.env.ShiroWebContextSecurer">
-    <argument ref="shiroWebEnvLoader"/>
+    <argument ref="webEnvironment"/>
   </bean>
   <service ref="webContextSecurer" interface="org.opendaylight.aaa.web.WebContextSecurer" />
 
+  <reference id="customFilterAdapterConfig"
+      interface="org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration"/>
   <reference id="webServer" interface="org.opendaylight.aaa.web.WebServer" />
 
   <bean id="webInitializer" class="org.opendaylight.aaa.shiro.web.env.WebInitializer" destroy-method="close">
