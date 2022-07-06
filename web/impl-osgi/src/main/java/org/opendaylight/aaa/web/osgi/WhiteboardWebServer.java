@@ -120,7 +120,7 @@ public final class WhiteboardWebServer implements WebServer {
         for (var listener : webContext.listeners()) {
             final var props = Map.of(
                 HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT, contextSelect,
-                HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER, Boolean.TRUE);
+                HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER, "true");
             LOG.debug("Registering listener {} with properties {}", listener, props);
             builder.add(bundleContext.registerService(ServletContextListener.class, listener,
                 FrameworkUtil.asDictionary(props)));
