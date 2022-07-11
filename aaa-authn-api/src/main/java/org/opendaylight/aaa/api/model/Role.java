@@ -21,15 +21,15 @@ public class Role {
         return roleid;
     }
 
-    public void setRoleid(String id) {
-        this.roleid = id;
+    public void setRoleid(final String id) {
+        roleid = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -37,7 +37,7 @@ public class Role {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -47,21 +47,16 @@ public class Role {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
-
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-
-        Role other = (Role) obj;
-        if (Objects.equals(getName(), other.getName()) && Objects.equals(getRoleid(), other.getRoleid())
-                && Objects.equals(getDescription(), other.getDescription())) {
-            return true;
-        }
-        return false;
+        final Role other = (Role) obj;
+        return Objects.equals(getName(), other.getName()) && Objects.equals(getRoleid(), other.getRoleid())
+            && Objects.equals(getDescription(), other.getDescription());
     }
 
     @Override
@@ -69,11 +64,11 @@ public class Role {
         return name;
     }
 
-    public void setDomainid(String domainid) {
+    public void setDomainid(final String domainid) {
         this.domainid = domainid;
     }
 
     public String getDomainid() {
-        return this.domainid;
+        return domainid;
     }
 }

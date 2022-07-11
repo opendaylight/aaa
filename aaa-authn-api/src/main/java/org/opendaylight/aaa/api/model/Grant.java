@@ -18,57 +18,52 @@ public class Grant {
     private String roleid;
 
     public String getGrantid() {
-        return this.grantid;
+        return grantid;
     }
 
-    public void setGrantid(String id) {
-        this.grantid = id;
+    public void setGrantid(final String id) {
+        grantid = id;
     }
 
     public String getDomainid() {
         return domainid;
     }
 
-    public void setDomainid(String id) {
-        this.domainid = id;
+    public void setDomainid(final String id) {
+        domainid = id;
     }
 
     public String getUserid() {
         return userid;
     }
 
-    public void setUserid(String id) {
-        this.userid = id;
+    public void setUserid(final String id) {
+        userid = id;
     }
 
     public String getRoleid() {
         return roleid;
     }
 
-    public void setRoleid(String id) {
-        this.roleid = id;
+    public void setRoleid(final String id) {
+        roleid = id;
     }
 
     @Override
     public int hashCode() {
-        return this.getUserid().hashCode();
+        return getUserid().hashCode();
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
-
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-
-        Grant other = (Grant) obj;
-        if (Objects.equals(getDomainid(), other.getDomainid()) && Objects.equals(getRoleid(), other.getRoleid())
-                && Objects.equals(getUserid(), other.getUserid())) {
-            return true;
-        }
-        return false;
+        final Grant other = (Grant) obj;
+        return Objects.equals(getDomainid(), other.getDomainid()) && Objects.equals(getRoleid(), other.getRoleid())
+            && Objects.equals(getUserid(), other.getUserid());
     }
 }

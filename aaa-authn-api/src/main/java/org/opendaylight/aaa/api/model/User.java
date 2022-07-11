@@ -29,15 +29,15 @@ public class User {
         return userid;
     }
 
-    public void setUserid(String id) {
-        this.userid = id;
+    public void setUserid(final String id) {
+        userid = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -45,7 +45,7 @@ public class User {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -65,7 +65,7 @@ public class User {
         this.enabled = enabled;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(final String email) {
         this.email = email;
     }
 
@@ -73,7 +73,7 @@ public class User {
         return email;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
@@ -81,19 +81,19 @@ public class User {
         return password;
     }
 
-    public void setSalt(String salt) {
+    public void setSalt(final String salt) {
         this.salt = salt;
     }
 
     public String getSalt() {
-        return this.salt;
+        return salt;
     }
 
     public String getDomainid() {
         return domainid;
     }
 
-    public void setDomainid(String domainid) {
+    public void setDomainid(final String domainid) {
         this.domainid = domainid;
     }
 
@@ -103,26 +103,18 @@ public class User {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
-
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-
-        User other = (User) obj;
-        if (Objects.equals(getName(), other.getName())
-                && Objects.equals(getEmail(), other.getEmail())
-                && isEnabled().equals(other.isEnabled())
-                && Objects.equals(getPassword(), other.getPassword())
-                && Objects.equals(getSalt(), other.getSalt())
-                && Objects.equals(getUserid(), other.getUserid())
-                && Objects.equals(getDescription(), other.getDescription())) {
-            return true;
-        }
-        return false;
+        final User other = (User) obj;
+        return Objects.equals(getName(), other.getName()) && Objects.equals(getEmail(), other.getEmail())
+            && isEnabled().equals(other.isEnabled()) && Objects.equals(getPassword(), other.getPassword())
+            && Objects.equals(getSalt(), other.getSalt()) && Objects.equals(getUserid(), other.getUserid())
+            && Objects.equals(getDescription(), other.getDescription());
     }
 
     @Override

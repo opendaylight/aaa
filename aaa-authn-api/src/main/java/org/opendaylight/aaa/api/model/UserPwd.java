@@ -5,14 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.api.model;
-
-/**
- *
- * @author peter.mellquist@hp.com
- *
- */
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -25,16 +18,15 @@ public class UserPwd {
         return username;
     }
 
-    public void setUsername(String name) {
-        this.username = name;
+    public void setUsername(final String name) {
+        username = name;
     }
 
     public String getUserpwd() {
         return userpwd;
     }
 
-    public void setUserpwd(String pwd) {
-        this.userpwd = pwd;
+    public void setUserpwd(final String pwd) {
+        userpwd = pwd;
     }
-
 }

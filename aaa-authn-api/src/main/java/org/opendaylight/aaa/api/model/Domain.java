@@ -21,15 +21,15 @@ public class Domain {
         return domainid;
     }
 
-    public void setDomainid(String id) {
-        this.domainid = id;
+    public void setDomainid(final String id) {
+        domainid = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -37,7 +37,7 @@ public class Domain {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -45,7 +45,7 @@ public class Domain {
         return enabled;
     }
 
-    public void setEnabled(Boolean enabled) {
+    public void setEnabled(final Boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -55,21 +55,16 @@ public class Domain {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
-
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-
-        Domain other = (Domain) obj;
-        if (Objects.equals(getName(), other.getName()) && Objects.equals(getDomainid(), other.getDomainid())
-                && Objects.equals(getDescription(), other.getDescription())) {
-            return true;
-        }
-        return false;
+        final Domain other = (Domain) obj;
+        return Objects.equals(getName(), other.getName()) && Objects.equals(getDomainid(), other.getDomainid())
+            && Objects.equals(getDescription(), other.getDescription());
     }
 
     @Override
