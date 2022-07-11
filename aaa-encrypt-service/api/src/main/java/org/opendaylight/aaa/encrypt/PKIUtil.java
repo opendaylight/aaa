@@ -127,8 +127,8 @@ public class PKIUtil {
         ECNamedCurveSpec params256r1 = new ECNamedCurveSpec(ECDSA_SUPPORTED_CURVE_NAME_SPEC, spec256r1.getCurve(),
                 spec256r1.getG(), spec256r1.getN());
         // The total length is 104 bytes, and the X and Y encoding uses the last 65 of these 104 bytes.
-        ECPoint point = ECPointUtil.decodePoint(params256r1.getCurve(), Arrays.copyOfRange(bytes, ECDSA_TOTAL_STR_LEN
-                - ECDSA_THIRD_STR_LEN, ECDSA_TOTAL_STR_LEN));
+        ECPoint point = ECPointUtil.decodePoint(params256r1.getCurve(),
+            Arrays.copyOfRange(bytes, ECDSA_TOTAL_STR_LEN - ECDSA_THIRD_STR_LEN, ECDSA_TOTAL_STR_LEN));
         ECPublicKeySpec pubKeySpec = new ECPublicKeySpec(point, params256r1);
 
         return ecdsaFactory.generatePublic(pubKeySpec);
