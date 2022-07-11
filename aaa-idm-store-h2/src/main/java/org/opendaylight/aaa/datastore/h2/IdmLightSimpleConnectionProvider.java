@@ -20,7 +20,7 @@ import org.h2.jdbcx.JdbcConnectionPool;
 public class IdmLightSimpleConnectionProvider implements ConnectionProvider {
     private final IdmLightConfig config;
 
-    public IdmLightSimpleConnectionProvider(IdmLightConfig config) {
+    public IdmLightSimpleConnectionProvider(final IdmLightConfig config) {
         new org.h2.Driver();
         this.config = config;
     }
@@ -29,7 +29,7 @@ public class IdmLightSimpleConnectionProvider implements ConnectionProvider {
     /**
      * {@inheritDoc}
      *
-     * @implSpec This implemenation always opens a new connection.
+     * @implSpec This implementation always opens a new connection.
      *
      *     FIXME: Integrate a {@link JdbcConnectionPool}, as {@link #config} is guaranteed to be constant. This is
      *            needlessly heavy, as we are locating the driver.
