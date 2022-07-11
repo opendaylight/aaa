@@ -32,8 +32,6 @@ import java.security.spec.ECPublicKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey;
 import org.bouncycastle.jce.ECNamedCurveTable;
 import org.bouncycastle.jce.ECPointUtil;
@@ -83,16 +81,8 @@ public class PKIUtil {
         return () -> factory;
     }
 
-    private static final Map<String, String> ECDSA_CURVES = new HashMap<>();
-
-    static {
-        ECDSA_CURVES.put("nistp256", "secp256r1");
-        ECDSA_CURVES.put("nistp384", "secp384r1");
-        ECDSA_CURVES.put("nistp512", "secp512r1");
-    }
-
     private static final String ECDSA_SUPPORTED_CURVE_NAME = "nistp256";
-    private static final String ECDSA_SUPPORTED_CURVE_NAME_SPEC = ECDSA_CURVES.get(ECDSA_SUPPORTED_CURVE_NAME);
+    private static final String ECDSA_SUPPORTED_CURVE_NAME_SPEC = "secp256r1";
     private static final int ECDSA_THIRD_STR_LEN = 65;
     private static final int ECDSA_TOTAL_STR_LEN = 104;
 
