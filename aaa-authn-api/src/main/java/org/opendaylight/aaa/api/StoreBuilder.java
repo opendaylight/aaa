@@ -51,7 +51,7 @@ public class StoreBuilder {
 
     private final IIDMStore store;
 
-    public StoreBuilder(IIDMStore store) {
+    public StoreBuilder(final IIDMStore store) {
         this.store = store;
     }
 
@@ -63,13 +63,12 @@ public class StoreBuilder {
      * @return ID of the just newly created Domain, or null if no new one had to be created
      * @throws IDMStoreException for issues coming from the IIDMStore
      */
-    public String initDomainAndRolesWithoutUsers(String domainID) throws IDMStoreException {
+    public String initDomainAndRolesWithoutUsers(final String domainID) throws IDMStoreException {
         LOG.info("Checking if default entries must be created in IDM store");
 
         // Check whether the default domain exists. If it exists, then do not
         // create default data in the store.
-        // TODO Address the fact that someone may delete the sdn domain, or make
-        // sdn mandatory.
+        // FIXME: Address the fact that someone may delete the sdn domain, or make sdn mandatory.
         Domain defaultDomain = store.readDomain(domainID);
         if (defaultDomain != null) {
             LOG.info("Found default domain in IDM store, skipping insertion of default data");
@@ -110,14 +109,14 @@ public class StoreBuilder {
      * @param domainID ID (same as name) of the "authentication domain"
      * @throws IDMStoreException for issues coming from the IIDMStore
      */
-    public void initWithDefaultUsers(String domainID) throws IDMStoreException {
+    public void initWithDefaultUsers(final String domainID) throws IDMStoreException {
         String newDomainID = initDomainAndRolesWithoutUsers(domainID);
         if (newDomainID != null) {
             createUser(newDomainID, "admin", "admin", true);
         }
     }
 
-    public List<String> getRoleIDs(String domainID, List<String> roleNames) throws IDMStoreException {
+    public List<String> getRoleIDs(final String domainID, final List<String> roleNames) throws IDMStoreException {
         Map<String, String> roleNameToID = new HashMap<>();
         List<Role> roles = store.getRoles().getRoles();
         for (Role role : roles) {
@@ -149,8 +148,8 @@ public class StoreBuilder {
      * @return ID of the just newly created user, useful to reference it e.g. in grants
      * @throws IDMStoreException for issues coming from the IIDMStore
      */
-    public String createUser(String domainID, String userName, String password, List<String> roleIDs)
-            throws IDMStoreException {
+    public String createUser(final String domainID, final String userName, final String password,
+            final List<String> roleIDs) throws IDMStoreException {
         User newUser = new User();
         newUser.setEnabled(true);
         newUser.setDomainid(domainID);
@@ -168,7 +167,7 @@ public class StoreBuilder {
         return newUserID;
     }
 
-    public String createUser(String domainID, String userName, String password, boolean isAdmin)
+    public String createUser(final String domainID, final String userName, final String password, final boolean isAdmin)
             throws IDMStoreException {
         List<String> roleIDs;
         if (isAdmin) {
@@ -179,16 +178,17 @@ public class StoreBuilder {
         return createUser(domainID, userName, password, roleIDs);
     }
 
-    public boolean deleteUser(String domainID, String userName) throws IDMStoreException {
+    public boolean deleteUser(final String domainID, final String userName) throws IDMStoreException {
         String userID = IDMStoreUtil.createUserid(userName, domainID);
-        Grants grants = store.getGrants(userID); // NOT store.getGrants(domainID, userName)
+        // NOT store.getGrants(domainID, userName) !
+        Grants grants = store.getGrants(userID);
         for (Grant grant : grants.getGrants()) {
             store.deleteGrant(grant.getGrantid());
         }
         return store.deleteUser(userID) != null;
     }
 
-    private void createGrant(String domainID, String userID, String roleID) throws IDMStoreException {
+    private void createGrant(final String domainID, final String userID, final String roleID) throws IDMStoreException {
         Grant grant = new Grant();
         grant.setDomainid(domainID);
         grant.setUserid(userID);

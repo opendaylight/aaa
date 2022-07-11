@@ -46,7 +46,8 @@ public class JettyWebServer implements WebServer {
     private final ContextHandlerCollection contextHandlerCollection;
 
     public JettyWebServer() {
-        this(0); // automatically choose free port
+        // automatically choose free port
+        this(0);
     }
 
     public JettyWebServer(final int httpPort) {
@@ -120,7 +121,8 @@ public class JettyWebServer implements WebServer {
             ServletHolder servletHolder = new ServletHolder(servlet.name(), servlet.servlet());
             servletHolder.setInitParameters(servlet.initParams());
             servletHolder.setAsyncSupported(servlet.getAsyncSupported());
-            servletHolder.setInitOrder(1); // AKA <load-on-startup> 1
+            // AKA <load-on-startup> 1
+            servletHolder.setInitOrder(1);
             servlet.urlPatterns().forEach(
                 urlPattern -> handler.addServlet(servletHolder, urlPattern)
             );
