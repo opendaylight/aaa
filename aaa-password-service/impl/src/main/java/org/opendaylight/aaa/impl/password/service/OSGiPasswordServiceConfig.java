@@ -8,17 +8,15 @@
 package org.opendaylight.aaa.impl.password.service;
 
 import static com.google.common.base.Verify.verifyNotNull;
-import static java.util.Objects.requireNonNull;
 
 import com.google.common.annotations.Beta;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ForwardingObject;
 import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.Map;
-import org.gaul.modernizer_maven_annotations.SuppressModernizer;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.password.service.config.rev170619.PasswordServiceConfig;
 import org.opendaylight.yangtools.yang.binding.Augmentation;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -81,10 +79,7 @@ public final class OSGiPasswordServiceConfig extends ForwardingObject implements
         delegate = null;
     }
 
-    @SuppressModernizer
     static Dictionary<String, ?> props(final PasswordServiceConfig delegate) {
-        final Dictionary<String, Object> ret = new Hashtable<>(2);
-        ret.put(DELEGATE, requireNonNull(delegate));
-        return ret;
+        return FrameworkUtil.asDictionary(Map.of(DELEGATE, delegate));
     }
 }
