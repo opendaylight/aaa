@@ -20,10 +20,26 @@ import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.metatype.annotations.AttributeDefinition;
+import org.osgi.service.metatype.annotations.Designate;
+import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Component(immediate = true, configurationPid = "org.opendaylight.aaa.h2", property = "type=default")
+@Designate(ocd = H2Store.Configuration.class)
 public class H2Store implements IIDMStore {
+    @ObjectClassDefinition
+    public @interface Configuration {
+        @AttributeDefinition(name = "dbUserName")
+        String username() default "foo";
+        @AttributeDefinition(name = "dbPassword")
+        String password() default "bar";
+    }
 
     private static final Logger LOG = LoggerFactory.getLogger(H2Store.class);
 
@@ -32,20 +48,31 @@ public class H2Store implements IIDMStore {
     private final RoleStore roleStore;
     private final GrantStore grantStore;
 
+    @Activate
+    public H2Store(@Reference final PasswordHashService passwordService, final Configuration config) {
+        this(config.username(), config.password(), passwordService);
+        LOG.info("H2 IDMStore activated");
+    }
+
     public H2Store(final String dbUsername, final String dbPassword, final PasswordHashService passwordService) {
         this(new IdmLightSimpleConnectionProvider(
                 new IdmLightConfigBuilder().dbUser(dbUsername).dbPwd(dbPassword).build()), passwordService);
     }
 
-    public H2Store(ConnectionProvider connectionFactory, final PasswordHashService passwordService) {
-        this.domainStore = new DomainStore(connectionFactory);
-        this.userStore = new UserStore(connectionFactory, passwordService);
-        this.roleStore = new RoleStore(connectionFactory);
-        this.grantStore = new GrantStore(connectionFactory);
+    public H2Store(final ConnectionProvider connectionFactory, final PasswordHashService passwordService) {
+        domainStore = new DomainStore(connectionFactory);
+        userStore = new UserStore(connectionFactory, passwordService);
+        roleStore = new RoleStore(connectionFactory);
+        grantStore = new GrantStore(connectionFactory);
+    }
+
+    @Deactivate
+    void deactivate() {
+        LOG.info("H2 IDMStore deactivated");
     }
 
     @Override
-    public Domain writeDomain(Domain domain) throws IDMStoreException {
+    public Domain writeDomain(final Domain domain) throws IDMStoreException {
         try {
             return domainStore.createDomain(domain);
         } catch (StoreException e) {
@@ -55,7 +82,7 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
-    public Domain readDomain(String domainid) throws IDMStoreException {
+    public Domain readDomain(final String domainid) throws IDMStoreException {
         try {
             return domainStore.getDomain(domainid);
         } catch (StoreException e) {
@@ -65,7 +92,7 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
-    public Domain deleteDomain(String domainid) throws IDMStoreException {
+    public Domain deleteDomain(final String domainid) throws IDMStoreException {
         try {
             return domainStore.deleteDomain(domainid);
         } catch (StoreException e) {
@@ -75,7 +102,7 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
-    public Domain updateDomain(Domain domain) throws IDMStoreException {
+    public Domain updateDomain(final Domain domain) throws IDMStoreException {
         try {
             return domainStore.putDomain(domain);
         } catch (StoreException e) {
@@ -95,7 +122,7 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
-    public Role writeRole(Role role) throws IDMStoreException {
+    public Role writeRole(final Role role) throws IDMStoreException {
         try {
             return roleStore.createRole(role);
         } catch (StoreException e) {
@@ -105,7 +132,7 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
-    public Role readRole(String roleid) throws IDMStoreException {
+    public Role readRole(final String roleid) throws IDMStoreException {
         try {
             return roleStore.getRole(roleid);
         } catch (StoreException e) {
@@ -115,7 +142,7 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
-    public Role deleteRole(String roleid) throws IDMStoreException {
+    public Role deleteRole(final String roleid) throws IDMStoreException {
         try {
             return roleStore.deleteRole(roleid);
         } catch (StoreException e) {
@@ -125,7 +152,7 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
-    public Role updateRole(Role role) throws IDMStoreException {
+    public Role updateRole(final Role role) throws IDMStoreException {
         try {
             return roleStore.putRole(role);
         } catch (StoreException e) {
@@ -145,7 +172,7 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
-    public User writeUser(User user) throws IDMStoreException {
+    public User writeUser(final User user) throws IDMStoreException {
         try {
             return userStore.createUser(user);
         } catch (StoreException e) {
@@ -155,7 +182,7 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
-    public User readUser(String userid) throws IDMStoreException {
+    public User readUser(final String userid) throws IDMStoreException {
         try {
             return userStore.getUser(userid);
         } catch (StoreException e) {
@@ -165,7 +192,7 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
-    public User deleteUser(String userid) throws IDMStoreException {
+    public User deleteUser(final String userid) throws IDMStoreException {
         try {
             return userStore.deleteUser(userid);
         } catch (StoreException e) {
@@ -175,7 +202,7 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
-    public User updateUser(User user) throws IDMStoreException {
+    public User updateUser(final User user) throws IDMStoreException {
         try {
             return userStore.putUser(user);
         } catch (StoreException e) {
@@ -185,7 +212,7 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
-    public Users getUsers(String username, String domain) throws IDMStoreException {
+    public Users getUsers(final String username, final String domain) throws IDMStoreException {
         try {
             return userStore.getUsers(username, domain);
         } catch (StoreException e) {
@@ -205,7 +232,7 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
-    public Grant writeGrant(Grant grant) throws IDMStoreException {
+    public Grant writeGrant(final Grant grant) throws IDMStoreException {
         try {
             return grantStore.createGrant(grant);
         } catch (StoreException e) {
@@ -215,7 +242,7 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
-    public Grant readGrant(String grantid) throws IDMStoreException {
+    public Grant readGrant(final String grantid) throws IDMStoreException {
         try {
             return grantStore.getGrant(grantid);
         } catch (StoreException e) {
@@ -225,12 +252,12 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
-    public Grant readGrant(String domainid, String userid, String roleid) throws IDMStoreException {
+    public Grant readGrant(final String domainid, final String userid, final String roleid) throws IDMStoreException {
         return readGrant(IDMStoreUtil.createGrantid(userid, domainid, roleid));
     }
 
     @Override
-    public Grant deleteGrant(String grantid) throws IDMStoreException {
+    public Grant deleteGrant(final String grantid) throws IDMStoreException {
         try {
             return grantStore.deleteGrant(grantid);
         } catch (StoreException e) {
@@ -240,7 +267,7 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
-    public Grants getGrants(String domainid, String userid) throws IDMStoreException {
+    public Grants getGrants(final String domainid, final String userid) throws IDMStoreException {
         try {
             return grantStore.getGrants(domainid, userid);
         } catch (StoreException e) {
@@ -250,7 +277,7 @@ public class H2Store implements IIDMStore {
     }
 
     @Override
-    public Grants getGrants(String userid) throws IDMStoreException {
+    public Grants getGrants(final String userid) throws IDMStoreException {
         try {
             return grantStore.getGrants(userid);
         } catch (StoreException e) {
@@ -259,15 +286,15 @@ public class H2Store implements IIDMStore {
         }
     }
 
-    public Domain createDomain(String domainName, boolean enable) throws StoreException {
+    public Domain createDomain(final String domainName, final boolean enable) throws StoreException {
         Domain domain = new Domain();
         domain.setName(domainName);
         domain.setEnabled(enable);
         return domainStore.createDomain(domain);
     }
 
-    public User createUser(String name, String password, String domain, String description,
-            String email, boolean enabled, String salt) throws StoreException {
+    public User createUser(final String name, final String password, final String domain, final String description,
+            final String email, final boolean enabled, final String salt) throws StoreException {
         User user = new User();
         user.setName(name);
         user.setDomainid(domain);
@@ -279,7 +306,7 @@ public class H2Store implements IIDMStore {
         return userStore.createUser(user);
     }
 
-    public Role createRole(String name, String domain, String description)
+    public Role createRole(final String name, final String domain, final String description)
             throws StoreException {
         Role role = new Role();
         role.setDescription(description);
@@ -288,7 +315,7 @@ public class H2Store implements IIDMStore {
         return roleStore.createRole(role);
     }
 
-    public Grant createGrant(String domain, String user, String role) throws StoreException {
+    public Grant createGrant(final String domain, final String user, final String role) throws StoreException {
         Grant grant = new Grant();
         grant.setDomainid(domain);
         grant.setRoleid(role);
