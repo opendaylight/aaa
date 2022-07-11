@@ -20,6 +20,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -164,7 +165,7 @@ abstract class AbstractStore<T> {
      * @return The first item, or {@code null} if none.
      * @throws StoreException if an error occurs.
      */
-    final T firstFromStatement(final PreparedStatement ps) throws StoreException {
+    final @Nullable T firstFromStatement(final PreparedStatement ps) throws StoreException {
         try (var rs = ps.executeQuery()) {
             return rs.next() ? fromResultSet(rs) : null;
         } catch (SQLException e) {
