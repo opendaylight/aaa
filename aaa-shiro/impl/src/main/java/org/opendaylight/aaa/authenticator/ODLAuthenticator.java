@@ -7,34 +7,32 @@
  */
 package org.opendaylight.aaa.authenticator;
 
+import static java.util.Objects.requireNonNull;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.env.WebEnvironment;
 import org.jolokia.osgi.security.Authenticator;
-import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * AAA hook for <code>odl-jolokia</code> configured w/ <code>org.jolokia.authMode=service-all</code>.
  */
-@Singleton
-@Component(immediate = true)
 public class ODLAuthenticator implements Authenticator {
     private static final Logger LOG = LoggerFactory.getLogger(ODLAuthenticator.class);
 
-    @Inject
-    public ODLAuthenticator() {
-        // Exposed for DI
+    private final WebEnvironment env;
+
+    public ODLAuthenticator(final WebEnvironment env) {
+        this.env = requireNonNull(env);
     }
 
     @Override
@@ -49,18 +47,19 @@ public class ODLAuthenticator implements Authenticator {
 
         try {
             final String base64Creds = authorization.substring("Basic".length()).trim();
-            String credentials = new String(Base64.getDecoder().decode(base64Creds), StandardCharsets.UTF_8);
+            final String credentials = new String(Base64.getDecoder().decode(base64Creds), StandardCharsets.UTF_8);
             final String[] values = credentials.split(":", 2);
-            UsernamePasswordToken upt = new UsernamePasswordToken();
+            final UsernamePasswordToken upt = new UsernamePasswordToken();
             upt.setUsername(values[0]);
             upt.setPassword(values[1].toCharArray());
 
+            final Subject subject = new Subject.Builder(env.getSecurityManager()).buildSubject();
             try {
-                return login(upt);
+                return login(subject, upt);
             } catch (UnknownSessionException e) {
                 LOG.debug("Couldn't log in {} - logging out and retrying...", upt, e);
-                logout();
-                return login(upt);
+                logout(subject);
+                return login(subject, upt);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             // FIXME: who throws this above and why do we need to catch it? Should this be error or warn?
@@ -70,8 +69,7 @@ public class ODLAuthenticator implements Authenticator {
         return false;
     }
 
-    private static void logout() {
-        final Subject subject = SecurityUtils.getSubject();
+    private static void logout(final Subject subject) {
         try {
             subject.logout();
             Session session = subject.getSession(false);
@@ -83,8 +81,7 @@ public class ODLAuthenticator implements Authenticator {
         }
     }
 
-    private static boolean login(final UsernamePasswordToken upt) {
-        final Subject subject = SecurityUtils.getSubject();
+    private static boolean login(final Subject subject, final UsernamePasswordToken upt) {
         try {
             subject.login(upt);
         } catch (AuthenticationException e) {

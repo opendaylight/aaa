@@ -58,6 +58,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   </bean>
   <service ref="webContextSecurer" interface="org.opendaylight.aaa.web.WebContextSecurer" />
 
+  <bean id="jolokiaAuthenticator" class="org.opendaylight.aaa.authenticator.ODLAuthenticator">
+    <argument ref="webEnvironment"/>
+  </bean>
+  <service ref="jolokiaAuthenticator" interface="org.jolokia.osgi.security.Authenticator"/>
+
   <reference id="customFilterAdapterConfig"
       interface="org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration"/>
   <reference id="webServer" interface="org.opendaylight.aaa.web.WebServer" />
