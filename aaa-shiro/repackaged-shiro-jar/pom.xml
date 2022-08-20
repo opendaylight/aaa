@@ -20,7 +20,7 @@
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>repackaged-shiro-jar</artifactId>
     <packaging>jar</packaging>
-    <version>0.15.6-SNAPSHOT</version>
+    <version>0.15.6</version>
     <name>${project.artifactId}</name>
 
     <properties>

@@ -20,7 +20,7 @@
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>odl-apache-shiro</artifactId>
-    <version>0.15.6-SNAPSHOT</version>
+    <version>0.15.6</version>
     <packaging>feature</packaging>
 
     <name>OpenDaylight :: Apache Shiro</name>
