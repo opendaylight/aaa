@@ -53,6 +53,9 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="passwordService" />
   </bean>
 
+  <bean id="authenticator" class="org.opendaylight.aaa.authenticator.ODLAuthenticator" />
+  <service ref="authenticator" interface="org.jolokia.osgi.security.Authenticator" />
+
   <bean id="shiroWebEnvLoader" class="org.opendaylight.aaa.shiro.web.env.ShiroWebEnvironmentLoaderListener">
     <argument ref="shiroConfiguration"/>
     <argument ref="dataBroker"/>

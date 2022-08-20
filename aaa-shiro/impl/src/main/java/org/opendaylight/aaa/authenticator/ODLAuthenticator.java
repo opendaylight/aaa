@@ -9,8 +9,6 @@ package org.opendaylight.aaa.authenticator;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.ShiroException;
@@ -20,22 +18,14 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.subject.Subject;
 import org.jolokia.osgi.security.Authenticator;
-import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * AAA hook for <code>odl-jolokia</code> configured w/ <code>org.jolokia.authMode=service-all</code>.
  */
-@Singleton
-@Component(immediate = true)
 public class ODLAuthenticator implements Authenticator {
     private static final Logger LOG = LoggerFactory.getLogger(ODLAuthenticator.class);
-
-    @Inject
-    public ODLAuthenticator() {
-        // Exposed for DI
-    }
 
     @Override
     public boolean authenticate(final HttpServletRequest httpServletRequest) {
