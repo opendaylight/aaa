@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6675a573_40e65b15",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2022-09-12T13:01:15Z",
+      "side": 1,
+      "message": "\"Fix web pattern propagation\"\n\nor similar",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "f27db15d727f5c76034c4dc21ff892cf10fcfe74",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3620047_181db57f",
+        "filename": "web/impl-osgi/src/main/java/org/opendaylight/aaa/web/osgi/WhiteboardWebServer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2022-09-12T13:01:15Z",
+      "side": 1,
+      "message": "I thing this should be fixed in sal-rest-docgen -- a resource could be a single file, and this would actually break that use case.",
+      "range": {
+        "startLine": 196,
+        "startChar": 11,
+        "endLine": 196,
+        "endChar": 82
+      },
+      "revId": "f27db15d727f5c76034c4dc21ff892cf10fcfe74",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
