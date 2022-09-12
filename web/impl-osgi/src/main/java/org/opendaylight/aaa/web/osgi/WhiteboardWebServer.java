@@ -128,7 +128,7 @@ public final class WhiteboardWebServer implements WebServer {
 
         // 3. Filters - because subsequent servlets should already be covered by the filters
         for (var filter : webContext.filters()) {
-            final var props = filterProperties(contextPath, contextSelect, filter);
+            final var props = filterProperties(contextSelect, filter);
             LOG.debug("Registering filter {} with properties {}", filter, props);
             builder.add(bundleContext.registerService(Filter.class, filter.filter(),
                 FrameworkUtil.asDictionary(props)));
@@ -136,7 +136,7 @@ public final class WhiteboardWebServer implements WebServer {
 
         // 4. Servlets - 'bout time for 'em by now, don't you think? ;)
         for (var servlet : webContext.servlets()) {
-            final var props = servletProperties(contextPath, contextSelect, servlet);
+            final var props = servletProperties(contextSelect, servlet);
             LOG.debug("Registering servlet {} with properties {}", servlet, props);
             builder.add(bundleContext.registerService(Servlet.class, servlet.servlet(),
                 FrameworkUtil.asDictionary(props)));
@@ -144,7 +144,7 @@ public final class WhiteboardWebServer implements WebServer {
 
         // 5. Resources
         for (var resource : webContext.resources()) {
-            final var props = resourceProperties(contextPath, contextSelect, resource);
+            final var props = resourceProperties(contextSelect, resource);
             LOG.debug("Registering resource {} with properties {}", resource, props);
             builder.add(bundleContext.registerService(Object.class, WhiteboardResource.INSTANCE,
                 FrameworkUtil.asDictionary(props)));
@@ -175,14 +175,12 @@ public final class WhiteboardWebServer implements WebServer {
         return builder.build();
     }
 
-    private static Map<String, Object> filterProperties(final String contextPath, final String contextSelect,
-            final FilterDetails filter) {
+    private static Map<String, Object> filterProperties(final String contextSelect, final FilterDetails filter) {
         final var builder = ImmutableMap.<String, Object>builder()
             .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT, contextSelect)
             .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED, filter.getAsyncSupported())
             .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME, filter.name())
-            .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN,
-                absolutePatterns(contextPath, filter.urlPatterns()));
+            .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN, absolutePatterns(filter.urlPatterns()));
 
         for (var e : filter.initParams().entrySet()) {
             builder.put(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX + e.getKey(), e.getValue());
@@ -191,23 +189,20 @@ public final class WhiteboardWebServer implements WebServer {
         return builder.build();
     }
 
-    private static Map<String, Object> resourceProperties(final String contextPath, final String contextSelect,
-            final ResourceDetails resource) {
+    private static Map<String, Object> resourceProperties(final String contextSelect, final ResourceDetails resource) {
         final var path = absolutePath(resource.name());
         return Map.of(
             HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT, contextSelect,
-            HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN, contextPath + absolutePath(resource.alias()),
+            HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN, path + "/*",
             HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX, path);
     }
 
-    private static Map<String, Object> servletProperties(final String contextPath, final String contextSelect,
-            final ServletDetails servlet) {
+    private static Map<String, Object> servletProperties(final String contextSelect, final ServletDetails servlet) {
         final var builder = ImmutableMap.<String, Object>builder()
             .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT, contextSelect)
             .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED, servlet.getAsyncSupported())
             .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME, servlet.name())
-            .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
-                absolutePatterns(contextPath, servlet.urlPatterns()));
+            .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, absolutePatterns(servlet.urlPatterns()));
 
         for (var e : servlet.initParams().entrySet()) {
             builder.put(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX + e.getKey(), e.getValue());
@@ -220,13 +215,12 @@ public final class WhiteboardWebServer implements WebServer {
         return path.startsWith("/") ? path : "/" + path;
     }
 
-    private static List<String> absolutePatterns(final String contextPath, final List<String> urlPatterns) {
+    private static List<String> absolutePatterns(final List<String> urlPatterns) {
         return urlPatterns.stream()
             // Reject duplicates
             .distinct()
             // Ease of debugging
             .sorted()
-            .map(urlPattern -> contextPath + urlPattern)
             .collect(Collectors.toUnmodifiableList());
     }
 }
