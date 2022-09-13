@@ -190,11 +190,13 @@ public final class WhiteboardWebServer implements WebServer {
     }
 
     private static Map<String, Object> resourceProperties(final String contextSelect, final ResourceDetails resource) {
-        final var path = absolutePath(resource.name());
+        final var alias = absolutePath(resource.alias());
+        final var pattern = alias.endsWith("/") ? alias + '*' : alias + "/*";
+
         return Map.of(
             HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT, contextSelect,
-            HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN, path,
-            HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX, path);
+            HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN, pattern,
+            HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX, absolutePath(resource.name()));
     }
 
     private static Map<String, Object> servletProperties(final String contextSelect, final ServletDetails servlet) {
