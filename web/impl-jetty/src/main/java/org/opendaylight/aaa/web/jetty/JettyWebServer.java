@@ -124,7 +124,7 @@ public class JettyWebServer implements WebServer {
             // AKA <load-on-startup> 1
             servletHolder.setInitOrder(1);
             servlet.urlPatterns().forEach(
-                urlPattern -> handler.addServlet(servletHolder, urlPattern)
+                urlPattern -> handler.addServlet(servletHolder, ensureAbsolutePath(urlPattern))
             );
         });
 
@@ -154,5 +154,9 @@ public class JettyWebServer implements WebServer {
             handler.destroy();
         }
         contextHandlerCollection.removeHandler(handler);
+    }
+
+    private static String ensureAbsolutePath(final String path) {
+        return path.startsWith("/") ? path : "/" + path;
     }
 }
