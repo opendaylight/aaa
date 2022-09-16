@@ -63,6 +63,24 @@
       "message": "Please add test cases.",
       "revId": "e31b788aa9c2610e0ff3a08f58adbaa45b4239ca",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da92bdb1_2615a992",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2022-09-16T17:50:08Z",
+      "side": 1,
+      "message": "Hmm, the code is not structured to really test these out. We will have a later follow-up, which will actually force the urls (and other strings) to be properly formatted, so that such violations are caught immediately -- and we will add tests for those (see WebContextApiTest.testBadContextPath())",
+      "parentUuid": "284a9b33_b436a197",
+      "revId": "e31b788aa9c2610e0ff3a08f58adbaa45b4239ca",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
