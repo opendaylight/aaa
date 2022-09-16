@@ -92,8 +92,7 @@ public class JettyWebServer implements WebServer {
 
     @Override
     public synchronized Registration registerWebContext(final WebContext webContext) throws ServletException {
-        String contextPathWithSlashPrefix = webContext.contextPath().startsWith("/")
-                ? webContext.contextPath() : "/" + webContext.contextPath();
+        String contextPathWithSlashPrefix = ensureAbsolutePath(webContext.contextPath());
         ServletContextHandler handler = new ServletContextHandler(contextHandlerCollection, contextPathWithSlashPrefix,
                 webContext.supportsSessions() ? ServletContextHandler.SESSIONS : ServletContextHandler.NO_SESSIONS);
 
@@ -112,7 +111,8 @@ public class JettyWebServer implements WebServer {
             FilterHolder filterHolder = new FilterHolder(filter.filter());
             filterHolder.setInitParameters(filter.initParams());
             filter.urlPatterns().forEach(
-                urlPattern -> handler.addFilter(filterHolder, urlPattern, EnumSet.allOf(DispatcherType.class))
+                urlPattern -> handler.addFilter(filterHolder, ensureAbsolutePath(urlPattern),
+                    EnumSet.allOf(DispatcherType.class))
             );
         });
 
@@ -124,7 +124,7 @@ public class JettyWebServer implements WebServer {
             // AKA <load-on-startup> 1
             servletHolder.setInitOrder(1);
             servlet.urlPatterns().forEach(
-                urlPattern -> handler.addServlet(servletHolder, urlPattern)
+                urlPattern -> handler.addServlet(servletHolder, ensureAbsolutePath(urlPattern))
             );
         });
 
@@ -154,5 +154,9 @@ public class JettyWebServer implements WebServer {
             handler.destroy();
         }
         contextHandlerCollection.removeHandler(handler);
+    }
+
+    private static String ensureAbsolutePath(final String path) {
+        return path.startsWith("/") ? path : "/" + path;
     }
 }
