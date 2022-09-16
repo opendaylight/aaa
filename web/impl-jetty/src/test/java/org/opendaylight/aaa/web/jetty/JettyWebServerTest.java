@@ -5,12 +5,11 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.web.jetty.test;
+package org.opendaylight.aaa.web.jetty;
 
 import org.junit.After;
 import org.junit.Before;
 import org.opendaylight.aaa.web.WebServer;
-import org.opendaylight.aaa.web.jetty.JettyWebServer;
 import org.opendaylight.aaa.web.test.AbstractWebServerTest;
 
 /**
@@ -23,7 +22,7 @@ public class JettyWebServerTest extends AbstractWebServerTest {
     private JettyWebServer webServer;
 
     @Before
-    @SuppressWarnings("checkstyle:IllegalThrows") // Jetty throws Throwable
+    @SuppressWarnings("checkstyle:IllegalThrows")
     public void beforeTest() throws Throwable {
         webServer = new JettyWebServer();
         webServer.start();
