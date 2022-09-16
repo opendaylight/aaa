@@ -5,36 +5,34 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.web.tests;
+package org.opendaylight.aaa.web;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
-import javax.servlet.Filter;
+import javax.servlet.Servlet;
 import org.junit.Test;
-import org.opendaylight.aaa.web.FilterDetails;
 
-public class FilterDetailsTest {
-
+public class ServletDetailsTest {
     @Test
     public void testDefaultValue() {
-        FilterDetails filterDetails = FilterDetails.builder()
-                .filter(mock(Filter.class))
+        ServletDetails servletDetails = ServletDetails.builder()
+                .servlet(mock(Servlet.class))
                 .addUrlPattern("test")
                 .addUrlPattern("another")
                 .name("custom")
                 .putInitParam("key", "value")
                 .build();
 
-        assertFalse(filterDetails.getAsyncSupported());
+        assertFalse(servletDetails.getAsyncSupported());
     }
 
     @Test
     public void testAsyncFalse() {
-        FilterDetails filterDetails = FilterDetails.builder()
-                .filter(mock(Filter.class))
+        ServletDetails servletDetails = ServletDetails.builder()
+                .servlet(mock(Servlet.class))
                 .addUrlPattern("test")
                 .addUrlPattern("another")
                 .name("custom")
@@ -42,13 +40,13 @@ public class FilterDetailsTest {
                 .asyncSupported(false)
                 .build();
 
-        assertFalse(filterDetails.getAsyncSupported());
+        assertFalse(servletDetails.getAsyncSupported());
     }
 
     @Test
     public void testAsyncTrue() {
-        FilterDetails filterDetails = FilterDetails.builder()
-                .filter(mock(Filter.class))
+        ServletDetails servletDetails = ServletDetails.builder()
+                .servlet(mock(Servlet.class))
                 .addUrlPattern("test")
                 .addUrlPattern("another")
                 .name("custom")
@@ -56,14 +54,11 @@ public class FilterDetailsTest {
                 .asyncSupported(true)
                 .build();
 
-        assertTrue(filterDetails.getAsyncSupported());
+        assertTrue(servletDetails.getAsyncSupported());
     }
 
     @Test
     public void testException() {
-        assertThrows(IllegalStateException.class, () -> {
-            FilterDetails.builder().build();
-        });
+        assertThrows(IllegalStateException.class, () -> ServletDetails.builder().build());
     }
-
 }

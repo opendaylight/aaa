@@ -5,7 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.web.tests;
+package org.opendaylight.aaa.web;
 
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,11 +21,6 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.opendaylight.aaa.web.FilterDetails;
-import org.opendaylight.aaa.web.ServletDetails;
-import org.opendaylight.aaa.web.WebContext;
-import org.opendaylight.aaa.web.WebContextBuilder;
-import org.opendaylight.aaa.web.WebServer;
 
 /**
  * Tests for Web Server {@link WebContext} API. These tests don't test an
