@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c03b62f_526751e4",
+        "filename": "web/impl-jetty/src/test/java/org/opendaylight/aaa/web/test/AbstractWebServerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2022-09-19T11:08:42Z",
+      "side": 1,
+      "message": "It\u0027s not clear what you are trying to test - IIRC: the fix has been made for servlets and filters.",
+      "revId": "f50cff9a68d3eeb50cad06dcf9703e8e433266ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
