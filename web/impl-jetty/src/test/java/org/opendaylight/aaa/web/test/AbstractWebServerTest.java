@@ -56,6 +56,20 @@ public abstract class AbstractWebServerTest {
     }
 
     @Test
+    public void testAddAfterStartWithoutSlashOnServletAndFilters() throws ServletException, IOException {
+        // NB subtle difference to testAddAfterStart() test: addUrlPattern("*") instead of /* with slash!
+        var testFilter = new TestFilter();
+        var webContext = WebContext.builder()
+                .contextPath("/test1")
+                .addServlet(ServletDetails.builder().addUrlPattern("*").name("Test").servlet(new TestServlet()).build())
+                .addFilter(FilterDetails.builder().addUrlPattern("*").name("Test").filter(testFilter).build())
+                .build();
+        try (var webContextRegistration = getWebServer().registerWebContext(webContext)) {
+            checkTestServlet(getWebServer().getBaseURL() + "/test1");
+        }
+    }
+
+    @Test
     public void testAddFilter() throws Exception {
         var testFilter = new TestFilter();
         var webContext = WebContext.builder()
