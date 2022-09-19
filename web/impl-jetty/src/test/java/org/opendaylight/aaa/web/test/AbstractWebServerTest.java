@@ -56,6 +56,18 @@ public abstract class AbstractWebServerTest {
     }
 
     @Test
+    public void testAddAfterStartWithoutSlashOnServlet() throws ServletException, IOException {
+        // NB subtle difference to testAddAfterStart() test: addUrlPattern("*") instead of /* with slash!
+        var webContext = WebContext.builder()
+                .contextPath("/test1")
+                .addServlet(ServletDetails.builder().addUrlPattern("*").name("Test").servlet(new TestServlet()).build())
+                .build();
+        try (var webContextRegistration = getWebServer().registerWebContext(webContext)) {
+            checkTestServlet(getWebServer().getBaseURL() + "/test1");
+        }
+    }
+
+    @Test
     public void testAddFilter() throws Exception {
         var testFilter = new TestFilter();
         var webContext = WebContext.builder()
@@ -63,6 +75,19 @@ public abstract class AbstractWebServerTest {
             .putContextParam("testParam1", "avalue")
             .addFilter(FilterDetails.builder().addUrlPattern("/*").name("Test").filter(testFilter).build())
             .build();
+        try (var webContextRegistration = getWebServer().registerWebContext(webContext)) {
+            assertTrue(testFilter.isInitialized);
+        }
+    }
+
+    @Test
+    public void testAddFilterWithoutSlash() throws Exception {
+        var testFilter = new TestFilter();
+        var webContext = WebContext.builder()
+                .contextPath("/testingFilters")
+                .putContextParam("testParam1", "avalue")
+                .addFilter(FilterDetails.builder().addUrlPattern("*").name("Test").filter(testFilter).build())
+                .build();
         try (var webContextRegistration = getWebServer().registerWebContext(webContext)) {
             assertTrue(testFilter.isInitialized);
         }
