@@ -12,16 +12,15 @@ import static java.util.Objects.requireNonNull;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterators;
+import com.google.common.collect.Streams;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.servlet.Filter;
 import javax.servlet.FilterConfig;
@@ -144,11 +143,8 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      *            The newly injected <code>FilterDTO</code> list
      */
     private void updateListener(final CustomFilterAdapterListener listener) {
-        final Optional<ServletContext> listenerServletContext = extractServletContext(listener);
-        final List<Filter> filterList = convertCustomFilterList(listenerServletContext);
-
+        final var filterList = convertCustomFilterList(extractServletContext(listener));
         LOG.debug("Notifying listener {} of filters {}", listener, filterList);
-
         listener.updateInjectedFilters(filterList);
     }
 
@@ -176,11 +172,10 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      *            a list of class names, ideally Filters
      * @return a list of derived Filter(s)
      */
-    private List<Filter> convertCustomFilterList(final Optional<ServletContext> listenerServletContext) {
-        final List<Filter> filterList = ImmutableList.<FilterDTO>builder().addAll(namedFilterDTOs)
-            .addAll(instanceFilterDTOs).build().stream().flatMap(
-                filter -> getFilterInstance(filter, listenerServletContext)).collect(Collectors.toList());
-        return Collections.unmodifiableList(filterList);
+    private ImmutableList<Filter> convertCustomFilterList(final Optional<ServletContext> listenerServletContext) {
+        return Streams.concat(namedFilterDTOs.stream(), instanceFilterDTOs.stream())
+            .flatMap(filter -> getFilterInstance(filter, listenerServletContext))
+            .collect(ImmutableList.toImmutableList());
     }
 
     /**
