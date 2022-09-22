@@ -280,7 +280,7 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
         final Map<String, String> extractedConfig = new HashMap<>();
         for (Entry<String, String> entry : fullConfiguration.entrySet()) {
             String key = entry.getKey();
-            final int lastDotSeparator = key.lastIndexOf(".");
+            final int lastDotSeparator = key.lastIndexOf('.');
             if (lastDotSeparator >= 0) {
                 final String comparisonClazzNameSubstring = key.substring(0, lastDotSeparator);
                 if (comparisonClazzNameSubstring.equals(clazzName)) {
