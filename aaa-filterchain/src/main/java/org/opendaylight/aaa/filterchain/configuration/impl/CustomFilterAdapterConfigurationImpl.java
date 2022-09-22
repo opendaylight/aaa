@@ -208,7 +208,7 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
         private InjectedFilterConfig(final Filter filter, final Optional<ServletContext> servletContext,
                 final Map<String, String> filterConfig) {
 
-            this.filterName = filter.getClass().getSimpleName();
+            filterName = filter.getClass().getSimpleName();
             this.servletContext = servletContext.orElse(null);
             this.filterConfig = filterConfig;
         }
@@ -304,9 +304,9 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
     @Override
     public void registerCustomFilterAdapterConfigurationListener(final CustomFilterAdapterListener listener) {
         LOG.debug("registerCustomFilterAdapterConfigurationListener: {}", listener);
-        if (this.listeners.add(listener)) {
+        if (listeners.add(listener)) {
             LOG.debug("Updated listener set: {}", listeners);
-            this.updateListener(listener);
+            updateListener(listener);
         }
     }
 
