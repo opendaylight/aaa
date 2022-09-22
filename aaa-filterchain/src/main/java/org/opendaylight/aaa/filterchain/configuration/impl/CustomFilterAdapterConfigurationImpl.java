@@ -12,7 +12,6 @@ import static java.util.Objects.requireNonNull;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterators;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -256,11 +255,8 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
         final String customFilterListValue = configuration.get(CUSTOM_FILTER_LIST_KEY);
         final ImmutableList.Builder<FilterDTO> customFilterListBuilder = ImmutableList.builder();
         if (customFilterListValue != null) {
-            // Creates the list from comma separate values; whitespace is
-            // removed first
-            final List<String> filterClazzNames = Arrays
-                    .asList(customFilterListValue.replaceAll("\\s", "").split(FILTER_DTO_SEPARATOR));
-            for (String filterClazzName : filterClazzNames) {
+            // Creates the list from comma separate values; whitespace is removed first
+            for (String filterClazzName : customFilterListValue.replaceAll("\\s", "").split(FILTER_DTO_SEPARATOR)) {
                 if (!Strings.isNullOrEmpty(filterClazzName)) {
                     final Map<String, String> applicableConfigs = extractPropertiesForFilter(filterClazzName,
                             configuration);
