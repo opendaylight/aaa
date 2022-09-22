@@ -287,10 +287,8 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
                     final String filterInitParamKey = key.substring(lastDotSeparator + 1);
                     extractedConfig.put(filterInitParamKey, entry.getValue());
                 }
-            } else {
-                if (!key.equals(CUSTOM_FILTER_LIST_KEY)) {
-                    LOG.error("couldn't parse property \"{}\"; skipping", key);
-                }
+            } else if (!key.equals(CUSTOM_FILTER_LIST_KEY)) {
+                LOG.error("couldn't parse property \"{}\"; skipping", key);
             }
         }
         return extractedConfig;
