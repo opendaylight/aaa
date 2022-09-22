@@ -337,17 +337,16 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
             this.initParams = requireNonNull(initParams);
         }
 
-        @SuppressWarnings("unchecked")
         @Override
         Filter getInstance(final Optional<ServletContext> servletContext) {
+            final Filter instance;
             try {
-                final Class<Filter> filterClazz = (Class<Filter>) Class.forName(clazzName);
-                return init(filterClazz.getDeclaredConstructor().newInstance(), servletContext);
+                instance = Class.forName(clazzName).asSubclass(Filter.class).getDeclaredConstructor().newInstance();
             } catch (ReflectiveOperationException | ClassCastException e) {
-                LOG.error("Error loading  {}", this, e);
+                LOG.error("Error loading {}", this, e);
+                return null;
             }
-
-            return null;
+            return init(instance, servletContext);
         }
 
         private Filter init(final Filter filter, final Optional<ServletContext> servletContext) {
