@@ -11,19 +11,18 @@ import static java.util.Objects.requireNonNull;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import java.util.Arrays;
+import com.google.common.collect.Iterators;
+import com.google.common.collect.Streams;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.servlet.Filter;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
@@ -69,9 +68,9 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      * Saves a local copy of the most recent configuration so when a listener is
      * added, it can receive and initial update.
      */
-    private volatile List<FilterDTO> namedFilterDTOs = Collections.emptyList();
+    private volatile ImmutableList<FilterDTO> namedFilterDTOs = ImmutableList.of();
 
-    private volatile List<FilterDTO> instanceFilterDTOs = Collections.emptyList();
+    private volatile ImmutableList<FilterDTO> instanceFilterDTOs = ImmutableList.of();
 
     @Activate
     void activate(final Map<String, String> properties) {
@@ -84,7 +83,7 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
         if (properties != null) {
             LOG.info("Custom filter properties updated: {}", properties);
 
-            this.namedFilterDTOs = getCustomFilterList(properties);
+            namedFilterDTOs = getCustomFilterList(properties);
             updateListeners();
         }
     }
@@ -105,8 +104,10 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
         }
 
         LOG.info("Custom Filter {} added", filter);
-        this.instanceFilterDTOs = ImmutableList.<FilterDTO>builder().addAll(instanceFilterDTOs)
-                .add(FilterDTO.createFilterDTO(filter)).build();
+        instanceFilterDTOs = ImmutableList.<FilterDTO>builder()
+            .addAll(instanceFilterDTOs)
+            .add(FilterDTO.createFilterDTO(filter))
+            .build();
         updateListeners();
     }
 
@@ -118,8 +119,9 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
 
         LOG.info("Custom Filter {} removed", filter);
         FilterDTO toRemove = FilterDTO.createFilterDTO(filter);
-        this.instanceFilterDTOs = ImmutableList.copyOf(instanceFilterDTOs.stream().filter(dto -> !dto.equals(toRemove))
-                .collect(Collectors.toList()));
+        instanceFilterDTOs = instanceFilterDTOs.stream()
+            .filter(dto -> !dto.equals(toRemove))
+            .collect(ImmutableList.toImmutableList());
         updateListeners();
     }
 
@@ -174,11 +176,11 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      *            a list of class names, ideally Filters
      * @return a list of derived Filter(s)
      */
-    private List<Filter> convertCustomFilterList(final Optional<ServletContext> listenerServletContext) {
-        final List<Filter> filterList = ImmutableList.<FilterDTO>builder().addAll(namedFilterDTOs)
-            .addAll(instanceFilterDTOs).build().stream().flatMap(
-                filter -> getFilterInstance(filter, listenerServletContext)).collect(Collectors.toList());
-        return Collections.unmodifiableList(filterList);
+    private ImmutableList<Filter> convertCustomFilterList(final Optional<ServletContext> listenerServletContext) {
+        return Streams.concat(namedFilterDTOs.stream(), instanceFilterDTOs.stream())
+            .map(filter -> getFilterInstance(filter, listenerServletContext))
+            .filter(Objects::nonNull)
+            .collect(ImmutableList.toImmutableList());
     }
 
     /**
@@ -190,15 +192,14 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      *            Scoped to the listener
      * @return A Stream containing the Filter, or empty if one cannot be instantiated.
      */
-    private static Stream<Filter> getFilterInstance(final FilterDTO customFilter,
+    private static @Nullable Filter getFilterInstance(final FilterDTO customFilter,
             final Optional<ServletContext> servletContext) {
         final Filter filter = customFilter.getInstance(servletContext);
         if (filter != null) {
             LOG.info("Successfully loaded custom Filter {} for context {}", filter, servletContext);
-            return Stream.of(filter);
+            return filter;
         }
-
-        return Stream.empty();
+        return null;
     }
 
     /**
@@ -214,7 +215,7 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
         private InjectedFilterConfig(final Filter filter, final Optional<ServletContext> servletContext,
                 final Map<String, String> filterConfig) {
 
-            this.filterName = filter.getClass().getSimpleName();
+            filterName = filter.getClass().getSimpleName();
             this.servletContext = servletContext.orElse(null);
             this.filterConfig = filterConfig;
         }
@@ -236,19 +237,8 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
 
         @Override
         public Enumeration<String> getInitParameterNames() {
-            return filterConfig != null ? new Enumeration<>() {
-                final Iterator<String> keySet = filterConfig.keySet().iterator();
-
-                @Override
-                public boolean hasMoreElements() {
-                    return keySet.hasNext();
-                }
-
-                @Override
-                public String nextElement() {
-                    return keySet.next();
-                }
-            } : Collections.emptyEnumeration();
+            return filterConfig == null ? Collections.emptyEnumeration()
+                : Iterators.asEnumeration(filterConfig.keySet().iterator());
         }
 
         @Override
@@ -263,21 +253,20 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      * @return A <code>non-null</code> <code>List</code> of the custom filter
      *         fully qualified class names.
      */
-    private static List<FilterDTO> getCustomFilterList(final Map<String, String> configuration) {
+    private static ImmutableList<FilterDTO> getCustomFilterList(final Map<String, String> configuration) {
         final String customFilterListValue = configuration.get(CUSTOM_FILTER_LIST_KEY);
-        final ImmutableList.Builder<FilterDTO> customFilterListBuilder = ImmutableList.builder();
-        if (customFilterListValue != null) {
-            // Creates the list from comma separate values; whitespace is
-            // removed first
-            final List<String> filterClazzNames = Arrays
-                    .asList(customFilterListValue.replaceAll("\\s", "").split(FILTER_DTO_SEPARATOR));
-            for (String filterClazzName : filterClazzNames) {
-                if (!Strings.isNullOrEmpty(filterClazzName)) {
-                    final Map<String, String> applicableConfigs = extractPropertiesForFilter(filterClazzName,
-                            configuration);
-                    final FilterDTO filterDTO = FilterDTO.createFilterDTO(filterClazzName, applicableConfigs);
-                    customFilterListBuilder.add(filterDTO);
-                }
+        if (customFilterListValue == null) {
+            return ImmutableList.of();
+        }
+
+        final var customFilterListBuilder = ImmutableList.<FilterDTO>builder();
+        // Creates the list from comma separate values; whitespace is removed first
+        for (String filterClazzName : customFilterListValue.replaceAll("\\s", "").split(FILTER_DTO_SEPARATOR)) {
+            if (!Strings.isNullOrEmpty(filterClazzName)) {
+                final Map<String, String> applicableConfigs = extractPropertiesForFilter(filterClazzName,
+                    configuration);
+                final FilterDTO filterDTO = FilterDTO.createFilterDTO(filterClazzName, applicableConfigs);
+                customFilterListBuilder.add(filterDTO);
             }
         }
         return customFilterListBuilder.build();
@@ -307,10 +296,8 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
                     final String filterInitParamKey = key.substring(lastDotSeparator + 1);
                     extractedConfig.put(filterInitParamKey, entry.getValue());
                 }
-            } else {
-                if (!key.equals(CUSTOM_FILTER_LIST_KEY)) {
-                    LOG.error("couldn't parse property \"{}\"; skipping", key);
-                }
+            } else if (!key.equals(CUSTOM_FILTER_LIST_KEY)) {
+                LOG.error("couldn't parse property \"{}\"; skipping", key);
             }
         }
         return extractedConfig;
@@ -326,9 +313,9 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
     @Override
     public void registerCustomFilterAdapterConfigurationListener(final CustomFilterAdapterListener listener) {
         LOG.debug("registerCustomFilterAdapterConfigurationListener: {}", listener);
-        if (this.listeners.add(listener)) {
+        if (listeners.add(listener)) {
             LOG.debug("Updated listener set: {}", listeners);
-            this.updateListener(listener);
+            updateListener(listener);
         }
     }
 
