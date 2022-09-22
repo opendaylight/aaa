@@ -19,9 +19,9 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Stream;
 import javax.servlet.Filter;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
@@ -174,28 +174,25 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      */
     private ImmutableList<Filter> convertCustomFilterList(final Optional<ServletContext> listenerServletContext) {
         return Streams.concat(namedFilterDTOs.stream(), instanceFilterDTOs.stream())
-            .flatMap(filter -> getFilterInstance(filter, listenerServletContext))
+            .map(filter -> getFilterInstance(filter, listenerServletContext))
+            .filter(Objects::nonNull)
             .collect(ImmutableList.toImmutableList());
     }
 
     /**
      * Utility method used to create and initialize a Filter from a FilterDTO.
      *
-     * @param customFilter
-     *            DTO containing Filter and properties path, if one exists.
-     * @param servletContext
-     *            Scoped to the listener
-     * @return A Stream containing the Filter, or empty if one cannot be instantiated.
+     * @param customFilter DTO containing Filter and properties path, if one exists.
+     * @param servletContext Scoped to the listener
+     * @returnThe Filter, or null
      */
-    private static Stream<Filter> getFilterInstance(final FilterDTO customFilter,
+    private static @Nullable Filter getFilterInstance(final FilterDTO customFilter,
             final Optional<ServletContext> servletContext) {
-        final Filter filter = customFilter.getInstance(servletContext);
+        final var filter = customFilter.getInstance(servletContext);
         if (filter != null) {
             LOG.info("Successfully loaded custom Filter {} for context {}", filter, servletContext);
-            return Stream.of(filter);
         }
-
-        return Stream.empty();
+        return filter;
     }
 
     /**
