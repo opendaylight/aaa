@@ -68,9 +68,9 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      * Saves a local copy of the most recent configuration so when a listener is
      * added, it can receive and initial update.
      */
-    private volatile List<FilterDTO> namedFilterDTOs = Collections.emptyList();
+    private volatile ImmutableList<FilterDTO> namedFilterDTOs = ImmutableList.of();
 
-    private volatile List<FilterDTO> instanceFilterDTOs = Collections.emptyList();
+    private volatile ImmutableList<FilterDTO> instanceFilterDTOs = ImmutableList.of();
 
     @Activate
     void activate(final Map<String, String> properties) {
@@ -83,7 +83,7 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
         if (properties != null) {
             LOG.info("Custom filter properties updated: {}", properties);
 
-            this.namedFilterDTOs = getCustomFilterList(properties);
+            namedFilterDTOs = getCustomFilterList(properties);
             updateListeners();
         }
     }
@@ -104,8 +104,10 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
         }
 
         LOG.info("Custom Filter {} added", filter);
-        this.instanceFilterDTOs = ImmutableList.<FilterDTO>builder().addAll(instanceFilterDTOs)
-                .add(FilterDTO.createFilterDTO(filter)).build();
+        instanceFilterDTOs = ImmutableList.<FilterDTO>builder()
+            .addAll(instanceFilterDTOs)
+            .add(FilterDTO.createFilterDTO(filter))
+            .build();
         updateListeners();
     }
 
@@ -117,8 +119,9 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
 
         LOG.info("Custom Filter {} removed", filter);
         FilterDTO toRemove = FilterDTO.createFilterDTO(filter);
-        this.instanceFilterDTOs = ImmutableList.copyOf(instanceFilterDTOs.stream().filter(dto -> !dto.equals(toRemove))
-                .collect(Collectors.toList()));
+        instanceFilterDTOs = instanceFilterDTOs.stream()
+            .filter(dto -> !dto.equals(toRemove))
+            .collect(ImmutableList.toImmutableList());
         updateListeners();
     }
 
@@ -251,21 +254,21 @@ public final class CustomFilterAdapterConfigurationImpl implements CustomFilterA
      * @return A <code>non-null</code> <code>List</code> of the custom filter
      *         fully qualified class names.
      */
-    private static List<FilterDTO> getCustomFilterList(final Map<String, String> configuration) {
-        final String customFilterListValue = configuration.get(CUSTOM_FILTER_LIST_KEY);
-        final ImmutableList.Builder<FilterDTO> customFilterListBuilder = ImmutableList.builder();
-        if (customFilterListValue != null) {
-            // Creates the list from comma separate values; whitespace is removed first
-            for (String filterClazzName : customFilterListValue.replaceAll("\\s", "").split(FILTER_DTO_SEPARATOR)) {
-                if (!Strings.isNullOrEmpty(filterClazzName)) {
-                    final Map<String, String> applicableConfigs = extractPropertiesForFilter(filterClazzName,
-                            configuration);
-                    final FilterDTO filterDTO = FilterDTO.createFilterDTO(filterClazzName, applicableConfigs);
-                    customFilterListBuilder.add(filterDTO);
-                }
+    private static ImmutableList<FilterDTO> getCustomFilterList(final Map<String, String> configuration) {
+        final var customFilterListValue = configuration.get(CUSTOM_FILTER_LIST_KEY);
+        if (customFilterListValue == null) {
+            return ImmutableList.of();
+        }
+
+        final var builder = ImmutableList.<FilterDTO>builder();
+        // Creates the list from comma separate values; whitespace is removed first
+        for (var filterClazzName : customFilterListValue.replaceAll("\\s", "").split(FILTER_DTO_SEPARATOR)) {
+            if (!Strings.isNullOrEmpty(filterClazzName)) {
+                builder.add(FilterDTO.createFilterDTO(filterClazzName,
+                    extractPropertiesForFilter(filterClazzName, configuration)));
             }
         }
-        return customFilterListBuilder.build();
+        return builder.build();
     }
 
     /**
