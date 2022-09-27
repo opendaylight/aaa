@@ -20,23 +20,30 @@ import org.immutables.value.Value.Default;
  */
 @Value.Immutable
 @Value.Style(visibility = Value.Style.ImplementationVisibility.PRIVATE, depluralize = true)
-public interface ServletDetails {
+public abstract class ServletDetails {
 
-    static ServletDetailsBuilder builder() {
+    public static ServletDetailsBuilder builder() {
         return new ServletDetailsBuilder();
     }
 
-    Servlet servlet();
+    public abstract Servlet servlet();
 
-    @Default default String name() {
+    @Default
+    public String name() {
         return servlet().getClass().getName();
     }
 
-    List<String> urlPatterns();
+    public abstract List<String> urlPatterns();
 
-    Map<String, String> initParams();
+    public abstract Map<String, String> initParams();
 
-    @Default default Boolean getAsyncSupported() {
+    @Default
+    public Boolean getAsyncSupported() {
         return false;
+    }
+
+    @Value.Check
+    protected void check() {
+        urlPatterns().forEach(ServletPathSpecValidator::checkUrlPattern);
     }
 }

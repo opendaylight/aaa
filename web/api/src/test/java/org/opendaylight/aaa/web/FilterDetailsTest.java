@@ -20,8 +20,8 @@ public class FilterDetailsTest {
     public void testDefaultValue() {
         FilterDetails filterDetails = FilterDetails.builder()
                 .filter(mock(Filter.class))
-                .addUrlPattern("test")
-                .addUrlPattern("another")
+                .addUrlPattern("/test")
+                .addUrlPattern("/another")
                 .name("custom")
                 .putInitParam("key", "value")
                 .build();
@@ -33,8 +33,8 @@ public class FilterDetailsTest {
     public void testAsyncFalse() {
         FilterDetails filterDetails = FilterDetails.builder()
                 .filter(mock(Filter.class))
-                .addUrlPattern("test")
-                .addUrlPattern("another")
+                .addUrlPattern("/test")
+                .addUrlPattern("/another")
                 .name("custom")
                 .putInitParam("key", "value")
                 .asyncSupported(false)
@@ -47,8 +47,8 @@ public class FilterDetailsTest {
     public void testAsyncTrue() {
         FilterDetails filterDetails = FilterDetails.builder()
                 .filter(mock(Filter.class))
-                .addUrlPattern("test")
-                .addUrlPattern("another")
+                .addUrlPattern("/test")
+                .addUrlPattern("/another")
                 .name("custom")
                 .putInitParam("key", "value")
                 .asyncSupported(true)
@@ -58,7 +58,40 @@ public class FilterDetailsTest {
     }
 
     @Test
-    public void testException() {
+    public void testEmptyBuilderException() {
         assertThrows(IllegalStateException.class, () -> FilterDetails.builder().build());
+    }
+
+    @Test
+    public void testNotPrefixNorSuffixPatternException() {
+        final var builder = FilterDetails.builder()
+                .filter(mock(Filter.class))
+                .addUrlPattern("test")
+                .name("custom")
+                .putInitParam("key", "value");
+
+        assertThrows(IllegalArgumentException.class, builder::build);
+    }
+
+    @Test
+    public void testIllegalPrefixPatternException() {
+        final var builder = FilterDetails.builder()
+                .filter(mock(Filter.class))
+                .addUrlPattern("/*test")
+                .name("custom")
+                .putInitParam("key", "value");
+
+        assertThrows(IllegalArgumentException.class, builder::build);
+    }
+
+    @Test
+    public void testIllegalSuffixPatternException() {
+        final var builder = FilterDetails.builder()
+                .filter(mock(Filter.class))
+                .addUrlPattern("*./test")
+                .name("custom")
+                .putInitParam("key", "value");
+
+        assertThrows(IllegalArgumentException.class, builder::build);
     }
 }
