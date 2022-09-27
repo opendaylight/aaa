@@ -20,8 +20,8 @@ public class ServletDetailsTest {
     public void testDefaultValue() {
         ServletDetails servletDetails = ServletDetails.builder()
                 .servlet(mock(Servlet.class))
-                .addUrlPattern("test")
-                .addUrlPattern("another")
+                .addUrlPattern("/test")
+                .addUrlPattern("/another")
                 .name("custom")
                 .putInitParam("key", "value")
                 .build();
@@ -33,8 +33,8 @@ public class ServletDetailsTest {
     public void testAsyncFalse() {
         ServletDetails servletDetails = ServletDetails.builder()
                 .servlet(mock(Servlet.class))
-                .addUrlPattern("test")
-                .addUrlPattern("another")
+                .addUrlPattern("/test")
+                .addUrlPattern("/another")
                 .name("custom")
                 .putInitParam("key", "value")
                 .asyncSupported(false)
@@ -47,8 +47,8 @@ public class ServletDetailsTest {
     public void testAsyncTrue() {
         ServletDetails servletDetails = ServletDetails.builder()
                 .servlet(mock(Servlet.class))
-                .addUrlPattern("test")
-                .addUrlPattern("another")
+                .addUrlPattern("/test")
+                .addUrlPattern("/another")
                 .name("custom")
                 .putInitParam("key", "value")
                 .asyncSupported(true)
