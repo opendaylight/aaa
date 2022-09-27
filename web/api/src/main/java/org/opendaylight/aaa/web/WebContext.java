@@ -82,17 +82,23 @@ import org.immutables.value.Value.Default;
 @Value.Style(visibility = Value.Style.ImplementationVisibility.PRIVATE, depluralize = true)
 public abstract class WebContext {
 
+    /**
+     * Builder for WebContext.
+     * @return {@link WebContextBuilder}
+     */
     public static WebContextBuilder builder() {
         return new WebContextBuilder();
     }
 
     /**
      * Path which will be used as URL prefix to all registered servlets and filters.
+     * @return {@link String} path
      */
     public abstract String contextPath();
 
     /**
      * Flag whether this context supports web sessions, defaults to true.
+     * @return boolean flag value
      */
     @Default
     public boolean supportsSessions() {
@@ -101,21 +107,25 @@ public abstract class WebContext {
 
     /**
      * Servlets.
+     * @return {@link List} list of {@link ServletDetails}
      */
     public abstract List<ServletDetails> servlets();
 
     /**
      * Filters.
+     * @return {@link List} list of {@link FilterDetails}
      */
     public abstract List<FilterDetails> filters();
 
     /**
      * Listeners.
+     * @return {@link List} list of {@link ServletContextListener}
      */
     public abstract List<ServletContextListener> listeners();
 
     /**
      * Registers resources (eg html files) that can be accessed via the URI namespace.
+     * @return {@link List} list of {@link ResourceDetails}
      */
     public abstract List<ResourceDetails> resources();
 
@@ -124,9 +134,13 @@ public abstract class WebContext {
      * {@link ServletDetails#initParams()} and {@link FilterDetails#initParams()}. While a ServletContext accepts
      * any Object as a parameter, that is not accepted in all implementations. Most notably OSGi HTTP Whiteboard
      * specification allows only String values, hence we are enforcing that.
+     * @return {@link Map} context parameters map
      */
     public abstract Map<String, String> contextParams();
 
+    /**
+     * Checking if filters and servlets in context have some url patterns inside.
+     */
     @Value.Check
     protected void check() {
         servlets().forEach(servlet -> {
