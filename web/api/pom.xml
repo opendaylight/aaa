@@ -22,15 +22,13 @@
   <packaging>bundle</packaging>
 
   <dependencies>
-
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.immutables</groupId>
-      <artifactId>value</artifactId>
-      <classifier>annotations</classifier>
     </dependency>
     <dependency>
       <groupId>org.opendaylight.yangtools</groupId>
