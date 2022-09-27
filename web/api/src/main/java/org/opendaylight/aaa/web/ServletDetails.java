@@ -20,23 +20,75 @@ import org.immutables.value.Value.Default;
  */
 @Value.Immutable
 @Value.Style(visibility = Value.Style.ImplementationVisibility.PRIVATE, depluralize = true)
-public interface ServletDetails {
+public abstract class ServletDetails {
 
-    static ServletDetailsBuilder builder() {
+    public static ServletDetailsBuilder builder() {
         return new ServletDetailsBuilder();
     }
 
-    Servlet servlet();
+    public abstract Servlet servlet();
 
-    @Default default String name() {
+    @Default
+    public String name() {
         return servlet().getClass().getName();
     }
 
-    List<String> urlPatterns();
+    public abstract List<String> urlPatterns();
 
-    Map<String, String> initParams();
+    public abstract Map<String, String> initParams();
 
-    @Default default Boolean getAsyncSupported() {
+    @Default
+    public Boolean getAsyncSupported() {
         return false;
+    }
+
+    @Value.Check
+    protected void check() {
+        urlPatterns().forEach(pattern -> {
+            checkUrlPattern(pattern);
+        });
+    }
+
+    private static void checkUrlPattern(String servletPathSpec) {
+        if (servletPathSpec != null && !servletPathSpec.isEmpty()) {
+            int len = servletPathSpec.length();
+            int idx;
+            if (servletPathSpec.charAt(0) == '/') {
+                if (len == 1) {
+                    return;
+                }
+
+                // Checking if there is glob '*' in url that should be present at some point if we are using url pattern
+                idx = servletPathSpec.indexOf(42);
+                if (idx < 0) {
+                    return;
+                }
+
+                // In this case glob '*' should always be last one in pattern
+                if (idx != len - 1) {
+                    throw new IllegalArgumentException("Servlet Spec 12.2 violation: glob '*' can only exist at end of"
+                            + "prefix based matches: bad spec \"" + servletPathSpec + "\"");
+                }
+            } else {
+                if (!servletPathSpec.startsWith("*.")) {
+                    throw new IllegalArgumentException("Servlet Spec 12.2 violation: path spec must start with \"/\" or"
+                            + "\"*.\": bad spec \"" + servletPathSpec + "\"");
+                }
+
+                // Checking for '/' - suffix based path spec cannot have it
+                idx = servletPathSpec.indexOf(47);
+                if (idx >= 0) {
+                    throw new IllegalArgumentException("Servlet Spec 12.2 violation: suffix based path spec cannot have"
+                            + "path separators: bad spec \"" + servletPathSpec + "\"");
+                }
+
+                // If pattern starts with '*.' then no other glob '*' should be present
+                idx = servletPathSpec.indexOf(42, 2);
+                if (idx >= 1) {
+                    throw new IllegalArgumentException("Servlet Spec 12.2 violation: suffix based path spec cannot have"
+                            + "multiple glob '*': bad spec \"" + servletPathSpec + "\"");
+                }
+            }
+        }
     }
 }
