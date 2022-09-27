@@ -106,7 +106,7 @@ public final class WhiteboardWebServer implements WebServer {
         // The order in which we set things up here matters...
 
         // 1. ServletContextHelper, to which all others are bound to
-        final var contextPath = absolutePath(webContext.contextPath());
+        final var contextPath = webContext.contextPath();
         // TODO: can we create a better name?
         final var contextName = contextPath + ".id";
 
@@ -178,7 +178,7 @@ public final class WhiteboardWebServer implements WebServer {
     private static Map<String, Object> filterProperties(final String contextSelect, final FilterDetails filter) {
         final var builder = ImmutableMap.<String, Object>builder()
             .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT, contextSelect)
-            .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED, filter.getAsyncSupported())
+            .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED, filter.asyncSupported())
             .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME, filter.name())
             .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN, absolutePatterns(filter.urlPatterns()));
 
@@ -201,7 +201,7 @@ public final class WhiteboardWebServer implements WebServer {
     private static Map<String, Object> servletProperties(final String contextSelect, final ServletDetails servlet) {
         final var builder = ImmutableMap.<String, Object>builder()
             .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT, contextSelect)
-            .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED, servlet.getAsyncSupported())
+            .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED, servlet.asyncSupported())
             .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME, servlet.name())
             .put(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, absolutePatterns(servlet.urlPatterns()));
 
