@@ -31,6 +31,8 @@ public interface WebContextSecurer {
      *
      * <p>
      * This method is equivalent to {@code requireAuthentication(webContextBuilder, false, urlPatterns}.
+     * @param webContextBuilder builder to secure
+     * @param urlPatterns URL patterns that require authentication
      */
     default void requireAuthentication(final WebContextBuilder webContextBuilder, final String... urlPatterns) {
         requireAuthentication(webContextBuilder, false, urlPatterns);
@@ -39,6 +41,7 @@ public interface WebContextSecurer {
     /**
      * Configures the WebContext so that all its URL patterns ({@code/**}) require authentication.
      * @see #requireAuthentication(WebContextBuilder, String...)
+     * @param webContextBuilder builder to secure
      */
     default void requireAuthentication(final WebContextBuilder webContextBuilder) {
         requireAuthentication(webContextBuilder, "/*");
