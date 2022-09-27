@@ -20,23 +20,88 @@ import org.immutables.value.Value.Default;
  */
 @Value.Immutable
 @Value.Style(visibility = Value.Style.ImplementationVisibility.PRIVATE, depluralize = true)
-public interface ServletDetails {
+public abstract class ServletDetails {
 
-    static ServletDetailsBuilder builder() {
+    public static ServletDetailsBuilder builder() {
         return new ServletDetailsBuilder();
     }
 
-    Servlet servlet();
+    /**
+     * Details about a {@link Servlet}.
+     */
+    public abstract Servlet servlet();
 
-    @Default default String name() {
+    /**
+     * Servlet's class name.
+     */
+    @Default
+    public String name() {
         return servlet().getClass().getName();
     }
 
-    List<String> urlPatterns();
+    /**
+     * Servlet url patterns. Used for mapping servlets. This is controls how you access a servlet.
+     * Restrictions to urls and how it should look like are specified in
+     * {@link org.eclipse.jetty.http.pathmap.ServletPathSpec}
+     */
+    public abstract List<String> urlPatterns();
 
-    Map<String, String> initParams();
+    /**
+     * Servlet initial parameters.
+     */
+    public abstract Map<String, String> initParams();
 
-    @Default default Boolean getAsyncSupported() {
+    /**
+     * Flag that used to allow async requests by AAA because SSE (Server Sent Events) use async communication.
+     */
+    @Default
+    public Boolean getAsyncSupported() {
         return false;
+    }
+
+    @Value.Check
+    protected void check() {
+        urlPatterns().forEach(pattern -> {
+            assertValidServletPathSpec(pattern);
+        });
+    }
+
+    private static void assertValidServletPathSpec(String servletPathSpec) {
+        if (servletPathSpec != null && !servletPathSpec.equals("")) {
+            int len = servletPathSpec.length();
+            int idx;
+            if (servletPathSpec.charAt(0) == '/') {
+                if (len == 1) {
+                    return;
+                }
+
+                idx = servletPathSpec.indexOf(42);
+                if (idx < 0) {
+                    return;
+                }
+
+                if (idx != len - 1) {
+                    throw new IllegalArgumentException("Servlet Spec 12.2 violation: glob '*' can only exist at end of"
+                            + "prefix based matches: bad spec \"" + servletPathSpec + "\"");
+                }
+            } else {
+                if (!servletPathSpec.startsWith("*.")) {
+                    throw new IllegalArgumentException("Servlet Spec 12.2 violation: path spec must start with \"/\" or"
+                            + "\"*.\": bad spec \"" + servletPathSpec + "\"");
+                }
+
+                idx = servletPathSpec.indexOf(47);
+                if (idx >= 0) {
+                    throw new IllegalArgumentException("Servlet Spec 12.2 violation: suffix based path spec cannot have"
+                            + "path separators: bad spec \"" + servletPathSpec + "\"");
+                }
+
+                idx = servletPathSpec.indexOf(42, 2);
+                if (idx >= 1) {
+                    throw new IllegalArgumentException("Servlet Spec 12.2 violation: suffix based path spec cannot have"
+                            + "multiple glob '*': bad spec \"" + servletPathSpec + "\"");
+                }
+            }
+        }
     }
 }
