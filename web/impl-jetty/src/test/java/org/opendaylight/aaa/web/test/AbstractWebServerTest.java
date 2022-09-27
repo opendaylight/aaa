@@ -9,6 +9,7 @@ package org.opendaylight.aaa.web.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import com.google.common.io.CharStreams;
@@ -44,15 +45,12 @@ public abstract class AbstractWebServerTest {
     }
 
     @Test
-    public void testAddAfterStartWithoutSlashOnContext() throws ServletException, IOException {
-        // NB subtle difference to previous test: contextPath("test1") instead of /test1 with slash!
-        var webContext = WebContext.builder()
-            .contextPath("test1")
-            .addServlet(ServletDetails.builder().addUrlPattern("/*").name("Test").servlet(new TestServlet()).build())
-            .build();
-        try (var webContextRegistration = getWebServer().registerWebContext(webContext)) {
-            checkTestServlet(getWebServer().getBaseURL() + "/test1");
-        }
+    public void testAddAfterStartWithoutSlashOnServlet() throws ServletException, IOException {
+        // NB subtle difference to testAddAfterStart() test: addUrlPattern("*") instead of /* with slash!
+        var builder = WebContext.builder()
+            .contextPath("/test1");
+        assertThrows(IllegalArgumentException.class, () -> builder
+            .addServlet(ServletDetails.builder().addUrlPattern("*").name("Test").servlet(new TestServlet()).build()));
     }
 
     @Test
@@ -66,6 +64,17 @@ public abstract class AbstractWebServerTest {
         try (var webContextRegistration = getWebServer().registerWebContext(webContext)) {
             assertTrue(testFilter.isInitialized);
         }
+    }
+
+    @Test
+    public void testAddFilterWithoutSlash() throws Exception {
+        // NB subtle difference to previous test: addUrlPattern("*") instead of /* with slash!
+        var testFilter = new TestFilter();
+        var builder = WebContext.builder()
+            .contextPath("/testingFilters")
+            .putContextParam("testParam1", "avalue");
+        assertThrows(IllegalArgumentException.class, () -> builder
+                .addFilter(FilterDetails.builder().addUrlPattern("*").name("Test").filter(testFilter).build()));
     }
 
     @Test
