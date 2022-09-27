@@ -7,6 +7,7 @@
  */
 package org.opendaylight.aaa.web;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
@@ -18,47 +19,82 @@ import org.junit.Test;
 public class FilterDetailsTest {
     @Test
     public void testDefaultValue() {
-        FilterDetails filterDetails = FilterDetails.builder()
-                .filter(mock(Filter.class))
-                .addUrlPattern("test")
-                .addUrlPattern("another")
-                .name("custom")
-                .putInitParam("key", "value")
-                .build();
+        var filterDetails = FilterDetails.builder()
+            .filter(mock(Filter.class))
+            .addUrlPattern("/test")
+            .addUrlPattern("/another")
+            .name("custom")
+            .putInitParam("key", "value")
+            .build();
 
-        assertFalse(filterDetails.getAsyncSupported());
+        assertFalse(filterDetails.asyncSupported());
     }
 
     @Test
     public void testAsyncFalse() {
-        FilterDetails filterDetails = FilterDetails.builder()
+        var filterDetails = FilterDetails.builder()
                 .filter(mock(Filter.class))
-                .addUrlPattern("test")
-                .addUrlPattern("another")
+                .addUrlPattern("/test")
+                .addUrlPattern("/another")
                 .name("custom")
                 .putInitParam("key", "value")
                 .asyncSupported(false)
                 .build();
 
-        assertFalse(filterDetails.getAsyncSupported());
+        assertFalse(filterDetails.asyncSupported());
     }
 
     @Test
     public void testAsyncTrue() {
-        FilterDetails filterDetails = FilterDetails.builder()
-                .filter(mock(Filter.class))
-                .addUrlPattern("test")
-                .addUrlPattern("another")
-                .name("custom")
-                .putInitParam("key", "value")
-                .asyncSupported(true)
-                .build();
+        var filterDetails = FilterDetails.builder()
+            .filter(mock(Filter.class))
+            .addUrlPattern("/test")
+            .addUrlPattern("/another")
+            .name("custom")
+            .putInitParam("key", "value")
+            .asyncSupported(true)
+            .build();
 
-        assertTrue(filterDetails.getAsyncSupported());
+        assertTrue(filterDetails.asyncSupported());
     }
 
     @Test
-    public void testException() {
-        assertThrows(IllegalStateException.class, () -> FilterDetails.builder().build());
+    public void testEmptyBuilderException() {
+        final var builder = FilterDetails.builder();
+        final var ex = assertThrows(IllegalStateException.class, builder::build);
+        assertEquals("No filter specified", ex.getMessage());
+    }
+
+    @Test
+    public void testBadFilterWithoutAnyURL() {
+        final var builder = FilterDetails.builder().filter(mock(Filter.class));
+        final var ex = assertThrows(IllegalStateException.class, builder::build);
+        assertEquals("No urlPattern specified", ex.getMessage());
+    }
+
+    @Test
+    public void testNotPrefixNorSuffixPatternException() {
+        final var builder = FilterDetails.builder();
+        final var ex = assertThrows(IllegalArgumentException.class, () -> builder.addUrlPattern("test"));
+        assertEquals("Servlet Spec 12.2 violation: path spec must start with \"/\" or \"*.\": bad spec \"test\"",
+            ex.getMessage());
+    }
+
+    @Test
+    public void testIllegalPrefixPatternException() {
+        final var builder = FilterDetails.builder();
+        final var ex = assertThrows(IllegalArgumentException.class, () -> builder.addUrlPattern("/*test"));
+        assertEquals(
+            "Servlet Spec 12.2 violation: glob '*' can only exist at end of prefix based matches: bad spec \"/*test\"",
+            ex.getMessage());
+    }
+
+    @Test
+    public void testIllegalSuffixPatternException() {
+        final var builder = FilterDetails.builder();
+        final var ex = assertThrows(IllegalArgumentException.class, () -> builder.addUrlPattern("*./test"));
+        assertEquals(
+            "Servlet Spec 12.2 violation: suffix based path spec cannot have path separators: bad spec \"*./test\"",
+            ex.getMessage());
     }
 }

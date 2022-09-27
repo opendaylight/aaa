@@ -111,7 +111,7 @@ public class JettyWebServer implements WebServer {
             FilterHolder filterHolder = new FilterHolder(filter.filter());
             filterHolder.setInitParameters(filter.initParams());
             filter.urlPatterns().forEach(
-                urlPattern -> handler.addFilter(filterHolder, ensureAbsolutePath(urlPattern),
+                urlPattern -> handler.addFilter(filterHolder, urlPattern,
                     EnumSet.allOf(DispatcherType.class))
             );
         });
@@ -120,11 +120,11 @@ public class JettyWebServer implements WebServer {
         webContext.servlets().forEach(servlet -> {
             ServletHolder servletHolder = new ServletHolder(servlet.name(), servlet.servlet());
             servletHolder.setInitParameters(servlet.initParams());
-            servletHolder.setAsyncSupported(servlet.getAsyncSupported());
+            servletHolder.setAsyncSupported(servlet.asyncSupported());
             // AKA <load-on-startup> 1
             servletHolder.setInitOrder(1);
             servlet.urlPatterns().forEach(
-                urlPattern -> handler.addServlet(servletHolder, ensureAbsolutePath(urlPattern))
+                urlPattern -> handler.addServlet(servletHolder, urlPattern)
             );
         });
 
