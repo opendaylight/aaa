@@ -7,6 +7,7 @@
  */
 package org.opendaylight.aaa.web;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
@@ -18,47 +19,56 @@ import org.junit.Test;
 public class ServletDetailsTest {
     @Test
     public void testDefaultValue() {
-        ServletDetails servletDetails = ServletDetails.builder()
-                .servlet(mock(Servlet.class))
-                .addUrlPattern("test")
-                .addUrlPattern("another")
-                .name("custom")
-                .putInitParam("key", "value")
-                .build();
+        final var servletDetails = ServletDetails.builder()
+            .servlet(mock(Servlet.class))
+            .addUrlPattern("/test")
+            .addUrlPattern("/another")
+            .name("custom")
+            .putInitParam("key", "value")
+            .build();
 
-        assertFalse(servletDetails.getAsyncSupported());
+        assertFalse(servletDetails.asyncSupported());
     }
 
     @Test
     public void testAsyncFalse() {
-        ServletDetails servletDetails = ServletDetails.builder()
-                .servlet(mock(Servlet.class))
-                .addUrlPattern("test")
-                .addUrlPattern("another")
-                .name("custom")
-                .putInitParam("key", "value")
-                .asyncSupported(false)
-                .build();
+        final var servletDetails = ServletDetails.builder()
+            .servlet(mock(Servlet.class))
+            .addUrlPattern("/test")
+            .addUrlPattern("/another")
+            .name("custom")
+            .putInitParam("key", "value")
+            .asyncSupported(false)
+            .build();
 
-        assertFalse(servletDetails.getAsyncSupported());
+        assertFalse(servletDetails.asyncSupported());
     }
 
     @Test
     public void testAsyncTrue() {
-        ServletDetails servletDetails = ServletDetails.builder()
-                .servlet(mock(Servlet.class))
-                .addUrlPattern("test")
-                .addUrlPattern("another")
-                .name("custom")
-                .putInitParam("key", "value")
-                .asyncSupported(true)
-                .build();
+        final var servletDetails = ServletDetails.builder()
+            .servlet(mock(Servlet.class))
+            .addUrlPattern("/test")
+            .addUrlPattern("/another")
+            .name("custom")
+            .putInitParam("key", "value")
+            .asyncSupported(true)
+            .build();
 
-        assertTrue(servletDetails.getAsyncSupported());
+        assertTrue(servletDetails.asyncSupported());
     }
 
     @Test
-    public void testException() {
-        assertThrows(IllegalStateException.class, () -> ServletDetails.builder().build());
+    public void testEmptyBuilderException() {
+        final var builder = ServletDetails.builder();
+        final var ex = assertThrows(IllegalStateException.class, builder::build);
+        assertEquals("No servlet specified", ex.getMessage());
+    }
+
+    @Test
+    public void testBadServletWithoutAnyURL() {
+        final var builder = ServletDetails.builder().servlet(mock(Servlet.class));
+        final var ex = assertThrows(IllegalStateException.class, builder::build);
+        assertEquals("No urlPattern specified", ex.getMessage());
     }
 }
