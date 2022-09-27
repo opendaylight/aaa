@@ -92,8 +92,7 @@ public class JettyWebServer implements WebServer {
 
     @Override
     public synchronized Registration registerWebContext(final WebContext webContext) throws ServletException {
-        String contextPathWithSlashPrefix = ensureAbsolutePath(webContext.contextPath());
-        ServletContextHandler handler = new ServletContextHandler(contextHandlerCollection, contextPathWithSlashPrefix,
+        ServletContextHandler handler = new ServletContextHandler(contextHandlerCollection, webContext.contextPath(),
                 webContext.supportsSessions() ? ServletContextHandler.SESSIONS : ServletContextHandler.NO_SESSIONS);
 
         // The order in which we do things here must be the same as
@@ -111,7 +110,7 @@ public class JettyWebServer implements WebServer {
             FilterHolder filterHolder = new FilterHolder(filter.filter());
             filterHolder.setInitParameters(filter.initParams());
             filter.urlPatterns().forEach(
-                urlPattern -> handler.addFilter(filterHolder, ensureAbsolutePath(urlPattern),
+                urlPattern -> handler.addFilter(filterHolder, urlPattern,
                     EnumSet.allOf(DispatcherType.class))
             );
         });
@@ -120,11 +119,11 @@ public class JettyWebServer implements WebServer {
         webContext.servlets().forEach(servlet -> {
             ServletHolder servletHolder = new ServletHolder(servlet.name(), servlet.servlet());
             servletHolder.setInitParameters(servlet.initParams());
-            servletHolder.setAsyncSupported(servlet.getAsyncSupported());
+            servletHolder.setAsyncSupported(servlet.asyncSupported());
             // AKA <load-on-startup> 1
             servletHolder.setInitOrder(1);
             servlet.urlPatterns().forEach(
-                urlPattern -> handler.addServlet(servletHolder, ensureAbsolutePath(urlPattern))
+                urlPattern -> handler.addServlet(servletHolder, urlPattern)
             );
         });
 
@@ -154,9 +153,5 @@ public class JettyWebServer implements WebServer {
             handler.destroy();
         }
         contextHandlerCollection.removeHandler(handler);
-    }
-
-    private static String ensureAbsolutePath(final String path) {
-        return path.startsWith("/") ? path : "/" + path;
     }
 }

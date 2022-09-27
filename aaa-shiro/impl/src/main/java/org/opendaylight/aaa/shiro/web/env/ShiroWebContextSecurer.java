@@ -9,11 +9,11 @@ package org.opendaylight.aaa.shiro.web.env;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Arrays;
 import org.apache.shiro.web.env.WebEnvironment;
 import org.opendaylight.aaa.shiro.filters.AAAShiroFilter;
 import org.opendaylight.aaa.web.FilterDetails;
 import org.opendaylight.aaa.web.WebContext;
-import org.opendaylight.aaa.web.WebContextBuilder;
 import org.opendaylight.aaa.web.WebContextSecurer;
 
 /**
@@ -29,14 +29,14 @@ public class ShiroWebContextSecurer implements WebContextSecurer {
     }
 
     @Override
-    public void requireAuthentication(final WebContextBuilder webContextBuilder, final boolean asyncSupported,
+    public void requireAuthentication(final WebContext.Builder webContextBuilder, final boolean asyncSupported,
             final String... urlPatterns) {
-        webContextBuilder
-            // AAA filter in front of these REST web services as well as for moon endpoints
-            .addFilter(FilterDetails.builder()
-                .filter(new AAAShiroFilter(webEnvironment))
-                .addUrlPatterns(urlPatterns)
-                .asyncSupported(asyncSupported)
-                .build());
+        // AAA filter in front of these REST web services as well as for moon endpoints
+        final var filterBuilder = FilterDetails.builder()
+            .filter(new AAAShiroFilter(webEnvironment))
+            .asyncSupported(asyncSupported);
+        Arrays.stream(urlPatterns).forEach(filterBuilder::addUrlPattern);
+
+        webContextBuilder.addFilter(filterBuilder.build());
     }
 }
