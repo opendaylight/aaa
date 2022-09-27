@@ -7,14 +7,17 @@
  */
 package org.opendaylight.aaa.web;
 
+import static java.util.Objects.requireNonNull;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRegistration;
-import org.immutables.value.Value;
-import org.immutables.value.Value.Default;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Web Context with URL prefix. AKA Web App or Servlet context.
@@ -78,46 +81,36 @@ import org.immutables.value.Value.Default;
  *
  * @author Michael Vorburger.ch
  */
-@Value.Immutable
-@Value.Style(visibility = Value.Style.ImplementationVisibility.PRIVATE, depluralize = true)
-public abstract class WebContext {
-
-    public static WebContextBuilder builder() {
-        return new WebContextBuilder();
-    }
-
+public interface WebContext {
     /**
      * Path which will be used as URL prefix to all registered servlets and filters.
      */
-    public abstract String contextPath();
+    @NonNull String contextPath();
 
     /**
-     * Flag whether this context supports web sessions, defaults to true.
+     * Flag whether this context supports web sessions.
      */
-    @Default
-    public boolean supportsSessions() {
-        return true;
-    }
+    boolean supportsSessions();
 
     /**
      * Servlets.
      */
-    public abstract List<ServletDetails> servlets();
+    @NonNull List<ServletDetails> servlets();
 
     /**
      * Filters.
      */
-    public abstract List<FilterDetails> filters();
+    @NonNull List<FilterDetails> filters();
 
     /**
      * Listeners.
      */
-    public abstract List<ServletContextListener> listeners();
+    @NonNull List<ServletContextListener> listeners();
 
     /**
      * Registers resources (eg html files) that can be accessed via the URI namespace.
      */
-    public abstract List<ResourceDetails> resources();
+    @NonNull List<ResourceDetails> resources();
 
     /**
      * Context params. These are the {@link ServletContext}s initial parameters; contrary to individual
@@ -125,19 +118,132 @@ public abstract class WebContext {
      * any Object as a parameter, that is not accepted in all implementations. Most notably OSGi HTTP Whiteboard
      * specification allows only String values, hence we are enforcing that.
      */
-    public abstract Map<String, String> contextParams();
+    @NonNull Map<String, String> contextParams();
 
-    @Value.Check
-    protected void check() {
-        servlets().forEach(servlet -> {
-            if (servlet.urlPatterns().isEmpty()) {
-                throw new IllegalArgumentException("Servlet has no URL: " + servlet.name());
+    static @NonNull Builder builder() {
+        return new Builder();
+    }
+
+    final class Builder {
+        private record DefaultWebContext(String contextPath, ImmutableList<ServletDetails> servlets,
+            ImmutableList<FilterDetails> filters, ImmutableList<ServletContextListener> listeners,
+            ImmutableList<ResourceDetails> resources, ImmutableMap<String, String> contextParams,
+            boolean supportsSessions) implements WebContext {
+            // Not much else here
+        }
+
+        private final ImmutableMap.Builder<String, String> contextParams = ImmutableMap.builder();
+        private final ImmutableList.Builder<ServletDetails> servlets = ImmutableList.builder();
+        private final ImmutableList.Builder<FilterDetails> filters = ImmutableList.builder();
+        private final ImmutableList.Builder<ServletContextListener> listeners = ImmutableList.builder();
+        private final ImmutableList.Builder<ResourceDetails> resources = ImmutableList.builder();
+        private String contextPath;
+        private boolean supportsSessions = true;
+
+        private Builder() {
+            // Hidden on purpose
+        }
+
+        /**
+         * Initializes the value for the {@link WebContext#contextPath() contextPath} attribute.
+         *
+         * @param contextPath The value for contextPath
+         * @return {@code this} builder for use in a chained invocation
+         * @throws NullPointerException if {code contextPath} is {@code null}
+         */
+        @SuppressWarnings("checkstyle:hiddenField")
+        public @NonNull Builder contextPath(final String contextPath) {
+            this.contextPath = requireNonNull(contextPath, "contextPath");
+            return this;
+        }
+
+        /**
+         * Adds one element to {@link WebContext#servlets() servlets} list.
+         *
+         * @param element A servlets element
+         * @return {@code this} builder for use in a chained invocation
+         * @throws NullPointerException if {code servlet} is {@code null}
+         */
+        public @NonNull Builder addServlet(final ServletDetails servlet) {
+            servlets.add(servlet);
+            return this;
+        }
+
+        /**
+         * Adds one element to {@link WebContext#filters() filters} list.
+         *
+         * @param element A filters element
+         * @return {@code this} builder for use in a chained invocation
+         * @throws NullPointerException if {code filter} is {@code null}
+         */
+        public @NonNull Builder addFilter(final FilterDetails filter) {
+            filters.add(filter);
+            return this;
+        }
+
+        /**
+         * Adds one element to {@link WebContext#listeners() listeners} list.
+         *
+         * @param listener A listeners element
+         * @return {@code this} builder for use in a chained invocation
+         * @throws NullPointerException if {code listener} is {@code null}
+         */
+        public @NonNull Builder addListener(final ServletContextListener listener) {
+            listeners.add(listener);
+            return this;
+        }
+
+        /**
+         * Adds one element to {@link WebContext#resources() resources} list.
+         *
+         * @param resource A resources element
+         * @return {@code this} builder for use in a chained invocation
+         * @throws NullPointerException if {code resource} is {@code null}
+         */
+        public @NonNull Builder addResource(final ResourceDetails resource) {
+            resources.add(resource);
+            return this;
+        }
+
+        /**
+         * Put one entry to the {@link WebContext#contextParams() contextParams} map.
+         *
+         * @param key The key in the contextParams map
+         * @param value The associated value in the contextParams map
+         * @return {@code this} builder for use in a chained invocation
+         * @throws NullPointerException if any argument is {@code null}
+         */
+        public @NonNull Builder putContextParam(final String key, final String value) {
+            contextParams.put(key, value);
+            return this;
+        }
+
+        /**
+         * Initializes the value for the {@link WebContext#supportsSessions() supportsSessions} attribute.
+         *
+         * <p><em>If not set, this attribute will have a default value of {@code true}.</em>
+         *
+         * @param supportsSessions The value for supportsSessions
+         * @return {@code this} builder for use in a chained invocation
+         */
+        @SuppressWarnings("checkstyle:hiddenField")
+        public Builder supportsSessions(final boolean supportsSessions) {
+            this.supportsSessions = supportsSessions;
+            return this;
+        }
+
+        /**
+         * Builds a new {@link WebContext WebContext}.
+         *
+         * @return An immutable instance of WebContext
+         * @throws IllegalStateException if any required attributes are missing
+         */
+        public @NonNull WebContext build() {
+            if (contextPath == null) {
+                throw new IllegalStateException("No contextPath specified");
             }
-        });
-        filters().forEach(filter -> {
-            if (filter.urlPatterns().isEmpty()) {
-                throw new IllegalArgumentException("Filter has no URL: " + filter.name());
-            }
-        });
+            return new DefaultWebContext(contextPath, servlets.build(), filters.build(), listeners.build(),
+                resources.build(), contextParams.build(), supportsSessions);
+        }
     }
 }

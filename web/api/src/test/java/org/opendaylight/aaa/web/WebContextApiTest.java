@@ -32,8 +32,8 @@ import org.junit.Test;
 public class WebContextApiTest {
     @Test
     public void testEmptyBuilder() {
-        final WebContextBuilder builder = WebContext.builder();
-        assertThrows(IllegalStateException.class, () -> builder.build());
+        final var builder = WebContext.builder();
+        assertThrows(IllegalStateException.class, builder::build);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class WebContextApiTest {
     @Test
     public void testAddSimpleServlet() {
         WebContext webContext = WebContext.builder().contextPath("test")
-                .addServlet(ServletDetails.builder().servlet(mock(Servlet.class)).addUrlPattern("test").build())
+                .addServlet(ServletDetails.builder().servlet(mock(Servlet.class)).addUrlPattern("/test").build())
                 .build();
         assertThat(webContext.servlets(), hasSize(1));
         ServletDetails firstServletDetail = webContext.servlets().get(0);
@@ -56,14 +56,14 @@ public class WebContextApiTest {
     @Test
     public void testAddFullServlet() {
         WebContext.builder().contextPath("test").addServlet(ServletDetails.builder().servlet(mock(Servlet.class))
-                .addUrlPattern("test").addUrlPattern("another").name("custom").putInitParam("key", "value").build())
+                .addUrlPattern("/test").addUrlPattern("/another").name("custom").putInitParam("key", "value").build())
                 .build();
     }
 
     @Test
     public void testAddFilter() {
         WebContext.builder().contextPath("test")
-            .addFilter(FilterDetails.builder().filter(mock(Filter.class)).addUrlPattern("test").build()).build();
+            .addFilter(FilterDetails.builder().filter(mock(Filter.class)).addUrlPattern("/test").build()).build();
     }
 
     @Test
@@ -86,19 +86,5 @@ public class WebContextApiTest {
         assertThrows(IllegalArgumentException.class, () -> WebContext.builder().contextPath("test space").build());
         assertThrows(IllegalArgumentException.class, () -> WebContext.builder().contextPath("/test").build());
         assertThrows(IllegalArgumentException.class, () -> WebContext.builder().contextPath("test/").build());
-    }
-
-    @Test
-    public void testBadServletWithoutAnyURL() {
-        final WebContextBuilder builder = WebContext.builder().contextPath("test")
-                .addServlet(ServletDetails.builder().servlet(mock(Servlet.class)).build());
-        assertThrows(IllegalArgumentException.class, () -> builder.build());
-    }
-
-    @Test
-    public void testBadFilterWithoutAnyURL() {
-        final WebContextBuilder builder = WebContext.builder().contextPath("test")
-                .addFilter(FilterDetails.builder().filter(mock(Filter.class)).build());
-        assertThrows(IllegalArgumentException.class, () -> builder.build());
     }
 }

@@ -22,7 +22,7 @@ public interface WebContextSecurer {
      * @param asyncSupported true if asynchronous communication should also be supported
      * @param urlPatterns URL patterns that require authentication
      */
-    void requireAuthentication(WebContextBuilder webContextBuilder, boolean asyncSupported, String... urlPatterns);
+    void requireAuthentication(WebContext.Builder webContextBuilder, boolean asyncSupported, String... urlPatterns);
 
     /**
      * Configures the WebContext in an implementation specific manner so that it requires authentication to access the
@@ -32,7 +32,7 @@ public interface WebContextSecurer {
      * <p>
      * This method is equivalent to {@code requireAuthentication(webContextBuilder, false, urlPatterns}.
      */
-    default void requireAuthentication(final WebContextBuilder webContextBuilder, final String... urlPatterns) {
+    default void requireAuthentication(final WebContext.Builder webContextBuilder, final String... urlPatterns) {
         requireAuthentication(webContextBuilder, false, urlPatterns);
     }
 
@@ -40,7 +40,7 @@ public interface WebContextSecurer {
      * Configures the WebContext so that all its URL patterns ({@code/**}) require authentication.
      * @see #requireAuthentication(WebContextBuilder, String...)
      */
-    default void requireAuthentication(final WebContextBuilder webContextBuilder) {
+    default void requireAuthentication(final WebContext.Builder webContextBuilder) {
         requireAuthentication(webContextBuilder, "/*");
     }
 }
