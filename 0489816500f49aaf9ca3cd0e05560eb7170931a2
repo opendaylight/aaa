@@ -16,6 +16,24 @@
       "message": "Not needed, please remove this.",
       "revId": "0489816500f49aaf9ca3cd0e05560eb7170931a2",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf961e31_6a530862",
+        "filename": "web/api/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 9063
+      },
+      "writtenOn": "2022-09-27T11:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4ffd1c6_bdf307df",
+      "revId": "0489816500f49aaf9ca3cd0e05560eb7170931a2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
