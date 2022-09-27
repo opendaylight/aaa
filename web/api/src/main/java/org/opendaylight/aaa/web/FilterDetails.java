@@ -20,24 +20,30 @@ import org.immutables.value.Value.Default;
  */
 @Value.Immutable
 @Value.Style(visibility = Value.Style.ImplementationVisibility.PRIVATE, depluralize = true)
-public interface FilterDetails {
+public abstract class FilterDetails {
 
-    static FilterDetailsBuilder builder() {
+    public static FilterDetailsBuilder builder() {
         return new FilterDetailsBuilder();
     }
 
-    Filter filter();
+    public abstract Filter filter();
 
-    @Default default String name() {
+    @Default
+    public String name() {
         return filter().getClass().getName();
     }
 
-    List<String> urlPatterns();
+    public abstract List<String> urlPatterns();
 
-    Map<String, String> initParams();
+    public abstract Map<String, String> initParams();
 
-    @Default default Boolean getAsyncSupported() {
+    @Default
+    public Boolean getAsyncSupported() {
         return false;
     }
 
+    @Value.Check
+    protected void check() {
+        urlPatterns().forEach(ServletPathSpecValidator::checkUrlPattern);
+    }
 }
