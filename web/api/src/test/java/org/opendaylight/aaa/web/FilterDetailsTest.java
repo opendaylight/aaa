@@ -20,8 +20,8 @@ public class FilterDetailsTest {
     public void testDefaultValue() {
         FilterDetails filterDetails = FilterDetails.builder()
                 .filter(mock(Filter.class))
-                .addUrlPattern("test")
-                .addUrlPattern("another")
+                .addUrlPattern("/test")
+                .addUrlPattern("/another")
                 .name("custom")
                 .putInitParam("key", "value")
                 .build();
@@ -33,8 +33,8 @@ public class FilterDetailsTest {
     public void testAsyncFalse() {
         FilterDetails filterDetails = FilterDetails.builder()
                 .filter(mock(Filter.class))
-                .addUrlPattern("test")
-                .addUrlPattern("another")
+                .addUrlPattern("/test")
+                .addUrlPattern("/another")
                 .name("custom")
                 .putInitParam("key", "value")
                 .asyncSupported(false)
@@ -47,8 +47,8 @@ public class FilterDetailsTest {
     public void testAsyncTrue() {
         FilterDetails filterDetails = FilterDetails.builder()
                 .filter(mock(Filter.class))
-                .addUrlPattern("test")
-                .addUrlPattern("another")
+                .addUrlPattern("/test")
+                .addUrlPattern("/another")
                 .name("custom")
                 .putInitParam("key", "value")
                 .asyncSupported(true)
