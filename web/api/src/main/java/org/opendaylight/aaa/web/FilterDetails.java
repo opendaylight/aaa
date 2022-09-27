@@ -20,24 +20,69 @@ import org.immutables.value.Value.Default;
  */
 @Value.Immutable
 @Value.Style(visibility = Value.Style.ImplementationVisibility.PRIVATE, depluralize = true)
-public interface FilterDetails {
+public abstract class FilterDetails {
 
-    static FilterDetailsBuilder builder() {
+    public static FilterDetailsBuilder builder() {
         return new FilterDetailsBuilder();
     }
 
-    Filter filter();
+    public abstract Filter filter();
 
-    @Default default String name() {
+    @Default
+    public String name() {
         return filter().getClass().getName();
     }
 
-    List<String> urlPatterns();
+    public abstract List<String> urlPatterns();
 
-    Map<String, String> initParams();
+    public abstract Map<String, String> initParams();
 
-    @Default default Boolean getAsyncSupported() {
+    @Default
+    public Boolean getAsyncSupported() {
         return false;
     }
 
+    @Value.Check
+    protected void check() {
+        urlPatterns().forEach(FilterDetails::checkUrlPattern);
+    }
+
+    private static void checkUrlPattern(final String filterPathSpec) {
+        if (filterPathSpec != null && !filterPathSpec.isEmpty()) {
+            int len = filterPathSpec.length();
+            int idx;
+            if (filterPathSpec.charAt(0) == '/') {
+                if (len == 1) {
+                    return;
+                }
+
+                idx = filterPathSpec.indexOf('*');
+                if (idx < 0) {
+                    return;
+                }
+
+                if (idx != len - 1) {
+                    throw new IllegalArgumentException("Servlet Spec 12.2 violation: glob '*' can only exist at end of"
+                            + "prefix based matches: bad spec \"" + filterPathSpec + "\"");
+                }
+            } else {
+                if (!filterPathSpec.startsWith("*.")) {
+                    throw new IllegalArgumentException("Servlet Spec 12.2 violation: path spec must start with \"/\" or"
+                            + "\"*.\": bad spec \"" + filterPathSpec + "\"");
+                }
+
+                idx = filterPathSpec.indexOf('/');
+                if (idx >= 0) {
+                    throw new IllegalArgumentException("Servlet Spec 12.2 violation: suffix based path spec cannot have"
+                            + "path separators: bad spec \"" + filterPathSpec + "\"");
+                }
+
+                idx = filterPathSpec.indexOf('*', 2);
+                if (idx >= 1) {
+                    throw new IllegalArgumentException("Servlet Spec 12.2 violation: suffix based path spec cannot have"
+                            + "multiple glob '*': bad spec \"" + filterPathSpec + "\"");
+                }
+            }
+        }
+    }
 }
