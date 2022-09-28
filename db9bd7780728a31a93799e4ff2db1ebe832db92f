@@ -16,6 +16,24 @@
       "message": "It would be better to split this into two commits: one for documentation and one for validation.",
       "revId": "db9bd7780728a31a93799e4ff2db1ebe832db92f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d86f34f_8d92f52e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9063
+      },
+      "writtenOn": "2022-09-28T15:53:46Z",
+      "side": 1,
+      "message": "Do we really need that? I mean validation part is just one method that was copied from official lib - I don\u0027t think there is a problem with it. Most of this patch is documentation. I think splinting it is just waste of time. Am I wrong?",
+      "parentUuid": "1af635bc_8e806e65",
+      "revId": "db9bd7780728a31a93799e4ff2db1ebe832db92f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
