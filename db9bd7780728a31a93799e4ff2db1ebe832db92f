@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1af635bc_8e806e65",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2022-09-28T15:14:28Z",
+      "side": 1,
+      "message": "It would be better to split this into two commits: one for documentation and one for validation.",
+      "revId": "db9bd7780728a31a93799e4ff2db1ebe832db92f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
