@@ -53,6 +53,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cc70ba0_8eaf183c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2022-09-29T12:29:03Z",
+      "side": 1,
+      "message": "Yes, we have agreed that it will be done in two patches.",
+      "parentUuid": "8d86f34f_8d92f52e",
+      "revId": "db9bd7780728a31a93799e4ff2db1ebe832db92f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60f69a53_92ee629f",
