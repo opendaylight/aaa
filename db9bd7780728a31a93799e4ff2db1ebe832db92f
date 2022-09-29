@@ -36,6 +36,69 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5224b82_3145eb0d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2022-09-29T06:40:28Z",
+      "side": 1,
+      "message": "The checks should be much more straightforward",
+      "revId": "db9bd7780728a31a93799e4ff2db1ebe832db92f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60f69a53_92ee629f",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/FilterDetails.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2022-09-29T06:40:28Z",
+      "side": 1,
+      "message": "filterPathSpec.isEmpty()",
+      "range": {
+        "startLine": 81,
+        "startChar": 39,
+        "endLine": 81,
+        "endChar": 64
+      },
+      "revId": "db9bd7780728a31a93799e4ff2db1ebe832db92f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf57dd4a_d8ee7798",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/FilterDetails.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2022-09-29T06:40:28Z",
+      "side": 1,
+      "message": "index of what?!",
+      "range": {
+        "startLine": 89,
+        "startChar": 45,
+        "endLine": 89,
+        "endChar": 47
+      },
+      "revId": "db9bd7780728a31a93799e4ff2db1ebe832db92f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d2c9394_e7ff8f9d",
