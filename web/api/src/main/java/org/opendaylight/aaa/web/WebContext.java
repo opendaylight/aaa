@@ -68,47 +68,76 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public interface WebContext {
     /**
-     * Path which will be used as URL prefix to all registered servlets and filters.
+     * Get path which will be used as URL prefix to all registered servlets and filters.
+     *
+     * @return {@link String} path
      */
     @NonNull String contextPath();
 
     /**
-     * Flag whether this context supports web sessions.
+     * Get flag value whether this context supports web sessions.
+     *
+     * @return boolean flag value
      */
     boolean supportsSessions();
 
     /**
-     * Servlets.
+     * Get list of servlets.
+     *
+     * @return {@link List} list of {@link ServletDetails}
      */
     @NonNull List<ServletDetails> servlets();
 
     /**
-     * Filters.
+     * Get list of filters.
+     *
+     * @return {@link List} list of {@link FilterDetails}
      */
     @NonNull List<FilterDetails> filters();
 
     /**
-     * Listeners.
+     * Get list of servlet context listeners.
+     *
+     * @return {@link List} list of {@link ServletContextListener}
      */
     @NonNull List<ServletContextListener> listeners();
 
     /**
-     * Registers resources (eg html files) that can be accessed via the URI namespace.
+     * Get lis of resources (e.g. html files) that can be accessed via the URI namespace.
+     *
+     * @return {@link List} list of {@link ResourceDetails}
      */
     @NonNull List<ResourceDetails> resources();
 
     /**
-     * Context params. These are the {@link ServletContext}s initial parameters; contrary to individual
+     * Get map of context params.
+     *
+     * <p>
+     * These are the {@link ServletContext}s initial parameters; contrary to individual
      * {@link ServletDetails#initParams()} and {@link FilterDetails#initParams()}. While a ServletContext accepts
      * any Object as a parameter, that is not accepted in all implementations. Most notably OSGi HTTP Whiteboard
      * specification allows only String values, hence we are enforcing that.
+     *
+     * @return {@link Map} context parameters map
      */
     @NonNull Map<String, String> contextParams();
 
+    /**
+     * Create builder for {@code WebContext}.
+     *
+     * @return {@link Builder} builder instance
+     */
     static @NonNull Builder builder() {
         return new Builder();
     }
 
+    /**
+     * Builds instances of type {@link WebContext WebContext}. Initialize attributes and then invoke the
+     * {@link #build()} method to create an immutable instance.
+     *
+     * <p><em>{@code WebContext.Builder} is not thread-safe and generally should not be stored in a field or
+     * collection, but instead used immediately to create instances.</em>
+     */
     final class Builder {
         private record ImmutableWebContext(String contextPath, ImmutableList<ServletDetails> servlets,
             ImmutableList<FilterDetails> filters, ImmutableList<ServletContextListener> listeners,
