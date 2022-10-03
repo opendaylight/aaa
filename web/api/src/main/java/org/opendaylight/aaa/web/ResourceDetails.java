@@ -19,18 +19,33 @@ import org.immutables.value.Value.Default;
 @Value.Style(visibility = Value.Style.ImplementationVisibility.PRIVATE, depluralize = true)
 public interface ResourceDetails {
 
+    /**
+     * Create builder for {@code ResourceDetails}.
+     *
+     * @return {@link ResourceDetailsBuilder} builder instance
+     */
     static ResourceDetailsBuilder builder() {
         return new ResourceDetailsBuilder();
     }
 
     /**
+     * Get resource base name.
+     *
+     * <p>
      * The base name of the resources that will be registered, typically a directory in the bundle/jar where "/"
      * is used to denote the root.
+     *
+     * @return {@link String} base name
      */
     String name();
 
     /**
+     * Get resource mapped alias.
+     *
+     * <p>
      * The name in the URI namespace to which the resources are mapped. This defaults to the {@link #name()}.
+     *
+     * @return {@link String} mapped alias
      */
     @Default default String alias() {
         return name();

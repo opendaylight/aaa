@@ -82,17 +82,26 @@ import org.immutables.value.Value.Default;
 @Value.Style(visibility = Value.Style.ImplementationVisibility.PRIVATE, depluralize = true)
 public abstract class WebContext {
 
+    /**
+     * Create builder for {@code WebContext}.
+     *
+     * @return {@link WebContextBuilder} builder instance
+     */
     public static WebContextBuilder builder() {
         return new WebContextBuilder();
     }
 
     /**
-     * Path which will be used as URL prefix to all registered servlets and filters.
+     * Get path which will be used as URL prefix to all registered servlets and filters.
+     *
+     * @return {@link String} path
      */
     public abstract String contextPath();
 
     /**
-     * Flag whether this context supports web sessions, defaults to true.
+     * Get flag value whether this context supports web sessions, defaults to true.
+     *
+     * @return boolean flag value
      */
     @Default
     public boolean supportsSessions() {
@@ -100,33 +109,49 @@ public abstract class WebContext {
     }
 
     /**
-     * Servlets.
+     * Get list of servlets.
+     *
+     * @return {@link List} list of {@link ServletDetails}
      */
     public abstract List<ServletDetails> servlets();
 
     /**
-     * Filters.
+     * Get list of filters.
+     *
+     * @return {@link List} list of {@link FilterDetails}
      */
     public abstract List<FilterDetails> filters();
 
     /**
-     * Listeners.
+     * Get list of servlet context listeners.
+     *
+     * @return {@link List} list of {@link ServletContextListener}
      */
     public abstract List<ServletContextListener> listeners();
 
     /**
-     * Registers resources (eg html files) that can be accessed via the URI namespace.
+     * Get lis of resources (e.g. html files) that can be accessed via the URI namespace.
+     *
+     * @return {@link List} list of {@link ResourceDetails}
      */
     public abstract List<ResourceDetails> resources();
 
     /**
-     * Context params. These are the {@link ServletContext}s initial parameters; contrary to individual
+     * Get map of context params.
+     *
+     * <p>
+     * These are the {@link ServletContext}s initial parameters; contrary to individual
      * {@link ServletDetails#initParams()} and {@link FilterDetails#initParams()}. While a ServletContext accepts
      * any Object as a parameter, that is not accepted in all implementations. Most notably OSGi HTTP Whiteboard
      * specification allows only String values, hence we are enforcing that.
+     *
+     * @return {@link Map} context parameters map
      */
     public abstract Map<String, String> contextParams();
 
+    /**
+     * Check if filters and servlets in context are not empty.
+     */
     @Value.Check
     protected void check() {
         servlets().forEach(servlet -> {
