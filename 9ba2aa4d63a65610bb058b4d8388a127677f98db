@@ -24,6 +24,30 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3853650a_db3446b7",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/FilterDetails.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 9063
+      },
+      "writtenOn": "2022-10-03T10:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e081e67c_bca60076",
+      "range": {
+        "startLine": 75,
+        "startChar": 30,
+        "endLine": 77,
+        "endChar": 9
+      },
+      "revId": "9ba2aa4d63a65610bb058b4d8388a127677f98db",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5fa2088b_508c7392",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-09-29T15:09:32Z",
       "side": 1,
       "message": "\u0027check\u0027, not \u0027assert\u0027 -- assert implies AssertionError",
+      "range": {
+        "startLine": 80,
+        "startChar": 24,
+        "endLine": 80,
+        "endChar": 30
+      },
+      "revId": "9ba2aa4d63a65610bb058b4d8388a127677f98db",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3450ab0_590a929e",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/FilterDetails.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 9063
+      },
+      "writtenOn": "2022-10-03T10:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fa2088b_508c7392",
       "range": {
         "startLine": 80,
         "startChar": 24,
