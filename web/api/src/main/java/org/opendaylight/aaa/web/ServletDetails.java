@@ -22,17 +22,68 @@ import org.eclipse.jdt.annotation.NonNull;
  * @author Michael Vorburger.ch
  */
 public interface ServletDetails {
-
+    /**
+     * Get a {@link Servlet} instance.
+     *
+     * @return {@link Servlet} instance
+     */
     @NonNull Servlet servlet();
 
+    /**
+     * Get Servlet's name.
+     *
+     * @return {@link String} servlet name
+     */
     @NonNull String name();
 
+    /**
+     * Get list of servlet URL patterns.
+     *
+     * <p>
+     * These patterns control how you access a servlet.
+     *
+     * <p>
+     * Restrictions to URLs and how it should look like are next:
+     * <ul>
+     * <li>A string beginning with a ‘ / ’ character and ending with a ‘ /*’ suffix is used for path mapping.
+     * <li>A string beginning with a ‘ *. ’ prefix is used as an extension mapping.
+     * <li>The empty string ("") is a special URL pattern that exactly maps to the application's context root, i.e.,
+     * requests of the form {@code http://host:port/context-root}. In this case the path info is ’ / ’ and the servlet
+     * path and context path is empty string (““).
+     * <li>A string containing only the ’ / ’ character indicates the "default" servlet of the application. In this case
+     * the servlet path is the request URI minus the context path and the path info is null.
+     * <li>All other strings are used for exact matches only.
+     * </ul>
+     *
+     * <p>
+     * For more info refer to <a href="https://javaee.github.io/servlet-spec/downloads/servlet-4.0/servlet-4_0_FINAL.pdf">Java Servlet Specification</a>.
+     *
+     * @return {@link List} of Servlet URL patterns
+     */
     @NonNull List<String> urlPatterns();
 
+    /**
+     * Get Servlet initial parameters.
+     *
+     * @return {@link Map} that contains initial parameters
+     */
     @NonNull Map<String, String> initParams();
 
+    /**
+     * Get flag to see if async support is on.
+     *
+     * <p>
+     * Flag is used to allow async requests by AAA via SSE (Server Sent Events) async communication.
+     *
+     * @return {@link boolean} support async requests flag
+     */
     boolean asyncSupported();
 
+    /**
+     * Create a builder for {@link ServletDetails}.
+     *
+     * @return {@link Builder} builder instance
+     */
     static @NonNull Builder builder() {
         return new Builder();
     }
