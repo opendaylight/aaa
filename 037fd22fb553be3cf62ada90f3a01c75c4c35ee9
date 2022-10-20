@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "105fdbc5_3bf1b2a5",
+        "filename": "web/api/src/main/java/org/opendaylight/aaa/web/WebContext.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2022-10-20T23:27:21Z",
+      "side": 1,
+      "message": "this also needs to be validated -- see corresponding tests",
+      "range": {
+        "startLine": 140,
+        "startChar": 32,
+        "endLine": 140,
+        "endChar": 43
+      },
+      "revId": "037fd22fb553be3cf62ada90f3a01c75c4c35ee9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
