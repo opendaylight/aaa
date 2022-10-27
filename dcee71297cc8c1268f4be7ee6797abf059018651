@@ -16,6 +16,24 @@
       "message": "IMO it should be \"org.opendaylight.aaa.filterchain.filters\".",
       "revId": "dcee71297cc8c1268f4be7ee6797abf059018651",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f07a865_44ed9cfd",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/configuration/impl/CustomFilterAdapterConfigurationImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 9063
+      },
+      "writtenOn": "2022-10-27T09:01:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a862499_914d33c0",
+      "revId": "dcee71297cc8c1268f4be7ee6797abf059018651",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
