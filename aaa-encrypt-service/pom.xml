@@ -16,7 +16,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
 
   <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-encryption-service-aggregator</artifactId>
-  <version>0.15.7-SNAPSHOT</version>
+  <version>0.15.7</version>
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>pom</packaging>
 
