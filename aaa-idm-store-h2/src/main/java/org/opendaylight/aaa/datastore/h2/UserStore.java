@@ -226,7 +226,6 @@ final class UserStore extends AbstractStore<User> {
 
         try (var conn = dbConnect();
              var stmt = conn.prepareStatement("DELETE FROM " + TABLE + " WHERE " + COL_ID + " = ?")) {
-            // FIXME: prepare statement instead
             stmt.setString(1, userid);
             LOG.debug("deleteUser() request: {}", stmt);
 
