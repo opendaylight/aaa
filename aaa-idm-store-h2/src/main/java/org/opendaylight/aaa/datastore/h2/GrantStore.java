@@ -9,11 +9,9 @@
 package org.opendaylight.aaa.datastore.h2;
 
 import com.google.common.annotations.VisibleForTesting;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import org.apache.commons.text.StringEscapeUtils;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Grants;
@@ -165,21 +163,18 @@ final class GrantStore extends AbstractStore<Grant> {
         }
     }
 
-    @SuppressFBWarnings(value = "SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE", justification = "Weird original code")
     Grant deleteGrant(final String grantid) throws StoreException {
-        final String escaped = StringEscapeUtils.escapeHtml4(grantid);
-        final var savedGrant = getGrant(escaped);
+        final var savedGrant = getGrant(grantid);
         if (savedGrant == null) {
             return null;
         }
 
         try (var conn = dbConnect();
-             var stmt = conn.createStatement()) {
-            // FIXME: prepare statement instead
-            final String query = String.format("DELETE FROM " + TABLE +  " WHERE " + COL_ID + " = '%s'", escaped);
-            LOG.debug("deleteGrant() request: {}", query);
+             var stmt = conn.prepareStatement("DELETE FROM " + TABLE +  " WHERE " + COL_ID + " = ?")) {
+            stmt.setString(1, grantid);
+            LOG.debug("deleteGrant() request: {}", stmt);
 
-            int deleteCount = stmt.executeUpdate(query);
+            int deleteCount = stmt.executeUpdate();
             LOG.debug("deleted {} records", deleteCount);
             return savedGrant;
         } catch (SQLException e) {
