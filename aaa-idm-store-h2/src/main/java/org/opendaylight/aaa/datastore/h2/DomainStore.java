@@ -9,13 +9,10 @@ package org.opendaylight.aaa.datastore.h2;
 
 import static java.util.Objects.requireNonNull;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import org.apache.commons.text.StringEscapeUtils;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Domains;
 import org.slf4j.Logger;
@@ -116,7 +113,7 @@ public class DomainStore extends AbstractStore<Domain> {
     }
 
     protected Domain putDomain(final Domain domain) throws StoreException {
-        Domain savedDomain = this.getDomain(domain.getDomainid());
+        Domain savedDomain = getDomain(domain.getDomainid());
         if (savedDomain == null) {
             return null;
         }
@@ -147,17 +144,16 @@ public class DomainStore extends AbstractStore<Domain> {
         return savedDomain;
     }
 
-    @SuppressFBWarnings("SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE")
-    protected Domain deleteDomain(String domainid) throws StoreException {
-        domainid = StringEscapeUtils.escapeHtml4(domainid);
-        Domain deletedDomain = this.getDomain(domainid);
+    protected Domain deleteDomain(final String domainid) throws StoreException {
+        Domain deletedDomain = getDomain(domainid);
         if (deletedDomain == null) {
             return null;
         }
-        String query = String.format("DELETE FROM DOMAINS WHERE domainid = '%s'", domainid);
+        String query = "DELETE FROM DOMAINS WHERE domainid = ?";
         try (Connection conn = dbConnect();
-             Statement statement = conn.createStatement()) {
-            int deleteCount = statement.executeUpdate(query);
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, domainid);
+            int deleteCount = statement.executeUpdate();
             LOG.debug("deleted {} records", deleteCount);
             return deletedDomain;
         } catch (SQLException e) {
