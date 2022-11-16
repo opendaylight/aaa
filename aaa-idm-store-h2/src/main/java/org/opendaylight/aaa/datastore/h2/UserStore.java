@@ -9,14 +9,11 @@ package org.opendaylight.aaa.datastore.h2;
 
 import static java.util.Objects.requireNonNull;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Objects;
-import org.apache.commons.text.StringEscapeUtils;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
@@ -143,7 +140,7 @@ public class UserStore extends AbstractStore<User> {
 
     public User putUser(final User user) throws StoreException {
 
-        User savedUser = this.getUser(user.getUserid());
+        User savedUser = getUser(user.getUserid());
         if (savedUser == null) {
             return null;
         }
@@ -186,17 +183,16 @@ public class UserStore extends AbstractStore<User> {
         return savedUser;
     }
 
-    @SuppressFBWarnings("SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE")
-    protected User deleteUser(String userid) throws StoreException {
-        userid = StringEscapeUtils.escapeHtml4(userid);
-        User savedUser = this.getUser(userid);
+    protected User deleteUser(final String userid) throws StoreException {
+        User savedUser = getUser(userid);
         if (savedUser == null) {
             return null;
         }
 
-        String query = String.format("DELETE FROM USERS WHERE userid = '%s'", userid);
-        try (Connection conn = dbConnect(); Statement statement = conn.createStatement()) {
-            int deleteCount = statement.executeUpdate(query);
+        String query = "DELETE FROM USERS WHERE userid = ?";
+        try (Connection conn = dbConnect(); PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, userid);
+            int deleteCount = statement.executeUpdate();
             LOG.debug("deleted {} records", deleteCount);
             return savedUser;
         } catch (SQLException s) {
