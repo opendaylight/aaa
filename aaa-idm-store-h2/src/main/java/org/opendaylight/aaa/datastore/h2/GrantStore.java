@@ -8,13 +8,10 @@
 
 package org.opendaylight.aaa.datastore.h2;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import org.apache.commons.text.StringEscapeUtils;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.model.Grant;
 import org.opendaylight.aaa.api.model.Grants;
@@ -140,18 +137,17 @@ public class GrantStore extends AbstractStore<Grant> {
         }
     }
 
-    @SuppressFBWarnings("SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE")
-    protected Grant deleteGrant(String grantid) throws StoreException {
-        grantid = StringEscapeUtils.escapeHtml4(grantid);
+    protected Grant deleteGrant(final String grantid) throws StoreException {
         Grant savedGrant = this.getGrant(grantid);
         if (savedGrant == null) {
             return null;
         }
 
-        String query = String.format("DELETE FROM GRANTS WHERE grantid = '%s'", grantid);
+        String query = "DELETE FROM GRANTS WHERE grantid = ?";
         try (Connection conn = dbConnect();
-             Statement statement = conn.createStatement()) {
-            int deleteCount = statement.executeUpdate(query);
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, grantid);
+            int deleteCount = statement.executeUpdate();
             LOG.debug("deleted {} records", deleteCount);
             return savedGrant;
         } catch (SQLException e) {
