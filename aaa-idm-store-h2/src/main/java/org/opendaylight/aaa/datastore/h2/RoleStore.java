@@ -10,11 +10,9 @@ package org.opendaylight.aaa.datastore.h2;
 import static java.util.Objects.requireNonNull;
 
 import com.google.common.annotations.VisibleForTesting;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import org.apache.commons.text.StringEscapeUtils;
 import org.eclipse.jdt.annotation.NonNull;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.model.Role;
@@ -166,22 +164,18 @@ final class RoleStore extends AbstractStore<Role> {
         return savedRole;
     }
 
-    @SuppressFBWarnings("SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE")
     Role deleteRole(final String roleid) throws StoreException {
-        // FIXME: remove this once we have a more modern H2
-        final String escaped = StringEscapeUtils.escapeHtml4(roleid);
-        Role savedRole = getRole(escaped);
+        Role savedRole = getRole(roleid);
         if (savedRole == null) {
             return null;
         }
 
         try (var conn = dbConnect();
-             var stmt = conn.createStatement()) {
-            // FIXME: prepare statement instead
-            final String query = String.format("DELETE FROM " + TABLE + " WHERE " + COL_ID + " = '%s'", escaped);
-            LOG.debug("deleteRole() request: {}", query);
+             var stmt = conn.prepareStatement("DELETE FROM " + TABLE + " WHERE " + COL_ID + " = ?")) {
+            stmt.setString(1, roleid);
+            LOG.debug("deleteRole() request: {}", stmt);
 
-            int deleteCount = stmt.executeUpdate(query);
+            int deleteCount = stmt.executeUpdate();
             LOG.debug("deleted {} records", deleteCount);
             return savedRole;
         } catch (SQLException s) {
