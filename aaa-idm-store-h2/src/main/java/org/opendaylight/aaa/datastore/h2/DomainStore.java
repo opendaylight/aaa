@@ -11,11 +11,9 @@ package org.opendaylight.aaa.datastore.h2;
 import static java.util.Objects.requireNonNull;
 
 import com.google.common.annotations.VisibleForTesting;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import org.apache.commons.text.StringEscapeUtils;
 import org.eclipse.jdt.annotation.NonNull;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Domains;
@@ -182,22 +180,18 @@ final class DomainStore extends AbstractStore<Domain> {
         return savedDomain;
     }
 
-    @SuppressFBWarnings(value = "SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE", justification = "Weird original code")
     Domain deleteDomain(final String domainid) throws StoreException {
-        // FIXME: remove this once we have a more modern H2
-        final String escaped = StringEscapeUtils.escapeHtml4(domainid);
-        final var deletedDomain = getDomain(escaped);
+        final var deletedDomain = getDomain(domainid);
         if (deletedDomain == null) {
             return null;
         }
 
         try (var conn = dbConnect();
-             var stmt = conn.createStatement()) {
-            // FIXME: prepare statement instead
-            final String query = String.format("DELETE FROM " + TABLE + " WHERE " + COL_ID + " = '%s'", escaped);
-            LOG.debug("deleteDomain() request: {}", query);
+             var stmt = conn.prepareStatement("DELETE FROM " + TABLE + " WHERE " + COL_ID + " = ?")) {
+            stmt.setString(1, domainid);
 
-            int deleteCount = stmt.executeUpdate(query);
+            LOG.debug("deleteDomain() request: {}", stmt);
+            int deleteCount = stmt.executeUpdate();
             LOG.debug("deleted {} records", deleteCount);
             return deletedDomain;
         } catch (SQLException e) {
