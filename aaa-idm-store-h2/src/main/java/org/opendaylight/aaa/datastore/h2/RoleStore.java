@@ -9,13 +9,10 @@ package org.opendaylight.aaa.datastore.h2;
 
 import static java.util.Objects.requireNonNull;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import org.apache.commons.text.StringEscapeUtils;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
@@ -103,7 +100,7 @@ public class RoleStore extends AbstractStore<Role> {
 
     protected Role putRole(final Role role) throws StoreException {
 
-        Role savedRole = this.getRole(role.getRoleid());
+        Role savedRole = getRole(role.getRoleid());
         if (savedRole == null) {
             return null;
         }
@@ -127,17 +124,16 @@ public class RoleStore extends AbstractStore<Role> {
         return savedRole;
     }
 
-    @SuppressFBWarnings("SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE")
-    protected Role deleteRole(String roleid) throws StoreException {
-        roleid = StringEscapeUtils.escapeHtml4(roleid);
-        Role savedRole = this.getRole(roleid);
+    protected Role deleteRole(final String roleid) throws StoreException {
+        Role savedRole = getRole(roleid);
         if (savedRole == null) {
             return null;
         }
 
-        String query = String.format("DELETE FROM ROLES WHERE roleid = '%s'", roleid);
-        try (Connection conn = dbConnect(); Statement statement = conn.createStatement()) {
-            int deleteCount = statement.executeUpdate(query);
+        String query = "DELETE FROM ROLES WHERE roleid = ?";
+        try (Connection conn = dbConnect(); PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, roleid);
+            int deleteCount = statement.executeUpdate();
             LOG.debug("deleted {} records", deleteCount);
             return savedRole;
         } catch (SQLException s) {
