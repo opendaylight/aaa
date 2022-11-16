@@ -10,11 +10,9 @@ package org.opendaylight.aaa.datastore.h2;
 import static java.util.Objects.requireNonNull;
 
 import com.google.common.annotations.VisibleForTesting;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import org.apache.commons.text.StringEscapeUtils;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.model.Users;
@@ -220,22 +218,19 @@ final class UserStore extends AbstractStore<User> {
         return savedUser;
     }
 
-    @SuppressFBWarnings(value = "SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE", justification = "Weird original code")
     User deleteUser(final String userid) throws StoreException {
-        // FIXME: remove this once we have a more modern H2
-        final var escaped = StringEscapeUtils.escapeHtml4(userid);
-        final var savedUser = getUser(escaped);
+        final var savedUser = getUser(userid);
         if (savedUser == null) {
             return null;
         }
 
         try (var conn = dbConnect();
-             var stmt = conn.createStatement()) {
+             var stmt = conn.prepareStatement("DELETE FROM " + TABLE + " WHERE " + COL_ID + " = ?")) {
             // FIXME: prepare statement instead
-            final var query = String.format("DELETE FROM " + TABLE + " WHERE " + COL_ID + " = '%s'", escaped);
-            LOG.debug("deleteUser() request: {}", query);
+            stmt.setString(1, userid);
+            LOG.debug("deleteUser() request: {}", stmt);
 
-            int deleteCount = stmt.executeUpdate(query);
+            int deleteCount = stmt.executeUpdate();
             LOG.debug("deleted {} records", deleteCount);
             return savedUser;
         } catch (SQLException s) {
