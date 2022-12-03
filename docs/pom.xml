@@ -19,7 +19,7 @@
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>aaa-docs</artifactId>
     <packaging>jar</packaging>
-    <version>0.16.5-SNAPSHOT</version>
+    <version>0.16.5</version>
     <name>${project.artifactId}</name>
     <description>AAA documentation</description>
 
@@ -28,7 +28,7 @@
             <dependency>
                 <groupId>org.opendaylight.aaa</groupId>
                 <artifactId>aaa-artifacts</artifactId>
-                <version>0.16.5-SNAPSHOT</version>
+                <version>0.16.5</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
