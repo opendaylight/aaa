@@ -1,0 +1,7 @@
+Verified+1: jenkins-releng ODL
+Code-Review+2: Robert Varga <nite@hq.sk>
+Submitted-by: Robert Varga <nite@hq.sk>
+Submitted-at: Tue, 03 Jan 2023 09:30:56 +0000
+Reviewed-on: https://git.opendaylight.org/gerrit/c/aaa/+/103901
+Project: aaa
+Branch: refs/heads/0.16.x
