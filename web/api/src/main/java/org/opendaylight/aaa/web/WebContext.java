@@ -7,6 +7,8 @@
  */
 package org.opendaylight.aaa.web;
 
+import static java.util.Objects.requireNonNull;
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import java.util.List;
@@ -65,6 +67,13 @@ import org.eclipse.jdt.annotation.NonNull;
  * @author Michael Vorburger.ch
  */
 public interface WebContext {
+    /**
+     * Get the descriptive name of this context.
+     *
+     * @return A descriptive name.
+     */
+    @NonNull String name();
+
     /**
      * Get path which will be used as URL prefix to all registered servlets and filters. Guaranteed to be non-empty
      *
@@ -138,7 +147,7 @@ public interface WebContext {
      * collection, but instead used immediately to create instances.</em>
      */
     final class Builder {
-        private record ImmutableWebContext(String contextPath, ImmutableList<ServletDetails> servlets,
+        private record ImmutableWebContext(String name, String contextPath, ImmutableList<ServletDetails> servlets,
             ImmutableList<FilterDetails> filters, ImmutableList<ServletContextListener> listeners,
             ImmutableList<ResourceDetails> resources, ImmutableMap<String, String> contextParams,
             boolean supportsSessions) implements WebContext {
@@ -150,6 +159,7 @@ public interface WebContext {
         private final ImmutableList.Builder<FilterDetails> filters = ImmutableList.builder();
         private final ImmutableList.Builder<ServletContextListener> listeners = ImmutableList.builder();
         private final ImmutableList.Builder<ResourceDetails> resources = ImmutableList.builder();
+        private String name;
         private String contextPath;
         private boolean supportsSessions = true;
 
@@ -158,7 +168,22 @@ public interface WebContext {
         }
 
         /**
+         * Initializes the value for the {@link WebContext#name() name} attribute.
+         *
+         * @param name A descriptive name
+         * @return {@code this} builder for use in a chained invocation
+         * @throws IllegalArgumentException if {@code contextPath} does not meet specification criteria
+         * @throws NullPointerException if {code contextPath} is {@code null}
+         */
+        @SuppressWarnings("checkstyle:hiddenField")
+        public @NonNull Builder name(final String name) {
+            this.name = requireNonNull(name);
+            return this;
+        }
+
+        /**
          * Initializes the value for the {@link WebContext#contextPath() contextPath} attribute. As per Servlet
+         * specification.
          *
          * @param contextPath The value for contextPath
          * @return {@code this} builder for use in a chained invocation
@@ -256,8 +281,9 @@ public interface WebContext {
             if (contextPath == null) {
                 throw new IllegalStateException("No contextPath specified");
             }
-            return new ImmutableWebContext(contextPath, servlets.build(), filters.build(), listeners.build(),
-                resources.build(), contextParams.build(), supportsSessions);
+
+            return new ImmutableWebContext(name != null ? name : contextPath + ".id", contextPath, servlets.build(),
+                filters.build(), listeners.build(), resources.build(), contextParams.build(), supportsSessions);
         }
     }
 }

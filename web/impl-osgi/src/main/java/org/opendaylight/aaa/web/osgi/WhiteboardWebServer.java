@@ -106,9 +106,8 @@ public final class WhiteboardWebServer implements WebServer {
         // The order in which we set things up here matters...
 
         // 1. ServletContextHelper, to which all others are bound to
+        final var contextName = webContext.name();
         final var contextPath = webContext.contextPath();
-        // TODO: can we create a better name?
-        final var contextName = contextPath + ".id";
 
         final var contextProps = contextProperties(contextName, contextPath, webContext.contextParams());
         LOG.debug("Registering context {} with properties {}", contextName, contextProps);
