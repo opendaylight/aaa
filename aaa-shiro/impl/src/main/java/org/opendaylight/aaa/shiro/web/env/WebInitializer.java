@@ -42,6 +42,7 @@ public class WebInitializer {
             final CustomFilterAdapterConfiguration customFilterAdapterConfig) throws ServletException {
 
         final var webContextBuilder = WebContext.builder()
+            .name("OpenDaylight IDM realm management")
             .contextPath("/auth")
             .supportsSessions(true)
 
