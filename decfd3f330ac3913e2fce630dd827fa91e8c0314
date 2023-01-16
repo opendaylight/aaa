@@ -16,6 +16,24 @@
       "message": "static",
       "revId": "decfd3f330ac3913e2fce630dd827fa91e8c0314",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f7bf2a4_289fec1c",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/OSGiAAAEncryptionService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 9063
+      },
+      "writtenOn": "2023-01-16T15:26:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaa59e95_ae5ee31b",
+      "revId": "decfd3f330ac3913e2fce630dd827fa91e8c0314",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
