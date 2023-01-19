@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b4cafe7_b38da501",
+        "filename": "artifacts/pom.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 0,
+      "message": "No, this is not intended?",
+      "revId": "fb811f5255a5c0611c03260a5521fb0183450e36",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7591bc1_ad741ad8",
+        "filename": "dependency-check/pom.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 0,
+      "message": "No, this is not intended?",
+      "revId": "fb811f5255a5c0611c03260a5521fb0183450e36",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}

@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b07c7ead_026a856a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiAaaCertRpcServiceProvider.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 1,
+      "message": "final? or I would prefer this to be a parameter of `init()`",
+      "revId": "d94ca30fbc195b8a9631371ed2b01d149595305c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8e242b1_06b4a75b",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiAaaCertRpcServiceProvider.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 1,
+      "message": "The same here",
+      "revId": "d94ca30fbc195b8a9631371ed2b01d149595305c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d218f5d_a4f7cf9c",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiAaaCertRpcServiceProvider.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 1,
+      "message": "The same here",
+      "revId": "d94ca30fbc195b8a9631371ed2b01d149595305c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d7703dc_2556c20c",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceConfig.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 1,
+      "message": "private",
+      "revId": "d94ca30fbc195b8a9631371ed2b01d149595305c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "539eb3b8_48ef832d",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceConfig.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 1,
+      "message": "private",
+      "revId": "d94ca30fbc195b8a9631371ed2b01d149595305c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df26fa0c_4644d6fe",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceConfig.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 1,
+      "message": "private final",
+      "revId": "d94ca30fbc195b8a9631371ed2b01d149595305c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c362afaf_489338a2",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceConfig.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 1,
+      "message": "Why we do not use delegate here?",
+      "revId": "d94ca30fbc195b8a9631371ed2b01d149595305c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "982d6713_ea803661",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceConfig.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 1,
+      "message": "Why we do not use delegate here?",
+      "revId": "d94ca30fbc195b8a9631371ed2b01d149595305c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bf3392c_fb1683f5",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceConfig.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 1,
+      "message": "IMO its possible to create delegate in constructor and make it final",
+      "revId": "d94ca30fbc195b8a9631371ed2b01d149595305c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d35c629_1ac26446",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceConfigBootstrap.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 1,
+      "message": "private",
+      "revId": "d94ca30fbc195b8a9631371ed2b01d149595305c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f62d452_d44c33b3",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceConfigBootstrap.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 1,
+      "message": "private",
+      "revId": "d94ca30fbc195b8a9631371ed2b01d149595305c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "690401a0_de5750a4",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceConfigBootstrap.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 1,
+      "message": "IMO: default configuration should be final",
+      "revId": "d94ca30fbc195b8a9631371ed2b01d149595305c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a6943c6_992ae459",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceConfigBootstrap.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 1,
+      "message": "```\nEach software component should log at least four events on this level:\n\n    when it starts its initialization\n\n    when it becomes operational,\n\n    when it starts orderly shutdown,\n\n    just before it terminates normally\n```\nhttps://docs.opendaylight.org/en/latest/developer-guides/logging-subsystem.html#info",
+      "revId": "d94ca30fbc195b8a9631371ed2b01d149595305c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff05ebec_19fa1f0c",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceConfigBootstrap.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 1,
+      "message": "```\nEach software component should log at least four events on this level:\n\n    when it starts its initialization\n\n    when it becomes operational,\n\n    when it starts orderly shutdown,\n\n    just before it terminates normally\n```\nhttps://docs.opendaylight.org/en/latest/developer-guides/logging-subsystem.html#info",
+      "revId": "d94ca30fbc195b8a9631371ed2b01d149595305c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fff11f35_4bb7632a",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceProvider.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 1,
+      "message": "private volatile",
+      "revId": "d94ca30fbc195b8a9631371ed2b01d149595305c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3edb81c8_a9dcc2d5",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceProvider.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-19T11:32:25Z",
+      "side": 1,
+      "message": "Then we do not need `serviceConfig` at all?",
+      "revId": "d94ca30fbc195b8a9631371ed2b01d149595305c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
