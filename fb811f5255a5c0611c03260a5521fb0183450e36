@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c19d85ae_c66e88ea",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/OSGiAAAEncryptionService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-23T13:17:03Z",
+      "side": 1,
+      "message": "We can move this to @Activate method/make this final.",
+      "revId": "fb811f5255a5c0611c03260a5521fb0183450e36",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
