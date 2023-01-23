@@ -19,7 +19,7 @@
 
   <groupId>org.opendaylight.aaa.web</groupId>
   <artifactId>web-aggregator</artifactId>
-  <version>0.17.3-SNAPSHOT</version>
+  <version>0.17.3</version>
   <packaging>pom</packaging>
   <name>ODL :: aaa :: ${project.artifactId}</name>
 
