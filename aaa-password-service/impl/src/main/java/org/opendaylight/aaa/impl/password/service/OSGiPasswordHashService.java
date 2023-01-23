@@ -15,7 +15,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 
-@Component(immediate = true, service = PasswordHashService.class, property = "type=default")
+@Component(immediate = true, property = "type=default")
 public final class OSGiPasswordHashService implements PasswordHashService {
     private volatile DefaultPasswordHashService delegate = null;
 
