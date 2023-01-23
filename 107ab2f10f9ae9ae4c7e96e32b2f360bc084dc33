@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fb52186_e073dc01",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 23
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-23T13:29:41Z",
+      "side": 1,
+      "message": "Missing \u0027.\u0027. What is Admin?",
+      "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2974f730_f472d954",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiAaaCertRpcServiceProvider.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-23T13:29:41Z",
+      "side": 1,
+      "message": "Please add one empty line after `private static final`.",
+      "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e65047a2_0a23f27d",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiAaaCertRpcServiceProvider.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-23T13:29:41Z",
+      "side": 1,
+      "message": "We require these parameter to be non null - `requireNonNull`.",
+      "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff4f2b1a_fb7c8510",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiAaaCertRpcServiceProvider.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-23T13:29:41Z",
+      "side": 1,
+      "message": "This should be `@Activate`.",
+      "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50db4b3e_766a49e1",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceConfig.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-23T13:29:41Z",
+      "side": 1,
+      "message": "We do not need this one time constant.",
+      "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d4e6db6_d39f0abd",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceConfigBootstrap.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-23T13:29:41Z",
+      "side": 1,
+      "message": "`dataBroker`",
+      "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9e615bf_ada24412",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceProvider.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-23T13:29:41Z",
+      "side": 1,
+      "message": "Please add one empty line after `private static final`.",
+      "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb966fd9_5bdce392",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceProvider.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-01-23T13:29:41Z",
+      "side": 1,
+      "message": "Should it be `@Activate`?",
+      "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
