@@ -9,7 +9,6 @@ package org.opendaylight.aaa.impl.password.service;
 
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.crypto.hash.DefaultHashService;
-import org.apache.shiro.crypto.hash.Hash;
 import org.apache.shiro.crypto.hash.HashRequest;
 import org.apache.shiro.crypto.hash.SimpleHashRequest;
 import org.apache.shiro.util.ByteSource;
@@ -39,33 +38,30 @@ public class DefaultPasswordHashService implements PasswordHashService {
 
     @Override
     public PasswordHash getPasswordHash(final String password) {
-        final HashRequest hashRequest = new HashRequest.Builder()
-                .setAlgorithmName(hashService.getHashAlgorithmName())
-                .setIterations(hashService.getHashIterations())
-                .setSource(ByteSource.Util.bytes(password)).build();
-
-        final Hash hash =  hashService.computeHash(hashRequest);
+        final var hash =  hashService.computeHash(new HashRequest.Builder()
+            .setAlgorithmName(hashService.getHashAlgorithmName())
+            .setIterations(hashService.getHashIterations())
+            .setSource(ByteSource.Util.bytes(password))
+            .build());
         return PasswordHashImpl.create(
-                hash.getAlgorithmName(),
-                hash.getSalt().toBase64(),
-                hash.getIterations(),
-                hash.toBase64());
+            hash.getAlgorithmName(),
+            hash.getSalt().toBase64(),
+            hash.getIterations(),
+            hash.toBase64());
     }
 
     @Override
     public PasswordHash getPasswordHash(final String password, final String salt) {
-        final HashRequest hashRequest = new SimpleHashRequest(
-                hashService.getHashAlgorithmName(),
-                ByteSource.Util.bytes(password),
-                ByteSource.Util.bytes(Base64.decode(salt)),
-                hashService.getHashIterations());
-
-        final Hash hash =  hashService.computeHash(hashRequest);
+        final var hash = hashService.computeHash(new SimpleHashRequest(
+            hashService.getHashAlgorithmName(),
+            ByteSource.Util.bytes(password),
+            ByteSource.Util.bytes(Base64.decode(salt)),
+            hashService.getHashIterations()));
         return PasswordHashImpl.create(
-                hash.getAlgorithmName(),
-                hash.getSalt().toBase64(),
-                hash.getIterations(),
-                hash.toBase64());
+            hash.getAlgorithmName(),
+            hash.getSalt().toBase64(),
+            hash.getIterations(),
+            hash.toBase64());
     }
 
     @Override

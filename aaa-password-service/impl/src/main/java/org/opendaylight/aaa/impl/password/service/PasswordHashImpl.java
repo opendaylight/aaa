@@ -10,7 +10,6 @@ package org.opendaylight.aaa.impl.password.service;
 import org.opendaylight.aaa.api.password.service.PasswordHash;
 
 public final class PasswordHashImpl implements PasswordHash {
-
     private final String algorithmName;
     private final String salt;
     private final int iterations;
@@ -18,7 +17,6 @@ public final class PasswordHashImpl implements PasswordHash {
 
     private PasswordHashImpl(final String algorithmName, final String salt, final int iterations,
                              final String hashedPassword) {
-
         this.algorithmName = algorithmName;
         this.salt = salt;
         this.iterations = iterations;
@@ -31,19 +29,23 @@ public final class PasswordHashImpl implements PasswordHash {
         return new PasswordHashImpl(algorithmName, salt, iterations, hashedPassword);
     }
 
+    @Override
     public String getAlgorithmName() {
-        return this.algorithmName;
+        return algorithmName;
     }
 
+    @Override
     public String getSalt() {
-        return this.salt;
+        return salt;
     }
 
+    @Override
     public int getIterations() {
-        return this.iterations;
+        return iterations;
     }
 
+    @Override
     public String getHashedPassword() {
-        return this.hashedPassword;
+        return hashedPassword;
     }
 }
