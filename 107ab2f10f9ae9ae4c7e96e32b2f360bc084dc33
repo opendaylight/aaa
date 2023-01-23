@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b95cccf1_baedc93e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 23
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2023-01-23T15:17:42Z",
+      "side": 1,
+      "message": "http://blog.vogella.com/2017/02/24/control-osgi-ds-component-instances-via-configuration-admin/\n\nBut I have changed it to \"Component Property\" which is maybe better describing.\nhttps://docs.osgi.org/specification/osgi.cmpn/8.0.0/service.component.html#service.component-component.property.types",
+      "parentUuid": "6fb52186_e073dc01",
+      "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2974f730_f472d954",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-01-23T13:29:41Z",
       "side": 1,
       "message": "Please add one empty line after `private static final`.",
+      "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13889e45_13e0ad77",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiAaaCertRpcServiceProvider.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2023-01-23T15:17:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2974f730_f472d954",
       "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
@@ -52,6 +88,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bfa48de_8ffc6443",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiAaaCertRpcServiceProvider.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2023-01-23T15:17:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e65047a2_0a23f27d",
+      "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ff4f2b1a_fb7c8510",
@@ -65,6 +119,24 @@
       "writtenOn": "2023-01-23T13:29:41Z",
       "side": 1,
       "message": "This should be `@Activate`.",
+      "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0eb20fcd_24c85a2d",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiAaaCertRpcServiceProvider.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2023-01-23T15:17:42Z",
+      "side": 1,
+      "message": "No, this is needs to be `@Reference`\nhttps://www.openhab.org/docs/developer/osgi/osgids.html#method-injection",
+      "parentUuid": "ff4f2b1a_fb7c8510",
       "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
@@ -86,6 +158,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7db54c3_18a89801",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceConfig.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2023-01-23T15:17:42Z",
+      "side": 1,
+      "message": "No, this constant is used in two places:\nhttps://git.opendaylight.org/gerrit/c/aaa/+/93846/23/aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceConfig.java#39\n\nhttps://git.opendaylight.org/gerrit/c/aaa/+/93846/23/aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceConfig.java#86\n\nI will rather keep it as a constant.",
+      "parentUuid": "50db4b3e_766a49e1",
+      "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d4e6db6_d39f0abd",
@@ -99,6 +189,24 @@
       "writtenOn": "2023-01-23T13:29:41Z",
       "side": 1,
       "message": "`dataBroker`",
+      "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abb5cf0e_c57ee258",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceConfigBootstrap.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2023-01-23T15:17:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d4e6db6_d39f0abd",
       "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
@@ -120,6 +228,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7529eec_93c3b1d9",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceProvider.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2023-01-23T15:17:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9e615bf_ada24412",
+      "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb966fd9_5bdce392",
@@ -133,6 +259,24 @@
       "writtenOn": "2023-01-23T13:29:41Z",
       "side": 1,
       "message": "Should it be `@Activate`?",
+      "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2eb22e1d_541ab433",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/OSGiCertServiceProvider.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2023-01-23T15:17:42Z",
+      "side": 1,
+      "message": "https://git.opendaylight.org/gerrit/c/aaa/+/93846/comments/ff4f2b1a_fb7c8510",
+      "parentUuid": "bb966fd9_5bdce392",
       "revId": "107ab2f10f9ae9ae4c7e96e32b2f360bc084dc33",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
