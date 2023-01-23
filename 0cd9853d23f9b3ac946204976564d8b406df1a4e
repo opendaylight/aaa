@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b84f3ef_8ad1206f",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/OSGiAAAEncryptionService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2023-01-23T17:07:47Z",
+      "side": 1,
+      "message": "okay, this is troublesome.\nat the end of the day, we d not want to provide defaults for key/salt here, but rather in a .cfg file\n\nwe really would like to generate these for each deployment, but that is a separate issue",
+      "range": {
+        "startLine": 37,
+        "startChar": 38,
+        "endLine": 37,
+        "endChar": 62
+      },
+      "revId": "0cd9853d23f9b3ac946204976564d8b406df1a4e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
