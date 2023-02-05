@@ -7,13 +7,10 @@
  */
 package org.opendaylight.aaa.encrypt.impl;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
@@ -26,23 +23,10 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
-import org.opendaylight.mdsal.binding.api.DataBroker;
-import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfigBuilder;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.EncryptServiceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 
 /**
  * Provides a basic encryption service implementation with configuration knobs.
@@ -52,38 +36,18 @@ import org.xml.sax.SAXException;
 @Deprecated
 public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     private static final Logger LOG = LoggerFactory.getLogger(AAAEncryptionServiceImpl.class);
-    private static final String DEFAULT_CONFIG_FILE_PATH = "etc" + File.separator + "opendaylight" + File.separator
-            + "datastore" + File.separator + "initial" + File.separator + "config" + File.separator
-            + "aaa-encrypt-service-config.xml";
-    private static final SecureRandom RANDOM = new SecureRandom();
 
     private final SecretKey key;
     private final Cipher encryptCipher;
     private final Cipher decryptCipher;
 
-    public AAAEncryptionServiceImpl(AaaEncryptServiceConfig encrySrvConfig, final DataBroker dataBroker) {
-        if (encrySrvConfig.getEncryptSalt() == null) {
-            throw new IllegalArgumentException(
-                    "null encryptSalt in AaaEncryptServiceConfig: " + encrySrvConfig.toString());
-        }
-        if (encrySrvConfig.getEncryptKey() != null && encrySrvConfig.getEncryptKey().isEmpty()) {
-            LOG.debug("Set the Encryption service password and encrypt salt");
-            String newPwd = RandomStringUtils.random(encrySrvConfig.getPasswordLength(), true, true);
-            byte[] salt = new byte[16];
-            RANDOM.nextBytes(salt);
-            String encodedSalt = Base64.getEncoder().encodeToString(salt);
-            encrySrvConfig = new AaaEncryptServiceConfigBuilder(encrySrvConfig).setEncryptKey(newPwd)
-                    .setEncryptSalt(encodedSalt).build();
-            updateEncrySrvConfig(newPwd, encodedSalt);
-            initializeConfigDataTree(encrySrvConfig, dataBroker);
-        }
-
-        final byte[] encryptionKeySalt = Base64.getDecoder().decode(encrySrvConfig.getEncryptSalt());
+    public AAAEncryptionServiceImpl(final EncryptServiceConfig encrySrvConfig) {
+        final byte[] encryptionKeySalt = Base64.getDecoder().decode(encrySrvConfig.requireEncryptSalt());
         IvParameterSpec tempIvSpec = null;
         SecretKey tempKey = null;
         try {
             final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(encrySrvConfig.getEncryptMethod());
-            final KeySpec spec = new PBEKeySpec(encrySrvConfig.getEncryptKey().toCharArray(), encryptionKeySalt,
+            final KeySpec spec = new PBEKeySpec(encrySrvConfig.requireEncryptKey().toCharArray(), encryptionKeySalt,
                     encrySrvConfig.getEncryptIterationCount(), encrySrvConfig.getEncryptKeyLength());
             tempKey = new SecretKeySpec(keyFactory.generateSecret(spec).getEncoded(), encrySrvConfig.getEncryptType());
             tempIvSpec = new IvParameterSpec(encryptionKeySalt);
@@ -181,34 +145,5 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             LOG.error("Failed to decrypt encoded data", e);
         }
         return encryptedData;
-    }
-
-    private static void updateEncrySrvConfig(final String newPwd, final String newSalt) {
-        LOG.debug("Update encryption service config file");
-        try {
-            final File configFile = new File(DEFAULT_CONFIG_FILE_PATH);
-            if (configFile.exists()) {
-                final Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(configFile);
-                final Node keyNode = doc.getElementsByTagName("encrypt-key").item(0);
-                keyNode.setTextContent(newPwd);
-                final Node salt = doc.getElementsByTagName("encrypt-salt").item(0);
-                salt.setTextContent(newSalt);
-                TransformerFactory.newInstance().newTransformer().transform(new DOMSource(doc),
-                    new StreamResult(new File(DEFAULT_CONFIG_FILE_PATH)));
-            } else {
-                LOG.warn("The encryption service config file does not exist {}", DEFAULT_CONFIG_FILE_PATH);
-            }
-        } catch (ParserConfigurationException | TransformerException | SAXException | IOException e) {
-            LOG.error("Error while updating the encryption service config file", e);
-        }
-    }
-
-    private static void initializeConfigDataTree(final AaaEncryptServiceConfig encrySrvConfig,
-            final DataBroker dataBroker) {
-        if (MdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION,
-                MdsalUtils.getEncryptionSrvConfigIid()) == null) {
-            MdsalUtils.initalizeDatastore(LogicalDatastoreType.CONFIGURATION, dataBroker,
-                    MdsalUtils.getEncryptionSrvConfigIid(), encrySrvConfig);
-        }
     }
 }
