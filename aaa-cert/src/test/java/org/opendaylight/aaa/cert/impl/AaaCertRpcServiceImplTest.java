@@ -7,7 +7,6 @@
  */
 package org.opendaylight.aaa.cert.impl;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -21,6 +20,7 @@ import java.util.List;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.opendaylight.aaa.cert.api.IAaaCertProvider;
 import org.opendaylight.aaa.cert.utils.KeyStoresDataUtils;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.cipher.suite.CipherSuitesBuilder;
@@ -29,8 +29,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev1603
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.OdlKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.OdlKeystoreBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.TrustKeystore;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.AaaCertServiceConfig;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.AaaCertServiceConfigBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertificateInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateReqInputBuilder;
@@ -48,11 +46,6 @@ public class AaaCertRpcServiceImplTest {
     private static final String PROTOCOL = "SSLv2Hello";
     private static final String TEST_PATH = "target" + File.separator + "test" + File.separator;
     private static final String TRUST_NAME = "trustTest.jks";
-    private static final AaaCertServiceConfig CONFIG = new AaaCertServiceConfigBuilder()
-        .setUseConfig(true)
-        .setUseMdsal(true)
-        .setBundleName(BUNDLE_NAME)
-        .build();
 
     private static AAAEncryptionService aaaEncryptionService;
     private static SslData signedSslData;
@@ -110,9 +103,7 @@ public class AaaCertRpcServiceImplTest {
         aaaEncryptionService = aaaEncryptionServiceInit;
 
         // Create class
-        aaaCertRpcService = new AaaCertRpcServiceImpl(CONFIG, mockDataBroker(signedSslData),
-                aaaEncryptionService);
-        assertNotNull(aaaCertRpcService);
+        aaaCertRpcService = new AaaCertRpcServiceImpl(mockMdsalProvider(signedSslData));
     }
 
     @Test
@@ -128,7 +119,7 @@ public class AaaCertRpcServiceImplTest {
     @Test
     public void setODLCertificateTest() throws Exception {
         final var result = Futures.getDone(
-            new AaaCertRpcServiceImpl(CONFIG, mockDataBroker(unsignedSslData), aaaEncryptionService)
+            new AaaCertRpcServiceImpl(mockMdsalProvider(unsignedSslData))
                 .setODLCertificate(
                     new SetODLCertificateInputBuilder().setOdlCertAlias(ALIAS).setOdlCert(CERTIFICATE).build()));
         assertTrue(result.isSuccessful());
@@ -157,9 +148,14 @@ public class AaaCertRpcServiceImplTest {
     @Test
     public void setNodeCertificate() throws Exception {
         final var result = Futures.getDone(
-            new AaaCertRpcServiceImpl(CONFIG, mockDataBroker(unsignedSslData), aaaEncryptionService)
+            new AaaCertRpcServiceImpl(mockMdsalProvider(unsignedSslData))
                 .setNodeCertificate(
                     new SetNodeCertificateInputBuilder().setNodeAlias(ALIAS).setNodeCert(CERTIFICATE).build()));
         assertTrue(result.isSuccessful());
+    }
+
+    private static IAaaCertProvider mockMdsalProvider(final SslData sslData) throws Exception {
+        return new DefaultMdsalSslData(new AaaCertMdsalProvider(mockDataBroker(sslData), aaaEncryptionService),
+            BUNDLE_NAME, null, null);
     }
 }
