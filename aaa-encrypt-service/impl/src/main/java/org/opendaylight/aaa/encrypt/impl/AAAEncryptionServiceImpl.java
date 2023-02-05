@@ -53,7 +53,6 @@ import org.xml.sax.SAXException;
  */
 @Deprecated
 public class AAAEncryptionServiceImpl implements AAAEncryptionService {
-
     private static final Logger LOG = LoggerFactory.getLogger(AAAEncryptionServiceImpl.class);
     private static final String DEFAULT_CONFIG_FILE_PATH = "etc" + File.separator + "opendaylight" + File.separator
             + "datastore" + File.separator + "initial" + File.separator + "config" + File.separator
@@ -66,8 +65,6 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     private final Cipher decryptCipher;
 
     public AAAEncryptionServiceImpl(AaaEncryptServiceConfig encrySrvConfig, final DataBroker dataBroker) {
-        SecretKey tempKey = null;
-        IvParameterSpec tempIvSpec = null;
         if (encrySrvConfig.getEncryptSalt() == null) {
             throw new IllegalArgumentException(
                     "null encryptSalt in AaaEncryptServiceConfig: " + encrySrvConfig.toString());
@@ -83,14 +80,16 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             updateEncrySrvConfig(newPwd, encodedSalt);
             initializeConfigDataTree(encrySrvConfig, dataBroker);
         }
-        final byte[] enryptionKeySalt = Base64.getDecoder().decode(encrySrvConfig.getEncryptSalt());
+
+        final byte[] encryptionKeySalt = Base64.getDecoder().decode(encrySrvConfig.getEncryptSalt());
+        IvParameterSpec tempIvSpec = null;
+        SecretKey tempKey = null;
         try {
             final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(encrySrvConfig.getEncryptMethod());
-            final KeySpec spec = new PBEKeySpec(encrySrvConfig.getEncryptKey().toCharArray(), enryptionKeySalt,
+            final KeySpec spec = new PBEKeySpec(encrySrvConfig.getEncryptKey().toCharArray(), encryptionKeySalt,
                     encrySrvConfig.getEncryptIterationCount(), encrySrvConfig.getEncryptKeyLength());
-            tempKey = keyFactory.generateSecret(spec);
-            tempKey = new SecretKeySpec(tempKey.getEncoded(), encrySrvConfig.getEncryptType());
-            tempIvSpec = new IvParameterSpec(enryptionKeySalt);
+            tempKey = new SecretKeySpec(keyFactory.generateSecret(spec).getEncoded(), encrySrvConfig.getEncryptType());
+            tempIvSpec = new IvParameterSpec(encryptionKeySalt);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             LOG.error("Failed to initialize secret key", e);
         }
