@@ -10,19 +10,7 @@ module aaa-encrypt-service-config {
     description "Initial revision.";
   }
 
-  grouping encrypt-service-config {
-    leaf encrypt-key {
-      description "Encryption key";
-      type string;
-    }
-    leaf password-length {
-      description "Encryption key password length";
-      type int32;
-    }
-    leaf encrypt-salt {
-      description "Encryption key salt";
-      type string;
-    }
+  grouping encrypt-service-preferences {
     leaf encrypt-method {
       description "The encryption method to use";
       type string;
@@ -45,7 +33,46 @@ module aaa-encrypt-service-config {
     }
   }
 
+  grouping encrypt-service-secrets {
+    leaf encrypt-key {
+      description "Encryption key";
+      type string;
+      mandatory true;
+    }
+    leaf encrypt-salt {
+      description "Encryption key salt";
+      type binary {
+        length 1..max;
+      }
+      mandatory true;
+    }
+  }
+
+  grouping encrypt-service-config {
+    uses encrypt-service-secrets;
+    uses encrypt-service-preferences;
+  }
+
+  grouping encrypt-service-generator-config {
+    leaf password-length {
+      description "Encryption key password length";
+      // FIXME: uint16, really, with a minimum of .. 8?
+      type int32;
+      default 12;
+    }
+    uses encrypt-service-preferences;
+  }
+
   container aaa-encrypt-service-config {
-    uses encrypt-service-config;
+    uses encrypt-service-generator-config;
+
+    leaf encrypt-key {
+      description "Encryption key";
+      type string;
+    }
+    leaf encrypt-salt {
+      description "Encryption key salt";
+      type string;
+    }
   }
 }
