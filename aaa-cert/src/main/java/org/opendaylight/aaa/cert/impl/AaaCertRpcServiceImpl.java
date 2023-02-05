@@ -7,12 +7,11 @@
  */
 package org.opendaylight.aaa.cert.impl;
 
+import static java.util.Objects.requireNonNull;
+
 import com.google.common.base.Strings;
 import com.google.common.util.concurrent.ListenableFuture;
 import org.opendaylight.aaa.cert.api.IAaaCertProvider;
-import org.opendaylight.aaa.encrypt.AAAEncryptionService;
-import org.opendaylight.mdsal.binding.api.DataBroker;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.AaaCertServiceConfig;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.AaaCertRpcService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertificateInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertificateOutput;
@@ -43,34 +42,14 @@ import org.slf4j.LoggerFactory;
  * the shiro.ini file for more info.
  *
  * @author mserngawy
- *
  */
-public class AaaCertRpcServiceImpl implements AaaCertRpcService {
-
+public final class AaaCertRpcServiceImpl implements AaaCertRpcService {
     private static final Logger LOG = LoggerFactory.getLogger(AaaCertRpcServiceImpl.class);
 
     private final IAaaCertProvider aaaCertProvider;
 
-    public AaaCertRpcServiceImpl(final AaaCertServiceConfig aaaCertServiceConfig, final DataBroker dataBroker,
-            final AAAEncryptionService encryptionSrv) {
-        if (aaaCertServiceConfig.getUseConfig()) {
-            if (aaaCertServiceConfig.getUseMdsal()) {
-                aaaCertProvider = new DefaultMdsalSslData(new AaaCertMdsalProvider(dataBroker, encryptionSrv),
-                        aaaCertServiceConfig.getBundleName(), aaaCertServiceConfig.getCtlKeystore(),
-                        aaaCertServiceConfig.getTrustKeystore());
-                LOG.debug("Using default mdsal SslData as aaaCertProvider");
-            } else {
-                aaaCertProvider = new AaaCertProvider(aaaCertServiceConfig.getCtlKeystore(),
-                        aaaCertServiceConfig.getTrustKeystore());
-                LOG.debug("Using default keystore files as aaaCertProvider");
-            }
-            LOG.info("AaaCert Rpc Service has been initialized");
-        } else {
-            aaaCertProvider = null;
-            LOG.info(
-                    "AaaCert Rpc Service has not been initialized,"
-                    + "change the initial aaa-cert-config data and restart Opendaylight");
-        }
+    public AaaCertRpcServiceImpl(final IAaaCertProvider aaaCertProvider) {
+        this.aaaCertProvider = requireNonNull(aaaCertProvider);
     }
 
     @Override

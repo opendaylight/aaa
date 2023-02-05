@@ -7,23 +7,15 @@
   </odl:clustered-app-config>
 
   <reference id="dataBroker" interface="org.opendaylight.mdsal.binding.api.DataBroker"/>
-
+  <reference id="rpcProviderService" interface="org.opendaylight.mdsal.binding.api.RpcProviderService"/>
   <reference id="encryService" interface="org.opendaylight.aaa.encrypt.AAAEncryptionService"/>
 
-  <bean id="certManager" class="org.opendaylight.aaa.cert.impl.CertificateManagerService">
-      <argument ref="aaaCertDefaultConfig"/>
+  <bean id="certManager" class="org.opendaylight.aaa.cert.impl.CertificateManagerService" destroy-method="close">
+      <argument ref="rpcProviderService"/>
       <argument ref="dataBroker"/>
       <argument ref="encryService"/>
+      <argument ref="aaaCertDefaultConfig"/>
   </bean>
-
   <service ref="certManager" interface="org.opendaylight.aaa.cert.api.ICertificateManager" odl:type="default-certificate-manager"/>
-
-  <bean id="aaaCertRpcService" class="org.opendaylight.aaa.cert.impl.AaaCertRpcServiceImpl">
-      <argument ref="aaaCertDefaultConfig"/>
-      <argument ref="dataBroker"/>
-      <argument ref="encryService"/>
-  </bean>
-
-  <odl:rpc-implementation ref="aaaCertRpcService" />
 
 </blueprint>
