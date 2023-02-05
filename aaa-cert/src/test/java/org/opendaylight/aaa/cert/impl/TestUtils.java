@@ -5,7 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.cert.test;
+package org.opendaylight.aaa.cert.impl;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -13,7 +13,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
-import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
 import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.mdsal.binding.api.ReadTransaction;
 import org.opendaylight.mdsal.binding.api.WriteTransaction;
@@ -23,12 +22,10 @@ import org.opendaylight.yangtools.util.concurrent.FluentFutures;
 
 /**
  * Utilities for test, the certificate needs to be updated yearly.
- * Last update: 8 march 2017
  */
-
 public final class TestUtils {
-    public static String dummyAlias = "fooAlias";
-    public static String dummyCert = KeyStoreConstant.BEGIN_CERTIFICATE
+    public static final String DUMMY_ALIAS = "fooAlias";
+    public static final String DUMMY_CERT = KeyStoreConstant.BEGIN_CERTIFICATE
             + "MIIDTzCCAjegAwIBAgIJAMrURYFr+EdHMA0GCSqGSIb3DQEBCwUAMD4xPDA6BgNV"
             + "BAMMM09ETCwgT1U9RGV2LCBPPUxpbnV4Rm91bmRhdGlvbiwgTD1RQyBNb250cmVh"
             + "bCwgQz1DQTAeFw0xODAzMDUxNjAxNTFaFw0yODAzMDIxNjAxNTFaMD4xPDA6BgNV"
