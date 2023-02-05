@@ -5,14 +5,14 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.cert.test;
+package org.opendaylight.aaa.cert.impl;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.opendaylight.aaa.cert.test.TestUtils.mockDataBroker;
+import static org.opendaylight.aaa.cert.impl.TestUtils.mockDataBroker;
 
 import java.io.File;
 import java.security.KeyStore;
@@ -23,9 +23,6 @@ import java.util.List;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.opendaylight.aaa.cert.impl.AaaCertMdsalProvider;
-import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
-import org.opendaylight.aaa.cert.impl.ODLKeyTool;
 import org.opendaylight.aaa.cert.utils.KeyStoresDataUtils;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.cipher.suite.CipherSuites;
@@ -37,9 +34,9 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev1603
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.TrustKeystore;
 
 public class AaaCertMdsalProviderTest {
-    private static final String ALIAS = TestUtils.dummyAlias;
+    private static final String ALIAS = TestUtils.DUMMY_ALIAS;
     private static final String BUNDLE_NAME = "opendaylight";
-    private static final String CERTIFICATE = TestUtils.dummyCert;
+    private static final String CERTIFICATE = TestUtils.DUMMY_CERT; 
     private static final String CIPHER_SUITE_NAME = "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256";
     private static final String[] CIPHER_SUITES_ARRAY = { CIPHER_SUITE_NAME };
     private static final String D_NAME = "CN=ODL, OU=Dev, O=LinuxFoundation, L=QC Montreal, C=CA";
