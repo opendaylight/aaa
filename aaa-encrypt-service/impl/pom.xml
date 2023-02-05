@@ -16,7 +16,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <relativePath>../../parent</relativePath>
   </parent>
 
-  <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-encrypt-service-impl</artifactId>
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>bundle</packaging>
