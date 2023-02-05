@@ -31,12 +31,15 @@ import org.opendaylight.aaa.cert.api.IAaaCertProvider;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
 import org.opendaylight.mdsal.binding.api.DataBroker;
+import org.opendaylight.mdsal.binding.api.RpcProviderService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.AaaCertServiceConfig;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.AaaCertServiceConfigBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystoreBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.TrustKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.TrustKeystoreBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.AaaCertRpcService;
+import org.opendaylight.yangtools.concepts.Registration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -49,20 +52,19 @@ import org.xml.sax.SAXException;
  * to which AaaCertProvider is used.
  *
  * @author mserngawy
- *
  */
-public class CertificateManagerService implements ICertificateManager {
-
+public class CertificateManagerService implements ICertificateManager, AutoCloseable {
     private static final Logger LOG = LoggerFactory.getLogger(CertificateManagerService.class);
-
     private static final String DEFAULT_CONFIG_FILE_PATH = "etc" + File.separator + "opendaylight" + File.separator
             + "datastore" + File.separator + "initial" + File.separator + "config" + File.separator
             + "aaa-cert-config.xml";
     private static final int PWD_LENGTH = 12;
-    private final IAaaCertProvider aaaCertProvider;
 
-    public CertificateManagerService(AaaCertServiceConfig aaaCertServiceConfig, final DataBroker dataBroker,
-            final AAAEncryptionService encryptionSrv) {
+    private final IAaaCertProvider aaaCertProvider;
+    private final Registration reg;
+
+    public CertificateManagerService(final RpcProviderService rpcProviderService, final DataBroker dataBroker,
+            final AAAEncryptionService encryptionSrv, AaaCertServiceConfig aaaCertServiceConfig) {
         if (aaaCertServiceConfig == null) {
             throw new IllegalArgumentException("Certificate Manager service configuration is null");
         }
@@ -93,11 +95,21 @@ public class CertificateManagerService implements ICertificateManager {
             }
             aaaCertProvider.createKeyStores();
             LOG.info("Certificate Manager service has been initialized");
+            reg = rpcProviderService.registerRpcImplementation(AaaCertRpcService.class,
+                new AaaCertRpcServiceImpl(aaaCertProvider));
+            LOG.info("AaaCert Rpc Service has been initialized");
         } else {
             aaaCertProvider = null;
-            LOG.info(
-                    "Certificate Manager service has not been initialized,"
-                    + " change the initial aaa-cert-config data and restart Opendaylight");
+            reg = null;
+            LOG.info("Certificate Manager service has not been initialized, change the initial aaa-cert-config data "
+                + "and restart Opendaylight");
+        }
+    }
+
+    @Override
+    public void close() {
+        if (reg != null) {
+            reg.close();
         }
     }
 
