@@ -41,7 +41,7 @@ import org.xml.sax.SAXException;
  * Intermediate component dealing with establishing initial configuration for {@link AAAEncryptionServiceImpl}. In
  * particular it deals with generating and persisting of encryption salt and encryption password.
  */
-public final class AAAEncryptionServiceConfigurator implements EncryptServiceConfig {
+public final class AAAEncryptionServiceConfigurator implements EncryptServiceConfigSupplier, EncryptServiceConfig {
     private static final Logger LOG = LoggerFactory.getLogger(AAAEncryptionServiceConfigurator.class);
 
     // Note: this is a strong binding to Blueprint, which is loading etc/opendaylight/datastore/initial/config
@@ -134,6 +134,11 @@ public final class AAAEncryptionServiceConfigurator implements EncryptServiceCon
         } catch (ParserConfigurationException | TransformerException | SAXException | IOException e) {
             LOG.error("Error while updating the encryption service config file", e);
         }
+    }
+
+    @Override
+    public EncryptServiceConfig get() {
+        return this;
     }
 
     @Override
