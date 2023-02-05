@@ -30,6 +30,7 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
@@ -175,7 +176,7 @@ public class ODLKeyTool {
             final X509v3CertificateBuilder x509V3CertBuilder =
                     new X509v3CertificateBuilder(new X500Name(distinguishedName), getSecureRandomeInt(),
                             new Date(currTime),
-                            new Date(currTime + KeyStoreConstant.DAY_TIME * validity),
+                            new Date(currTime + TimeUnit.DAYS.toMillis(validity)),
                             new X500Name(distinguishedName), keyInfo);
             final X509CertificateHolder x509Cert = x509V3CertBuilder
                     .build(new JcaContentSignerBuilder(signAlg).build(keyPair.getPrivate()));
