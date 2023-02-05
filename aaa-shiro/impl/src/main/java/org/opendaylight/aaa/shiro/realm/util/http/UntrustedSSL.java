@@ -15,7 +15,6 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,7 +74,7 @@ public final class UntrustedSSL {
 
         private static SSLContext buildSSLContext() {
             try {
-                SSLContext sslContext = SSLContext.getInstance(KeyStoreConstant.TLS_PROTOCOL);
+                SSLContext sslContext = SSLContext.getInstance("TLS");
                 sslContext.init(null, InsecureTrustManager.INSTANCE, null);
                 return sslContext;
             } catch (NoSuchAlgorithmException | KeyManagementException e) {
