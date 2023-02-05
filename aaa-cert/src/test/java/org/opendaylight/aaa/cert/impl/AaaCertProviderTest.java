@@ -5,7 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.cert.test;
+package org.opendaylight.aaa.cert.impl;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -16,8 +16,6 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.opendaylight.aaa.cert.impl.AaaCertProvider;
-import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystoreBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.TrustKeystore;
@@ -30,8 +28,8 @@ public class AaaCertProviderTest {
     private static CtlKeystore ctlKeyStore;
     private static TrustKeystore trustKeyStore;
 
-    private final String dummyAlias = TestUtils.dummyAlias;
-    private final String dummyCert = TestUtils.dummyCert;
+    private final String dummyAlias = TestUtils.DUMMY_ALIAS;
+    private final String dummyCert = TestUtils.DUMMY_CERT;
 
     @Test
     public void testCertificate() throws InterruptedException, ExecutionException {

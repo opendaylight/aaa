@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.aaa.cert.test;
+package org.opendaylight.aaa.cert.impl;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -17,8 +17,6 @@ import java.security.Security;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
-import org.opendaylight.aaa.cert.impl.ODLKeyTool;
 
 public class ODLKeyToolTest {
 
