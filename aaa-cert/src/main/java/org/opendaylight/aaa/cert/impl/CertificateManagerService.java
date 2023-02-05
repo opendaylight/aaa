@@ -145,7 +145,7 @@ public class CertificateManagerService implements ICertificateManager {
             TrustManagerFactory tmf = TrustManagerFactory.getInstance(algorithm);
             tmf.init(aaaCertProvider.getTrustKeyStore());
 
-            serverContext = SSLContext.getInstance(KeyStoreConstant.TLS_PROTOCOL);
+            serverContext = SSLContext.getInstance("TLS");
             serverContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
         } catch (final NoSuchAlgorithmException | UnrecoverableKeyException | KeyStoreException
                 | KeyManagementException e) {

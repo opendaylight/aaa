@@ -20,22 +20,18 @@ import org.slf4j.LoggerFactory;
  * @author mserngawy
  */
 public final class KeyStoreConstant {
-    private static final Logger LOG = LoggerFactory.getLogger(KeyStoreConstant.class);
-
-    public static final String BEGIN_CERTIFICATE = "-----BEGIN CERTIFICATE-----";
-
-    public static final String BEGIN_CERTIFICATE_REQUEST = "-----BEGIN CERTIFICATE REQUEST-----";
-    // Day time in millisecond
-    public static final long DAY_TIME = 1000L * 60 * 60 * 24;
+    public static final String KEY_STORE_PATH = "configuration" + File.separator + "ssl" + File.separator;
     public static final String DEFAULT_KEY_ALG = "RSA"; // DES
     public static final int DEFAULT_KEY_SIZE = 2048; // 1024
     public static final String DEFAULT_SIGN_ALG = "SHA1WithRSAEncryption"; // MD5WithRSAEncryption
-
     public static final int DEFAULT_VALIDITY = 365;
-    public static final String END_CERTIFICATE = "-----END CERTIFICATE-----";
-    public static final String END_CERTIFICATE_REQUEST = "-----END CERTIFICATE REQUEST-----";
-    public static final String TLS_PROTOCOL = "TLS";
-    public static final String KEY_STORE_PATH = "configuration" + File.separator + "ssl" + File.separator;
+
+    static final String BEGIN_CERTIFICATE = "-----BEGIN CERTIFICATE-----";
+    static final String END_CERTIFICATE = "-----END CERTIFICATE-----";
+    static final String BEGIN_CERTIFICATE_REQUEST = "-----BEGIN CERTIFICATE REQUEST-----";
+    static final String END_CERTIFICATE_REQUEST = "-----END CERTIFICATE REQUEST-----";
+
+    private static final Logger LOG = LoggerFactory.getLogger(KeyStoreConstant.class);
 
     private KeyStoreConstant() {
 
