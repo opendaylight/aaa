@@ -43,7 +43,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     private final Cipher decryptCipher;
 
     public AAAEncryptionServiceImpl(final EncryptServiceConfig encrySrvConfig) {
-        final byte[] encryptionKeySalt = Base64.getDecoder().decode(encrySrvConfig.requireEncryptSalt());
+        final byte[] encryptionKeySalt = encrySrvConfig.requireEncryptSalt();
         IvParameterSpec tempIvSpec = null;
         SecretKey tempKey = null;
         try {

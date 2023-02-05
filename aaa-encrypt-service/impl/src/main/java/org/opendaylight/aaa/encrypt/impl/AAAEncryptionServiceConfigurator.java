@@ -50,7 +50,7 @@ public final class AAAEncryptionServiceConfigurator implements EncryptServiceCon
         + "aaa-encrypt-service-config.xml";
     private static final SecureRandom RANDOM = new SecureRandom();
 
-    private final EncryptServiceConfig delegate;
+    private final AaaEncryptServiceConfig delegate;
 
     public AAAEncryptionServiceConfigurator(final DataBroker dataBroker,
             final AaaEncryptServiceConfig blueprintConfig) {
@@ -68,7 +68,7 @@ public final class AAAEncryptionServiceConfigurator implements EncryptServiceCon
         }
     }
 
-    private static @NonNull AaaEncryptServiceConfig generateConfig(final EncryptServiceConfig blueprintConfig) {
+    private static @NonNull AaaEncryptServiceConfig generateConfig(final AaaEncryptServiceConfig blueprintConfig) {
         LOG.debug("Set the Encryption service password and encrypt salt");
         String newPwd = RandomStringUtils.random(blueprintConfig.getPasswordLength(), true, true);
         byte[] salt = new byte[16];
@@ -145,17 +145,12 @@ public final class AAAEncryptionServiceConfigurator implements EncryptServiceCon
 
     @Override
     public String getEncryptKey() {
-        return delegate.getEncryptKey();
+        return delegate.requireEncryptKey();
     }
 
     @Override
-    public Integer getPasswordLength() {
-        return delegate.getPasswordLength();
-    }
-
-    @Override
-    public String getEncryptSalt() {
-        return delegate.getEncryptSalt();
+    public byte[] getEncryptSalt() {
+        return Base64.getDecoder().decode(delegate.requireEncryptSalt());
     }
 
     @Override
