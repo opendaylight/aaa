@@ -5,13 +5,10 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.cert.impl;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.security.KeyStore;
-import java.util.ArrayList;
-import java.util.List;
 import org.opendaylight.aaa.cert.api.IAaaCertProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.TrustKeystore;
@@ -139,19 +136,11 @@ public class AaaCertProvider implements IAaaCertProvider {
     }
 
     @Override
-    @SuppressFBWarnings("PZLA_PREFER_ZERO_LENGTH_ARRAYS")
     public String[] getCipherSuites() {
-        final List<CipherSuites> cipherSuites = ctlKeyStore.getCipherSuites();
-        if (cipherSuites != null && !cipherSuites.isEmpty()) {
-            final List<String> suites = new ArrayList<>();
-            cipherSuites.stream().forEach(cs -> {
-                if (!cs.getSuiteName().isEmpty()) {
-                    suites.add(cs.getSuiteName());
-                }
-            });
-            return suites.toArray(new String[suites.size()]);
-        }
-        return null;
+        return ctlKeyStore.nonnullCipherSuites().stream()
+            .map(CipherSuites::getSuiteName)
+            .filter(name -> !name.isEmpty())
+            .toArray(String[]::new);
     }
 
     @Override
