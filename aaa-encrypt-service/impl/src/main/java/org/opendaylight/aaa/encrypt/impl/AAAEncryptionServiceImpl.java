@@ -24,7 +24,10 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.EncryptServiceConfig;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +37,8 @@ import org.slf4j.LoggerFactory;
  * @author - Sharon Aicler (saichler@gmail.com)
  */
 @Deprecated
-public class AAAEncryptionServiceImpl implements AAAEncryptionService {
+@Component(immediate = true)
+public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
     private static final Logger LOG = LoggerFactory.getLogger(AAAEncryptionServiceImpl.class);
 
     private final SecretKey key;
@@ -42,7 +46,10 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     private final Cipher encryptCipher;
     private final Cipher decryptCipher;
 
-    public AAAEncryptionServiceImpl(final EncryptServiceConfig encrySrvConfig) {
+    @Activate
+    public AAAEncryptionServiceImpl(@Reference final EncryptServiceConfigSupplier configProvider) {
+        final var encrySrvConfig = configProvider.get();
+
         final byte[] encryptionKeySalt = encrySrvConfig.requireEncryptSalt();
         IvParameterSpec tempIvSpec = null;
         SecretKey tempKey = null;
@@ -75,6 +82,12 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             LOG.error("Failed to create decrypt cipher.", e);
         }
         decryptCipher = cipher;
+        LOG.info("AAAEncryptionService activated");
+    }
+
+    @Deactivate
+    void deactivate() {
+        LOG.info("AAAEncryptionService deactivated");
     }
 
     @Override

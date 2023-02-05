@@ -45,6 +45,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
       <groupId>org.opendaylight.aaa</groupId>
       <artifactId>aaa-encrypt-service</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.service.component.annotations</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.opendaylight.yangtools</groupId>
@@ -53,6 +57,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     </dependency>
   </dependencies>
 
+  <!-- FIXME: AAA-204: remove all this once we do not have Blueprint -->
   <build>
     <plugins>
       <plugin>
@@ -76,6 +81,20 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <!-- Mixed OSGi DS/Blueprint services, we have to override to get Blueprint bits here -->
+            <Provide-Capability>
+                osgi.service;objectClass:List&lt;String&gt;="org.opendaylight.aaa.encrypt.AAAEncryptionService";uses:="org.opendaylight.aaa.encrypt",
+                osgi.service;objectClass:List&lt;String&gt;="org.opendaylight.aaa.encrypt.impl.EncryptServiceConfigSupplier";uses:="org.opendaylight.aaa.encrypt.impl"
+            </Provide-Capability>
+          </instructions>
+        </configuration>
       </plugin>
     </plugins>
   </build>

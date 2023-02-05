@@ -11,10 +11,6 @@
     <argument ref="dataBroker"/>
     <argument ref="encryptConfig"/>
   </bean>
-
-  <bean id="encryptService" class="org.opendaylight.aaa.encrypt.impl.AAAEncryptionServiceImpl">
-    <argument ref="encryptServiceConfigurator"/>
-  </bean>
-  <service ref="encryptService" interface="org.opendaylight.aaa.encrypt.AAAEncryptionService"/>
+  <service ref="encryptServiceConfigurator" interface="org.opendaylight.aaa.encrypt.impl.EncryptServiceConfigSupplier"/>
 
 </blueprint>
