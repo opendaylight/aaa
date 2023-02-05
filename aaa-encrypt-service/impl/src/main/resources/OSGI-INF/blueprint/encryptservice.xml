@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
-                 xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0">
-
+           xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0">
   <reference id="dataBroker" interface="org.opendaylight.mdsal.binding.api.DataBroker"/>
 
   <odl:clustered-app-config id="encryptConfig" default-config-file-name="aaa-encrypt-service-config.xml"
         binding-class="org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig">
   </odl:clustered-app-config>
 
-  <bean id="encryptService" class="org.opendaylight.aaa.encrypt.impl.AAAEncryptionServiceImpl">
-    <argument ref="encryptConfig"/>
+  <bean id="encryptServiceConfigurator" class="org.opendaylight.aaa.encrypt.impl.AAAEncryptionServiceConfigurator">
     <argument ref="dataBroker"/>
+    <argument ref="encryptConfig"/>
   </bean>
 
+  <bean id="encryptService" class="org.opendaylight.aaa.encrypt.impl.AAAEncryptionServiceImpl">
+    <argument ref="encryptServiceConfigurator"/>
+  </bean>
   <service ref="encryptService" interface="org.opendaylight.aaa.encrypt.AAAEncryptionService"/>
 
 </blueprint>
