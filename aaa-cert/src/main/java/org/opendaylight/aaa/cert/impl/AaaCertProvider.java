@@ -7,6 +7,8 @@
  */
 package org.opendaylight.aaa.cert.impl;
 
+import static java.util.Objects.requireNonNullElse;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.security.KeyStore;
 import org.opendaylight.aaa.cert.api.IAaaCertProvider;
@@ -24,7 +26,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class AaaCertProvider implements IAaaCertProvider {
-
     private static final Logger LOG = LoggerFactory.getLogger(AaaCertProvider.class);
 
     private final CtlKeystore ctlKeyStore;
@@ -146,16 +147,12 @@ public class AaaCertProvider implements IAaaCertProvider {
     @Override
     @SuppressFBWarnings("PZLA_PREFER_ZERO_LENGTH_ARRAYS")
     public String[] getTlsProtocols() {
-        String tlsProtocols = ctlKeyStore.getTlsProtocols();
-        if (tlsProtocols != null && !tlsProtocols.isEmpty()) {
-            // remove white spaces in tlsProtocols string
-            tlsProtocols = tlsProtocols.replace(" ", "");
-            if (tlsProtocols.contains(",")) {
-                return tlsProtocols.split(",");
-            } else {
-                return new String[] { tlsProtocols };
-            }
+        // remove white spaces in tlsProtocols string
+        final var tlsProtocols = requireNonNullElse(ctlKeyStore.getTlsProtocols(), "").replace(" ", "");
+        if (tlsProtocols.isEmpty()) {
+            return null;
         }
-        return null;
+
+        return tlsProtocols.contains(",") ? tlsProtocols.split(",") : new String[] { tlsProtocols };
     }
 }
