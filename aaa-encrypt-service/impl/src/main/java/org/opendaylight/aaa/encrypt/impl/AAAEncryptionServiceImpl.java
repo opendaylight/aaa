@@ -26,10 +26,8 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -53,7 +51,6 @@ import org.xml.sax.SAXException;
  */
 @Deprecated
 public class AAAEncryptionServiceImpl implements AAAEncryptionService {
-
     private static final Logger LOG = LoggerFactory.getLogger(AAAEncryptionServiceImpl.class);
     private static final String DEFAULT_CONFIG_FILE_PATH = "etc" + File.separator + "opendaylight" + File.separator
             + "datastore" + File.separator + "initial" + File.separator + "config" + File.separator
@@ -61,13 +58,10 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     private static final SecureRandom RANDOM = new SecureRandom();
 
     private final SecretKey key;
-    private final IvParameterSpec ivspec;
     private final Cipher encryptCipher;
     private final Cipher decryptCipher;
 
     public AAAEncryptionServiceImpl(AaaEncryptServiceConfig encrySrvConfig, final DataBroker dataBroker) {
-        SecretKey tempKey = null;
-        IvParameterSpec tempIvSpec = null;
         if (encrySrvConfig.getEncryptSalt() == null) {
             throw new IllegalArgumentException(
                     "null encryptSalt in AaaEncryptServiceConfig: " + encrySrvConfig.toString());
@@ -83,23 +77,25 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
             updateEncrySrvConfig(newPwd, encodedSalt);
             initializeConfigDataTree(encrySrvConfig, dataBroker);
         }
-        final byte[] enryptionKeySalt = Base64.getDecoder().decode(encrySrvConfig.getEncryptSalt());
+
+        final byte[] encryptionKeySalt = Base64.getDecoder().decode(encrySrvConfig.getEncryptSalt());
+        IvParameterSpec tempIvSpec = null;
+        SecretKey tempKey = null;
         try {
             final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(encrySrvConfig.getEncryptMethod());
-            final KeySpec spec = new PBEKeySpec(encrySrvConfig.getEncryptKey().toCharArray(), enryptionKeySalt,
+            final KeySpec spec = new PBEKeySpec(encrySrvConfig.getEncryptKey().toCharArray(), encryptionKeySalt,
                     encrySrvConfig.getEncryptIterationCount(), encrySrvConfig.getEncryptKeyLength());
-            tempKey = keyFactory.generateSecret(spec);
-            tempKey = new SecretKeySpec(tempKey.getEncoded(), encrySrvConfig.getEncryptType());
-            tempIvSpec = new IvParameterSpec(enryptionKeySalt);
+            tempKey = new SecretKeySpec(keyFactory.generateSecret(spec).getEncoded(), encrySrvConfig.getEncryptType());
+            tempIvSpec = new IvParameterSpec(encryptionKeySalt);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             LOG.error("Failed to initialize secret key", e);
         }
         key = tempKey;
-        ivspec = tempIvSpec;
+        final var ivSpec = tempIvSpec;
         Cipher cipher = null;
         try {
             cipher = Cipher.getInstance(encrySrvConfig.getCipherTransforms());
-            cipher.init(Cipher.ENCRYPT_MODE, key, ivspec);
+            cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException
                 | InvalidKeyException e) {
             LOG.error("Failed to create encrypt cipher.", e);
@@ -108,7 +104,7 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
         cipher = null;
         try {
             cipher = Cipher.getInstance(encrySrvConfig.getCipherTransforms());
-            cipher.init(Cipher.DECRYPT_MODE, key, ivspec);
+            cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException
                 | InvalidKeyException e) {
             LOG.error("Failed to create decrypt cipher.", e);
@@ -188,24 +184,17 @@ public class AAAEncryptionServiceImpl implements AAAEncryptionService {
     }
 
     private static void updateEncrySrvConfig(final String newPwd, final String newSalt) {
+        LOG.debug("Update encryption service config file");
         try {
-            final String encryptKeyTag = "encrypt-key";
-            final String encryptSaltTag = "encrypt-salt";
-            LOG.debug("Update encryption service config file");
             final File configFile = new File(DEFAULT_CONFIG_FILE_PATH);
             if (configFile.exists()) {
-                final DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-                final DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-                final Document doc = docBuilder.parse(configFile);
-                final Node keyNode = doc.getElementsByTagName(encryptKeyTag).item(0);
+                final Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(configFile);
+                final Node keyNode = doc.getElementsByTagName("encrypt-key").item(0);
                 keyNode.setTextContent(newPwd);
-                final Node salt = doc.getElementsByTagName(encryptSaltTag).item(0);
+                final Node salt = doc.getElementsByTagName("encrypt-salt").item(0);
                 salt.setTextContent(newSalt);
-                final TransformerFactory transformerFactory = TransformerFactory.newInstance();
-                final Transformer transformer = transformerFactory.newTransformer();
-                final DOMSource source = new DOMSource(doc);
-                final StreamResult result = new StreamResult(new File(DEFAULT_CONFIG_FILE_PATH));
-                transformer.transform(source, result);
+                TransformerFactory.newInstance().newTransformer().transform(new DOMSource(doc),
+                    new StreamResult(new File(DEFAULT_CONFIG_FILE_PATH)));
             } else {
                 LOG.warn("The encryption service config file does not exist {}", DEFAULT_CONFIG_FILE_PATH);
             }
