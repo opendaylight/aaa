@@ -5,11 +5,9 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.aaa.cert.utils;
+package org.opendaylight.aaa.cert.impl;
 
 import java.util.List;
-import org.opendaylight.aaa.cert.impl.KeyStoreConstant;
-import org.opendaylight.aaa.cert.impl.ODLKeyTool;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
 import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
