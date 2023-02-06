@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8631552a_e1f88d1f",
+        "filename": "aaa-cert/src/test/java/org/opendaylight/aaa/cert/impl/AaaCertRpcServiceImplTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-02-06T10:23:05Z",
+      "side": 1,
+      "message": "When at place we can simplify this to `assertFalse`.",
+      "revId": "79e0f3c5a2b64a68c006787f97daa9883977dd07",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fda2c29_241b0667",
+        "filename": "aaa-cert/src/test/java/org/opendaylight/aaa/cert/impl/AaaCertRpcServiceImplTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-02-06T10:23:05Z",
+      "side": 1,
+      "message": "When at place we can simplify this to `assertFalse`.",
+      "revId": "79e0f3c5a2b64a68c006787f97daa9883977dd07",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f907bcc0_cffcd519",
+        "filename": "aaa-cert/src/test/java/org/opendaylight/aaa/cert/impl/AaaCertRpcServiceImplTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-02-06T10:23:05Z",
+      "side": 1,
+      "message": "When at place we can simplify this to `assertFalse`.",
+      "revId": "79e0f3c5a2b64a68c006787f97daa9883977dd07",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
