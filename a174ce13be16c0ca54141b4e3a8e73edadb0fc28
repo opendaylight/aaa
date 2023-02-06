@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c427b7d9_68701277",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/KeyStoreConstant.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-02-06T10:17:35Z",
+      "side": 1,
+      "message": "Can we order constants to have `public` first?",
+      "revId": "a174ce13be16c0ca54141b4e3a8e73edadb0fc28",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
