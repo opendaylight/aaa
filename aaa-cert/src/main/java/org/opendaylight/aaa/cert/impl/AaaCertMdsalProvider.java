@@ -12,8 +12,6 @@ import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
 import org.opendaylight.aaa.cert.api.IAaaCertMdsalProvider;
-import org.opendaylight.aaa.cert.utils.KeyStoresDataUtils;
-import org.opendaylight.aaa.cert.utils.MdsalUtils;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
 import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
