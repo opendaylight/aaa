@@ -33,6 +33,24 @@
       "message": "Why exception?",
       "revId": "f740e4a93b490777b297c0f85d8324335ca1a1a7",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2ec6819_19371fad",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceConfigurator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2023-02-06T09:16:46Z",
+      "side": 1,
+      "message": "Grouping vs. DataObject -- we are not a DataObject, Groupings do not have an implementation.\n\nFurthermore this is used only as a DTO, hence should never see anyone who cares about this.",
+      "parentUuid": "7344be86_7e33a454",
+      "revId": "f740e4a93b490777b297c0f85d8324335ca1a1a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
