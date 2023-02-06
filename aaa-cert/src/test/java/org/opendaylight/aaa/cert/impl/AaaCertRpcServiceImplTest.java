@@ -22,7 +22,6 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.opendaylight.aaa.cert.api.IAaaCertProvider;
-import org.opendaylight.aaa.cert.utils.KeyStoresDataUtils;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.cipher.suite.CipherSuitesBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslData;
