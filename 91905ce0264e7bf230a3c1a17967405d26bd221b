@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3ca87cc_98dfe4c2",
+        "filename": "aaa-cert/src/main/java/org/opendaylight/aaa/cert/impl/AaaCertRpcServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-02-06T14:07:57Z",
+      "side": 1,
+      "message": "Missing @NonNull?",
+      "revId": "91905ce0264e7bf230a3c1a17967405d26bd221b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
