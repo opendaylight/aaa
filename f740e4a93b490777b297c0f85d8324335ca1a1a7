@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a321861e_81866e3f",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceConfigurator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-02-06T08:51:03Z",
+      "side": 1,
+      "message": "These parts are good to use `final var`. We are sure the result is `String`.",
+      "revId": "f740e4a93b490777b297c0f85d8324335ca1a1a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7344be86_7e33a454",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceConfigurator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-02-06T08:51:03Z",
+      "side": 1,
+      "message": "Why exception?",
+      "revId": "f740e4a93b490777b297c0f85d8324335ca1a1a7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
