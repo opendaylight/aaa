@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "696845c3_fb6f2710",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-02-06T08:16:05Z",
+      "side": 1,
+      "message": "When at place we can covert field `private final IvParameterSpec ivspec;` to local variable.",
+      "revId": "d931b4577956bc4c7f1205ac97d86a47070b2dfd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
