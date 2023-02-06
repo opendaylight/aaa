@@ -44,20 +44,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Export-Package>
-              org.opendaylight.aaa.cert.api.*,
-              org.opendaylight.aaa.cert.impl.*,
-              org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.*
-            </Export-Package>
-          </instructions>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
         <executions>
