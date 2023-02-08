@@ -9,16 +9,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 -->
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
            xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0">
-
-  <odl:clustered-app-config
-          binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration"
-          id="shiroConfiguration"
-          default-config-file-name="aaa-app-config.xml"/>
-
-  <odl:clustered-app-config id="datastoreConfig"
-        default-config-file-name="aaa-datastore-config.xml"
-        binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.DatastoreConfig" />
-
   <reference id="authService" interface="org.opendaylight.aaa.api.AuthenticationService"/>
   <reference id="passwordService" interface="org.opendaylight.aaa.api.password.service.PasswordHashService"/>
   <reference id="idmStore" interface ="org.opendaylight.aaa.api.IIDMStore"/>
@@ -27,11 +17,19 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <reference id="certManager" interface="org.opendaylight.aaa.cert.api.ICertificateManager"/>
   <reference id="servletSupport" interface="org.opendaylight.aaa.web.servlet.ServletSupport"/>
 
+  <odl:clustered-app-config id="datastoreConfig"
+    default-config-file-name="aaa-datastore-config.xml"
+    binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.DatastoreConfig"/>
+
   <bean id="provider" class="org.opendaylight.aaa.AAAShiroProvider" destroy-method="close">
     <argument ref="passwordCredentialAuth"/>
     <argument ref="datastoreConfig"/>
     <argument ref="idmStore"/>
   </bean>
+
+  <odl:clustered-app-config id="shiroConfiguration"
+    default-config-file-name="aaa-app-config.xml"
+    binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration"/>
 
   <bean id="webEnvironment" class="org.opendaylight.aaa.shiro.web.env.AAAWebEnvironment">
     <argument ref="shiroConfiguration"/>
