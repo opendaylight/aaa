@@ -35,11 +35,7 @@ import org.slf4j.LoggerFactory;
 public final class AAAWebEnvironment extends IniWebEnvironment implements AAAShiroWebEnvironment {
     private static final Logger LOG = LoggerFactory.getLogger(AAAWebEnvironment.class);
 
-    private AAAWebEnvironment(final Ini ini) {
-        setIni(ini);
-    }
-
-    public static AAAWebEnvironment create(final ShiroIni shiroConfiguration, final DataBroker dataBroker,
+    public AAAWebEnvironment(final ShiroIni shiroConfiguration, final DataBroker dataBroker,
             final ICertificateManager certificateManager, final AuthenticationService authenticationService,
             final TokenAuthenticators tokenAuthenticators, final TokenStore tokenStore,
             final PasswordHashService passwordHashService, final ServletSupport servletSupport) {
@@ -56,8 +52,8 @@ public final class AAAWebEnvironment extends IniWebEnvironment implements AAAShi
             urlsSection.put(url.getPairKey(), url.getPairValue());
         }
 
-        // Create an instance
-        final var ret = new AAAWebEnvironment(ini);
+        // Set the configuration
+        setIni(ini);
 
         // Configure the instance with all known custom components prepared for loading via their thread locals and
         // clean up afterwards. This needs to happen on our class loader so Shiro's ReflectionBuilder use of
@@ -69,11 +65,10 @@ public final class AAAWebEnvironment extends IniWebEnvironment implements AAAShi
                  var moonLoad = MoonRealm.prepareForLoad(servletSupport);
                  var tokenAuthLoad = TokenAuthRealm.prepareForLoad(authenticationService, tokenAuthenticators,
                      tokenStore)) {
-                ret.configure();
+                configure();
             }
         });
 
         LOG.debug("AAAWebEnvironment created");
-        return ret;
     }
 }

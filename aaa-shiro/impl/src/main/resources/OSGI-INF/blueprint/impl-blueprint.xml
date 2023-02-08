@@ -33,7 +33,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="idmStore"/>
   </bean>
 
-  <bean id="webEnvironment" class="org.opendaylight.aaa.shiro.web.env.AAAWebEnvironment" factory-method="create">
+  <bean id="webEnvironment" class="org.opendaylight.aaa.shiro.web.env.AAAWebEnvironment">
     <argument ref="shiroConfiguration"/>
     <argument ref="dataBroker"/>
     <argument ref="certManager"/>
