@@ -27,7 +27,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <reference id="certManager" interface="org.opendaylight.aaa.cert.api.ICertificateManager"/>
   <reference id="servletSupport" interface="org.opendaylight.aaa.web.servlet.ServletSupport"/>
 
-  <bean id="provider" class="org.opendaylight.aaa.AAAShiroProvider" init-method="init" destroy-method="close">
+  <bean id="provider" class="org.opendaylight.aaa.AAAShiroProvider" destroy-method="close">
     <argument ref="passwordCredentialAuth"/>
     <argument ref="datastoreConfig"/>
     <argument ref="idmStore"/>

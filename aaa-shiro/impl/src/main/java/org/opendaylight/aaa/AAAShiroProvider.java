@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provider for AAA shiro implementation.
  */
-public final class AAAShiroProvider {
+public final class AAAShiroProvider implements AutoCloseable {
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
     private final TokenStore tokenStore;
@@ -34,19 +34,27 @@ public final class AAAShiroProvider {
     public AAAShiroProvider(final PasswordCredentialAuth credentialAuth,
                             final DatastoreConfig datastoreConfig,
                             final IIDMStore iidmStore) {
-        if (datastoreConfig == null || !datastoreConfig.getStore().equals(DatastoreConfig.Store.H2DataStore)) {
-            LOG.info("AAA Datastore has not been initialized");
-            tokenStore = null;
-            tokenAuthenticators = new TokenAuthenticators();
-            return;
-        }
-
-        tokenStore = new H2TokenStore(datastoreConfig.getTimeToLive().longValue(),
+        if (datastoreConfig != null && datastoreConfig.getStore() == DatastoreConfig.Store.H2DataStore) {
+            tokenStore = new H2TokenStore(datastoreConfig.getTimeToLive().longValue(),
                 datastoreConfig.getTimeToWait().longValue());
 
-        initializeIIDMStore(iidmStore);
+            initializeIIDMStore(iidmStore);
 
-        tokenAuthenticators = new TokenAuthenticators(new HttpBasicAuth(credentialAuth));
+            tokenAuthenticators = new TokenAuthenticators(new HttpBasicAuth(credentialAuth));
+            LOG.info("AAAShiroProvider Session Initiated");
+        } else {
+            tokenStore = null;
+            tokenAuthenticators = new TokenAuthenticators();
+            LOG.info("AAA Datastore has not been initialized");
+        }
+    }
+
+    /**
+     * Method called when the blueprint container is destroyed.
+     */
+    @Override
+    public void close() {
+        LOG.info("AAAShiroProvider Closed");
     }
 
     private static void initializeIIDMStore(final IIDMStore iidmStore) {
@@ -55,20 +63,6 @@ public final class AAAShiroProvider {
         } catch (final IDMStoreException e) {
             LOG.error("Failed to initialize data in store", e);
         }
-    }
-
-    /**
-     * Method called when the blueprint container is created.
-     */
-    public void init() {
-        LOG.info("AAAShiroProvider Session Initiated");
-    }
-
-    /**
-     * Method called when the blueprint container is destroyed.
-     */
-    public void close() {
-        LOG.info("AAAShiroProvider Closed");
     }
 
     public TokenStore getTokenStore() {
