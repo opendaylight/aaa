@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * Initialization happens in the context of this class's ClassLoader, with dependencies being injected into their
  * thread-local variables.
  */
-public final class AAAWebEnvironment extends IniWebEnvironment {
+public final class AAAWebEnvironment extends IniWebEnvironment implements AAAShiroWebEnvironment {
     private static final Logger LOG = LoggerFactory.getLogger(AAAWebEnvironment.class);
 
     private AAAWebEnvironment(final Ini ini) {

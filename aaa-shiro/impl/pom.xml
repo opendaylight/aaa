@@ -165,6 +165,15 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                            !javax.annotation,
                            *
                         </Import-Package>
+
+                        <!-- FIXME: AAA-205: remove this block -->
+                        <Provide-Capability>
+                            osgi.service;objectClass:List&lt;String&gt;="javax.servlet.Servlet";uses:="javax.servlet",
+                            osgi.service;objectClass:List&lt;String&gt;="org.jolokia.osgi.security.Authenticator";uses:="org.jolokia.osgi.security",
+                            osgi.service;objectClass:List&lt;String&gt;="org.opendaylight.aaa.api.ClaimCache,org.opendaylight.aaa.api.CredentialAuth,org.opendaylight.aaa.api.IdMService,org.opendaylight.aaa.api.PasswordCredentialAuth";uses:="org.opendaylight.aaa.api,org.opendaylight.aaa.api,org.opendaylight.aaa.api,org.opendaylight.aaa.api",
+                            osgi.service;objectClass:List&lt;String&gt;="org.opendaylight.aaa.web.WebContextSecurer";uses:="org.opendaylight.aaa.web"
+                            osgi.service;objectClass:List&lt;String&gt;="org.opendaylight.aaa.shiro.web.env.AAAShiroWebEnvironment";uses:="org.opendaylight.aaa.shiro.web.env",
+                        </Provide-Capability>
                     </instructions>
                 </configuration>
             </plugin>
