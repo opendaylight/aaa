@@ -22,7 +22,7 @@ import org.opendaylight.aaa.shiro.realm.TokenAuthRealm;
 import org.opendaylight.aaa.tokenauthrealm.auth.TokenAuthenticators;
 import org.opendaylight.aaa.web.servlet.ServletSupport;
 import org.opendaylight.mdsal.binding.api.DataBroker;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroIni;
 import org.opendaylight.yangtools.util.ClassLoaderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +39,7 @@ public final class AAAWebEnvironment extends IniWebEnvironment implements AAAShi
         setIni(ini);
     }
 
-    public static AAAWebEnvironment create(final ShiroConfiguration shiroConfiguration, final DataBroker dataBroker,
+    public static AAAWebEnvironment create(final ShiroIni shiroConfiguration, final DataBroker dataBroker,
             final ICertificateManager certificateManager, final AuthenticationService authenticationService,
             final TokenAuthenticators tokenAuthenticators, final TokenStore tokenStore,
             final PasswordHashService passwordHashService, final ServletSupport servletSupport) {
