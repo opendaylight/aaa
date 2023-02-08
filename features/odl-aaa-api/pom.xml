@@ -18,7 +18,7 @@
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>odl-aaa-api</artifactId>
-    <version>0.17.5-SNAPSHOT</version>
+    <version>0.17.6-SNAPSHOT</version>
     <packaging>feature</packaging>
 
     <name>ODL :: aaa :: ${project.artifactId}</name>
