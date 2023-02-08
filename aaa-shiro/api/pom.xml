@@ -16,9 +16,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <relativePath>../../parent</relativePath>
   </parent>
 
-  <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-shiro-api</artifactId>
-  <version>0.17.5-SNAPSHOT</version>
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>bundle</packaging>
 
