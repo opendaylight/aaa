@@ -23,6 +23,10 @@ import org.opendaylight.aaa.web.WebContextSecurer;
 import org.opendaylight.aaa.web.WebServer;
 import org.opendaylight.aaa.web.servlet.ServletSupport;
 import org.opendaylight.yangtools.concepts.Registration;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Initializer for web components.
@@ -33,13 +37,16 @@ import org.opendaylight.yangtools.concepts.Registration;
  * @author Michael Vorburger.ch
  */
 @Singleton
-public class WebInitializer {
+@Component(service = { })
+public final class WebInitializer implements AutoCloseable {
     private final Registration registraton;
 
     @Inject
-    public WebInitializer(final WebServer webServer, final ClaimCache claimCache, final IIDMStore iidMStore,
-            final WebContextSecurer webContextSecurer, final ServletSupport servletSupport,
-            final CustomFilterAdapterConfiguration customFilterAdapterConfig) throws ServletException {
+    @Activate
+    public WebInitializer(final @Reference WebServer webServer, @Reference final ClaimCache claimCache,
+            final @Reference ServletSupport servletSupport, final @Reference WebContextSecurer webContextSecurer,
+            final @Reference IIDMStore iidMStore,
+            final @Reference CustomFilterAdapterConfiguration customFilterAdapterConfig) throws ServletException {
 
         final var webContextBuilder = WebContext.builder()
             .name("OpenDaylight IDM realm management")
@@ -64,6 +71,8 @@ public class WebInitializer {
     }
 
     @PreDestroy
+    @Deactivate
+    @Override
     public void close() {
         registraton.close();
     }
