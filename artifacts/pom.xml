@@ -66,13 +66,6 @@
                 <artifactId>aaa-encrypt-service-impl</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-encrypt-service-impl</artifactId>
-                <version>${project.version}</version>
-                <type>xml</type>
-                <classifier>config</classifier>
-            </dependency>
 
             <dependency>
                 <groupId>${project.groupId}</groupId>

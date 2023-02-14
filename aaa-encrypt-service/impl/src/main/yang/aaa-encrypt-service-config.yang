@@ -14,22 +14,29 @@ module aaa-encrypt-service-config {
     leaf encrypt-method {
       description "The encryption method to use";
       type string;
+      default PBKDF2WithHmacSHA1;
     }
     leaf encrypt-type {
       description "The encryption type";
       type string;
+      default AES;
     }
     leaf encrypt-iteration-count {
       description "Number of iterations that will be used by the key";
+      // FIXME: uint32
       type int32;
+      default 32768;
     }
     leaf encrypt-key-length {
       description "Key length";
+      // FIXME: uint32
       type int32;
+      default 128;
     }
     leaf cipher-transforms {
       description "cipher transformation type ex: AES/CBC/PKCS5Padding (128)";
       type string;
+      default "AES/CBC/PKCS5Padding";
     }
   }
 
