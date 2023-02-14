@@ -7,6 +7,9 @@
  */
 package org.opendaylight.aaa.encrypt.impl;
 
+import static com.google.common.base.Verify.verifyNotNull;
+import static java.util.Objects.requireNonNull;
+
 import java.nio.charset.Charset;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -14,6 +17,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
+import java.util.Map;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -24,10 +28,10 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.EncryptServiceConfig;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,26 +41,26 @@ import org.slf4j.LoggerFactory;
  * @author - Sharon Aicler (saichler@gmail.com)
  */
 @Deprecated
-@Component(immediate = true)
+@Component(factory = AAAEncryptionServiceImpl.FACTORY_NAME)
 public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
+    static final String FACTORY_NAME = "org.opendaylight.aaa.encrypt.impl.AAAEncryptionServiceImpl";
+
     private static final Logger LOG = LoggerFactory.getLogger(AAAEncryptionServiceImpl.class);
+    private static final String CONFIG_PROP = ".config";
 
     private final SecretKey key;
     private final Cipher encryptCipher;
     private final Cipher decryptCipher;
 
-    @Activate
-    public AAAEncryptionServiceImpl(@Reference final EncryptServiceConfigSupplier configProvider) {
-        final var encrySrvConfig = configProvider.get();
-
-        final byte[] encryptionKeySalt = encrySrvConfig.requireEncryptSalt();
+    public AAAEncryptionServiceImpl(final EncryptServiceConfig configuration) {
+        final byte[] encryptionKeySalt = configuration.requireEncryptSalt();
         IvParameterSpec tempIvSpec = null;
         SecretKey tempKey = null;
         try {
-            final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(encrySrvConfig.getEncryptMethod());
-            final KeySpec spec = new PBEKeySpec(encrySrvConfig.requireEncryptKey().toCharArray(), encryptionKeySalt,
-                    encrySrvConfig.getEncryptIterationCount(), encrySrvConfig.getEncryptKeyLength());
-            tempKey = new SecretKeySpec(keyFactory.generateSecret(spec).getEncoded(), encrySrvConfig.getEncryptType());
+            final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(configuration.getEncryptMethod());
+            final KeySpec spec = new PBEKeySpec(configuration.requireEncryptKey().toCharArray(), encryptionKeySalt,
+                    configuration.getEncryptIterationCount(), configuration.getEncryptKeyLength());
+            tempKey = new SecretKeySpec(keyFactory.generateSecret(spec).getEncoded(), configuration.getEncryptType());
             tempIvSpec = new IvParameterSpec(encryptionKeySalt);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             LOG.error("Failed to initialize secret key", e);
@@ -65,7 +69,7 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
         final var ivSpec = tempIvSpec;
         Cipher cipher = null;
         try {
-            cipher = Cipher.getInstance(encrySrvConfig.getCipherTransforms());
+            cipher = Cipher.getInstance(configuration.getCipherTransforms());
             cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException
                 | InvalidKeyException e) {
@@ -74,7 +78,7 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
         encryptCipher = cipher;
         cipher = null;
         try {
-            cipher = Cipher.getInstance(encrySrvConfig.getCipherTransforms());
+            cipher = Cipher.getInstance(configuration.getCipherTransforms());
             cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException
                 | InvalidKeyException e) {
@@ -82,6 +86,15 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
         }
         decryptCipher = cipher;
         LOG.info("AAAEncryptionService activated");
+    }
+
+    @Activate
+    public AAAEncryptionServiceImpl(final Map<String, ?> properties) {
+        this((EncryptServiceConfig) verifyNotNull(properties.get(CONFIG_PROP)));
+    }
+
+    static Map<String, ?> props(final EncryptServiceConfig configuration) {
+        return Map.of(CONFIG_PROP, requireNonNull(configuration));
     }
 
     @Deactivate
