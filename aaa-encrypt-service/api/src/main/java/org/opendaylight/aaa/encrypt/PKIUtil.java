@@ -104,19 +104,12 @@ public class PKIUtil {
         pos = 0;
 
         String type = decodeType();
-        if (type.equals(KEY_TYPE_RSA)) {
-            return decodeAsRSA();
-        }
-
-        if (type.equals(KEY_TYPE_DSA)) {
-            return decodeAsDSA();
-        }
-
-        if (type.equals(KEY_TYPE_ECDSA)) {
-            return decodeAsECDSA();
-        }
-
-        throw new IllegalArgumentException("Unknown decode key type " + type + " in " + keyLine);
+        return switch (type) {
+            case KEY_TYPE_RSA -> decodeAsRSA();
+            case KEY_TYPE_DSA -> decodeAsDSA();
+            case KEY_TYPE_ECDSA -> decodeAsECDSA();
+            default -> throw new IllegalArgumentException("Unknown decode key type " + type + " in " + keyLine);
+        };
     }
 
     @SuppressWarnings("AbbreviationAsWordInName")
