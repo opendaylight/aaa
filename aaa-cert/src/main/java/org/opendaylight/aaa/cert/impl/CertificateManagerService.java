@@ -13,7 +13,6 @@ import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.Security;
 import java.security.UnrecoverableKeyException;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
@@ -145,16 +144,12 @@ public class CertificateManagerService implements ICertificateManager, AutoClose
 
     @Override
     public SSLContext getServerContext() {
-        String algorithm = Security.getProperty("ssl.KeyManagerFactory.algorithm");
-        if (algorithm == null) {
-            algorithm = "SunX509";
-        }
         SSLContext serverContext = null;
         try {
-            KeyManagerFactory kmf = KeyManagerFactory.getInstance(algorithm);
+            KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
             kmf.init(aaaCertProvider.getODLKeyStore(),
                     aaaCertProvider.getOdlKeyStoreInfo().getStorePassword().toCharArray());
-            TrustManagerFactory tmf = TrustManagerFactory.getInstance(algorithm);
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
             tmf.init(aaaCertProvider.getTrustKeyStore());
 
             serverContext = SSLContext.getInstance("TLS");
