@@ -816,30 +816,32 @@ This an example on how to limit access to the modules endpoint:
 ::
 
     HTTP Operation:
-    put URL: /restconf/config/aaa:http-authorization/policies
-
-    or
-
-    put RFC8040 URL: /rests/data/aaa:http-authorization/policies
+    put URL: /rests/data/aaa:http-authorization/policies
 
     headers: Content-Type: application/json Accept: application/json
 
     body:
-      { "aaa:policies":
-        { "aaa:policies":
-          [ { "aaa:resource": "/restconf/modules/**",
-            "aaa:permissions": [ { "aaa:role": "admin",
-                                   "aaa:actions": [ "get",
-                                                    "post",
-                                                    "put",
-                                                    "patch",
-                                                    "delete"
-                                                  ]
-                                 }
-                               ]
-            }
-          ]
-        }
+      {
+          "aaa:policies": {
+              "aaa:policies": [
+                  {
+                      "aaa:resource": "/restconf/modules/**",
+                      "aaa:index": 1,
+                      "aaa:permissions": [
+                          {
+                              "aaa:role": "admin",
+                              "aaa:actions": [
+                                  "get",
+                                  "post",
+                                  "put",
+                                  "patch",
+                                  "delete"
+                              ]
+                          }
+                      ]
+                  }
+              ]
+          }
       }
 
 The above example locks down access to the modules endpoint (and any URLS
