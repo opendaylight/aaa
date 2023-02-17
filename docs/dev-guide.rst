@@ -266,7 +266,7 @@ command to enable the user interface:
 
 .. code-block:: bash
 
-    java -cp ./data/cache/org.eclipse.osgi/bundles/217/1/.cp/h2-1.4.185.jar
+    java -cp ./system/com/h2database/h2/2.1.210/h2-2.1.210.jar
         org.h2.tools.Server -trace -pg -web -webAllowOthers -baseDir `pwd`
 
 
@@ -401,26 +401,32 @@ This an example on how to limit access to the modules endpoint:
 ::
 
     HTTP Operation:
-    put URL: /restconf/config/aaa:http-authorization/policies
+    put URL: /rests/data/aaa:http-authorization/policies
 
     headers: Content-Type: application/json Accept: application/json
 
     body:
-      { "aaa:policies":
-        { "aaa:policies":
-          [ { "aaa:resource": "/restconf/modules/**",
-            "aaa:permissions": [ { "aaa:role": "admin",
-                                   "aaa:actions": [ "get",
-                                                    "post",
-                                                    "put",
-                                                    "patch",
-                                                    "delete"
-                                                  ]
-                                 }
-                               ]
-            }
-          ]
-        }
+      {
+          "aaa:policies": {
+              "aaa:policies": [
+                  {
+                      "aaa:resource": "/restconf/modules/**",
+                      "aaa:index": 1,
+                      "aaa:permissions": [
+                          {
+                              "aaa:role": "admin",
+                              "aaa:actions": [
+                                  "get",
+                                  "post",
+                                  "put",
+                                  "patch",
+                                  "delete"
+                              ]
+                          }
+                      ]
+                  }
+              ]
+          }
       }
 
 The above example locks down access to the modules endpoint (and any URLS
