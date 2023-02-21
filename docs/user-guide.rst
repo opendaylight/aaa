@@ -634,37 +634,6 @@ Create a new 'test' domain
         "enabled": true
     }
 
-Create an OAuth2 Token For Admin Scoped to SDN
-''''''''''''''''''''''''''''''''''''''''''''''
-
-::
-
-    curl -d 'grant_type=password&username=admin&password=a&scope=sdn' http://localhost:8181/oauth2/token
-
-    OUTPUT:
-    {
-        "expires_in":3600,
-        "token_type":"Bearer",
-        "access_token":"5a615fbc-bcad-3759-95f4-ad97e831c730"
-    }
-
-Use an OAuth2 Token
-'''''''''''''''''''
-
-::
-
-    curl -H "Authorization: Bearer 5a615fbc-bcad-3759-95f4-ad97e831c730" http://localhost:8181/auth/v1/domains
-    {
-        "domains":
-        [
-            {
-                "domainid":"sdn",
-                "name":"sdn”,
-                "description":"default odl sdn domain",
-                "enabled":true
-            }
-        ]
-    }
 
 **Token Store Configuration Parameters**
 ########################################
