@@ -221,22 +221,24 @@ IdM configuration:
 **Idmtool**
 ###########
 
-A utility script located at “etc/idmtool” is used to manipulate the
+A utility script located at “karaf/target/assembly/bin/idmtool” is used to manipulate the
 TokenAuthRealm IdM policy. idmtool assumes a single domain, the default one
 (sdn), since multiple domains are not supported in the Boron release. General
 usage information for idmtool is derived through issuing the following command:
 
 ::
 
-    $ python etc/idmtool -h
-    usage: idmtool [-h] [--target-host TARGET_HOST]
+    $ python3 idmtool -h
+    usage: idmtool [-h] [--target-host TARGET_HOST] [-k]
                    user
-                   {list-users,add-user,change-password,delete-user,list-domains,list-roles,add-role,delete-role,add-grant,get-grants,delete-grant}
+                   {list-users,add-user,change-password,delete-user,list-domains,list-roles,add-role,delete-role,add-grant,get-grants,delete-grant,
+    change-jolokia-password}
                    ...
 
     positional arguments:
-      user                  username for BSC node
-      {list-users,add-user,change-password,delete-user,list-domains,list-roles,add-role,delete-role,add-grant,get-grants,delete-grant}
+      user                  username for ODL node
+      {list-users,add-user,change-password,delete-user,list-domains,list-roles,add-role,delete-role,add-grant,get-grants,delete-grant,
+    change-jolokia-password}
                             sub-command help
         list-users          list all users
         add-user            add a user
@@ -249,31 +251,34 @@ usage information for idmtool is derived through issuing the following command:
         add-grant           add a grant
         get-grants          get grants for userid on sdn
         delete-grant        delete a grant
+        change-jolokia-password
+                            change the jolokia specific password
 
     optional arguments:
       -h, --help            show this help message and exit
       --target-host TARGET_HOST
-                            target host node
+                            target host url in form protocol://host:port
+      -k, --insecure        disable HTTPS certificate verification
+
 
 Add a user
 ''''''''''
 
 ::
 
-    python etc/idmtool admin add-user newUser
-    Password:
+    python3 idmtool admin add-user newUser
+    Password:    (default "admin")
     Enter new password:
     Re-enter password:
     add_user(admin)
 
-    command succeeded!
-
+    Operation Successful!!
     json:
     {
         "description": "",
         "domainid": "sdn",
         "email": "",
-        "enabled": true,
+        "enabled": 1,
         "name": "newUser",
         "password": "**********",
         "salt": "**********",
@@ -289,41 +294,31 @@ Delete a user
 
 ::
 
-    $ python etc/idmtool admin delete-user newUser@sdn
+    $ python3 idmtool admin delete-user newUser@sdn
     Password:
     delete_user(newUser@sdn)
 
-    command succeeded!
+    Operation Successful!!
 
 List all users
 ''''''''''''''
 
 ::
 
-    $ python etc/idmtool admin list-users
+    $ python3 idmtool admin list-users
     Password:
     list_users
+    http://localhost:8181/auth/v1/users
 
-    command succeeded!
-
+    Operation Successful!!
     json:
     {
         "users": [
             {
-                "description": "user user",
-                "domainid": "sdn",
-                "email": "",
-                "enabled": true,
-                "name": "user",
-                "password": "**********",
-                "salt": "**********",
-                "userid": "user@sdn"
-            },
-            {
                 "description": "admin user",
                 "domainid": "sdn",
                 "email": "",
-                "enabled": true,
+                "enabled": 1,
                 "name": "admin",
                 "password": "**********",
                 "salt": "**********",
@@ -337,20 +332,19 @@ Change a user’s password
 
 ::
 
-    $ python etc/idmtool admin change-password admin@sdn
+    $ python3 idmtool admin change-password admin@sdn
     Password:
     Enter new password:
     Re-enter password:
     change_password(admin)
 
-    command succeeded!
-
+    Operation Successful!!
     json:
     {
         "description": "admin user",
         "domainid": "sdn",
         "email": "",
-        "enabled": true,
+        "enabled": 1,
         "name": "admin",
         "password": "**********",
         "salt": "**********",
@@ -362,12 +356,11 @@ Add a role
 
 ::
 
-    $ python etc/idmtool admin add-role network-admin
+    $ python3 idmtool admin add-role network-admin
     Password:
     add_role(network-admin)
 
-    command succeeded!
-
+    Operation Successful!!
     json:
     {
         "description": "",
@@ -381,23 +374,23 @@ Delete a role
 
 ::
 
-    $ python etc/idmtool admin delete-role network-admin@sdn
+    $ python3 idmtool admin delete-role network-admin@sdn
     Password:
     delete_role(network-admin@sdn)
 
-    command succeeded!
+    Operation Successful!!
 
 List all roles
 ''''''''''''''
 
 ::
 
-    $ python etc/idmtool admin list-roles
+    $ python3 idmtool admin list-roles
     Password:
     list_roles
+    http://localhost:8181/auth/v1/roles
 
-    command succeeded!
-
+    Operation Successful!!
     json:
     {
         "roles": [
@@ -421,12 +414,12 @@ List all domains
 
 ::
 
-    $ python etc/idmtool admin list-domains
+    $ python3 idmtool admin list-domains
     Password:
     list_domains
+    http://localhost:8181/auth/v1/domains
 
-    command succeeded!
-
+    Operation Successful!!
     json:
     {
         "domains": [
@@ -444,18 +437,17 @@ Add a grant
 
 ::
 
-    $ python etc/idmtool admin add-grant user@sdn admin@sdn
+    $ python3 idmtool admin add-grant newUser@sdn admin@sdn
     Password:
-    add_grant(userid=user@sdn,roleid=admin@sdn)
+    add_grant(userid=newUser@sdn,roleid=admin@sdn)
 
-    command succeeded!
-
+    Operation Successful!!
     json:
     {
         "domainid": "sdn",
-        "grantid": "user@sdn@admin@sdn@sdn",
+        "grantid": "newUser@sdn@admin@sdn@sdn",
         "roleid": "admin@sdn",
-        "userid": "user@sdn"
+        "userid": "newUser@sdn"
     }
 
 Delete a grant
@@ -463,24 +455,24 @@ Delete a grant
 
 ::
 
-    $ python etc/idmtool admin delete-grant user@sdn admin@sdn
+    $ python3 idmtool admin delete-grant newUser@sdn admin@sdn
     Password:
-    http://localhost:8181/auth/v1/domains/sdn/users/user@sdn/roles/admin@sdn
-    delete_grant(userid=user@sdn,roleid=admin@sdn)
+    http://localhost:8181/auth/v1/domains/sdn/users/newUser@sdn/roles/admin@sdn
+    delete_grant(userid=newUser@sdn,roleid=admin@sdn)
 
-    command succeeded!
+    Operation Successful!!
 
 Get grants for a user
 '''''''''''''''''''''
 
 ::
 
-    python etc/idmtool admin get-grants admin@sdn
+    python3 idmtool admin get-grants admin@sdn
     Password:
     get_grants(admin@sdn)
+    http://localhost:8181/auth/v1/domains/sdn/users/admin@sdn/roles
 
-    command succeeded!
-
+    Operation Successful!!
     json:
     {
         "roles": [
@@ -503,100 +495,145 @@ Get grants for a user
 ###############################################
 
 The TokenAuthRealm IdM policy is fully configurable through a RESTful
-web service. Full documentation for manipulating AAA IdM data is located
-online (https://wiki.opendaylight.org/images/0/00/AAA_Test_Plan.docx),
-and a few examples are included in this guide:
+web service. Few examples are included in this guide:
 
-Get All Users
+Get all users
 '''''''''''''
 
 ::
 
-    curl -u admin:admin http://localhost:8181/auth/v1/users
+    curl --request GET 'http://localhost:8181/auth/v1/users' --header 'Authorization: Basic YWRtaW46YWRtaW4='
     OUTPUT:
     {
         "users": [
             {
-                "description": "user user",
-                "domainid": "sdn",
-                "email": "",
-                "enabled": true,
-                "name": "user",
-                "password": "**********",
-                "salt": "**********",
-                "userid": "user@sdn"
-            },
-            {
-                "description": "admin user",
-                "domainid": "sdn",
-                "email": "",
-                "enabled": true,
+                "userid": "admin@sdn",
                 "name": "admin",
+                "description": "admin user",
+                "enabled": 1,
+                "email": "",
                 "password": "**********",
                 "salt": "**********",
-                "userid": "admin@sdn"
+                "domainid": "sdn"
             }
         ]
     }
 
-Create a User
+Create a user
 '''''''''''''
 
 ::
 
-    curl -u admin:admin -X POST -H "Content-Type: application/json" --data-binary @./user.json http://localhost:8181/auth/v1/users
-    PAYLOAD:
+    curl --request POST 'http://localhost:8181/auth/v1/users' \
+    --header 'Authorization: Basic YWRtaW46YWRtaW4=' \
+    --header 'Content-Type: application/json' \
+    --data-raw '    {
+            "name": "ryan",
+            "password": "ryan",
+            "domainid": "sdn",
+            "description": "Ryan'\''s User Account",
+            "email": "ryandgoulding@gmail.com"
+        }'
+
+    OUTPUT:
     {
+        "userid": "ryan@sdn",
         "name": "ryan",
-        "password": "ryan",
-        "domainid": "sdn",
         "description": "Ryan's User Account",
-        "email": "ryandgoulding@gmail.com"
+        "enabled": 1,
+        "email": "ryandgoulding@gmail.com",
+        "password": "**********",
+        "salt": "**********",
+        "domainid": "sdn"
     }
 
-    OUTPUT:
-    {
-        "userid":"ryan@sdn",
-        "name":"ryan",
-        "description":"Ryan's User Account",
-        "enabled":true,
-        "email":"ryandgoulding@gmail.com",
-        "password":"**********",
-        "salt":"**********",
-        "domainid":"sdn"
-    }
-
-Create an OAuth2 Token For Admin Scoped to SDN
-''''''''''''''''''''''''''''''''''''''''''''''
+Get grants for the new 'ryan' user
+''''''''''''''''''''''''''''''''''
 
 ::
 
-    curl -d 'grant_type=password&username=admin&password=a&scope=sdn' http://localhost:8181/oauth2/token
+    curl --request GET 'http://localhost:8181/auth/v1/domains/sdn/users/ryan@sdn/roles' \
+    --header 'Authorization: Basic YWRtaW46YWRtaW4='
 
     OUTPUT:
     {
-        "expires_in":3600,
-        "token_type":"Bearer",
-        "access_token":"5a615fbc-bcad-3759-95f4-ad97e831c730"
+        "roles": []
     }
 
-Use an OAuth2 Token
-'''''''''''''''''''
+Add admin grants for the 'ryan' user
+''''''''''''''''''''''''''''''''''''
 
 ::
 
-    curl -H "Authorization: Bearer 5a615fbc-bcad-3759-95f4-ad97e831c730" http://localhost:8181/auth/v1/domains
+    curl --request POST 'http://localhost:8181/auth/v1/domains/sdn/users/ryan@sdn/roles' \
+    --header 'Authorization: Basic YWRtaW46YWRtaW4=' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+        "roleid": "admin@sdn",
+        "name": "admin",
+        "description": "a role for admins",
+        "domainid": "sdn"
+    }'
+
+    OUTPUT:
     {
-        "domains":
-        [
+        "grantid": "ryan@sdn@admin@sdn@sdn",
+        "domainid": "sdn",
+        "userid": "ryan@sdn",
+        "roleid": "admin@sdn"
+    }
+
+Remove admin grants for the 'ryan' user
+'''''''''''''''''''''''''''''''''''''''
+
+::
+
+    curl --request DELETE 'http://localhost:8181/auth/v1/domains/sdn/users/ryan@sdn/roles/admin@sdn' \
+    --header 'Authorization: Basic YWRtaW46YWRtaW4='
+
+    OUTPUT: 204
+
+Get all domains
+'''''''''''''''
+
+::
+
+    curl --request GET 'http://localhost:8181/auth/v1/domains' --header 'Authorization: Basic YWRtaW46YWRtaW4='
+
+    OUTPUT:
+    {
+        "domains": [
             {
-                "domainid":"sdn",
-                "name":"sdn”,
-                "description":"default odl sdn domain",
-                "enabled":true
+                "domainid": "sdn",
+                "name": "sdn",
+                "description": "default odl sdn domain",
+                "enabled": true
             }
         ]
     }
+
+Create a new 'test' domain
+''''''''''''''''''''''''''
+
+::
+
+    curl --request POST 'http://localhost:8181/auth/v1/domains' \
+    --header 'Authorization: Basic YWRtaW46YWRtaW4=' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+        "name": "test",
+        "description": "Odl test domain",
+        "enabled": true
+    }'
+
+    OUTPUT:
+    {
+        "domainid": "test",
+        "name": "test",
+        "description": "Odl test domain",
+        "enabled": true
+    }
+
 
 **Token Store Configuration Parameters**
 ########################################
@@ -816,30 +853,32 @@ This an example on how to limit access to the modules endpoint:
 ::
 
     HTTP Operation:
-    put URL: /restconf/config/aaa:http-authorization/policies
-
-    or
-
-    put RFC8040 URL: /rests/data/aaa:http-authorization/policies
+    put URL: /rests/data/aaa:http-authorization/policies
 
     headers: Content-Type: application/json Accept: application/json
 
     body:
-      { "aaa:policies":
-        { "aaa:policies":
-          [ { "aaa:resource": "/restconf/modules/**",
-            "aaa:permissions": [ { "aaa:role": "admin",
-                                   "aaa:actions": [ "get",
-                                                    "post",
-                                                    "put",
-                                                    "patch",
-                                                    "delete"
-                                                  ]
-                                 }
-                               ]
-            }
-          ]
-        }
+      {
+          "aaa:policies": {
+              "aaa:policies": [
+                  {
+                      "aaa:resource": "/restconf/modules/**",
+                      "aaa:index": 1,
+                      "aaa:permissions": [
+                          {
+                              "aaa:role": "admin",
+                              "aaa:actions": [
+                                  "get",
+                                  "post",
+                                  "put",
+                                  "patch",
+                                  "delete"
+                              ]
+                          }
+                      ]
+                  }
+              ]
+          }
       }
 
 The above example locks down access to the modules endpoint (and any URLS
