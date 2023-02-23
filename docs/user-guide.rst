@@ -1,7 +1,7 @@
 .. _aaa-user-guide:
 
-Authentication, Authorization and Accounting (AAA) Services
-===========================================================
+Authentication, Authorization and Accounting (AAA) Services - User guide
+========================================================================
 
 Overview
 --------
