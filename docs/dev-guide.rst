@@ -506,41 +506,59 @@ feature or module:
     <dependency>
       <groupId>org.opendaylight.aaa</groupId>
       <artifactId>aaa-cert</artifactId>
-      <version>0.5.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.mdsal</groupId>
+      <artifactId>mdsal-binding-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.service.component.annotations</artifactId>
     </dependency>
 
 3. Using the provider class in the implementation bundle needs to define a
-   variable holding the Certificate Manager Service as in the following example:
+   variable holding the Certificate Manager Service with OSGI DS annotation as in the following example:
 
 .. code-block:: java
 
     import org.opendaylight.aaa.cert.api.ICertificateManager;
-    import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+    import org.opendaylight.mdsal.binding.api.DataBroker;
+    import org.osgi.service.component.annotations.Activate;
+    import org.osgi.service.component.annotations.Component;
+    import org.osgi.service.component.annotations.Deactivate;
+    import org.osgi.service.component.annotations.Reference;
 
+    @Component
     public class UseCertManagerExampleProvider {
-      private final DataBroker dataBroker;
-      private final ICertificateManager caManager;
+        private final DataBroker dataBroker;
+        private final ICertificateManager caManager;
 
-      public EncSrvExampleProvider(final DataBroker dataBroker, final ICertificateManager caManager) {
-        this.dataBroker = dataBroker;
-        this.caManager = caManager;
-      }
-      public SSLEngine createSSLEngine() {
-        final SSLContext sslContext = caManager.getServerContext();
-        if (sslContext != null) {
-          final SSLEngine sslEngine = sslContext.createSSLEngine();
-          sslEngine.setEnabledCipherSuites(caManager.getCipherSuites());
-          // DO the Implementation
-          return sslEngine;
+        @Activate
+        public UseCertManagerExampleProvider(@Reference final DataBroker dataBroker,
+                @Reference final ICertificateManager caManager) {
+            this.dataBroker = dataBroker;
+            this.caManager = caManager;
         }
-      }
-      public void init() {
-          // TODO
-      }
-      public void close() {
-          // TODO
-      }
-    }
+
+        public SSLEngine createSSLEngine() {
+            final SSLContext sslContext = caManager.getServerContext();
+            if (sslContext != null) {
+                final SSLEngine sslEngine = sslContext.createSSLEngine();
+                sslEngine.setEnabledCipherSuites(caManager.getCipherSuites());
+                // DO the Implementation
+                return sslEngine;
+            }
+        }
+
+        @Activate
+        public void init() {
+            // TODO
+        }
+
+        @Deactivate
+        public void close() {
+            // TODO
+        }
 
 4. The Certificate Manager Service provides two main methods that are needed to
    establish the *SSLEngine* object, *getServerContext()* and *getCipherSuites()*
@@ -548,37 +566,11 @@ feature or module:
    *getODLKeyStore()* and *getTrustKeyStore()* that gives access to the
    OpenDaylight and Trust keystores.
 
-5. Now the *ICertificateManager* need to be passed as an argument to the
-   *UseCertManagerExampleProvider* within the implementation bundle blueprint
-   configuration. The following example shows how:
-
-.. code-block:: xml
-
-    <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
-      xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0"
-      odl:use-default-for-reference-types="true">
-      <reference id="dataBroker"
-        interface="org.opendaylight.controller.md.sal.binding.api.DataBroker"
-        odl:type="default" />
-      <reference id="aaaCertificateManager"
-        interface="org.opendaylight.aaa.cert.api.ICertificateManager"
-        odl:type="default-certificate-manager" />
-      <bean id="provider"
-        class="org.opendaylight.UseCertManagerExample.impl.UseCertManagerExampleProvider"
-        init-method="init" destroy-method="close">
-        <argument ref="dataBroker" />
-        <argument ref="aaaCertificateManager" />
-      </bean>
-    </blueprint>
-
-6. After finishing the bundle implementation the feature module needs to be
+5. After finishing the bundle implementation the feature module needs to be
    updated to include the *aaa-cert* feature in its feature bundle pom.xml file.
 
 .. code-block:: xml
 
-    <properties>
-      <aaa.version>0.5.0-SNAPSHOT</aaa.version>
-    </properties>
     <dependency>
       <groupId>org.opendaylight.aaa</groupId>
       <artifactId>features-aaa</artifactId>
@@ -587,7 +579,7 @@ feature or module:
       <type>xml</type>
     </dependency>
 
-7. Now, in the feature.xml file add the Certificate Manager Service feature and
+6. Now, in the feature.xml file add the Certificate Manager Service feature and
    its repository.
 
 .. code-block:: xml
@@ -606,7 +598,7 @@ implementation bundle feature as shown in the following example:
       <bundle>mvn:org.opendaylight.UseCertManagerExample/UseCertManagerExample-impl/{VERSION}</bundle>
     </feature>
 
-8. Now the project can be built and the OpenDaylight distribution started to
+7. Now the project can be built and the OpenDaylight distribution started to
    continue with the configuration process. See the User Guide for more details.
 
 Encryption Service
@@ -625,61 +617,58 @@ AAA Encryption Service with an OpenDaylight distribution project to encrypt data
 
 .. code-block:: xml
 
-    <dependency>
-      <groupId>org.opendaylight.aaa</groupId>
-      <artifactId>aaa-encrypt-service</artifactId>
-      <version>0.5.0-SNAPSHOT</version>
-    </dependency>
+      <dependency>
+        <groupId>org.opendaylight.aaa</groupId>
+        <artifactId>aaa-encrypt-service</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.mdsal</groupId>
+        <artifactId>mdsal-binding-api</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.osgi</groupId>
+        <artifactId>org.osgi.service.component.annotations</artifactId>
+      </dependency>
 
 3. Using the provider class in the implementation bundle needs to define a
-   variable holding the Encryption Service as in the following example:
+   variable holding the Encryption Service with OSGI DS annotation as in the following example:
 
 .. code-block:: java
 
     import org.opendaylight.aaa.encrypt.AAAEncryptionService;
-    import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+    import org.opendaylight.mdsal.binding.api.DataBroker;
+    import org.osgi.service.component.annotations.Activate;
+    import org.osgi.service.component.annotations.Component;
+    import org.osgi.service.component.annotations.Deactivate;
+    import org.osgi.service.component.annotations.Reference;
 
+    @Component
     public class EncSrvExampleProvider {
-    private final DataBroker dataBroker;
-      private final AAAEncryptionService encryService;
+        private final DataBroker dataBroker;
+        private final AAAEncryptionService encryService;
 
-      public EncSrvExampleProvider(final DataBroker dataBroker, final AAAEncryptionService encryService) {
-        this.dataBroker = dataBroker;
-        this.encryService = encryService;
-      }
-      public void init() {
-        // TODO
-      }
-      public void close() {
-        // TODO
-      }
+        @Activate
+        public EncSrvExampleProvider(@Reference final DataBroker dataBroker,
+                @Reference final AAAEncryptionService encryService) {
+            this.dataBroker = dataBroker;
+            this.encryService = encryService;
+        }
+
+        @Activate
+        public void init() {
+            // TODO
+        }
+
+        @Deactivate
+        public void close() {
+            // TODO
+        }
     }
 
 The AAAEncryptionService can be used to encrypt and decrypt any data based on
 project's needs.
 
-4. Now the *AAAEncryptionService* needs to be passed as an argument to the
-   *EncSrvExampleProvider* within the implementation bundle blueprint
-   configuration. The following example shows how:
-
-.. code-block:: xml
-
-    <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
-      xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0"
-      odl:use-default-for-reference-types="true">
-      <reference id="dataBroker"
-        interface="org.opendaylight.controller.md.sal.binding.api.DataBroker"
-        odl:type="default" />
-      <reference id="encryService" interface="org.opendaylight.aaa.encrypt.AAAEncryptionService"/>
-      <bean id="provider"
-        class="org.opendaylight.EncSrvExample.impl.EncSrvExampleProvider"
-        init-method="init" destroy-method="close">
-        <argument ref="dataBroker" />
-        <argument ref="encryService" />
-      </bean>
-    </blueprint>
-
-5. After finishing the bundle implementation the feature module needs to be
+4. After finishing the bundle implementation the feature module needs to be
    updated to include the *aaa-encryption-service* feature in its feature bundle
    pom.xml file.
 
@@ -693,15 +682,7 @@ project's needs.
       <type>xml</type>
     </dependency>
 
-It is also necessary to add the *aaa.version* in the properties section:
-
-.. code-block:: xml
-
-    <properties>
-      <aaa.version>0.5.0-SNAPSHOT</aaa.version>
-    </properties>
-
-6. Now, in the feature.xml file add the Encryption Service feature and its
+5. Now, in the feature.xml file add the Encryption Service feature and its
    repository.
 
 .. code-block:: xml
@@ -720,5 +701,5 @@ feature as shown in the following example:
       <bundle>mvn:org.opendaylight.EncSrvExample/EncSrvExample-impl/{VERSION}</bundle>
     </feature>
 
-7. Now the project can be built and the OpenDaylight distribution started to
+6. Now the project can be built and the OpenDaylight distribution started to
    continue with the configuration process. See the User Guide for more details.
