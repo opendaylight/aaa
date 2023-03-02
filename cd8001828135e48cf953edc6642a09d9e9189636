@@ -16,6 +16,24 @@
       "message": "The majority of users are probably using distribution - and do not build by themselves. Thus `/target/assembly` should be removed.",
       "revId": "cd8001828135e48cf953edc6642a09d9e9189636",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70f0524f_30489a1e",
+        "filename": "docs/dev-guide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2023-03-02T15:55:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ab0066e_b186c7cb",
+      "revId": "cd8001828135e48cf953edc6642a09d9e9189636",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
