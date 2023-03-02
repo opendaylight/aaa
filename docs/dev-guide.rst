@@ -266,8 +266,8 @@ command to enable the user interface:
 
 .. code-block:: bash
 
-    java -cp ./system/com/h2database/h2/2.1.214/h2-2.1.214.jar
-        org.h2.tools.Server -trace -pg -web -webAllowOthers -baseDir `pwd`
+    java -cp ./system/com/h2database/h2/2.1.214/h2-2.1.214.jar org.h2.tools.Server \
+        -trace -pg -web -webAllowOthers
 
 
 You can navigate to the following and login via the browser:
@@ -275,6 +275,15 @@ You can navigate to the following and login via the browser:
 ::
 
     http://{IP}:8082/
+
+Within the browser, you can log in to the H2 database by providing your credentials and the path to the database.
+The default configuration is as follows:
+
+::
+
+    JDBC URL:   jdbc:h2:[ABSOLUTE_PATH_TO_KARAF_FOLDER]/data/idmlight.db.mv.db
+    User Name:  foo
+    Password:   bar
 
 ODLJndiLdapRealm
 ^^^^^^^^^^^^^^^^
