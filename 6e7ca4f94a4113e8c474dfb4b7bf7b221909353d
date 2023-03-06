@@ -16,6 +16,24 @@
       "message": "I think we should fix the database name instead...",
       "revId": "6e7ca4f94a4113e8c474dfb4b7bf7b221909353d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42f80af6_17d5a898",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2023-03-06T14:36:11Z",
+      "side": 1,
+      "message": "Done in previous patch:\nhttps://git.opendaylight.org/gerrit/c/aaa/+/104775",
+      "parentUuid": "8478cd9b_556f6ef6",
+      "revId": "6e7ca4f94a4113e8c474dfb4b7bf7b221909353d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
