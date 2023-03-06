@@ -21,7 +21,7 @@ public class IdmLightConfigTest {
     public void testDefaults() {
         IdmLightConfig config = new IdmLightConfigBuilder().dbUser("foo").dbPwd("bar").build();
         assertEquals("org.h2.Driver", config.getDbDriver());
-        assertEquals("jdbc:h2:./data/idmlight.db", config.getDbConnectionString());
+        assertEquals("jdbc:h2:./data/idmlight.db.mv.db", config.getDbConnectionString());
         assertEquals("foo", config.getDbUser());
         assertEquals("bar", config.getDbPwd());
         assertEquals(3, config.getDbValidTimeOut());
@@ -33,7 +33,7 @@ public class IdmLightConfigTest {
         builder.dbUser("foo").dbPwd("bar");
         builder.dbDirectory("target");
         IdmLightConfig config = builder.build();
-        assertEquals("jdbc:h2:target/idmlight.db", config.getDbConnectionString());
+        assertEquals("jdbc:h2:target/idmlight.db.mv.db", config.getDbConnectionString());
     }
 
     @Test
