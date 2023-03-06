@@ -31,7 +31,7 @@ public abstract class IdmLightConfig {
      */
     @Default
     public String getDbName() {
-        return "idmlight.db";
+        return "idmlight.db.mv.db";
     }
 
     /**
