@@ -251,10 +251,10 @@
         <pair-key>securityManager.realms</pair-key>
         <pair-value>$tokenAuthRealm</pair-value>
     </main>
-    <!-- Used to support OAuth2 use case. -->
+    <!-- Used to support basic HTTP auth. -->
     <main>
         <pair-key>authcBasic</pair-key>
-        <pair-value>org.opendaylight.aaa.shiro.filters.ODLHttpAuthenticationFilter</pair-value>
+        <pair-value>org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter</pair-value>
     </main>
 
     <!-- Start moonAuthRealm commented out
