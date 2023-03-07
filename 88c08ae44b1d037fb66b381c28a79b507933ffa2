@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff150fd6_c1ea4d57",
+        "filename": "docs/dev-guide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-03-07T15:16:02Z",
+      "side": 1,
+      "message": "For example? Its not working for me :(",
+      "revId": "88c08ae44b1d037fb66b381c28a79b507933ffa2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
