@@ -16,6 +16,24 @@
       "message": "For example? Its not working for me :(",
       "revId": "88c08ae44b1d037fb66b381c28a79b507933ffa2",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5be7e2e9_32c5578b",
+        "filename": "docs/dev-guide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2023-03-07T16:42:03Z",
+      "side": 1,
+      "message": "Have you created a new database file using ODL? To create this database, you can install the odl-aaa-shiro feature in the AAA project.",
+      "parentUuid": "ff150fd6_c1ea4d57",
+      "revId": "88c08ae44b1d037fb66b381c28a79b507933ffa2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
