@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "223317dc_8758adb3",
+        "filename": "aaa-idm-store-h2/src/main/java/org/opendaylight/aaa/datastore/h2/IdmLightConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-03-08T12:47:47Z",
+      "side": 1,
+      "message": "IMO, just use \"imdlight\" and the file will be \"imdlight.mv.db\"",
+      "revId": "b4ba666729d9a9dbccb3f5fec67f29f39027d94c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
