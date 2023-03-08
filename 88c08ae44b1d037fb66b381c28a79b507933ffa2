@@ -87,6 +87,24 @@
       "parentUuid": "32cb5bdb_a10ba81f",
       "revId": "88c08ae44b1d037fb66b381c28a79b507933ffa2",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc7de528_68a0df92",
+        "filename": "docs/dev-guide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2023-03-08T17:33:30Z",
+      "side": 1,
+      "message": "I removed the previous patch which renamed the database. Since we are using h2 database version 2.1.214, the correct approach is that the created database is called idmlight.db and the created file is named idmlight.db.mv.db. Additionally, the h2 database also creates an idmlight.db.lock.db file if it is currently in use.\nhttp://www.h2database.com/html/features.html#database_file_layout",
+      "parentUuid": "83d542b5_cf4dc220",
+      "revId": "88c08ae44b1d037fb66b381c28a79b507933ffa2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
