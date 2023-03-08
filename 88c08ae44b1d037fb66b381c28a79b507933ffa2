@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4abe8dc4_6e5f97ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-03-08T12:46:24Z",
+      "side": 1,
+      "message": "IMO the correct path is `jdbc:h2:~/IdeaProjects/opendaylight/aaa/karaf/target/assembly/data/idmlight` when the file is `idmlight.mv.db`.\n\nFrom docs:\nThe URL jdbc:h2:~/test means the database is stored in the user home directory in `files starting with` \u0027test\u0027",
+      "revId": "88c08ae44b1d037fb66b381c28a79b507933ffa2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ff150fd6_c1ea4d57",
