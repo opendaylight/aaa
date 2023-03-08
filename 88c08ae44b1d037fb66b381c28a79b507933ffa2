@@ -34,6 +34,24 @@
       "parentUuid": "ff150fd6_c1ea4d57",
       "revId": "88c08ae44b1d037fb66b381c28a79b507933ffa2",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32cb5bdb_a10ba81f",
+        "filename": "docs/dev-guide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-03-08T12:37:03Z",
+      "side": 1,
+      "message": "Hmm, after installing `odl-aaa-shiro` we have `idmlight.db.mv.db.mv.db` in data folder.",
+      "parentUuid": "5be7e2e9_32c5578b",
+      "revId": "88c08ae44b1d037fb66b381c28a79b507933ffa2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
