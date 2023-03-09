@@ -105,6 +105,24 @@
       "parentUuid": "83d542b5_cf4dc220",
       "revId": "88c08ae44b1d037fb66b381c28a79b507933ffa2",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c47ce78_1f976a48",
+        "filename": "docs/dev-guide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-03-09T07:29:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cc7de528_68a0df92",
+      "revId": "88c08ae44b1d037fb66b381c28a79b507933ffa2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
