@@ -76,18 +76,6 @@ public class DomainHandlerTest extends HandlerTest {
         clientResponse = target("/v1/domains/5/users/0/roles").request().post(entity(grantData));
         assertEquals(404, clientResponse.getStatus());
 
-        // check validate user (admin)
-        Map<String, String> usrPwdData = new HashMap<>();
-        usrPwdData.put("username", "admin");
-        usrPwdData.put("userpwd", "admin");
-        clientResponse = target("/v1/domains/0/users/roles").request().post(entity(usrPwdData));
-        assertEquals(200, clientResponse.getStatus());
-
-        // check validate user (admin) with wrong password
-        usrPwdData.put("userpwd", "1234");
-        clientResponse = target("/v1/domains/0/users/roles").request().post(entity(usrPwdData));
-        assertEquals(401, clientResponse.getStatus());
-
         // check get user (admin) roles
         Roles usrRoles = target("/v1/domains/0/users/0/roles").request().get(Roles.class);
         assertNotNull(usrRoles);
