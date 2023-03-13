@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08da0ec5_38ac87e1",
+        "filename": "aaa-shiro/impl/src/main/resources/initial/aaa-app-config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2023-03-13T09:55:54Z",
+      "side": 1,
+      "message": "I think this is not needed, as the default value of authcbasic should work. You can just delete the authcbasic from this xml file",
+      "revId": "6ac0a9e8b9dbe73b7b63f313047756b8619e56a3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
