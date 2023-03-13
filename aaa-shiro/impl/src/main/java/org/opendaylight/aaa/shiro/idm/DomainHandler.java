@@ -13,7 +13,6 @@ import static javax.ws.rs.core.Response.Status.CREATED;
 import static javax.ws.rs.core.Response.Status.FORBIDDEN;
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
-import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 
 import java.util.ArrayList;
 import javax.ws.rs.Consumes;
@@ -31,7 +30,6 @@ import javax.ws.rs.core.UriInfo;
 import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
-import org.opendaylight.aaa.api.model.Claim;
 import org.opendaylight.aaa.api.model.Domain;
 import org.opendaylight.aaa.api.model.Domains;
 import org.opendaylight.aaa.api.model.Grant;
@@ -39,8 +37,6 @@ import org.opendaylight.aaa.api.model.IDMError;
 import org.opendaylight.aaa.api.model.Role;
 import org.opendaylight.aaa.api.model.Roles;
 import org.opendaylight.aaa.api.model.User;
-import org.opendaylight.aaa.api.model.UserPwd;
-import org.opendaylight.aaa.api.model.Users;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -368,105 +364,6 @@ public class DomainHandler {
 
         claimCache.clear();
         return Response.status(CREATED).entity(newGrant).build();
-    }
-
-    /**
-     * Used to validate user access.
-     *
-     * @param info
-     *            passed from Jersey
-     * @param domainId
-     *            the domain in question
-     * @param userpwd
-     *            the password attempt
-     * @return A response stating success or failure of user validation.
-     */
-    @POST
-    @Path("/{did}/users/roles")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response validateUser(@Context final UriInfo info, @PathParam("did") final String domainId,
-            final UserPwd userpwd) {
-        LOG.info("GET /domains/{}/users", domainId);
-
-        final Domain domain;
-        try {
-            domain = iidMStore.readDomain(domainId);
-        } catch (IDMStoreException se) {
-            LOG.error("StoreException: ", se);
-            IDMError idmerror = new IDMError();
-            idmerror.setMessage("Internal error getting domain");
-            idmerror.setDetails(se.getMessage());
-            return Response.status(INTERNAL_SERVER_ERROR).entity(idmerror).build();
-        }
-        if (domain == null) {
-            IDMError idmerror = new IDMError();
-            idmerror.setMessage("Not found! Domain id:" + domainId);
-            return Response.status(NOT_FOUND).entity(idmerror).build();
-        }
-
-        // check request body for username and pwd
-        final String username = userpwd.getUsername();
-        if (username == null) {
-            IDMError idmerror = new IDMError();
-            idmerror.setMessage("username not specfied in request body");
-            return Response.status(BAD_REQUEST).entity(idmerror).build();
-        }
-        final String pwd = userpwd.getUserpwd();
-        if (pwd == null) {
-            IDMError idmerror = new IDMError();
-            idmerror.setMessage("userpwd not specfied in request body");
-            return Response.status(BAD_REQUEST).entity(idmerror).build();
-        }
-
-        // find userid for user
-        final Users users;
-        try {
-            users = iidMStore.getUsers(username, domainId);
-        } catch (IDMStoreException e) {
-            LOG.error("StoreException", e);
-            IDMError idmerror = new IDMError();
-            idmerror.setMessage("Internal error getting user");
-            idmerror.setDetails(e.getMessage());
-            return Response.status(INTERNAL_SERVER_ERROR).entity(idmerror).build();
-        }
-
-        final var userList = users.getUsers();
-        if (userList.isEmpty()) {
-            IDMError idmerror = new IDMError();
-            idmerror.setMessage("did not find username: " + username);
-            return Response.status(NOT_FOUND).entity(idmerror).build();
-        }
-
-        final User user = userList.get(0);
-        final String userPwd = user.getPassword();
-        final String reqPwd = userpwd.getUserpwd();
-        if (!userPwd.equals(reqPwd)) {
-            IDMError idmerror = new IDMError();
-            idmerror.setMessage("password does not match for username: " + username);
-            return Response.status(UNAUTHORIZED).entity(idmerror).build();
-        }
-
-        final var roleList = new ArrayList<Role>();
-        try {
-            for (Grant grant : iidMStore.getGrants(domainId, user.getUserid()).getGrants()) {
-                roleList.add(iidMStore.readRole(grant.getRoleid()));
-            }
-        } catch (IDMStoreException e) {
-            LOG.error("StoreException", e);
-            IDMError idmerror = new IDMError();
-            idmerror.setMessage("Internal error getting Roles");
-            idmerror.setDetails(e.getMessage());
-            return Response.status(INTERNAL_SERVER_ERROR).entity(idmerror).build();
-        }
-
-        Claim claim = new Claim();
-        claim.setDomainid(domainId);
-        claim.setUsername(username);
-        claim.setUserid(user.getUserid());
-        claim.setRoles(roleList);
-
-        return Response.ok(claim).build();
     }
 
     /**
