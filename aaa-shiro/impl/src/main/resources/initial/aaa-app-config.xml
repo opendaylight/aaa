@@ -275,8 +275,11 @@
     </main>
 
     <!-- Model based authorization scheme supporting RBAC for REST endpoints -->
+    <!-- please comment the below section to use the default rest filter!!-->
+    <!-- please add "rest" to urls for using mdsaldynamic for some url pattern-->
+    <!-- please use "nosessionCreation" filter for efficient usage of dynamicAuthorization-->
     <main>
-        <pair-key>dynamicAuthorization</pair-key>
+        <pair-key>rest</pair-key>
         <pair-value>org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter</pair-value>
     </main>
 
@@ -298,18 +301,26 @@
     End moonAuthRealm commented out-->
     <urls>
         <pair-key>/**/operations/cluster-admin**</pair-key>
+        <!-- please un-comment below line to avoid cookies and comment the line after that-->
+        <!--pair-value>noSessionCreation, authcBasic, roles[admin]</pair-value-->
         <pair-value>authcBasic, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**/v1/**</pair-key>
+        <!-- please un-comment below line to avoid cookies and comment the line after that-->
+        <!--pair-value>noSessionCreation, authcBasic, roles[admin]</pair-value-->
         <pair-value>authcBasic, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**/config/aaa*/**</pair-key>
+        <!-- please un-comment below line to avoid cookies and comment the line after that-->
+        <!--pair-value>noSessionCreation, authcBasic, roles[admin]</pair-value-->
         <pair-value>authcBasic, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**</pair-key>
+        <!-- please un-comment below line to avoid cookies and comment the line after that-->
+        <!--pair-value>noSessionCreation, authcBasic</pair-value-->
         <pair-value>authcBasic</pair-value>
     </urls>
 </shiro-configuration>
