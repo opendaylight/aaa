@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e884010e_2756c678",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-03-17T07:24:47Z",
+      "side": 1,
+      "message": "Please fill JIRA issue with description what is current behaviour and what is being expected. For example from your commit msg I do not understand what behaviour is expected after merging your patch. Thanks.",
+      "revId": "68ec64e166e711d7389f76c084af99ee952a29a8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
