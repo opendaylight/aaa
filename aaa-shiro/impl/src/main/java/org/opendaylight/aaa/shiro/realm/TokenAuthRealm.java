@@ -125,7 +125,6 @@ public class TokenAuthRealm extends AuthorizingRealm {
                 "{\"error\":\"Only basic authentication is supported by TokenAuthRealm\"}", e);
         }
 
-        // if the password is empty, this is an OAuth2 request, not a Basic HTTP Auth request
         if (!Strings.isNullOrEmpty(password)) {
             Map<String, List<String>> headers = HeaderUtils.formHeaders(username, password, domain);
             // iterate over <code>TokenAuth</code> implementations and
@@ -147,16 +146,6 @@ public class TokenAuthRealm extends AuthorizingRealm {
                     throw new AuthenticationException("{\"error\":\"Could not authenticate\"}", ae);
                 }
             }
-        }
-
-        // extract the authentication token and attempt validation of the token
-        final String token = TokenUtils.extractUsername(authenticationToken);
-        try {
-            final Authentication auth = validate(token);
-            final ODLPrincipal odlPrincipal = ODLPrincipalImpl.createODLPrincipal(auth);
-            return new SimpleAuthenticationInfo(odlPrincipal, "", getName());
-        } catch (AuthenticationException e) {
-            LOG.debug("Unknown OAuth2 Token Access Request", e);
         }
 
         LOG.debug("Authentication failed: exhausted TokenAuth resources");
