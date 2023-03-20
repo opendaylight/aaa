@@ -16,6 +16,23 @@
       "message": "Contains unresolved comments.",
       "revId": "91daca5e00a8fa5fc48fc4a20a1982c1d66c49ee",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bc8300b_988f2c5f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-03-20T10:03:29Z",
+      "side": 1,
+      "message": "```\nRemove it and replace in AAA configuration with Shiro\u0027s\ndefault BasicHttpAuthenticationFilter. Thus we do no need to\nset used filter explicitly in configuration.\n```",
+      "revId": "91daca5e00a8fa5fc48fc4a20a1982c1d66c49ee",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
