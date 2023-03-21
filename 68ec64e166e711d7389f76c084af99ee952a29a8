@@ -16,6 +16,24 @@
       "message": "Please fill JIRA issue with description what is current behaviour and what is being expected. For example from your commit msg I do not understand what behaviour is expected after merging your patch. Thanks.",
       "revId": "68ec64e166e711d7389f76c084af99ee952a29a8",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f7b2bc3_b3bbb871",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7779
+      },
+      "writtenOn": "2023-03-21T06:01:26Z",
+      "side": 1,
+      "message": "Created tickets AAA-256 and AAA-257. Please let me know if more details are needed",
+      "parentUuid": "e884010e_2756c678",
+      "revId": "68ec64e166e711d7389f76c084af99ee952a29a8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
