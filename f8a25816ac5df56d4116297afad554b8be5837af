@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02368387_b1d250ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-03-21T07:35:26Z",
+      "side": 1,
+      "message": "I have realized this is not accurate. Only admin can access this parts of API.",
+      "revId": "f8a25816ac5df56d4116297afad554b8be5837af",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
