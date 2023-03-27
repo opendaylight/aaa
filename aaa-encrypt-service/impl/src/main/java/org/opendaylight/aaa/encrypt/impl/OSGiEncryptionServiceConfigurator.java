@@ -24,8 +24,8 @@ import org.checkerframework.checker.lock.qual.GuardedBy;
 import org.checkerframework.checker.lock.qual.Holding;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.opendaylight.mdsal.binding.api.ClusteredDataTreeChangeListener;
 import org.opendaylight.mdsal.binding.api.DataBroker;
-import org.opendaylight.mdsal.binding.api.DataTreeChangeListener;
 import org.opendaylight.mdsal.binding.api.DataTreeIdentifier;
 import org.opendaylight.mdsal.binding.api.DataTreeModification;
 import org.opendaylight.mdsal.common.api.CommitInfo;
@@ -56,7 +56,8 @@ import org.slf4j.LoggerFactory;
  * conditions and we try again.
  */
 @Component(service = { })
-public final class OSGiEncryptionServiceConfigurator implements DataTreeChangeListener<AaaEncryptServiceConfig> {
+public final class OSGiEncryptionServiceConfigurator
+        implements ClusteredDataTreeChangeListener<AaaEncryptServiceConfig> {
     private static final Logger LOG = LoggerFactory.getLogger(OSGiEncryptionServiceConfigurator.class);
     private static final SecureRandom RANDOM = new SecureRandom();
     private static final @NonNull AaaEncryptServiceConfig DEFAULT_CONFIG = new AaaEncryptServiceConfigBuilder()
