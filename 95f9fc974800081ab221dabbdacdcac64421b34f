@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31ed6acd_73827613",
+        "filename": "docs/dev-guide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-04-12T16:40:49Z",
+      "side": 1,
+      "message": "This should be changed from `en/lates` to `en/stable-chlorine`.",
+      "revId": "95f9fc974800081ab221dabbdacdcac64421b34f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdda7b71_b85a8f85",
+        "filename": "docs/dev-guide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-04-12T16:40:49Z",
+      "side": 1,
+      "message": "This should be changed from `en/lates` to `en/stable-chlorine`.",
+      "revId": "95f9fc974800081ab221dabbdacdcac64421b34f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
