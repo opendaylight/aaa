@@ -1,7 +1,7 @@
 .. _aaa-dev-guide:
 
-Authentication, Authorization and Accounting (AAA) Services
-===========================================================
+Authentication, Authorization and Accounting (AAA) Services - Developer guide
+=============================================================================
 
 Overview
 --------
@@ -266,8 +266,8 @@ command to enable the user interface:
 
 .. code-block:: bash
 
-    java -cp ./data/cache/org.eclipse.osgi/bundles/217/1/.cp/h2-1.4.185.jar
-        org.h2.tools.Server -trace -pg -web -webAllowOthers -baseDir `pwd`
+    java -cp ./system/com/h2database/h2/2.1.214/h2-2.1.214.jar org.h2.tools.Server \
+        -trace -pg -web -webAllowOthers
 
 
 You can navigate to the following and login via the browser:
@@ -275,6 +275,15 @@ You can navigate to the following and login via the browser:
 ::
 
     http://{IP}:8082/
+
+Within the browser, you can log in to the H2 database by providing your credentials and the path to the database.
+The default configuration is as follows:
+
+::
+
+    JDBC URL:   jdbc:h2:[ABSOLUTE_PATH_TO_KARAF_FOLDER]/data/idmlight.db
+    User Name:  foo
+    Password:   bar
 
 ODLJndiLdapRealm
 ^^^^^^^^^^^^^^^^
@@ -401,26 +410,32 @@ This an example on how to limit access to the modules endpoint:
 ::
 
     HTTP Operation:
-    put URL: /restconf/config/aaa:http-authorization/policies
+    put URL: /rests/data/aaa:http-authorization/policies
 
     headers: Content-Type: application/json Accept: application/json
 
     body:
-      { "aaa:policies":
-        { "aaa:policies":
-          [ { "aaa:resource": "/restconf/modules/**",
-            "aaa:permissions": [ { "aaa:role": "admin",
-                                   "aaa:actions": [ "get",
-                                                    "post",
-                                                    "put",
-                                                    "patch",
-                                                    "delete"
-                                                  ]
-                                 }
-                               ]
-            }
-          ]
-        }
+      {
+          "aaa:policies": {
+              "aaa:policies": [
+                  {
+                      "aaa:resource": "/restconf/modules/**",
+                      "aaa:index": 1,
+                      "aaa:permissions": [
+                          {
+                              "aaa:role": "admin",
+                              "aaa:actions": [
+                                  "get",
+                                  "post",
+                                  "put",
+                                  "patch",
+                                  "delete"
+                              ]
+                          }
+                      ]
+                  }
+              ]
+          }
       }
 
 The above example locks down access to the modules endpoint (and any URLS
@@ -490,7 +505,7 @@ feature or module:
 
 1. It is assumed that there exists an already created OpenDaylight distribution
    project following `this guide
-   <https://wiki.opendaylight.org/view/OpenDaylight_Controller:MD-SAL:Startup_Project_Archetype#Part_1_-_Build_with_a_simple_.27Example.27_module>`_.
+   <https://docs.opendaylight.org/en/stable-chlorine/developer-guides/developing-apps-on-the-opendaylight-controller.html#building-an-example-module>`_.
 
 2. In the implementation bundle the following artifact must be added to its
    *pom.xml* file as dependency.
@@ -612,7 +627,7 @@ AAA Encryption Service with an OpenDaylight distribution project to encrypt data
 
 1. It is assumed that there exists an already created OpenDaylight distribution
    project following `this guide
-   <https://wiki.opendaylight.org/view/OpenDaylight_Controller:MD-SAL:Startup_Project_Archetype#Part_1_-_Build_with_a_simple_.27Example.27_module>`_.
+   <https://docs.opendaylight.org/en/stable-chlorine/developer-guides/developing-apps-on-the-opendaylight-controller.html#building-an-example-module>`_.
 
 2. In the implementation bundle the following artifact must be added to its
    *pom.xml* file as dependency.
