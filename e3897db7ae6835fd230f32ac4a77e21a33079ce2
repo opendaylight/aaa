@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6b6c1f7_092a13fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-04-19T13:13:42Z",
+      "side": 1,
+      "message": "Please rebase.",
+      "revId": "e3897db7ae6835fd230f32ac4a77e21a33079ce2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9fe5a44_5d49c4df",
+        "filename": "aaa-shiro/impl/src/main/resources/initial/aaa-app-config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-04-19T13:13:42Z",
+      "side": 1,
+      "message": "What is the meaning of `rest`?",
+      "revId": "e3897db7ae6835fd230f32ac4a77e21a33079ce2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
