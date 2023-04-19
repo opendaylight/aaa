@@ -62,7 +62,7 @@ public class StandaloneCommandLineInterface {
         if (!optUser.isPresent()) {
             return false;
         } else {
-            User user = optUser.get();
+            User user = optUser.orElseThrow();
             user.setPassword(newPassword);
             identityStore.updateUser(user);
             return true;
@@ -78,7 +78,7 @@ public class StandaloneCommandLineInterface {
         if (!optUser.isPresent()) {
             return false;
         } else {
-            User user = optUser.get();
+            User user = optUser.orElseThrow();
             return passwordService.passwordsMatch(password, user.getPassword(), user.getSalt());
         }
     }

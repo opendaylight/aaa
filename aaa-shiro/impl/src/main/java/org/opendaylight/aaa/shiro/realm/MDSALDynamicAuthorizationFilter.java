@@ -129,7 +129,7 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter
             return true;
         }
 
-        final HttpAuthorization httpAuthorization = authorizationOptional.get();
+        final HttpAuthorization httpAuthorization = authorizationOptional.orElseThrow();
         final var policies = httpAuthorization.getPolicies();
         List<Policies> policiesList = policies != null ? policies.getPolicies() : null;
         if (policiesList == null || policiesList.isEmpty()) {

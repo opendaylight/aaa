@@ -113,7 +113,7 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
         final ODLPrincipal odlPrincipal = (ODLPrincipal)principalCollection.getPrimaryPrincipal();
         final Optional<Authentication> opt = getAuthenticationContainer();
         if (opt.isPresent()) {
-            final Authentication auth = opt.get();
+            final Authentication auth = opt.orElseThrow();
 
             // iterate through and determine the appropriate roles based on the programmed grants
             final Grants grants = auth.getGrants();
@@ -155,7 +155,7 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
         final String username = TokenUtils.extractUsername(authenticationToken);
         final Optional<Authentication> opt = getAuthenticationContainer();
         if (opt.isPresent()) {
-            final Authentication auth = opt.get();
+            final Authentication auth = opt.orElseThrow();
             final Users users = auth.getUsers();
             for (org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.authentication.users
                     .Users u : users.nonnullUsers().values()) {

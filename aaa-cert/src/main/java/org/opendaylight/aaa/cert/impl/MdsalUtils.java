@@ -143,7 +143,7 @@ public final class MdsalUtils {
         try (ReadTransaction transaction = dataBroker.newReadOnlyTransaction()) {
             Optional<D> optionalDataObject = transaction.read(store, path).get();
             if (optionalDataObject.isPresent()) {
-                return optionalDataObject.get();
+                return optionalDataObject.orElseThrow();
             }
         } catch (InterruptedException | ExecutionException e) {
             LOG.warn("Failed to read {} ", path, e);
