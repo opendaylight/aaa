@@ -16,6 +16,24 @@
       "message": "On master should be \"Potassium\" according to task.",
       "revId": "c460a9659c2f4880c1dacd01f2bc230fba21fc86",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6624f36_473f5f91",
+        "filename": "docs/conf.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 9229
+      },
+      "writtenOn": "2023-05-29T08:53:04Z",
+      "side": 1,
+      "message": "version 0.17.x in task description don\u0027t exist in git,\n0.17.x is master(Argon) and potassium don\u0027t exist yet",
+      "parentUuid": "4ffa5aea_58746454",
+      "revId": "c460a9659c2f4880c1dacd01f2bc230fba21fc86",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
