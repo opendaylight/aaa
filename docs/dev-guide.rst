@@ -254,8 +254,8 @@ picture:
    TokenAuthRealm direct authentication mechanism
 
 A user presents some credentials (e.g., username/password) directly to the
-OpenDaylight controller token endpoint /oauth2/token and receives an access
-token, which then can be used to access protected resources on the controller.
+OpenDaylight controller and receives a session cookie, which can be then
+used to access protected resources on the controller.
 
 How to access the H2 database
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
