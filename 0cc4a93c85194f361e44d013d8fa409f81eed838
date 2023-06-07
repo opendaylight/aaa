@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "169a5d83_8cc131b5",
+        "filename": "README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-06-07T14:11:46Z",
+      "side": 1,
+      "message": "than -\u003e then; remove space from the end of line",
+      "revId": "0cc4a93c85194f361e44d013d8fa409f81eed838",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e75ca3b7_0a4a333a",
+        "filename": "README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-06-07T14:11:46Z",
+      "side": 1,
+      "message": "Remove empty space at EOL.",
+      "revId": "0cc4a93c85194f361e44d013d8fa409f81eed838",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec8082b6_c391dfc6",
+        "filename": "README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-06-07T14:11:46Z",
+      "side": 1,
+      "message": "ODLJndiLdapRealmAuthNOnly",
+      "revId": "0cc4a93c85194f361e44d013d8fa409f81eed838",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
