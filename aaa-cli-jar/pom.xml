@@ -116,6 +116,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
               <createDependencyReducedPom>false</createDependencyReducedPom>
               <minimizeJar>true</minimizeJar>
               <filters>
+                  <filter>
+                    <artifact>*:*</artifact>
+                    <excludes>
+                      <exclude>META-INF/*.SF</exclude>
+                      <exclude>META-INF/*.DSA</exclude>
+                      <exclude>META-INF/*.RSA</exclude>
+                    </excludes>
+                  </filter>
                 <filter>
                   <artifact>org.opendaylight.aaa:aaa-shiro</artifact>
                   <includes>
