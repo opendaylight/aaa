@@ -1,0 +1,8 @@
+Verified+1: jenkins-releng ODL
+Code-Review+1: Oleksandr Zharov <oleksandr.zharov@pantheon.tech>
+Code-Review+2: Robert Varga <nite@hq.sk>
+Submitted-by: Robert Varga <nite@hq.sk>
+Submitted-at: Tue, 20 Jun 2023 21:08:46 +0000
+Reviewed-on: https://git.opendaylight.org/gerrit/c/aaa/+/106303
+Project: aaa
+Branch: refs/heads/master
