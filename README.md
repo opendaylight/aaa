@@ -20,9 +20,9 @@ The following caveats are applicable to the current AAA implementation:
 
 *Prerequisite:*  The followings are required for building AAA:
 
-- Maven 3.5.2+
-- JDK8
-- Python 2.7+ (optional) for running wrapper scripts
+- Maven 3.8.3+
+- JDK 17
+- Python 3.7+ (optional) for running wrapper scripts
 
 Get the code:
 
@@ -48,24 +48,19 @@ following command:
 ### Running
 
 Once the installation finishes, one can authenticate with the OpenDaylight controller by presenting a username/password
-and a domain name (scope):
+to access protected resources.
+Example:
 
-    curl -s -d 'grant_type=password&username=admin&password=admin&scope=sdn' http://<controller>:<port>/oauth2/token
+    curl -s -H 'Authorization: Basic YWRtaW46YWRtaW4=' \
+    http://<controller>:<port>/rests/data/...?content=config
 
-Upon successful authentication, the controller returns an access token with a configurable expiration in seconds,
-something similar to the followings:
-```json
-{
-  "expires_in": 3600,
-  "token_type": "Bearer",
-  "access_token": "d772d85e-34c7-3099-bea5-cfafd3c747cb"
-}
-```
-The access token can then be used to access protected resources on the controller by passing it along in the standard
-HTTP Authorization header with the resource request.  Example:
+Upon successful authentication, session cookie will be created, which can be then used to access protected resources
+during session, instead of providing username/password.
+Example:
 
-    curl -s -H 'Authorization: Bearer d772d85e-34c7-3099-bea5-cfafd3c747cb' \
-    http://<controller>:<port>/restconf/operational/opendaylight-inventory:nodes
+    curl -s -H 'Cookie: JSESSIONID=node0x12lwsvqbaxx15981soehtqed1.node0' \
+    http://<controller>:<port>/rests/data/...?content=config
+
 
 ### Defaults
 
@@ -97,15 +92,15 @@ the simpler to deploy (i.e., no external system dependency) and hence being the 
 #### Direct
 
 In this use-case, a user presents some credentials (e.g., username/password) directly to the Opendaylight (ODL)
-controller token endpoint `/oauth2/token` and receives an access token, which then can be used to access protected
-resources on the controller, similar to the example we saw in the Quickstart section.
+controller and receives a session cookie, which can be then used to access protected resources on the controller,
+similar to the example we saw in the Quickstart section.
 
 #### Federated
 
 In the federated use-case, the responsibility of authentication is delegated to a third-party IdP (perhaps, an
 enterprise-level IdP).
 
-For more information, consult ODLJndiLdapRealm and ODLJndiLdapRealmAuthnOnly documentation.
+For more information, consult ODLJndiLdapRealm and ODLJndiLdapRealmAuthNOnly documentation.
 
 ### Authorization & Access Control
 
