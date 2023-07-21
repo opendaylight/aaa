@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c215f4f_85bc4831",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2023-07-21T13:40:25Z",
+      "side": 1,
+      "message": "This will need to wait for next release due to https://github.com/h2database/h2database/pull/3834",
+      "revId": "9b04e02f307bae04bbea199c03206f5accc9dbef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
