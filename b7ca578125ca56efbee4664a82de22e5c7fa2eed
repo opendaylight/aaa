@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ad813a4_e3fcf92d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 9171
+      },
+      "writtenOn": "2023-07-24T11:18:22Z",
+      "side": 1,
+      "message": "The reference to the issue should be like this:\nJIRA: AAA-261",
+      "revId": "b7ca578125ca56efbee4664a82de22e5c7fa2eed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
