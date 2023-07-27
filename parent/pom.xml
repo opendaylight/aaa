@@ -10,7 +10,7 @@
 
   <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-parent</artifactId>
-  <version>0.17.11</version>
+  <version>0.17.12-SNAPSHOT</version>
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>pom</packaging>
 
