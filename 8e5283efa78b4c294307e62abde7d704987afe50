@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ce57b18_c9b1b303",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2023-07-28T07:59:11Z",
+      "side": 1,
+      "message": "Please fix order of Change-Id and Signed-off-by:\n```\nChange-Id: Ifc1f98ddf1c5489a033b2bb1bd31456d4a1cb0d0\nSigned-off-by: Matej Sramcik \u003cmatej.sramcik@pantheon.tech\u003e\n```",
+      "revId": "8e5283efa78b4c294307e62abde7d704987afe50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
