@@ -1,6 +1,16 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.opendaylight.aaa/aaa-artifacts/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.opendaylight.aaa/aaa-artifacts)
 [![Javadocs](https://www.javadoc.io/badge/org.opendaylight.aaa/aaa-docs.svg)](https://www.javadoc.io/doc/org.opendaylight.aaa/aaa-docs)
 [![License](https://img.shields.io/badge/License-EPL%201.0-blue.svg)](https://opensource.org/licenses/EPL-1.0)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=opendaylight_aaa&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=opendaylight_aaa)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=opendaylight_aaa&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=opendaylight_aaa)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=opendaylight_aaa&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=opendaylight_aaa)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=opendaylight_aaa&metric=coverage)](https://sonarcloud.io/summary/new_code?id=opendaylight_aaa)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=opendaylight_aaa&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=opendaylight_aaa)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=opendaylight_aaa&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=opendaylight_aaa)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=opendaylight_aaa&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=opendaylight_aaa)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=opendaylight_aaa&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=opendaylight_aaa)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=opendaylight_aaa&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=opendaylight_aaa)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=opendaylight_aaa&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=opendaylight_aaa)
 
 ## Opendaylight AAA
 
