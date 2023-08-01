@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02049a10_d5f11c94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-08-01T15:04:32Z",
+      "side": 1,
+      "message": "The commit msg title\n\nThe commit msg content\n\nJIRA:\nChange-Id:\nSigned-off-by:",
+      "revId": "c73ad702dd38844f277cb057d92d6b59eea48a8f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
