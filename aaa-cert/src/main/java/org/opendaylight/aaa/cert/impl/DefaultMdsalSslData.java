@@ -132,12 +132,12 @@ public class DefaultMdsalSslData implements IAaaCertProvider {
         return aaaCertMdsalProv.getCipherSuites(bundleName);
     }
 
-    private String[] getCipherSuites(final List<CipherSuites> cipherSuites) {
-        final List<String> suites = new ArrayList<>();
+    private static String[] getCipherSuites(final List<CipherSuites> cipherSuites) {
+        final var suites = new ArrayList<String>();
         if (cipherSuites != null && !cipherSuites.isEmpty()) {
             cipherSuites.forEach(cs -> suites.add(cs.getSuiteName()));
         }
-        return suites.toArray(new String[suites.size()]);
+        return suites.toArray(new String[0]);
     }
 
     @Override
