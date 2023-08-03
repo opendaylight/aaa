@@ -19,23 +19,27 @@ import java.io.File;
 import java.security.Security;
 import java.util.List;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.opendaylight.aaa.cert.api.IAaaCertProvider;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
+import org.opendaylight.mdsal.binding.api.DataBroker;
+import org.opendaylight.mdsal.binding.api.RpcProviderService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.cipher.suite.CipherSuitesBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslData;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslDataBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.OdlKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.OdlKeystoreBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.TrustKeystore;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.AaaCertServiceConfigBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertificateInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateReqInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetNodeCertificateInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertificateInputBuilder;
 
-public class AaaCertRpcServiceImplTest {
+public class CertificateManagerServiceTest {
     private static final String ALIAS = TestUtils.DUMMY_ALIAS;
     private static final String BUNDLE_NAME = "opendaylight";
     private static final String CERTIFICATE = TestUtils.DUMMY_CERT;
@@ -50,7 +54,9 @@ public class AaaCertRpcServiceImplTest {
     private static AAAEncryptionService aaaEncryptionService;
     private static SslData signedSslData;
     private static SslData unsignedSslData;
-    private static AaaCertRpcServiceImpl aaaCertRpcService;
+
+    private DataBroker dataBroker;
+    private CertificateManagerService certManager;
 
     static {
         Security.addProvider(new BouncyCastleProvider());
@@ -101,14 +107,18 @@ public class AaaCertRpcServiceImplTest {
                 .thenReturn(signedOdlKeystore.getKeystoreFile());
         when(aaaEncryptionServiceInit.decrypt(any(String.class))).thenReturn(PASSWORD);
         aaaEncryptionService = aaaEncryptionServiceInit;
+    }
 
-        // Create class
-        aaaCertRpcService = new AaaCertRpcServiceImpl(mockMdsalProvider(signedSslData));
+    @Before
+    public void before() {
+        dataBroker = mock(DataBroker.class);
+        certManager = new CertificateManagerService(mock(RpcProviderService.class), dataBroker, aaaEncryptionService,
+            new AaaCertServiceConfigBuilder().setUseConfig(true).setUseMdsal(true).build());
     }
 
     @Test
     public void getNodeCertificateTest() throws Exception {
-        final var result = Futures.getDone(aaaCertRpcService.getNodeCertificate(
+        final var result = Futures.getDone(certManager.getNodeCertificate(
             new GetNodeCertificateInputBuilder().setNodeAlias(ALIAS).build()));
         assertTrue(result.isSuccessful());
         final String cert = result.getResult().getNodeCert();
@@ -118,16 +128,14 @@ public class AaaCertRpcServiceImplTest {
 
     @Test
     public void setODLCertificateTest() throws Exception {
-        final var result = Futures.getDone(
-            new AaaCertRpcServiceImpl(mockMdsalProvider(unsignedSslData))
-                .setODLCertificate(
-                    new SetODLCertificateInputBuilder().setOdlCertAlias(ALIAS).setOdlCert(CERTIFICATE).build()));
+        final var result = Futures.getDone(certManager.setODLCertificate(
+            new SetODLCertificateInputBuilder().setOdlCertAlias(ALIAS).setOdlCert(CERTIFICATE).build()));
         assertTrue(result.isSuccessful());
     }
 
     @Test
     public void getODLCertificateTest() throws Exception {
-        final var result = Futures.getDone(aaaCertRpcService.getODLCertificate(
+        final var result = Futures.getDone(certManager.getODLCertificate(
             new GetODLCertificateInputBuilder().build()));
         assertTrue(result.isSuccessful());
         final String cert = result.getResult().getOdlCert();
@@ -137,7 +145,7 @@ public class AaaCertRpcServiceImplTest {
 
     @Test
     public void getODLCertificateReq() throws Exception {
-        final var result = Futures.getDone(aaaCertRpcService.getODLCertificateReq(
+        final var result = Futures.getDone(certManager.getODLCertificateReq(
             new GetODLCertificateReqInputBuilder().build()));
         assertTrue(result.isSuccessful());
         final String cert = result.getResult().getOdlCertReq();
@@ -147,10 +155,8 @@ public class AaaCertRpcServiceImplTest {
 
     @Test
     public void setNodeCertificate() throws Exception {
-        final var result = Futures.getDone(
-            new AaaCertRpcServiceImpl(mockMdsalProvider(unsignedSslData))
-                .setNodeCertificate(
-                    new SetNodeCertificateInputBuilder().setNodeAlias(ALIAS).setNodeCert(CERTIFICATE).build()));
+        final var result = Futures.getDone(certManager.setNodeCertificate(
+            new SetNodeCertificateInputBuilder().setNodeAlias(ALIAS).setNodeCert(CERTIFICATE).build()));
         assertTrue(result.isSuccessful());
     }
 

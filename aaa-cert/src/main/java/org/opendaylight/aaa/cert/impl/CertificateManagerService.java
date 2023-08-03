@@ -7,6 +7,10 @@
  */
 package org.opendaylight.aaa.cert.impl;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableClassToInstanceMap;
+import com.google.common.util.concurrent.ListenableFuture;
 import java.io.File;
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -37,8 +41,32 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystoreBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.TrustKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.TrustKeystoreBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.AaaCertRpcService;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertificate;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertificateInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertificateOutput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetNodeCertificateOutputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificate;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateOutput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateOutputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateReq;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateReqInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateReqOutput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.GetODLCertificateReqOutputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetNodeCertificate;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetNodeCertificateInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetNodeCertificateOutput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetNodeCertificateOutputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertificate;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertificateInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertificateOutput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertificateOutputBuilder;
 import org.opendaylight.yangtools.concepts.Registration;
+import org.opendaylight.yangtools.yang.binding.Rpc;
+import org.opendaylight.yangtools.yang.common.ErrorTag;
+import org.opendaylight.yangtools.yang.common.ErrorType;
+import org.opendaylight.yangtools.yang.common.RpcResult;
+import org.opendaylight.yangtools.yang.common.RpcResultBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -94,8 +122,13 @@ public class CertificateManagerService implements ICertificateManager, AutoClose
             }
             aaaCertProvider.createKeyStores();
             LOG.info("Certificate Manager service has been initialized");
-            reg = rpcProviderService.registerRpcImplementation(AaaCertRpcService.class,
-                new AaaCertRpcServiceImpl(aaaCertProvider));
+            reg = rpcProviderService.registerRpcImplementations(ImmutableClassToInstanceMap.<Rpc<?, ?>>builder()
+                .put(GetNodeCertificate.class, this::getNodeCertificate)
+                .put(SetNodeCertificate.class, this::setNodeCertificate)
+                .put(GetODLCertificate.class, this::getODLCertificate)
+                .put(SetODLCertificate.class, this::setODLCertificate)
+                .put(GetODLCertificateReq.class, this::getODLCertificateReq)
+                .build());
             LOG.info("AaaCert Rpc Service has been initialized");
         } else {
             aaaCertProvider = null;
@@ -187,6 +220,57 @@ public class CertificateManagerService implements ICertificateManager, AutoClose
             return;
         }
         mdsalCertProvider.exportSslDataKeystores();
+    }
+
+    @VisibleForTesting
+    ListenableFuture<RpcResult<GetNodeCertificateOutput>> getNodeCertificate(final GetNodeCertificateInput input) {
+        final String cert = aaaCertProvider.getCertificateTrustStore(input.getNodeAlias(), false);
+        if (Strings.isNullOrEmpty(cert)) {
+            return RpcResultBuilder.<GetNodeCertificateOutput>failed()
+                .withRpcError(RpcResultBuilder.newError(ErrorType.APPLICATION, ErrorTag.DATA_MISSING,
+                    "getNodeCertificate does not fetch certificate for the alias " + input.getNodeAlias()))
+                .buildFuture();
+        }
+
+        return RpcResultBuilder.success(new GetNodeCertificateOutputBuilder().setNodeCert(cert).build()).buildFuture();
+    }
+
+    @VisibleForTesting
+    ListenableFuture<RpcResult<SetNodeCertificateOutput>> setNodeCertificate(final SetNodeCertificateInput input) {
+        if (aaaCertProvider.addCertificateTrustStore(input.getNodeAlias(), input.getNodeCert())) {
+            return RpcResultBuilder.success(new SetNodeCertificateOutputBuilder().build()).buildFuture();
+        }
+        LOG.info("Error while adding the Node certificate");
+        return RpcResultBuilder.<SetNodeCertificateOutput>failed().buildFuture();
+    }
+
+    @VisibleForTesting
+    ListenableFuture<RpcResult<GetODLCertificateOutput>> getODLCertificate(final GetODLCertificateInput input) {
+        final String cert = aaaCertProvider.getODLKeyStoreCertificate(false);
+        if (Strings.isNullOrEmpty(cert)) {
+            return RpcResultBuilder.<GetODLCertificateOutput>failed().buildFuture();
+        }
+        return RpcResultBuilder.success(new GetODLCertificateOutputBuilder().setOdlCert(cert).build()).buildFuture();
+    }
+
+    @VisibleForTesting
+    ListenableFuture<RpcResult<SetODLCertificateOutput>> setODLCertificate(final SetODLCertificateInput input) {
+        if (aaaCertProvider.addCertificateODLKeyStore(input.getOdlCertAlias(), input.getOdlCert())) {
+            return RpcResultBuilder.success(new SetODLCertificateOutputBuilder().build()).buildFuture();
+        }
+        LOG.info("Error while adding ODL certificate");
+        return RpcResultBuilder.<SetODLCertificateOutput>failed().buildFuture();
+    }
+
+    @VisibleForTesting
+    ListenableFuture<RpcResult<GetODLCertificateReqOutput>> getODLCertificateReq(
+            final GetODLCertificateReqInput input) {
+        final String certReq = aaaCertProvider.genODLKeyStoreCertificateReq(false);
+        if (Strings.isNullOrEmpty(certReq)) {
+            return RpcResultBuilder.<GetODLCertificateReqOutput>failed().buildFuture();
+        }
+        return RpcResultBuilder.success(new GetODLCertificateReqOutputBuilder().setOdlCertReq(certReq).build())
+            .buildFuture();
     }
 
     private static void updateCertManagerSrvConfig(final String ctlPwd, final String trustPwd) {
