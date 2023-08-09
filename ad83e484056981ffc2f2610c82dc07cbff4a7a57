@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55cfa051_f272ea1c",
+        "filename": "README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2023-08-09T14:51:30Z",
+      "side": 1,
+      "message": "IMO It would be better to add one empty line here.",
+      "revId": "ad83e484056981ffc2f2610c82dc07cbff4a7a57",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
