@@ -29,8 +29,7 @@ import org.opendaylight.aaa.filterchain.filters.ExtractFilterConfigFilter;
  * Custom Filter Adapter Configuration Test Suite.
  */
 public class CustomFilterAdapterConfigurationImplTest {
-
-    private static class TestCustomFilterAdapterListener implements CustomFilterAdapterListener {
+    private static final class TestCustomFilterAdapterListener implements CustomFilterAdapterListener {
         volatile List<Filter> updatedInjectedFilters;
 
         @Override
@@ -130,7 +129,7 @@ public class CustomFilterAdapterConfigurationImplTest {
         // just ensures a non-null ServletConfig is accepted.
         config.registerCustomFilterAdapterConfigurationListener(new CustomFilterAdapterListener() {
             @Override
-            public void updateInjectedFilters(List<Filter> injectedFilters) {
+            public void updateInjectedFilters(final List<Filter> injectedFilters) {
             }
 
             @Override
@@ -148,7 +147,7 @@ public class CustomFilterAdapterConfigurationImplTest {
                     }
 
                     @Override
-                    public String getInitParameter(String string) {
+                    public String getInitParameter(final String string) {
                         return null;
                     }
 
