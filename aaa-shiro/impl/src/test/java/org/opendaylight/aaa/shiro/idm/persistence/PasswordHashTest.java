@@ -7,12 +7,14 @@
  */
 package org.opendaylight.aaa.shiro.idm.persistence;
 
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.PasswordCredentials;
@@ -30,18 +32,18 @@ import org.opendaylight.aaa.shiro.idm.IdmLightProxy;
  * @Author - Sharon Aicler (saichler@cisco.com)
 */
 public class PasswordHashTest {
+    private final PasswordHashService passwordService = new DefaultPasswordHashService();
 
     private IIDMStore store;
-    private PasswordHashService passwordService = new DefaultPasswordHashService();
 
     @Before
     public void before() throws IDMStoreException {
-        store = Mockito.mock(IIDMStore.class);
+        store = mock(IIDMStore.class);
         Domain domain = new Domain();
         domain.setName("sdn");
         domain.setDomainid("sdn");
 
-        Mockito.when(store.readDomain("sdn")).thenReturn(domain);
+        doReturn(domain).when(store).readDomain("sdn");
         Creds creds = new Creds();
 
         User user = new User();
@@ -66,18 +68,18 @@ public class PasswordHashTest {
         Role role = new Role();
         role.setRoleid("admin");
         role.setName("admin");
-        Mockito.when(store.readRole("admin")).thenReturn(role);
-        Mockito.when(store.getUsers(creds.username(), creds.domain())).thenReturn(users);
-        Mockito.when(store.getGrants(creds.domain(), creds.username())).thenReturn(grants);
+        doReturn(role).when(store).readRole("admin");
+        doReturn(users).when(store).getUsers(creds.username(), creds.domain());
+        doReturn(grants).when(store).getGrants(creds.domain(), creds.username());
     }
 
     @Test
     public void testPasswordHash() {
-        IdmLightProxy proxy = new IdmLightProxy(store, passwordService);
+        final var proxy = new IdmLightProxy(store, passwordService);
         proxy.authenticate(new Creds());
     }
 
-    private static class Creds implements PasswordCredentials {
+    private static final class Creds implements PasswordCredentials {
         @Override
         public String username() {
             return "admin";
