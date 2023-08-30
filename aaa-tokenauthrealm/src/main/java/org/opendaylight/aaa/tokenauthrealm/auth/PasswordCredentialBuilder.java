@@ -37,7 +37,7 @@ public class PasswordCredentialBuilder {
         return pc;
     }
 
-    private static class MutablePasswordCredentials implements PasswordCredentials {
+    private static final class MutablePasswordCredentials implements PasswordCredentials {
         private int hashCode = 0;
         private String username;
         private String password;

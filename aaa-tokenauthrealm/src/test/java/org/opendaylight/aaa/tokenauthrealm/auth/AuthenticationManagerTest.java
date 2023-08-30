@@ -95,7 +95,7 @@ public class AuthenticationManagerTest {
         assertFalse(authManager.isAuthEnabled());
     }
 
-    private class Worker implements Callable<Authentication> {
+    private final class Worker implements Callable<Authentication> {
         @Override
         public Authentication call() throws Exception {
             return authManager.get();
