@@ -37,7 +37,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystoreBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.TrustKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.TrustKeystoreBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.AaaCertRpcService;
 import org.opendaylight.yangtools.concepts.Registration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,8 +93,7 @@ public class CertificateManagerService implements ICertificateManager, AutoClose
             }
             aaaCertProvider.createKeyStores();
             LOG.info("Certificate Manager service has been initialized");
-            reg = rpcProviderService.registerRpcImplementation(AaaCertRpcService.class,
-                new AaaCertRpcServiceImpl(aaaCertProvider));
+            reg = new AaaCertRpcServiceImpl(aaaCertProvider).registerWith(rpcProviderService);
             LOG.info("AaaCert Rpc Service has been initialized");
         } else {
             aaaCertProvider = null;
