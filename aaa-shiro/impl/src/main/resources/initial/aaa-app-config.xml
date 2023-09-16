@@ -275,6 +275,23 @@
         <pair-value>org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter</pair-value>
     </main>
 
+    <!--
+        Disable parts of invalidRequest filter, as these are blocking valid RESTCONF requests.
+
+        RESTCONF routinely transmits data in URLs. The encoding requires that all reserved URI
+        characters, as defined in https://www.rfc-editor.org/rfc/rfc3986#section-2.2, be
+        percent-encoded. See https://jira.opendaylight.org/browse/AAA-265.
+     -->
+    <main>
+        <!-- ';' is a RFC3986 reserved character -->
+        <pair-key>invalidRequest.blockSemicolon</pair-key>
+        <pair-value>false</pair-value>
+    </main>
+    <main>
+        <!-- '/' is a RFC3986 reserved character -->
+        <pair-key>invalidRequest.blockTraversal</pair-key>
+        <pair-value>false</pair-value>
+    </main>
 
     <!--
       ===================================================================================
