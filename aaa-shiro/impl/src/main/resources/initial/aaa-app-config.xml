@@ -275,6 +275,14 @@
         <pair-value>org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter</pair-value>
     </main>
 
+    <!--
+        Disable traversal blocking, as it interferes with RESTCONF's encoding,
+        see https://jira.opendaylight.org/browse/AAA-265
+     -->
+    <main>
+        <pair-key>invalidRequest.blockTraversal</pair-key>
+        <pair-value>false</pair-value>
+    </main>
 
     <!--
       ===================================================================================
