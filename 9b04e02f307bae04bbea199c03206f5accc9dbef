@@ -16,6 +16,23 @@
       "message": "This will need to wait for next release due to https://github.com/h2database/h2database/pull/3834",
       "revId": "9b04e02f307bae04bbea199c03206f5accc9dbef",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b3c098c_d07be4e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2023-09-18T16:45:15Z",
+      "side": 1,
+      "message": "Okay, this has a mirror with karaf-4.4.4, which upgrades this dependency as part of pax-jdbc 😞",
+      "revId": "9b04e02f307bae04bbea199c03206f5accc9dbef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
