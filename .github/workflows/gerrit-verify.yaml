@@ -42,6 +42,9 @@ on:
         required: true
         type: string
 
+env:
+  ODLNEXUSPROXY: ${{ vars.NEXUSPROXY }}
+
 concurrency:
   # yamllint disable-line rule:line-length
   group: compose-maven-verify-${{ github.workflow }}-${{ github.event.inputs.GERRIT_CHANGE_ID || github.run_id }}
