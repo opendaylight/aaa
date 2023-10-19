@@ -16,6 +16,47 @@
       "message": "There is no `gerrit-compose-required-maven-verify.yaml`. GitHub Action also failed because of the issue:\nhttps://github.com/opendaylight/aaa/actions/runs/6574969194 \n```\nInvalid workflow file: .github/workflows/gerrit-verify.yaml#L76\nerror parsing called workflow\n\".github/workflows/gerrit-verify.yaml\"\n-\u003e \"lfit/releng-reusable-workflows/.github/workflows/gerrit-compose-required-maven-verify.yaml@main\"\n: failed to fetch workflow: workflow was not found.\n```\n\nIs this expected?",
       "revId": "fd7b8f12dc94b293c89a20df90e9fe3e923098d2",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28093c6f_c9c33733",
+        "filename": ".github/workflows/gerrit-verify.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2023-10-19T17:24:27Z",
+      "side": 1,
+      "message": "This is being rectified. There was an issue with the documentation causing the reusable workflow to be invalid.",
+      "parentUuid": "a19c1e3a_9c2025c4",
+      "revId": "fd7b8f12dc94b293c89a20df90e9fe3e923098d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e42af945_94c778fa",
+        "filename": ".github/workflows/gerrit-verify.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2023-10-19T17:24:27Z",
+      "side": 1,
+      "message": "This should be \u0027vars\u0027 not a specific var because of how the used action actually works.",
+      "range": {
+        "startLine": 87,
+        "startChar": 27,
+        "endLine": 87,
+        "endChar": 40
+      },
+      "revId": "fd7b8f12dc94b293c89a20df90e9fe3e923098d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
