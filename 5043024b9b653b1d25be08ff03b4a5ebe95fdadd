@@ -16,6 +16,24 @@
       "message": "IMO: one signed off is enough",
       "revId": "5043024b9b653b1d25be08ff03b4a5ebe95fdadd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c908c5fd_1bcca993",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6258
+      },
+      "writtenOn": "2023-10-19T13:00:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "586f855d_5e6aa26f",
+      "revId": "5043024b9b653b1d25be08ff03b4a5ebe95fdadd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
