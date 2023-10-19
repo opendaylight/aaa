@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a19c1e3a_9c2025c4",
+        "filename": ".github/workflows/gerrit-verify.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2023-10-19T15:05:53Z",
+      "side": 1,
+      "message": "There is no `gerrit-compose-required-maven-verify.yaml`. GitHub Action also failed because of the issue:\nhttps://github.com/opendaylight/aaa/actions/runs/6574969194 \n```\nInvalid workflow file: .github/workflows/gerrit-verify.yaml#L76\nerror parsing called workflow\n\".github/workflows/gerrit-verify.yaml\"\n-\u003e \"lfit/releng-reusable-workflows/.github/workflows/gerrit-compose-required-maven-verify.yaml@main\"\n: failed to fetch workflow: workflow was not found.\n```\n\nIs this expected?",
+      "revId": "fd7b8f12dc94b293c89a20df90e9fe3e923098d2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
