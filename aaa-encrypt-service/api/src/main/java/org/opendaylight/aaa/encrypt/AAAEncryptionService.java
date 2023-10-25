@@ -13,36 +13,39 @@ package org.opendaylight.aaa.encrypt;
  * @author - Sharon Aicler (saichler@gmail.com)
  */
 public interface AAAEncryptionService {
+    /**
+     * Encrypt <code>data</code> using a 2-way encryption mechanism.
+     *
+     * @param data plaintext data
+     * @return an encrypted representation of <code>data</code>
+     * @throws EncryptionServiceException exception thrown during encryption
+     */
+    String encrypt(String data) throws EncryptionServiceException;
 
     /**
      * Encrypt <code>data</code> using a 2-way encryption mechanism.
      *
      * @param data plaintext data
      * @return an encrypted representation of <code>data</code>
+     * @throws EncryptionServiceException exception thrown during encryption
      */
-    String encrypt(String data);
-
-    /**
-     * Encrypt <code>data</code> using a 2-way encryption mechanism.
-     *
-     * @param data plaintext data
-     * @return an encrypted representation of <code>data</code>
-     */
-    byte[] encrypt(byte[] data);
+    byte[] encrypt(byte[] data) throws EncryptionServiceException;
 
     /**
      * Decrypt <code>data</code> using a 2-way decryption mechanism.
      *
      * @param encryptedData encrypted data
      * @return plaintext <code>data</code>
+     * @throws EncryptionServiceException exception thrown during decryption
      */
-    String decrypt(String encryptedData);
+    String decrypt(String encryptedData) throws EncryptionServiceException;
 
     /**
      * Decrypt <code>data</code> using a 2-way decryption mechanism.
      *
      * @param encryptedData encrypted data
      * @return plaintext <code>data</code>
+     * @throws EncryptionServiceException exception thrown during decryption
      */
-    byte[] decrypt(byte[] encryptedData);
+    byte[] decrypt(byte[] encryptedData) throws EncryptionServiceException;
 }
