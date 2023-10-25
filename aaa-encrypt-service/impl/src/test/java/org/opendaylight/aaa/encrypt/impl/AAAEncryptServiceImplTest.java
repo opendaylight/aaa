@@ -9,9 +9,11 @@ package org.opendaylight.aaa.encrypt.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThrows;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.opendaylight.aaa.encrypt.exception.DecryptionException;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfigBuilder;
 
 /*
@@ -37,7 +39,7 @@ public class AAAEncryptServiceImplTest {
     }
 
     @Test
-    public void testShortString() {
+    public void testShortString() throws Exception {
         String before = "shortone";
         String encrypt = impl.encrypt(before);
         assertNotEquals(before, encrypt);
@@ -46,11 +48,27 @@ public class AAAEncryptServiceImplTest {
     }
 
     @Test
-    public void testLongString() {
+    public void testLongString() throws Exception {
         String before = "This is a very long string to encrypt for testing 1...2...3";
         String encrypt = impl.encrypt(before);
         assertNotEquals(before, encrypt);
         String after = impl.decrypt(encrypt);
         assertEquals(before, after);
     }
+
+    @Test
+    public void testDecryptWithIllegalArgumentException() {
+        assertThrows(DecryptionException.class, () -> impl.decrypt("admin"));
+    }
+
+    @Test
+    public void testDecryptWithIllegalBlockSizeException() {
+        assertThrows(DecryptionException.class, () -> impl.decrypt("adminadmin"));
+    }
+
+    @Test
+    public void testDecryptWithBadPaddingException() {
+        assertThrows(DecryptionException.class, () -> impl.decrypt("ValidOmse64EncodedDatQ=="));
+    }
+
 }
