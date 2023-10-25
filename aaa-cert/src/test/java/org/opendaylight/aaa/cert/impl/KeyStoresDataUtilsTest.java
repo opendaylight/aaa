@@ -64,7 +64,7 @@ public class KeyStoresDataUtilsTest {
     private final DataBroker dataBroker = mock(DataBroker.class);
 
     @Test
-    public void keyStoresDataUtilsTest() {
+    public void keyStoresDataUtilsTest() throws Exception {
         // Test vars setup
         final OdlKeystore odlKeystore = new OdlKeystoreBuilder().setAlias(ALIAS).setDname(D_NAME).setName(ODL_NAME)
                 .setStorePassword(PASSWORD).setValidity(KeyStoreConstant.DEFAULT_VALIDITY)
