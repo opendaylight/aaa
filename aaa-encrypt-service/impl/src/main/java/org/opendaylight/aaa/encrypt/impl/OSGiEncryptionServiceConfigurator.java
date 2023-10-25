@@ -36,6 +36,7 @@ import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev1
 import org.opendaylight.yangtools.concepts.Registration;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.ComponentException;
 import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.ComponentInstance;
 import org.osgi.service.component.annotations.Activate;
@@ -206,8 +207,14 @@ public final class OSGiEncryptionServiceConfigurator
         }
 
         disableInstance();
-        instance = factory.newInstance(FrameworkUtil.asDictionary(
-            AAAEncryptionServiceImpl.props(new EncryptServiceConfigImpl(newConfig))));
+        try {
+            instance = factory.newInstance(FrameworkUtil.asDictionary(
+                AAAEncryptionServiceImpl.props(new EncryptServiceConfigImpl(newConfig))));
+        } catch (ComponentException e) {
+            LOG.error("Failed to start Encryption Service", e);
+            return;
+        }
+
         current = newConfig;
         LOG.info("Encryption Service enabled");
     }
