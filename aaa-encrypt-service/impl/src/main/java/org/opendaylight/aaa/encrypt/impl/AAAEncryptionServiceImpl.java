@@ -103,7 +103,7 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
     }
 
     @Override
-    public String encrypt(final String data) {
+    public String encrypt(final String data) throws IllegalBlockSizeException, BadPaddingException {
         // We could not instantiate the encryption key, hence no encryption or
         // decryption will be done.
         if (key == null) {
@@ -118,13 +118,13 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
             }
         } catch (IllegalBlockSizeException | BadPaddingException e) {
             LOG.error("Failed to encrypt data.", e);
-            return data;
+            throw e;
         }
         return Base64.getEncoder().encodeToString(cryptobytes);
     }
 
     @Override
-    public byte[] encrypt(final byte[] data) {
+    public byte[] encrypt(final byte[] data) throws IllegalBlockSizeException, BadPaddingException {
         // We could not instantiate the encryption key, hence no encryption or
         // decryption will be done.
         if (key == null) {
@@ -137,12 +137,12 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
             }
         } catch (IllegalBlockSizeException | BadPaddingException e) {
             LOG.error("Failed to encrypt data.", e);
-            return data;
+            throw e;
         }
     }
 
     @Override
-    public String decrypt(final String encryptedData) {
+    public String decrypt(final String encryptedData) throws IllegalBlockSizeException, BadPaddingException {
         if (key == null || encryptedData == null || encryptedData.length() == 0) {
             LOG.warn("String {} was not decrypted.", encryptedData);
             return encryptedData;
@@ -154,13 +154,13 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
             clearbytes = decryptCipher.doFinal(cryptobytes);
         } catch (IllegalBlockSizeException | BadPaddingException e) {
             LOG.error("Failed to decrypt encoded data", e);
-            return encryptedData;
+            throw e;
         }
         return new String(clearbytes, Charset.defaultCharset());
     }
 
     @Override
-    public byte[] decrypt(final byte[] encryptedData) {
+    public byte[] decrypt(final byte[] encryptedData) throws IllegalBlockSizeException, BadPaddingException {
         if (encryptedData == null) {
             LOG.warn("encryptedData is null.");
             return encryptedData;
@@ -169,7 +169,7 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
             return decryptCipher.doFinal(encryptedData);
         } catch (IllegalBlockSizeException | BadPaddingException e) {
             LOG.error("Failed to decrypt encoded data", e);
+            throw e;
         }
-        return encryptedData;
     }
 }

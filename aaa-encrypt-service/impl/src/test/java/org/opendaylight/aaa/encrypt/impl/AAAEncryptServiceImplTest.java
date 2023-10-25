@@ -37,7 +37,7 @@ public class AAAEncryptServiceImplTest {
     }
 
     @Test
-    public void testShortString() {
+    public void testShortString() throws Exception {
         String before = "shortone";
         String encrypt = impl.encrypt(before);
         assertNotEquals(before, encrypt);
@@ -46,7 +46,7 @@ public class AAAEncryptServiceImplTest {
     }
 
     @Test
-    public void testLongString() {
+    public void testLongString() throws Exception {
         String before = "This is a very long string to encrypt for testing 1...2...3";
         String encrypt = impl.encrypt(before);
         assertNotEquals(before, encrypt);
