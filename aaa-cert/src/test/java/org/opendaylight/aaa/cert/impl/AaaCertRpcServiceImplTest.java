@@ -16,6 +16,7 @@ import static org.opendaylight.aaa.cert.impl.TestUtils.mockDataBroker;
 
 import com.google.common.util.concurrent.Futures;
 import java.io.File;
+import java.nio.charset.Charset;
 import java.security.Security;
 import java.util.List;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -99,7 +100,7 @@ public class AaaCertRpcServiceImplTest {
                 .thenReturn(unsignedTrustKeyStore.getKeystoreFile());
         when(aaaEncryptionServiceInit.decrypt(signedOdlKeystore.getKeystoreFile()))
                 .thenReturn(signedOdlKeystore.getKeystoreFile());
-        when(aaaEncryptionServiceInit.decrypt(any(String.class))).thenReturn(PASSWORD);
+        when(aaaEncryptionServiceInit.decrypt(any())).thenReturn(PASSWORD.getBytes(Charset.defaultCharset()));
         aaaEncryptionService = aaaEncryptionServiceInit;
 
         // Create class

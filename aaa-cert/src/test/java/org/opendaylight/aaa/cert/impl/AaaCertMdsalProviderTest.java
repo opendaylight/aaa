@@ -9,22 +9,20 @@ package org.opendaylight.aaa.cert.impl;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.opendaylight.aaa.cert.impl.TestUtils.mockDataBroker;
 
 import java.io.File;
+import java.nio.charset.Charset;
 import java.security.KeyStore;
 import java.security.Security;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.cipher.suite.CipherSuites;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.cipher.suite.CipherSuitesBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslData;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslDataBuilder;
@@ -68,11 +66,9 @@ public class AaaCertMdsalProviderTest {
         final TrustKeystore unsignedTrustKeyStore = keyStoresDataUtils.createTrustKeystore(TRUST_NAME, PASSWORD,
                 odlKeyTool);
 
-        final CipherSuites cipherSuite = new CipherSuitesBuilder().setSuiteName(CIPHER_SUITE_NAME).build();
-
-        final List<CipherSuites> cipherSuites = new ArrayList<>(Arrays.asList(cipherSuite));
-
-        signedSslData = new SslDataBuilder().setCipherSuites(cipherSuites).setOdlKeystore(signedOdlKeystore)
+        signedSslData = new SslDataBuilder()
+            .setCipherSuites(List.of(new CipherSuitesBuilder().setSuiteName(CIPHER_SUITE_NAME).build()))
+            .setOdlKeystore(signedOdlKeystore)
                 .setTrustKeystore(signedTrustKeyStore).setTlsProtocols(PROTOCOL).setBundleName(BUNDLE_NAME).build();
 
         final OdlKeystore unsignedOdlKeystore = new OdlKeystoreBuilder().setAlias(ALIAS).setDname(D_NAME)
@@ -88,7 +84,8 @@ public class AaaCertMdsalProviderTest {
                 .thenReturn(unsignedTrustKeyStore.getKeystoreFile());
         when(aaaEncryptionServiceInit.decrypt(signedOdlKeystore.getKeystoreFile()))
                 .thenReturn(signedOdlKeystore.getKeystoreFile());
-        when(aaaEncryptionServiceInit.decrypt(isA(String.class))).thenReturn(PASSWORD);
+        when(aaaEncryptionServiceInit.decrypt(new byte[] { -91, -85, 44, 90, -118, -35 }))
+            .thenReturn(PASSWORD.getBytes(Charset.defaultCharset()));
         aaaEncryptionService = aaaEncryptionServiceInit;
 
         // Create class
