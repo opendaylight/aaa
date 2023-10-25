@@ -9,14 +9,15 @@ package org.opendaylight.aaa.cert.impl;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.opendaylight.aaa.cert.impl.TestUtils.mockDataBroker;
 
 import com.google.common.util.concurrent.Futures;
 import java.io.File;
+import java.nio.charset.Charset;
 import java.security.Security;
+import java.util.Base64;
 import java.util.List;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.BeforeClass;
@@ -99,7 +100,10 @@ public class AaaCertRpcServiceImplTest {
                 .thenReturn(unsignedTrustKeyStore.getKeystoreFile());
         when(aaaEncryptionServiceInit.decrypt(signedOdlKeystore.getKeystoreFile()))
                 .thenReturn(signedOdlKeystore.getKeystoreFile());
-        when(aaaEncryptionServiceInit.decrypt(any(String.class))).thenReturn(PASSWORD);
+        when(aaaEncryptionServiceInit.decrypt(Base64.getDecoder().decode(PASSWORD)))
+            .thenReturn(PASSWORD.getBytes(Charset.defaultCharset()));
+        when(aaaEncryptionServiceInit.encrypt(PASSWORD.getBytes(Charset.defaultCharset())))
+            .thenReturn(PASSWORD.getBytes(Charset.defaultCharset()));
         aaaEncryptionService = aaaEncryptionServiceInit;
 
         // Create class
