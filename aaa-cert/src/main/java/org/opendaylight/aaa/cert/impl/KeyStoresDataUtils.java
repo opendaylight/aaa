@@ -9,6 +9,8 @@ package org.opendaylight.aaa.cert.impl;
 
 import java.util.List;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
+import org.opendaylight.aaa.encrypt.exception.DecryptionException;
+import org.opendaylight.aaa.encrypt.exception.EncryptionException;
 import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.KeyStores;
@@ -62,9 +64,15 @@ public class KeyStoresDataUtils {
     public SslData addSslData(final DataBroker dataBroker, final String bundleName, final OdlKeystore odlKeystore,
             final TrustKeystore trustKeystore, final List<CipherSuites> cipherSuites, final String tlsProtocols) {
         final SslDataKey sslDataKey = new SslDataKey(bundleName);
-        final SslData sslData = new SslDataBuilder().withKey(sslDataKey).setOdlKeystore(encryptOdlKeyStore(odlKeystore))
-                .setTrustKeystore(encryptTrustKeystore(trustKeystore)).setCipherSuites(cipherSuites)
-                .setTlsProtocols(tlsProtocols).build();
+        final SslData sslData;
+        try {
+            sslData = new SslDataBuilder().withKey(sslDataKey).setOdlKeystore(encryptOdlKeyStore(odlKeystore))
+                    .setTrustKeystore(encryptTrustKeystore(trustKeystore)).setCipherSuites(cipherSuites)
+                    .setTlsProtocols(tlsProtocols).build();
+        } catch (EncryptionException e) {
+            LOG.error("Encryption of TrustKeystore for SslData failed.", e);
+            return null;
+        }
 
         if (MdsalUtils.put(dataBroker, LogicalDatastoreType.CONFIGURATION, getSslDataIid(bundleName), sslData)) {
             return new SslDataBuilder().withKey(sslDataKey).setOdlKeystore(odlKeystore).setTrustKeystore(trustKeystore)
@@ -124,7 +132,7 @@ public class KeyStoresDataUtils {
                 .build();
     }
 
-    private OdlKeystore decryptOdlKeyStore(final OdlKeystore odlKeystore) {
+    private OdlKeystore decryptOdlKeyStore(final OdlKeystore odlKeystore) throws DecryptionException {
         if (odlKeystore == null) {
             return null;
         }
@@ -134,7 +142,7 @@ public class KeyStoresDataUtils {
         return odlKeystoreBuilder.build();
     }
 
-    private SslData decryptSslData(final SslData sslData) {
+    private SslData decryptSslData(final SslData sslData) throws DecryptionException {
         if (sslData == null) {
             return null;
         }
@@ -144,7 +152,7 @@ public class KeyStoresDataUtils {
         return sslDataBuilder.build();
     }
 
-    private TrustKeystore decryptTrustKeystore(final TrustKeystore trustKeyStore) {
+    private TrustKeystore decryptTrustKeystore(final TrustKeystore trustKeyStore) throws DecryptionException {
         if (trustKeyStore == null) {
             return null;
         }
@@ -154,21 +162,21 @@ public class KeyStoresDataUtils {
         return trustKeyStoreBuilder.build();
     }
 
-    private OdlKeystore encryptOdlKeyStore(final OdlKeystore odlKeystore) {
+    private OdlKeystore encryptOdlKeyStore(final OdlKeystore odlKeystore) throws EncryptionException {
         final OdlKeystoreBuilder odlKeystoreBuilder = new OdlKeystoreBuilder(odlKeystore);
         odlKeystoreBuilder.setKeystoreFile(encryService.encrypt(odlKeystore.getKeystoreFile()));
         odlKeystoreBuilder.setStorePassword(encryService.encrypt(odlKeystore.getStorePassword()));
         return odlKeystoreBuilder.build();
     }
 
-    private SslData encryptSslData(final SslData sslData) {
+    private SslData encryptSslData(final SslData sslData) throws EncryptionException {
         final SslDataBuilder sslDataBuilder = new SslDataBuilder(sslData)
                 .setOdlKeystore(encryptOdlKeyStore(sslData.getOdlKeystore()))
                 .setTrustKeystore(encryptTrustKeystore(sslData.getTrustKeystore()));
         return sslDataBuilder.build();
     }
 
-    private TrustKeystore encryptTrustKeystore(final TrustKeystore trustKeyStore) {
+    private TrustKeystore encryptTrustKeystore(final TrustKeystore trustKeyStore) throws EncryptionException {
         final TrustKeystoreBuilder trustKeyStoreBuilder = new TrustKeystoreBuilder(trustKeyStore);
         trustKeyStoreBuilder.setKeystoreFile(encryService.encrypt(trustKeyStore.getKeystoreFile()));
         trustKeyStoreBuilder.setStorePassword(encryService.encrypt(trustKeyStore.getStorePassword()));
@@ -177,7 +185,12 @@ public class KeyStoresDataUtils {
 
     public SslData getSslData(final DataBroker dataBroker, final String bundleName) {
         final InstanceIdentifier<SslData> sslDataIid = getSslDataIid(bundleName);
-        return decryptSslData(MdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION, sslDataIid));
+        try {
+            return decryptSslData(MdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION, sslDataIid));
+        } catch (DecryptionException e) {
+            LOG.error("Decryption of KeyStore for SslData failed.", e);
+            return null;
+        }
     }
 
     public boolean removeSslData(final DataBroker dataBroker, final String bundleName) {
@@ -187,7 +200,14 @@ public class KeyStoresDataUtils {
 
     public boolean updateSslData(final DataBroker dataBroker, final SslData sslData) {
         final InstanceIdentifier<SslData> sslDataIid = getSslDataIid(sslData.getBundleName());
-        return MdsalUtils.merge(dataBroker, LogicalDatastoreType.CONFIGURATION, sslDataIid, encryptSslData(sslData));
+        final SslData encryptedSslData;
+        try {
+            encryptedSslData = encryptSslData(sslData);
+        } catch (EncryptionException e) {
+            LOG.error("Encryption of KeyStore for SslData failed.", e);
+            return false;
+        }
+        return MdsalUtils.merge(dataBroker, LogicalDatastoreType.CONFIGURATION, sslDataIid, encryptedSslData);
     }
 
     public boolean updateSslDataCipherSuites(final DataBroker dataBroker, final SslData baseSslData,
