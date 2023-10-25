@@ -9,11 +9,13 @@ package org.opendaylight.aaa.encrypt.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThrows;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import org.junit.Before;
 import org.junit.Test;
+import org.opendaylight.aaa.encrypt.DecryptionException;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfigBuilder;
 
 /*
@@ -39,7 +41,7 @@ public class AAAEncryptServiceImplTest {
     }
 
     @Test
-    public void testShortString() {
+    public void testShortString() throws Exception {
         String before = "shortone";
         String encrypt = impl.encrypt(before);
         assertNotEquals(before, encrypt);
@@ -48,7 +50,7 @@ public class AAAEncryptServiceImplTest {
     }
 
     @Test
-    public void testLongString() {
+    public void testLongString() throws Exception {
         String before = "This is a very long string to encrypt for testing 1...2...3";
         String encrypt = impl.encrypt(before);
         assertNotEquals(before, encrypt);
@@ -57,7 +59,7 @@ public class AAAEncryptServiceImplTest {
     }
 
     @Test
-    public void testNetconfEncodedPasswordWithoutPadding() {
+    public void testNetconfEncodedPasswordWithoutPadding() throws Exception {
         changePadding();
         String password = "bmV0Y29uZgo=";
         String unencrypted = impl.decrypt(password);
@@ -65,14 +67,14 @@ public class AAAEncryptServiceImplTest {
     }
 
     @Test
-    public void testNetconfEncodedPasswordWithPadding() {
+    public void testNetconfEncodedPasswordWithPadding() throws Exception {
         String password = "bmV0Y29uZgo=";
         String unencrypted = impl.decrypt(password);
         assertEquals(password, unencrypted);
     }
 
     @Test
-    public void testNetconfPasswordWithoutPadding() {
+    public void testNetconfPasswordWithoutPadding() throws Exception {
         changePadding();
         String password = "netconf";
         String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes(StandardCharsets.UTF_8));
@@ -81,7 +83,7 @@ public class AAAEncryptServiceImplTest {
     }
 
     @Test
-    public void testNetconfPasswordWithPadding() {
+    public void testNetconfPasswordWithPadding() throws Exception {
         String password = "netconf";
         String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes(StandardCharsets.UTF_8));
         String unencrypted = impl.decrypt(encodedPassword);
@@ -89,7 +91,7 @@ public class AAAEncryptServiceImplTest {
     }
 
     @Test
-    public void testAdminEncodedPasswordWithoutPadding() {
+    public void testAdminEncodedPasswordWithoutPadding() throws Exception {
         changePadding();
         String password = "YWRtaW4K";
         String unencrypted = impl.decrypt(password);
@@ -97,14 +99,14 @@ public class AAAEncryptServiceImplTest {
     }
 
     @Test
-    public void testAdminEncodedPasswordWithPadding() {
+    public void testAdminEncodedPasswordWithPadding() throws Exception {
         String password = "YWRtaW4K";
         String unencrypted = impl.decrypt(password);
         assertEquals(password, unencrypted);
     }
 
     @Test
-    public void testAdminPasswordWithoutPadding() {
+    public void testAdminPasswordWithoutPadding() throws Exception {
         changePadding();
         String password = "admin";
         String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes(StandardCharsets.UTF_8));
@@ -113,7 +115,7 @@ public class AAAEncryptServiceImplTest {
     }
 
     @Test
-    public void testAdminPasswordWithPadding() {
+    public void testAdminPasswordWithPadding() throws Exception {
         String password = "admin";
         String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes(StandardCharsets.UTF_8));
         String unencrypted = impl.decrypt(encodedPassword);
@@ -132,5 +134,23 @@ public class AAAEncryptServiceImplTest {
                 .setEncryptType("AES")
                 .setPasswordLength(12)
                 .build())));
+    }
+
+    @Test
+    public void testDecryptWithIllegalArgumentException() {
+        final var ex = assertThrows(DecryptionException.class, () -> impl.decrypt("admin"));
+        assertEquals("", ex.getMessage());
+    }
+
+    @Test
+    public void testDecryptWithIllegalBlockSizeException() {
+        final var ex = assertThrows(DecryptionException.class, () -> impl.decrypt("adminadmin"));
+        assertEquals("", ex.getMessage());
+    }
+
+    @Test
+    public void testDecryptWithBadPaddingException() {
+        final var ex = assertThrows(DecryptionException.class, () -> impl.decrypt("ValidOmse64EncodedDatQ=="));
+        assertEquals("", ex.getMessage());
     }
 }
