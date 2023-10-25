@@ -7,42 +7,32 @@
  */
 package org.opendaylight.aaa.encrypt;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+
 /**
  * A generic encryption/decryption service for encrypting various data in ODL.
  *
  * @author - Sharon Aicler (saichler@gmail.com)
  */
 public interface AAAEncryptionService {
-
     /**
      * Encrypt <code>data</code> using a 2-way encryption mechanism.
      *
      * @param data plaintext data
      * @return an encrypted representation of <code>data</code>
+     * @throws BadPaddingException when ...
+     * @throws IllegalBlockSizeException when ...
      */
-    String encrypt(String data);
-
-    /**
-     * Encrypt <code>data</code> using a 2-way encryption mechanism.
-     *
-     * @param data plaintext data
-     * @return an encrypted representation of <code>data</code>
-     */
-    byte[] encrypt(byte[] data);
+    byte[] encrypt(byte[] data) throws BadPaddingException, IllegalBlockSizeException;
 
     /**
      * Decrypt <code>data</code> using a 2-way decryption mechanism.
      *
      * @param encryptedData encrypted data
      * @return plaintext <code>data</code>
+     * @throws BadPaddingException when ...
+     * @throws IllegalBlockSizeException when ...
      */
-    String decrypt(String encryptedData);
-
-    /**
-     * Decrypt <code>data</code> using a 2-way decryption mechanism.
-     *
-     * @param encryptedData encrypted data
-     * @return plaintext <code>data</code>
-     */
-    byte[] decrypt(byte[] encryptedData);
+    byte[] decrypt(byte[] encryptedData) throws BadPaddingException, IllegalBlockSizeException;
 }

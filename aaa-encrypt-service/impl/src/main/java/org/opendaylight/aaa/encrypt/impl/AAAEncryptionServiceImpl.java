@@ -10,13 +10,11 @@ package org.opendaylight.aaa.encrypt.impl;
 import static com.google.common.base.Verify.verifyNotNull;
 import static java.util.Objects.requireNonNull;
 
-import java.nio.charset.Charset;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
-import java.util.Base64;
 import java.util.Map;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -104,73 +102,24 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
     }
 
     @Override
-    public String encrypt(final String data) {
+    public byte[] encrypt(final byte[] data) throws BadPaddingException, IllegalBlockSizeException {
         // We could not instantiate the encryption key, hence no encryption or
         // decryption will be done.
         if (key == null) {
             LOG.warn("Encryption Key is NULL, will not encrypt data.");
             return data;
         }
-
-        final byte[] cryptobytes;
-        try {
-            synchronized (encryptCipher) {
-                cryptobytes = encryptCipher.doFinal(data.getBytes(Charset.defaultCharset()));
-            }
-        } catch (IllegalBlockSizeException | BadPaddingException e) {
-            LOG.error("Failed to encrypt data.", e);
-            return data;
-        }
-        return Base64.getEncoder().encodeToString(cryptobytes);
-    }
-
-    @Override
-    public byte[] encrypt(final byte[] data) {
-        // We could not instantiate the encryption key, hence no encryption or
-        // decryption will be done.
-        if (key == null) {
-            LOG.warn("Encryption Key is NULL, will not encrypt data.");
-            return data;
-        }
-        try {
-            synchronized (encryptCipher) {
-                return encryptCipher.doFinal(data);
-            }
-        } catch (IllegalBlockSizeException | BadPaddingException e) {
-            LOG.error("Failed to encrypt data.", e);
-            return data;
+        synchronized (encryptCipher) {
+            return encryptCipher.doFinal(data);
         }
     }
 
     @Override
-    public String decrypt(final String encryptedData) {
-        if (key == null || encryptedData == null || encryptedData.length() == 0) {
-            LOG.warn("String {} was not decrypted.", encryptedData);
-            return encryptedData;
-        }
-
-        final byte[] cryptobytes = Base64.getDecoder().decode(encryptedData);
-        final byte[] clearbytes;
-        try {
-            clearbytes = decryptCipher.doFinal(cryptobytes);
-        } catch (IllegalBlockSizeException | BadPaddingException e) {
-            LOG.error("Failed to decrypt encoded data", e);
-            return encryptedData;
-        }
-        return new String(clearbytes, Charset.defaultCharset());
-    }
-
-    @Override
-    public byte[] decrypt(final byte[] encryptedData) {
+    public byte[] decrypt(final byte[] encryptedData) throws BadPaddingException, IllegalBlockSizeException {
         if (encryptedData == null) {
             LOG.warn("encryptedData is null.");
             return encryptedData;
         }
-        try {
-            return decryptCipher.doFinal(encryptedData);
-        } catch (IllegalBlockSizeException | BadPaddingException e) {
-            LOG.error("Failed to decrypt encoded data", e);
-        }
-        return encryptedData;
+        return decryptCipher.doFinal(encryptedData);
     }
 }
