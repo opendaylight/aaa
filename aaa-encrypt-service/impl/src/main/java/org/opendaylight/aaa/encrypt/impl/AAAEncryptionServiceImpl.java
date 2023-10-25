@@ -10,18 +10,11 @@ package org.opendaylight.aaa.encrypt.impl;
 import static com.google.common.base.Verify.verifyNotNull;
 import static java.util.Objects.requireNonNull;
 
-import java.nio.charset.Charset;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
-import java.util.Base64;
+import java.security.GeneralSecurityException;
 import java.util.Map;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
@@ -54,37 +47,30 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
 
     public AAAEncryptionServiceImpl(final EncryptServiceConfig configuration) {
         final byte[] encryptionKeySalt = configuration.requireEncryptSalt();
-        IvParameterSpec tempIvSpec = null;
-        SecretKey tempKey = null;
+        final IvParameterSpec ivSpec;
         try {
-            final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(configuration.getEncryptMethod());
-            final KeySpec spec = new PBEKeySpec(configuration.requireEncryptKey().toCharArray(), encryptionKeySalt,
+            final var keyFactory = SecretKeyFactory.getInstance(configuration.getEncryptMethod());
+            final var spec = new PBEKeySpec(configuration.requireEncryptKey().toCharArray(), encryptionKeySalt,
                     configuration.getEncryptIterationCount(), configuration.getEncryptKeyLength());
-            tempKey = new SecretKeySpec(keyFactory.generateSecret(spec).getEncoded(), configuration.getEncryptType());
-            tempIvSpec = new IvParameterSpec(encryptionKeySalt);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            LOG.error("Failed to initialize secret key", e);
+            key = new SecretKeySpec(keyFactory.generateSecret(spec).getEncoded(), configuration.getEncryptType());
+            ivSpec = new IvParameterSpec(encryptionKeySalt);
+        } catch (GeneralSecurityException e) {
+            throw new IllegalStateException("Failed to initialize secret key", e);
         }
-        key = tempKey;
-        final var ivSpec = tempIvSpec;
-        Cipher cipher = null;
         try {
-            cipher = Cipher.getInstance(configuration.getCipherTransforms());
+            final var cipher = Cipher.getInstance(configuration.getCipherTransforms());
             cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException
-                | InvalidKeyException e) {
-            LOG.error("Failed to create encrypt cipher.", e);
+            encryptCipher = cipher;
+        } catch (GeneralSecurityException e) {
+            throw new IllegalStateException("Failed to create encrypt cipher.", e);
         }
-        encryptCipher = cipher;
-        cipher = null;
         try {
-            cipher = Cipher.getInstance(configuration.getCipherTransforms());
+            final var cipher = Cipher.getInstance(configuration.getCipherTransforms());
             cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException
-                | InvalidKeyException e) {
-            LOG.error("Failed to create decrypt cipher.", e);
+            decryptCipher = cipher;
+        } catch (GeneralSecurityException e) {
+            throw new IllegalStateException("Failed to create decrypt cipher.", e);
         }
-        decryptCipher = cipher;
         LOG.info("AAAEncryptionService activated");
     }
 
@@ -104,73 +90,14 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
     }
 
     @Override
-    public String encrypt(final String data) {
-        // We could not instantiate the encryption key, hence no encryption or
-        // decryption will be done.
-        if (key == null) {
-            LOG.warn("Encryption Key is NULL, will not encrypt data.");
-            return data;
-        }
-
-        final byte[] cryptobytes;
-        try {
-            synchronized (encryptCipher) {
-                cryptobytes = encryptCipher.doFinal(data.getBytes(Charset.defaultCharset()));
-            }
-        } catch (IllegalBlockSizeException | BadPaddingException e) {
-            LOG.error("Failed to encrypt data.", e);
-            return data;
-        }
-        return Base64.getEncoder().encodeToString(cryptobytes);
-    }
-
-    @Override
-    public byte[] encrypt(final byte[] data) {
-        // We could not instantiate the encryption key, hence no encryption or
-        // decryption will be done.
-        if (key == null) {
-            LOG.warn("Encryption Key is NULL, will not encrypt data.");
-            return data;
-        }
-        try {
-            synchronized (encryptCipher) {
-                return encryptCipher.doFinal(data);
-            }
-        } catch (IllegalBlockSizeException | BadPaddingException e) {
-            LOG.error("Failed to encrypt data.", e);
-            return data;
+    public byte[] encrypt(final byte[] data) throws BadPaddingException, IllegalBlockSizeException {
+        synchronized (encryptCipher) {
+            return encryptCipher.doFinal(requireNonNull(data));
         }
     }
 
     @Override
-    public String decrypt(final String encryptedData) {
-        if (key == null || encryptedData == null || encryptedData.length() == 0) {
-            LOG.warn("String {} was not decrypted.", encryptedData);
-            return encryptedData;
-        }
-
-        final byte[] cryptobytes = Base64.getDecoder().decode(encryptedData);
-        final byte[] clearbytes;
-        try {
-            clearbytes = decryptCipher.doFinal(cryptobytes);
-        } catch (IllegalBlockSizeException | BadPaddingException e) {
-            LOG.error("Failed to decrypt encoded data", e);
-            return encryptedData;
-        }
-        return new String(clearbytes, Charset.defaultCharset());
-    }
-
-    @Override
-    public byte[] decrypt(final byte[] encryptedData) {
-        if (encryptedData == null) {
-            LOG.warn("encryptedData is null.");
-            return encryptedData;
-        }
-        try {
-            return decryptCipher.doFinal(encryptedData);
-        } catch (IllegalBlockSizeException | BadPaddingException e) {
-            LOG.error("Failed to decrypt encoded data", e);
-        }
-        return encryptedData;
+    public byte[] decrypt(final byte[] encryptedData) throws BadPaddingException, IllegalBlockSizeException {
+        return decryptCipher.doFinal(requireNonNull(encryptedData));
     }
 }
