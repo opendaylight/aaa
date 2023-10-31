@@ -22,6 +22,30 @@
       },
       "revId": "727733ede59a1c78e016accfa7ec4dda5d6564c2",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "335fa499_dbf3abda",
+        "filename": "aaa-encrypt-service/api/src/main/java/org/opendaylight/aaa/encrypt/AAAEncryptionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2023-10-31T11:38:41Z",
+      "side": 1,
+      "message": "Fixed.\nAAAEncryptionService primarily handles encryption exceptions through configuration. The cipher configuration automatically handles padding or data block size adjustments. As a result, I couldn\u0027t prepare a test for encryption which will throw the expected exception.\n\nHowever, for decryption, it\u0027s possible to rise these exceptions using the provided tests:\nhttps://git.opendaylight.org/gerrit/c/aaa/+/108651/2/aaa-encrypt-service/impl/src/test/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptServiceImplTest.java\n\nI\u0027ve added exceptions for both encryption and decryption, even though I haven\u0027t found a way to raise an exception for encryption. This option still exists by changing the default config.",
+      "parentUuid": "903abffd_d012e922",
+      "range": {
+        "startLine": 10,
+        "startChar": 7,
+        "endLine": 10,
+        "endChar": 19
+      },
+      "revId": "727733ede59a1c78e016accfa7ec4dda5d6564c2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
