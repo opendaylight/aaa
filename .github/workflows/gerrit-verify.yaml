@@ -84,6 +84,14 @@ jobs:
       JDK_VERSION: "17"
       MVN_VERSION: "3.8.3"
       MVN_PROFILES: "docker"
+      MVN_PHASES: "clean, install"
+      # yamllint disable rule:line-length
+      MVN_OPTS: >-
+        -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+        -Dmaven.repo.local=/tmp/r -Dorg.ops4j.pax.url.mvn.localRepository=/tmp/r
+        -DaltDeploymentRepository=staging::default::file:"${GITHUB_WORKSPACE}"/m2repo
+        -Dkaraf.keep.unpack
+      # yamllint enable rule:line-length
       ENV_VARS: ${{ toJSON(vars) }}
 
   vote:
