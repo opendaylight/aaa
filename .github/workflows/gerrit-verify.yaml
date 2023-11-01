@@ -82,7 +82,7 @@ jobs:
       GERRIT_PROJECT: ${{ inputs.GERRIT_PROJECT }}
       GERRIT_REFSPEC: ${{ inputs.GERRIT_REFSPEC }}
       JDK_VERSION: "17"
-      MVN_VERSION: "3.8.2"
+      MVN_VERSION: "3.8.3"
       MVN_PROFILES: "docker"
       ENV_VARS: ${{ toJSON(vars) }}
 
