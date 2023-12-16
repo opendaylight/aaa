@@ -1,0 +1,33 @@
+name: AAA-CSIT-1-Node-authn-all
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  composite-csit-1-node:
+    runs-on: ubuntu-latest
+    # Run the job on an Ubuntu latest runner
+
+    services:
+      opendaylight:
+        image: ${{ vars.DOCKER_REPOSITORY }}/${{ vars.ODL_IMAGE_NAME_CENTOS }}
+        env:
+          FEATURES: odl-restconf,odl-daexim-all,odl-netconf-topology,odl-jolokia
+        ports:
+          - 8181:8181
+        options: --name odl-container
+        # Set up a service container for OpenDaylight
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        # Checkout the code repository
+
+      - name: Run Test
+        uses: askb/releng-docker/.github/action/composite-csit-1-node@main
+        with:
+          project_name: aaa
+          DOCKER_REPOSITORY: ${{ vars.DOCKER_REPOSITORY }}
+          ROBOT_IMAGE: ${{ vars.ROBOT_IMAGE }}
