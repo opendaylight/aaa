@@ -10,13 +10,11 @@ package org.opendaylight.aaa.encrypt.impl;
 import static java.util.Objects.requireNonNull;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.Iterables;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.MoreExecutors;
 import java.security.SecureRandom;
 import java.util.Base64;
-import java.util.Collection;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -24,10 +22,9 @@ import org.checkerframework.checker.lock.qual.GuardedBy;
 import org.checkerframework.checker.lock.qual.Holding;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.opendaylight.mdsal.binding.api.ClusteredDataTreeChangeListener;
 import org.opendaylight.mdsal.binding.api.DataBroker;
+import org.opendaylight.mdsal.binding.api.DataListener;
 import org.opendaylight.mdsal.binding.api.DataTreeIdentifier;
-import org.opendaylight.mdsal.binding.api.DataTreeModification;
 import org.opendaylight.mdsal.common.api.CommitInfo;
 import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.odlparent.logging.markers.Markers;
@@ -52,12 +49,11 @@ import org.slf4j.LoggerFactory;
  * <p>
  * We primarily listen to the configuration being present. Whenever the salt is missing or the password does not match
  * the required length, we generate them and persist them. This mode of operation means we potentially have a loop, i.e.
- * our touching the datastore will trigger again {@link #onDataTreeChanged(Collection)}, which will re-evaluate the
- * conditions and we try again.
+ * our touching the datastore will trigger again {@link #dataChangedTo(AaaEncryptServiceConfig)}, which will re-evaluate
+ * the conditions and we try again.
  */
 @Component(service = { })
-public final class OSGiEncryptionServiceConfigurator
-        implements ClusteredDataTreeChangeListener<AaaEncryptServiceConfig> {
+public final class OSGiEncryptionServiceConfigurator implements DataListener<AaaEncryptServiceConfig> {
     private static final Logger LOG = LoggerFactory.getLogger(OSGiEncryptionServiceConfigurator.class);
     private static final SecureRandom RANDOM = new SecureRandom();
     private static final @NonNull AaaEncryptServiceConfig DEFAULT_CONFIG = new AaaEncryptServiceConfigBuilder()
@@ -86,7 +82,7 @@ public final class OSGiEncryptionServiceConfigurator
             final ComponentFactory<AAAEncryptionServiceImpl> factory) {
         this.dataBroker = requireNonNull(dataBroker);
         this.factory = requireNonNull(factory);
-        reg = dataBroker.registerDataTreeChangeListener(
+        reg = dataBroker.registerDataListener(
             DataTreeIdentifier.create(LogicalDatastoreType.CONFIGURATION,
                 InstanceIdentifier.create(AaaEncryptServiceConfig.class)),
             this);
@@ -102,21 +98,15 @@ public final class OSGiEncryptionServiceConfigurator
     }
 
     @Override
-    public void onDataTreeChanged(final Collection<DataTreeModification<AaaEncryptServiceConfig>> changes) {
+    public void dataChangedTo(final AaaEncryptServiceConfig data) {
         // Acquire the last reported configuration and check if it needs to have salt/password generated.
-        final var dsConfig = Iterables.getLast(changes).getRootNode().getDataAfter();
-        if (dsConfig == null || needKey(dsConfig) || needSalt(dsConfig)) {
+        if (data == null || needKey(data) || needSalt(data)) {
             // Generate salt/key as needed and persist it -- causing us to be re-invoked later.
-            updateDatastore(dsConfig);
+            updateDatastore(data);
         } else {
             // Configuration is self-consistent, proceed to activate an instance based on it
-            updateInstance(dsConfig);
+            updateInstance(data);
         }
-    }
-
-    @Override
-    public void onInitialData() {
-        updateDatastore(null);
     }
 
     @VisibleForTesting
