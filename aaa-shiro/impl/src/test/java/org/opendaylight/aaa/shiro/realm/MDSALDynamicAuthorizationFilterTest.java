@@ -86,7 +86,7 @@ public class MDSALDynamicAuthorizationFilterTest {
             .http.authorization.policies.Policies.class);
         when(innerPolicies.getResource()).thenReturn(resource);
         when(innerPolicies.getDescription()).thenReturn(description);
-        when(innerPolicies.getPermissions()).thenReturn(List.of(permissions));
+        when(innerPolicies.nonnullPermissions()).thenReturn(List.of(permissions));
         final Policies policies = mock(Policies.class);
         when(policies.getPolicies()).thenReturn(List.of(innerPolicies));
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
@@ -216,7 +216,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(innerPolicies.getResource()).thenReturn(resource);
         when(innerPolicies.getIndex()).thenReturn(Uint32.valueOf(5));
         when(innerPolicies.getDescription()).thenReturn(description);
-        when(innerPolicies.getPermissions()).thenReturn(List.of(permissions));
+        when(innerPolicies.nonnullPermissions()).thenReturn(List.of(permissions));
         final var innerPolicies2 = mock(org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214
             .http.authorization.policies.Policies.class);
         when(innerPolicies2.getResource()).thenReturn(resource2);
@@ -224,7 +224,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         final Permissions permissions2 = mock(Permissions.class);
         when(permissions2.getRole()).thenReturn("dog");
         when(permissions2.getActions()).thenReturn(actionsList);
-        when(innerPolicies2.getPermissions()).thenReturn(List.of(permissions2));
+        when(innerPolicies2.nonnullPermissions()).thenReturn(List.of(permissions2));
         when(innerPolicies2.getDescription()).thenReturn("Specialized Rule");
         final Policies policies = mock(Policies.class);
         when(policies.getPolicies()).thenReturn(List.of(innerPolicies, innerPolicies2));
@@ -294,7 +294,7 @@ public class MDSALDynamicAuthorizationFilterTest {
             .http.authorization.policies.Policies.class);
         when(innerPolicies.getResource()).thenReturn(resource);
         when(innerPolicies.getDescription()).thenReturn(description);
-        when(innerPolicies.getPermissions()).thenReturn(List.of(permissions, permissions2));
+        when(innerPolicies.nonnullPermissions()).thenReturn(List.of(permissions, permissions2));
         final Policies policies = mock(Policies.class);
         when(policies.getPolicies()).thenReturn(List.of(innerPolicies));
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);

@@ -19,7 +19,6 @@ import static org.mockito.Mockito.doReturn;
 
 import java.util.Base64;
 import java.util.Dictionary;
-import java.util.List;
 import java.util.Optional;
 import org.eclipse.jdt.annotation.NonNull;
 import org.junit.Before;
@@ -30,16 +29,14 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.opendaylight.mdsal.binding.api.DataBroker;
-import org.opendaylight.mdsal.binding.api.DataObjectModification;
-import org.opendaylight.mdsal.binding.api.DataTreeChangeListener;
+import org.opendaylight.mdsal.binding.api.DataListener;
 import org.opendaylight.mdsal.binding.api.DataTreeIdentifier;
-import org.opendaylight.mdsal.binding.api.DataTreeModification;
 import org.opendaylight.mdsal.binding.api.ReadWriteTransaction;
 import org.opendaylight.mdsal.common.api.CommitInfo;
 import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.EncryptServiceConfig;
-import org.opendaylight.yangtools.concepts.ListenerRegistration;
+import org.opendaylight.yangtools.concepts.Registration;
 import org.opendaylight.yangtools.util.concurrent.FluentFutures;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.osgi.service.component.ComponentFactory;
@@ -57,17 +54,13 @@ public class OSGiEncryptionServiceConfiguratorTest {
     @Mock
     private ComponentInstance<AAAEncryptionServiceImpl> instance;
     @Mock
-    private ListenerRegistration<?> registration;
+    private Registration registration;
     @Mock
     private ReadWriteTransaction transaction;
-    @Mock
-    private DataTreeModification<AaaEncryptServiceConfig> treeModification;
-    @Mock
-    private DataObjectModification<AaaEncryptServiceConfig> objectModification;
     @Captor
     private ArgumentCaptor<DataTreeIdentifier<AaaEncryptServiceConfig>> treeIdCaptor;
     @Captor
-    private ArgumentCaptor<DataTreeChangeListener<AaaEncryptServiceConfig>> listenerCaptor;
+    private ArgumentCaptor<DataListener<AaaEncryptServiceConfig>> listenerCaptor;
     @Captor
     private ArgumentCaptor<AaaEncryptServiceConfig> configCaptor;
     @Captor
@@ -77,8 +70,7 @@ public class OSGiEncryptionServiceConfiguratorTest {
 
     @Before
     public void before() {
-        doReturn(registration).when(dataBroker).registerDataTreeChangeListener(treeIdCaptor.capture(),
-            listenerCaptor.capture());
+        doReturn(registration).when(dataBroker).registerDataListener(treeIdCaptor.capture(), listenerCaptor.capture());
 
         configurator = new OSGiEncryptionServiceConfigurator(dataBroker, factory);
 
@@ -101,7 +93,7 @@ public class OSGiEncryptionServiceConfiguratorTest {
         doNothing().when(transaction).put(eq(LogicalDatastoreType.CONFIGURATION), eq(IID), configCaptor.capture());
         doReturn(CommitInfo.emptyFluentFuture()).when(transaction).commit();
 
-        configurator.onInitialData();
+        configurator.dataChangedTo(null);
 
         final var config = configCaptor.getValue();
         assertEquals("AES/CBC/PKCS5Padding", config.getCipherTransforms());
@@ -119,11 +111,9 @@ public class OSGiEncryptionServiceConfiguratorTest {
         assertEquals(12, key.length());
 
         // Now we circle around are report that config. We expect the factory to be called
-        doReturn(config).when(objectModification).getDataAfter();
-        doReturn(objectModification).when(treeModification).getRootNode();
         doReturn(instance).when(factory).newInstance(propertiesCaptor.capture());
 
-        configurator.onDataTreeChanged(List.of(treeModification));
+        configurator.dataChangedTo(config);
 
         final var props = propertiesCaptor.getValue();
         assertNotNull(props);
