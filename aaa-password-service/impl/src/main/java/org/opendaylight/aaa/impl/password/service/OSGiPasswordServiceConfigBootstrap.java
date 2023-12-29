@@ -7,6 +7,8 @@
  */
 package org.opendaylight.aaa.impl.password.service;
 
+import static java.util.Objects.requireNonNull;
+
 import com.google.common.annotations.Beta;
 import com.google.common.collect.Iterables;
 import java.util.Collection;
@@ -30,22 +32,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Beta
-@Component(immediate = true)
+@Component(service = { })
 public final class OSGiPasswordServiceConfigBootstrap
         implements ClusteredDataTreeChangeListener<PasswordServiceConfig> {
     private static final Logger LOG = LoggerFactory.getLogger(OSGiPasswordServiceConfigBootstrap.class);
 
-    @Reference
-    DataBroker dataBroker = null;
-
-    @Reference(target = "(component.factory=" + OSGiPasswordServiceConfig.FACTORY_NAME + ")")
-    ComponentFactory<OSGiPasswordServiceConfig> configFactory = null;
-
+    private final ComponentFactory<OSGiPasswordServiceConfig> configFactory;
     private ListenerRegistration<?> registration;
     private ComponentInstance<?> instance;
 
     @Activate
-    synchronized void activate() {
+    public OSGiPasswordServiceConfigBootstrap(@Reference final DataBroker dataBroker,
+            @Reference(target = "(component.factory=" + OSGiPasswordServiceConfig.FACTORY_NAME + ")")
+            final ComponentFactory<OSGiPasswordServiceConfig> configFactory) {
+        this.configFactory  = requireNonNull(configFactory);
         registration = dataBroker.registerDataTreeChangeListener(
             DataTreeIdentifier.create(LogicalDatastoreType.CONFIGURATION,
                 InstanceIdentifier.create(PasswordServiceConfig.class)), this);
@@ -77,7 +77,7 @@ public final class OSGiPasswordServiceConfigBootstrap
     @Holding("this")
     private void updateInstance(final PasswordServiceConfig config) {
         if (registration != null) {
-            final ComponentInstance<?> newInstance = configFactory.newInstance(
+            final var newInstance = configFactory.newInstance(
                 OSGiPasswordServiceConfig.props(config != null ? config : new PasswordServiceConfigBuilder().build()));
             if (instance != null) {
                 instance.dispose();
