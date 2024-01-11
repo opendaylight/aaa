@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "447caaf5_e2ef8491",
+        "filename": "aaa-encrypt-service/api/src/main/java/org/opendaylight/aaa/encrypt/exception/DecryptionException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-01-11T16:52:20Z",
+      "side": 1,
+      "message": "Please add docs what is the purpose of this exception.",
+      "revId": "bdcd268167498f6e069d9b7df9f0a3f381745881",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23017b26_5633a61f",
+        "filename": "aaa-encrypt-service/api/src/main/java/org/opendaylight/aaa/encrypt/exception/DecryptionException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-01-11T16:52:20Z",
+      "side": 1,
+      "message": "extends RuntimeException",
+      "revId": "bdcd268167498f6e069d9b7df9f0a3f381745881",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7611d183_a64d7a04",
+        "filename": "aaa-encrypt-service/api/src/main/java/org/opendaylight/aaa/encrypt/exception/EncryptionException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-01-11T16:52:20Z",
+      "side": 1,
+      "message": "Please document the exception purpose.",
+      "revId": "bdcd268167498f6e069d9b7df9f0a3f381745881",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ed5d21c_e5fc7616",
+        "filename": "aaa-encrypt-service/api/src/main/java/org/opendaylight/aaa/encrypt/exception/EncryptionException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-01-11T16:52:20Z",
+      "side": 1,
+      "message": "extends RuntimeException",
+      "revId": "bdcd268167498f6e069d9b7df9f0a3f381745881",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
