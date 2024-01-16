@@ -22,22 +22,25 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
 
   <dependencies>
     <dependency>
+      <groupId>com.github.spotbugs</groupId>
+      <artifactId>spotbugs-annotations</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk18on</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.opendaylight.aaa</groupId>
       <artifactId>aaa-encrypt-service</artifactId>
     </dependency>
     <dependency>
       <groupId>org.opendaylight.mdsal</groupId>
       <artifactId>mdsal-binding-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-    </dependency>
-
-    <!-- Bouncy Castle dependency -->
-    <dependency>
-      <groupId>org.bouncycastle</groupId>
-      <artifactId>bcprov-jdk18on</artifactId>
     </dependency>
   </dependencies>
 
