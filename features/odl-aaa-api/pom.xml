@@ -50,7 +50,7 @@
         <dependency>
             <groupId>org.opendaylight.mdsal</groupId>
             <artifactId>odl-mdsal-binding-base</artifactId>
-            <version>12.0.4</version>
+            <version>13.0.0</version>
             <type>xml</type>
             <classifier>features</classifier>
         </dependency>
