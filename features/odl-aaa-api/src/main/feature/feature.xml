@@ -11,6 +11,6 @@
         <feature version="[13,14)">odl-jakarta-activation-api</feature>
         <feature version="[13,14)">odl-servlet-api</feature>
         <feature version="[13,14)">odl-ws-rs-api</feature>
-        <feature version="[12,13)">odl-mdsal-binding-base</feature>
+        <feature version="[13,14)">odl-mdsal-binding-base</feature>
     </feature>
 </features>
