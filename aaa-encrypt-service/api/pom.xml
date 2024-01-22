@@ -9,7 +9,6 @@
     <relativePath>../../parent</relativePath>
   </parent>
 
-  <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-encrypt-service</artifactId>
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>bundle</packaging>
