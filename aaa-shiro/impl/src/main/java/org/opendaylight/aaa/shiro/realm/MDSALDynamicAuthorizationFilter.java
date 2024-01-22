@@ -26,7 +26,6 @@ import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.mdsal.binding.api.DataListener;
 import org.opendaylight.mdsal.binding.api.DataTreeIdentifier;
-import org.opendaylight.mdsal.binding.api.ReadTransaction;
 import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.HttpAuthorization;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies.Policies;
@@ -48,7 +47,7 @@ import org.slf4j.LoggerFactory;
 public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter implements DataListener<HttpAuthorization> {
     private static final Logger LOG = LoggerFactory.getLogger(MDSALDynamicAuthorizationFilter.class);
 
-    private static final DataTreeIdentifier<HttpAuthorization> AUTHZ_CONTAINER = DataTreeIdentifier.create(
+    private static final DataTreeIdentifier<HttpAuthorization> AUTHZ_CONTAINER = DataTreeIdentifier.of(
             LogicalDatastoreType.CONFIGURATION, InstanceIdentifier.create(HttpAuthorization.class));
 
     private static final ThreadLocal<DataBroker> DATABROKER_TL = new ThreadLocal<>();
@@ -73,8 +72,8 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter impleme
 
     @Override
     public Filter processPathConfig(final String path, final String config) {
-        try (ReadTransaction tx = dataBroker.newReadOnlyTransaction()) {
-            authContainer = tx.read(AUTHZ_CONTAINER.getDatastoreType(), AUTHZ_CONTAINER.getRootIdentifier());
+        try (var tx = dataBroker.newReadOnlyTransaction()) {
+            authContainer = tx.read(AUTHZ_CONTAINER.datastore(), AUTHZ_CONTAINER.path());
         }
         reg = dataBroker.registerDataListener(AUTHZ_CONTAINER, this);
         return super.processPathConfig(path, config);

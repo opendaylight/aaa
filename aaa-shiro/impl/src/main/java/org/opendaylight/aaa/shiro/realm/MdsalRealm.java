@@ -31,7 +31,6 @@ import org.opendaylight.aaa.shiro.realm.util.TokenUtils;
 import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
 import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.mdsal.binding.api.DataTreeIdentifier;
-import org.opendaylight.mdsal.binding.api.ReadTransaction;
 import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.Authentication;
 import org.opendaylight.yangtools.concepts.Registration;
@@ -48,7 +47,7 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
     /**
      * InstanceIdentifier for the authentication container.
      */
-    private static final DataTreeIdentifier<Authentication> AUTH_TREE_ID = DataTreeIdentifier.create(
+    private static final DataTreeIdentifier<Authentication> AUTH_TREE_ID = DataTreeIdentifier.of(
             LogicalDatastoreType.CONFIGURATION, InstanceIdentifier.create(Authentication.class));
 
     private static final ThreadLocal<PasswordHashService> PASSWORD_HASH_SERVICE_TL = new ThreadLocal<>();
@@ -70,8 +69,8 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
     public MdsalRealm(final PasswordHashService passwordHashService, final DataBroker dataBroker) {
         this.passwordHashService = requireNonNull(passwordHashService);
 
-        try (ReadTransaction tx = dataBroker.newReadOnlyTransaction()) {
-            authentication = tx.read(AUTH_TREE_ID.getDatastoreType(), AUTH_TREE_ID.getRootIdentifier());
+        try (var tx = dataBroker.newReadOnlyTransaction()) {
+            authentication = tx.read(AUTH_TREE_ID.datastore(), AUTH_TREE_ID.path());
         }
 
         reg = dataBroker.registerDataListener(AUTH_TREE_ID, this::onAuthenticationChanged);
