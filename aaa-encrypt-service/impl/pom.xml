@@ -64,6 +64,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 
     <dependency>
       <groupId>org.opendaylight.yangtools</groupId>
+      <artifactId>mockito-configuration</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.yangtools</groupId>
       <artifactId>util</artifactId>
       <scope>test</scope>
     </dependency>

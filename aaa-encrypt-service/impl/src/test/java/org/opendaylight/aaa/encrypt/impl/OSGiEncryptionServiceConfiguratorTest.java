@@ -7,12 +7,11 @@
  */
 package org.opendaylight.aaa.encrypt.impl;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -21,13 +20,13 @@ import java.util.Base64;
 import java.util.Dictionary;
 import java.util.Optional;
 import org.eclipse.jdt.annotation.NonNull;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.mdsal.binding.api.DataListener;
 import org.opendaylight.mdsal.binding.api.DataTreeIdentifier;
@@ -42,11 +41,10 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.ComponentInstance;
 
-@RunWith(MockitoJUnitRunner.StrictStubs.class)
-public class OSGiEncryptionServiceConfiguratorTest {
+@ExtendWith(MockitoExtension.class)
+class OSGiEncryptionServiceConfiguratorTest {
     private static final @NonNull InstanceIdentifier<AaaEncryptServiceConfig> IID =
         InstanceIdentifier.create(AaaEncryptServiceConfig.class);
-
     @Mock
     private DataBroker dataBroker;
     @Mock
@@ -68,8 +66,8 @@ public class OSGiEncryptionServiceConfiguratorTest {
 
     private OSGiEncryptionServiceConfigurator configurator;
 
-    @Before
-    public void before() {
+    @BeforeEach
+    void before() {
         doReturn(registration).when(dataBroker).registerDataListener(treeIdCaptor.capture(), listenerCaptor.capture());
 
         configurator = new OSGiEncryptionServiceConfigurator(dataBroker, factory);
@@ -79,13 +77,13 @@ public class OSGiEncryptionServiceConfiguratorTest {
     }
 
     @Test
-    public void testImmediateDeactivate() {
+    void testImmediateDeactivate() {
         doNothing().when(registration).close();
         configurator.deactivate();
     }
 
     @Test
-    public void testEmptyDatastore() {
+    void testEmptyDatastore() {
         // Config datastore write is expected: capture what gets written
         doReturn(transaction).when(dataBroker).newReadWriteTransaction();
         doReturn(FluentFutures.immediateFluentFuture(Optional.empty())).when(transaction)
@@ -118,10 +116,7 @@ public class OSGiEncryptionServiceConfiguratorTest {
         final var props = propertiesCaptor.getValue();
         assertNotNull(props);
         assertEquals(1, props.size());
-        final var configObj = props.elements().nextElement();
-        assertNotNull(configObj);
-        assertThat(configObj, instanceOf(EncryptServiceConfig.class));
-        final var serviceConfig = (EncryptServiceConfig) configObj;
+        final var serviceConfig = assertInstanceOf(EncryptServiceConfig.class, props.elements().nextElement());
         assertArrayEquals(salt, serviceConfig.getEncryptSalt());
         assertEquals(key, serviceConfig.getEncryptKey());
 
