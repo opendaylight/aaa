@@ -42,7 +42,7 @@ public final class OSGiPasswordServiceConfigBootstrap implements DataListener<Pa
             final ComponentFactory<OSGiPasswordServiceConfig> configFactory) {
         this.configFactory  = requireNonNull(configFactory);
         registration = dataBroker.registerDataListener(
-            DataTreeIdentifier.create(LogicalDatastoreType.CONFIGURATION,
+            DataTreeIdentifier.of(LogicalDatastoreType.CONFIGURATION,
                 InstanceIdentifier.create(PasswordServiceConfig.class)), this);
         LOG.info("Listening for password service configuration");
     }
