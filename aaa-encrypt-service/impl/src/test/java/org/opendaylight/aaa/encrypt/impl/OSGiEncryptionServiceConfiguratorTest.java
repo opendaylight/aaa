@@ -74,7 +74,7 @@ public class OSGiEncryptionServiceConfiguratorTest {
 
         configurator = new OSGiEncryptionServiceConfigurator(dataBroker, factory);
 
-        assertEquals(DataTreeIdentifier.create(LogicalDatastoreType.CONFIGURATION, IID), treeIdCaptor.getValue());
+        assertEquals(DataTreeIdentifier.of(LogicalDatastoreType.CONFIGURATION, IID), treeIdCaptor.getValue());
         assertSame(configurator, listenerCaptor.getValue());
     }
 

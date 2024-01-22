@@ -98,6 +98,7 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
     }
 
     @Deactivate
+    @SuppressWarnings("static-method")
     void deactivate() {
         LOG.info("AAAEncryptionService deactivated");
     }

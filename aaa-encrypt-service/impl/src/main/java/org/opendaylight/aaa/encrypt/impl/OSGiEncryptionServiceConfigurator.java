@@ -83,7 +83,7 @@ public final class OSGiEncryptionServiceConfigurator implements DataListener<Aaa
         this.dataBroker = requireNonNull(dataBroker);
         this.factory = requireNonNull(factory);
         reg = dataBroker.registerDataListener(
-            DataTreeIdentifier.create(LogicalDatastoreType.CONFIGURATION,
+            DataTreeIdentifier.of(LogicalDatastoreType.CONFIGURATION,
                 InstanceIdentifier.create(AaaEncryptServiceConfig.class)),
             this);
         LOG.debug("AAA Encryption Service configurator started");
