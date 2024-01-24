@@ -54,6 +54,9 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
               org.opendaylight.aaa.cert.impl.*,
               org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.*
             </Export-Package>
+            <Provide-Capability>
+              osgi.service;objectClass:List&lt;String&gt;="org.opendaylight.aaa.cert.api.ICertificateManager";uses:="org.opendaylight.aaa.cert.api"
+            </Provide-Capability>
           </instructions>
         </configuration>
       </plugin>
