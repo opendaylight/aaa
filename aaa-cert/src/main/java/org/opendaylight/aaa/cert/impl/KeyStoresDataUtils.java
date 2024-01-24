@@ -7,6 +7,9 @@
  */
 package org.opendaylight.aaa.cert.impl;
 
+import java.nio.charset.Charset;
+import java.security.GeneralSecurityException;
+import java.util.Base64;
 import java.util.List;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
 import org.opendaylight.mdsal.binding.api.DataBroker;
@@ -29,7 +32,6 @@ import org.slf4j.LoggerFactory;
  * KeyStoresDataUtils manage the SslData operations add, delete and update.
  *
  * @author mserngawy
- *
  */
 public class KeyStoresDataUtils {
 
@@ -62,9 +64,15 @@ public class KeyStoresDataUtils {
     public SslData addSslData(final DataBroker dataBroker, final String bundleName, final OdlKeystore odlKeystore,
             final TrustKeystore trustKeystore, final List<CipherSuites> cipherSuites, final String tlsProtocols) {
         final SslDataKey sslDataKey = new SslDataKey(bundleName);
-        final SslData sslData = new SslDataBuilder().withKey(sslDataKey).setOdlKeystore(encryptOdlKeyStore(odlKeystore))
-                .setTrustKeystore(encryptTrustKeystore(trustKeystore)).setCipherSuites(cipherSuites)
-                .setTlsProtocols(tlsProtocols).build();
+        final SslData sslData;
+        try {
+            sslData = new SslDataBuilder().withKey(sslDataKey).setOdlKeystore(encryptOdlKeyStore(odlKeystore))
+                    .setTrustKeystore(encryptTrustKeystore(trustKeystore)).setCipherSuites(cipherSuites)
+                    .setTlsProtocols(tlsProtocols).build();
+        } catch (GeneralSecurityException e) {
+            LOG.error("Encryption of TrustKeystore for SslData failed.", e);
+            return null;
+        }
 
         if (MdsalUtils.put(dataBroker, LogicalDatastoreType.CONFIGURATION, getSslDataIid(bundleName), sslData)) {
             return new SslDataBuilder().withKey(sslDataKey).setOdlKeystore(odlKeystore).setTrustKeystore(trustKeystore)
@@ -99,13 +107,13 @@ public class KeyStoresDataUtils {
         LOG.debug("Odl keystore string {} ", keyStoreBytes);
 
         return new OdlKeystoreBuilder().setKeystoreFile(keyStoreBytes)
-                .setAlias(alias).setDname(dname).setKeyAlg(keyAlg)
-                .setKeysize(keySize)
-                .setName(name)
-                .setSignAlg(sigAlg)
-                .setStorePassword(password)
-                .setValidity(validity)
-                .build();
+            .setAlias(alias).setDname(dname).setKeyAlg(keyAlg)
+            .setKeysize(keySize)
+            .setName(name)
+            .setSignAlg(sigAlg)
+            .setStorePassword(password)
+            .setValidity(validity)
+            .build();
     }
 
     public TrustKeystore createTrustKeystore(final String name, final String password, final byte[] keyStoreBytes) {
@@ -118,66 +126,76 @@ public class KeyStoresDataUtils {
                 password);
         LOG.debug("trust keystore string {} ", keyStoreBytes);
         return new TrustKeystoreBuilder()
-                .setKeystoreFile(keyStoreBytes)
-                .setName(name)
-                .setStorePassword(password)
-                .build();
+            .setKeystoreFile(keyStoreBytes)
+            .setName(name)
+            .setStorePassword(password)
+            .build();
     }
 
-    private OdlKeystore decryptOdlKeyStore(final OdlKeystore odlKeystore) {
-        if (odlKeystore == null) {
-            return null;
-        }
-        final OdlKeystoreBuilder odlKeystoreBuilder = new OdlKeystoreBuilder(odlKeystore);
-        odlKeystoreBuilder.setKeystoreFile(encryService.decrypt(odlKeystore.getKeystoreFile()));
-        odlKeystoreBuilder.setStorePassword(encryService.decrypt(odlKeystore.getStorePassword()));
-        return odlKeystoreBuilder.build();
+    private OdlKeystore decryptOdlKeyStore(final OdlKeystore odlKeystore) throws GeneralSecurityException {
+        return odlKeystore == null ? null : new OdlKeystoreBuilder(odlKeystore)
+            .setKeystoreFile(decryptNullable(odlKeystore.getKeystoreFile()))
+            .setStorePassword(decryptStringFromBase64(odlKeystore.getStorePassword()))
+            .build();
     }
 
-    private SslData decryptSslData(final SslData sslData) {
-        if (sslData == null) {
-            return null;
-        }
-        final SslDataBuilder sslDataBuilder = new SslDataBuilder(sslData)
-                .setOdlKeystore(decryptOdlKeyStore(sslData.getOdlKeystore()))
-                .setTrustKeystore(decryptTrustKeystore(sslData.getTrustKeystore()));
-        return sslDataBuilder.build();
+    private SslData decryptSslData(final SslData sslData) throws GeneralSecurityException {
+        return sslData == null ? null : new SslDataBuilder(sslData)
+            .setOdlKeystore(decryptOdlKeyStore(sslData.getOdlKeystore()))
+            .setTrustKeystore(decryptTrustKeystore(sslData.getTrustKeystore()))
+            .build();
     }
 
-    private TrustKeystore decryptTrustKeystore(final TrustKeystore trustKeyStore) {
-        if (trustKeyStore == null) {
-            return null;
-        }
-        final TrustKeystoreBuilder trustKeyStoreBuilder = new TrustKeystoreBuilder(trustKeyStore);
-        trustKeyStoreBuilder.setKeystoreFile(encryService.decrypt(trustKeyStore.getKeystoreFile()));
-        trustKeyStoreBuilder.setStorePassword(encryService.decrypt(trustKeyStore.getStorePassword()));
-        return trustKeyStoreBuilder.build();
+    private TrustKeystore decryptTrustKeystore(final TrustKeystore trustKeyStore) throws GeneralSecurityException {
+        return trustKeyStore == null ? null : new TrustKeystoreBuilder(trustKeyStore)
+            .setKeystoreFile(decryptNullable(trustKeyStore.getKeystoreFile()))
+            .setStorePassword(decryptStringFromBase64(trustKeyStore.getStorePassword()))
+            .build();
     }
 
-    private OdlKeystore encryptOdlKeyStore(final OdlKeystore odlKeystore) {
-        final OdlKeystoreBuilder odlKeystoreBuilder = new OdlKeystoreBuilder(odlKeystore);
-        odlKeystoreBuilder.setKeystoreFile(encryService.encrypt(odlKeystore.getKeystoreFile()));
-        odlKeystoreBuilder.setStorePassword(encryService.encrypt(odlKeystore.getStorePassword()));
-        return odlKeystoreBuilder.build();
+    private byte[] decryptNullable(final byte[] bytes) throws GeneralSecurityException {
+        return bytes == null ? null : encryService.decrypt(bytes);
     }
 
-    private SslData encryptSslData(final SslData sslData) {
-        final SslDataBuilder sslDataBuilder = new SslDataBuilder(sslData)
-                .setOdlKeystore(encryptOdlKeyStore(sslData.getOdlKeystore()))
-                .setTrustKeystore(encryptTrustKeystore(sslData.getTrustKeystore()));
-        return sslDataBuilder.build();
+    private String decryptStringFromBase64(final String base64) throws GeneralSecurityException {
+        return base64 == null ? null
+            : new String(encryService.decrypt(Base64.getDecoder().decode(base64)), Charset.defaultCharset());
     }
 
-    private TrustKeystore encryptTrustKeystore(final TrustKeystore trustKeyStore) {
-        final TrustKeystoreBuilder trustKeyStoreBuilder = new TrustKeystoreBuilder(trustKeyStore);
-        trustKeyStoreBuilder.setKeystoreFile(encryService.encrypt(trustKeyStore.getKeystoreFile()));
-        trustKeyStoreBuilder.setStorePassword(encryService.encrypt(trustKeyStore.getStorePassword()));
-        return trustKeyStoreBuilder.build();
+    private String encryptStringToBase64(final String str) throws GeneralSecurityException {
+        return str == null ? null
+            : Base64.getEncoder().encodeToString(encryService.encrypt(str.getBytes(Charset.defaultCharset())));
+    }
+
+    private OdlKeystore encryptOdlKeyStore(final OdlKeystore odlKeystore) throws GeneralSecurityException {
+        return new OdlKeystoreBuilder(odlKeystore)
+            .setKeystoreFile(encryService.encrypt(odlKeystore.getKeystoreFile()))
+            .setStorePassword(encryptStringToBase64(odlKeystore.getStorePassword()))
+            .build();
+    }
+
+    private SslData encryptSslData(final SslData sslData) throws GeneralSecurityException {
+        return new SslDataBuilder(sslData)
+            .setOdlKeystore(encryptOdlKeyStore(sslData.getOdlKeystore()))
+            .setTrustKeystore(encryptTrustKeystore(sslData.getTrustKeystore()))
+            .build();
+    }
+
+    private TrustKeystore encryptTrustKeystore(final TrustKeystore trustKeyStore) throws GeneralSecurityException {
+        return new TrustKeystoreBuilder(trustKeyStore)
+            .setKeystoreFile(encryService.encrypt(trustKeyStore.getKeystoreFile()))
+            .setStorePassword(encryptStringToBase64(trustKeyStore.getStorePassword()))
+            .build();
     }
 
     public SslData getSslData(final DataBroker dataBroker, final String bundleName) {
         final InstanceIdentifier<SslData> sslDataIid = getSslDataIid(bundleName);
-        return decryptSslData(MdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION, sslDataIid));
+        try {
+            return decryptSslData(MdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION, sslDataIid));
+        } catch (GeneralSecurityException e) {
+            LOG.error("Decryption of KeyStore for SslData failed.", e);
+            return null;
+        }
     }
 
     public boolean removeSslData(final DataBroker dataBroker, final String bundleName) {
@@ -187,25 +205,29 @@ public class KeyStoresDataUtils {
 
     public boolean updateSslData(final DataBroker dataBroker, final SslData sslData) {
         final InstanceIdentifier<SslData> sslDataIid = getSslDataIid(sslData.getBundleName());
-        return MdsalUtils.merge(dataBroker, LogicalDatastoreType.CONFIGURATION, sslDataIid, encryptSslData(sslData));
+        final SslData encryptedSslData;
+        try {
+            encryptedSslData = encryptSslData(sslData);
+        } catch (GeneralSecurityException e) {
+            LOG.error("Encryption of KeyStore for SslData failed.", e);
+            return false;
+        }
+        return MdsalUtils.merge(dataBroker, LogicalDatastoreType.CONFIGURATION, sslDataIid, encryptedSslData);
     }
 
     public boolean updateSslDataCipherSuites(final DataBroker dataBroker, final SslData baseSslData,
             final List<CipherSuites> cipherSuites) {
-        final SslDataBuilder sslDataBuilder = new SslDataBuilder(baseSslData).setCipherSuites(cipherSuites);
-        return updateSslData(dataBroker, sslDataBuilder.build());
+        return updateSslData(dataBroker, new SslDataBuilder(baseSslData).setCipherSuites(cipherSuites).build());
     }
 
     public boolean updateSslDataOdlKeystore(final DataBroker dataBroker, final SslData baseSslData,
             final OdlKeystore odlKeyStore) {
-        final SslDataBuilder sslDataBuilder = new SslDataBuilder(baseSslData).setOdlKeystore(odlKeyStore);
-        return updateSslData(dataBroker, sslDataBuilder.build());
+        return updateSslData(dataBroker, new SslDataBuilder(baseSslData).setOdlKeystore(odlKeyStore).build());
     }
 
     public boolean updateSslDataTrustKeystore(final DataBroker dataBroker, final SslData baseSslData,
             final TrustKeystore trustKeyStore) {
-        final SslDataBuilder sslDataBuilder = new SslDataBuilder(baseSslData).setTrustKeystore(trustKeyStore);
-        return updateSslData(dataBroker, sslDataBuilder.build());
+        return updateSslData(dataBroker, new SslDataBuilder(baseSslData).setTrustKeystore(trustKeyStore).build());
     }
 
     public TrustKeystore updateTrustKeystore(final TrustKeystore baseTrustKeyStore, final byte[] keyStoreBytes) {
