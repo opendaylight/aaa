@@ -39,7 +39,12 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-cert</artifactId>
+                <artifactId>aaa-cert-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>aaa-cert-impl</artifactId>
                 <version>${project.version}</version>
                 <classifier>config</classifier>
                 <type>xml</type>
