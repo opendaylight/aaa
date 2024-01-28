@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- vi: set et smarttab sw=2 tabstop=2: -->
 <!--
  Copyright © 2018 Red Hat, Inc. and others. All rights reserved.
 
@@ -8,27 +7,32 @@
  and is available at http://www.eclipse.org/legal/epl-v10.html
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.opendaylight.odlparent</groupId>
-    <artifactId>odlparent-lite</artifactId>
-    <version>13.0.10</version>
-    <relativePath/>
-  </parent>
+    <parent>
+        <groupId>org.opendaylight.odlparent</groupId>
+        <artifactId>odlparent-lite</artifactId>
+        <version>13.0.10</version>
+        <relativePath/>
+    </parent>
 
-  <groupId>org.opendaylight.aaa.web</groupId>
-  <artifactId>web-aggregator</artifactId>
-  <version>0.19.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <name>ODL :: aaa :: ${project.artifactId}</name>
+    <groupId>org.opendaylight.aaa.web</groupId>
+    <artifactId>web-aggregator</artifactId>
+    <version>0.19.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>ODL :: aaa :: ${project.artifactId}</name>
 
-  <modules>
-    <module>api</module>
-    <module>impl-osgi</module>
-    <module>impl-jetty</module>
-    <module>servlet-api</module>
-    <module>servlet-jersey2</module>
-    <module>testutils</module>
-  </modules>
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <maven.install.skip>true</maven.install.skip>
+    </properties>
+
+    <modules>
+        <module>api</module>
+        <module>impl-osgi</module>
+        <module>impl-jetty</module>
+        <module>servlet-api</module>
+        <module>servlet-jersey2</module>
+        <module>testutils</module>
+    </modules>
 </project>
