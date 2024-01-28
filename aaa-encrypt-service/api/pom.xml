@@ -12,15 +12,4 @@
   <artifactId>aaa-encrypt-service</artifactId>
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>bundle</packaging>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.bouncycastle</groupId>
-      <artifactId>bcpkix-jdk18on</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.bouncycastle</groupId>
-      <artifactId>bcprov-jdk18on</artifactId>
-    </dependency>
-  </dependencies>
 </project>
