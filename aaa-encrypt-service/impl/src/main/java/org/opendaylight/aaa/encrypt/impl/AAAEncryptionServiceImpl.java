@@ -17,7 +17,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
@@ -47,26 +47,26 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
 
     public AAAEncryptionServiceImpl(final EncryptServiceConfig configuration) {
         final byte[] encryptionKeySalt = configuration.requireEncryptSalt();
-        final IvParameterSpec ivSpec;
+        final GCMParameterSpec gcmSpec;
         try {
             final var keyFactory = SecretKeyFactory.getInstance(configuration.getEncryptMethod());
             final var spec = new PBEKeySpec(configuration.requireEncryptKey().toCharArray(), encryptionKeySalt,
                     configuration.getEncryptIterationCount(), configuration.getEncryptKeyLength());
             key = new SecretKeySpec(keyFactory.generateSecret(spec).getEncoded(), configuration.getEncryptType());
-            ivSpec = new IvParameterSpec(encryptionKeySalt);
+            gcmSpec = new GCMParameterSpec(configuration.getAuthTagLength(), encryptionKeySalt);
         } catch (GeneralSecurityException e) {
             throw new IllegalStateException("Failed to initialize secret key", e);
         }
         try {
             final var cipher = Cipher.getInstance(configuration.getCipherTransforms());
-            cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
+            cipher.init(Cipher.ENCRYPT_MODE, key, gcmSpec);
             encryptCipher = cipher;
         } catch (GeneralSecurityException e) {
             throw new IllegalStateException("Failed to create encrypt cipher.", e);
         }
         try {
             final var cipher = Cipher.getInstance(configuration.getCipherTransforms());
-            cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
+            cipher.init(Cipher.DECRYPT_MODE, key, gcmSpec);
             decryptCipher = cipher;
         } catch (GeneralSecurityException e) {
             throw new IllegalStateException("Failed to create decrypt cipher.", e);
