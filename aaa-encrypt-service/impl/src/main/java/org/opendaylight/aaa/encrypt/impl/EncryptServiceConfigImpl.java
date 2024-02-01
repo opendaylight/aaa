@@ -59,4 +59,9 @@ record EncryptServiceConfigImpl(@NonNull AaaEncryptServiceConfig delegate) imple
     public String getCipherTransforms() {
         return delegate.getCipherTransforms();
     }
+
+    @Override
+    public Integer getAuthTagLength() {
+        return delegate.getAuthTagLength();
+    }
 }

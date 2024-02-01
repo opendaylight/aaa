@@ -63,8 +63,9 @@ public final class OSGiEncryptionServiceConfigurator implements DataListener<Aaa
         .setEncryptType("AES")
         .setEncryptIterationCount(32768)
         .setEncryptKeyLength(128)
-        .setCipherTransforms("AES/CBC/PKCS5Padding")
+        .setCipherTransforms("AES/MCG/NoPadding")
         .setPasswordLength(12)
+        .setAuthTagLength(128)
         .build();
 
     private final ComponentFactory<AAAEncryptionServiceImpl> factory;
