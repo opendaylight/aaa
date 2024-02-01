@@ -33,8 +33,8 @@ import org.opendaylight.mdsal.binding.api.DataTreeIdentifier;
 import org.opendaylight.mdsal.binding.api.ReadWriteTransaction;
 import org.opendaylight.mdsal.common.api.CommitInfo;
 import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.EncryptServiceConfig;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev240202.AaaEncryptServiceConfig;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev240202.EncryptServiceConfig;
 import org.opendaylight.yangtools.concepts.Registration;
 import org.opendaylight.yangtools.util.concurrent.FluentFutures;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
@@ -94,12 +94,14 @@ class OSGiEncryptionServiceConfiguratorTest {
         configurator.dataChangedTo(null);
 
         final var config = configCaptor.getValue();
-        assertEquals("AES/CBC/PKCS5Padding", config.getCipherTransforms());
+        assertEquals("AES/GCM/NoPadding", config.getCipherTransforms());
         assertEquals(Integer.valueOf(32768), config.getEncryptIterationCount());
         assertEquals(Integer.valueOf(128), config.getEncryptKeyLength());
         assertEquals("PBKDF2WithHmacSHA1", config.getEncryptMethod());
         assertEquals("AES", config.getEncryptType());
         assertEquals(Integer.valueOf(12), config.getPasswordLength());
+        assertEquals(Integer.valueOf(128), config.getAuthTagLength());
+        assertEquals(Integer.valueOf(12), config.getIvLength());
 
         final var salt = Base64.getDecoder().decode(config.getEncryptSalt());
         assertEquals(16, salt.length);

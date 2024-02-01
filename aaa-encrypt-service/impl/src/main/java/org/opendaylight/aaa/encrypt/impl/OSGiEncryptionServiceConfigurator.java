@@ -28,8 +28,8 @@ import org.opendaylight.mdsal.binding.api.DataTreeIdentifier;
 import org.opendaylight.mdsal.common.api.CommitInfo;
 import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.odlparent.logging.markers.Markers;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfigBuilder;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev240202.AaaEncryptServiceConfig;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev240202.AaaEncryptServiceConfigBuilder;
 import org.opendaylight.yangtools.concepts.Registration;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.osgi.framework.FrameworkUtil;
@@ -63,8 +63,10 @@ public final class OSGiEncryptionServiceConfigurator implements DataListener<Aaa
         .setEncryptType("AES")
         .setEncryptIterationCount(32768)
         .setEncryptKeyLength(128)
-        .setCipherTransforms("AES/CBC/PKCS5Padding")
+        .setCipherTransforms("AES/GCM/NoPadding")
         .setPasswordLength(12)
+        .setAuthTagLength(128)
+        .setIvLength(12)
         .build();
 
     private final ComponentFactory<AAAEncryptionServiceImpl> factory;
