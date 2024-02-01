@@ -11,8 +11,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Base64;
 import org.eclipse.jdt.annotation.NonNull;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.AaaEncryptServiceConfig;
-import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.EncryptServiceConfig;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev240202.AaaEncryptServiceConfig;
+import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev240202.EncryptServiceConfig;
 
 record EncryptServiceConfigImpl(@NonNull AaaEncryptServiceConfig delegate) implements EncryptServiceConfig {
     EncryptServiceConfigImpl {
@@ -58,5 +58,15 @@ record EncryptServiceConfigImpl(@NonNull AaaEncryptServiceConfig delegate) imple
     @Override
     public String getCipherTransforms() {
         return delegate.getCipherTransforms();
+    }
+
+    @Override
+    public Integer getAuthTagLength() {
+        return delegate.getAuthTagLength();
+    }
+
+    @Override
+    public Integer getIvLength() {
+        return delegate.getIvLength();
     }
 }
