@@ -6,6 +6,10 @@ module aaa-encrypt-service-config {
 
   contact "melserngawy@inocybe.ca";
 
+  revision 2024-02-02 {
+    description "Added configuration options for authentication tag length and IV length in GCM mode.";
+  }
+
   revision 2016-09-15 {
     description "Initial revision.";
   }
@@ -33,10 +37,15 @@ module aaa-encrypt-service-config {
       type int32;
       default 128;
     }
+    leaf auth-tag-length {
+      description "Length of the authentication tag for GCM mode in bits. Supported values are 32, 64, 96, 104, 112, 120, 128";
+      type int32;
+      default 128;
+    }
     leaf cipher-transforms {
-      description "cipher transformation type ex: AES/CBC/PKCS5Padding (128)";
+      description "cipher transformation type ex: AES/GCM/NoPadding (128)";
       type string;
-      default "AES/CBC/PKCS5Padding";
+      default "AES/GCM/NoPadding";
     }
   }
 
