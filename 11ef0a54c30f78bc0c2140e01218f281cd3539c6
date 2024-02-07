@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e747e58b_2250bba5",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-02-07T13:24:00Z",
+      "side": 1,
+      "message": "We are usually using `final` for all parameters even in small methods.",
+      "revId": "11ef0a54c30f78bc0c2140e01218f281cd3539c6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
