@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "02ed2725_b15de063",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-02-12T15:26:21Z",
+      "side": 1,
+      "message": "aaa-encrypt-service-config.\n\nI see that there is some additional configuration added. Can you explain why?",
+      "revId": "72cd9ea020dc8713260864acc7b2d37d64dc482a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cbf0756a_07ba0e80",
