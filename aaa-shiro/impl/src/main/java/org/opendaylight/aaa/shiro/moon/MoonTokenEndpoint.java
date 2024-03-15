@@ -9,7 +9,6 @@ package org.opendaylight.aaa.shiro.moon;
 
 import java.io.IOException;
 import javax.servlet.Servlet;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +20,6 @@ import org.osgi.service.http.whiteboard.propertytypes.HttpWhiteboardServletPatte
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@WebServlet(value = "/moon", name = "MoonTokenEndpoint")
 @HttpWhiteboardServletPattern("/moon")
 @HttpWhiteboardServletName("MoonTokenEndpoint")
 @RequireHttpWhiteboard
