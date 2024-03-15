@@ -11,7 +11,6 @@ import static java.util.Objects.requireNonNull;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableClassToInstanceMap;
 import com.google.common.util.concurrent.ListenableFuture;
 import org.eclipse.jdt.annotation.NonNull;
 import org.opendaylight.aaa.cert.api.IAaaCertProvider;
@@ -37,7 +36,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertificateOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rpc.rev151215.SetODLCertificateOutputBuilder;
 import org.opendaylight.yangtools.concepts.Registration;
-import org.opendaylight.yangtools.yang.binding.Rpc;
 import org.opendaylight.yangtools.yang.common.ErrorTag;
 import org.opendaylight.yangtools.yang.common.ErrorType;
 import org.opendaylight.yangtools.yang.common.RpcResult;
@@ -63,13 +61,12 @@ final class AaaCertRpcServiceImpl {
     }
 
     @NonNull Registration registerWith(final RpcProviderService rpcProviderService) {
-        return rpcProviderService.registerRpcImplementations(ImmutableClassToInstanceMap.<Rpc<?, ?>>builder()
-            .put(GetNodeCertificate.class, this::getNodeCertificate)
-            .put(SetNodeCertificate.class, this::setNodeCertificate)
-            .put(GetODLCertificate.class, this::getODLCertificate)
-            .put(SetODLCertificate.class, this::setODLCertificate)
-            .put(GetODLCertificateReq.class, this::getODLCertificateReq)
-            .build());
+        return rpcProviderService.registerRpcImplementations(
+            (GetNodeCertificate) this::getNodeCertificate,
+            (SetNodeCertificate) this::setNodeCertificate,
+            (GetODLCertificate) this::getODLCertificate,
+            (SetODLCertificate) this::setODLCertificate,
+            (GetODLCertificateReq) this::getODLCertificateReq);
     }
 
     @VisibleForTesting
