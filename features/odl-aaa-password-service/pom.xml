@@ -52,12 +52,6 @@
             <type>xml</type>
         </dependency>
         <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>odl-apache-shiro</artifactId>
-            <type>xml</type>
-            <classifier>features</classifier>
-        </dependency>
-        <dependency>
             <groupId>org.opendaylight.mdsal</groupId>
             <artifactId>odl-mdsal-binding-base</artifactId>
             <version>13.0.3</version>
@@ -70,6 +64,17 @@
             <version>9.0.3</version>
             <type>xml</type>
             <classifier>features</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.odlparent</groupId>
+            <artifactId>odl-apache-spifly</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 
