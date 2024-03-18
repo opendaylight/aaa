@@ -35,7 +35,6 @@
         <module>odl-aaa-password-service</module>
         <module>odl-aaa-shiro</module>
         <module>odl-aaa-web</module>
-        <module>odl-apache-shiro</module>
     </modules>
 
     <scm>

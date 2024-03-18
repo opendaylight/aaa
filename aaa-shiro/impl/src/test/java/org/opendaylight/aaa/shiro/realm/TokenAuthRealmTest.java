@@ -52,7 +52,7 @@ public class TokenAuthRealmTest {
     public void testGetEncodedToken() {
         final String stringToEncode = "admin1:admin1";
         final byte[] bytesToEncode = stringToEncode.getBytes();
-        final String expectedToken = org.apache.shiro.codec.Base64.encodeToString(bytesToEncode);
+        final String expectedToken = org.apache.shiro.lang.codec.Base64.encodeToString(bytesToEncode);
         assertEquals(expectedToken, HeaderUtils.getEncodedToken(stringToEncode));
     }
 
