@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.apache.shiro.codec.Base64;
+import org.apache.shiro.lang.codec.Base64;
 import org.junit.Test;
 import org.opendaylight.aaa.api.password.service.PasswordHash;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
@@ -41,12 +41,12 @@ public class DefaultPasswordHashServiceTest {
         String privateSalt = Base64.encodeToString("somePrivateSalt".getBytes());
         String publicSalt = Base64.encodeToString("somePublicSalt".getBytes());
         DefaultPasswordHashService hashService = new DefaultPasswordHashService(new PasswordServiceConfigBuilder()
-                .setAlgorithm("MD5")
+                .setAlgorithm("SHA-256")
                 .setIterations(24)
                 .setPrivateSalt(privateSalt)
                 .build());
         PasswordHash hash = hashService.getPasswordHash("password", publicSalt);
-        assertEquals("MD5", hash.getAlgorithmName());
+        assertEquals("SHA-256", hash.getAlgorithmName());
         assertEquals(24, hash.getIterations());
         assertEquals(publicSalt, hash.getSalt());
         assertNotNull(hash.getHashedPassword());
@@ -54,7 +54,7 @@ public class DefaultPasswordHashServiceTest {
                 hashService.getPasswordHash("password", hash.getSalt()).getHashedPassword());
 
         hashService = new DefaultPasswordHashService(new PasswordServiceConfigBuilder()
-                .setAlgorithm("MD5")
+                .setAlgorithm("SHA-256")
                 .setIterations(20)
                 .build());
         hash = hashService.getPasswordHash("password");
