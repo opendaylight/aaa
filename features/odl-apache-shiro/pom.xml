@@ -35,7 +35,7 @@
         <dependencies>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-artifacts</artifactId>
+                <artifactId>aaa-parent</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -44,15 +44,32 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- FIXME: should be odl-servlet-api but shiro-web requires version >= 4.0.0 -->
         <dependency>
             <groupId>org.opendaylight.odlparent</groupId>
-            <artifactId>odl-servlet-api</artifactId>
+            <artifactId>odl-karaf-feat-jetty</artifactId>
             <type>xml</type>
             <classifier>features</classifier>
         </dependency>
         <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>repackaged-shiro</artifactId>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.odlparent</groupId>
+            <artifactId>odl-apache-spifly</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
         </dependency>
     </dependencies>
 </project>
