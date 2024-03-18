@@ -7,11 +7,11 @@
  */
 package org.opendaylight.aaa.impl.password.service;
 
-import org.apache.shiro.codec.Base64;
 import org.apache.shiro.crypto.hash.DefaultHashService;
 import org.apache.shiro.crypto.hash.HashRequest;
 import org.apache.shiro.crypto.hash.SimpleHashRequest;
-import org.apache.shiro.util.ByteSource;
+import org.apache.shiro.lang.codec.Base64;
+import org.apache.shiro.lang.util.ByteSource;
 import org.opendaylight.aaa.api.password.service.PasswordHash;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.password.service.config.rev170619.PasswordServiceConfig;
