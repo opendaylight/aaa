@@ -29,8 +29,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
   <modules>
     <module>api</module>
     <module>impl</module>
-    <module>repackaged-shiro</module>
-    <module>repackaged-shiro-jar</module>
   </modules>
 
   <scm>

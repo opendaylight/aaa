@@ -141,16 +141,6 @@
             <type>xml</type>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>odl-apache-shiro</artifactId>
-            <classifier>features</classifier>
-            <type>xml</type>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>repackaged-shiro</artifactId>
-        </dependency>
-        <dependency>
             <groupId>${project.groupId}.web</groupId>
             <artifactId>servlet-api</artifactId>
         </dependency>
