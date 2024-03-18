@@ -109,11 +109,6 @@
                 <artifactId>aaa-tokenauthrealm</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>repackaged-shiro</artifactId>
-                <version>${project.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>${project.groupId}.web</groupId>
