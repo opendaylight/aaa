@@ -15,11 +15,14 @@ package org.opendaylight.aaa.api;
  *
  */
 public interface TokenStore {
+
+    void destroyPersistentFiles() throws TokenStoreException;
+
     void put(String token, Authentication auth);
 
     Authentication get(String token);
 
-    boolean delete(String token);
+    void delete(String token);
 
     long tokenExpiration();
 }

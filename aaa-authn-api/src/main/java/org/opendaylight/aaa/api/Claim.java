@@ -8,6 +8,7 @@
 
 package org.opendaylight.aaa.api;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -17,7 +18,7 @@ import java.util.Set;
  * @author liemmn
  *
  */
-public interface Claim {
+public interface Claim extends Serializable {
     /**
      * Get the id of the authorized client. If the id is an empty string, it
      * means that the client is anonymous.
