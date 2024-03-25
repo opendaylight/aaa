@@ -22,11 +22,12 @@ import org.opendaylight.aaa.tokenauthrealm.auth.ClaimBuilder;
  * @author mserngawy
  */
 public class H2TokenStoreTest {
-    private final H2TokenStore h2TokenStore = new H2TokenStore(36000, 3600);
+    private H2TokenStore h2TokenStore = new H2TokenStore(36000, 3600);
 
     @After
     public void teardown() throws Exception {
         h2TokenStore.close();
+        h2TokenStore.destroyPersistentFiles();
     }
 
     @Test
@@ -38,5 +39,18 @@ public class H2TokenStoreTest {
         assertEquals(auth, h2TokenStore.get(fooToken));
         h2TokenStore.delete(fooToken);
         assertNull(h2TokenStore.get(fooToken));
+    }
+
+    @Test
+    public void testTokenStorePersistence() {
+        final var fooToken = "foo_token";
+        final var auth = new AuthenticationBuilder(
+            new ClaimBuilder().setUser("foo").setUserId("1234").addRole("admin").build()).build();
+        h2TokenStore.put(fooToken, auth);
+        // Restart H2TokenStore
+        h2TokenStore.close();
+        h2TokenStore = new H2TokenStore(36000, 3600);
+        // Verify loaded persistent data
+        assertEquals(auth, h2TokenStore.get(fooToken));
     }
 }
