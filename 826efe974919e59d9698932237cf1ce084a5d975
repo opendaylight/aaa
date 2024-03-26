@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55eac2c6_29668402",
+        "filename": "aaa-idm-store-h2/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2024-03-26T16:56:33Z",
+      "side": 1,
+      "message": "Undeclared dependencies:\n```\n[WARNING] Used undeclared dependencies found:\n[WARNING]    org.eclipse.jdt:org.eclipse.jdt.annotation:jar:2.2.800:compile\n[WARNING]    com.google.errorprone:error_prone_annotations:jar:2.24.0:compile\n```",
+      "revId": "826efe974919e59d9698932237cf1ce084a5d975",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "953288f4_e2e4f580",
+        "filename": "aaa-idm-store-h2/src/main/java/org/opendaylight/aaa/datastore/h2/H2TokenStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2024-03-26T16:56:33Z",
+      "side": 1,
+      "message": "This overrides the expiry for TTL, not adding to it.",
+      "revId": "826efe974919e59d9698932237cf1ce084a5d975",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67691866_8f4efe3a",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2024-03-26T16:56:33Z",
+      "side": 1,
+      "message": "aaa-shiro doesn\u0027t seem to have direct dependency on ehcache.",
+      "revId": "826efe974919e59d9698932237cf1ce084a5d975",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
