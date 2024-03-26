@@ -50,6 +50,24 @@
       "message": "aaa-shiro doesn\u0027t seem to have direct dependency on ehcache.",
       "revId": "826efe974919e59d9698932237cf1ce084a5d975",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d813165_6a3bf964",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2024-03-26T17:47:41Z",
+      "side": 1,
+      "message": "yeah, I am not sure it\u0027s even needed. I would prefer if we could just ditch it...",
+      "parentUuid": "67691866_8f4efe3a",
+      "revId": "826efe974919e59d9698932237cf1ce084a5d975",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
