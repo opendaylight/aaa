@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecc9e4a1_e308ea07",
+        "filename": "aaa-idm-store-h2/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-03-27T14:58:01Z",
+      "side": 1,
+      "message": "These warnings existed before my changes. Therefore, they should be removed in a separate commit by importing \"org.eclipse.jdt.annotation\", as it is used in:\nhttps://github.com/opendaylight/aaa/blob/master/aaa-idm-store-h2/src/main/java/org/opendaylight/aaa/datastore/h2/DomainStore.java#L17\n\nRegarding `com.google.errorprone:error_prone_annotations`, in my opinion, it is a false positive since it is not used in this project.",
+      "parentUuid": "55eac2c6_29668402",
+      "revId": "826efe974919e59d9698932237cf1ce084a5d975",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "953288f4_e2e4f580",
