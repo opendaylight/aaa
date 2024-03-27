@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7f11eb79_6a34ec68",
+        "filename": "aaa-idm-store-h2/src/main/java/org/opendaylight/aaa/datastore/h2/H2TokenStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-03-27T14:45:15Z",
+      "side": 1,
+      "message": "Correct, with a new version setting both is not possible.\nhttps://github.com/ehcache/ehcache3/blob/master/ehcache-impl/src/main/java/org/ehcache/config/builders/CacheConfigurationBuilder.java#L336\n\nhttps://github.com/ehcache/ehcache3/blob/561af430d76847a2c8aa1ba507cf3e142ad9185e/ehcache-api/src/main/java/org/ehcache/expiry/Expirations.java#L154C1-L165C4\n\nhttps://groups.google.com/g/ehcache-users/c/Jo3iIxI3hd8\n\nFixed by setting timeToIdle as the default value if both are set with a value higher than zero.\nhttps://www.ehcache.org/documentation/2.8/configuration/data-life.html#setting-expiration-\n\nIf this is the correct approach, I will modify the YANG model so that TTL and TTI are set within a Choice node, preventing both of them from being set simultaneously.\n\nhttps://github.com/opendaylight/aaa/blob/670382900d7e5b0efa0389bce06c200c04aa248d/aaa-shiro/impl/src/main/yang/aaa-app-config.yang#L57C1-L65C20",
+      "parentUuid": "953288f4_e2e4f580",
+      "revId": "826efe974919e59d9698932237cf1ce084a5d975",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "67691866_8f4efe3a",
         "filename": "aaa-shiro/impl/pom.xml",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "yeah, I am not sure it\u0027s even needed. I would prefer if we could just ditch it...",
       "parentUuid": "67691866_8f4efe3a",
+      "revId": "826efe974919e59d9698932237cf1ce084a5d975",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a48b2f9_46e79464",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-03-27T14:45:15Z",
+      "side": 1,
+      "message": "This dependency is necessary for generating Javadoc in the aaa-docs project. Without it, the build fails on:\n\n```\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-javadoc-plugin:3.6.3:jar (attach-javadocs) on project aaa-docs: MavenReportException: Error while generating Javadoc: \n[ERROR] Exit code: 1\n[ERROR] /home/Projects/ODL/aaa/docs/target/src/org/opendaylight/aaa/datastore/h2/H2TokenStore.java:18: error: package org.ehcache does not exist\n[ERROR] import org.ehcache.Cache;\n```",
+      "parentUuid": "6d813165_6a3bf964",
       "revId": "826efe974919e59d9698932237cf1ce084a5d975",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
