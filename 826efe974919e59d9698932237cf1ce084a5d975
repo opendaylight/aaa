@@ -71,6 +71,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "16608d0a_93ef212c",
+        "filename": "aaa-idm-store-h2/src/main/java/org/opendaylight/aaa/datastore/h2/H2TokenStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-03-28T10:04:38Z",
+      "side": 1,
+      "message": "I have removed the previous approach, as I was able to resolve it using a custom ExpiryPolicy.",
+      "parentUuid": "7f11eb79_6a34ec68",
+      "revId": "826efe974919e59d9698932237cf1ce084a5d975",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "67691866_8f4efe3a",
