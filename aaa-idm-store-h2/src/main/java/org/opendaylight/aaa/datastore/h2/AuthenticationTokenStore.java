@@ -33,9 +33,9 @@ import org.opendaylight.aaa.api.TokenStoreException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class H2TokenStore implements AutoCloseable, TokenStore {
+public class AuthenticationTokenStore implements AutoCloseable, TokenStore {
 
-    private static final Logger LOG = LoggerFactory.getLogger(H2TokenStore.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AuthenticationTokenStore.class);
 
     private static final String TOKEN_CACHE_MANAGER = "org.opendaylight.aaa";
     private static final String TOKEN_CACHE_FOLDER = "data/tokens-ehcache";
@@ -49,7 +49,7 @@ public class H2TokenStore implements AutoCloseable, TokenStore {
     private final PersistentCacheManager cacheManager;
     private final long secondsToLive;
 
-    public H2TokenStore(final long secondsToLive, final long secondsToIdle) {
+    public AuthenticationTokenStore(final long secondsToLive, final long secondsToIdle) {
         this.secondsToLive = secondsToIdle;
         final var cacheConfiguration = CacheConfigurationBuilder
             .newCacheConfigurationBuilder(String.class, Authentication.class, RESOURCE_POOLS_BUILDER)
