@@ -12,7 +12,7 @@ import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.PasswordCredentialAuth;
 import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.api.TokenStore;
-import org.opendaylight.aaa.datastore.h2.H2TokenStore;
+import org.opendaylight.aaa.datastore.h2.AuthenticationTokenStore;
 import org.opendaylight.aaa.tokenauthrealm.auth.HttpBasicAuth;
 import org.opendaylight.aaa.tokenauthrealm.auth.TokenAuthenticators;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.DatastoreConfig;
@@ -35,7 +35,7 @@ public final class AAAShiroProvider implements AutoCloseable {
                             final DatastoreConfig datastoreConfig,
                             final IIDMStore iidmStore) {
         if (datastoreConfig != null && datastoreConfig.getStore() == DatastoreConfig.Store.H2DataStore) {
-            tokenStore = new H2TokenStore(datastoreConfig.getTimeToLive().longValue(),
+            tokenStore = new AuthenticationTokenStore(datastoreConfig.getTimeToLive().longValue(),
                 datastoreConfig.getTimeToWait().longValue());
 
             initializeIIDMStore(iidmStore);
