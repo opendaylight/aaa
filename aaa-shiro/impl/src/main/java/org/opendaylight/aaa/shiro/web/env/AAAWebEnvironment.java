@@ -11,7 +11,6 @@ package org.opendaylight.aaa.shiro.web.env;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.web.env.IniWebEnvironment;
 import org.opendaylight.aaa.api.AuthenticationService;
-import org.opendaylight.aaa.api.TokenStore;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.shiro.realm.KeystoneAuthRealm;
@@ -37,8 +36,8 @@ public final class AAAWebEnvironment extends IniWebEnvironment implements AAAShi
 
     public AAAWebEnvironment(final ShiroIni shiroConfiguration, final DataBroker dataBroker,
             final ICertificateManager certificateManager, final AuthenticationService authenticationService,
-            final TokenAuthenticators tokenAuthenticators, final TokenStore tokenStore,
-            final PasswordHashService passwordHashService, final ServletSupport servletSupport) {
+            final TokenAuthenticators tokenAuthenticators, final PasswordHashService passwordHashService,
+            final ServletSupport servletSupport) {
         // Turn ShiroConfiguration into an Ini
         final var ini = new Ini();
 
@@ -63,8 +62,7 @@ public final class AAAWebEnvironment extends IniWebEnvironment implements AAAShi
                  var keyStoneLoad = KeystoneAuthRealm.prepareForLoad(certificateManager, servletSupport);
                  var mdsalLoad = MdsalRealm.prepareForLoad(passwordHashService, dataBroker);
                  var moonLoad = MoonRealm.prepareForLoad(servletSupport);
-                 var tokenAuthLoad = TokenAuthRealm.prepareForLoad(authenticationService, tokenAuthenticators,
-                     tokenStore)) {
+                 var tokenAuthLoad = TokenAuthRealm.prepareForLoad(authenticationService, tokenAuthenticators)) {
                 configure();
             }
         });

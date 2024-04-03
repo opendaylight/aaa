@@ -40,9 +40,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument>
       <bean factory-ref="provider" factory-method="getTokenAuthenticators"/>
     </argument>
-    <argument>
-      <bean factory-ref="provider" factory-method="getTokenStore"/>
-    </argument>
     <argument ref="passwordService"/>
     <argument ref="servletSupport"/>
   </bean>
