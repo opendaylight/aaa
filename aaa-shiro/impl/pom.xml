@@ -39,10 +39,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-tokenauthrealm</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-idm-store-h2</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
@@ -90,15 +86,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <optional>true</optional>
         </dependency>
 
-        <dependency>
-            <groupId>net.sf.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.immutables</groupId>
-            <artifactId>value</artifactId>
-            <classifier>annotations</classifier>
-        </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
