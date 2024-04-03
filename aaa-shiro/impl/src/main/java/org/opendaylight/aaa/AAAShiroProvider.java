@@ -11,8 +11,6 @@ import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.PasswordCredentialAuth;
 import org.opendaylight.aaa.api.StoreBuilder;
-import org.opendaylight.aaa.api.TokenStore;
-import org.opendaylight.aaa.datastore.h2.H2TokenStore;
 import org.opendaylight.aaa.tokenauthrealm.auth.HttpBasicAuth;
 import org.opendaylight.aaa.tokenauthrealm.auth.TokenAuthenticators;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.DatastoreConfig;
@@ -25,7 +23,6 @@ import org.slf4j.LoggerFactory;
 public final class AAAShiroProvider implements AutoCloseable {
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
-    private final TokenStore tokenStore;
     private final TokenAuthenticators tokenAuthenticators;
 
     /**
@@ -35,15 +32,11 @@ public final class AAAShiroProvider implements AutoCloseable {
                             final DatastoreConfig datastoreConfig,
                             final IIDMStore iidmStore) {
         if (datastoreConfig != null && datastoreConfig.getStore() == DatastoreConfig.Store.H2DataStore) {
-            tokenStore = new H2TokenStore(datastoreConfig.getTimeToLive().longValue(),
-                datastoreConfig.getTimeToWait().longValue());
-
             initializeIIDMStore(iidmStore);
 
             tokenAuthenticators = new TokenAuthenticators(new HttpBasicAuth(credentialAuth));
             LOG.info("AAAShiroProvider Session Initiated");
         } else {
-            tokenStore = null;
             tokenAuthenticators = new TokenAuthenticators();
             LOG.info("AAA Datastore has not been initialized");
         }
@@ -63,10 +56,6 @@ public final class AAAShiroProvider implements AutoCloseable {
         } catch (final IDMStoreException e) {
             LOG.error("Failed to initialize data in store", e);
         }
-    }
-
-    public TokenStore getTokenStore() {
-        return tokenStore;
     }
 
     public TokenAuthenticators getTokenAuthenticators() {
