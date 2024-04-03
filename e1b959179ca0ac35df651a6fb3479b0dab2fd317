@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c3d4b3d_75e69467",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-04-03T10:29:24Z",
+      "side": 1,
+      "message": "You need your own JIRA.",
+      "revId": "e1b959179ca0ac35df651a6fb3479b0dab2fd317",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
