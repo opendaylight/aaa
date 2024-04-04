@@ -16,6 +16,23 @@
       "message": "`odl-aaa-shiro/pom.xml` has a dependency for ehcache:\nhttps://github.com/opendaylight/aaa/blob/master/features/odl-aaa-shiro/pom.xml#L141",
       "revId": "c10e8d405ff249944333a8920d7cdcf097dfc88f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8de0eff4_a2c2d218",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-04-04T16:37:08Z",
+      "side": 1,
+      "message": "WebSecurityManager also contains some note about it 😊",
+      "revId": "c10e8d405ff249944333a8920d7cdcf097dfc88f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
