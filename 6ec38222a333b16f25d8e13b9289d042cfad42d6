@@ -16,6 +16,24 @@
       "message": "JIRA: AAA-276",
       "revId": "6ec38222a333b16f25d8e13b9289d042cfad42d6",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "942d0e9b_a3748aa3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-04-05T12:49:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d587eb22_500e4ef7",
+      "revId": "6ec38222a333b16f25d8e13b9289d042cfad42d6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
