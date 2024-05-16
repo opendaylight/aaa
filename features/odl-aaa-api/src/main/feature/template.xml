@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.6.0" name="odl-aaa-api">
+    <repository>mvn:org.opendaylight.odlparent/odl-jakarta-activation-api/{{versionAsInProject}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.odlparent/odl-servlet-api/{{versionAsInProject}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.odlparent/odl-ws-rs-api/{{versionAsInProject}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.mdsal/odl-mdsal-binding-base/{{versionAsInProject}}/xml/features</repository>
+    <feature name="odl-aaa-api">
+        <feature version="[13,14)">odl-jakarta-activation-api</feature>
+        <feature version="[13,14)">odl-servlet-api</feature>
+        <feature version="[13,14)">odl-ws-rs-api</feature>
+        <feature version="[13,14)">odl-mdsal-binding-base</feature>
+        <bundle>mvn:org.opendaylight.aaa/aaa-authn-api/{{versionAsInProject}}</bundle>
+    </feature>
+</features>

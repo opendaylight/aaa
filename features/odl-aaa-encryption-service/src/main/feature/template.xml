@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.6.0" name="odl-aaa-encryption-service">
+    <repository>mvn:org.opendaylight.controller/odl-mdsal-broker/{{versionAsInProject}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.controller/odl-controller-blueprint/{{versionAsInProject}}/xml/features</repository>
+    <feature name="odl-aaa-encryption-service">
+        <feature version="[9,10)">odl-mdsal-broker</feature>
+        <feature version="[9,10)">odl-controller-blueprint</feature>
+        <bundle>mvn:org.opendaylight.aaa/aaa-encrypt-service/{{versionAsInProject}}</bundle>
+        <bundle>mvn:org.opendaylight.aaa/aaa-encrypt-service-impl/{{versionAsInProject}}</bundle>
+    </feature>
+</features>
