@@ -10,37 +10,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.opendaylight.odlparent</groupId>
-        <artifactId>single-feature-parent</artifactId>
-        <version>13.1.2</version>
-        <relativePath/>
+        <groupId>org.opendaylight.aaa</groupId>
+        <artifactId>feature-parent</artifactId>
+        <version>0.19.5-SNAPSHOT</version>
+        <relativePath>../parent</relativePath>
     </parent>
 
-    <groupId>org.opendaylight.aaa</groupId>
     <artifactId>odl-aaa-encryption-service</artifactId>
-    <version>0.19.5-SNAPSHOT</version>
     <packaging>feature</packaging>
-
     <name>ODL :: aaa :: ${project.artifactId}</name>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.opendaylight.controller</groupId>
-                <artifactId>controller-artifacts</artifactId>
-                <version>9.0.3</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-artifacts</artifactId>
-                <version>${project.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <!-- MD-SAL -->
