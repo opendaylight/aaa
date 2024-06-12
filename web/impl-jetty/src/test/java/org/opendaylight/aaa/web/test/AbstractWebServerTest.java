@@ -32,6 +32,7 @@ public abstract class AbstractWebServerTest {
     @Test
     public void testAddAfterStart() throws Exception {
         var webContext = WebContext.builder()
+            .name("test")
             .contextPath("/test1")
             .addServlet(ServletDetails.builder().addUrlPattern("/*").name("Test").servlet(new TestServlet()).build())
             .build();
@@ -53,6 +54,7 @@ public abstract class AbstractWebServerTest {
     public void testAddFilter() throws Exception {
         var testFilter = new TestFilter();
         var webContext = WebContext.builder()
+            .name("testFilter")
             .contextPath("/testingFilters")
             .putContextParam("testParam1", "avalue")
             .addFilter(FilterDetails.builder().addUrlPattern("/*").name("Test").filter(testFilter).build())
@@ -77,6 +79,7 @@ public abstract class AbstractWebServerTest {
     public void testRegisterListener() throws Exception {
         var testListener = new TestListener();
         var webContext = WebContext.builder()
+            .name("testListen")
             .contextPath("/testingListener")
             .addListener(testListener)
             .build();
