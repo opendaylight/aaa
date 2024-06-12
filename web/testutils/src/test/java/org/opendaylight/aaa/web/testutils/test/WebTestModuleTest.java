@@ -10,9 +10,7 @@ package org.opendaylight.aaa.web.testutils.test;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import javax.inject.Inject;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,8 +37,9 @@ public class WebTestModuleTest {
     @Inject TestWebClient webClient;
 
     @Test
-    public void testServlet() throws ServletException, IOException, InterruptedException, URISyntaxException {
+    public void testServlet() throws Exception {
         var webContext = WebContext.builder()
+            .name("test")
             .contextPath("/test1")
             .addServlet(ServletDetails.builder()
                 .addUrlPattern("/hello")
