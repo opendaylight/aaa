@@ -282,7 +282,7 @@ public interface WebContext {
                 throw new IllegalStateException("No contextPath specified");
             }
 
-            return new ImmutableWebContext(name != null ? name : contextPath + ".id", contextPath, servlets.build(),
+            return new ImmutableWebContext(name != null ? name : contextPath + "-id", contextPath, servlets.build(),
                 filters.build(), listeners.build(), resources.build(), contextParams.build(), supportsSessions);
         }
     }
