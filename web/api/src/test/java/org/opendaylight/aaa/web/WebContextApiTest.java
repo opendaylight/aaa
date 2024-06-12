@@ -37,13 +37,14 @@ public class WebContextApiTest {
 
     @Test
     public void testMinimalBuilder() {
-        assertTrue(WebContext.builder().contextPath("/test").build().supportsSessions());
-        assertEquals("/test", WebContext.builder().contextPath("/test").supportsSessions(false).build().contextPath());
+        assertTrue(WebContext.builder().name("test").contextPath("/test").build().supportsSessions());
+        assertEquals("/test",
+            WebContext.builder().name("test").contextPath("/test").supportsSessions(false).build().contextPath());
     }
 
     @Test
     public void testAddSimpleServlet() {
-        WebContext webContext = WebContext.builder().contextPath("/test")
+        WebContext webContext = WebContext.builder().name("test").contextPath("/test")
                 .addServlet(ServletDetails.builder().servlet(mock(Servlet.class)).addUrlPattern("/test").build())
                 .build();
         assertThat(webContext.servlets(), hasSize(1));
@@ -54,27 +55,27 @@ public class WebContextApiTest {
 
     @Test
     public void testAddFullServlet() {
-        WebContext.builder().contextPath("/test").addServlet(ServletDetails.builder().servlet(mock(Servlet.class))
-                .addUrlPattern("/test").addUrlPattern("/another").name("custom").putInitParam("key", "value").build())
-                .build();
+        WebContext.builder().name("test").contextPath("/test").addServlet(ServletDetails.builder()
+            .servlet(mock(Servlet.class)).addUrlPattern("/test").addUrlPattern("/another").name("custom")
+            .putInitParam("key", "value").build()).build();
     }
 
     @Test
     public void testAddFilter() {
-        WebContext.builder().contextPath("/test")
+        WebContext.builder().name("test").contextPath("/test")
             .addFilter(FilterDetails.builder().filter(mock(Filter.class)).addUrlPattern("/test").build()).build();
     }
 
     @Test
     public void testAddListener() {
-        assertThat(WebContext.builder().contextPath("/test").addListener(mock(ServletContextListener.class)).build()
-                .listeners(), hasSize(1));
+        assertThat(WebContext.builder().name("test").contextPath("/test").addListener(mock(ServletContextListener.class))
+            .build().listeners(), hasSize(1));
     }
 
     @Test
     public void testContextParam() {
-        assertEquals(Map.of("key", "value"),
-            WebContext.builder().contextPath("/test").putContextParam("key", "value").build().contextParams());
+        assertEquals(Map.of("key", "value"), WebContext.builder().name("test").contextPath("/test")
+            .putContextParam("key", "value").build().contextParams());
     }
 
     @Test
@@ -84,6 +85,13 @@ public class WebContextApiTest {
         assertBadContextPath("Context path 'test space' does not start with '/'", "test space");
         assertBadContextPath("Context path 'test/' does not start with '/'", "test/");
         assertBadContextPath("Context path '/test/' ends with '/'", "/test/");
+    }
+
+    @Test
+    public void testNoName() {
+        final var ex = assertThrows(IllegalStateException.class,
+            () -> WebContext.builder().contextPath("/test").build());
+        assertEquals("No name specified", ex.getMessage());
     }
 
     private static void assertBadContextPath(final String expectedMessage, final String contextPath) {

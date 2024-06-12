@@ -278,12 +278,15 @@ public interface WebContext {
          * @throws IllegalStateException if any required attributes are missing
          */
         public @NonNull WebContext build() {
+            if (name == null) {
+                throw new IllegalStateException("No name specified");
+            }
             if (contextPath == null) {
                 throw new IllegalStateException("No contextPath specified");
             }
 
-            return new ImmutableWebContext(name != null ? name : contextPath + ".id", contextPath, servlets.build(),
-                filters.build(), listeners.build(), resources.build(), contextParams.build(), supportsSessions);
+            return new ImmutableWebContext(name, contextPath, servlets.build(), filters.build(), listeners.build(),
+                resources.build(), contextParams.build(), supportsSessions);
         }
     }
 }
