@@ -91,9 +91,9 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(innerPolicies.getDescription()).thenReturn(description);
         when(innerPolicies.nonnullPermissions()).thenReturn(List.of(permissions));
         final Policies policies = mock(Policies.class);
-        when(policies.getPolicies()).thenReturn(List.of(innerPolicies));
+        when(policies.nonnullPolicies()).thenReturn(List.of(innerPolicies));
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
-        when(httpAuthorization.getPolicies()).thenReturn(policies);
+        when(httpAuthorization.nonnullPolicies()).thenReturn(policies);
 
         return mockDataBroker(httpAuthorization);
     }
@@ -116,9 +116,9 @@ public class MDSALDynamicAuthorizationFilterTest {
         // Same as above, but with an empty policy list returned.
 
         final Policies policies = mock(Policies.class);
-        when(policies.getPolicies()).thenReturn(List.of());
+        when(policies.nonnullPolicies()).thenReturn(List.of());
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
-        when(httpAuthorization.getPolicies()).thenReturn(policies);
+        when(httpAuthorization.nonnullPolicies()).thenReturn(policies);
         filter = newFilter(mock(Subject.class), mockDataBroker(httpAuthorization));
 
         assertTrue(filter.isAccessAllowed(request, null, null));
@@ -230,9 +230,9 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(innerPolicies2.nonnullPermissions()).thenReturn(List.of(permissions2));
         when(innerPolicies2.getDescription()).thenReturn("Specialized Rule");
         final Policies policies = mock(Policies.class);
-        when(policies.getPolicies()).thenReturn(List.of(innerPolicies, innerPolicies2));
+        when(policies.nonnullPolicies()).thenReturn(List.of(innerPolicies, innerPolicies2));
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
-        when(httpAuthorization.getPolicies()).thenReturn(policies);
+        when(httpAuthorization.nonnullPolicies()).thenReturn(policies);
 
         final Subject subject = mock(Subject.class);
         final MDSALDynamicAuthorizationFilter filter = newFilter(subject, mockDataBroker(httpAuthorization));
@@ -266,7 +266,7 @@ public class MDSALDynamicAuthorizationFilterTest {
         // Now reverse the ordering of the rules, and ensure that access is denied (except for
         // the first non-applicable rule, which should still be allowed).  This is
         // because the Subject making the request is not granted the "dog" role.
-        when(policies.getPolicies()).thenReturn(List.of(innerPolicies2, innerPolicies));
+        when(policies.nonnullPolicies()).thenReturn(List.of(innerPolicies2, innerPolicies));
         // Modify Index to ensure the innerPolicies2 actually gets
         // used instead of innerPolicies
         when(innerPolicies2.getIndex()).thenReturn(Uint32.valueOf(4));
@@ -299,9 +299,9 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(innerPolicies.getDescription()).thenReturn(description);
         when(innerPolicies.nonnullPermissions()).thenReturn(List.of(permissions, permissions2));
         final Policies policies = mock(Policies.class);
-        when(policies.getPolicies()).thenReturn(List.of(innerPolicies));
+        when(policies.nonnullPolicies()).thenReturn(List.of(innerPolicies));
         final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
-        when(httpAuthorization.getPolicies()).thenReturn(policies);
+        when(httpAuthorization.nonnullPolicies()).thenReturn(policies);
 
         final Subject subject = mock(Subject.class);
         final MDSALDynamicAuthorizationFilter filter = newFilter(subject, mockDataBroker(httpAuthorization));

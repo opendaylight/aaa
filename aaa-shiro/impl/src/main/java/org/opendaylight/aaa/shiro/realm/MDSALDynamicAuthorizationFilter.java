@@ -14,7 +14,6 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import javax.servlet.Filter;
@@ -122,16 +121,15 @@ public class MDSALDynamicAuthorizationFilter extends AuthorizationFilter impleme
         }
 
         final HttpAuthorization httpAuthorization = authorizationOptional.orElseThrow();
-        final var policies = httpAuthorization.getPolicies();
-        List<Policies> policiesList = policies != null ? policies.getPolicies() : null;
-        if (policiesList == null || policiesList.isEmpty()) {
+        final var policies = httpAuthorization.nonnullPolicies().nonnullPolicies();
+        if (policies.isEmpty()) {
             // The authorization container exists, but no rules are present.  Allow access.
             LOG.debug("Exiting successfully early since no authorization rules exist");
             return true;
         }
 
         // Sort the Policies list based on index
-        policiesList = new ArrayList<>(policiesList);
+        final var policiesList = new ArrayList<>(policies);
         policiesList.sort(Comparator.comparing(Policies::getIndex));
 
         for (Policies policy : policiesList) {
