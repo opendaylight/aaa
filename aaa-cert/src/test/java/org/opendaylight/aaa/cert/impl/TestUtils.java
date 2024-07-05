@@ -19,6 +19,7 @@ import org.opendaylight.mdsal.binding.api.WriteTransaction;
 import org.opendaylight.mdsal.common.api.CommitInfo;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslData;
 import org.opendaylight.yangtools.util.concurrent.FluentFutures;
+import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 
 /**
  * Utilities for test, the certificate needs to be updated yearly.
@@ -52,8 +53,8 @@ public final class TestUtils {
 
     public static DataBroker mockDataBroker(final SslData sslData) throws Exception {
         final ReadTransaction readOnlyTransaction = mock(ReadTransaction.class);
-        when(readOnlyTransaction.read(any(), any())).thenReturn(FluentFutures.immediateFluentFuture(
-            Optional.of(sslData)));
+        when(readOnlyTransaction.read(any(), any(InstanceIdentifier.class)))
+            .thenReturn(FluentFutures.immediateFluentFuture(Optional.of(sslData)));
 
         final WriteTransaction writeTransaction = mock(WriteTransaction.class);
         doReturn(CommitInfo.emptyFluentFuture()).when(writeTransaction).commit();
