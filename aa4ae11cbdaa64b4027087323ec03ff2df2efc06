@@ -16,6 +16,23 @@
       "message": "recheck",
       "revId": "aa4ae11cbdaa64b4027087323ec03ff2df2efc06",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cae9faf6_2d18aaa4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-07-15T10:59:57Z",
+      "side": 1,
+      "message": "This branch is no more supported.",
+      "revId": "aa4ae11cbdaa64b4027087323ec03ff2df2efc06",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
