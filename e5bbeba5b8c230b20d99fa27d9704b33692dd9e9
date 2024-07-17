@@ -138,6 +138,24 @@
       "message": "I would expect that names/the purpose of the tests are intact 😞.",
       "revId": "e5bbeba5b8c230b20d99fa27d9704b33692dd9e9",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e50f4eb_11a16d03",
+        "filename": "aaa-encrypt-service/impl/src/test/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptServiceImplTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 9173
+      },
+      "writtenOn": "2024-07-17T15:48:41Z",
+      "side": 1,
+      "message": "Since we don\u0027t have padding for GCM, those tests which I have deleted are useless. The names of others were changed because they didn\u0027t expose the real purpose of the tests. I saved everything I could",
+      "parentUuid": "367f95a3_4067e43e",
+      "revId": "e5bbeba5b8c230b20d99fa27d9704b33692dd9e9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
