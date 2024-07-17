@@ -70,6 +70,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a097fb5e_d96057c0",
+        "filename": "aaa-encrypt-service/impl/src/main/yang/aaa-encrypt-service-config.yang",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 9173
+      },
+      "writtenOn": "2024-07-17T15:43:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34f19ffd_7175bb79",
+      "revId": "e5bbeba5b8c230b20d99fa27d9704b33692dd9e9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9795bfad_7dbd230a",
