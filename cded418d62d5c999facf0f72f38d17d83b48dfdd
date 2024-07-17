@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa717b8a_a5c6f15f",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 9173
+      },
+      "writtenOn": "2024-07-17T15:33:17Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c45688ea_6d2f0959",
+      "revId": "cded418d62d5c999facf0f72f38d17d83b48dfdd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9417ab5a_3f728e11",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-07-15T14:21:51Z",
       "side": 0,
       "message": "Lets not make change to this logic in this patch - create encrypt/decrypt ciphers here.",
+      "revId": "cded418d62d5c999facf0f72f38d17d83b48dfdd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e25c0ca6_ace5f157",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 9173
+      },
+      "writtenOn": "2024-07-17T15:33:17Z",
+      "side": 0,
+      "message": "Cannot move the creation of ciphers into the constructor. We must create new ones every time because of \norg.opentest4j.AssertionFailedError: IllegalStateException thrown: Must use either different key or  iv for GCM encryption https://github.com/openjdk/jdk/blob/6df7acbc74922d297852044596045a8b32636423/src/java.base/share/classes/com/sun/crypto/provider/GaloisCounterMode.java#L322C10-L322C21",
+      "parentUuid": "9417ab5a_3f728e11",
       "revId": "cded418d62d5c999facf0f72f38d17d83b48dfdd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
