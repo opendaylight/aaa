@@ -252,6 +252,20 @@ class MDSALDynamicAuthorizationFilterTest {
         assertTrue(filter.isAccessAllowed(request, null, null));
     }
 
+    @Test
+    public void testWithoutPermissions() throws Exception {
+        final var resource = "/**";
+        when(innerPolicies.getResource()).thenReturn(resource);
+
+        // return policy without permissions
+        when(policies.nonnullPolicies()).thenReturn(List.of(innerPolicies));
+        when(httpAuthorization.nonnullPolicies()).thenReturn(policies);
+
+        final var filter = newFilter(subject, mockDataBroker(httpAuthorization));
+        when(request.getRequestURI()).thenReturn("/abc");
+        assertFalse(filter.isAccessAllowed(request, null, null));
+    }
+
     private static DataBroker mockDataBroker(final Object readData) {
         final var readOnlyTransaction = mock(ReadTransaction.class);
         if (readData instanceof DataObject dataObject) {
