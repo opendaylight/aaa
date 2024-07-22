@@ -316,4 +316,32 @@ public class MDSALDynamicAuthorizationFilterTest {
         when(request.getMethod()).thenReturn("Get");
         assertTrue(filter.isAccessAllowed(request, null, null));
     }
+
+    @Test
+    public void testNullPermissions() throws Exception {
+        // admin can do anything
+        final var resource = "/**";
+        final var description = "Test description";
+        final var innerPolicies = mock(org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214
+            .http.authorization.policies.Policies.class);
+        when(innerPolicies.getResource()).thenReturn(resource);
+        when(innerPolicies.getDescription()).thenReturn(description);
+
+        // Return null permissions
+        when(innerPolicies.getPermissions()).thenReturn(null);
+        final var policies = mock(Policies.class);
+        when(policies.getPolicies()).thenReturn(List.of(innerPolicies));
+        final var httpAuthorization = mock(HttpAuthorization.class);
+        when(httpAuthorization.getPolicies()).thenReturn(policies);
+
+        final var subject = mock(Subject.class);
+        final var filter = newFilter(subject, mockDataBroker(httpAuthorization));
+
+        final var request = mock(HttpServletRequest.class);
+        when(request.getRequestURI()).thenReturn("/abc");
+        when(request.getMethod()).thenReturn("Put");
+
+        when(request.getMethod()).thenReturn("Get");
+        assertFalse(filter.isAccessAllowed(request, null, null));
+    }
 }
