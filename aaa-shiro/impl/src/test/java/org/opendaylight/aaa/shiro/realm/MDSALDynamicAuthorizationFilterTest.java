@@ -7,8 +7,8 @@
  */
 package org.opendaylight.aaa.shiro.realm;
 
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -24,7 +24,10 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.subject.Subject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.mdsal.binding.api.ReadTransaction;
 import org.opendaylight.mdsal.common.api.ReadFailedException;
@@ -39,74 +42,37 @@ import org.opendaylight.yangtools.yang.common.Uint32;
  * Tests the Dynamic Authorization Filter.
  */
 @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
-public class MDSALDynamicAuthorizationFilterTest {
+@ExtendWith(MockitoExtension.class)
+class MDSALDynamicAuthorizationFilterTest {
+    private static final Set<Permissions.Actions> ACTIONS_SET = Set.of(Permissions.Actions.Get, Permissions.Actions.Put,
+        Permissions.Actions.Delete, Permissions.Actions.Patch, Permissions.Actions.Post);
 
-    private static DataBroker mockDataBroker(final Object readData) {
-        final ReadTransaction readOnlyTransaction = mock(ReadTransaction.class);
-
-        if (readData instanceof DataObject dataObject) {
-            doReturn(immediateFluentFuture(Optional.of(dataObject)))
-                    .when(readOnlyTransaction).read(any(), any(InstanceIdentifier.class));
-        } else if (readData instanceof Exception cause) {
-            doReturn(immediateFailedFluentFuture(cause)).when(readOnlyTransaction)
-                .read(any(), any(InstanceIdentifier.class));
-        } else {
-            doReturn(immediateFluentFuture(Optional.empty())).when(readOnlyTransaction)
-                .read(any(), any(InstanceIdentifier.class));
-        }
-
-        final DataBroker mockDataBroker = mock(DataBroker.class);
-        when(mockDataBroker.newReadOnlyTransaction()).thenReturn(readOnlyTransaction);
-        return mockDataBroker;
-    }
-
-    private static MDSALDynamicAuthorizationFilter newFilter(final Subject subject, final DataBroker dataBroker)
-            throws ServletException {
-        final var ret = new MDSALDynamicAuthorizationFilter(dataBroker) {
-            @Override
-            protected Subject getSubject(final ServletRequest request, final ServletResponse servletResponse) {
-                return subject;
-            }
-        };
-
-        ret.processPathConfig("test-path","test-config");
-        return ret;
-    }
-
-    // test helper method to generate some cool mdsal data
-    private static DataBroker getTestData() {
-        return getTestData("/**", "admin", "Default Test AuthZ Rule", Permissions.Actions.Put);
-    }
-
-    // test helper method to generate some cool mdsal data
-    private static DataBroker getTestData(final String resource, final String role, final String description,
-            final Permissions.Actions actions) {
-
-        final Permissions permissions = mock(Permissions.class);
-        when(permissions.getRole()).thenReturn(role);
-        when(permissions.getActions()).thenReturn(Set.of(actions));
-        final var innerPolicies = mock(org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214
-            .http.authorization.policies.Policies.class);
-        when(innerPolicies.getResource()).thenReturn(resource);
-        when(innerPolicies.getDescription()).thenReturn(description);
-        when(innerPolicies.nonnullPermissions()).thenReturn(List.of(permissions));
-        final Policies policies = mock(Policies.class);
-        when(policies.nonnullPolicies()).thenReturn(List.of(innerPolicies));
-        final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
-        when(httpAuthorization.nonnullPolicies()).thenReturn(policies);
-
-        return mockDataBroker(httpAuthorization);
-    }
+    @Mock
+    private HttpServletRequest request;
+    @Mock
+    private HttpAuthorization httpAuthorization;
+    @Mock
+    private Policies policies;
+    @Mock
+    private org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies
+        .Policies innerPolicies;
+    @Mock
+    private org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.policies
+        .Policies innerPolicies2;
+    @Mock
+    private Subject subject;
+    @Mock
+    private Permissions permissions;
+    @Mock
+    private Permissions permissions2;
 
     @Test
-    public void testBasicAccessWithNoRules() throws Exception {
-        final HttpServletRequest request = mock(HttpServletRequest.class);
+    void testBasicAccessWithNoRules() throws Exception {
         when(request.getRequestURI()).thenReturn("abc");
-        when(request.getMethod()).thenReturn("Put");
 
         //
         // Test Setup: No rules are added to the HttpAuthorization container.  Open access should be allowed.
-        MDSALDynamicAuthorizationFilter filter = newFilter(mock(Subject.class), mockDataBroker(null));
+        var filter = newFilter(subject, mockDataBroker(null));
 
         // Ensure that access is allowed since no data is returned from the MDSAL read.
         // This is through making sure the Optional is not present.
@@ -114,35 +80,28 @@ public class MDSALDynamicAuthorizationFilterTest {
 
         //
         // Same as above, but with an empty policy list returned.
-
-        final Policies policies = mock(Policies.class);
         when(policies.nonnullPolicies()).thenReturn(List.of());
-        final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
         when(httpAuthorization.nonnullPolicies()).thenReturn(policies);
-        filter = newFilter(mock(Subject.class), mockDataBroker(httpAuthorization));
+        filter = newFilter(subject, mockDataBroker(httpAuthorization));
 
         assertTrue(filter.isAccessAllowed(request, null, null));
     }
 
     @Test
-    public void testMDSALExceptionDuringRead() throws Exception {
+    void testMDSALExceptionDuringRead() throws Exception {
         // Test Setup: No rules are added to the HttpAuthorization container.  The MDSAL read
         // is instructed to return an immediateFailedFluentFuture, to emulate an error in reading
         // the Data Store.
-
-        final HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getRequestURI()).thenReturn("abc");
-        when(request.getMethod()).thenReturn("Put");
 
-        MDSALDynamicAuthorizationFilter filter = newFilter(mock(Subject.class),
-                mockDataBroker(new ReadFailedException("Test Fail")));
+        final var filter = newFilter(subject, mockDataBroker(new ReadFailedException("Test Fail")));
 
         // Ensure that if an error occurs while reading MD-SAL that access is denied.
         assertFalse(filter.isAccessAllowed(request, null, null));
     }
 
     @Test
-    public void testBasicAccessWithOneRule() throws Exception {
+    void testBasicAccessWithOneRule() throws Exception {
 
         //
         // Test Setup:
@@ -150,10 +109,14 @@ public class MDSALDynamicAuthorizationFilterTest {
         // A Rule is added to match /** allowing HTTP PUT for the admin role.
         // All other Methods are considered unauthorized.
 
-        final Subject subject = mock(Subject.class);
-        final MDSALDynamicAuthorizationFilter filter = newFilter(subject, getTestData());
+        when(permissions.getRole()).thenReturn("admin");
+        when(permissions.getActions()).thenReturn(Set.of(Permissions.Actions.Put));
+        when(innerPolicies.getResource()).thenReturn("/**");
+        when(innerPolicies.nonnullPermissions()).thenReturn(List.of(permissions));
+        when(policies.nonnullPolicies()).thenReturn(List.of(innerPolicies));
+        when(httpAuthorization.nonnullPolicies()).thenReturn(policies);
 
-        final HttpServletRequest request = mock(HttpServletRequest.class);
+        final var filter = newFilter(subject, mockDataBroker(httpAuthorization));
         when(request.getRequestURI()).thenReturn("abc");
         when(request.getMethod()).thenReturn("Put");
         when(subject.hasRole("admin")).thenReturn(true);
@@ -199,45 +162,29 @@ public class MDSALDynamicAuthorizationFilterTest {
     }
 
     @Test
-    public void testSeveralMatchingRules() throws Exception {
+    void testSeveralMatchingRules() throws Exception {
         //
         // Test Setup:
         //
         // Create some mock data which has a couple of rules which may/may not match.  This
         // test ensures the correct application of said rules.
-        final Set<Permissions.Actions> actionsList = Set.of(Permissions.Actions.Get, Permissions.Actions.Delete,
-            Permissions.Actions.Patch, Permissions.Actions.Put, Permissions.Actions.Post);
-        final String role = "admin";
-        final String resource = "/**";
-        final String resource2 = "/specialendpoint/**";
-        final String description = "All encompassing rule";
-        final Permissions permissions = mock(Permissions.class);
+        final var role = "admin";
+        final var resource = "/**";
+        final var resource2 = "/specialendpoint/**";
         when(permissions.getRole()).thenReturn(role);
-        when(permissions.getActions()).thenReturn(actionsList);
-        final var innerPolicies = mock(org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214
-            .http.authorization.policies.Policies.class);
+        when(permissions.getActions()).thenReturn(ACTIONS_SET);
         when(innerPolicies.getResource()).thenReturn(resource);
         when(innerPolicies.getIndex()).thenReturn(Uint32.valueOf(5));
-        when(innerPolicies.getDescription()).thenReturn(description);
         when(innerPolicies.nonnullPermissions()).thenReturn(List.of(permissions));
-        final var innerPolicies2 = mock(org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214
-            .http.authorization.policies.Policies.class);
         when(innerPolicies2.getResource()).thenReturn(resource2);
         when(innerPolicies2.getIndex()).thenReturn(Uint32.TEN);
-        final Permissions permissions2 = mock(Permissions.class);
         when(permissions2.getRole()).thenReturn("dog");
-        when(permissions2.getActions()).thenReturn(actionsList);
+        when(permissions2.getActions()).thenReturn(ACTIONS_SET);
         when(innerPolicies2.nonnullPermissions()).thenReturn(List.of(permissions2));
-        when(innerPolicies2.getDescription()).thenReturn("Specialized Rule");
-        final Policies policies = mock(Policies.class);
         when(policies.nonnullPolicies()).thenReturn(List.of(innerPolicies, innerPolicies2));
-        final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
         when(httpAuthorization.nonnullPolicies()).thenReturn(policies);
 
-        final Subject subject = mock(Subject.class);
-        final MDSALDynamicAuthorizationFilter filter = newFilter(subject, mockDataBroker(httpAuthorization));
-
-        final HttpServletRequest request = mock(HttpServletRequest.class);
+        final var filter = newFilter(subject, mockDataBroker(httpAuthorization));
         when(request.getRequestURI()).thenReturn("/abc");
         when(request.getMethod()).thenReturn("Put");
         when(subject.hasRole("admin")).thenReturn(true);
@@ -281,32 +228,20 @@ public class MDSALDynamicAuthorizationFilterTest {
     }
 
     @Test
-    public void testMultiplePolicies() throws Exception {
+    void testMultiplePolicies() throws Exception {
         // admin can do anything
-        final String role = "admin";
-        final String resource = "/**";
-        final String description = "Test description";
-        final Permissions permissions = mock(Permissions.class);
+        final var role = "admin";
+        final var resource = "/**";
         when(permissions.getRole()).thenReturn(role);
-        when(permissions.getActions()).thenReturn(Set.of(Permissions.Actions.Get, Permissions.Actions.Put,
-            Permissions.Actions.Delete, Permissions.Actions.Patch, Permissions.Actions.Post));
-        final Permissions permissions2 = mock(Permissions.class);
+        when(permissions.getActions()).thenReturn(ACTIONS_SET);
         when(permissions2.getRole()).thenReturn("user");
         when(permissions2.getActions()).thenReturn(Set.of(Permissions.Actions.Get));
-        final var innerPolicies = mock(org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214
-            .http.authorization.policies.Policies.class);
         when(innerPolicies.getResource()).thenReturn(resource);
-        when(innerPolicies.getDescription()).thenReturn(description);
         when(innerPolicies.nonnullPermissions()).thenReturn(List.of(permissions, permissions2));
-        final Policies policies = mock(Policies.class);
         when(policies.nonnullPolicies()).thenReturn(List.of(innerPolicies));
-        final HttpAuthorization httpAuthorization = mock(HttpAuthorization.class);
         when(httpAuthorization.nonnullPolicies()).thenReturn(policies);
 
-        final Subject subject = mock(Subject.class);
-        final MDSALDynamicAuthorizationFilter filter = newFilter(subject, mockDataBroker(httpAuthorization));
-
-        final HttpServletRequest request = mock(HttpServletRequest.class);
+        final var filter = newFilter(subject, mockDataBroker(httpAuthorization));
         when(request.getRequestURI()).thenReturn("/abc");
         when(request.getMethod()).thenReturn("Put");
         when(subject.hasRole("admin")).thenReturn(false);
@@ -315,5 +250,36 @@ public class MDSALDynamicAuthorizationFilterTest {
         assertFalse(filter.isAccessAllowed(request, null, null));
         when(request.getMethod()).thenReturn("Get");
         assertTrue(filter.isAccessAllowed(request, null, null));
+    }
+
+    private static DataBroker mockDataBroker(final Object readData) {
+        final var readOnlyTransaction = mock(ReadTransaction.class);
+        if (readData instanceof DataObject dataObject) {
+            doReturn(immediateFluentFuture(Optional.of(dataObject)))
+                .when(readOnlyTransaction).read(any(), any(InstanceIdentifier.class));
+        } else if (readData instanceof Exception cause) {
+            doReturn(immediateFailedFluentFuture(cause)).when(readOnlyTransaction)
+                .read(any(), any(InstanceIdentifier.class));
+        } else {
+            doReturn(immediateFluentFuture(Optional.empty())).when(readOnlyTransaction)
+                .read(any(), any(InstanceIdentifier.class));
+        }
+
+        final var mockDataBroker = mock(DataBroker.class);
+        when(mockDataBroker.newReadOnlyTransaction()).thenReturn(readOnlyTransaction);
+        return mockDataBroker;
+    }
+
+    private static MDSALDynamicAuthorizationFilter newFilter(final Subject subject, final DataBroker dataBroker)
+            throws ServletException {
+        final var ret = new MDSALDynamicAuthorizationFilter(dataBroker) {
+            @Override
+            protected Subject getSubject(final ServletRequest servletRequest, final ServletResponse servletResponse) {
+                return subject;
+            }
+        };
+
+        ret.processPathConfig("test-path","test-config");
+        return ret;
     }
 }
