@@ -16,6 +16,24 @@
       "message": "For new tests, use var wherever it can be used.",
       "revId": "32ae3606151ffb2f69adc83ac7d7266243e6d2e7",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "019917f3_434ce920",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/MDSALDynamicAuthorizationFilterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 9229
+      },
+      "writtenOn": "2024-07-23T08:10:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf26f1df_fa70ded5",
+      "revId": "32ae3606151ffb2f69adc83ac7d7266243e6d2e7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
