@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf26f1df_fa70ded5",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/MDSALDynamicAuthorizationFilterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 9255
+      },
+      "writtenOn": "2024-07-23T07:39:38Z",
+      "side": 1,
+      "message": "For new tests, use var wherever it can be used.",
+      "revId": "32ae3606151ffb2f69adc83ac7d7266243e6d2e7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
