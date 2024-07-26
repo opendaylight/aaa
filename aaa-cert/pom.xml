@@ -1,94 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Copyright (c) 2015, 2017 Inocybe Technology. All rights reserved.
-This program and the accompanying materials are made available under the
-terms of the Eclipse Public License v1.0 which accompanies this distribution,
-and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
--->
+ Copyright (c) 2024 PANTHEON.tech, s.r.o. and others. All rights reserved.
+
+ This program and the accompanying materials are made available under the
+ terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ and is available at http://www.eclipse.org/legal/epl-v10.html
+ -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.opendaylight.odlparent</groupId>
+        <artifactId>odlparent-lite</artifactId>
+        <version>14.0.2</version>
+        <relativePath/>
+    </parent>
 
-  <parent>
     <groupId>org.opendaylight.aaa</groupId>
-    <artifactId>aaa-parent</artifactId>
+    <artifactId>aaa-cert</artifactId>
     <version>0.20.0-SNAPSHOT</version>
-    <relativePath>../parent</relativePath>
-  </parent>
+    <name>ODL :: aaa :: ${project.artifactId}</name>
+    <packaging>pom</packaging>
 
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.opendaylight.aaa</groupId>
-  <artifactId>aaa-cert</artifactId>
-  <name>ODL :: aaa :: ${project.artifactId}</name>
-  <packaging>bundle</packaging>
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <maven.install.skip>true</maven.install.skip>
+    </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>com.github.spotbugs</groupId>
-      <artifactId>spotbugs-annotations</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.bouncycastle</groupId>
-      <artifactId>bcpkix-jdk18on</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.bouncycastle</groupId>
-      <artifactId>bcprov-jdk18on</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.aaa</groupId>
-      <artifactId>aaa-encrypt-service</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.mdsal</groupId>
-      <artifactId>mdsal-binding-api</artifactId>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Export-Package>
-              org.opendaylight.aaa.cert.api.*,
-              org.opendaylight.aaa.cert.impl.*,
-              org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.*
-            </Export-Package>
-            <Provide-Capability>
-              osgi.service;objectClass:List&lt;String&gt;="org.opendaylight.aaa.cert.api.ICertificateManager";uses:="org.opendaylight.aaa.cert.api"
-            </Provide-Capability>
-          </instructions>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>build-helper-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-artifacts</id>
-            <goals>
-              <goal>attach-artifact</goal>
-            </goals>
-            <phase>package</phase>
-            <configuration>
-              <artifacts>
-                <artifact>
-                  <file>${project.build.directory}/classes/initial/aaa-cert-config.xml</file>
-                  <type>xml</type>
-                  <classifier>config</classifier>
-                </artifact>
-              </artifacts>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+    <modules>
+        <module>api</module>
+        <module>impl</module>
+    </modules>
 </project>
