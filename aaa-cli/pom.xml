@@ -34,7 +34,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     </dependency>
     <dependency>
       <groupId>org.opendaylight.aaa</groupId>
-      <artifactId>aaa-cert</artifactId>
+      <artifactId>aaa-cert-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.opendaylight.aaa</groupId>

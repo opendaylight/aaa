@@ -42,13 +42,17 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>aaa-cert</artifactId>
-            <classifier>config</classifier>
-            <type>xml</type>
+            <artifactId>aaa-cert-api</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>aaa-cert</artifactId>
+            <artifactId>aaa-cert-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>aaa-cert-impl</artifactId>
+            <classifier>config</classifier>
+            <type>xml</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

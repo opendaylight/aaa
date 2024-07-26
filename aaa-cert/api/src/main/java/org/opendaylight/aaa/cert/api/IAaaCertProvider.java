@@ -9,8 +9,8 @@ package org.opendaylight.aaa.cert.api;
 
 import java.security.KeyStore;
 import org.eclipse.jdt.annotation.NonNull;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.api.rev240726.ssl.data.TrustKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.CtlKeystore;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.rev151126.aaa.cert.service.config.TrustKeystore;
 
 /**
  * IAaaCertProvider defines the basic operation for certificates management.
