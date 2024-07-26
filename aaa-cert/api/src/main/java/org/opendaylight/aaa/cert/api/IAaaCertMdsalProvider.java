@@ -10,7 +10,7 @@ package org.opendaylight.aaa.cert.api;
 import java.security.KeyStore;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.key.stores.SslData;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.api.rev240726.SslData;
 
 /**
  * IAaaCertMdsalProvider define the basic API required by AaaCertMdsalProvider.

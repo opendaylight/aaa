@@ -1,0 +1,36 @@
+/*
+Copyright (c) 2016 Inocybe Technology All rights reserved.
+
+This program and the accompanying materials are made available under the
+terms of the Eclipse Public License v1.0 which accompanies this distribution,
+and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
+*/
+module aaa-cert-mdsal {
+    yang-version 1;
+    namespace "urn:opendaylight:yang:aaa:cert:mdsal";
+    prefix "aaa-cert-mdsal";
+
+    organization "The OpenDaylight Project";
+
+    contact "melserngawy@inocybe.com";
+
+    description "Yang model definition for aaa certificate using MDSAL";
+
+    revision 2024-07-26 {
+        description "Use odl-aaa-cert.yang";
+
+    revision 2016-03-21 {
+        description "Initial revision";
+    }
+
+    container key-stores {
+        leaf id {
+            type string;
+            mandatory true;
+        }
+        list ssl-data {
+            key bundle-name;
+            uses ssl-data;
+        }
+    }
+}
