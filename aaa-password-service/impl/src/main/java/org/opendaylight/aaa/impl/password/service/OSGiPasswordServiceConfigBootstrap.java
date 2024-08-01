@@ -33,7 +33,9 @@ public final class OSGiPasswordServiceConfigBootstrap implements DataListener<Pa
     private static final Logger LOG = LoggerFactory.getLogger(OSGiPasswordServiceConfigBootstrap.class);
 
     private final ComponentFactory<OSGiPasswordServiceConfig> configFactory;
-    private Registration registration;
+    private final Registration registration;
+
+    private boolean active;
     private ComponentInstance<?> instance;
 
     @Activate
@@ -41,6 +43,11 @@ public final class OSGiPasswordServiceConfigBootstrap implements DataListener<Pa
             @Reference(target = "(component.factory=" + OSGiPasswordServiceConfig.FACTORY_NAME + ")")
             final ComponentFactory<OSGiPasswordServiceConfig> configFactory) {
         this.configFactory  = requireNonNull(configFactory);
+
+        synchronized (this) {
+            active = true;
+        }
+
         registration = dataBroker.registerDataListener(
             DataTreeIdentifier.of(LogicalDatastoreType.CONFIGURATION,
                 InstanceIdentifier.create(PasswordServiceConfig.class)), this);
@@ -49,25 +56,38 @@ public final class OSGiPasswordServiceConfigBootstrap implements DataListener<Pa
 
     @Deactivate
     synchronized void deactivate() {
+        active = false;
         registration.close();
-        registration = null;
-        if (instance != null) {
-            instance.dispose();
-            instance = null;
-        }
         LOG.info("No longer listening for password service configuration");
+
+        final var oldInstance = instance;
+        instance = null;
+        disposeInstance(oldInstance);
     }
 
     @Override
     public synchronized void dataChangedTo(final PasswordServiceConfig data) {
+        LOG.debug("Data changed to {}", data);
+
+        if (!active) {
+            LOG.debug("Ignoring change after shutdown");
+            return;
+        }
+
         // FIXME: at this point we need to populate default values -- from the XML file
-        if (registration != null) {
-            final var newInstance = configFactory.newInstance(
-                OSGiPasswordServiceConfig.props(data != null ? data : new PasswordServiceConfigBuilder().build()));
-            if (instance != null) {
-                instance.dispose();
-            }
-            instance = newInstance;
+        final var newInstance = configFactory.newInstance(
+            OSGiPasswordServiceConfig.props(data != null ? data : new PasswordServiceConfigBuilder().build()));
+        LOG.debug("Instantiated configuration {}", newInstance);
+
+        final var oldInstance = instance;
+        instance = newInstance;
+        disposeInstance(oldInstance);
+    }
+
+    private static void disposeInstance(final ComponentInstance<?> instance) {
+        if (instance != null) {
+            LOG.debug("Disposing of configuration {}", instance);
+            instance.dispose();
         }
     }
 }
