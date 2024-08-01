@@ -12,12 +12,11 @@ import static java.util.Objects.requireNonNull;
 import com.google.common.annotations.Beta;
 import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.mdsal.binding.api.DataListener;
-import org.opendaylight.mdsal.binding.api.DataTreeIdentifier;
 import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.password.service.config.rev170619.PasswordServiceConfig;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.password.service.config.rev170619.PasswordServiceConfigBuilder;
+import org.opendaylight.yangtools.binding.DataObjectIdentifier;
 import org.opendaylight.yangtools.concepts.Registration;
-import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.ComponentInstance;
 import org.osgi.service.component.annotations.Activate;
@@ -48,9 +47,8 @@ public final class OSGiPasswordServiceConfigBootstrap implements DataListener<Pa
             active = true;
         }
 
-        registration = dataBroker.registerDataListener(
-            DataTreeIdentifier.of(LogicalDatastoreType.CONFIGURATION,
-                InstanceIdentifier.create(PasswordServiceConfig.class)), this);
+        registration = dataBroker.registerDataListener(LogicalDatastoreType.CONFIGURATION,
+            DataObjectIdentifier.builder(PasswordServiceConfig.class).build(), this);
         LOG.info("Listening for password service configuration");
     }
 
