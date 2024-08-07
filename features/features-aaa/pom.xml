@@ -77,5 +77,11 @@
             <type>xml</type>
             <classifier>features</classifier>
         </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>odl-aaa-jetty-auth-log</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
     </dependencies>
 </project>
