@@ -7,6 +7,7 @@
  */
 package org.opendaylight.aaa.shiro.principal;
 
+import com.google.common.base.MoreObjects;
 import java.util.Set;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
@@ -16,7 +17,6 @@ import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
  * making the auth request.
  */
 public final class ODLPrincipalImpl implements ODLPrincipal {
-
     private final String username;
     private final String domain;
     private final String userId;
@@ -35,7 +35,7 @@ public final class ODLPrincipalImpl implements ODLPrincipal {
      * @param auth Contains identifying information for the particular request.
      * @return A Principal for the given session;  essentially a DTO.
      */
-    public static ODLPrincipal createODLPrincipal(Authentication auth) {
+    public static ODLPrincipal createODLPrincipal(final Authentication auth) {
         return createODLPrincipal(auth.user(), auth.domain(), auth.userId(), auth.roles());
     }
 
@@ -48,8 +48,8 @@ public final class ODLPrincipalImpl implements ODLPrincipal {
      * @param roles The roles associated with <code>username</code>@<code>domain</code>
      * @return A Principal for the given session;  essentially a DTO.
      */
-    public static ODLPrincipal createODLPrincipal(String username, String domain,
-                                           String userId, Set<String> roles) {
+    public static ODLPrincipal createODLPrincipal(final String username, final String domain,
+                                           final String userId, final Set<String> roles) {
 
         return new ODLPrincipalImpl(username, domain, userId, roles);
     }
@@ -62,33 +62,43 @@ public final class ODLPrincipalImpl implements ODLPrincipal {
      * @param userId The unique key for <code>username</code>
      * @return A Principal for the given session;  essentially a DTO.
      */
-    public static ODLPrincipal createODLPrincipal(String username, String domain,
-                                                  String userId) {
+    public static ODLPrincipal createODLPrincipal(final String username, final String domain,
+                                                  final String userId) {
         return ODLPrincipalImpl.createODLPrincipal(username, domain, userId, null);
     }
 
     @Override
     public String getUsername() {
-        return this.username;
+        return username;
     }
 
     @Override
     public String getDomain() {
-        return this.domain;
+        return domain;
     }
 
     @Override
     public String getUserId() {
-        return this.userId;
+        return userId;
     }
 
     @Override
     public Set<String> getRoles() {
-        return this.roles;
+        return roles;
     }
 
     @Override
     public String getName() {
         return getUserId();
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this).omitNullValues()
+            .add("userId", userId)
+            .add("username", username)
+            .add("domain", domain)
+            .add("roles", roles)
+            .toString();
     }
 }
