@@ -79,6 +79,11 @@
                 <type>cfg</type>
                 <classifier>config</classifier>
             </dependency>
+            <dependency>
+                <groupId>org.opendaylight.aaa</groupId>
+                <artifactId>aaa-jetty-auth-log-filter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
@@ -209,6 +214,13 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>odl-aaa-web</artifactId>
+                <version>${project.version}</version>
+                <classifier>features</classifier>
+                <type>xml</type>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>odl-aaa-jetty-auth-log</artifactId>
                 <version>${project.version}</version>
                 <classifier>features</classifier>
                 <type>xml</type>

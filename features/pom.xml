@@ -32,6 +32,7 @@
         <module>odl-aaa-cert</module>
         <module>odl-aaa-cli</module>
         <module>odl-aaa-encryption-service</module>
+        <module>odl-aaa-jetty-auth-log</module>
         <module>odl-aaa-password-service</module>
         <module>odl-aaa-shiro</module>
         <module>odl-aaa-web</module>
