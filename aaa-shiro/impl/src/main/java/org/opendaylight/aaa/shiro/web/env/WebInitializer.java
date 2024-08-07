@@ -15,6 +15,7 @@ import org.opendaylight.aaa.api.ClaimCache;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.filterchain.configuration.CustomFilterAdapterConfiguration;
 import org.opendaylight.aaa.filterchain.filters.CustomFilterAdapter;
+import org.opendaylight.aaa.filterchain.filters.JettyAuthenticationLogFilter;
 import org.opendaylight.aaa.shiro.idm.IdmLightApplication;
 import org.opendaylight.aaa.web.FilterDetails;
 import org.opendaylight.aaa.web.ServletDetails;
@@ -62,6 +63,12 @@ public final class WebInitializer implements AutoCloseable {
             // Allows user to add javax.servlet.Filter(s) in front of REST services
             .addFilter(FilterDetails.builder()
                 .filter(new CustomFilterAdapter(customFilterAdapterConfig))
+                .addUrlPattern("/*")
+                .build())
+
+            // Allows printing the username in Jetty logs when NCSA logging is enabled.
+            .addFilter(FilterDetails.builder()
+                .filter(new JettyAuthenticationLogFilter())
                 .addUrlPattern("/*")
                 .build());
 
