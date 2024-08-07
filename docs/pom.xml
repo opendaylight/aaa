@@ -64,6 +64,10 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>aaa-filterchain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>aaa-jetty-auth-log-filter</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>${project.groupId}</groupId>
