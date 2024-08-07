@@ -91,4 +91,9 @@ public final class ODLPrincipalImpl implements ODLPrincipal {
     public String getName() {
         return getUserId();
     }
+
+    @Override
+    public String toString() {
+        return "userId:" + userId + ", " + "userName:" + username + ", " + "domain:" + domain + ", " + "roles:" + roles;
+    }
 }
