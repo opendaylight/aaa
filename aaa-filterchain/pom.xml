@@ -33,6 +33,10 @@
       <groupId>org.osgi</groupId>
       <artifactId>org.osgi.service.component.annotations</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.opendaylight.aaa</groupId>
+      <artifactId>aaa-filter</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
