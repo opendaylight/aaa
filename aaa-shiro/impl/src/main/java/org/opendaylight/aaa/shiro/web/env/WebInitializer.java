@@ -49,7 +49,7 @@ public final class WebInitializer implements AutoCloseable {
             final @Reference CustomFilterAdapterConfiguration customFilterAdapterConfig) throws ServletException {
 
         final var webContextBuilder = WebContext.builder()
-            .name("OpenDaylight IDM realm management")
+            .name("RealmManagement")
             .contextPath("/auth")
             .supportsSessions(true)
 
