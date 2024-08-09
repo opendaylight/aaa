@@ -74,19 +74,18 @@ public final class WhiteboardWebServer implements WebServer {
 
     @Override
     public String getBaseURL() {
-        final var endpoint = serviceRuntime.getProperty(HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT);
-        if (endpoint instanceof String str) {
-            return str;
-        } else if (endpoint instanceof String[] endpoints) {
-            return getBaseURL(Arrays.asList(endpoints));
-        } else if (endpoint instanceof Collection) {
-            // Safe as per OSGi Compendium R7 section 140.15.3.1
-            @SuppressWarnings("unchecked")
-            final var cast = (Collection<String>) endpoint;
-            return getBaseURL(cast);
-        } else {
-            throw new IllegalStateException("Unhandled endpoint " + endpoint);
-        }
+        final var prop = serviceRuntime.getProperty(HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT);
+        return switch (prop) {
+            case String endpoint -> endpoint;
+            case String[] endpoints -> getBaseURL(Arrays.asList(endpoints));
+            case Collection<?> endpoints -> {
+                // Safe as per OSGi Compendium R7 section 140.15.3.1
+                @SuppressWarnings("unchecked")
+                final var cast = (Collection<String>) endpoints;
+                yield getBaseURL(cast);
+            }
+            default -> throw new IllegalStateException("Unhandled endpoint " + prop);
+        };
     }
 
     private static String getBaseURL(final Collection<String> endpoints) {
