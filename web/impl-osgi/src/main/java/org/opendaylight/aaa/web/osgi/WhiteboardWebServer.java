@@ -7,12 +7,14 @@
  */
 package org.opendaylight.aaa.web.osgi;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
@@ -51,6 +53,19 @@ import org.slf4j.LoggerFactory;
 @Component(scope = ServiceScope.BUNDLE)
 public final class WhiteboardWebServer implements WebServer {
     private static final Logger LOG = LoggerFactory.getLogger(WhiteboardWebServer.class);
+
+    // OSGi Core Release 8 defines this as follows:
+    //   symbolic-name   ::= token ( '.' token )*
+    //   token           ::= ( alphanum | '_' | '-' )+
+    //   alphanum        ::= alpha | digit
+    //   alpha           ::= [a..zA..Z]
+    //   digit           ::= [0..9]
+    // We take advantage of Pattern's features:
+    //   \A      matches beginning of input
+    //   \z      matches end of output
+    //   \w      is [a-zA-Z_0-9], hence 'token' is [\w\-]+
+    //   (?:X)   is a non-caputring version of (X)
+    private static final Pattern OSGI_SYMBOLIC_NAME = Pattern.compile("\\A[\\w\\-]+(?:\\.[\\w\\-]+)*\\z");
 
     private final Bundle bundle;
     @Reference
@@ -105,7 +120,7 @@ public final class WhiteboardWebServer implements WebServer {
         // The order in which we set things up here matters...
 
         // 1. ServletContextHelper, to which all others are bound to
-        final var contextName = webContext.name();
+        final var contextName = checkSymbolicName(webContext.name());
         final var contextPath = webContext.contextPath();
 
         final var contextProps = contextProperties(contextName, contextPath, webContext.contextParams());
@@ -221,5 +236,13 @@ public final class WhiteboardWebServer implements WebServer {
             // Ease of debugging
             .sorted()
             .collect(Collectors.toUnmodifiableList());
+    }
+
+    @VisibleForTesting
+    static String checkSymbolicName(final String name) throws ServletException {
+        if (OSGI_SYMBOLIC_NAME.matcher(name).matches()) {
+            return name;
+        }
+        throw new ServletException("WebContext name '" + name + "' is not a symbolic-name");
     }
 }
