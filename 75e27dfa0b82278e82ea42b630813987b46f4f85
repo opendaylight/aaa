@@ -24,6 +24,30 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "50add8c8_78f9a219",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-08-13T09:19:52Z",
+      "side": 1,
+      "message": "Done, I have created a new filter called JettyAuthenticationLogFilter. The main difference is that it needs to be added to the WebContext.builder() in Netconf to enable this functionality.",
+      "parentUuid": "0e5f4b66_75c28c51",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "75e27dfa0b82278e82ea42b630813987b46f4f85",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3e97dd37_452c5164",
@@ -47,6 +71,30 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "38b12fb3_29601aff",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-08-13T09:19:52Z",
+      "side": 1,
+      "message": "Done, I have changed it to ConcurrentHashMap",
+      "parentUuid": "3e97dd37_452c5164",
+      "range": {
+        "startLine": 72,
+        "startChar": 21,
+        "endLine": 72,
+        "endChar": 37
+      },
+      "revId": "75e27dfa0b82278e82ea42b630813987b46f4f85",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d28daa1_755d7381",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-08-07T14:56:41Z",
       "side": 1,
       "message": "why not direct equals()?\n\nalso, base this on entrySet().iterator() and use Iterator.remove()",
+      "range": {
+        "startLine": 151,
+        "startChar": 29,
+        "endLine": 151,
+        "endChar": 58
+      },
+      "revId": "75e27dfa0b82278e82ea42b630813987b46f4f85",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbcf1430_05e4841d",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/CustomFilterAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-08-13T09:19:52Z",
+      "side": 1,
+      "message": "Replaced with:\n```\nsessionMap.entrySet().removeIf(entry -\u003e userAuthentication.equals(entry.getValue()));\n```\n\nremoveIf() use also iterators and looks better.",
+      "parentUuid": "1d28daa1_755d7381",
       "range": {
         "startLine": 151,
         "startChar": 29,
