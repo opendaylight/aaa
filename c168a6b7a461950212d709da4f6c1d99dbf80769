@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce34ded4_06db95d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2024-09-03T11:41:06Z",
+      "side": 1,
+      "message": "This would cause duplicate versions: this upgrade really needs to start at odlparent",
+      "revId": "c168a6b7a461950212d709da4f6c1d99dbf80769",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
