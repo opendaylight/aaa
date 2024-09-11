@@ -22,6 +22,30 @@
       },
       "revId": "4e70c9c5a1e6fb96f66eb3f356a1b52df1778af5",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c90824f1_665cfe69",
+        "filename": "aaa-filterchain/src/main/java/org/opendaylight/aaa/filterchain/filters/JettyAuthenticationLogFilter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-09-11T11:14:48Z",
+      "side": 1,
+      "message": "Fixed. I have prepared a separate aaa-filter artifact and removed the unnecessary WebInitializer changes.",
+      "parentUuid": "a633a49b_2132d885",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 41
+      },
+      "revId": "4e70c9c5a1e6fb96f66eb3f356a1b52df1778af5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
