@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "241e0f1f_a65a41ad",
+        "filename": "aaa-filter/src/main/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-09-12T06:51:43Z",
+      "side": 1,
+      "message": "final",
+      "revId": "be829235530ccc2bd9d18fe712b2781956623910",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77f4f845_1577c738",
+        "filename": "aaa-filter/src/test/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilterTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-09-12T06:51:43Z",
+      "side": 1,
+      "message": "With JUnit5 we do not need to have class and test methods public",
+      "revId": "be829235530ccc2bd9d18fe712b2781956623910",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57b5a18e_4f176eca",
+        "filename": "aaa-filter/src/test/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilterTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-09-12T06:51:43Z",
+      "side": 1,
+      "message": "IMO has no sense to instantiate static filed in before all with no other setup. Inline it:\n\nprivate static final JettyAuthenticationLogFilter customFilterAdapter \u003d ...",
+      "revId": "be829235530ccc2bd9d18fe712b2781956623910",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
