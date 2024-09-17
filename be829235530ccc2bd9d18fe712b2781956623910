@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53fafdef_7c2b1fdb",
+        "filename": "aaa-filter/src/main/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-09-17T09:48:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "241e0f1f_a65a41ad",
+      "revId": "be829235530ccc2bd9d18fe712b2781956623910",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "77f4f845_1577c738",
@@ -35,6 +53,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f42293ff_d32e17e8",
+        "filename": "aaa-filter/src/test/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilterTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-09-17T09:48:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77f4f845_1577c738",
+      "revId": "be829235530ccc2bd9d18fe712b2781956623910",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "57b5a18e_4f176eca",
@@ -48,6 +84,24 @@
       "writtenOn": "2024-09-12T06:51:43Z",
       "side": 1,
       "message": "IMO has no sense to instantiate static filed in before all with no other setup. Inline it:\n\nprivate static final JettyAuthenticationLogFilter customFilterAdapter \u003d ...",
+      "revId": "be829235530ccc2bd9d18fe712b2781956623910",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03026935_0e322722",
+        "filename": "aaa-filter/src/test/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilterTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-09-17T09:48:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57b5a18e_4f176eca",
       "revId": "be829235530ccc2bd9d18fe712b2781956623910",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
