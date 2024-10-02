@@ -12,14 +12,14 @@
     <parent>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>odlparent</artifactId>
-        <version>14.0.4</version>
+        <version>14.0.3</version>
         <relativePath/>
     </parent>
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>aaa-docs</artifactId>
     <packaging>jar</packaging>
-    <version>0.20.4-SNAPSHOT</version>
+    <version>0.21.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>AAA documentation</description>
 
@@ -28,7 +28,7 @@
             <dependency>
                 <groupId>org.opendaylight.aaa</groupId>
                 <artifactId>aaa-artifacts</artifactId>
-                <version>0.20.4-SNAPSHOT</version>
+                <version>0.21.0-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -116,7 +116,7 @@
         <dependency>
             <groupId>org.opendaylight.infrautils</groupId>
             <artifactId>inject.guice.testutils</artifactId>
-            <version>7.0.4</version>
+            <version>7.0.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -251,16 +251,16 @@
                 <configuration combine.children="append">
                     <links>
                         <link>https://junit.org/junit4/javadoc/4.13.2/</link>
-                        <link>https://hamcrest.org/JavaHamcrest/javadoc/3.0/</link>
+                        <link>https://hamcrest.org/JavaHamcrest/javadoc/2.2/</link>
                         <link>https://www.slf4j.org/apidocs/</link>
-                        <link>https://guava.dev/releases/33.3.1-jre/api/docs/</link>
+                        <link>https://guava.dev/releases/33.2.1-jre/api/docs/</link>
                         <link>https://commons.apache.org/proper/commons-lang/javadocs/api-release/</link>
 
-                        <link>https://www.javadoc.io/doc/org.opendaylight.odlparent/odlparent-docs/14.0.4/</link>
-                        <link>https://www.javadoc.io/doc/org.opendaylight.infrautils/infrautils-docs/7.0.4/</link>
-                        <link>https://www.javadoc.io/doc/org.opendaylight.yangtools/yangtools-docs/14.0.5/</link>
-                        <link>https://www.javadoc.io/doc/org.opendaylight.mdsal/mdsal-docs/14.0.4/</link>
-                        <link>https://www.javadoc.io/doc/org.opendaylight.controller/controller-docs/10.0.4/</link>
+                        <link>https://www.javadoc.io/doc/org.opendaylight.odlparent/odlparent-docs/14.0.3/</link>
+                        <link>https://www.javadoc.io/doc/org.opendaylight.infrautils/infrautils-docs/7.0.3/</link>
+                        <link>https://www.javadoc.io/doc/org.opendaylight.yangtools/yangtools-docs/14.0.4/</link>
+                        <link>https://www.javadoc.io/doc/org.opendaylight.mdsal/mdsal-docs/14.0.2/</link>
+                        <link>https://www.javadoc.io/doc/org.opendaylight.controller/controller-docs/10.0.2/</link>
                     </links>
 
                     <!--groups>

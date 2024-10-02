@@ -12,13 +12,13 @@
     <parent>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>single-feature-parent</artifactId>
-        <version>14.0.4</version>
+        <version>14.0.3</version>
         <relativePath/>
     </parent>
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>odl-aaa-web</artifactId>
-    <version>0.20.4-SNAPSHOT</version>
+    <version>0.21.0-SNAPSHOT</version>
     <packaging>feature</packaging>
 
     <name>ODL :: aaa :: ${project.artifactId}</name>
@@ -35,7 +35,7 @@
             <dependency>
                 <groupId>org.opendaylight.yangtools</groupId>
                 <artifactId>yangtools-artifacts</artifactId>
-                <version>14.0.5</version>
+                <version>14.0.4</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
