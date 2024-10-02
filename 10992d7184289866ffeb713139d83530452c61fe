@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be181e20_ff387492",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-10-02T08:49:06Z",
+      "side": 1,
+      "message": "Seems to be incorrect. What about 0.21.0-SNAPSHOT?",
+      "revId": "10992d7184289866ffeb713139d83530452c61fe",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
