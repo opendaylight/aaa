@@ -72,6 +72,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3d8b393f_1f81175b",
+        "filename": "aaa-jetty-auth-log-filter/src/test/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilterTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-10-10T13:48:14Z",
+      "side": 1,
+      "message": "@RunWith(MockitoJUnitRunner.class)",
+      "revId": "b6bac4349ce971cfa885dbbe7852ee3d03f1e2dc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86c6f5c6_9308dd50",
+        "filename": "aaa-jetty-auth-log-filter/src/test/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilterTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-10-10T13:48:14Z",
+      "side": 1,
+      "message": "@Mock",
+      "revId": "b6bac4349ce971cfa885dbbe7852ee3d03f1e2dc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6546efac_bc73bdaa",
         "filename": "aaa-jetty-auth-log-filter/src/test/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilterTest.java",
         "patchSetId": 9
