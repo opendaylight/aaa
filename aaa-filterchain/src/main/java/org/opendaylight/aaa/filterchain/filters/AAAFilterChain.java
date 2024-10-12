@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.filterchain.filters;
 
 import java.io.IOException;
@@ -24,12 +23,10 @@ import javax.servlet.ServletResponse;
  * through all of the injected Filters, then the original, existing chain is
  * maintained.
  *
- * <p>
- * This revision of code assumes that the url-pattern for injected filters is
+ * <p>This revision of code assumes that the url-pattern for injected filters is
  * exactly the same as the one specified for <code>CustomFilterAdapter</code>.
  */
 public final class AAAFilterChain implements FilterChain {
-
     // Must be stored locally to be used within
     // javax.servlet.FilterChain.doFilter(
     // ServletRequest, ServletResponse) due to rigid API contract.

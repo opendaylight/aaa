@@ -18,8 +18,7 @@ import org.slf4j.LoggerFactory;
  * package, <code>org.opendaylightaaa.shiro.realm</code>, which enables easier
  * import by consuming servlets.
  *
- * <p>
- * To enable the <code>ODLActiveDirectoryRealm</code>, modify the realms
+ * <p>To enable the <code>ODLActiveDirectoryRealm</code>, modify the realms
  * declaration in <code>etc/shiro.ini</code> as follows:
  * <code>adRealm = ODLActiveDirectoryRealm
  * adRealm.searchBase = "CN=Users,DC=example,DC=com"
@@ -32,7 +31,6 @@ import org.slf4j.LoggerFactory;
  * securityManager.realms = $tokenAuthRealm, $adRealm</code>
  */
 public class ODLActiveDirectoryRealm extends ActiveDirectoryRealm {
-
     private static final Logger LOG = LoggerFactory.getLogger(ODLActiveDirectoryRealm.class);
 
     public ODLActiveDirectoryRealm() {

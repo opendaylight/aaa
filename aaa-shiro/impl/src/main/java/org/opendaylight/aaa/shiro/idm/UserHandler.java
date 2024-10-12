@@ -34,8 +34,7 @@ import org.slf4j.LoggerFactory;
 /**
  * REST application used to manipulate the H2 database users table. The REST endpoint is <code>/auth/v1/users</code>.
  *
- * <p>
- * A wrapper script called <code>idmtool</code> is provided to manipulate AAA data.
+ * <p>A wrapper script called <code>idmtool</code> is provided to manipulate AAA data.
  *
  * @author peter.mellquist@hp.com
  */
@@ -116,8 +115,7 @@ public class UserHandler {
      * <code>password</code>: <code>changeme</code> <code>enabled</code>:
      * <code>true</code>
      *
-     * <p>
-     * If a password is not provided, please ensure you change the default
+     * <p>If a password is not provided, please ensure you change the default
      * password ASAP for security reasons!
      *
      * @param info

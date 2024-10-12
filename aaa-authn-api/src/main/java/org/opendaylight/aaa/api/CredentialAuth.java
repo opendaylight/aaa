@@ -29,9 +29,8 @@ public interface CredentialAuth<T extends Credentials> {
      * Return the credential class that is required by this services. This acts as a type check allowing discovery
      * of the type at runtime.
      *
-     * <p>
-     * Note: this method should be defined in subclasses specializations for a particular credential class as a default
-     *       (in case of an interface) or a final (in case of a class) method.
+     * <p>Note: this method should be defined in subclasses specializations for a particular credential class
+     *          as a default (in case of an interface) or a final (in case of a class) method.
      *
      * @return Required credential class
      */

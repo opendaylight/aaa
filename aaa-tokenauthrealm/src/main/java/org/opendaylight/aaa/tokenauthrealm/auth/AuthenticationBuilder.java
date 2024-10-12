@@ -14,10 +14,7 @@ import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.Claim;
 
 /**
- * A builder for the authentication context.
- *
- * <p>
- * The expiration DEFAULTS to 0.
+ * A builder for the authentication context. The expiration DEFAULTS to 0.
  *
  * @author liemmn
  */

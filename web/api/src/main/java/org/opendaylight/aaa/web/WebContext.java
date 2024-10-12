@@ -22,12 +22,10 @@ import org.eclipse.jdt.annotation.NonNull;
 /**
  * Web Context with URL prefix. AKA Web App or Servlet context.
  *
- * <p>
- * Its {@link WebContext.Builder} allows programmatic web component registration (as opposed to declarative e.g. via
+ * <p>Its {@link WebContext.Builder} allows programmatic web component registration (as opposed to declarative e.g. via
  * web.xml, OSGi HTTP Whiteboard blueprint integration, CXF BP etc.)
  *
- * <p>
- * This is preferable because:
+ * <p>This is preferable because:
  * <ul>
  *   <li>using code instead of hiding class names in XML enables tools such as e.g. BND (in the maven-bundle-plugin) to
  *       correctly figure dependencies e.g. for OSGi Import-Package headers;</li>
@@ -38,8 +36,7 @@ import org.eclipse.jdt.annotation.NonNull;
  *   <li>tests can more easily programmatically instantiate web components.</li>
  * </ul>
  *
- * <p>
- * This, not surprisingly, looks somewhat like a Servlet (3.x+) {@link ServletContext}, which also allows programmatic
+ * <p>This, unsurprisingly, looks somewhat like a Servlet (3.x+) {@link ServletContext}, which also allows programmatic
  * dynamic registration e.g. via {@link ServletRegistration}; however in practice direct use of that API has been found
  * to be problematic under OSGi, because it is intended for JSE and
  * <a href="https://github.com/eclipse/jetty.project/issues/1395">does not easily appear to permit dynamic registration
@@ -48,8 +45,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * a web.xml file. This API is also slightly more focused and drops a number of concepts that API has which we do not
  * want to support here (including e.g. security, roles, multipart etc.)
  *
- * <p>
- * It also looks somewhat similar to the OSGi HttpService, but we want to avoid any org.osgi dependency (both API and
+ * <p>It also looks somewhat similar to the OSGi HttpService, but we want to avoid any org.osgi dependency (both API and
  * impl) here, and that API is also less clear (and uses an ancient (!) {@link java.util.Dictionary} in its method
  * signature), and -most importantly- simply does not support Filters and Listeners, only Servlets. The Pax Web API does
  * extend the base OSGi API and adds supports for Filters, Listeners and context parameters, but is still OSGi specific,
@@ -57,8 +53,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * signatures in its registerFilter() methods, where one can easily confuse which String[] is the urlPatterns; which we
  * had initially done accidentally; and left AAA broken.)
  *
- * <p>
- * This is immutable, with a Builder, because contrary to a declarative approach in a file such as web.xml, the
+ * <p>This is immutable, with a Builder, because contrary to a declarative approach in a file such as web.xml, the
  * registration order very much matters (e.g. an context parameter added after a Servlet registration would not be seen
  * by that Servlet; or a Filter added to protect a Servlet might not yet be active for an instant if the registerServlet
  * is before the registerFilter). Therefore, this API enforces atomicity and lets clients first register everything on
@@ -120,8 +115,7 @@ public interface WebContext {
     /**
      * Get map of context params.
      *
-     * <p>
-     * These are the {@link ServletContext}s initial parameters; contrary to individual
+     * <p>These are the {@link ServletContext}s initial parameters; contrary to individual
      * {@link ServletDetails#initParams()} and {@link FilterDetails#initParams()}. While a ServletContext accepts
      * any Object as a parameter, that is not accepted in all implementations. Most notably OSGi HTTP Whiteboard
      * specification allows only String values, hence we are enforcing that.

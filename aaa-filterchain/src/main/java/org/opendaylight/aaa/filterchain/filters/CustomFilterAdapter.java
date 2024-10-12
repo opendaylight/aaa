@@ -30,8 +30,7 @@ import org.slf4j.LoggerFactory;
  * <code>AAAFilterChain.doFilter(...)</code>, which honors the injected filter
  * chain links, and then continues the original filter chain.
  *
- * <p>
- * This code was designed specifically to work with the common, generic
+ * <p>This code was designed specifically to work with the common, generic
  * <code>javax.servlet.Filter</code> interface; thus, certain choices, such as
  * creating a new <code>AAAFilterChain</code> per request, were necessary to
  * preserve the existing API contracts (i.e., the injected chain is stored as a

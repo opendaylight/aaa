@@ -41,8 +41,7 @@ import org.slf4j.LoggerFactory;
  * additional Authorization capabilities.  To enable this Realm, add the
  * following to <code>shiro.ini</code>:
  *
- * <p>
- * <code>#ldapRealm = ODLJndiLdapRealmAuthNOnly
+ * <p><code>#ldapRealm = ODLJndiLdapRealmAuthNOnly
  * #ldapRealm.userDnTemplate = uid={0},ou=People,dc=DOMAIN,dc=TLD
  * #ldapRealm.contextFactory.url = ldap://URL:389
  * #ldapRealm.searchBase = dc=DOMAIN,dc=TLD
@@ -51,8 +50,7 @@ import org.slf4j.LoggerFactory;
  * # list below:
  * securityManager.realms = $tokenAuthRealm, $ldapRealm</code>
  *
- * <p>
- * The values above are specific to the deployed LDAP domain.  If the defaults
+ * <p>The values above are specific to the deployed LDAP domain.  If the defaults
  * are not sufficient, alternatives can be derived through enabling
  * <code>TRACE</code> level logging.  To enable <code>TRACE</code> level
  * logging, issue the following command in the karaf shell:
@@ -64,7 +62,6 @@ import org.slf4j.LoggerFactory;
  * documentation</a>
  */
 public class ODLJndiLdapRealm extends DefaultLdapRealm {
-
     private static final Logger LOG = LoggerFactory.getLogger(ODLJndiLdapRealm.class);
 
     /**

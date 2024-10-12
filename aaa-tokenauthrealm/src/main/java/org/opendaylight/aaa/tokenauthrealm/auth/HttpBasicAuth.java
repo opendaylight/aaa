@@ -26,17 +26,14 @@ import org.slf4j.LoggerFactory;
  * backward compatible authenticator, but usage of this authenticator or HTTP
  * Basic Authentication is highly discouraged due to its vulnerability.
  *
- * <p>
- * To obtain a token using the HttpBasicAuth Strategy, add a header to your HTTP
+ * <p>To obtain a token using the HttpBasicAuth Strategy, add a header to your HTTP
  * request in the form:
  * <code>Authorization: Basic BASE_64_ENCODED_CREDENTIALS</code>
  *
- * <p>
- * Where <code>BASE_64_ENCODED_CREDENTIALS</code> is the base 64 encoded value
+ * <p>Where <code>BASE_64_ENCODED_CREDENTIALS</code> is the base 64 encoded value
  * of the user's credentials in the following form: <code>user:password</code>
  *
- * <p>
- * For example, assuming the user is "admin" and the password is "admin":
+ * <p>For example, assuming the user is "admin" and the password is "admin":
  * <code>Authorization: Basic YWRtaW46YWRtaW4=</code>
  *
  * @author liemmn

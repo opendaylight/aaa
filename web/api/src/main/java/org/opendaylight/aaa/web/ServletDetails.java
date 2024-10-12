@@ -39,8 +39,7 @@ public interface ServletDetails {
     /**
      * Get list of servlet URL patterns. These patterns control how you access a servlet.
      *
-     * <p>
-     * Restrictions to URLs and how it should look like are next:
+     * <p>Restrictions to URLs and how it should look like are next:
      * <ul>
      *   <li>A string beginning with a ‘ / ’ character and ending with a ‘ /*’ suffix is used for path mapping.</li>
      *   <li>A string beginning with a ‘ *. ’ prefix is used as an extension mapping.</li>

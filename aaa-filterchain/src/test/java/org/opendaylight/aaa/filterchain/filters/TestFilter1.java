@@ -5,7 +5,6 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.filterchain.filters;
 
 import java.io.IOException;
@@ -23,13 +22,11 @@ import org.slf4j.LoggerFactory;
  * whether a Filter is reached/traversed, he or she can use this class to produce
  * some basic karaf log output.
  *
- *<p>
- * This functionality is particularly useful when developing new Filter(s);  for
+ * <p>This functionality is particularly useful when developing new Filter(s);  for
  * example, you can sandwich the newly created filter in between filter1 and filter2
  * to ensure that the chain is traversed correctly and in order.
  */
 public class TestFilter1 implements Filter {
-
     private static final Logger LOG = LoggerFactory.getLogger(TestFilter1.class);
 
     @Override

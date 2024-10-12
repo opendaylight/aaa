@@ -47,11 +47,10 @@ import org.slf4j.LoggerFactory;
  * Intermediate component dealing with establishing initial configuration for {@link AAAEncryptionServiceImpl}. In
  * particular it deals with generating and persisting of encryption salt and encryption password.
  *
- * <p>
- * We primarily listen to the configuration being present. Whenever the salt is missing or the password does not match
- * the required length, we generate them and persist them. This mode of operation means we potentially have a loop, i.e.
- * our touching the datastore will trigger again {@link #dataChangedTo(AaaEncryptServiceConfig)}, which will re-evaluate
- * the conditions and we try again.
+ * <p>We primarily listen to the configuration being present. Whenever the salt is missing or the password does not
+ * match the required length, we generate them and persist them. This mode of operation means we potentially have
+ * a loop, i.e. our touching the datastore will trigger again {@link #dataChangedTo(AaaEncryptServiceConfig)}, which
+ * will re-evaluate the conditions and we try again.
  */
 @Component(service = { })
 public final class OSGiEncryptionServiceConfigurator implements DataListener<AaaEncryptServiceConfig> {

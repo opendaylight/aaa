@@ -20,11 +20,9 @@ import org.opendaylight.aaa.provider.GsonProvider;
  * A JAX-RS application for IdmLight. The REST endpoints delivered by this application are in the form:
  * <code>http://{HOST}:{PORT}/auth/v1/</code>
  *
- * <p>
- * For example, the users REST endpoint is: <code>http://{HOST}:{PORT}/auth/v1/users</code>
+ * <p>For example, the users REST endpoint is: <code>http://{HOST}:{PORT}/auth/v1/users</code>
  *
- * <p>
- * This application is responsible for interaction with the backing h2 database store.
+ * <p>This application is responsible for interaction with the backing h2 database store.
  *
  * @see DomainHandler
  * @see UserHandler

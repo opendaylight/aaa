@@ -39,8 +39,7 @@ public interface FilterDetails {
     /**
      * Get list of Filter URL patterns. These patterns control where filter is applied.
      *
-     * <p>
-     * Restrictions to URLs and how it should look like are next:
+     * <p>Restrictions to URLs and how it should look like are next:
      * <ul>
      *   <li>A string beginning with a ‘ / ’ character and ending with a ‘ /*’ suffix is used for path mapping.</li>
      *   <li>A string beginning with a ‘ *. ’ prefix is used as an extension mapping.</li>

@@ -19,8 +19,7 @@ import org.slf4j.LoggerFactory;
  * JDBC-supporting data source.  This can ease deployment with existing OSS
  * systems.
  *
- * <p>
- * To enabled the <code>ODLJdbcRealm</code>, modify the realms declaration in
+ * <p>To enabled the <code>ODLJdbcRealm</code>, modify the realms declaration in
  * <code>etc/shiro.ini</code> as follows:
  * <code>
  * ds = com.mysql.jdbc.Driver
@@ -39,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * ones provided above based on your particular deployment scenario.
  */
 public class ODLJdbcRealm extends JdbcRealm {
-
     private static final Logger LOG = LoggerFactory.getLogger(ODLJdbcRealm.class);
 
     public ODLJdbcRealm() {

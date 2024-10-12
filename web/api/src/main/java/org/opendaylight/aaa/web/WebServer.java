@@ -15,8 +15,7 @@ import org.opendaylight.yangtools.concepts.Registration;
  * components programmatically, instead of using a web.xml declaratively; see
  * the {@link WebContext} for why this is preferable.
  *
- * <p>
- * This API has an OSGi-based as well as a "standalone" implementation suitable
+ * <p>This API has an OSGi-based as well as a "standalone" implementation suitable
  * e.g. for tests.
  *
  * @author Michael Vorburger.ch
@@ -34,8 +33,7 @@ public interface WebServer {
     /**
      * Get base URL of this web server, without any contexts.
      *
-     * <p>
-     * In production, this would likely be HTTPS with a well known hostname and fixed port configured.
+     * <p>In production, this would likely be HTTPS with a well known hostname and fixed port configured.
      * For example, in Karaf etc/ configuration file. In tests, this would be typically be HTTP on
      * localhost and an arbitrarily chosen port.
      *

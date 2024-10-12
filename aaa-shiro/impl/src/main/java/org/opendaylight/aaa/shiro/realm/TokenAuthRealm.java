@@ -72,8 +72,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
     /**
      * {@inheritDoc}
      *
-     * <p>
-     * Roles are derived from {@code TokenAuth.authenticate()}. Shiro roles are identical to existing IDM roles.
+     * <p>Roles are derived from {@code TokenAuth.authenticate()}. Shiro roles are identical to existing IDM roles.
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(final PrincipalCollection principalCollection) {
@@ -89,8 +88,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
     /**
      * {@inheritDoc}
      *
-     * <p>
-     * Authenticates against any {@code TokenAuth} registered with the {@code ServiceLocator}.
+     * <p>Authenticates against any {@code TokenAuth} registered with the {@code ServiceLocator}.
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(final AuthenticationToken authenticationToken)

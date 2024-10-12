@@ -16,8 +16,7 @@ public interface WebContextSecurer {
     /**
      * Configure the WebContext to require auth for specified URLs.
      *
-     * <p>
-     * Configure the WebContext so that it requires authentication to access the
+     * <p>Configure the WebContext so that it requires authentication to access the
      * given URL Patterns. Typically, this will be done by adding a {@code javax.servlet.Filter} (or several, and
      * whatever else they need).
      *
@@ -30,13 +29,11 @@ public interface WebContextSecurer {
     /**
      * Configure the WebContext to require auth for specified URLs.
      *
-     * <p>
-     * Configures the WebContext so that it requires authentication to access the
+     * <p>Configures the WebContext so that it requires authentication to access the
      * given URL Patterns. Typically, this will be done by adding a {@code javax.servlet.Filter} (or several, and
      * whatever else they need).
      *
-     * <p>
-     * This method is equivalent to {@code requireAuthentication(webContextBuilder, false, urlPatterns}.
+     * <p>This method is equivalent to {@code requireAuthentication(webContextBuilder, false, urlPatterns}.
      *
      * @param webContextBuilder builder to secure
      * @param urlPatterns URL patterns that require authentication
@@ -48,8 +45,7 @@ public interface WebContextSecurer {
     /**
      * Configure the WebContext to require auth all URLs.
      *
-     * <p>
-     * Configures the WebContext so that all its URL patterns ({@code/**}) require authentication.
+     * <p>Configures the WebContext so that all its URL patterns ({@code/**}) require authentication.
      *
      * @param webContextBuilder builder to secure
      * @see #requireAuthentication(WebContext.Builder, String...)
