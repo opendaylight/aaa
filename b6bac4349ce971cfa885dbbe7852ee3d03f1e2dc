@@ -35,6 +35,42 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2525182e_eeb2f00a",
+        "filename": "aaa-jetty-auth-log-filter/src/main/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2024-10-14T07:34:25Z",
+      "side": 1,
+      "message": "refactored the code to make it clear what is going on",
+      "parentUuid": "0955cebe_a50a3ee0",
+      "revId": "b6bac4349ce971cfa885dbbe7852ee3d03f1e2dc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7299683_654f27a8",
+        "filename": "aaa-jetty-auth-log-filter/src/main/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2024-10-14T07:34:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7208ee33_ace96b52",
+      "revId": "b6bac4349ce971cfa885dbbe7852ee3d03f1e2dc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61289735_c440ad0a",
@@ -66,6 +102,24 @@
       "side": 1,
       "message": "Yes, but a 500 error could still involve a valid session, or am I wrong?",
       "parentUuid": "61289735_c440ad0a",
+      "revId": "b6bac4349ce971cfa885dbbe7852ee3d03f1e2dc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac73ae57_cd2856b1",
+        "filename": "aaa-jetty-auth-log-filter/src/main/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2024-10-14T07:34:25Z",
+      "side": 1,
+      "message": "so let\u0027s start by defining semantics:\n1. what does the boolean returned here mean?\n2. under what conditions should it be true?\n3. *document* that in the comment",
+      "parentUuid": "82ede54f_abb52baf",
       "revId": "b6bac4349ce971cfa885dbbe7852ee3d03f1e2dc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
