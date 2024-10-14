@@ -87,6 +87,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28cbf81c_40aebaa2",
+        "filename": "aaa-jetty-auth-log-filter/src/test/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilterTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2024-10-14T07:28:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d8b393f_1f81175b",
+      "revId": "b6bac4349ce971cfa885dbbe7852ee3d03f1e2dc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "86c6f5c6_9308dd50",
@@ -104,6 +122,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8faee7e6_55d238e7",
+        "filename": "aaa-jetty-auth-log-filter/src/test/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilterTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2024-10-14T07:28:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86c6f5c6_9308dd50",
+      "revId": "b6bac4349ce971cfa885dbbe7852ee3d03f1e2dc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6546efac_bc73bdaa",
@@ -117,6 +153,24 @@
       "writtenOn": "2024-10-10T13:44:18Z",
       "side": 1,
       "message": "can this be split to multiple test cases?",
+      "revId": "b6bac4349ce971cfa885dbbe7852ee3d03f1e2dc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc8c28e6_02b1c76b",
+        "filename": "aaa-jetty-auth-log-filter/src/test/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilterTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2024-10-14T07:28:32Z",
+      "side": 1,
+      "message": "let\u0027s do that separately, as they definitely have dependencies",
+      "parentUuid": "6546efac_bc73bdaa",
       "revId": "b6bac4349ce971cfa885dbbe7852ee3d03f1e2dc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
