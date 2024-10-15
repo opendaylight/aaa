@@ -15,7 +15,6 @@ import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Map;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -47,7 +46,6 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
 
     private static final Logger LOG = LoggerFactory.getLogger(AAAEncryptionServiceImpl.class);
     private static final String CONFIG_PROP = ".config";
-    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     private final SecretKey key;
     private final EncryptServiceConfig configuration;
