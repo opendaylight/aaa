@@ -1112,7 +1112,6 @@ The following are the steps to configure the Encryption Service:
         <encrypt-type>AES</encrypt-type>
         <encrypt-iteration-count>32768</encrypt-iteration-count>
         <encrypt-key-length>128</encrypt-key-length>
-        <iv-length>12</iv-length>
         <auth-tag-length>128</auth-tag-length>
         <cipher-transforms>AES/GCM/NoPadding</cipher-transforms>
       </aaa-encrypt-service-config>
