@@ -16,6 +16,24 @@
       "message": "Be careful, you cannot downgrade nor upgrade other components",
       "revId": "06b77c4164ed9c89413d63455a4b99baee77770f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8373977_c719ba53",
+        "filename": "aaa-encrypt-service/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 9173
+      },
+      "writtenOn": "2024-10-28T09:34:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38d334a7_000bf77c",
+      "revId": "06b77c4164ed9c89413d63455a4b99baee77770f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
