@@ -89,6 +89,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "918ea1fb_1b9d4dc2",
+        "filename": "aaa-jetty-auth-log-filter/src/main/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-11-14T09:37:42Z",
+      "side": 1,
+      "message": "Fixed by adding false to getSession method\n`final var requestSession \u003d request.getSession(false)",
+      "parentUuid": "5f71d36a_bad1d4b4",
+      "revId": "b6bac4349ce971cfa885dbbe7852ee3d03f1e2dc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61289735_c440ad0a",
@@ -138,6 +156,24 @@
       "side": 1,
       "message": "so let\u0027s start by defining semantics:\n1. what does the boolean returned here mean?\n2. under what conditions should it be true?\n3. *document* that in the comment",
       "parentUuid": "82ede54f_abb52baf",
+      "revId": "b6bac4349ce971cfa885dbbe7852ee3d03f1e2dc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3f1faf5_76595306",
+        "filename": "aaa-jetty-auth-log-filter/src/main/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-11-14T09:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac73ae57_cd2856b1",
       "revId": "b6bac4349ce971cfa885dbbe7852ee3d03f1e2dc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
