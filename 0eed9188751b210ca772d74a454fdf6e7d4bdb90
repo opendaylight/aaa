@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "94797e0f_73aaf0c1",
+        "filename": "aaa-jetty-auth-log-filter/src/main/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilter.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-11-15T14:46:27Z",
+      "side": 1,
+      "message": "Thanks, changed.",
+      "parentUuid": "aa75f973_b127956f",
+      "revId": "0eed9188751b210ca772d74a454fdf6e7d4bdb90",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ab9742b_69fc74b6",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-11-14T19:41:03Z",
       "side": 1,
       "message": "This doesn\u0027t work because `UserAuthentication` does not implement `equals`. So a session added to `sessionMap` doesn\u0027t seem to get removed hence causing a memory leak.\nAnd even if that works and remove authentication based on username, this won\u0027t work well because there can be multiple sessions for a give username.",
+      "revId": "0eed9188751b210ca772d74a454fdf6e7d4bdb90",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b89fe8fd_d4e1ac31",
+        "filename": "aaa-jetty-auth-log-filter/src/main/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilter.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-11-15T14:46:27Z",
+      "side": 1,
+      "message": "Correct, fixed by removing sessionMap.",
+      "parentUuid": "4ab9742b_69fc74b6",
       "revId": "0eed9188751b210ca772d74a454fdf6e7d4bdb90",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
