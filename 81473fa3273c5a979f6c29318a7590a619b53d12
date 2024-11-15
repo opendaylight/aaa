@@ -62,6 +62,24 @@
       "message": "`userAuthentication` doesn\u0027t show username which probably is the most useful because `DefaultUserIdentity` does not implement `toString`.",
       "revId": "81473fa3273c5a979f6c29318a7590a619b53d12",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cb7e369_70d4b3fb",
+        "filename": "aaa-jetty-auth-log-filter/src/main/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2024-11-15T17:52:40Z",
+      "side": 1,
+      "message": "Maybe we can add `toString()` to `ODLPrincipalImpl` and log `principal` instead of `userAuthentication`. And similarly, just log the username in line 121.",
+      "parentUuid": "e0b54c88_347a188b",
+      "revId": "81473fa3273c5a979f6c29318a7590a619b53d12",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
