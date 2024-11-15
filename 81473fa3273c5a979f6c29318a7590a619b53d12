@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f257bcf_3542b801",
+        "filename": "aaa-jetty-auth-log-filter/src/main/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2024-11-15T15:46:16Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to check if the session is valid based on status code since the point of setting the user authentication is to log the authentication (username) the request was attempted with, whether it\u0027s a valid REST request or authentication was successful or not.",
+      "range": {
+        "startLine": 90,
+        "startChar": 12,
+        "endLine": 90,
+        "endChar": 24
+      },
+      "revId": "81473fa3273c5a979f6c29318a7590a619b53d12",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cec396e_49eac025",
+        "filename": "aaa-jetty-auth-log-filter/src/main/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2024-11-15T15:46:16Z",
+      "side": 1,
+      "message": "`getPrimaryPrincipal()` comes from the `org.apache.shiro.subject.PrincipalCollection` interface, so it would be better to check if `attribute` is an instance of `PrincipalCollection`.",
+      "range": {
+        "startLine": 93,
+        "startChar": 37,
+        "endLine": 93,
+        "endChar": 62
+      },
+      "revId": "81473fa3273c5a979f6c29318a7590a619b53d12",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0b54c88_347a188b",
+        "filename": "aaa-jetty-auth-log-filter/src/main/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2024-11-15T15:46:16Z",
+      "side": 1,
+      "message": "`userAuthentication` doesn\u0027t show username which probably is the most useful because `DefaultUserIdentity` does not implement `toString`.",
+      "revId": "81473fa3273c5a979f6c29318a7590a619b53d12",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
