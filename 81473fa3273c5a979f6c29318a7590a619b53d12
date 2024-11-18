@@ -24,6 +24,30 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ead5729a_38ac627d",
+        "filename": "aaa-jetty-auth-log-filter/src/main/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-11-18T13:51:50Z",
+      "side": 1,
+      "message": "You are right. Fixed.",
+      "parentUuid": "5f257bcf_3542b801",
+      "range": {
+        "startLine": 90,
+        "startChar": 12,
+        "endLine": 90,
+        "endChar": 24
+      },
+      "revId": "81473fa3273c5a979f6c29318a7590a619b53d12",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9cec396e_49eac025",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-11-15T15:46:16Z",
       "side": 1,
       "message": "`getPrimaryPrincipal()` comes from the `org.apache.shiro.subject.PrincipalCollection` interface, so it would be better to check if `attribute` is an instance of `PrincipalCollection`.",
+      "range": {
+        "startLine": 93,
+        "startChar": 37,
+        "endLine": 93,
+        "endChar": 62
+      },
+      "revId": "81473fa3273c5a979f6c29318a7590a619b53d12",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48f5ba21_370a9442",
+        "filename": "aaa-jetty-auth-log-filter/src/main/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-11-18T13:51:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cec396e_49eac025",
       "range": {
         "startLine": 93,
         "startChar": 37,
@@ -78,6 +126,24 @@
       "side": 1,
       "message": "Maybe we can add `toString()` to `ODLPrincipalImpl` and log `principal` instead of `userAuthentication`. And similarly, just log the username in line 121.",
       "parentUuid": "e0b54c88_347a188b",
+      "revId": "81473fa3273c5a979f6c29318a7590a619b53d12",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d08658d8_43baa7d1",
+        "filename": "aaa-jetty-auth-log-filter/src/main/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-11-18T13:51:50Z",
+      "side": 1,
+      "message": "Fixed by adding toString method to ODLPrincipalImpl. \nClasses DefaultUserIdentity and UserAuthentication contains toString method:\n\nhttps://github.com/jetty/jetty.project/blob/jetty-9.4.54.v20240208/jetty-security/src/main/java/org/eclipse/jetty/security/DefaultUserIdentity.java#L78\n\nhttps://github.com/jetty/jetty.project/blob/jetty-9.4.54.v20240208/jetty-security/src/main/java/org/eclipse/jetty/security/UserAuthentication.java#L35\n\nLOG output after fix:\n```\n13:57:01.058 INFO [qtp1285064734-964] Basic authentication User {User,Basic,DefaultUserIdentity(\u0027admin123\u0027)} has been set in the request authentication\n13:57:03.634 INFO [qtp1285064734-955] Session user {User,Basic,DefaultUserIdentity(\u0027userId:admin@sdn, userName:admin, domain:sdn, roles:[user, admin]\u0027)} has been set in the request authentication\n\n```",
+      "parentUuid": "0cb7e369_70d4b3fb",
       "revId": "81473fa3273c5a979f6c29318a7590a619b53d12",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
