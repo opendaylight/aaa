@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb429d8a_7117c1e1",
+        "filename": "features/odl-aaa-jetty-auth-log/pom.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-11-19T06:54:09Z",
+      "side": 1,
+      "message": "copyright header please",
+      "revId": "8999165e224e96c2e8fc9f1c6a95f4acde805135",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
