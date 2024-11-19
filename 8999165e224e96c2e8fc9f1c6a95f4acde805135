@@ -16,6 +16,24 @@
       "message": "copyright header please",
       "revId": "8999165e224e96c2e8fc9f1c6a95f4acde805135",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b730c0c9_3d85da78",
+        "filename": "features/odl-aaa-jetty-auth-log/pom.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2024-11-19T07:45:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb429d8a_7117c1e1",
+      "revId": "8999165e224e96c2e8fc9f1c6a95f4acde805135",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
