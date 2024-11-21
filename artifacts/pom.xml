@@ -88,14 +88,6 @@
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>aaa-shiro</artifactId>
-                <version>${project.version}</version>
-                <type>xml</type>
-                <classifier>aaa-app-config</classifier>
-            </dependency>
-
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-shiro-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -104,6 +96,28 @@
                 <artifactId>aaa-shiro</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.opendaylight.aaa</groupId>
+                <artifactId>aaa-shiro</artifactId>
+                <version>${project.version}</version>
+                <type>py</type>
+                <classifier>idmtool</classifier>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>aaa-shiro</artifactId>
+                <version>${project.version}</version>
+                <type>xml</type>
+                <classifier>aaa-app-config</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.opendaylight.aaa</groupId>
+                <artifactId>aaa-shiro</artifactId>
+                <version>${project.version}</version>
+                <type>xml</type>
+                <classifier>aaa-datastore-config</classifier>
+            </dependency>
+
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>aaa-tokenauthrealm</artifactId>
@@ -195,6 +209,13 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>odl-aaa-encryption-service</artifactId>
+                <version>${project.version}</version>
+                <classifier>features</classifier>
+                <type>xml</type>
+            </dependency>
+            <dependency>
+                <groupId>org.opendaylight.aaa</groupId>
+                <artifactId>odl-aaa-password-service</artifactId>
                 <version>${project.version}</version>
                 <classifier>features</classifier>
                 <type>xml</type>
