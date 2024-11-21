@@ -24,6 +24,30 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b8700ce_c6565b4c",
+        "filename": "aaa-jetty-auth-log-filter/src/main/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2024-11-21T20:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "442abd73_f8d638ab",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 8
+      },
+      "revId": "410aa99cbde7174cf3209318cc294b0faca1756d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "550b1665_79fd28db",
@@ -47,6 +71,30 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9954ec0a_5b9c8e3c",
+        "filename": "aaa-jetty-auth-log-filter/src/test/java/org/opendaylight/aaa/filter/JettyAuthenticationLogFilterTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2024-11-21T20:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "550b1665_79fd28db",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 10
+      },
+      "revId": "410aa99cbde7174cf3209318cc294b0faca1756d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "38f6e500_aea24b65",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-11-21T19:53:59Z",
       "side": 1,
       "message": "use MoreObject.toStringHelper() to do this sorts of things.\nOTOH this could be a record -- but let\u0027s start with ToStringHelper",
+      "range": {
+        "startLine": 97,
+        "startChar": 15,
+        "endLine": 97,
+        "endChar": 24
+      },
+      "revId": "410aa99cbde7174cf3209318cc294b0faca1756d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a2c1824_2ac1d7b0",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/principal/ODLPrincipalImpl.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2024-11-21T20:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38f6e500_aea24b65",
       "range": {
         "startLine": 97,
         "startChar": 15,
@@ -106,6 +178,30 @@
       "writtenOn": "2024-11-21T19:53:59Z",
       "side": 1,
       "message": "this should be coming from artifacts",
+      "range": {
+        "startLine": 118,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 49
+      },
+      "revId": "410aa99cbde7174cf3209318cc294b0faca1756d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97d21417_fb18312c",
+        "filename": "features/odl-aaa-shiro/pom.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2024-11-21T20:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d568e1ad_76f5c50f",
       "range": {
         "startLine": 118,
         "startChar": 12,
