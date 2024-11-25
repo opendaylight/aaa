@@ -81,8 +81,8 @@ jobs:
       GERRIT_PATCHSET_REVISION: ${{ inputs.GERRIT_PATCHSET_REVISION }}
       GERRIT_PROJECT: ${{ inputs.GERRIT_PROJECT }}
       GERRIT_REFSPEC: ${{ inputs.GERRIT_REFSPEC }}
-      JDK_VERSION: "17"
-      MVN_VERSION: "3.8.3"
+      JDK_VERSION: "21"
+      MVN_VERSION: "3.9.6"
       MVN_PROFILES: "docker"
       MVN_PHASES: "clean install"
       # yamllint disable rule:line-length
