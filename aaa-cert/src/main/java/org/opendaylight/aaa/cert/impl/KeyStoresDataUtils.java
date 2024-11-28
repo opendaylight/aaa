@@ -24,7 +24,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev1603
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.OdlKeystoreBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.TrustKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.TrustKeystoreBuilder;
-import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.opendaylight.yangtools.binding.DataObjectIdentifier;
+import org.opendaylight.yangtools.binding.DataObjectReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,17 +45,16 @@ public class KeyStoresDataUtils {
         this.encryService = encryService;
     }
 
-    public static InstanceIdentifier<KeyStores> getKeystoresIid() {
-        return InstanceIdentifier.builder(KeyStores.class).build();
+    public static DataObjectIdentifier<KeyStores> getKeystoresIid() {
+        return DataObjectIdentifier.builder(KeyStores.class).build();
     }
 
-    public static InstanceIdentifier<SslData> getSslDataIid() {
-        return InstanceIdentifier.create(KeyStores.class).child(SslData.class);
+    public static DataObjectReference<SslData> getSslDataIid() {
+        return DataObjectReference.builder(KeyStores.class).child(SslData.class).build();
     }
 
-    public static InstanceIdentifier<SslData> getSslDataIid(final String bundleName) {
-        final SslDataKey sslDataKey = new SslDataKey(bundleName);
-        return InstanceIdentifier.create(KeyStores.class).child(SslData.class, sslDataKey);
+    public static DataObjectIdentifier<SslData> getSslDataIid(final String bundleName) {
+        return DataObjectIdentifier.builder(KeyStores.class).child(SslData.class, new SslDataKey(bundleName)).build();
     }
 
     public static OdlKeystore updateOdlKeystore(final OdlKeystore baseOdlKeyStore, final byte[] keyStoreBytes) {
@@ -189,9 +189,9 @@ public class KeyStoresDataUtils {
     }
 
     public SslData getSslData(final DataBroker dataBroker, final String bundleName) {
-        final InstanceIdentifier<SslData> sslDataIid = getSslDataIid(bundleName);
         try {
-            return decryptSslData(MdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION, sslDataIid));
+            return decryptSslData(MdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION,
+                getSslDataIid(bundleName)));
         } catch (GeneralSecurityException e) {
             LOG.error("Decryption of KeyStore for SslData failed.", e);
             return null;
@@ -199,12 +199,10 @@ public class KeyStoresDataUtils {
     }
 
     public boolean removeSslData(final DataBroker dataBroker, final String bundleName) {
-        final InstanceIdentifier<SslData> sslDataIid = getSslDataIid(bundleName);
-        return MdsalUtils.delete(dataBroker, LogicalDatastoreType.CONFIGURATION, sslDataIid);
+        return MdsalUtils.delete(dataBroker, LogicalDatastoreType.CONFIGURATION, getSslDataIid(bundleName));
     }
 
     public boolean updateSslData(final DataBroker dataBroker, final SslData sslData) {
-        final InstanceIdentifier<SslData> sslDataIid = getSslDataIid(sslData.getBundleName());
         final SslData encryptedSslData;
         try {
             encryptedSslData = encryptSslData(sslData);
@@ -212,7 +210,8 @@ public class KeyStoresDataUtils {
             LOG.error("Encryption of KeyStore for SslData failed.", e);
             return false;
         }
-        return MdsalUtils.merge(dataBroker, LogicalDatastoreType.CONFIGURATION, sslDataIid, encryptedSslData);
+        return MdsalUtils.merge(dataBroker, LogicalDatastoreType.CONFIGURATION, getSslDataIid(sslData.getBundleName()),
+            encryptedSslData);
     }
 
     public boolean updateSslDataCipherSuites(final DataBroker dataBroker, final SslData baseSslData,

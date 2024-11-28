@@ -38,8 +38,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev1603
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.OdlKeystoreBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.TrustKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.TrustKeystoreBuilder;
+import org.opendaylight.yangtools.binding.DataObjectIdentifier;
 import org.opendaylight.yangtools.util.concurrent.FluentFutures;
-import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 
 @RunWith(MockitoJUnitRunner.StrictStubs.class)
 public class KeyStoresDataUtilsTest {
@@ -93,24 +93,21 @@ public class KeyStoresDataUtilsTest {
         doReturn(CommitInfo.emptyFluentFuture()).when(wtx).commit();
         doReturn(wtx).when(dataBroker).newWriteOnlyTransaction();
 
-        doReturn(FluentFutures.immediateFluentFuture(Optional.of(sslData))).when(rtx).read(
-            any(LogicalDatastoreType.class), any(InstanceIdentifier.class));
+        doReturn(FluentFutures.immediateFluentFuture(Optional.of(sslData))).when(rtx)
+            .read(any(LogicalDatastoreType.class), any(DataObjectIdentifier.class));
         doReturn(rtx).when(dataBroker).newReadOnlyTransaction();
 
         doReturn(ENCRYPTED_STRING.getBytes(Charset.defaultCharset())).when(encryptionService).encrypt(any());
         doReturn(PASSWORD.getBytes(Charset.defaultCharset())).when(encryptionService).decrypt(any());
 
         // getKeystoresIid
-        InstanceIdentifier<?> instanceIdentifierResult = KeyStoresDataUtils.getKeystoresIid();
-        assertNotNull(instanceIdentifierResult);
+        assertNotNull(KeyStoresDataUtils.getKeystoresIid());
 
         // getSslIid()
-        instanceIdentifierResult = KeyStoresDataUtils.getSslDataIid();
-        assertNotNull(instanceIdentifierResult);
+        assertNotNull(KeyStoresDataUtils.getSslDataIid());
 
         // getSslDataIid(final String bundleName)
-        instanceIdentifierResult = KeyStoresDataUtils.getSslDataIid(BUNDLE_NAME);
-        assertNotNull(instanceIdentifierResult);
+        assertNotNull(KeyStoresDataUtils.getSslDataIid(BUNDLE_NAME));
 
         // updateOdlKeystore
         OdlKeystore odlKeystoreResult = KeyStoresDataUtils.updateOdlKeystore(odlKeystore, ENCRYPTED_BYTE);
