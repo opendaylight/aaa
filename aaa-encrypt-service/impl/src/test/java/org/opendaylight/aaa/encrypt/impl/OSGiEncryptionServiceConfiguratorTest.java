@@ -12,9 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
 
 import java.util.Base64;
 import java.util.Dictionary;
@@ -29,22 +31,21 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.mdsal.binding.api.DataListener;
-import org.opendaylight.mdsal.binding.api.DataTreeIdentifier;
 import org.opendaylight.mdsal.binding.api.ReadWriteTransaction;
 import org.opendaylight.mdsal.common.api.CommitInfo;
 import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev240202.AaaEncryptServiceConfig;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev240202.EncryptServiceConfig;
+import org.opendaylight.yangtools.binding.DataObjectIdentifier;
 import org.opendaylight.yangtools.concepts.Registration;
 import org.opendaylight.yangtools.util.concurrent.FluentFutures;
-import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.ComponentInstance;
 
 @ExtendWith(MockitoExtension.class)
 class OSGiEncryptionServiceConfiguratorTest {
-    private static final @NonNull InstanceIdentifier<AaaEncryptServiceConfig> IID =
-        InstanceIdentifier.create(AaaEncryptServiceConfig.class);
+    private static final @NonNull DataObjectIdentifier<AaaEncryptServiceConfig> IID =
+        DataObjectIdentifier.builder(AaaEncryptServiceConfig.class).build();
     @Mock
     private DataBroker dataBroker;
     @Mock
@@ -56,8 +57,6 @@ class OSGiEncryptionServiceConfiguratorTest {
     @Mock
     private ReadWriteTransaction transaction;
     @Captor
-    private ArgumentCaptor<DataTreeIdentifier<AaaEncryptServiceConfig>> treeIdCaptor;
-    @Captor
     private ArgumentCaptor<DataListener<AaaEncryptServiceConfig>> listenerCaptor;
     @Captor
     private ArgumentCaptor<AaaEncryptServiceConfig> configCaptor;
@@ -68,11 +67,12 @@ class OSGiEncryptionServiceConfiguratorTest {
 
     @BeforeEach
     void before() {
-        doReturn(registration).when(dataBroker).registerDataListener(treeIdCaptor.capture(), listenerCaptor.capture());
+        doReturn(registration).when(dataBroker).registerDataListener(any(), any(), any());
 
         configurator = new OSGiEncryptionServiceConfigurator(dataBroker, factory);
 
-        assertEquals(DataTreeIdentifier.of(LogicalDatastoreType.CONFIGURATION, IID), treeIdCaptor.getValue());
+        verify(dataBroker).registerDataListener(eq(LogicalDatastoreType.CONFIGURATION), eq(IID),
+            listenerCaptor.capture());
         assertSame(configurator, listenerCaptor.getValue());
     }
 
