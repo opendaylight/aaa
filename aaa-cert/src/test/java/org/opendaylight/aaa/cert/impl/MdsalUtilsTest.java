@@ -21,7 +21,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev1603
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.OdlKeystoreBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.TrustKeystore;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.yang.aaa.cert.mdsal.rev160321.ssl.data.TrustKeystoreBuilder;
-import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.opendaylight.yangtools.binding.DataObjectIdentifier;
 
 public class MdsalUtilsTest {
     private static final String ALIAS = "fooTest";
@@ -33,7 +33,7 @@ public class MdsalUtilsTest {
 
     private static DataBroker dataBroker;
     private static SslData sslData;
-    private static InstanceIdentifier<SslData> instanceIdentifier;
+    private static DataObjectIdentifier<SslData> instanceIdentifier;
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
@@ -49,7 +49,7 @@ public class MdsalUtilsTest {
             .setBundleName("bundle").build();
 
         final SslDataKey sslDataKey = new SslDataKey(BUNDLE_NAME);
-        instanceIdentifier = InstanceIdentifier.create(KeyStores.class).child(SslData.class, sslDataKey);
+        instanceIdentifier = DataObjectIdentifier.builder(KeyStores.class).child(SslData.class, sslDataKey).build();
 
         dataBroker = TestUtils.mockDataBroker(sslData);
     }
