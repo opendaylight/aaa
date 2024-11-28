@@ -26,6 +26,13 @@
     <dependencies>
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
+            <artifactId>odl-controller-blueprint</artifactId>
+            <version>10.0.4</version>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.controller</groupId>
             <artifactId>odl-mdsal-broker</artifactId>
             <version>10.0.4</version>
             <type>xml</type>
