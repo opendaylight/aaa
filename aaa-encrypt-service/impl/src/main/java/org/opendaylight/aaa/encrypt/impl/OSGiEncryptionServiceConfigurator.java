@@ -24,14 +24,13 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.mdsal.binding.api.DataListener;
-import org.opendaylight.mdsal.binding.api.DataTreeIdentifier;
 import org.opendaylight.mdsal.common.api.CommitInfo;
 import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.odlparent.logging.markers.Markers;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev240202.AaaEncryptServiceConfig;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev240202.AaaEncryptServiceConfigBuilder;
+import org.opendaylight.yangtools.binding.DataObjectIdentifier;
 import org.opendaylight.yangtools.concepts.Registration;
-import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.ComponentException;
 import org.osgi.service.component.ComponentFactory;
@@ -83,9 +82,8 @@ public final class OSGiEncryptionServiceConfigurator implements DataListener<Aaa
             final ComponentFactory<AAAEncryptionServiceImpl> factory) {
         this.dataBroker = requireNonNull(dataBroker);
         this.factory = requireNonNull(factory);
-        reg = dataBroker.registerDataListener(
-            DataTreeIdentifier.of(LogicalDatastoreType.CONFIGURATION,
-                InstanceIdentifier.create(AaaEncryptServiceConfig.class)),
+        reg = dataBroker.registerDataListener(LogicalDatastoreType.CONFIGURATION,
+            DataObjectIdentifier.builder(AaaEncryptServiceConfig.class).build(),
             this);
         LOG.debug("AAA Encryption Service configurator started");
     }
@@ -134,7 +132,7 @@ public final class OSGiEncryptionServiceConfigurator implements DataListener<Aaa
         // Careful update of the datastore: we are coming from DTCL thread, so inherently 'expected' may already be out
         // of date, either by user action, or our update from another node (in a cluster). We rely on transaction's
         // read&put atomicity to do the right thing here.
-        final var iid = InstanceIdentifier.create(AaaEncryptServiceConfig.class);
+        final var iid = DataObjectIdentifier.builder(AaaEncryptServiceConfig.class).build();
         final var tx = dataBroker.newReadWriteTransaction();
         final var readFuture = tx.read(LogicalDatastoreType.CONFIGURATION, iid);
 
