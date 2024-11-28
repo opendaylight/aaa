@@ -30,11 +30,10 @@ import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
 import org.opendaylight.aaa.shiro.realm.util.TokenUtils;
 import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
 import org.opendaylight.mdsal.binding.api.DataBroker;
-import org.opendaylight.mdsal.binding.api.DataTreeIdentifier;
 import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.Authentication;
+import org.opendaylight.yangtools.binding.DataObjectIdentifier;
 import org.opendaylight.yangtools.concepts.Registration;
-import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,13 +42,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MdsalRealm extends AuthorizingRealm implements Destroyable {
     private static final Logger LOG = LoggerFactory.getLogger(MdsalRealm.class);
-
-    /**
-     * InstanceIdentifier for the authentication container.
-     */
-    private static final DataTreeIdentifier<Authentication> AUTH_TREE_ID = DataTreeIdentifier.of(
-            LogicalDatastoreType.CONFIGURATION, InstanceIdentifier.create(Authentication.class));
-
     private static final ThreadLocal<PasswordHashService> PASSWORD_HASH_SERVICE_TL = new ThreadLocal<>();
     private static final ThreadLocal<DataBroker> DATABROKER_TL = new ThreadLocal<>();
 
@@ -69,11 +61,12 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
     public MdsalRealm(final PasswordHashService passwordHashService, final DataBroker dataBroker) {
         this.passwordHashService = requireNonNull(passwordHashService);
 
+        final var doi = DataObjectIdentifier.builder(Authentication.class).build();
         try (var tx = dataBroker.newReadOnlyTransaction()) {
-            authentication = tx.read(AUTH_TREE_ID.datastore(), AUTH_TREE_ID.path());
+            authentication = tx.read(LogicalDatastoreType.CONFIGURATION, doi);
         }
 
-        reg = dataBroker.registerDataListener(AUTH_TREE_ID, this::onAuthenticationChanged);
+        reg = dataBroker.registerDataListener(LogicalDatastoreType.CONFIGURATION, doi, this::onAuthenticationChanged);
 
         LOG.info("MdsalRealm created");
     }
