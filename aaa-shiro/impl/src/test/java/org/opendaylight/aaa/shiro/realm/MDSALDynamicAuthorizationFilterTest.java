@@ -35,7 +35,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev1
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.authorization.Policies;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.aaa.rev161214.http.permission.Permissions;
 import org.opendaylight.yangtools.binding.DataObject;
-import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.opendaylight.yangtools.binding.DataObjectIdentifier;
 import org.opendaylight.yangtools.yang.common.Uint32;
 
 /**
@@ -270,13 +270,13 @@ class MDSALDynamicAuthorizationFilterTest {
         final var readOnlyTransaction = mock(ReadTransaction.class);
         if (readData instanceof DataObject dataObject) {
             doReturn(immediateFluentFuture(Optional.of(dataObject)))
-                .when(readOnlyTransaction).read(any(), any(InstanceIdentifier.class));
+                .when(readOnlyTransaction).read(any(), any(DataObjectIdentifier.class));
         } else if (readData instanceof Exception cause) {
             doReturn(immediateFailedFluentFuture(cause)).when(readOnlyTransaction)
-                .read(any(), any(InstanceIdentifier.class));
+                .read(any(), any(DataObjectIdentifier.class));
         } else {
             doReturn(immediateFluentFuture(Optional.empty())).when(readOnlyTransaction)
-                .read(any(), any(InstanceIdentifier.class));
+                .read(any(), any(DataObjectIdentifier.class));
         }
 
         final var mockDataBroker = mock(DataBroker.class);
