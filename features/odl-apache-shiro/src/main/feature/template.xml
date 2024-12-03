@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.6.0" name="odl-apache-shiro">
+    <repository>mvn:org.opendaylight.odlparent/odl-servlet-api/{{versionAsInProject}}/xml/features</repository>
+    <feature name="odl-apache-shiro">
+        <feature version="[14,15)">odl-servlet-api</feature>
+        <bundle>mvn:org.opendaylight.aaa/repackaged-shiro/{{versionAsInProject}}</bundle>
+        <bundle>mvn:commons-beanutils/commons-beanutils/{{versionAsInProject}}</bundle>
+        <bundle>mvn:commons-collections/commons-collections/{{versionAsInProject}}</bundle>
+        <bundle>mvn:org.owasp.encoder/encoder/{{versionAsInProject}}</bundle>
+    </feature>
+</features>

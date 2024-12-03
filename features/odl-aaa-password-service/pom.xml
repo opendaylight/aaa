@@ -44,24 +44,12 @@
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-password-service-impl</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-password-service-impl</artifactId>
             <classifier>aaa-password-service-config</classifier>
             <type>xml</type>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.aaa</groupId>
