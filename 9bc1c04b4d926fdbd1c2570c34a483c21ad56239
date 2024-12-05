@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b201b478_5d619141",
+        "filename": ".github/workflows/github2gerrit.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2024-12-05T08:52:45Z",
+      "side": 1,
+      "message": "we do not have `main` branch",
+      "revId": "9bc1c04b4d926fdbd1c2570c34a483c21ad56239",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
