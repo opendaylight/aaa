@@ -317,7 +317,7 @@
         <pair-value>authcBasic, roles[admin]</pair-value>
     </urls>
     <urls>
-        <pair-key>/**/config/aaa*/**</pair-key>
+        <pair-key>/**/data/aaa*/**</pair-key>
         <pair-value>authcBasic, roles[admin]</pair-value>
     </urls>
     <urls>
