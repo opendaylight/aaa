@@ -798,7 +798,7 @@ describes how to configure the Authentication feature in detail.
     belonging to the cluster.
 
     The URL patterns are matched relative to the Servlet context leaving room
-    for ambiguity, since many endpoints may match (i.e., "/restconf/modules" and
+    for ambiguity, since many endpoints may match (i.e., "/rests/modules" and
     "/auth/modules" would both match a "/modules/\**" rule).
 
 Enable “admin” Role Based Access to the IdMLight RESTful web service
@@ -862,7 +862,7 @@ This an example on how to limit access to the modules endpoint:
           "aaa:policies": {
               "aaa:policies": [
                   {
-                      "aaa:resource": "/restconf/modules/**",
+                      "aaa:resource": "/rests/modules/**",
                       "aaa:index": 1,
                       "aaa:permissions": [
                           {
