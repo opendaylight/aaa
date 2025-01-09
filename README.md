@@ -151,7 +151,7 @@ Example:
 To limit access to the modules endpoint, issue the following:
 
 HTTP Operation:    put
-URL:               /restconf/config/aaa:http-authorization/policies
+URL:               /rests/data/aaa:http-authorization/policies
 Headers:
     Content-Tye:       application/json
     Accept:            application/json
@@ -162,7 +162,8 @@ Body:
   "aaa:policies": {
     "aaa:policies": [
       {
-        "aaa:resource": "/restconf/modules/**",
+        "aaa:resource": "/rests/modules/**",
+        "aaa:index": 1,
         "aaa:permissions": [
           {
             "aaa:role": "admin",
@@ -181,7 +182,7 @@ The above example locks down access to the modules endpoint (and any URLS availa
 Thus, an attempt from the OOB admin user will succeed with 2XX HTTP status code, while an attempt from the OOB "user"
 user will fail with HTTP status code 401, as the "user" user is not granted the "admin" role.
 
-NOTE:  "aaa:resource" value starts with "/restconf".  Unlike the RolesAuthorizationFilter whichis relative to the
+NOTE:  "aaa:resource" value starts with "/rests".  Unlike the RolesAuthorizationFilter which is relative to the
 ServletContext, The MDSALDyanmicAuthorizationFilter is relative to the Servlet Root (i.e., "/"). This is superior, as it
 is more specific and does not allow for ambiguity.
 
@@ -199,7 +200,7 @@ honored upon restart.
 
 NOTE:  Use of aaa-app-config.xml urls section to define roles requirements is discouraged!  This is due to the fact that
 url patterns are matched relative to the servlet context.  This leaves room for ambiguity, since many endpoints may
-match (i.e., "/restconf/modules" and "/auth/modules" would both match a "/modules/**" rule).
+match (i.e., "/rests/modules" and "/auth/modules" would both match a "/modules/**" rule).
 
 ### Accounting
 
