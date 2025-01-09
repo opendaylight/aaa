@@ -151,7 +151,7 @@ Example:
 To limit access to the modules endpoint, issue the following:
 
 HTTP Operation:    put
-URL:               /restconf/config/aaa:http-authorization/policies
+URL:               /rests/data/aaa:http-authorization/policies
 Headers:
     Content-Tye:       application/json
     Accept:            application/json
@@ -163,6 +163,7 @@ Body:
     "aaa:policies": [
       {
         "aaa:resource": "/restconf/modules/**",
+        "aaa:index": 1,
         "aaa:permissions": [
           {
             "aaa:role": "admin",
