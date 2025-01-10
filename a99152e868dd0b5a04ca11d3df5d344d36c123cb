@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8628244a_6ed24c80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2025-01-10T07:18:52Z",
+      "side": 1,
+      "message": "RFC 8040/Bierman do not differ in body but in paths",
+      "revId": "a99152e868dd0b5a04ca11d3df5d344d36c123cb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37bed706_3d3eed7c",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2025-01-10T07:18:52Z",
+      "side": 1,
+      "message": "I guess its /rests/modules/**",
+      "revId": "a99152e868dd0b5a04ca11d3df5d344d36c123cb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f744364_e3b90652",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2025-01-10T07:18:52Z",
+      "side": 1,
+      "message": "\"/rests\"",
+      "revId": "a99152e868dd0b5a04ca11d3df5d344d36c123cb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
