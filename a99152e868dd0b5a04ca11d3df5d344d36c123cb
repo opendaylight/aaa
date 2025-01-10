@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be17b6b3_99a78a52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-01-10T08:42:07Z",
+      "side": 1,
+      "message": "The aaa:index is a required part of body. This leaf is specified as unique in policies list, therefore must be provided. Otherwise, the PUT request fails.\n\nhttps://github.com/opendaylight/aaa/blob/v0.20.4/aaa-shiro/api/src/main/yang/aaa.yang#L168",
+      "parentUuid": "8628244a_6ed24c80",
+      "revId": "a99152e868dd0b5a04ca11d3df5d344d36c123cb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "37bed706_3d3eed7c",
@@ -35,6 +53,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8c889b5_d731af68",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-01-10T08:42:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37bed706_3d3eed7c",
+      "revId": "a99152e868dd0b5a04ca11d3df5d344d36c123cb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f744364_e3b90652",
@@ -48,6 +84,24 @@
       "writtenOn": "2025-01-10T07:18:52Z",
       "side": 1,
       "message": "\"/rests\"",
+      "revId": "a99152e868dd0b5a04ca11d3df5d344d36c123cb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e24ed3af_a9be71c7",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-01-10T08:42:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f744364_e3b90652",
       "revId": "a99152e868dd0b5a04ca11d3df5d344d36c123cb",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
