@@ -34,6 +34,24 @@
       "parentUuid": "bd2fac59_aef6b8be",
       "revId": "826d18e23197df65304f2316e55d8af51a285482",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35b279e2_2856f86f",
+        "filename": "docs/dev-guide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-01-15T13:27:25Z",
+      "side": 1,
+      "message": "Fixed in the next patch:\nhttps://git.opendaylight.org/gerrit/c/aaa/+/114911",
+      "parentUuid": "ed23db12_05e2a8eb",
+      "revId": "826d18e23197df65304f2316e55d8af51a285482",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
