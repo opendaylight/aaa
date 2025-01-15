@@ -42,12 +42,15 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
     private static final String CONFIG_PROP = ".config";
 
     private final SecretKey key;
-    private final Cipher encryptCipher;
-    private final Cipher decryptCipher;
+    private final EncryptServiceConfig configuration;
+    private final IvParameterSpec ivSpec;
+
+    private Cipher encryptCipher;
+    private Cipher decryptCipher;
 
     public AAAEncryptionServiceImpl(final EncryptServiceConfig configuration) {
+        this.configuration = configuration;
         final byte[] encryptionKeySalt = configuration.requireEncryptSalt();
-        final IvParameterSpec ivSpec;
         try {
             final var keyFactory = SecretKeyFactory.getInstance(configuration.getEncryptMethod());
             final var spec = new PBEKeySpec(configuration.requireEncryptKey().toCharArray(), encryptionKeySalt,
@@ -57,20 +60,8 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
         } catch (GeneralSecurityException e) {
             throw new IllegalStateException("Failed to initialize secret key", e);
         }
-        try {
-            final var cipher = Cipher.getInstance(configuration.getCipherTransforms());
-            cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
-            encryptCipher = cipher;
-        } catch (GeneralSecurityException e) {
-            throw new IllegalStateException("Failed to create encrypt cipher.", e);
-        }
-        try {
-            final var cipher = Cipher.getInstance(configuration.getCipherTransforms());
-            cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
-            decryptCipher = cipher;
-        } catch (GeneralSecurityException e) {
-            throw new IllegalStateException("Failed to create decrypt cipher.", e);
-        }
+        encryptCipher = initCipher(Cipher.ENCRYPT_MODE);
+        decryptCipher = initCipher(Cipher.DECRYPT_MODE);
         LOG.info("AAAEncryptionService activated");
     }
 
@@ -90,14 +81,35 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
     }
 
     @Override
-    public byte[] encrypt(final byte[] data) throws BadPaddingException, IllegalBlockSizeException {
-        synchronized (encryptCipher) {
+    public synchronized byte[] encrypt(final byte[] data) throws BadPaddingException, IllegalBlockSizeException {
+        try {
             return encryptCipher.doFinal(requireNonNull(data));
+        } catch (IllegalBlockSizeException | BadPaddingException exception) {
+            // Reset Cipher after exception and re-throw.
+            encryptCipher = initCipher(Cipher.DECRYPT_MODE);
+            throw exception;
         }
     }
 
     @Override
     public byte[] decrypt(final byte[] encryptedData) throws BadPaddingException, IllegalBlockSizeException {
-        return decryptCipher.doFinal(requireNonNull(encryptedData));
+        try {
+            return decryptCipher.doFinal(requireNonNull(encryptedData));
+        } catch (IllegalBlockSizeException | BadPaddingException exception) {
+            // Reset Cipher after exception and re-throw.
+            decryptCipher = initCipher(Cipher.DECRYPT_MODE);
+            throw exception;
+        }
+    }
+
+    private Cipher initCipher(final int mode) {
+        try {
+            final var cipher = Cipher.getInstance(configuration.getCipherTransforms());
+            cipher.init(mode, key, ivSpec);
+            return cipher;
+        } catch (GeneralSecurityException e) {
+            final var stringMode = mode == Cipher.DECRYPT_MODE ? "decrypt" : "encrypt";
+            throw new IllegalStateException("Failed to create " + stringMode + " cipher.", e);
+        }
     }
 }
