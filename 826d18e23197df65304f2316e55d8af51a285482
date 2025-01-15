@@ -16,6 +16,24 @@
       "message": "Although not required for ODL, the module name prefix `aaa:` should be removed from here to conform to [RFC 7951](https://www.rfc-editor.org/rfc/rfc7951.html#section-4).",
       "revId": "826d18e23197df65304f2316e55d8af51a285482",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed23db12_05e2a8eb",
+        "filename": "docs/dev-guide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2025-01-15T11:22:33Z",
+      "side": 1,
+      "message": "Agree, I propose to do it in follow up patch and maybe check other occurrences as well.",
+      "parentUuid": "bd2fac59_aef6b8be",
+      "revId": "826d18e23197df65304f2316e55d8af51a285482",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
