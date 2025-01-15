@@ -7,7 +7,6 @@
  */
 package org.opendaylight.aaa.encrypt.impl;
 
-
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -137,5 +136,23 @@ class AAAEncryptServiceImplTest {
         assertEquals(
             "Given final block not properly padded. Such issues can arise if a bad key is used during decryption.",
             ex.getMessage());
+    }
+
+    @Test
+    void testDecryptionAfterExceptionThrow() throws Exception {
+        // Verify successful encryption/decryption.
+        final var before = "shortone".getBytes();
+        final var encrypt = impl.encrypt(before);
+        assertFalse(Arrays.equals(before, encrypt));
+        assertArrayEquals(before, impl.decrypt(encrypt));
+
+        // Reset Cipher and verify that new Cipher can not decrypt old encrypted data.
+        setup();
+        assertThrows(BadPaddingException.class, () -> impl.decrypt(encrypt));
+
+        // Verify that Cipher decrypt work after previous failure.
+        final var encrypt2 = impl.encrypt(before);
+        assertFalse(Arrays.equals(before, encrypt2));
+        assertArrayEquals(before, impl.decrypt(encrypt2));
     }
 }
