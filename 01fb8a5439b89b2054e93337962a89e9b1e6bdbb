@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f3d8ab8c_2b7ea399",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2025-01-15T18:04:38Z",
+      "side": 1,
+      "message": "I think synchronized will probably win out -- but determining that requires a JMH benchmark to prove one way or another (including characterization of failure% impact).",
+      "parentUuid": "c30e4469_feda9b70",
+      "revId": "01fb8a5439b89b2054e93337962a89e9b1e6bdbb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e5f6c748_238ace3d",
         "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
         "patchSetId": 1
@@ -37,6 +55,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9e7cf85f_dab573b7",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2025-01-15T18:04:38Z",
+      "side": 1,
+      "message": "invert logic: rather than ensuring \u0027encryptCipher\u0027 is always initialized, add a \u0027getCipher()\u0027 method, which will either reuse existing or initialize new.\n\nthan this catch block should just invalidate the cache, e.g. \u0027this.cipher \u003d null\u0027, minimizing the amount of work in error paths.",
+      "range": {
+        "startLine": 89,
+        "startChar": 12,
+        "endLine": 89,
+        "endChar": 38
+      },
+      "revId": "01fb8a5439b89b2054e93337962a89e9b1e6bdbb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "02bf9ad8_c8fa4249",
         "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
         "patchSetId": 1
@@ -48,6 +89,24 @@
       "writtenOn": "2025-01-15T14:56:28Z",
       "side": 1,
       "message": "IDK: do we really want to rethrow exception?",
+      "revId": "01fb8a5439b89b2054e93337962a89e9b1e6bdbb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ee32f63_a694c633",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2025-01-15T18:04:38Z",
+      "side": 1,
+      "message": "yes, definitely",
+      "parentUuid": "02bf9ad8_c8fa4249",
       "revId": "01fb8a5439b89b2054e93337962a89e9b1e6bdbb",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
