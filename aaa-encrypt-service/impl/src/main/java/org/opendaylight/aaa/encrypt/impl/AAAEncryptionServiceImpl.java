@@ -20,6 +20,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+import org.checkerframework.checker.lock.qual.GuardedBy;
 import org.opendaylight.aaa.encrypt.AAAEncryptionService;
 import org.opendaylight.yang.gen.v1.config.aaa.authn.encrypt.service.config.rev160915.EncryptServiceConfig;
 import org.osgi.service.component.annotations.Activate;
@@ -42,12 +43,17 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
     private static final String CONFIG_PROP = ".config";
 
     private final SecretKey key;
-    private final Cipher encryptCipher;
-    private final Cipher decryptCipher;
+    private final IvParameterSpec ivSpec;
+    private final Cipher baseEncryptCipher;
+    private final Cipher baseDecryptCipher;
+
+    @GuardedBy("baseEncryptCipher")
+    private Cipher encryptCipher = null;
+    @GuardedBy("baseDecryptCipher")
+    private Cipher decryptCipher = null;
 
     public AAAEncryptionServiceImpl(final EncryptServiceConfig configuration) {
         final byte[] encryptionKeySalt = configuration.requireEncryptSalt();
-        final IvParameterSpec ivSpec;
         try {
             final var keyFactory = SecretKeyFactory.getInstance(configuration.getEncryptMethod());
             final var spec = new PBEKeySpec(configuration.requireEncryptKey().toCharArray(), encryptionKeySalt,
@@ -57,19 +63,16 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
         } catch (GeneralSecurityException e) {
             throw new IllegalStateException("Failed to initialize secret key", e);
         }
+        final var cipherTransforms = configuration.getCipherTransforms();
         try {
-            final var cipher = Cipher.getInstance(configuration.getCipherTransforms());
-            cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
-            encryptCipher = cipher;
+            baseEncryptCipher = Cipher.getInstance(cipherTransforms);
         } catch (GeneralSecurityException e) {
-            throw new IllegalStateException("Failed to create encrypt cipher.", e);
+            throw new IllegalStateException("Failed to create base encrypt cipher", e);
         }
         try {
-            final var cipher = Cipher.getInstance(configuration.getCipherTransforms());
-            cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
-            decryptCipher = cipher;
+            baseDecryptCipher = Cipher.getInstance(cipherTransforms);
         } catch (GeneralSecurityException e) {
-            throw new IllegalStateException("Failed to create decrypt cipher.", e);
+            throw new IllegalStateException("Failed to create base decrypt cipher", e);
         }
         LOG.info("AAAEncryptionService activated");
     }
@@ -91,13 +94,46 @@ public final class AAAEncryptionServiceImpl implements AAAEncryptionService {
 
     @Override
     public byte[] encrypt(final byte[] data) throws BadPaddingException, IllegalBlockSizeException {
-        synchronized (encryptCipher) {
-            return encryptCipher.doFinal(requireNonNull(data));
+        synchronized (baseEncryptCipher) {
+            if (encryptCipher == null) {
+                encryptCipher = initCipher(Cipher.ENCRYPT_MODE, baseEncryptCipher);
+            }
+            try {
+                return encryptCipher.doFinal(requireNonNull(data));
+            } catch (IllegalBlockSizeException | BadPaddingException e) {
+                // Remove Cipher after exception and re-throw.
+                LOG.warn("Failed to encrypt data, resetting encrypt Cipher.", e);
+                encryptCipher = null;
+                throw e;
+            }
         }
     }
 
     @Override
-    public byte[] decrypt(final byte[] encryptedData) throws BadPaddingException, IllegalBlockSizeException {
-        return decryptCipher.doFinal(requireNonNull(encryptedData));
+    public byte[] decrypt(final byte[] encryptedData) throws BadPaddingException,
+            IllegalBlockSizeException {
+        synchronized (baseDecryptCipher) {
+            if (decryptCipher == null) {
+                decryptCipher = initCipher(Cipher.DECRYPT_MODE, baseDecryptCipher);
+            }
+            try {
+                return decryptCipher.doFinal(requireNonNull(encryptedData));
+            } catch (IllegalBlockSizeException | BadPaddingException e) {
+                // Remove Cipher after exception and re-throw.
+                LOG.warn("Failed to decrypt data, resetting decrypt Cipher.", e);
+                decryptCipher = null;
+                throw e;
+            }
+        }
+    }
+
+    private Cipher initCipher(final int mode, final Cipher cipher) {
+        try {
+            cipher.init(mode, key, ivSpec);
+            return cipher;
+        } catch (GeneralSecurityException e) {
+            final var stringMode = mode == Cipher.DECRYPT_MODE ? "decrypt" : "encrypt";
+            throw new IllegalStateException("Failed to create " + stringMode + " cipher.", e);
+        }
     }
 }
