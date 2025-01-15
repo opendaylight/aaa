@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c30e4469_feda9b70",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2025-01-15T17:50:36Z",
+      "side": 1,
+      "message": "What is the overhead of synchronization vs. initializing cipher every time this method is called like in https://git.opendaylight.org/gerrit/c/aaa/+/110117?\n\n`decrypt()` doesn\u0027t have `synchronized` and probably better to use `VarHandle`?",
+      "revId": "01fb8a5439b89b2054e93337962a89e9b1e6bdbb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e5f6c748_238ace3d",
         "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
         "patchSetId": 1
