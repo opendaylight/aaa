@@ -160,14 +160,14 @@ Body:
 ```json
 {
   "aaa:policies": {
-    "aaa:policies": [
+    "policies": [
       {
-        "aaa:resource": "/rests/modules/**",
-        "aaa:index": 1,
-        "aaa:permissions": [
+        "resource": "/rests/modules/**",
+        "index": 1,
+        "permissions": [
           {
-            "aaa:role": "admin",
-            "aaa:actions": [
+            "role": "admin",
+            "actions": [
               "get","post","put","patch","delete"
             ]
           }
