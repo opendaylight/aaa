@@ -36,6 +36,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06460769_ac981a38",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-01-21T11:23:28Z",
+      "side": 1,
+      "message": "If we initialize the cipher every time encrypt/decrypt method is called, we will have similar benchmark results for use-case when encryption/decryption fails. However, the normal successful use of this method would be less efficient.\n\nHere is a benchmarks result with 8 threads used:\n\nTest for initialization after each execution:\n```\nBenchmark                                                      (iterations)  Mode  Cnt   Score    Error  Units\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark            10  avgt   10  37.362 ±  0.508  ms/op\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark           100  avgt   10  37.105 ±  0.150  ms/op\nAAAEncryptionBenchmark.shortStringBenchmark                              10  avgt   10   0.021 ±  0.001  ms/op\nAAAEncryptionBenchmark.shortStringBenchmark                             100  avgt   10   0.022 ±  0.001  ms/op\n```\n\nTest for synchronized encrypt method:\n```\nBenchmark                                                      (iterations)  Mode  Cnt   Score    Error  Units\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark           100  avgt   10  38.734 ±  1.413  ms/op\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark          1000  avgt   10  37.847 ±  0.998  ms/op\nAAAEncryptionBenchmark.shortStringBenchmark                             100  avgt   10  ≈ 10⁻⁴           ms/op\nAAAEncryptionBenchmark.shortStringBenchmark                            1000  avgt   10  ≈ 10⁻⁴           ms/op\n```\n\nTest for current implementation:\n```\nBenchmark                                                      (iterations)  Mode  Cnt   Score    Error  Units\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark           100  avgt   10  38.281 ±  2.314  ms/op\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark          1000  avgt   10  37.704 ±  0.280  ms/op\nAAAEncryptionBenchmark.shortStringBenchmark                             100  avgt   10  ≈ 10⁻⁴           ms/op\nAAAEncryptionBenchmark.shortStringBenchmark                            1000  avgt   10  ≈ 10⁻⁴           ms/op\n\n```\n\nTest for VarHandle with the Cipher reset only after failure:\n```\nBenchmark                                                      (iterations)  Mode  Cnt   Score    Error  Units\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark           100  avgt   10  37.171 ±  0.640  ms/op\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark          1000  avgt   10  37.691 ±  0.585  ms/op\nAAAEncryptionBenchmark.shortStringBenchmark                             100  avgt   10  ≈ 10⁻⁴           ms/op\nAAAEncryptionBenchmark.shortStringBenchmark                            1000  avgt   10  ≈ 10⁻⁴           ms/op\n\n```\n\nI have decided to use ConcurrentHashMap instead of VarHandle. This makes accesses to Cipher easier and more readable than with VarHandle. The drawback is slight worse performance for handling exception. IMHO it is better to sacrifice slightly worse performance in this corner case than to increase the code complexity and reduce its readability.",
+      "parentUuid": "f3d8ab8c_2b7ea399",
+      "revId": "01fb8a5439b89b2054e93337962a89e9b1e6bdbb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5f6c748_238ace3d",
@@ -53,6 +71,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c74bed0_a26c9c65",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-01-21T11:23:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5f6c748_238ace3d",
+      "revId": "01fb8a5439b89b2054e93337962a89e9b1e6bdbb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e7cf85f_dab573b7",
@@ -66,6 +102,30 @@
       "writtenOn": "2025-01-15T18:04:38Z",
       "side": 1,
       "message": "invert logic: rather than ensuring \u0027encryptCipher\u0027 is always initialized, add a \u0027getCipher()\u0027 method, which will either reuse existing or initialize new.\n\nthan this catch block should just invalidate the cache, e.g. \u0027this.cipher \u003d null\u0027, minimizing the amount of work in error paths.",
+      "range": {
+        "startLine": 89,
+        "startChar": 12,
+        "endLine": 89,
+        "endChar": 38
+      },
+      "revId": "01fb8a5439b89b2054e93337962a89e9b1e6bdbb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "453d0756_8bd0cf7d",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-01-21T11:23:28Z",
+      "side": 1,
+      "message": "Done. I have hopefully improved this by using ConcurrentHashMap. Setting \u0027this.cipher \u003d null\u0027 can create a window for failure in multithreaded environment.\n\nThere is slight chance that thread (A) verify that cipher is not null. Thread (B) set cipher to null. Thread (A) Use cipher with null value.",
+      "parentUuid": "9e7cf85f_dab573b7",
       "range": {
         "startLine": 89,
         "startChar": 12,
@@ -107,6 +167,24 @@
       "side": 1,
       "message": "yes, definitely",
       "parentUuid": "02bf9ad8_c8fa4249",
+      "revId": "01fb8a5439b89b2054e93337962a89e9b1e6bdbb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81fdb713_2810d7c6",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-01-21T11:23:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ee32f63_a694c633",
       "revId": "01fb8a5439b89b2054e93337962a89e9b1e6bdbb",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
