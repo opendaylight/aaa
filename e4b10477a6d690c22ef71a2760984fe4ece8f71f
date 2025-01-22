@@ -16,6 +16,24 @@
       "message": "This may not be critical but I guess it\u0027s possible for another thread to pick up the cipher between exception and this removal?",
       "revId": "e4b10477a6d690c22ef71a2760984fe4ece8f71f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "421c17ee_e41f5e53",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-01-22T10:29:38Z",
+      "side": 1,
+      "message": "Yes, this is possible. In this case, the thread that picks up a failing cipher will also fail and remove the possibly refreshed cipher. The next caller of this method will create a new one and continue successfully.\n\nTherefore, there is a small chance that an unrelated decryption/encryption might fail, but the next call will work.",
+      "parentUuid": "e299e0c7_e25ef6bb",
+      "revId": "e4b10477a6d690c22ef71a2760984fe4ece8f71f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
