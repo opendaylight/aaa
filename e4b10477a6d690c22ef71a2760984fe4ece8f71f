@@ -34,6 +34,24 @@
       "parentUuid": "e299e0c7_e25ef6bb",
       "revId": "e4b10477a6d690c22ef71a2760984fe4ece8f71f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68393682_7fd199cd",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-01-22T13:14:59Z",
+      "side": 1,
+      "message": "Since this was not shown in my benchmark test. I double-check it and found that in previous multi-thread benchmark results, I had created a new instance of the AAAEncryptionServiceImpl class before each test. When I fixed my test and used one instance for all benchmark iterations to verify interaction between threads, this issue became visible.\n\nFixed by adding synchronized to encryption/decryption method.\n\nThe updated benchmark test shows that \"Test for initialization after each execution\" performs worse than the current implementation.\n\nNew benchmark results:\n\"Test for initialization after each execution\":\n```\nBenchmark                                                      (iterations)  Mode  Cnt  Score    Error  Units\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark           100  avgt   10  0.060 ±  0.001  ms/op\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark          1000  avgt   10  0.060 ±  0.006  ms/op\nAAAEncryptionBenchmark.shortStringBenchmark                             100  avgt   10  0.023 ±  0.001  ms/op\nAAAEncryptionBenchmark.shortStringBenchmark                            1000  avgt   10  0.024 ±  0.001  ms/op\n```\n\n\"Test for ConcurrentHashMap with synchronized implementation\":\n```\nBenchmark                                                      (iterations)  Mode  Cnt  Score    Error  Units\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark           100  avgt   10  0.040 ±  0.002  ms/op\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark          1000  avgt   10  0.040 ±  0.001  ms/op\nAAAEncryptionBenchmark.shortStringBenchmark                             100  avgt   10  0.001 ±  0.001  ms/op\nAAAEncryptionBenchmark.shortStringBenchmark                            1000  avgt   10  0.001 ±  0.001  ms/op\n```",
+      "parentUuid": "421c17ee_e41f5e53",
+      "revId": "e4b10477a6d690c22ef71a2760984fe4ece8f71f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
