@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "785f75ba_ee6dc6e8",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1927
+      },
+      "writtenOn": "2025-01-24T19:57:08Z",
+      "side": 1,
+      "message": "Okay, so I took the benchmark class and changed the time unit to `TimeUnit.MICROSECONDS` and I got the following numbers:\n\n```\nBenchmark                                                      (iterations)  Mode  Cnt   Score   Error  Units\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark           100  avgt   10  35.314 ± 0.633  us/op\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark          1000  avgt   10  36.474 ± 0.728  us/op\nAAAEncryptionBenchmark.shortStringBenchmark                             100  avgt   10   2.278 ± 0.168  us/op\nAAAEncryptionBenchmark.shortStringBenchmark                            1000  avgt   10   2.112 ± 0.049  us/op\n```\n\nWhen encrypt \u0026 decrypt are synchronized independently, I get these:\n```\nBenchmark                                                      (iterations)  Mode  Cnt   Score   Error  Units\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark           100  avgt   10  31.473 ± 0.888  us/op\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark          1000  avgt   10  31.649 ± 0.626  us/op\nAAAEncryptionBenchmark.shortStringBenchmark                             100  avgt   10   1.381 ± 0.052  us/op\nAAAEncryptionBenchmark.shortStringBenchmark                            1000  avgt   10   1.370 ± 0.048  us/op\n```\n\nSo the latter is better.",
+      "parentUuid": "d546b274_4072ba3f",
+      "revId": "e70c8f225544f4fd52757e96f358c3f7cd36d5b2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "631a6ccc_91dfff85",
         "filename": "aaa-encrypt-service/impl/src/test/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptServiceImplTest.java",
         "patchSetId": 3
