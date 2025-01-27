@@ -108,6 +108,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6494082b_69ab96df",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-01-27T10:08:15Z",
+      "side": 1,
+      "message": "I have the same results with TimeUnit.MICROSECONDS. The difference in results is probably caused by different processors. However, I changed it to a synchronized block because the results are in microseconds, and this better illustrates that these two methods do not require synchronization.",
+      "parentUuid": "48314fd8_fc713e2e",
+      "revId": "e70c8f225544f4fd52757e96f358c3f7cd36d5b2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "631a6ccc_91dfff85",
