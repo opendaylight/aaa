@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "206b36fe_741595af",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2025-02-04T13:01:32Z",
+      "side": 1,
+      "message": "maybe just configuration.getCipherTransforms() would be better than whole configuration",
+      "revId": "2a504f7ae4049b227be64b34c5b9a7fcf9381977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
