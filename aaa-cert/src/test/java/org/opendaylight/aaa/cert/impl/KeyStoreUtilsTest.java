@@ -7,29 +7,34 @@
  */
 package org.opendaylight.aaa.cert.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.junit.Test;
 
-public class KeyStoreUtilisTest {
+public class KeyStoreUtilsTest {
     private static final String FILE_NAME = "foo.pem";
     private static final String TXT = "test save text";
-    private static final String KEYSTORE_PATH = "configuration" + File.separator + "ssl" + File.separator;
+    private static final Path KEYSTORE_PATH = Path.of("configuration", "ssl");
 
     @Test
     public void testKeyStoreUtils() {
-        final String path = KeyStoreConstant.createDir(KEYSTORE_PATH);
-        assertTrue(!path.isEmpty());
-        final File dir = new File(path);
-        assertTrue(dir.exists());
+        final var path = KeyStoreConstant.createDir(KEYSTORE_PATH.toString());
+        assertNotNull(path);
+        assertNotEquals("", path);
+
+        assertTrue(Files.exists(Path.of(path)));
+
         //Test save file
         assertTrue(KeyStoreConstant.saveCert(FILE_NAME, TXT));
         //Test check file
         assertTrue(KeyStoreConstant.checkKeyStoreFile(FILE_NAME));
         //Test read file
-        final String readTxt = KeyStoreConstant.readFile(FILE_NAME);
+        final var readTxt = KeyStoreConstant.readFile(FILE_NAME);
         assertEquals(TXT, readTxt);
     }
 }
