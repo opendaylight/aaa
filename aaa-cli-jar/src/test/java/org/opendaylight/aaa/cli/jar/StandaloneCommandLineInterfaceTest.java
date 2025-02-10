@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,14 +24,14 @@ import org.junit.Test;
  * @author Michael Vorburger.ch
  */
 public class StandaloneCommandLineInterfaceTest {
-    private static final String DIR = "target/" + StandaloneCommandLineInterfaceTest.class.getSimpleName();
+    private static final Path DIR = Path.of("target", StandaloneCommandLineInterfaceTest.class.getSimpleName());
 
-    StandaloneCommandLineInterface cli;
+    private StandaloneCommandLineInterface cli;
 
     @Before
     public void before() throws Exception {
         FilesUtils.delete(DIR);
-        cli = new StandaloneCommandLineInterface(new File(DIR));
+        cli = new StandaloneCommandLineInterface(DIR.toFile());
     }
 
     @Test
