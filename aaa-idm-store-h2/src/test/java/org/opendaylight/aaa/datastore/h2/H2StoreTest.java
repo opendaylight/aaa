@@ -7,15 +7,16 @@
  */
 package org.opendaylight.aaa.datastore.h2;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.io.File;
-import java.sql.SQLException;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.opendaylight.aaa.api.IDMStoreUtil;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.model.Domain;
@@ -25,37 +26,30 @@ import org.opendaylight.aaa.api.model.User;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.impl.password.service.DefaultPasswordHashService;
 
-public class H2StoreTest {
+class H2StoreTest {
+    private static final List<Path> FILE_PATHS = List.of(Path.of("idmlight.db.mv.db"), Path.of("idmlight.db.trace.db"));
 
-    @BeforeClass
-    public static void start() {
-        File file = new File("idmlight.db.mv.db");
-        if (file.exists()) {
-            file.delete();
-        }
-        file = new File("idmlight.db.trace.db");
-        if (file.exists()) {
-            file.delete();
-        }
-    }
-
-    @AfterClass
-    public static void end() {
-        File file = new File("idmlight.db.mv.db");
-        if (file.exists()) {
-            file.delete();
-        }
-        file = new File("idmlight.db.trace.db");
-        if (file.exists()) {
-            file.delete();
-        }
-    }
-
-    private H2Store h2Store;
     private final PasswordHashService passwordService = new DefaultPasswordHashService();
+    private H2Store h2Store;
 
-    @Before
-    public void before() throws StoreException, SQLException {
+    @BeforeAll
+    static void beforeAll() throws Exception {
+        cleanupFiles();
+    }
+
+    @AfterAll
+    static void afterAll() throws Exception {
+        cleanupFiles();
+    }
+
+    private static void cleanupFiles() throws Exception {
+        for (var path : FILE_PATHS) {
+            Files.deleteIfExists(path);
+        }
+    }
+
+    @BeforeEach
+    void beforeEach() throws Exception {
         IdmLightSimpleConnectionProvider dbConnectionFactory = new IdmLightSimpleConnectionProvider(
                 new IdmLightConfigBuilder().dbUser("foo").dbPwd("bar").build());
         UserStore us = new UserStore(dbConnectionFactory, passwordService);
@@ -71,7 +65,7 @@ public class H2StoreTest {
     }
 
     @Test
-    public void testCreateDefaultDomain() throws StoreException {
+    void testCreateDefaultDomain() throws Exception {
         Domain domain = new Domain();
         DomainStore ds = new DomainStore(
                 new IdmLightSimpleConnectionProvider(new IdmLightConfigBuilder().dbUser("foo").dbPwd("bar").build()));
@@ -82,20 +76,19 @@ public class H2StoreTest {
     }
 
     @Test
-    public void testCreateTempRole() throws StoreException {
-        Role role = h2Store.createRole("temp", "temp domain", "Temp Testing role");
+    void testCreateTempRole() throws Exception {
+        final var role = h2Store.createRole("temp", "temp domain", "Temp Testing role");
         assertNotNull(role);
     }
 
     @Test
-    public void testCreateUser() throws StoreException {
-        User user = h2Store.createUser("test", "pass", "domain", "desc",
-                "email",true, "SALT");
+    void testCreateUser() throws Exception {
+        final var user = h2Store.createUser("test", "pass", "domain", "desc", "email",true, "SALT");
         assertNotNull(user);
     }
 
     @Test
-    public void testCreateGrant() throws StoreException {
+    void testCreateGrant() throws Exception {
         Domain domain = h2Store.createDomain("sdn", true);
         Role role = h2Store.createRole("temp", "temp domain", "Temp Testing role");
         User user = h2Store.createUser("test", "pass", "domain", "desc",
@@ -105,7 +98,7 @@ public class H2StoreTest {
     }
 
     @Test
-    public void testUpdatingUserEmail() throws StoreException {
+    void testUpdatingUserEmail() throws Exception {
         UserStore us = new UserStore(
                 new IdmLightSimpleConnectionProvider(
                         new IdmLightConfigBuilder().dbUser("foo").dbPwd("bar").build()), passwordService);
