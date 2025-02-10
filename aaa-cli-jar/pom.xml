@@ -20,6 +20,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>jar</packaging>
 
+  <properties>
+    <odlparent.modernizer.enforce>false</odlparent.modernizer.enforce>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>com.google.guava</groupId>
