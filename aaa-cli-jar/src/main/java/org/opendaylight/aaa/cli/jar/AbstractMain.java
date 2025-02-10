@@ -9,6 +9,7 @@ package org.opendaylight.aaa.cli.jar;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -130,7 +131,7 @@ public abstract class AbstractMain {
 
         parser.acceptsAll(List.of(OPTION_HELP, "?"), "Show help").forHelp();
         parser.accepts(OPTION_DB_DIR, "databaseDirectory").withRequiredArg().ofType(File.class)
-            .defaultsTo(new File(".")).describedAs("path");
+            .defaultsTo(Path.of(".").toFile()).describedAs("path");
         parser.acceptsAll(List.of(OPTION_LIST_USERS, "listUsers"), "List all existing users");
         parser.acceptsAll(List.of(OPTION_NEW_USER, "newUser"), "New user to create").withRequiredArg();
         parser.acceptsAll(List.of(OPTION_CHANGE_USER, "changeUser"), "Existing user name to change password")

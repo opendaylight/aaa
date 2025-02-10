@@ -16,6 +16,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 import org.junit.Test;
 import org.opendaylight.yangtools.testutils.mockito.MoreAnswers;
@@ -26,6 +27,8 @@ import org.opendaylight.yangtools.testutils.mockito.MoreAnswers;
  * @author Michael Vorburger.ch
  */
 public class AbstractMainTest {
+    private static final File DOT_FILE = Path.of(".").toFile();
+
     private static AbstractMain mockedMain() {
         return mock(AbstractMain.class, MoreAnswers.realOrException());
     }
@@ -94,7 +97,7 @@ public class AbstractMainTest {
     public void changeUserAndPassword() throws Exception {
         AbstractMain main = spy(AbstractMain.class);
         assertEquals(0, main.parseArguments(new String[] { "-X", "-cu", "user", "-p", "newpass" }));
-        verify(main).setDbDirectory(new File("."));
+        verify(main).setDbDirectory(DOT_FILE);
         verify(main).resetPasswords(List.of("user"), List.of("newpass"));
     }
 
@@ -102,7 +105,7 @@ public class AbstractMainTest {
     public void addNewUser() throws Exception {
         AbstractMain main = spy(AbstractMain.class);
         assertEquals(0, main.parseArguments(new String[] { "-X", "-nu", "user", "-p", "newpass" }));
-        verify(main).setDbDirectory(new File("."));
+        verify(main).setDbDirectory(DOT_FILE);
         verify(main).addNewUsers(List.of("user"), List.of("newpass"), false);
     }
 
@@ -110,7 +113,7 @@ public class AbstractMainTest {
     public void addNewAdminUser() throws Exception {
         AbstractMain main = spy(AbstractMain.class);
         assertEquals(0, main.parseArguments(new String[] { "-X", "-nu", "user", "-p", "newpass", "-a" }));
-        verify(main).setDbDirectory(new File("."));
+        verify(main).setDbDirectory(DOT_FILE);
         verify(main).addNewUsers(List.of("user"), List.of("newpass"), true);
     }
 
@@ -119,7 +122,7 @@ public class AbstractMainTest {
         AbstractMain main = spy(AbstractMain.class);
         assertEquals(0,
             main.parseArguments(new String[] { "-X", "--dbd", "altDbDir", "-cu", "user", "-p", "newpass" }));
-        verify(main).setDbDirectory(new File("altDbDir"));
+        verify(main).setDbDirectory(Path.of("altDbDir").toFile());
         verify(main).resetPasswords(List.of("user"), List.of("newpass"));
     }
 
@@ -147,7 +150,7 @@ public class AbstractMainTest {
     public void deleteSingleUser() throws Exception {
         AbstractMain main = spy(AbstractMain.class);
         assertEquals(0, main.parseArguments(new String[] { "-X", "-du", "duser" }));
-        verify(main).setDbDirectory(new File("."));
+        verify(main).setDbDirectory(DOT_FILE);
         verify(main).deleteUsers(List.of("duser"));
     }
 
@@ -155,7 +158,7 @@ public class AbstractMainTest {
     public void verify1User1Password() throws Exception {
         AbstractMain main = spy(AbstractMain.class);
         assertEquals(0, main.parseArguments(new String[] { "-X", "-vu", "user", "-p", "pass" }));
-        verify(main).setDbDirectory(new File("."));
+        verify(main).setDbDirectory(DOT_FILE);
         verify(main).verifyUsers(List.of("user"), List.of("pass"));
     }
 
@@ -164,7 +167,7 @@ public class AbstractMainTest {
         AbstractMain main = spy(AbstractMain.class);
         assertEquals(0, main.parseArguments(new String[] {
             "-X", "-vu", "user1", "-p", "pass1", "-vu", "user2", "-p", "pass2" }));
-        verify(main).setDbDirectory(new File("."));
+        verify(main).setDbDirectory(DOT_FILE);
         verify(main).verifyUsers(List.of("user1", "user2"), List.of("pass1", "pass2"));
     }
 

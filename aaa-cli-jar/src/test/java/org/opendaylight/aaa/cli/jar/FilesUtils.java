@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Comparator;
 
 /**
@@ -24,10 +23,10 @@ public final class FilesUtils {
         // Hidden on purpose
     }
 
-    public static void delete(final String directory) throws IOException {
-        final Path path = Paths.get(directory);
-        if (Files.exists(path)) {
-            Files.walk(path).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
+    public static void delete(final Path directory) throws IOException {
+        if (Files.exists(directory)) {
+            Files.walk(directory).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
         }
     }
+
 }
