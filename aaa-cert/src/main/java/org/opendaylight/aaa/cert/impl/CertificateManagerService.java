@@ -7,8 +7,9 @@
  */
 package org.opendaylight.aaa.cert.impl;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -53,9 +54,8 @@ import org.xml.sax.SAXException;
  */
 public class CertificateManagerService implements ICertificateManager, AutoCloseable {
     private static final Logger LOG = LoggerFactory.getLogger(CertificateManagerService.class);
-    private static final String DEFAULT_CONFIG_FILE_PATH = "etc" + File.separator + "opendaylight" + File.separator
-            + "datastore" + File.separator + "initial" + File.separator + "config" + File.separator
-            + "aaa-cert-config.xml";
+    private static final Path DEFAULT_CONFIG_FILE_PATH =
+        Path.of("etc", "opendaylight", "datastore", "initial", "config", "aaa-cert-config.xml");
     private static final int PWD_LENGTH = 12;
 
     private final IAaaCertProvider aaaCertProvider;
@@ -190,14 +190,14 @@ public class CertificateManagerService implements ICertificateManager, AutoClose
     private static void updateCertManagerSrvConfig(final String ctlPwd, final String trustPwd) {
         try {
             LOG.debug("Update Certificate manager service config file");
-            final File configFile = new File(DEFAULT_CONFIG_FILE_PATH);
-            if (configFile.exists()) {
+            if (Files.exists(DEFAULT_CONFIG_FILE_PATH)) {
+                final var file = DEFAULT_CONFIG_FILE_PATH.toFile();
                 final String storePwdTag = "store-password";
                 final String ctlStoreTag = "ctlKeystore";
                 final String trustStoreTag = "trustKeystore";
                 final DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
                 final DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-                final Document doc = docBuilder.parse(configFile);
+                final Document doc = docBuilder.parse(file);
                 final NodeList ndList = doc.getElementsByTagName(storePwdTag);
                 for (int i = 0; i < ndList.getLength(); i++) {
                     final Node nd = ndList.item(i);
@@ -210,7 +210,7 @@ public class CertificateManagerService implements ICertificateManager, AutoClose
                 final TransformerFactory transformerFactory = TransformerFactory.newInstance();
                 final Transformer transformer = transformerFactory.newTransformer();
                 final DOMSource source = new DOMSource(doc);
-                final StreamResult result = new StreamResult(new File(DEFAULT_CONFIG_FILE_PATH));
+                final StreamResult result = new StreamResult(file);
                 transformer.transform(source, result);
             } else {
                 LOG.warn("The Certificate manager service config file does not exist {}", DEFAULT_CONFIG_FILE_PATH);

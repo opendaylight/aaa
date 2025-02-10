@@ -38,8 +38,8 @@ public final class KeyStoreConstant {
     }
 
     public static File toAbsoluteFile(final String fileName, final String basePath) {
-        final File file = new File(fileName);
-        return file.isAbsolute() ? file : new File(basePath + fileName);
+        final var file = Path.of(fileName);
+        return file.isAbsolute() ? file.toFile() : Path.of(basePath).resolve(file).toFile();
     }
 
     public static boolean checkKeyStoreFile(final String fileName) {
@@ -47,13 +47,13 @@ public final class KeyStoreConstant {
     }
 
     public static String createDir(final String dir) {
-        final File file = new File(dir);
-        if (!file.exists()) {
-            if (!file.mkdirs()) {
-                LOG.error("Failed to create directories {}", file);
-            }
+        final var file = Path.of(dir);
+        try {
+            Files.createDirectories(file);
+        } catch (IOException e) {
+            LOG.error("Failed to create directories {}", file);
         }
-        return file.getAbsolutePath();
+        return file.toAbsolutePath().toString();
     }
 
     public static String readFile(final String certFile) {

@@ -9,12 +9,10 @@ package org.opendaylight.aaa.cert.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
+import java.nio.file.Files;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
@@ -228,9 +226,9 @@ public class ODLKeyTool {
             return false;
         }
 
-        final File realPath = KeyStoreConstant.toAbsoluteFile(fileName, workingDir);
-        try (FileOutputStream fOutputStream = new FileOutputStream(realPath)) {
-            keystore.store(fOutputStream, keystorePassword.toCharArray());
+        final var realPath = KeyStoreConstant.toAbsoluteFile(fileName, workingDir);
+        try (var fos = Files.newOutputStream(realPath.toPath())) {
+            keystore.store(fos, keystorePassword.toCharArray());
             return true;
         } catch (final KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
             LOG.error("Fatal error export keystore", e);
@@ -353,8 +351,7 @@ public class ODLKeyTool {
      * @return secure random number as BigInteger.
      */
     private static BigInteger getSecureRandomeInt() {
-        final BigInteger bigInt = BigInteger.valueOf(RANDOM.nextInt());
-        return new BigInteger(1, bigInt.toByteArray());
+        return new BigInteger(1, BigInteger.valueOf(RANDOM.nextInt()).toByteArray());
     }
 
     /**
@@ -368,7 +365,7 @@ public class ODLKeyTool {
      */
     public KeyStore loadKeyStore(final byte[] keyStoreBytes, final String keystorePassword) {
         try {
-            final KeyStore keyStore = KeyStore.getInstance("JKS");
+            final var keyStore = KeyStore.getInstance("JKS");
             keyStore.load(new ByteArrayInputStream(keyStoreBytes), keystorePassword.toCharArray());
             return keyStore;
         } catch (final KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
@@ -387,10 +384,10 @@ public class ODLKeyTool {
      * @return keystore object otherwise return null if it fails to load.
      */
     public KeyStore loadKeyStore(final String keyStoreName, final String keystorePassword) {
-        final File realPath = KeyStoreConstant.toAbsoluteFile(keyStoreName, workingDir);
-        try (FileInputStream fInputStream = new FileInputStream(realPath)) {
-            final KeyStore keyStore = KeyStore.getInstance("JKS");
-            keyStore.load(fInputStream, keystorePassword.toCharArray());
+        final var realPath = KeyStoreConstant.toAbsoluteFile(keyStoreName, workingDir);
+        try (var fis = Files.newInputStream(realPath.toPath())) {
+            final var keyStore = KeyStore.getInstance("JKS");
+            keyStore.load(fis, keystorePassword.toCharArray());
             return keyStore;
         } catch (NoSuchAlgorithmException | CertificateException | IOException | KeyStoreException e) {
             LOG.error("failed to get keystore {}", e.getMessage());
