@@ -16,6 +16,24 @@
       "message": "IMO we can re-init() the previous instance as well - without call to Cipher#getInstance again",
       "revId": "3c440611b651e650fca35241fe34e2414ea3ce79",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b77ce227_516871b2",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-03-03T14:43:23Z",
+      "side": 1,
+      "message": "Correct, thanks. Fixed, and it improved benchmarks:\n```\nBenchmark                                                      (iterations)  Mode  Cnt  Score    Error  Units\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark           100  avgt   10  0.016 ±  0.001  ms/op\nAAAEncryptionBenchmark.decryptionAfterExceptionThrowBenchmark          1000  avgt   10  0.016 ±  0.001  ms/op\nAAAEncryptionBenchmark.shortStringBenchmark                             100  avgt   10  0.002 ±  0.001  ms/op\nAAAEncryptionBenchmark.shortStringBenchmark                            1000  avgt   10  0.002 ±  0.001  ms/op\n\n```",
+      "parentUuid": "a285f079_0a226fec",
+      "revId": "3c440611b651e650fca35241fe34e2414ea3ce79",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
