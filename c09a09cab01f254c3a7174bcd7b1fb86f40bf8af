@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f458b9d5_f3dd61d5",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2025-03-03T15:54:10Z",
+      "side": 1,
+      "message": "Do we really need to have Cipher as an instance field and parameter of this method?",
+      "revId": "c09a09cab01f254c3a7174bcd7b1fb86f40bf8af",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
