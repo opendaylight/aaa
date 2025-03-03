@@ -16,6 +16,24 @@
       "message": "Do we really need to have Cipher as an instance field and parameter of this method?",
       "revId": "c09a09cab01f254c3a7174bcd7b1fb86f40bf8af",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5a75fb2_7b2b8b67",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-03-03T16:35:43Z",
+      "side": 1,
+      "message": "Yes, IMHO it is better than making two separate init method for Encrypt and Decrypt.\n\nhttps://git.opendaylight.org/gerrit/c/aaa/+/114910/9/aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java#99\n\nhttps://git.opendaylight.org/gerrit/c/aaa/+/114910/9/aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java#117",
+      "parentUuid": "f458b9d5_f3dd61d5",
+      "revId": "c09a09cab01f254c3a7174bcd7b1fb86f40bf8af",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
