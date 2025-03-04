@@ -123,6 +123,24 @@
       "parentUuid": "bedb5553_abef6365",
       "revId": "c09a09cab01f254c3a7174bcd7b1fb86f40bf8af",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "226fdc9e_fefcfb37",
+        "filename": "aaa-encrypt-service/impl/src/main/java/org/opendaylight/aaa/encrypt/impl/AAAEncryptionServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-03-04T11:48:46Z",
+      "side": 1,
+      "message": "Do you really want code like this?\n```\n        synchronized (baseEncryptCipher) {\n            if (encryptCipher \u003d\u003d null) {\n                initCipher(Cipher.ENCRYPT_MODE, baseEncryptCipher);\n            }\n            try {\n                return encryptCipher.doFinal(requireNonNull(data));\n            } catch (IllegalBlockSizeException | BadPaddingException e) {\n                // Remove Cipher after exception and re-throw.\n                LOG.warn(\"Failed to encrypt data, resetting encrypt Cipher.\", e);\n                encryptCipher \u003d null;\n                throw e;\n            }\n        }\n```",
+      "parentUuid": "2eeba528_6c8b3e40",
+      "revId": "c09a09cab01f254c3a7174bcd7b1fb86f40bf8af",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
