@@ -25,7 +25,7 @@ import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
 import org.opendaylight.aaa.tokenauthrealm.auth.AuthenticationManager;
 
 public class TokenAuthRealmTest {
-    private final TokenAuthRealm testRealm = new TokenAuthRealm(new AuthenticationManager(), List.of());
+    private final TokenAuthRealm testRealm = new TokenAuthRealm(new AuthenticationManager(), List::of);
 
     @Test
     public void testTokenAuthRealm() {

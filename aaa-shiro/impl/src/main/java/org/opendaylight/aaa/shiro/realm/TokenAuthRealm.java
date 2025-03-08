@@ -11,7 +11,6 @@ import static com.google.common.base.Verify.verifyNotNull;
 import static java.util.Objects.requireNonNull;
 
 import com.google.common.base.Strings;
-import java.util.List;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -22,7 +21,6 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationService;
-import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
 import org.opendaylight.aaa.shiro.realm.util.TokenUtils;
@@ -37,26 +35,26 @@ import org.slf4j.LoggerFactory;
  */
 public class TokenAuthRealm extends AuthorizingRealm {
     private static final Logger LOG = LoggerFactory.getLogger(TokenAuthRealm.class);
-    private static final ThreadLocal<List<TokenAuth>> AUTHENICATORS_TL = new ThreadLocal<>();
+    private static final ThreadLocal<RealmAuthProvider> AUTHENICATORS_TL = new ThreadLocal<>();
     private static final ThreadLocal<AuthenticationService> AUTH_SERVICE_TL = new ThreadLocal<>();
 
-    private final List<TokenAuth> authenticators;
+    private final RealmAuthProvider realmAuthProvider;
     private final AuthenticationService authService;
 
     public TokenAuthRealm() {
         this(verifyLoad(AUTH_SERVICE_TL), verifyLoad(AUTHENICATORS_TL));
     }
 
-    public TokenAuthRealm(final AuthenticationService authService, final List<TokenAuth> authenticators) {
+    public TokenAuthRealm(final AuthenticationService authService, final RealmAuthProvider realmAuthProvider) {
         this.authService = requireNonNull(authService);
-        this.authenticators = List.copyOf(authenticators);
+        this.realmAuthProvider = requireNonNull(realmAuthProvider);
         super.setName("TokenAuthRealm");
     }
 
     public static Registration prepareForLoad(final AuthenticationService authService,
-            final List<TokenAuth> authenticators) {
+            final RealmAuthProvider realmAuthProvider) {
         AUTH_SERVICE_TL.set(requireNonNull(authService));
-        AUTHENICATORS_TL.set(requireNonNull(authenticators));
+        AUTHENICATORS_TL.set(requireNonNull(realmAuthProvider));
         return () -> {
             AUTH_SERVICE_TL.remove();
             AUTHENICATORS_TL.remove();
@@ -114,7 +112,7 @@ public class TokenAuthRealm extends AuthorizingRealm {
             // iterate over <code>TokenAuth</code> implementations and
             // attempt to
             // authentication with each one
-            for (var ta : authenticators) {
+            for (var ta : realmAuthProvider.tokenAuthenticators()) {
                 try {
                     LOG.debug("Authentication attempt using {}", ta.getClass().getName());
                     final Authentication auth = ta.validate(headers);

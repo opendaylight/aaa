@@ -37,9 +37,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="dataBroker"/>
     <argument ref="certManager"/>
     <argument ref="authService"/>
-    <argument>
-      <bean factory-ref="provider" factory-method="getTokenAuthenticators"/>
-    </argument>
+    <argument ref="provider"/>
     <argument ref="passwordService"/>
     <argument ref="servletSupport"/>
   </bean>

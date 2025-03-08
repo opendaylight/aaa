@@ -14,6 +14,7 @@ import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.PasswordCredentialAuth;
 import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.api.TokenAuth;
+import org.opendaylight.aaa.shiro.realm.RealmAuthProvider;
 import org.opendaylight.aaa.tokenauthrealm.auth.HttpBasicAuth;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.DatastoreConfig;
 import org.slf4j.Logger;
@@ -22,7 +23,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provider for AAA shiro implementation.
  */
-public final class AAAShiroProvider implements AutoCloseable {
+public final class AAAShiroProvider implements RealmAuthProvider, AutoCloseable {
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
     private final @NonNull List<TokenAuth> tokenAuthenticators;
@@ -60,7 +61,8 @@ public final class AAAShiroProvider implements AutoCloseable {
         }
     }
 
-    public @NonNull List<TokenAuth> getTokenAuthenticators() {
+    @Override
+    public List<TokenAuth> tokenAuthenticators() {
         return tokenAuthenticators;
     }
 }

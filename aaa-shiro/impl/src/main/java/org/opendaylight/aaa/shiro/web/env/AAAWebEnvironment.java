@@ -8,17 +8,16 @@
  */
 package org.opendaylight.aaa.shiro.web.env;
 
-import java.util.List;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.web.env.IniWebEnvironment;
 import org.opendaylight.aaa.api.AuthenticationService;
-import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
 import org.opendaylight.aaa.shiro.realm.KeystoneAuthRealm;
 import org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter;
 import org.opendaylight.aaa.shiro.realm.MdsalRealm;
 import org.opendaylight.aaa.shiro.realm.MoonRealm;
+import org.opendaylight.aaa.shiro.realm.RealmAuthProvider;
 import org.opendaylight.aaa.shiro.realm.TokenAuthRealm;
 import org.opendaylight.aaa.web.servlet.ServletSupport;
 import org.opendaylight.mdsal.binding.api.DataBroker;
@@ -37,7 +36,7 @@ public final class AAAWebEnvironment extends IniWebEnvironment implements AAAShi
 
     public AAAWebEnvironment(final ShiroIni shiroConfiguration, final DataBroker dataBroker,
             final ICertificateManager certificateManager, final AuthenticationService authenticationService,
-            final List<TokenAuth> tokenAuthenticators, final PasswordHashService passwordHashService,
+            final RealmAuthProvider realmAuthProvider, final PasswordHashService passwordHashService,
             final ServletSupport servletSupport) {
         // Turn ShiroConfiguration into an Ini
         final var ini = new Ini();
@@ -63,7 +62,7 @@ public final class AAAWebEnvironment extends IniWebEnvironment implements AAAShi
                  var keyStoneLoad = KeystoneAuthRealm.prepareForLoad(certificateManager, servletSupport);
                  var mdsalLoad = MdsalRealm.prepareForLoad(passwordHashService, dataBroker);
                  var moonLoad = MoonRealm.prepareForLoad(servletSupport);
-                 var tokenAuthLoad = TokenAuthRealm.prepareForLoad(authenticationService, tokenAuthenticators)) {
+                 var tokenAuthLoad = TokenAuthRealm.prepareForLoad(authenticationService, realmAuthProvider)) {
                 configure();
             }
         });
