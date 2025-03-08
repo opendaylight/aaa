@@ -12,7 +12,6 @@ import static java.util.Objects.requireNonNull;
 
 import com.google.common.base.Strings;
 import java.util.List;
-import java.util.Map;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -28,7 +27,6 @@ import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
 import org.opendaylight.aaa.shiro.realm.util.TokenUtils;
 import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
-import org.opendaylight.aaa.tokenauthrealm.auth.TokenAuthenticators;
 import org.opendaylight.yangtools.concepts.Registration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,24 +37,24 @@ import org.slf4j.LoggerFactory;
  */
 public class TokenAuthRealm extends AuthorizingRealm {
     private static final Logger LOG = LoggerFactory.getLogger(TokenAuthRealm.class);
-    private static final ThreadLocal<TokenAuthenticators> AUTHENICATORS_TL = new ThreadLocal<>();
+    private static final ThreadLocal<List<TokenAuth>> AUTHENICATORS_TL = new ThreadLocal<>();
     private static final ThreadLocal<AuthenticationService> AUTH_SERVICE_TL = new ThreadLocal<>();
 
-    private final TokenAuthenticators authenticators;
+    private final List<TokenAuth> authenticators;
     private final AuthenticationService authService;
 
     public TokenAuthRealm() {
         this(verifyLoad(AUTH_SERVICE_TL), verifyLoad(AUTHENICATORS_TL));
     }
 
-    public TokenAuthRealm(final AuthenticationService authService, final TokenAuthenticators authenticators) {
+    public TokenAuthRealm(final AuthenticationService authService, final List<TokenAuth> authenticators) {
         this.authService = requireNonNull(authService);
-        this.authenticators = requireNonNull(authenticators);
+        this.authenticators = List.copyOf(authenticators);
         super.setName("TokenAuthRealm");
     }
 
     public static Registration prepareForLoad(final AuthenticationService authService,
-            final TokenAuthenticators authenticators) {
+            final List<TokenAuth> authenticators) {
         AUTH_SERVICE_TL.set(requireNonNull(authService));
         AUTHENICATORS_TL.set(requireNonNull(authenticators));
         return () -> {
@@ -112,11 +110,11 @@ public class TokenAuthRealm extends AuthorizingRealm {
         }
 
         if (!Strings.isNullOrEmpty(password)) {
-            Map<String, List<String>> headers = HeaderUtils.formHeaders(username, password, domain);
+            final var headers = HeaderUtils.formHeaders(username, password, domain);
             // iterate over <code>TokenAuth</code> implementations and
             // attempt to
             // authentication with each one
-            for (TokenAuth ta : authenticators.getTokenAuthCollection()) {
+            for (var ta : authenticators) {
                 try {
                     LOG.debug("Authentication attempt using {}", ta.getClass().getName());
                     final Authentication auth = ta.validate(headers);

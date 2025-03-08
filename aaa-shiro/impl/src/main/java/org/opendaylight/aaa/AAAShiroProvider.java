@@ -7,12 +7,14 @@
  */
 package org.opendaylight.aaa;
 
+import java.util.List;
+import org.eclipse.jdt.annotation.NonNull;
 import org.opendaylight.aaa.api.IDMStoreException;
 import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.PasswordCredentialAuth;
 import org.opendaylight.aaa.api.StoreBuilder;
+import org.opendaylight.aaa.api.TokenAuth;
 import org.opendaylight.aaa.tokenauthrealm.auth.HttpBasicAuth;
-import org.opendaylight.aaa.tokenauthrealm.auth.TokenAuthenticators;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.DatastoreConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public final class AAAShiroProvider implements AutoCloseable {
     private static final Logger LOG = LoggerFactory.getLogger(AAAShiroProvider.class);
 
-    private final TokenAuthenticators tokenAuthenticators;
+    private final @NonNull List<TokenAuth> tokenAuthenticators;
 
     /**
      * Constructor.
@@ -34,10 +36,10 @@ public final class AAAShiroProvider implements AutoCloseable {
         if (datastoreConfig != null && datastoreConfig.getStore() == DatastoreConfig.Store.H2DataStore) {
             initializeIIDMStore(iidmStore);
 
-            tokenAuthenticators = new TokenAuthenticators(new HttpBasicAuth(credentialAuth));
+            tokenAuthenticators = List.of(new HttpBasicAuth(credentialAuth));
             LOG.info("AAAShiroProvider Session Initiated");
         } else {
-            tokenAuthenticators = new TokenAuthenticators();
+            tokenAuthenticators = List.of();
             LOG.info("AAA Datastore has not been initialized");
         }
     }
@@ -58,7 +60,7 @@ public final class AAAShiroProvider implements AutoCloseable {
         }
     }
 
-    public TokenAuthenticators getTokenAuthenticators() {
+    public @NonNull List<TokenAuth> getTokenAuthenticators() {
         return tokenAuthenticators;
     }
 }
