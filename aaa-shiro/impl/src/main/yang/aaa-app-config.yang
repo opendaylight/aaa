@@ -58,11 +58,13 @@ module aaa-app-config {
       description "Time to live for tokens in second.";
       type uint64;
       default 36000;
+      status obsolete;
     }
     leaf time-to-wait {
       description "Time to wait for tokens in second.";
       type uint64;
       default 3600;
+      status obsolete;
     }
   }
 }
