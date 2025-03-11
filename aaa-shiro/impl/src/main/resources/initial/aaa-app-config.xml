@@ -278,9 +278,17 @@
     <!--
         Disable parts of invalidRequest filter, as these are blocking valid RESTCONF requests.
 
-        RESTCONF routinely transmits data in URLs. The encoding requires that all reserved URI
+        RESTCONF routinely transmits data in URLs.
+
+        The encoding requires that all reserved URI
         characters, as defined in https://www.rfc-editor.org/rfc/rfc3986#section-2.2, be
-        percent-encoded. See https://jira.opendaylight.org/browse/AAA-265.
+        percent-encoded.
+
+        The unreserved characters can be used both with and without percent-encoding,
+        https://www.rfc-editor.org/rfc/rfc3986#section-2.3.
+
+        See https://jira.opendaylight.org/browse/AAA-265.
+        See https://jira.opendaylight.org/browse/AAA-291.
      -->
     <main>
         <!-- ';' is a RFC3986 reserved character -->
@@ -289,7 +297,12 @@
     </main>
     <main>
         <!-- '/' is a RFC3986 reserved character -->
-        <pair-key>invalidRequest.blockTraversal</pair-key>
+        <pair-key>invalidRequest.blockEncodedForwardSlash</pair-key>
+        <pair-value>false</pair-value>
+    </main>
+    <main>
+        <!-- '.' is a RFC3986 un-reserved character -->
+        <pair-key>invalidRequest.blockEncodedPeriod</pair-key>
         <pair-value>false</pair-value>
     </main>
 
