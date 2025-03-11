@@ -44,6 +44,12 @@
         <artifactId>javax.json</artifactId>
         <version>1.0.4</version>
       </dependency>
+      <!-- Required by commons-beanutils 1.9.4, which is required by shiro-core 1.12.0 -->
+      <dependency>
+        <groupId>commons-collections</groupId>
+        <artifactId>commons-collections</artifactId>
+        <version>3.2.2</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
