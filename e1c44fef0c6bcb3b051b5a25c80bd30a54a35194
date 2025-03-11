@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a2154d3_6faf8425",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2025-03-11T11:56:08Z",
+      "side": 1,
+      "message": "I wonder if we can just remove dependency to commons-collection as well: https://github.com/apache/shiro/blob/604e0772ffd56682434717c718ab36254c78233c/support/features/pom.xml#L40",
+      "revId": "e1c44fef0c6bcb3b051b5a25c80bd30a54a35194",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
