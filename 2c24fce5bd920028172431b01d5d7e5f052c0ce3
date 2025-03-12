@@ -16,6 +16,23 @@
       "message": "recheck",
       "revId": "2c24fce5bd920028172431b01d5d7e5f052c0ce3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa4b11b0_69b53bc8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2025-03-12T09:27:30Z",
+      "side": 1,
+      "message": "so this needs testing, because again this touches the InvalidRequestFilter:\n\nhttps://github.com/apache/shiro/compare/shiro-root-1.12.0...shiro-root-1.13.0#diff-bd4bf9dfa4cc7521c708850ac5d397fee22b021ea09a3a91f7ce1587abc287d7\n\nI suspect this has the potential to break requests",
+      "revId": "2c24fce5bd920028172431b01d5d7e5f052c0ce3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
