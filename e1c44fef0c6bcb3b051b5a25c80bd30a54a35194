@@ -34,6 +34,24 @@
       "parentUuid": "5a2154d3_6faf8425",
       "revId": "e1c44fef0c6bcb3b051b5a25c80bd30a54a35194",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4245919c_7aacaad9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2025-03-12T12:05:07Z",
+      "side": 1,
+      "message": "Yes, it requires some investigation, if current feature is up-to-date, can be changed or not.",
+      "parentUuid": "c019e81f_01709e38",
+      "revId": "e1c44fef0c6bcb3b051b5a25c80bd30a54a35194",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
