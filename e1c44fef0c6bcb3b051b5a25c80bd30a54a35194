@@ -124,6 +124,23 @@
       "parentUuid": "929a299f_d8dcebfd",
       "revId": "e1c44fef0c6bcb3b051b5a25c80bd30a54a35194",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c502c0c7_665c96c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2025-03-19T10:01:40Z",
+      "side": 1,
+      "message": "This should be part of the \u0027adopt-corresponding-odlparent\u0027 patch",
+      "revId": "e1c44fef0c6bcb3b051b5a25c80bd30a54a35194",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
