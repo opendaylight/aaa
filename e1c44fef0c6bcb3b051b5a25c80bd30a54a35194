@@ -88,6 +88,24 @@
       "parentUuid": "8fef1f69_c7dd5c9a",
       "revId": "e1c44fef0c6bcb3b051b5a25c80bd30a54a35194",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "929a299f_d8dcebfd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-03-19T09:29:49Z",
+      "side": 1,
+      "message": "The commons-beanutils is a vital part of the Shiro repository.\nhttps://github.com/apache/shiro/blob/shiro-root-1.12.0/config/ogdl/src/main/java/org/apache/shiro/config/ReflectionBuilder.java#L111\n\nBased on this, it is used to initialize the Shiro environment:\nhttps://github.com/apache/shiro/blob/c8a294ab32b29a6e9d4b03bbaa6bae11c42daea1/tools/hasher/pom.xml#L38-L43\n\nSo, we can not remove this dependency from here. \n\nThe commons.collections dependency is also required part of the commons-beanutils repository. \nhttps://github.com/apache/commons-beanutils/blob/commons-beanutils-1.9.4/src/main/java/org/apache/commons/beanutils/BeanMap.java#L36-L37\n\nHence, we can not remove both of these dependencies from here.",
+      "parentUuid": "c52d3a91_fa5f8929",
+      "revId": "e1c44fef0c6bcb3b051b5a25c80bd30a54a35194",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
