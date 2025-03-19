@@ -158,6 +158,42 @@
       "message": "we need to know why shiro is able to say that it doe not depend on ANCIENT collections version anymore\n\nI would at least expect that we add also some similar comment as they did - to say that we need this old version for something\n\nlike this:\nhttps://github.com/apache/shiro/blob/604e0772ffd56682434717c718ab36254c78233c/support/features/pom.xml#L40\n\nIIRC there is definitely a newer collection version, isn it?",
       "revId": "e1c44fef0c6bcb3b051b5a25c80bd30a54a35194",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "618ca83d_61890691",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-03-19T10:46:27Z",
+      "side": 1,
+      "message": "If I remove beanutils, the SFT will fail with this error in karaf.logs:\n\n```\norg.osgi.service.blueprint.container.ComponentDefinitionException: org.osgi.service.blueprint.container.ComponentDefinitionException: Error when instantiating bean webEnvironment of class org.opendaylight.aaa.shiro.web.env.AAAWebEnvironment\n\tat org.apache.aries.blueprint.container.ServiceRecipe.createService(ServiceRecipe.java:310) ~[?:?]\n\tat org.apache.aries.blueprint.container.ServiceRecipe.internalGetService(ServiceRecipe.java:252) ~[?:?]\n...\nCaused by: java.lang.NoClassDefFoundError: org/apache/commons/beanutils/ConvertUtilsBean\n\tat org.apache.shiro.config.IniSecurityManagerFactory.\u003cinit\u003e(IniSecurityManagerFactory.java:64) ~[?:?]\n\tat org.apache.shiro.web.config.WebIniSecurityManagerFactory.\u003cinit\u003e(WebIniSecurityManagerFactory.java:45) ~[?:?]\n```",
+      "parentUuid": "0711cdb6_eaf1d00a",
+      "revId": "e1c44fef0c6bcb3b051b5a25c80bd30a54a35194",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e189cccd_60e97a64",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-03-19T10:46:27Z",
+      "side": 1,
+      "message": "Shiro depends on commons-beanutils. And our version of commons-beanutils 1.9.4 depends on commons-collections 3.2.2.\n\nUsing a newer version of commons-collections4 will be possible with commons-beanutils 2.0.0.\nhttps://github.com/apache/commons-beanutils/commit/a33d634e68061f507e9ac62ad185158b58e502ee",
+      "parentUuid": "ab92958c_2610317b",
+      "revId": "e1c44fef0c6bcb3b051b5a25c80bd30a54a35194",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
