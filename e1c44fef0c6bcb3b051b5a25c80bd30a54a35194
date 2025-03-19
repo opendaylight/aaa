@@ -212,6 +212,42 @@
       "parentUuid": "e189cccd_60e97a64",
       "revId": "e1c44fef0c6bcb3b051b5a25c80bd30a54a35194",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd0170df_5fc7b017",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-03-19T12:16:04Z",
+      "side": 1,
+      "message": "Prepared and assigned task AAA-292.",
+      "parentUuid": "c502c0c7_665c96c7",
+      "revId": "e1c44fef0c6bcb3b051b5a25c80bd30a54a35194",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "765f95cf_d04c28db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8449
+      },
+      "writtenOn": "2025-03-19T12:16:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d089629_dc98534f",
+      "revId": "e1c44fef0c6bcb3b051b5a25c80bd30a54a35194",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
