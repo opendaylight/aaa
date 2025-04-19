@@ -57,9 +57,8 @@ import org.slf4j.LoggerFactory;
  * <code>log:set TRACE ODLJndiLdapRealm</code>
  *
  * @see <code>org.apache.shiro.realm.ldap.JndiLdapRealm</code>
- * @see <a
- * href="https://shiro.apache.org/static/1.2.3/apidocs/org/apache/shiro/realm/ldap/JndiLdapRealm.html">Shiro
- * documentation</a>
+ * @see <a href="https://shiro.apache.org/static/1.2.3/apidocs/org/apache/shiro/realm/ldap/JndiLdapRealm.html">
+ *      Shiro documentation</a>
  */
 public class ODLJndiLdapRealm extends DefaultLdapRealm {
     private static final Logger LOG = LoggerFactory.getLogger(ODLJndiLdapRealm.class);
