@@ -12,12 +12,10 @@
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>aaa-parent</artifactId>
     <version>0.21.0-SNAPSHOT</version>
-    <relativePath>../parent</relativePath>
+    <relativePath>../parent/pom.xml</relativePath>
   </parent>
 
-  <groupId>org.opendaylight.aaa</groupId>
   <artifactId>aaa-authn-api</artifactId>
-  <version>0.21.0-SNAPSHOT</version>
   <name>ODL :: aaa :: ${project.artifactId}</name>
   <packaging>bundle</packaging>
 
