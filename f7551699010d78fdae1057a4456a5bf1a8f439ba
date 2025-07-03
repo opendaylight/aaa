@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "727be237_cd96d4cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2025-07-03T12:23:17Z",
+      "side": 1,
+      "message": "Works for:\n(200)\nhttp://localhost:8181/rests/data/network-topology:network-topology/topology\u003dtopology-netconf\n\n(409, missing data)\nhttp://localhost:8181/rests/data/network-topology:network-topology/topology\u003dtopology-netconf%2F\n\nInvalid is (400):\nhttp://localhost:8181/rests/data/network-topology:network-topology/../topology\u003dtopology-netconf",
+      "revId": "f7551699010d78fdae1057a4456a5bf1a8f439ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
