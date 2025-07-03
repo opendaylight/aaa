@@ -33,6 +33,24 @@
       "message": "Needs adaptation of aaa-app-config.xml because of https://github.com/apache/shiro/commit/3b80f5c8e5a95ba31e92e4825ecc0ba3148b555a.",
       "revId": "52e4b06a11b2a89954d471a6886fecd0741fdc44",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1938ec01_a073e25a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2025-07-03T12:09:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "134ec9e1_41f0aa43",
+      "revId": "52e4b06a11b2a89954d471a6886fecd0741fdc44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }

@@ -51,6 +51,24 @@
       "parentUuid": "fa4b11b0_69b53bc8",
       "revId": "2c24fce5bd920028172431b01d5d7e5f052c0ce3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d8da3c2_242537f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2025-07-03T12:09:17Z",
+      "side": 1,
+      "message": "InvalidRequestFilter has been improved in shiro, now we can allow desired characters and disallow traversal.",
+      "parentUuid": "95e8b0d5_b455943a",
+      "revId": "2c24fce5bd920028172431b01d5d7e5f052c0ce3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
