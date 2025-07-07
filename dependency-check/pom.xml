@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.opendaylight.aaa</groupId>
         <artifactId>aaa-artifacts</artifactId>
-        <version>0.21.0-SNAPSHOT</version>
+        <version>0.21.1-SNAPSHOT</version>
         <relativePath>../artifacts/pom.xml</relativePath>
     </parent>
 
