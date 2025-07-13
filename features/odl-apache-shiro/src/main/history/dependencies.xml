@@ -2,7 +2,7 @@
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.6.0" name="odl-aaa-0.14.0">
     <feature version="0.0.0">
         <feature>odl-servlet-api</feature>
-        <bundle>mvn:commons-beanutils/commons-beanutils/1.9.4</bundle>
+        <bundle>mvn:commons-beanutils/commons-beanutils/1.11.0</bundle>
         <bundle>mvn:commons-collections/commons-collections/3.2.2</bundle>
         <bundle>mvn:org.opendaylight.aaa/repackaged-shiro/${project.version}</bundle>
         <bundle>mvn:org.owasp.encoder/encoder/1.2.3</bundle>
