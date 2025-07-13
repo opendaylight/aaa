@@ -49,7 +49,8 @@ public class WebContextApiTest {
                 .build();
         assertThat(webContext.servlets(), hasSize(1));
         ServletDetails firstServletDetail = webContext.servlets().get(0);
-        assertThat(firstServletDetail.name(), startsWith("org.mockito.codegen.Servlet$MockitoMock$"));
+        assertThat(firstServletDetail.name(),
+            startsWith("org.mockito.internal.creation.bytebuddy.codegen.Servlet$MockitoMock$"));
         assertEquals(Map.of(), firstServletDetail.initParams());
     }
 
