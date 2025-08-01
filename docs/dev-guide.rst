@@ -266,7 +266,7 @@ command to enable the user interface:
 
 .. code-block:: bash
 
-    java -cp ./system/com/h2database/h2/2.1.214/h2-2.1.214.jar org.h2.tools.Server \
+    java -cp ./system/com/h2database/h2/2.1.214/h2-<current H2 version>.jar org.h2.tools.Server \
         -trace -pg -web -webAllowOthers
 
 
