@@ -21,11 +21,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
 
   <dependencies>
     <dependency>
-      <groupId>com.github.spotbugs</groupId>
-      <artifactId>spotbugs-annotations</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
       <groupId>org.opendaylight.aaa</groupId>
       <artifactId>aaa-authn-api</artifactId>
     </dependency>

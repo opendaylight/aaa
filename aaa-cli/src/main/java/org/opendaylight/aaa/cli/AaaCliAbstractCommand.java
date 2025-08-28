@@ -7,7 +7,6 @@
  */
 package org.opendaylight.aaa.cli;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Collection;
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Option;
@@ -23,7 +22,6 @@ import org.opendaylight.aaa.cli.utils.DataStoreUtils;
  * @author mserngawy
  *
  */
-@SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 @SuppressWarnings("checkstyle:RegexpSingleLineJava")
 public abstract class AaaCliAbstractCommand implements Action {
     public static final String LOGIN_FAILED_MESS = "User does not exist OR user name and passsword are not correct";
