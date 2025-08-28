@@ -21,8 +21,8 @@ import org.immutables.value.Value.Style.ImplementationVisibility;
  * @author Michael Vorburger.ch - Made it configurable, as Immutable with a Builder
  */
 @Immutable
-@Value.Style(strictBuilder = true, builder = "new",
-    typeImmutable = "*Impl", visibility = ImplementationVisibility.PRIVATE)
+@Value.Style(strictBuilder = true, builder = "new", typeImmutable = "*Impl",
+    visibility = ImplementationVisibility.PRIVATE, allowedClasspathAnnotations = { SuppressWarnings.class })
 public abstract class IdmLightConfig {
     /**
      * The filename for the H2 database file.
