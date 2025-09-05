@@ -16,7 +16,7 @@
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>aaa-encryption-service-aggregator</artifactId>
-    <version>0.20.11</version>
+    <version>0.20.12-SNAPSHOT</version>
     <name>ODL :: aaa :: ${project.artifactId}</name>
     <packaging>pom</packaging>
 
