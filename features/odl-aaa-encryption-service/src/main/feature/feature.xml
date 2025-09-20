@@ -8,6 +8,6 @@
  -->
 <features name="odl-aaa-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
     <feature name="odl-aaa-encryption-service" version="${project.version}">
-        <feature version="[11,12)">odl-mdsal-broker</feature>
+        <feature version="[12,13)">odl-mdsal-broker</feature>
     </feature>
 </features>
