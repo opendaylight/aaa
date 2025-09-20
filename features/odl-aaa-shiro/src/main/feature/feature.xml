@@ -25,7 +25,7 @@
         </configfile>
         <feature version="[14,15)">odl-karaf-feat-jdbc</feature>
         <feature version="[14,15)">odl-karaf-feat-jetty</feature>
-        <feature version="[11,12)">odl-controller-blueprint</feature>
-        <feature version="[11,12)">odl-jolokia</feature>
+        <feature version="[12,13)">odl-controller-blueprint</feature>
+        <feature version="[12,13)">odl-jolokia</feature>
     </feature>
 </features>
