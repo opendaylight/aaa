@@ -69,12 +69,9 @@ public final class OSGiEncryptionServiceConfigurator implements DataListener<Aaa
     private final ComponentFactory<AAAEncryptionServiceImpl> factory;
     private final DataBroker dataBroker;
 
-    @GuardedBy("this")
-    private Registration reg;
-    @GuardedBy("this")
-    private ComponentInstance<AAAEncryptionServiceImpl> instance;
-    @GuardedBy("this")
-    private AaaEncryptServiceConfig current;
+    private @GuardedBy("this") Registration reg;
+    private @GuardedBy("this") ComponentInstance<AAAEncryptionServiceImpl> instance;
+    private @GuardedBy("this") AaaEncryptServiceConfig current;
 
     @Activate
     public OSGiEncryptionServiceConfigurator(@Reference final DataBroker dataBroker,
