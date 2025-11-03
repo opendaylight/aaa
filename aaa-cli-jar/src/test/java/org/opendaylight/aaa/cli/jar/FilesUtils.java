@@ -25,8 +25,9 @@ public final class FilesUtils {
 
     public static void delete(final Path directory) throws IOException {
         if (Files.exists(directory)) {
-            Files.walk(directory).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
+            try (var stream = Files.walk(directory)) {
+                stream.sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
+            }
         }
     }
-
 }
