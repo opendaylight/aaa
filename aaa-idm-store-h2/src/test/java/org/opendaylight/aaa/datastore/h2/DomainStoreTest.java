@@ -54,7 +54,7 @@ public class DomainStoreTest {
     }
 
     @Test
-    public void deleteDomainsTest() throws SQLException, Exception {
+    public void deleteDomainsTest() throws Exception {
         String domainId = "Testing12345";
 
         // Run Test
