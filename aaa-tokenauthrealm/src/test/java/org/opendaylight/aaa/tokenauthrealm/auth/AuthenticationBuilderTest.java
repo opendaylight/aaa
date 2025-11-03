@@ -5,12 +5,12 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.tokenauthrealm.auth;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -21,8 +21,8 @@ import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.Claim;
 
 public class AuthenticationBuilderTest {
-    private Set<String> roles = new LinkedHashSet<>(Arrays.asList("role1", "role2"));
-    private Claim validClaim = new ClaimBuilder().setDomain("aName").setUserId("1")
+    private final Set<String> roles = new LinkedHashSet<>(Arrays.asList("role1", "role2"));
+    private final Claim validClaim = new ClaimBuilder().setDomain("aName").setUserId("1")
             .setClientId("2222").setUser("bob").addRole("foo").addRoles(roles).build();
 
     @Test
@@ -55,16 +55,18 @@ public class AuthenticationBuilderTest {
         assertEquals(3, a1.roles().size());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testBuildWithNegativeExpiration() {
         AuthenticationBuilder a1 = new AuthenticationBuilder(validClaim).setExpiration(-1);
-        a1.build();
+        final var ex = assertThrows(IllegalStateException.class, a1::build);
+        assertEquals("The expiration is less than 0.", ex.getMessage());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testBuildWithNullClaim() {
         AuthenticationBuilder a1 = new AuthenticationBuilder(null);
-        a1.build();
+        final var ex = assertThrows(IllegalStateException.class, a1::build);
+        assertEquals("The Claim is null.", ex.getMessage());
     }
 
     @Test

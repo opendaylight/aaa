@@ -9,10 +9,10 @@ package org.opendaylight.aaa.tokenauthrealm.auth;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
@@ -32,10 +32,9 @@ public class HttpBasicAuthTest {
     private static final String DOMAIN = "sdn";
     private HttpBasicAuth auth;
 
-    @SuppressWarnings("unchecked")
     @Before
     public void setup() {
-        CredentialAuth<PasswordCredentials> mockCredentialAuth = mock(CredentialAuth.class);
+        CredentialAuth<PasswordCredentials> mockCredentialAuth = mock();
         auth = new HttpBasicAuth(mockCredentialAuth);
         when(mockCredentialAuth.authenticate(
                 new PasswordCredentialBuilder().setUserName(USERNAME).setPassword(PASSWORD).setDomain(DOMAIN).build()))
@@ -46,7 +45,7 @@ public class HttpBasicAuthTest {
     }
 
     @Test
-    public void testValidateOk() throws UnsupportedEncodingException {
+    public void testValidateOk() throws Exception {
         String data = USERNAME + ":" + PASSWORD + ":" + DOMAIN;
         Map<String, List<String>> headers = new HashMap<>();
         headers.put("Authorization", Arrays.asList(
@@ -57,41 +56,45 @@ public class HttpBasicAuthTest {
         assertEquals("admin", claim.roles().iterator().next());
     }
 
-    @Test(expected = AuthenticationException.class)
-    public void testValidateBadPassword() throws UnsupportedEncodingException {
+    @Test
+    public void testValidateBadPassword() throws Exception {
         String data = USERNAME + ":bozo:" + DOMAIN;
         Map<String, List<String>> headers = new HashMap<>();
         headers.put("Authorization", Arrays.asList(
             "Basic " + new String(Base64.getEncoder().encode(data.getBytes(StandardCharsets.UTF_8)))));
-        auth.validate(headers);
+        final var ex = assertThrows(AuthenticationException.class, () -> auth.validate(headers));
+        assertEquals("barf", ex.getMessage());
     }
 
-    @Test(expected = AuthenticationException.class)
-    public void testValidateBadPasswordNoDomain() throws UnsupportedEncodingException {
+    @Test
+    public void testValidateBadPasswordNoDomain() throws Exception {
         String data = USERNAME + ":bozo";
         Map<String, List<String>> headers = new HashMap<>();
         headers.put("Authorization", Arrays.asList(
             "Basic " + new String(Base64.getEncoder().encode(data.getBytes(StandardCharsets.UTF_8)))));
-        auth.validate(headers);
+        final var ex = assertThrows(AuthenticationException.class, () -> auth.validate(headers));
+        assertEquals("barf", ex.getMessage());
     }
 
-    @Test(expected = AuthenticationException.class)
-    public void testBadHeaderFormatNoPassword() throws UnsupportedEncodingException {
+    @Test
+    public void testBadHeaderFormatNoPassword() throws Exception {
         // just provide the username
         String data = USERNAME;
         Map<String, List<String>> headers = new HashMap<>();
         headers.put("Authorization", Arrays.asList(
             "Basic " + new String(Base64.getEncoder().encode(data.getBytes(StandardCharsets.UTF_8)))));
-        auth.validate(headers);
+        final var ex = assertThrows(AuthenticationException.class, () -> auth.validate(headers));
+        assertEquals("Login Attempt in Bad Format. Please provide user:password in Base64 format.", ex.getMessage());
     }
 
-    @Test(expected = AuthenticationException.class)
-    public void testBadHeaderFormat() throws UnsupportedEncodingException {
+    @Test
+    public void testBadHeaderFormat() throws Exception {
         // provide username:
         String data = USERNAME + "$" + PASSWORD;
         Map<String, List<String>> headers = new HashMap<>();
         headers.put("Authorization", Arrays.asList(
             "Basic " + new String(Base64.getEncoder().encode(data.getBytes(StandardCharsets.UTF_8)))));
-        auth.validate(headers);
+        final var ex = assertThrows(AuthenticationException.class, () -> auth.validate(headers));
+        assertEquals("Login Attempt in Bad Format. Please provide user:password in Base64 format.", ex.getMessage());
     }
 }

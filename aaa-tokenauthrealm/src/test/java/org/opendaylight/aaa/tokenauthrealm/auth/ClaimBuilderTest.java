@@ -5,12 +5,12 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.tokenauthrealm.auth;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -76,64 +76,74 @@ public class ClaimBuilderTest {
         assertEquals(1, c1.roles().size());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testBuildWithDefault() {
         ClaimBuilder c1 = new ClaimBuilder();
-        c1.build();
+        final var ex = assertThrows(IllegalStateException.class, c1::build);
+        assertEquals("The Claim is missing one or more of the required fields.", ex.getMessage());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testBuildWithoutUser() {
         ClaimBuilder c1 = new ClaimBuilder().setUserId("1234").addRole("foo");
-        c1.build();
+        final var ex = assertThrows(IllegalStateException.class, c1::build);
+        assertEquals("The Claim is missing one or more of the required fields.", ex.getMessage());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testBuildWithNullUser() {
         ClaimBuilder c1 = new ClaimBuilder().setUser(null).setUserId("1234").addRole("foo");
-        c1.build();
+        final var ex = assertThrows(IllegalStateException.class, c1::build);
+        assertEquals("The Claim is missing one or more of the required fields.", ex.getMessage());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testBuildWithEmptyUser() {
         ClaimBuilder c1 = new ClaimBuilder().setUser("  ").setUserId("1234").addRole("foo");
-        c1.build();
+        final var ex = assertThrows(IllegalStateException.class, c1::build);
+        assertEquals("The Claim is missing one or more of the required fields.", ex.getMessage());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testBuildWithoutUserId() {
         ClaimBuilder c1 = new ClaimBuilder().setUser("john").addRole("foo");
-        c1.build();
+        final var ex = assertThrows(IllegalStateException.class, c1::build);
+        assertEquals("The Claim is missing one or more of the required fields.", ex.getMessage());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testBuildWithNullUserId() {
         ClaimBuilder c1 = new ClaimBuilder().setUser("john").setUserId(null).addRole("foo");
-        c1.build();
+        final var ex = assertThrows(IllegalStateException.class, c1::build);
+        assertEquals("The Claim is missing one or more of the required fields.", ex.getMessage());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testBuildWithEmptyUserId() {
         ClaimBuilder c1 = new ClaimBuilder().setUser("john").setUserId("  ").addRole("foo");
-        c1.build();
+        final var ex = assertThrows(IllegalStateException.class, c1::build);
+        assertEquals("The Claim is missing one or more of the required fields.", ex.getMessage());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testBuildWithoutRole() {
         ClaimBuilder c1 = new ClaimBuilder().setUser("john").setUserId("1234");
-        c1.build();
+        final var ex = assertThrows(IllegalStateException.class, c1::build);
+        assertEquals("The Claim is missing one or more of the required fields.", ex.getMessage());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testBuildWithNullRole() {
         ClaimBuilder c1 = new ClaimBuilder().setUser("john").setUserId("1234").addRole(null);
-        c1.build();
+        final var ex = assertThrows(IllegalStateException.class, c1::build);
+        assertEquals("The Claim is missing one or more of the required fields.", ex.getMessage());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testBuildWithEmptyRole() {
         ClaimBuilder c1 = new ClaimBuilder().setUser("john").setUserId("1234").addRole("  ");
-        c1.build();
+        final var ex = assertThrows(IllegalStateException.class, c1::build);
+        assertEquals("The Claim is missing one or more of the required fields.", ex.getMessage());
     }
 
     @Test
