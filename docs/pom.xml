@@ -12,7 +12,7 @@
     <parent>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>odlparent</artifactId>
-        <version>14.1.4</version>
+        <version>14.1.6</version>
         <relativePath/>
     </parent>
 
@@ -125,7 +125,7 @@
         <dependency>
             <groupId>org.opendaylight.infrautils</groupId>
             <artifactId>inject.guice.testutils</artifactId>
-            <version>7.1.8</version>
+            <version>7.1.9</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -265,11 +265,11 @@
                         <link>https://guava.dev/releases/33.4.7-jre/api/docs/</link>
                         <link>https://commons.apache.org/proper/commons-lang/javadocs/api-release/</link>
 
-                        <link>https://www.javadoc.io/doc/org.opendaylight.odlparent/odlparent-docs/14.1.4/</link>
-                        <link>https://www.javadoc.io/doc/org.opendaylight.infrautils/infrautils-docs/7.1.8/</link>
-                        <link>https://www.javadoc.io/doc/org.opendaylight.yangtools/yangtools-docs/14.0.18/</link>
-                        <link>https://www.javadoc.io/doc/org.opendaylight.mdsal/mdsal-docs/15.0.1/</link>
-                        <link>https://www.javadoc.io/doc/org.opendaylight.controller/controller-docs/12.0.1/</link>
+                        <link>https://www.javadoc.io/doc/org.opendaylight.odlparent/odlparent-docs/14.1.6/</link>
+                        <link>https://www.javadoc.io/doc/org.opendaylight.infrautils/infrautils-docs/7.1.9/</link>
+                        <link>https://www.javadoc.io/doc/org.opendaylight.yangtools/yangtools-docs/14.0.20/</link>
+                        <link>https://www.javadoc.io/doc/org.opendaylight.mdsal/mdsal-docs/15.0.2/</link>
+                        <link>https://www.javadoc.io/doc/org.opendaylight.controller/controller-docs/12.0.2/</link>
                     </links>
 
                     <!--groups>
