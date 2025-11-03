@@ -30,8 +30,8 @@ import org.opendaylight.infrautils.inject.guice.testutils.GuiceRule;
  * @author Michael Vorburger.ch
  */
 public class WebTestModuleTest {
-
-    public @Rule GuiceRule guice = new GuiceRule(WebTestModule.class, AnnotationsModule.class);
+    @Rule
+    public GuiceRule guice = new GuiceRule(WebTestModule.class, AnnotationsModule.class);
 
     @Inject WebServer webServer;
     @Inject TestWebClient webClient;
