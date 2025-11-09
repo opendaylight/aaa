@@ -16,7 +16,7 @@
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>aaa-password-service-aggregator</artifactId>
-    <version>0.22.2-SNAPSHOT</version>
+    <version>0.22.2</version>
     <name>ODL :: aaa :: ${project.artifactId}</name>
     <packaging>pom</packaging>
 

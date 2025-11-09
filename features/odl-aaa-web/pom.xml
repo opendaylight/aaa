@@ -17,7 +17,7 @@
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>odl-aaa-web</artifactId>
-    <version>0.22.2-SNAPSHOT</version>
+    <version>0.22.2</version>
     <packaging>feature</packaging>
 
     <name>ODL :: aaa :: ${project.artifactId}</name>
