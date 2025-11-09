@@ -17,7 +17,7 @@
 
     <groupId>org.opendaylight.aaa</groupId>
     <artifactId>odl-aaa-cert</artifactId>
-    <version>0.22.2</version>
+    <version>0.22.3-SNAPSHOT</version>
     <packaging>feature</packaging>
 
     <name>ODL :: aaa :: ${project.artifactId}</name>
