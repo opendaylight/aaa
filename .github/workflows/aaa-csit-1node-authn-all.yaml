@@ -3,7 +3,7 @@ name: AAA-CSIT-1-Node-authn-all
 on:
   push:
     branches:
-      - '*'
+      - "*"
 
 jobs:
   composite-csit-1-node:
