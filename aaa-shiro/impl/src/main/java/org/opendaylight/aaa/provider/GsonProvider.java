@@ -99,4 +99,3 @@ public class GsonProvider<T> implements MessageBodyReader<T>, MessageBodyWriter<
         }
     }
 }
-
