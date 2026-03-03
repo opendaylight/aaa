@@ -21,6 +21,8 @@
   <packaging>pom</packaging>
   <name>aaa</name> <!-- Used by Sonar to set project name -->
 
+  b0rk!
+
   <properties>
     <maven.deploy.skip>true</maven.deploy.skip>
     <maven.install.skip>true</maven.install.skip>
