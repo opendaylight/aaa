@@ -65,7 +65,8 @@ jobs:
           gerrit-change-number: ${{ inputs.GERRIT_CHANGE_NUMBER }}
           gerrit-patchset-number: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
           vote-type: clear
-          - name: Allow replication
+          comment-only: true
+      - name: Allow replication
         run: sleep 10s
 
   maven-verify:
