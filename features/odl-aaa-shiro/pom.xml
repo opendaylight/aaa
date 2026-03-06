@@ -146,6 +146,12 @@
             <type>cfg</type>
             <classifier>oauth2proxyheaderfilter-config</classifier>
         </dependency>
+
+        <!-- Third-party -->
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
