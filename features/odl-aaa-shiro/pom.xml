@@ -138,6 +138,12 @@
             <type>cfg</type>
             <classifier>config</classifier>
         </dependency>
+
+        <!-- Third-party -->
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
