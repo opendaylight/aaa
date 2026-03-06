@@ -177,9 +177,25 @@
       = Description:  A Realm implementation utilizing a per node H2 database store.    =
       ===================================================================================
     -->
+
+    <!--
     <main>
         <pair-key>tokenAuthRealm</pair-key>
         <pair-value>org.opendaylight.aaa.shiro.realm.TokenAuthRealm</pair-value>
+    </main>
+    -->
+
+    <!--
+      ===================================================================================
+      ================================= TokenAuthRealm ==================================
+      ===================================================================================
+      =                                                                                 =
+      = Description:  A Realm implementation utilizing Oath2-proxy.                     =
+      ===================================================================================
+    -->
+    <main>
+        <pair-key>oauth2ProxyRealm</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.realm.Oauth2ProxyRealm</pair-value>
     </main>
 
     <!--
@@ -247,10 +263,24 @@
     <!--
     Add tokenAuthRealm as the only realm.  To enable mdsalRealm, add it to the list to he right of tokenAuthRealm.
     -->
+    <!-- Start tokenAuthRealm commented out
     <main>
         <pair-key>securityManager.realms</pair-key>
         <pair-value>$tokenAuthRealm</pair-value>
     </main>
+    End tokenAuthRealm commented out-->
+
+    <main>
+        <pair-key>securityManager.realms</pair-key>
+        <pair-value>$oauth2ProxyRealm</pair-value>
+    </main>
+
+    <!--TODO setup stateless execution for Oauth2 - no sessions? -->
+    <!--[urls]
+    # Protect your API endpoints:
+    # 1. Prevent session creation
+    # 2. Require the Bearer token
+    /api/** = noSessionCreation, authcBearer-->
 
     <!-- Start moonAuthRealm commented out
     <main>
@@ -323,18 +353,18 @@
     End moonAuthRealm commented out-->
     <urls>
         <pair-key>/**/operations/cluster-admin**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
+        <pair-value>authcBearer, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**/v1/**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
+        <pair-value>authcBearer, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**/data/aaa*/**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
+        <pair-value>authcBearer, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**</pair-key>
-        <pair-value>authcBasic</pair-value>
+        <pair-value>authcBearer</pair-value>
     </urls>
 </shiro-configuration>
