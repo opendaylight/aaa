@@ -37,8 +37,8 @@ The following caveats are applicable to the current AAA implementation:
 
 _Prerequisite:_ The followings are required for building AAA:
 
-- Maven 3.8.3+
-- JDK 17
+- Maven 3.9.5+
+- JDK 21
 - Python 3.7+ (optional) for running wrapper scripts
 
 Get the code:
