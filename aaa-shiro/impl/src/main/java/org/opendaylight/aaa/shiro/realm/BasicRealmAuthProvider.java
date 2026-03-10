@@ -40,7 +40,7 @@ public final class BasicRealmAuthProvider implements RealmAuthProvider {
     public BasicRealmAuthProvider(@Reference final PasswordCredentialAuth credentialAuth,
             @Reference final IIDMStore iidmStore) {
         try {
-            new StoreBuilder(iidmStore).initWithDefaultUsers(IIDMStore.DEFAULT_DOMAIN);
+            new StoreBuilder(iidmStore).initWithDefaultUsers();
         } catch (final IDMStoreException e) {
             LOG.error("Failed to initialize data in store", e);
         }

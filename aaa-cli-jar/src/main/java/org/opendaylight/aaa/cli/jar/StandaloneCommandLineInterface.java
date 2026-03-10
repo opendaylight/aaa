@@ -35,7 +35,6 @@ public class StandaloneCommandLineInterface {
 
     private final IIDMStore identityStore;
     private final StoreBuilder storeBuilder;
-    private static final String DOMAIN = IIDMStore.DEFAULT_DOMAIN;
     private final PasswordHashService passwordService;
 
     public StandaloneCommandLineInterface(File directoryWithDatabaseFile) throws IOException, IDMStoreException {
@@ -49,7 +48,7 @@ public class StandaloneCommandLineInterface {
         this.identityStore = h2Store;
 
         this.storeBuilder = new StoreBuilder(h2Store);
-        storeBuilder.initDomainAndRolesWithoutUsers(DOMAIN);
+        storeBuilder.initDomainAndRolesWithoutUsers();
     }
 
     public List<String> getAllUserNames() throws IDMStoreException {
@@ -85,7 +84,7 @@ public class StandaloneCommandLineInterface {
 
     private Optional<User> getSingleUser(String userIdWithoutDomain) throws IDMStoreException {
         requireNonNull(userIdWithoutDomain, "userIdWithoutDomain == null");
-        List<User> users = identityStore.getUsers(userIdWithoutDomain, DOMAIN).getUsers();
+        List<User> users = identityStore.getUsers(userIdWithoutDomain, IIDMStore.DEFAULT_DOMAIN).getUsers();
         if (users.isEmpty()) {
             return Optional.empty();
         }
@@ -97,11 +96,11 @@ public class StandaloneCommandLineInterface {
 
     public void createNewUser(String userName, String password, boolean isAdmin) throws IDMStoreException {
         requireNonNull(userName, "userName == null");
-        storeBuilder.createUser(DOMAIN, userName, password, isAdmin);
+        storeBuilder.createUser(IIDMStore.DEFAULT_DOMAIN, userName, password, isAdmin);
     }
 
     public boolean deleteUser(String userIdWithoutDomain) throws IDMStoreException {
         requireNonNull(userIdWithoutDomain, "userIdWithoutDomain == null");
-        return storeBuilder.deleteUser(DOMAIN, userIdWithoutDomain);
+        return storeBuilder.deleteUser(IIDMStore.DEFAULT_DOMAIN, userIdWithoutDomain);
     }
 }

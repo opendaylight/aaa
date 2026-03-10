@@ -59,17 +59,16 @@ public class StoreBuilder {
      * Initialize IIDMStore with the default domain and the 'user' and 'admin' roles, if needed.
      * This does not create any default user entries (because they are an inherent security risk).
      *
-     * @param domainID ID (same as name) of the "authentication domain"
      * @return ID of the just newly created Domain, or null if no new one had to be created
      * @throws IDMStoreException for issues coming from the IIDMStore
      */
-    public String initDomainAndRolesWithoutUsers(final String domainID) throws IDMStoreException {
+    public String initDomainAndRolesWithoutUsers() throws IDMStoreException {
         LOG.info("Checking if default entries must be created in IDM store");
 
         // Check whether the default domain exists. If it exists, then do not
         // create default data in the store.
         // FIXME: Address the fact that someone may delete the sdn domain, or make sdn mandatory.
-        Domain defaultDomain = store.readDomain(domainID);
+        Domain defaultDomain = store.readDomain(IIDMStore.DEFAULT_DOMAIN);
         if (defaultDomain != null) {
             LOG.info("Found default domain in IDM store, skipping insertion of default data");
             return null;
@@ -106,11 +105,10 @@ public class StoreBuilder {
      * Initialize IIDMStore with the default domain and the 'user' and 'admin'
      * roles AND a default admin account (with default password, which is bad practice).
      *
-     * @param domainID ID (same as name) of the "authentication domain"
      * @throws IDMStoreException for issues coming from the IIDMStore
      */
-    public void initWithDefaultUsers(final String domainID) throws IDMStoreException {
-        String newDomainID = initDomainAndRolesWithoutUsers(domainID);
+    public void initWithDefaultUsers() throws IDMStoreException {
+        String newDomainID = initDomainAndRolesWithoutUsers();
         if (newDomainID != null) {
             createUser(newDomainID, "admin", "admin", true);
         }

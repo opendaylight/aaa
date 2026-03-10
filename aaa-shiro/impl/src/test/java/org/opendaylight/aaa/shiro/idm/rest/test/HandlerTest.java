@@ -15,7 +15,6 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Before;
-import org.opendaylight.aaa.api.IIDMStore;
 import org.opendaylight.aaa.api.StoreBuilder;
 import org.opendaylight.aaa.impl.password.service.DefaultPasswordHashService;
 import org.opendaylight.aaa.provider.GsonProvider;
@@ -42,7 +41,7 @@ public abstract class HandlerTest extends JerseyTest {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        new StoreBuilder(testStore).initWithDefaultUsers(IIDMStore.DEFAULT_DOMAIN);
+        new StoreBuilder(testStore).initWithDefaultUsers();
     }
 
     static <T> Entity<T> entity(T obj) {
