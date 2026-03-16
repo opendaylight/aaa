@@ -16,6 +16,24 @@
       "message": "why does null works here?",
       "revId": "be9d807aa9c9f752af2c61508b68f00e2025e4b2",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54a1b4b6_a81dbf3c",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyRealm.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-03-16T13:55:13Z",
+      "side": 1,
+      "message": "because, only AAA paths are meant to by used by admin user, the others are for anyone",
+      "parentUuid": "4450b46d_07ba42ed",
+      "revId": "be9d807aa9c9f752af2c61508b68f00e2025e4b2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
