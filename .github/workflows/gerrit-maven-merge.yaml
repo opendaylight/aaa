@@ -124,13 +124,13 @@ jobs:
           path: "${{ github.workspace }}/m2repo"
       - name: Publish to Nexus
         # yamllint disable-line rule:line-length
-        uses: lfit/nexus-upload-action@977af1a1db8719876f12ed6d83fa453fcabb2f7a # v0.1.8
+        uses: lfreleng-actions/nexus-publish-action@b53a4638789cba03279c97aeab7f0ce10dbfa991 # v0.1.4
         with:
           nexus_server: ${{ vars.NEXUS_SERVER }}
           nexus_username: ${{ secrets.NEXUS_USERNAME }}
           nexus_password: ${{ secrets.NEXUS_PASSWORD }}
-          nexus_repository: ${{ vars.NEXUS_REPO }}
-          upload_directory: "${{ github.workspace }}/m2repo"
+          repository_name: ${{ vars.NEXUS_REPO }}
+          files_path: "${{ github.workspace }}/m2repo"
 
   vote:
     if: ${{ always() }}
