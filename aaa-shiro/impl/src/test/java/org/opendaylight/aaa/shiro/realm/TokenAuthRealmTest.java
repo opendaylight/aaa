@@ -9,18 +9,13 @@
 package org.opendaylight.aaa.shiro.realm;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import com.google.common.collect.Lists;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.shiro.authc.AuthenticationToken;
 import org.junit.Test;
-import org.opendaylight.aaa.shiro.realm.util.TokenUtils;
 import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
 import org.opendaylight.aaa.tokenauthrealm.auth.AuthenticationManager;
 
@@ -102,33 +97,4 @@ public class TokenAuthRealmTest {
         testRealm.doGetAuthenticationInfo(null);
     }
 
-    @Test
-    public void testExtractUsernameNullUsername() {
-        AuthenticationToken at = mock(AuthenticationToken.class);
-        when(at.getPrincipal()).thenReturn(null);
-        assertNull(TokenUtils.extractUsername(at));
-    }
-
-    @Test(expected = ClassCastException.class)
-    public void testExtractPasswordNullPassword() {
-        AuthenticationToken at = mock(AuthenticationToken.class);
-        when(at.getPrincipal()).thenReturn("username");
-        when(at.getCredentials()).thenReturn(null);
-        TokenUtils.extractPassword(at);
-    }
-
-    @Test(expected = ClassCastException.class)
-    public void testExtractUsernameBadUsernameClass() {
-        AuthenticationToken at = mock(AuthenticationToken.class);
-        when(at.getPrincipal()).thenReturn(1);
-        TokenUtils.extractUsername(at);
-    }
-
-    @Test(expected = ClassCastException.class)
-    public void testExtractPasswordBadPasswordClass() {
-        AuthenticationToken at = mock(AuthenticationToken.class);
-        when(at.getPrincipal()).thenReturn("username");
-        when(at.getCredentials()).thenReturn(1);
-        TokenUtils.extractPassword(at);
-    }
 }

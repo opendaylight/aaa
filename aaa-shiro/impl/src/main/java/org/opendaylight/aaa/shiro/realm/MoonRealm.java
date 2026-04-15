@@ -51,6 +51,7 @@ public class MoonRealm extends AuthorizingRealm {
 
     public MoonRealm(final ServletSupport servletSupport) {
         this.servletSupport = requireNonNull(servletSupport);
+        setAuthenticationTokenClass(UsernamePasswordToken.class);
     }
 
     public static Registration prepareForLoad(final ServletSupport jaxrsSupport) {
@@ -66,18 +67,10 @@ public class MoonRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(final AuthenticationToken authenticationToken)
             throws AuthenticationException {
-        final var principal = authenticationToken.getPrincipal();
-        if (!(principal instanceof String stringPrincipal)) {
-            throw new AuthenticationException("Non-string principal " + principal);
-        }
-
-        if (!(authenticationToken instanceof UsernamePasswordToken userPassToken)) {
-            throw new AuthenticationException("Token is not UsernamePasswordToken: " + authenticationToken);
-        }
-
-        final var password = new String(userPassToken.getPassword());
+        final var upt = (UsernamePasswordToken) authenticationToken;
+        final var password = new String(upt.getPassword());
         // FIXME: make the domain name configurable
-        final var moonPrincipal = moonAuthenticate(stringPrincipal, password, MOON_DEFAULT_DOMAIN);
+        final var moonPrincipal = moonAuthenticate(upt.getUsername(), password, MOON_DEFAULT_DOMAIN);
         return moonPrincipal == null ? null
             : new SimpleAuthenticationInfo(moonPrincipal, password.toCharArray(), getName());
     }
