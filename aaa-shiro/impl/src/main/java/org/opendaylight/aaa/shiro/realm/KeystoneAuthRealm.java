@@ -63,7 +63,6 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     private static final String NO_CATALOG_OPTION = "nocatalog";
     private static final String DEFAULT_KEYSTONE_DOMAIN = "Default";
     private static final String USERNAME_DOMAIN_SEPARATOR = "@";
-    private static final String FATAL_ERROR_BASIC_AUTH_ONLY = "{\"error\":\"Only basic authentication is supported\"}";
     private static final String FATAL_ERROR_INVALID_URL = "{\"error\":\"Invalid URL to Keystone server\"}";
     private static final String UNABLE_TO_AUTHENTICATE = "{\"error\":\"Could not authenticate\"}";
     private static final String AUTH_PATH = "v3/auth/tokens";
@@ -151,10 +150,7 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(
             final AuthenticationToken authenticationToken,
             final SimpleHttpClient client) {
-        if (!(authenticationToken instanceof UsernamePasswordToken usernamePasswordToken)) {
-            LOG.error("Only basic authentication is supported");
-            throw new AuthenticationException(FATAL_ERROR_BASIC_AUTH_ONLY);
-        }
+        final var usernamePasswordToken = (UsernamePasswordToken) authenticationToken;
 
         final URI theServerUri = getServerUri();
         if (theServerUri == null) {
