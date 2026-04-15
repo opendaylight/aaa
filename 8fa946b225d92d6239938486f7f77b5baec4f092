@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c6cf1503_43c82415",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-15T08:58:53Z",
+      "side": 1,
+      "message": "there can be two situations:\n\n- all roles are in one header\n- we receive roles in multiple header instances\n\nthus use #getHeaders instead",
+      "revId": "8fa946b225d92d6239938486f7f77b5baec4f092",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7d166bd5_c2f637c8",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyFilter.java",
         "patchSetId": 1
