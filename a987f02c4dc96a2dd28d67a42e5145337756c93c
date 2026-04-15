@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8fcb705_88df6bb1",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-15T11:48:44Z",
+      "side": 1,
+      "message": "comment in commit msg",
+      "revId": "a987f02c4dc96a2dd28d67a42e5145337756c93c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df70086d_fc712766",
+        "filename": "aaa-shiro/impl/src/main/resources/initial/aaa-app-config.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-15T11:48:44Z",
+      "side": 1,
+      "message": "move this to docs",
+      "revId": "a987f02c4dc96a2dd28d67a42e5145337756c93c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
