@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c144bd0_d5785a8d",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/TokenAuthRealm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-15T14:08:04Z",
+      "side": 1,
+      "message": "can be var",
+      "revId": "fd3006d2304586ea98161f4fd97818af208a5131",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}

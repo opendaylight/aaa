@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ab0daf5_b80b1cef",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/KeystoneAuthRealm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-15T14:08:04Z",
+      "side": 0,
+      "message": "can stay as defense ourselfs?",
+      "revId": "59a38d3fc7adcacbfd648d5a67a217837d4e1a59",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
