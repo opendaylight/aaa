@@ -19,6 +19,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -27,7 +28,6 @@ import org.apache.shiro.util.Destroyable;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
-import org.opendaylight.aaa.shiro.realm.util.TokenUtils;
 import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
 import org.opendaylight.mdsal.binding.api.DataBroker;
 import org.opendaylight.mdsal.common.api.LogicalDatastoreType;
@@ -127,7 +127,10 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(final AuthenticationToken authenticationToken)
             throws AuthenticationException {
-        final var username = TokenUtils.extractUsername(authenticationToken);
+        if (!(authenticationToken instanceof UsernamePasswordToken usernamePasswordToken)) {
+            throw new AuthenticationException("Token is not UsernamePasswordToken: " + authenticationToken.getClass());
+        }
+        final var username = usernamePasswordToken.getUsername();
         final var opt = getAuthenticationContainer();
         if (opt.isPresent()) {
             final var auth = opt.orElseThrow();
@@ -141,7 +144,7 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
                     LOG.trace("userId={} is skipped because it is disabled", u.getUserid());
                 }
                 if (userEnabled && u.getUserid().equals(inputUserId)) {
-                    final String inputPassword = TokenUtils.extractPassword(authenticationToken);
+                    final String inputPassword = new String(usernamePasswordToken.getPassword());
                     if (passwordHashService.passwordsMatch(inputPassword, u.getPassword(), u.getSalt())) {
                         return new SimpleAuthenticationInfo(
                             ODLPrincipalImpl.createODLPrincipal(inputUsername, domainId, inputUserId), inputPassword,
