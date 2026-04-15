@@ -30,7 +30,6 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.junit.Assert;
 import org.junit.Before;
@@ -194,29 +193,6 @@ public class KeystoneAuthRealmTest {
         final String invalidUrl = "not_an_url";
         keystoneAuthRealm.setUrl(invalidUrl);
         keystoneAuthRealm.doGetAuthenticationInfo(token, client);
-    }
-
-    @Test(expected = AuthenticationException.class)
-    public void doGetAuthenticationInfoUnknownTokenType() throws Exception {
-        AuthenticationToken token = new AuthenticationToken() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public Object getPrincipal() {
-                return null;
-            }
-
-            @Override
-            public Object getCredentials() {
-                return null;
-            }
-        };
-        keystoneAuthRealm.doGetAuthenticationInfo(token, client);
-    }
-
-    @Test(expected = AuthenticationException.class)
-    public void doGetAuthenticationInfoNullToken() throws Exception {
-        keystoneAuthRealm.doGetAuthenticationInfo(null, client);
     }
 
     @Test

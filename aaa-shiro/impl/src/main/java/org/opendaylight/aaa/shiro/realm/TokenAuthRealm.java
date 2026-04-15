@@ -15,6 +15,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -23,7 +24,6 @@ import org.opendaylight.aaa.api.Authentication;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
-import org.opendaylight.aaa.shiro.realm.util.TokenUtils;
 import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
 import org.opendaylight.yangtools.concepts.Registration;
 import org.slf4j.Logger;
@@ -89,23 +89,11 @@ public class TokenAuthRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(final AuthenticationToken authenticationToken)
             throws AuthenticationException {
-        if (authenticationToken == null) {
-            throw new AuthenticationException("{\"error\":\"Unable to decode credentials\"}");
-        }
-
-        final String username;
-        final String password;
-        final String domain;
-
-        try {
-            final String possiblyQualifiedUser = TokenUtils.extractUsername(authenticationToken);
-            username = HeaderUtils.extractUsername(possiblyQualifiedUser);
-            domain = HeaderUtils.extractDomain(possiblyQualifiedUser);
-            password = TokenUtils.extractPassword(authenticationToken);
-        } catch (ClassCastException e) {
-            throw new AuthenticationException(
-                "{\"error\":\"Only basic authentication is supported by TokenAuthRealm\"}", e);
-        }
+        final var usernamePasswordToken = (UsernamePasswordToken) authenticationToken;
+        final var possiblyQualifiedUser = usernamePasswordToken.getUsername();
+        final var username = HeaderUtils.extractUsername(possiblyQualifiedUser);
+        final var domain = HeaderUtils.extractDomain(possiblyQualifiedUser);
+        final var password = new String(usernamePasswordToken.getPassword());
 
         if (!Strings.isNullOrEmpty(password)) {
             final var headers = HeaderUtils.formHeaders(username, password, domain);
