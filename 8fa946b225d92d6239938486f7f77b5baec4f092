@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ed8d6ab_006e3bc6",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-04-15T16:01:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b21b3a84_72c04a0b",
+      "revId": "8fa946b225d92d6239938486f7f77b5baec4f092",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36e02c7e_eef20810",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-04-14T09:13:40Z",
       "side": 1,
       "message": "final var",
+      "revId": "8fa946b225d92d6239938486f7f77b5baec4f092",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6aa0ab2_8c68b893",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-04-15T16:01:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36e02c7e_eef20810",
       "revId": "8fa946b225d92d6239938486f7f77b5baec4f092",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
@@ -52,6 +88,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e48af53_5b4a3622",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-04-15T16:01:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6cf1503_43c82415",
+      "revId": "8fa946b225d92d6239938486f7f77b5baec4f092",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d166bd5_c2f637c8",
@@ -69,6 +123,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b7e0e6c_1d053131",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-04-15T16:01:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d166bd5_c2f637c8",
+      "revId": "8fa946b225d92d6239938486f7f77b5baec4f092",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "89b59e40_833c83ab",
@@ -82,6 +154,24 @@
       "writtenOn": "2026-04-14T09:13:40Z",
       "side": 1,
       "message": "describe the algorithm",
+      "revId": "8fa946b225d92d6239938486f7f77b5baec4f092",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45e5af63_570eeaba",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyRealm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-04-15T16:01:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89b59e40_833c83ab",
       "revId": "8fa946b225d92d6239938486f7f77b5baec4f092",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
