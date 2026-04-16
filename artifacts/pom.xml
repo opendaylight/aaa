@@ -127,6 +127,13 @@
                 <artifactId>aaa-shiro</artifactId>
                 <version>${project.version}</version>
                 <type>cfg</type>
+                <classifier>bearerjwtrealm-config</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.opendaylight.aaa</groupId>
+                <artifactId>aaa-shiro</artifactId>
+                <version>${project.version}</version>
+                <type>cfg</type>
                 <classifier>oauth2proxyheaderfilter-config</classifier>
             </dependency>
 
