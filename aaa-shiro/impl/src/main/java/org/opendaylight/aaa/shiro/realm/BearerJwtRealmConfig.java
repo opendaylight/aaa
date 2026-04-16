@@ -9,6 +9,7 @@ package org.opendaylight.aaa.shiro.realm;
 
 import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jwt.proc.JWTProcessor;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 public interface BearerJwtRealmConfig {
@@ -17,4 +18,14 @@ public interface BearerJwtRealmConfig {
      * {@return JWTProcessor if configured}
      */
     @Nullable JWTProcessor<SecurityContext> jwtProcessor();
+
+    /**
+     * {@return configured JWT claim name used to extract the username}
+     */
+    @NonNull String userClaim();
+
+    /**
+     * {@return configured claim name used to extract the list of roles}
+     */
+    @NonNull String roleClaim();
 }
