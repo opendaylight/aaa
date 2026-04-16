@@ -138,6 +138,14 @@
             <type>cfg</type>
             <classifier>config</classifier>
         </dependency>
+
+        <dependency>
+            <!-- finalname="/etc/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg" -->
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-shiro</artifactId>
+            <type>cfg</type>
+            <classifier>bearerjwtrealm-config</classifier>
+        </dependency>
     </dependencies>
 
     <build>
