@@ -24,6 +24,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.eclipse.jdt.annotation.NonNull;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
 import org.opendaylight.yangtools.concepts.Registration;
@@ -46,15 +47,19 @@ import org.slf4j.LoggerFactory;
  */
 public final class BearerJwtRealm extends AuthorizingRealm {
     private static final Logger LOG = LoggerFactory.getLogger(BearerJwtRealm.class);
-    // TODO make this configurable for different identity providers
-    private static final String USER_CLAIM = "preferred_username";
-    private static final String ROLE_CLAIM = "roles";
-    private static final ThreadLocal<JWTProcessor<SecurityContext>> PROCESSOR_TL = new ThreadLocal<>();
+    private static final String DEFAULT_USER_CLAIM = "preferred_username";
+    private static final String DEFAULT_ROLE_CLAIM = "roles";
+    private static final ThreadLocal<BearerJwtRealmConfig> CONFIG_TL = new ThreadLocal<>();
 
     private final JWTProcessor<SecurityContext> jwtProcessor;
+    private final @NonNull String userClaim;
+    private final @NonNull String roleClaim;
 
     public BearerJwtRealm() {
-        this.jwtProcessor = PROCESSOR_TL.get();
+        final var config = CONFIG_TL.get();
+        this.jwtProcessor = config != null ? config.jwtProcessor() : null;
+        this.userClaim = config != null ? config.userClaim() : DEFAULT_USER_CLAIM;
+        this.roleClaim = config != null ? config.roleClaim() : DEFAULT_ROLE_CLAIM;
     }
 
     /**
@@ -67,8 +72,8 @@ public final class BearerJwtRealm extends AuthorizingRealm {
      * @return a {@link Registration} that cleans up the thread-local when closed
      */
     public static Registration prepareForLoad(final BearerJwtRealmConfig config) {
-        PROCESSOR_TL.set(config != null ? config.jwtProcessor() : null);
-        return PROCESSOR_TL::remove;
+        CONFIG_TL.set(config);
+        return CONFIG_TL::remove;
     }
 
     @Override
@@ -87,7 +92,7 @@ public final class BearerJwtRealm extends AuthorizingRealm {
 
         final String username;
         try {
-            username = claims.getStringClaim(USER_CLAIM);
+            username = claims.getStringClaim(userClaim);
         } catch (ParseException e) {
             throw new AuthenticationException("Invalid JWT user claim data", e);
         }
@@ -97,7 +102,7 @@ public final class BearerJwtRealm extends AuthorizingRealm {
 
         final Set<String> roles;
         try {
-            roles = parseRoles(claims);
+            roles = parseRoles(claims, roleClaim);
         } catch (ParseException e) {
             throw new AuthenticationException("Invalid JWT groups claim data", e);
         }
@@ -137,8 +142,8 @@ public final class BearerJwtRealm extends AuthorizingRealm {
         }
     }
 
-    private static Set<String> parseRoles(final JWTClaimsSet claims) throws ParseException {
-        final var groups = claims.getStringListClaim(ROLE_CLAIM);
+    private static Set<String> parseRoles(final JWTClaimsSet claims, final String roleClaim) throws ParseException {
+        final var groups = claims.getStringListClaim(roleClaim);
         if (groups == null) {
             LOG.warn("JWT has no roles claim; granting no roles");
             return Set.of();
