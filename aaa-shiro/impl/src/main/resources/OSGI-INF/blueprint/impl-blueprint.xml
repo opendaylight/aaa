@@ -8,7 +8,8 @@ terms of the Eclipse Public License v1.0 which accompanies this distribution,
 and is available at http://www.eclipse.org/legal/epl-v10.html
 -->
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
-           xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0">
+           xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0"
+           xmlns:ext="http://www.osgi.org/xmlns/blueprint-ext/v1.0.0">
   <reference id="passwordCredentialAuth" interface="org.opendaylight.aaa.api.PasswordCredentialAuth"/>
   <reference id="idmStore" interface ="org.opendaylight.aaa.api.IIDMStore"/>
 
@@ -32,6 +33,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     default-config-file-name="aaa-app-config.xml"
     binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration"/>
 
+  <reference id="jwtConfig"
+    interface="org.opendaylight.aaa.shiro.realm.BearerJwtRealmConfig"
+    ext:proxy-method="classes"
+    availability="optional"/>
+
   <bean id="webEnvironment" class="org.opendaylight.aaa.shiro.web.env.AAAWebEnvironment">
     <argument ref="shiroConfiguration"/>
     <argument ref="dataBroker"/>
@@ -40,6 +46,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="provider"/>
     <argument ref="passwordService"/>
     <argument ref="servletSupport"/>
+    <argument ref="jwtRealmConfig"/>
   </bean>
   <service ref="webEnvironment" interface="org.opendaylight.aaa.shiro.web.env.AAAShiroWebEnvironment"/>
 </blueprint>
