@@ -23,6 +23,9 @@
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">
             mvn:org.opendaylight.aaa/aaa-filterchain/${project.version}/cfg/config
         </configfile>
+        <configfile finalname="/etc/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg">
+            mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/cfg/bearerjwtrealm-config
+        </configfile>
         <feature version="[14,15)">odl-karaf-feat-jdbc</feature>
         <feature version="[14,15)">odl-karaf-feat-jetty</feature>
         <feature version="[13,14)">odl-controller-blueprint</feature>
