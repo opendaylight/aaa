@@ -177,6 +177,26 @@ class BearerJwtRealmTest {
     }
 
     /**
+     * Tests that custom user and role claim names are honored when configured.
+     */
+    @Test
+    void testCustomClaimNames() {
+        final var config = new BearerJwtRealmConfigImpl(null, "sub", "auth_roles");
+        try (var ignored = BearerJwtRealm.prepareForLoad(config)) {
+            final var customRealm = new BearerJwtRealm();
+            final var jwt = buildPlainJwt(new JWTClaimsSet.Builder()
+                .claim("sub", "custom-user")
+                .claim("auth_roles", List.of("admin", "viewer"))
+                .build());
+            final var info = customRealm.doGetAuthenticationInfo(new BearerToken(jwt));
+            assertNotNull(info);
+            final var principal = assertInstanceOf(ODLPrincipal.class, info.getPrincipals().getPrimaryPrincipal());
+            assertEquals("custom-user", principal.getUsername());
+            assertEquals(Set.of("admin", "viewer"), principal.getRoles());
+        }
+    }
+
+    /**
      * Tests that a correctly signed JWT with valid claims passes verification.
      */
     @Test
@@ -417,7 +437,7 @@ class BearerJwtRealmTest {
         final var processor = new DefaultJWTProcessor<>();
         processor.setJWSKeySelector(keySelector);
         processor.setJWTClaimsSetVerifier(claimsVerifier);
-        return new BearerJwtRealmConfigImpl(processor);
+        return new BearerJwtRealmConfigImpl(processor, USER_CLAIM, ROLE_CLAIM);
     }
 
     private static Date futureDate() {
