@@ -182,6 +182,20 @@
         <pair-value>org.opendaylight.aaa.shiro.realm.TokenAuthRealm</pair-value>
     </main>
 
+
+    <!--
+      ===================================================================================
+      ================================= Oauth2ProxyRealm ================================
+      ===================================================================================
+      =                                                                                 =
+      = Description:  A Realm implementation utilizing Oath2-proxy.                     =
+      ===================================================================================
+    -->
+    <main>
+        <pair-key>oauth2ProxyRealm</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.realm.BearerJwtRealm</pair-value>
+    </main>
+
     <!--
       ===================================================================================
       =================================== MdsalRealm ====================================
@@ -250,6 +264,11 @@
     <main>
         <pair-key>securityManager.realms</pair-key>
         <pair-value>$tokenAuthRealm</pair-value>
+    </main>
+
+    <main>
+        <pair-key>securityManager.realms</pair-key>
+        <pair-value>$oauth2ProxyRealm</pair-value>
     </main>
 
     <!-- Start moonAuthRealm commented out
