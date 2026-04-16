@@ -32,6 +32,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     default-config-file-name="aaa-app-config.xml"
     binding-class="org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration"/>
 
+  <reference-list id="jwtRealmConfigs"
+                  interface="org.opendaylight.aaa.shiro.realm.BearerJwtRealmConfig"
+                  availability="optional"/>
+
   <bean id="webEnvironment" class="org.opendaylight.aaa.shiro.web.env.AAAWebEnvironment">
     <argument ref="shiroConfiguration"/>
     <argument ref="dataBroker"/>
@@ -40,6 +44,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="provider"/>
     <argument ref="passwordService"/>
     <argument ref="servletSupport"/>
+    <argument ref="jwtRealmConfigs"/>
   </bean>
   <service ref="webEnvironment" interface="org.opendaylight.aaa.shiro.web.env.AAAShiroWebEnvironment"/>
 </blueprint>
