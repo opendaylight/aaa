@@ -7,8 +7,12 @@
  */
 package org.opendaylight.aaa.shiro.realm;
 
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.proc.BadJOSEException;
+import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.JWTParser;
+import com.nimbusds.jwt.proc.JWTProcessor;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Set;
@@ -23,23 +27,48 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.opendaylight.aaa.api.shiro.principal.ODLPrincipal;
 import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
+import org.opendaylight.yangtools.concepts.Registration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Realm implementation for Bearer token including JWT tokens.
  *
- * <p>Implementation for Bearer authorization headers. We are parsing user claim to create {@link AuthenticationInfo}
- * and roles claim to create {@link AuthorizationInfo}.
+ * <p>Implementation for Bearer authorization headers. We parse the user claim to create
+ * {@link AuthenticationInfo} and the roles claim to create {@link AuthorizationInfo}.
+ *
+ * <p>When a {@link BearerJwtRealmConfig} is available, the JWT is fully verified: signature
+ * (via JWKS), issuer, audience, expiration and not-before. Without configuration the realm
+ * falls back to accepting any well-formed JWT without verification — a WARN is emitted for each
+ * such token.
  *
  * <p>The expected input from the request is:
- * Authorization: Bearer [JWT Token]
+ * {@code Authorization: Bearer [JWT Token]}
  */
 public final class BearerJwtRealm extends AuthorizingRealm {
     private static final Logger LOG = LoggerFactory.getLogger(BearerJwtRealm.class);
     // TODO make this configurable for different identity providers
     private static final String USER_CLAIM = "preferred_username";
     private static final String ROLE_CLAIM = "roles";
+    private static final ThreadLocal<JWTProcessor<SecurityContext>> PROCESSOR_TL = new ThreadLocal<>();
+
+    private final JWTProcessor<SecurityContext> jwtProcessor;
+
+    public BearerJwtRealm() {
+        this.jwtProcessor = PROCESSOR_TL.get();
+    }
+
+    /**
+     * Prepare this realm for loading by Shiro's {@code ReflectionBuilder}. Must be called before
+     * {@code configure()} and the returned {@link Registration} closed afterwards.
+     *
+     * @param config optional JWT verification configuration; {@code null} disables verification
+     * @return a {@link Registration} that cleans up the thread-local when closed
+     */
+    public static Registration prepareForLoad(final BearerJwtRealmConfig config) {
+        PROCESSOR_TL.set(config != null ? config.getJwtProcessor() : null);
+        return PROCESSOR_TL::remove;
+    }
 
     @Override
     public boolean supports(final AuthenticationToken token) {
@@ -53,12 +82,7 @@ public final class BearerJwtRealm extends AuthorizingRealm {
             throw new AuthenticationException("BearerToken required, provided: " + token.getClass());
         }
 
-        final JWTClaimsSet claims;
-        try {
-            claims = JWTParser.parse(bearerToken.getToken()).getJWTClaimsSet();
-        } catch (ParseException e) {
-            throw new AuthenticationException("Failed to parse provided JWT claims", e);
-        }
+        final JWTClaimsSet claims = parseClaims(bearerToken.getToken());
 
         final String username;
         try {
@@ -89,6 +113,27 @@ public final class BearerJwtRealm extends AuthorizingRealm {
         }
         LOG.error("Unsupported principal {}", primary.getClass());
         return new SimpleAuthorizationInfo();
+    }
+
+    private JWTClaimsSet parseClaims(final String token) {
+        if (jwtProcessor != null) {
+            try {
+                return jwtProcessor.process(JWTParser.parse(token), null);
+            } catch (ParseException e) {
+                throw new AuthenticationException("Failed to parse JWT", e);
+            } catch (BadJOSEException e) {
+                throw new AuthenticationException("JWT verification failed: " + e.getMessage(), e);
+            } catch (JOSEException e) {
+                throw new AuthenticationException("JWT processing error", e);
+            }
+        }
+
+        LOG.warn("No JWT verification configured — accepting unverified Bearer token");
+        try {
+            return JWTParser.parse(token).getJWTClaimsSet();
+        } catch (ParseException e) {
+            throw new AuthenticationException("Failed to parse provided JWT claims", e);
+        }
     }
 
     private static Set<String> parseRoles(final JWTClaimsSet claims) throws ParseException {
