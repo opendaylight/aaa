@@ -40,6 +40,8 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
  * expected.issuer=http://keycloak.local:8080/realms/odl-realm
  * expected.audience=odl-application
  * allowed.algorithms=RS256
+ * user.claim=preferred_username
+ * role.claim=roles
  * </pre>
  */
 @Component(configurationPid = "org.opendaylight.aaa.shiro.bearerjwtrealm",
@@ -66,20 +68,43 @@ public final class BearerJwtRealmConfig {
         @AttributeDefinition(name = "Allowed Algorithms",
             description = "Allowed JWS signing algorithms (e.g. RS256, RS384, RS512, ES256).")
         String[] allowed_algorithms() default { "RS256" };
+
+        @AttributeDefinition(name = "User Claim",
+            description = "JWT claim name used to extract the username (e.g. preferred_username, sub).")
+        String user_claim() default "preferred_username";
+
+        @AttributeDefinition(name = "Role Claim",
+            description = "JWT claim name used to extract the list of roles (e.g. roles, groups).")
+        String role_claim() default "roles";
     }
 
     private final JWTProcessor<SecurityContext> jwtProcessor;
+    private final String userClaim;
+    private final String roleClaim;
 
     /**
-     * Package-private constructor for use in unit tests, accepting a pre-built processor.
+     * Package-private constructor for use in unit tests, accepting a pre-built processor and default claim names.
      */
     @VisibleForTesting
     BearerJwtRealmConfig(final JWTProcessor<SecurityContext> jwtProcessor) {
+        this(jwtProcessor, "preferred_username", "roles");
+    }
+
+    /**
+     * Package-private constructor for use in unit tests, accepting a pre-built processor and custom claim names.
+     */
+    @VisibleForTesting
+    BearerJwtRealmConfig(final JWTProcessor<SecurityContext> jwtProcessor, final String userClaim,
+            final String roleClaim) {
         this.jwtProcessor = jwtProcessor;
+        this.userClaim = userClaim;
+        this.roleClaim = roleClaim;
     }
 
     @Activate
     public BearerJwtRealmConfig(final Config config) throws Exception {
+        this.userClaim = config.user_claim();
+        this.roleClaim = config.role_claim();
         final var jwkSource = JWKSourceBuilder.create(new URI(config.jwks_uri()).toURL()).build();
 
         final var allowedAlgs = Arrays.stream(config.allowed_algorithms())
@@ -110,7 +135,15 @@ public final class BearerJwtRealmConfig {
         this.jwtProcessor = processor;
     }
 
-    JWTProcessor<SecurityContext> getJwtProcessor() {
+    JWTProcessor<SecurityContext> jwtProcessor() {
         return jwtProcessor;
+    }
+
+    String userClaim() {
+        return userClaim;
+    }
+
+    String roleClaim() {
+        return roleClaim;
     }
 }
