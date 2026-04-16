@@ -13,8 +13,13 @@ import org.apache.shiro.web.env.IniWebEnvironment;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+<<<<<<< PATCH SET (8a13e4 Add JWT signature verification to BearerJwtRealm)
+import org.opendaylight.aaa.shiro.realm.BearerJwtRealm;
+import org.opendaylight.aaa.shiro.realm.BearerJwtRealmConfig;
+=======
 import org.opendaylight.aaa.shiro.filters.Oauth2ProxyHeaderFilter;
 import org.opendaylight.aaa.shiro.filters.Oauth2ProxyHeaderFilterConfig;
+>>>>>>> BASE      (b63fb8 Implement Bearer JWT token realm)
 import org.opendaylight.aaa.shiro.realm.KeystoneAuthRealm;
 import org.opendaylight.aaa.shiro.realm.MDSALDynamicAuthorizationFilter;
 import org.opendaylight.aaa.shiro.realm.MdsalRealm;
@@ -39,7 +44,11 @@ public final class AAAWebEnvironment extends IniWebEnvironment implements AAAShi
     public AAAWebEnvironment(final ShiroIni shiroConfiguration, final DataBroker dataBroker,
             final ICertificateManager certificateManager, final AuthenticationService authenticationService,
             final RealmAuthProvider realmAuthProvider, final PasswordHashService passwordHashService,
+<<<<<<< PATCH SET (8a13e4 Add JWT signature verification to BearerJwtRealm)
+            final ServletSupport servletSupport, final BearerJwtRealmConfig bearerJwtRealmConfig) {
+=======
             final ServletSupport servletSupport, final Oauth2ProxyHeaderFilterConfig oauth2Config) {
+>>>>>>> BASE      (b63fb8 Implement Bearer JWT token realm)
         // Turn ShiroConfiguration into an Ini
         final var ini = new Ini();
 
@@ -65,7 +74,11 @@ public final class AAAWebEnvironment extends IniWebEnvironment implements AAAShi
                  var mdsalLoad = MdsalRealm.prepareForLoad(passwordHashService, dataBroker);
                  var moonLoad = MoonRealm.prepareForLoad(servletSupport);
                  var tokenAuthLoad = TokenAuthRealm.prepareForLoad(authenticationService, realmAuthProvider);
+<<<<<<< PATCH SET (8a13e4 Add JWT signature verification to BearerJwtRealm)
+                 var jwtLoad = BearerJwtRealm.prepareForLoad(bearerJwtRealmConfig)) {
+=======
                  var oauth2Load = Oauth2ProxyHeaderFilter.prepareForLoad(oauth2Config)) {
+>>>>>>> BASE      (b63fb8 Implement Bearer JWT token realm)
                 configure();
             }
         });
