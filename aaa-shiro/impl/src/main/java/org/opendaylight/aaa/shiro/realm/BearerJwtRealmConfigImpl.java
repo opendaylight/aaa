@@ -7,6 +7,8 @@
  */
 package org.opendaylight.aaa.shiro.realm;
 
+import static java.util.Objects.requireNonNull;
+
 import com.google.common.annotations.VisibleForTesting;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.jwk.source.JWKSourceBuilder;
@@ -21,6 +23,7 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.inject.Singleton;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -41,6 +44,8 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
  * expected-issuer=http(s)://keycloak.local:8080/realms/odl-realm
  * expected-audience=odl-application
  * allowed-algorithms=RS256
+ * user-claim=preferred_username
+ * role-claim=roles
  * }</pre>
  */
 @Singleton
@@ -68,16 +73,29 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
         @AttributeDefinition(description = """
             Allowed JWS signing algorithms (comma-separated, e.g. RS256, RS384, RS512, ES256).""")
         String allowed$_$algorithms() default "RS256, RS384, RS512, ES256";
+
+        @AttributeDefinition(description = """
+            JWT claim name used to extract the username.""")
+        String user$_$claim() default "preferred_username";
+
+        @AttributeDefinition(description = """
+            JWT claim name used to extract the list of roles.""")
+        String role$_$claim() default "groups";
     }
 
     private final @Nullable JWTProcessor<SecurityContext> jwtProcessor;
+    private final @NonNull String userClaim;
+    private final @NonNull String roleClaim;
 
     /**
      * Package-private constructor for use in unit tests, accepting a pre-built processor.
      */
     @VisibleForTesting
-    BearerJwtRealmConfigImpl(final @Nullable JWTProcessor<SecurityContext> jwtProcessor) {
+    BearerJwtRealmConfigImpl(final @Nullable JWTProcessor<SecurityContext> jwtProcessor,
+            final @NonNull String userClaim, final @NonNull String roleClaim) {
         this.jwtProcessor = jwtProcessor;
+        this.userClaim = requireNonNull(userClaim);
+        this.roleClaim = requireNonNull(roleClaim);
     }
 
     /**
@@ -89,6 +107,9 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
      */
     @Activate
     public BearerJwtRealmConfigImpl(final Configuration configuration) throws Exception {
+        userClaim = configuration.user$_$claim();
+        roleClaim = configuration.role$_$claim();
+
         if (configuration.jwks$_$uri().isBlank()) {
             jwtProcessor = null;
             return;
@@ -131,5 +152,15 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
     @Override
     public @Nullable JWTProcessor<SecurityContext> jwtProcessor() {
         return jwtProcessor;
+    }
+
+    @Override
+    public @NonNull String userClaim() {
+        return userClaim;
+    }
+
+    @Override
+    public @NonNull String roleClaim() {
+        return roleClaim;
     }
 }
