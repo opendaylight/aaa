@@ -204,6 +204,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                                     <type>xml</type>
                                     <classifier>aaa-datastore-config</classifier>
                                 </artifact>
+                                <artifact>
+                                    <file>${project.build.directory}/classes/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg</file>
+                                    <type>cfg</type>
+                                    <classifier>bearerjwtrealm-config</classifier>
+                                </artifact>
                             </artifacts>
                         </configuration>
                     </execution>
