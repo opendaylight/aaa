@@ -10,13 +10,27 @@ package org.opendaylight.aaa.shiro.realm;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.JWSHeader;
+import com.nimbusds.jose.crypto.RSASSASigner;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
+import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
+import com.nimbusds.jose.proc.JWSVerificationKeySelector;
+import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.PlainJWT;
+import com.nimbusds.jwt.SignedJWT;
+import com.nimbusds.jwt.proc.DefaultJWTClaimsVerifier;
+import com.nimbusds.jwt.proc.DefaultJWTProcessor;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import org.apache.shiro.authc.AuthenticationException;
@@ -30,7 +44,7 @@ import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
 
 public class BearerJwtRealmTest {
     private static final String USER_CLAIM = "preferred_username";
-    private static final String ROLE_CLAIM = "groups";
+    private static final String ROLE_CLAIM = "roles";
 
     private final BearerJwtRealm realm = new BearerJwtRealm();
 
@@ -39,7 +53,7 @@ public class BearerJwtRealmTest {
      */
     @Test
     public void testSupportsBearer() {
-        final var jwt = buildJwt(new JWTClaimsSet.Builder().claim(USER_CLAIM, "user").build());
+        final var jwt = buildPlainJwt(new JWTClaimsSet.Builder().claim(USER_CLAIM, "user").build());
         assertTrue(realm.supports(new BearerToken(jwt)));
     }
 
@@ -52,11 +66,11 @@ public class BearerJwtRealmTest {
     }
 
     /**
-     * Tests that fully valid token is parsed correctly.
+     * Tests that fully valid token is parsed correctly (no verification configured).
      */
     @Test
     public void testAuthenticationValid() {
-        final var jwt = buildJwt(new JWTClaimsSet.Builder()
+        final var jwt = buildPlainJwt(new JWTClaimsSet.Builder()
             .claim(USER_CLAIM, "aadmin")
             .claim(ROLE_CLAIM, List.of("admin", "global-admin"))
             .build());
@@ -64,8 +78,8 @@ public class BearerJwtRealmTest {
         assertNotNull(info);
         final var principal = (ODLPrincipal) info.getPrincipals().getPrimaryPrincipal();
         assertEquals("aadmin", principal.getUsername());
-        assertEquals("sdn", principal.getDomain());
-        assertEquals("aadmin@sdn", principal.getUserId());
+        assertNull(principal.getDomain());
+        assertEquals("aadmin", principal.getUserId());
         assertEquals(Set.of("admin", "global-admin"), principal.getRoles());
     }
 
@@ -74,7 +88,7 @@ public class BearerJwtRealmTest {
      */
     @Test
     public void testAuthenticationNoRoles() {
-        final var jwt = buildJwt(new JWTClaimsSet.Builder()
+        final var jwt = buildPlainJwt(new JWTClaimsSet.Builder()
             .claim(USER_CLAIM, "aadmin")
             .build());
         final var info = realm.doGetAuthenticationInfo(new BearerToken(jwt));
@@ -88,7 +102,7 @@ public class BearerJwtRealmTest {
      */
     @Test
     public void testAuthenticationMissingUsername() {
-        final var jwt = buildJwt(new JWTClaimsSet.Builder().build());
+        final var jwt = buildPlainJwt(new JWTClaimsSet.Builder().build());
         assertThrows(AuthenticationException.class,
             () -> realm.doGetAuthenticationInfo(new BearerToken(jwt)));
     }
@@ -98,7 +112,7 @@ public class BearerJwtRealmTest {
      */
     @Test
     public void testAuthenticationBlankUsername() {
-        final var jwt = buildJwt(new JWTClaimsSet.Builder()
+        final var jwt = buildPlainJwt(new JWTClaimsSet.Builder()
             .claim(USER_CLAIM, "")
             .build());
         assertThrows(AuthenticationException.class,
@@ -139,7 +153,165 @@ public class BearerJwtRealmTest {
         assertTrue(info.getRoles() == null || info.getRoles().isEmpty());
     }
 
-    private static String buildJwt(final JWTClaimsSet claims) {
+    // -------------------------------------------------------------------------
+    // Verified path tests (BearerJwtRealmConfig configured)
+    // -------------------------------------------------------------------------
+
+    /**
+     * Tests that a correctly signed JWT with valid claims passes verification.
+     */
+    @Test
+    public void testVerifiedAuthenticationValid() throws Exception {
+        final var rsaKey = newRsaKey();
+        try (var reg = BearerJwtRealm.prepareForLoad(buildConfig(rsaKey, "test-issuer", null))) {
+            final var verifiedRealm = new BearerJwtRealm();
+            final var jwt = buildSignedJwt(rsaKey, new JWTClaimsSet.Builder()
+                .claim(USER_CLAIM, "aadmin")
+                .claim(ROLE_CLAIM, List.of("admin"))
+                .issuer("test-issuer")
+                .expirationTime(futureDate())
+                .build());
+            final var info = verifiedRealm.doGetAuthenticationInfo(new BearerToken(jwt));
+            assertNotNull(info);
+            final var principal = (ODLPrincipal) info.getPrincipals().getPrimaryPrincipal();
+            assertEquals("aadmin", principal.getUsername());
+            assertEquals(Set.of("admin"), principal.getRoles());
+        }
+    }
+
+    /**
+     * Tests that an expired JWT is rejected when verification is configured.
+     */
+    @Test
+    public void testVerifiedAuthenticationExpired() throws Exception {
+        final var rsaKey = newRsaKey();
+        try (var reg = BearerJwtRealm.prepareForLoad(buildConfig(rsaKey, "test-issuer", null))) {
+            final var verifiedRealm = new BearerJwtRealm();
+            final var jwt = buildSignedJwt(rsaKey, new JWTClaimsSet.Builder()
+                .claim(USER_CLAIM, "aadmin")
+                .issuer("test-issuer")
+                .expirationTime(new Date(System.currentTimeMillis() - 60_000))
+                .build());
+            assertThrows(AuthenticationException.class,
+                () -> verifiedRealm.doGetAuthenticationInfo(new BearerToken(jwt)));
+        }
+    }
+
+    /**
+     * Tests that a JWT with the wrong issuer is rejected.
+     */
+    @Test
+    public void testVerifiedAuthenticationWrongIssuer() throws Exception {
+        final var rsaKey = newRsaKey();
+        try (var reg = BearerJwtRealm.prepareForLoad(buildConfig(rsaKey, "expected-issuer", null))) {
+            final var verifiedRealm = new BearerJwtRealm();
+            final var jwt = buildSignedJwt(rsaKey, new JWTClaimsSet.Builder()
+                .claim(USER_CLAIM, "aadmin")
+                .issuer("wrong-issuer")
+                .expirationTime(futureDate())
+                .build());
+            assertThrows(AuthenticationException.class,
+                () -> verifiedRealm.doGetAuthenticationInfo(new BearerToken(jwt)));
+        }
+    }
+
+    /**
+     * Tests that an unsigned (plain) JWT is rejected when verification is configured.
+     */
+    @Test
+    public void testVerifiedAuthenticationUnsignedRejected() throws Exception {
+        final var rsaKey = newRsaKey();
+        try (var reg = BearerJwtRealm.prepareForLoad(buildConfig(rsaKey, null, null))) {
+            final var verifiedRealm = new BearerJwtRealm();
+            final var jwt = buildPlainJwt(new JWTClaimsSet.Builder()
+                .claim(USER_CLAIM, "aadmin")
+                .expirationTime(futureDate())
+                .build());
+            assertThrows(AuthenticationException.class,
+                () -> verifiedRealm.doGetAuthenticationInfo(new BearerToken(jwt)));
+        }
+    }
+
+    /**
+     * Tests that a JWT signed with a different key (unknown key) is rejected.
+     */
+    @Test
+    public void testVerifiedAuthenticationUnknownKey() throws Exception {
+        final var configKey = newRsaKey();
+        final var signingKey = newRsaKey();
+        try (var reg = BearerJwtRealm.prepareForLoad(buildConfig(configKey, null, null))) {
+            final var verifiedRealm = new BearerJwtRealm();
+            final var jwt = buildSignedJwt(signingKey, new JWTClaimsSet.Builder()
+                .claim(USER_CLAIM, "aadmin")
+                .expirationTime(futureDate())
+                .build());
+            assertThrows(AuthenticationException.class,
+                () -> verifiedRealm.doGetAuthenticationInfo(new BearerToken(jwt)));
+        }
+    }
+
+    /**
+     * Tests that a JWT with missing required audience is rejected.
+     */
+    @Test
+    public void testVerifiedAuthenticationWrongAudience() throws Exception {
+        final var rsaKey = newRsaKey();
+        try (var reg = BearerJwtRealm.prepareForLoad(buildConfig(rsaKey, null, "my-service"))) {
+            final var verifiedRealm = new BearerJwtRealm();
+            final var jwt = buildSignedJwt(rsaKey, new JWTClaimsSet.Builder()
+                .claim(USER_CLAIM, "aadmin")
+                .audience("other-service")
+                .expirationTime(futureDate())
+                .build());
+            assertThrows(AuthenticationException.class,
+                () -> verifiedRealm.doGetAuthenticationInfo(new BearerToken(jwt)));
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Helpers
+    // -------------------------------------------------------------------------
+
+    private static String buildPlainJwt(final JWTClaimsSet claims) {
         return new PlainJWT(claims).serialize();
+    }
+
+    private static RSAKey newRsaKey() throws Exception {
+        return new RSAKeyGenerator(2048).keyID("test-key-" + System.nanoTime()).generate();
+    }
+
+    private static String buildSignedJwt(final RSAKey rsaKey, final JWTClaimsSet claims) throws Exception {
+        final var signedJwt = new SignedJWT(new JWSHeader(JWSAlgorithm.RS256), claims);
+        signedJwt.sign(new RSASSASigner(rsaKey));
+        return signedJwt.serialize();
+    }
+
+    /**
+     * Builds a {@link BearerJwtRealmConfig} backed by a local {@link ImmutableJWKSet} for testing.
+     * Uses the package-private constructor that accepts a pre-built processor.
+     */
+    private static BearerJwtRealmConfig buildConfig(final RSAKey rsaKey, final String issuer,
+            final String audience) throws Exception {
+        final var jwkSource = new ImmutableJWKSet<SecurityContext>(new JWKSet(rsaKey.toPublicJWK()));
+        final var keySelector = new JWSVerificationKeySelector<SecurityContext>(JWSAlgorithm.RS256, jwkSource);
+
+        final var exactMatchBuilder = new JWTClaimsSet.Builder();
+        if (issuer != null) {
+            exactMatchBuilder.issuer(issuer);
+        }
+
+        final Set<String> audienceSet = audience != null ? Set.of(audience) : null;
+        final var claimsVerifier = new DefaultJWTClaimsVerifier<SecurityContext>(
+            audienceSet, exactMatchBuilder.build(), Set.of(), null);
+
+        final var processor = new DefaultJWTProcessor<SecurityContext>();
+        processor.setJWSKeySelector(keySelector);
+        processor.setJWTClaimsSetVerifier(claimsVerifier);
+
+        return new BearerJwtRealmConfig(processor);
+    }
+
+    private static Date futureDate() {
+        return new Date(System.currentTimeMillis() + 60_000);
     }
 }
