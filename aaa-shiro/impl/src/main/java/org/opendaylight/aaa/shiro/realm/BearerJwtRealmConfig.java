@@ -22,6 +22,7 @@ import java.net.URI;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -38,17 +39,24 @@ import org.eclipse.jdt.annotation.Nullable;
  * expected.issuer=http(s)://keycloak.local:8080/realms/odl-realm
  * expected.audience=odl-application
  * allowed.algorithms=RS256
+ * user.claim=preferred_username
+ * role.claim=roles
  * }</pre>
  */
 public final class BearerJwtRealmConfig {
     private final @Nullable JWTProcessor<SecurityContext> jwtProcessor;
+    private final @NonNull String userClaim;
+    private final @NonNull String roleClaim;
 
     /**
-     * Package-private constructor for use in unit tests, accepting a pre-built processor.
+     * Package-private constructor for use in unit tests, accepting a pre-built processor and custom claim names.
      */
     @VisibleForTesting
-    BearerJwtRealmConfig(final @Nullable JWTProcessor<SecurityContext> jwtProcessor) {
+    BearerJwtRealmConfig(final @Nullable JWTProcessor<SecurityContext> jwtProcessor, final @NonNull String userClaim,
+            final @NonNull String roleClaim) {
         this.jwtProcessor = jwtProcessor;
+        this.userClaim = requireNonNull(userClaim);
+        this.roleClaim = requireNonNull(roleClaim);
     }
 
     /**
@@ -62,14 +70,19 @@ public final class BearerJwtRealmConfig {
      * @param expectedIssuer expected {@code iss} claim value; blank skips issuer check
      * @param expectedAudience comma-separated expected {@code aud} values; blank skips audience check
      * @param allowedAlgorithms comma-separated JWS algorithm names (e.g. {@code RS256,RS384})
+     * @param userClaim JWT claim name used to extract the username
+     * @param roleClaim JWT claim name used to extract the list of roles
      */
     @NonNullByDefault
-    public BearerJwtRealmConfig(final String jwksUri, final String expectedIssuer,
-            final String expectedAudience, final String allowedAlgorithms) throws Exception {
+    public BearerJwtRealmConfig(final String jwksUri, final String expectedIssuer, final String expectedAudience,
+            final String allowedAlgorithms, final String userClaim, final String roleClaim) throws Exception {
         requireNonNull(jwksUri);
         requireNonNull(expectedIssuer);
         requireNonNull(expectedAudience);
         requireNonNull(allowedAlgorithms);
+
+        this.userClaim = requireNonNull(userClaim);
+        this.roleClaim = requireNonNull(roleClaim);
 
         if (jwksUri.isBlank()) {
             jwtProcessor = null;
@@ -111,5 +124,13 @@ public final class BearerJwtRealmConfig {
 
     @Nullable JWTProcessor<SecurityContext> jwtProcessor() {
         return jwtProcessor;
+    }
+
+    @NonNull String userClaim() {
+        return userClaim;
+    }
+
+    @NonNull String roleClaim() {
+        return roleClaim;
     }
 }
