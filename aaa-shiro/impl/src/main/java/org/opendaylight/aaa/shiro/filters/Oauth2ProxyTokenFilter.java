@@ -7,6 +7,10 @@
  */
 package org.opendaylight.aaa.shiro.filters;
 
+import com.nimbusds.oauth2.sdk.token.AccessToken;
+import com.nimbusds.oauth2.sdk.token.BearerAccessToken;
+import com.nimbusds.openid.connect.sdk.*;
+import java.net.URI;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +48,7 @@ public class Oauth2ProxyTokenFilter extends AuthenticatingFilter {
             return executeLogin(request, response);
         }
 
-        var httpResponse = WebUtils.toHttp(response);
+        final var httpResponse = WebUtils.toHttp(response);
         httpResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
         return false;
     }

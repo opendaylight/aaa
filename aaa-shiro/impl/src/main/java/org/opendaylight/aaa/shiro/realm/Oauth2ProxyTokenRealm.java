@@ -7,9 +7,21 @@
  */
 package org.opendaylight.aaa.shiro.realm;
 
+import com.nimbusds.oauth2.sdk.ClientCredentialsGrant;
+import com.nimbusds.oauth2.sdk.TokenRequest;
+import com.nimbusds.oauth2.sdk.TokenResponse;
+import com.nimbusds.oauth2.sdk.auth.Secret;
+import com.nimbusds.oauth2.sdk.id.ClientID;
+import com.nimbusds.oauth2.sdk.token.AccessToken;
+import com.nimbusds.oauth2.sdk.token.BearerAccessToken;
+import com.nimbusds.openid.connect.sdk.UserInfoRequest;
+import com.nimbusds.openid.connect.sdk.UserInfoResponse;
+import com.nimbusds.openid.connect.sdk.claims.UserInfo;
+import java.net.URI;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.shiro.authc.AuthenticationException;
@@ -29,6 +41,9 @@ import org.opendaylight.aaa.shiro.principal.ODLPrincipalImpl;
  * forwarded by oauth2-proxy, authorize and authenticate user based on that.
  */
 public final class Oauth2ProxyTokenRealm extends AuthorizingRealm {
+    private final String ENDPOINT_USERINFO = "https://keycloak:8080/realms/odl-realm/protocol/openid-connect/userinfo";
+    private final String ENDPOINT_TOKEN = "http://keycloak:8080/realms/odl-realm/protocol/openid-connect/token";
+
     public Oauth2ProxyTokenRealm() {
         super();
         setAuthenticationTokenClass(Oauth2ProxyToken.class);
@@ -41,6 +56,37 @@ public final class Oauth2ProxyTokenRealm extends AuthorizingRealm {
             throw new AuthenticationException("Only Oauth2ProxyToken is supported by Oauth2ProxyRealm");
         }
         final var user = proxyToken.user();
+        final var groups = proxyToken.groups();
+        if (groups == null) {
+            // Define your Keycloak details
+            final var clientID = new ClientID(user);
+            final var secret = new Secret("your-client-secret");
+            final var clientGrant = new ClientCredentialsGrant();
+            final var tokenEndpoint = URI.create(ENDPOINT_TOKEN);
+
+            // Make the request
+            TokenRequest request = new TokenRequest(tokenEndpoint, clientID, clientGrant);
+            TokenResponse response = TokenResponse.parse(request.toHTTPRequest().send());
+
+            if (!response.indicatesSuccess()) {
+                throw new RuntimeException("Failed to get service token");
+            }
+
+            final var serviceToken = response.toSuccessResponse().getTokens().getAccessToken();
+            final var userInfoRequest = new UserInfoRequest(
+                URI.create(ENDPOINT_USERINFO),
+                serviceToken
+            );
+
+            final var groupsResponse = UserInfoResponse.parse(userInfoRequest.toHTTPRequest().send());
+            if (response.indicatesSuccess()) {
+                final var userInfo = response.toSuccessResponse().getUserInfo();
+
+                // 3. Extract roles from the 'groups' or 'roles' claim
+                // Nimbus allows fetching custom claims easily
+                final var roles = userInfo.getStringListClaim("groups");
+            }
+        }
         final var odlPrincipal = ODLPrincipalImpl.createODLPrincipal(user, null, user,
             parseRoles(proxyToken.groups()));
         return new SimpleAuthenticationInfo(odlPrincipal, token.getCredentials(), getName());

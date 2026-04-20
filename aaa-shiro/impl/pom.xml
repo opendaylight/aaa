@@ -57,6 +57,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>oauth2-oidc-sdk</artifactId>
+        </dependency>
 
         <!--Yang Binding -->
         <dependency>
