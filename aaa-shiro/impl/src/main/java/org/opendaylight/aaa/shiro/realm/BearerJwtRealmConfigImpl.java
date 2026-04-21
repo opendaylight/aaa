@@ -53,6 +53,7 @@ import org.slf4j.LoggerFactory;
  * role-claim=groups
  * cache-timetolive-seconds=300
  * cache-refreshtimeout-seconds=15
+ * retry-jwks-retrieval=false
  * }</pre>
  */
 @Singleton
@@ -98,6 +99,12 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
         @AttributeDefinition(description = """
             How early before cache expiry a background refresh of the JWK set is triggered (seconds).""", min = "1")
         long cache$_$refreshtimeout$_$seconds() default 15L;
+
+        @AttributeDefinition(description = """
+            Retry to contact IdP to overcome intermittent network failure.
+            When enabled, a single automatic retry is attempted if the initial JWKS
+            fetch fails due to a transient network error.""")
+        boolean retry$_$jwks$_$retrieval() default false;
     }
 
     private final @Nullable JWTProcessor<SecurityContext> jwtProcessor;
@@ -137,6 +144,7 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
         try {
             jwkSource = JWKSourceBuilder.create(new URI(configuration.jwks$_$uri()).toURL())
             .cache(timeToLiveMillis, cacheRefreshTimeoutMillis)
+            .retrying(configuration.retry$_$jwks$_$retrieval())
             .build();
         } catch (final MalformedURLException | URISyntaxException e) {
             LOG.error("Malformed JWKS URL {} could not be correctly parsed", configuration.jwks$_$uri(), e);
