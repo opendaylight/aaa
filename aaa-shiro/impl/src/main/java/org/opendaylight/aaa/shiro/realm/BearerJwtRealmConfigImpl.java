@@ -50,6 +50,8 @@ import org.slf4j.LoggerFactory;
  * allowed-algorithms=RS256
  * user-claim=preferred_username
  * role-claim=groups
+ * cache-timetolive-seconds=300
+ * cache-refreshtimeout-seconds=15
  * }</pre>
  */
 @Component(service = BearerJwtRealmConfig.class, configurationPid = "org.opendaylight.aaa.shiro.bearerjwtrealm")
@@ -86,6 +88,14 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
         @AttributeDefinition(description = """
             JWT claim name used to extract the list of roles.""")
         String role$_$claim() default BearerJwtRealm.DEFAULT_ROLE_CLAIM;
+
+        @AttributeDefinition(description = """
+            How long the fetched JWK set is considered valid (seconds).""", min = "1")
+        long cache$_$timetolive$_$seconds() default 300L;
+
+        @AttributeDefinition(description = """
+            How early before cache expiry a background refresh of the JWK set is triggered (seconds).""", min = "1")
+        long cache$_$refreshtimeout$_$seconds() default 15L;
     }
 
     private final @Nullable JWTProcessor<SecurityContext> jwtProcessor;
@@ -119,9 +129,13 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
             return;
         }
 
+        final var timeToLiveMillis = configuration.cache$_$timetolive$_$seconds() * 1000;
+        final var cacheRefreshTimeoutMillis = configuration.cache$_$refreshtimeout$_$seconds() * 1000;
         final JWKSource<SecurityContext> jwkSource;
         try {
-            jwkSource = JWKSourceBuilder.create(new URI(configuration.jwks$_$uri()).toURL()).build();
+            jwkSource = JWKSourceBuilder.create(new URI(configuration.jwks$_$uri()).toURL())
+            .cache(timeToLiveMillis, cacheRefreshTimeoutMillis)
+            .build();
         } catch (final MalformedURLException | URISyntaxException e) {
             LOG.error("Malformed JWKS URL {} could not be correctly parsed", configuration.jwks$_$uri(), e);
             throw new IllegalArgumentException("jwks-uri must be empty or contain valid URL", e);
