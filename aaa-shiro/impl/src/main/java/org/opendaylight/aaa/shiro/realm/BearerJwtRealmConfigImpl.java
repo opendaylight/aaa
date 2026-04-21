@@ -46,6 +46,8 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
  * allowed-algorithms=RS256
  * user-claim=preferred_username
  * role-claim=roles
+ * cache-timetolive-seconds=300
+ * cache-refreshtimeout-seconds=15
  * }</pre>
  */
 @Singleton
@@ -81,6 +83,14 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
         @AttributeDefinition(description = """
             JWT claim name used to extract the list of roles.""")
         String role$_$claim() default "groups";
+
+        @AttributeDefinition(description = """
+            How long the fetched JWK set is considered valid (seconds).""", min = "1")
+        long cache$_$timetolive$_$seconds() default 300L;
+
+        @AttributeDefinition(description = """
+            How long the fetched JWK set is considered valid (seconds).""", min = "1")
+        long cache$_$refreshtimeout$_$seconds() default 15L;
     }
 
     private final @Nullable JWTProcessor<SecurityContext> jwtProcessor;
@@ -115,7 +125,11 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
             return;
         }
 
-        final var jwkSource = JWKSourceBuilder.create(new URI(configuration.jwks$_$uri()).toURL()).build();
+        final var timeToLiveMillis = configuration.cache$_$timetolive$_$seconds() * 1000;
+        final var cacheRefreshTimeoutMillis = configuration.cache$_$refreshtimeout$_$seconds() * 1000;
+        final var jwkSource = JWKSourceBuilder.create(new URI(configuration.jwks$_$uri()).toURL())
+            .cache(timeToLiveMillis, cacheRefreshTimeoutMillis)
+            .build();
         final var allowedAlgs = Arrays.stream(configuration.allowed$_$algorithms())
             .map(String::strip)
             .filter(s -> !s.isEmpty())
