@@ -48,6 +48,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
  * role-claim=roles
  * cache-timetolive-seconds=300
  * cache-refreshtimeout-seconds=15
+ * network-retrying=false
  * }</pre>
  */
 @Singleton
@@ -91,6 +92,12 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
         @AttributeDefinition(description = """
             How long the fetched JWK set is considered valid (seconds).""", min = "1")
         long cache$_$refreshtimeout$_$seconds() default 15L;
+
+        @AttributeDefinition(description = """
+            Retry to contact IdP to overcome intermittent network failure.
+            When enabled, a single automatic retry is attempted if the initial JWKS
+            fetch fails due to a transient network error.""")
+        boolean network$_$retrying() default false;
     }
 
     private final @Nullable JWTProcessor<SecurityContext> jwtProcessor;
@@ -129,6 +136,7 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
         final var cacheRefreshTimeoutMillis = configuration.cache$_$refreshtimeout$_$seconds() * 1000;
         final var jwkSource = JWKSourceBuilder.create(new URI(configuration.jwks$_$uri()).toURL())
             .cache(timeToLiveMillis, cacheRefreshTimeoutMillis)
+            .retrying(configuration.network$_$retrying())
             .build();
         final var allowedAlgs = Arrays.stream(configuration.allowed$_$algorithms())
             .map(String::strip)
