@@ -8,6 +8,7 @@
 package org.opendaylight.aaa.shiro.realm;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.nimbusds.jose.JWSAlgorithm;
@@ -50,6 +51,9 @@ import org.slf4j.LoggerFactory;
  * allowed-algorithms=["RS256", "RS384", "RS512", "ES256"]
  * user-claim="preferred_username"
  * role-claim="groups"
+ * cache-timetolive-seconds=l"300"
+ * cache-refreshtimeout-seconds=l"15"
+ * rate-limit-min-interval-seconds=l"30"
  * }</pre>
  */
 @Component(service = BearerJwtRealmConfig.class, configurationPid = "org.opendaylight.aaa.shiro.bearerjwtrealm")
@@ -73,6 +77,7 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
         @AttributeDefinition(description = """
             Expected value(s) of the 'aud' JWT claim (comma-separated).
             Leave empty to skip audience verification.""")
+        // TODO: String[], just as we have for allowed-algorithms
         String expected$_$audience() default "";
 
         @AttributeDefinition(description = """
@@ -86,6 +91,21 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
         @AttributeDefinition(description = """
             JWT claim name used to extract the list of roles.""")
         String role$_$claim() default BearerJwtRealm.DEFAULT_ROLE_CLAIM;
+
+        @AttributeDefinition(description = """
+            How long the fetched JWK set is considered valid (seconds).
+            Must be more than both cache-refreshtimeout-seconds and rate-limit-min-interval-seconds""", min = "1")
+        long cache$_$timetolive$_$seconds() default 300L;
+
+        @AttributeDefinition(description = """
+            How early before cache expiry a background refresh of the JWK set is triggered (seconds).
+            Must be less than cache-timetolive-seconds.""", min = "1")
+        long cache$_$refreshtimeout$_$seconds() default 15L;
+
+        @AttributeDefinition(description = """
+            Minimum time between two upstream JWKS fetches, in seconds (rate limiting). Must be
+            less than cache-timetolive-seconds.""", min = "1")
+        long rate$_$limit$_$min$_$interval$_$seconds() default 30L;
     }
 
     private final @Nullable JWTProcessor<SecurityContext> jwtProcessor;
@@ -112,6 +132,7 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
      */
     @Activate
     public BearerJwtRealmConfigImpl(final Configuration configuration) {
+        // TODO: validate configuration before applying it
         userClaim = configuration.user$_$claim();
         roleClaim = configuration.role$_$claim();
         if (configuration.jwks$_$uri().isBlank()) {
@@ -119,9 +140,24 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
             return;
         }
 
+        final var timeToLiveMillis = SECONDS.toMillis(configuration.cache$_$timetolive$_$seconds());
+        final var rateLimitMillis = SECONDS.toMillis(configuration.rate$_$limit$_$min$_$interval$_$seconds());
+        if (timeToLiveMillis <= rateLimitMillis) {
+            throw new IllegalArgumentException(
+                "cache-timetolive-seconds must be greater than rate-limit-min-interval-seconds");
+        }
+        final var cacheRefreshTimeoutMillis = SECONDS.toMillis(configuration.cache$_$refreshtimeout$_$seconds());
+        if (cacheRefreshTimeoutMillis >= timeToLiveMillis) {
+            throw new IllegalArgumentException(
+                "cache-refreshtimeout-seconds must be less than cache-timetolive-seconds");
+        }
+
         final JWKSource<SecurityContext> jwkSource;
         try {
-            jwkSource = JWKSourceBuilder.create(new URI(configuration.jwks$_$uri()).toURL()).build();
+            jwkSource = JWKSourceBuilder.create(new URI(configuration.jwks$_$uri()).toURL())
+                .cache(timeToLiveMillis, cacheRefreshTimeoutMillis)
+                .rateLimited(rateLimitMillis)
+                .build();
         } catch (final MalformedURLException | URISyntaxException e) {
             LOG.error("Malformed JWKS URL {} could not be correctly parsed", configuration.jwks$_$uri(), e);
             throw new IllegalArgumentException("jwks-uri must be empty or contain valid URL", e);
