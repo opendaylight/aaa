@@ -72,10 +72,13 @@ public final class BearerJwtRealmConfig {
      * @param allowedAlgorithms comma-separated JWS algorithm names (e.g. {@code RS256,RS384})
      * @param userClaim JWT claim name used to extract the username
      * @param roleClaim JWT claim name used to extract the list of roles
+     * @param timeToLive how long the fetched JWK set is considered valid in seconds
+     * @param cacheRefreshTimeout how early before expiry a background refresh is triggered in seconds
      */
     @NonNullByDefault
     public BearerJwtRealmConfig(final String jwksUri, final String expectedIssuer, final String expectedAudience,
-            final String allowedAlgorithms, final String userClaim, final String roleClaim) throws Exception {
+            final String allowedAlgorithms, final String userClaim, final String roleClaim,
+            final long timeToLive, final long cacheRefreshTimeout) throws Exception {
         requireNonNull(jwksUri);
         requireNonNull(expectedIssuer);
         requireNonNull(expectedAudience);
@@ -89,7 +92,11 @@ public final class BearerJwtRealmConfig {
             return;
         }
 
-        final var jwkSource = JWKSourceBuilder.create(new URI(jwksUri).toURL()).build();
+        final var timeToLiveMillis = timeToLive * 1000;
+        final var cacheRefreshTimeoutMillis = cacheRefreshTimeout * 1000;
+        final var jwkSource = JWKSourceBuilder.create(new URI(jwksUri).toURL())
+            .cache(timeToLiveMillis, cacheRefreshTimeoutMillis)
+            .build();
         final var allowedAlgs = Arrays.stream(allowedAlgorithms.split(","))
             .map(String::strip)
             .filter(s -> !s.isEmpty())
