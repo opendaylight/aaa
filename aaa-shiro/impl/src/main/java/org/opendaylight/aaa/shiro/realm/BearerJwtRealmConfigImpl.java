@@ -53,6 +53,7 @@ import org.slf4j.LoggerFactory;
  * cache-timetolive-seconds=l"300"
  * cache-refreshtimeout-seconds=l"15"
  * rate-limit-min-interval-seconds=l"30"
+ * retry-jwks-retrieval=b"false"
  * }</pre>
  */
 @Component(service = BearerJwtRealmConfig.class, configurationPid = "org.opendaylight.aaa.shiro.bearerjwtrealm")
@@ -104,6 +105,12 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
             Minimum time between two upstream JWKS fetches, in seconds (rate limiting). Must be
             less than cache-timetolive-seconds.""", min = "1")
         long rate$_$limit$_$min$_$interval$_$seconds() default 30L;
+
+        @AttributeDefinition(description = """
+            Retry to contact IdP to overcome intermittent network failure.
+            When enabled, a single automatic retry is attempted if the initial JWKS
+            fetch fails due to a transient network error.""")
+        boolean retry$_$jwks$_$retrieval() default false;
     }
 
     private final @Nullable JWTProcessor<SecurityContext> jwtProcessor;
@@ -154,6 +161,7 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
             jwkSource = JWKSourceBuilder.create(new URI(configuration.jwks$_$uri()).toURL())
                 .cache(timeToLiveMillis, cacheRefreshTimeoutMillis)
                 .rateLimited(rateLimitMillis)
+                .retrying(configuration.retry$_$jwks$_$retrieval())
                 .build();
         } catch (final MalformedURLException | URISyntaxException e) {
             LOG.error("Malformed JWKS URL {} could not be correctly parsed", configuration.jwks$_$uri(), e);
