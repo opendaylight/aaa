@@ -44,6 +44,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument value="${role.claim}"/>
     <argument value="${cache.timetolive.seconds}" type="long"/>
     <argument value="${cache.refreshtimeout.seconds}" type="long"/>
+    <argument value="${network.retrying}" type="boolean"/>
   </bean>
 
   <bean id="webEnvironment" class="org.opendaylight.aaa.shiro.web.env.AAAWebEnvironment">
