@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5f08606_78a40127",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-21T08:20:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29963a9f_ba8acc5b",
+      "revId": "4e12416426070c6a2d58d440cae26c9d5e9616e0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27b2fc77_5c9288e4",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-04-20T14:11:52Z",
       "side": 1,
       "message": "var",
+      "revId": "4e12416426070c6a2d58d440cae26c9d5e9616e0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "939a6284_d4ff20b4",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-21T08:20:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b2fc77_5c9288e4",
       "revId": "4e12416426070c6a2d58d440cae26c9d5e9616e0",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
