@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e26bdc66_9414bc40",
+        "filename": "docs/user-guide.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-21T13:58:22Z",
+      "side": 1,
+      "message": "rather revoke access when empty?",
+      "revId": "1840646ca955a8602d5e884f64ff268cfdcecfe7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
