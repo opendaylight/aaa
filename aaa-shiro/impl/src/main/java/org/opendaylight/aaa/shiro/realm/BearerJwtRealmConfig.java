@@ -74,11 +74,12 @@ public final class BearerJwtRealmConfig {
      * @param roleClaim JWT claim name used to extract the list of roles
      * @param timeToLive how long the fetched JWK set is considered valid in seconds
      * @param cacheRefreshTimeout how early before expiry a background refresh is triggered in seconds
+     * @param retrying retry (just once) to overcome network error
      */
     @NonNullByDefault
     public BearerJwtRealmConfig(final String jwksUri, final String expectedIssuer, final String expectedAudience,
             final String allowedAlgorithms, final String userClaim, final String roleClaim,
-            final long timeToLive, final long cacheRefreshTimeout) throws Exception {
+            final long timeToLive, final long cacheRefreshTimeout, final boolean retrying) throws Exception {
         requireNonNull(jwksUri);
         requireNonNull(expectedIssuer);
         requireNonNull(expectedAudience);
@@ -96,6 +97,7 @@ public final class BearerJwtRealmConfig {
         final var cacheRefreshTimeoutMillis = cacheRefreshTimeout * 1000;
         final var jwkSource = JWKSourceBuilder.create(new URI(jwksUri).toURL())
             .cache(timeToLiveMillis, cacheRefreshTimeoutMillis)
+            .retrying(retrying)
             .build();
         final var allowedAlgs = Arrays.stream(allowedAlgorithms.split(","))
             .map(String::strip)
