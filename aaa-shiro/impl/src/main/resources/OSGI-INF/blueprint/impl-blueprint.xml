@@ -40,6 +40,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument value="${expected.issuer}"/>
     <argument value="${expected.audience}"/>
     <argument value="${allowed.algorithms}"/>
+    <argument value="${user.claim}"/>
+    <argument value="${role.claim}"/>
+    <argument value="${cache.timetolive.seconds}" type="long"/>
+    <argument value="${cache.refreshtimeout.seconds}" type="long"/>
   </bean>
 
   <bean id="webEnvironment" class="org.opendaylight.aaa.shiro.web.env.AAAWebEnvironment">
