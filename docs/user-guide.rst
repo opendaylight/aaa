@@ -180,6 +180,15 @@ OpenDaylight contains five implementations:
 
    - Disabled out of the box.
 
+-  Oauth2ProxyHeaderRealm
+
+   - An AuthorizingRealm that delegates authentication to an external
+     identity provider via `OAuth2 Proxy <https://oauth2-proxy.github.io/oauth2-proxy/>`_.
+     OpenDaylight trusts the user identity forwarded by the proxy rather than
+     verifying credentials directly.
+
+   - Disabled out of the box. See :ref:`configuring-oauth2-proxy-header-realm`.
+
 .. note::
 
     More than one Realm implementation can be specified. Realms are attempted
@@ -759,6 +768,130 @@ The optional parameter *keystoneAuthRealm.sslVerification* specifies whether the
 realm has to verify the SSL certificate or not. The optional parameter
 *keystoneAuthRealm.defaultDomain* allows to use a different default domain from
 the hard-coded one *"Default"*.
+
+Oauth2ProxyHeaderRealm
+^^^^^^^^^^^^^^^^^^^^^
+
+How it works
+~~~~~~~~~~~~
+
+The ``Oauth2ProxyHeaderRealm`` enables OpenDaylight to delegate authentication
+and authorization to an external identity provider (IdP) via
+`OAuth2 Proxy <https://oauth2-proxy.github.io/oauth2-proxy/>`_. In this setup,
+OAuth2 Proxy acts as a reverse proxy in front of OpenDaylight, authenticating
+users against the IdP (e.g., via OIDC). ODL is configured as the upstream
+service of OAuth2 Proxy.
+
+Upon successful authentication by the IdP, OAuth2 Proxy forwards the request
+to OpenDaylight with the following HTTP headers:
+
+- ``X-Forwarded-User`` — the authenticated user's identifier.
+- ``X-Forwarded-Groups`` — the user's groups or roles, comma-separated.
+  Each entry may carry an optional namespace prefix separated by ``:``,
+  for example ``role:global-admin,role:odl-application:admin``.
+
+The ``Oauth2ProxyHeaderFilter`` (a Shiro ``AuthenticatingFilter``) intercepts
+each incoming request, reads these headers, and builds an
+``Oauth2ProxyHeaderToken``. Because the IdP has already validated the user, the
+token carries no password credential — OpenDaylight trusts the forwarded
+identity. The ``Oauth2ProxyHeaderRealm`` then authenticates and authorizes the
+request: the value of ``X-Forwarded-User`` becomes the principal, and groups
+from ``X-Forwarded-Groups`` are parsed into ODL roles.
+
+If the ``X-Forwarded-User`` header is absent — indicating the request arrived
+without passing through OAuth2 Proxy — the filter returns HTTP ``403
+Forbidden``.
+
+Role parsing strips all namespace prefixes; only the last colon-delimited
+segment is used as the ODL role name:
+
++----------------------------------+------------------+
+| ``X-Forwarded-Groups`` value     | ODL role         |
++==================================+==================+
+| ``admin``                        | ``admin``        |
++----------------------------------+------------------+
+| ``role:admin``                   | ``admin``        |
++----------------------------------+------------------+
+| ``role:odl-application:admin``   | ``admin``        |
++----------------------------------+------------------+
+
+.. warning::
+
+    When ``Oauth2ProxyHeaderRealm`` is active, OpenDaylight must only be
+    reachable through OAuth2 Proxy. Any direct access to the ODL HTTP port
+    must be blocked at the network level; otherwise a client can forge the
+    ``X-Forwarded-User`` header and gain unauthenticated access.
+
+.. _configuring-oauth2-proxy-header-realm:
+
+Configuring Oauth2ProxyHeaderRealm
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Edit the file
+``etc/opendaylight/datastore/initial/config/aaa-app-config.xml`` and restart
+the controller for the changes to take effect.
+
+**1. Register the realm and filter**
+
+Add the following entries to the ``main`` section:
+
+.. code-block:: xml
+
+    <!-- Realm that processes OAuth2 Proxy forwarded headers -->
+    <main>
+        <pair-key>oauth2ProxyHeaderRealm</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.realm.Oauth2ProxyHeaderRealm</pair-value>
+    </main>
+
+    <!-- Shiro filter wired to Oauth2ProxyHeaderRealm -->
+    <main>
+        <pair-key>oauth2ProxyHeaderFilter</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.filters.Oauth2ProxyHeaderFilter</pair-value>
+    </main>
+
+**2. Add the realm to the security manager**
+
+.. code-block:: xml
+
+    <main>
+        <pair-key>securityManager.realms</pair-key>
+        <pair-value>$oauth2ProxyHeaderRealm</pair-value>
+    </main>
+
+**3. Apply the filter to URL patterns**
+
+Replace ``authcBasic`` with ``noSessionCreation, oauth2ProxyHeaderFilter`` in
+the ``urls`` section. Add ``roles[admin]`` for endpoints that require
+administrator access:
+
+.. code-block:: xml
+
+    <!-- cluster-admin operations require admin role -->
+    <urls>
+        <pair-key>/**/operations/cluster-admin**</pair-key>
+        <pair-value>noSessionCreation, oauth2ProxyHeaderFilter, roles[admin]</pair-value>
+    </urls>
+    <!-- IdM REST API requires admin role -->
+    <urls>
+        <pair-key>/**/v1/**</pair-key>
+        <pair-value>noSessionCreation, oauth2ProxyHeaderFilter, roles[admin]</pair-value>
+    </urls>
+    <!-- AAA datastore endpoints require admin role -->
+    <urls>
+        <pair-key>/**/data/aaa*/**</pair-key>
+        <pair-value>noSessionCreation, oauth2ProxyHeaderFilter, roles[admin]</pair-value>
+    </urls>
+    <!-- All other endpoints require authentication only -->
+    <urls>
+        <pair-key>/**</pair-key>
+        <pair-value>noSessionCreation, oauth2ProxyHeaderFilter</pair-value>
+    </urls>
+
+.. note::
+
+    ``noSessionCreation`` prevents Shiro from creating HTTP sessions. Each
+    request is independently authenticated from the forwarded headers, which
+    is the correct behavior when session lifecycle is managed by OAuth2 Proxy.
 
 Authorization Configuration
 ---------------------------
