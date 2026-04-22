@@ -184,21 +184,21 @@
 
     <!--
       ===================================================================================
-      ============================== Oauth2ProxyTokenRealm ==============================
+      ================================== BearerJwtRealm =================================
       ===================================================================================
       =                                                                                 =
-      = Description:  A Realm implementation that delegates authentication to an        =
-      =               OAuth2 Proxy, reading the forwarded user identity from the        =
-      =               X-Forwarded-User HTTP header.                                     =
+      = Description:  A Realm implementation authenticating requests that carry an      =
+      =               HTTP "Authorization: Bearer <JWT>" header issued by an external   =
+      =               identity provider (e.g. Keycloak). Full JWT verification          =
+      =               (signature, issuer, audience, expiry) is performed when a JWKS    =
+      =               URI is configured in                                               =
+      =               etc/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg; without it     =
+      =               the realm accepts any well-formed JWT (dev/test mode only).        =
       ===================================================================================
     -->
     <main>
-        <pair-key>oauth2ProxyTokenRealm</pair-key>
-        <pair-value>org.opendaylight.aaa.shiro.realm.Oauth2ProxyTokenRealm</pair-value>
-    </main>
-    <main>
-        <pair-key>oauth2ProxyTokenFilter</pair-key>
-        <pair-value>org.opendaylight.aaa.shiro.filters.Oauth2ProxyTokenFilter</pair-value>
+        <pair-key>bearerJwtRealm</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.realm.BearerJwtRealm</pair-value>
     </main>
 
     <!--
@@ -264,11 +264,19 @@
     -->
 
     <!--
-    Add oauth2ProxyTokenRealm as the only realm.  To enable mdsalRealm, add it to the list to he right of oauth2ProxyTokenRealm.
+    Add tokenAuthRealm as the only realm.  To enable mdsalRealm, add it to the list to he right of tokenAuthRealm.
     -->
+    <!--
     <main>
         <pair-key>securityManager.realms</pair-key>
-        <pair-value>$oauth2ProxyTokenRealm</pair-value>
+        <pair-value>$tokenAuthRealm</pair-value>
+    </main>
+    -->
+
+    <!--  Enable $bearerJwtRealm as teh only one realm used  -->
+    <main>
+        <pair-key>securityManager.realms</pair-key>
+        <pair-value>$bearerJwtRealm</pair-value>
     </main>
 
     <!-- Start moonAuthRealm commented out
@@ -342,18 +350,18 @@
     End moonAuthRealm commented out-->
     <urls>
         <pair-key>/**/operations/cluster-admin**</pair-key>
-        <pair-value>noSessionCreation, oauth2ProxyTokenFilter, roles[admin]</pair-value>
+        <pair-value>noSessionCreation, authcBearer, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**/v1/**</pair-key>
-        <pair-value>noSessionCreation, oauth2ProxyTokenFilter, roles[admin]</pair-value>
+        <pair-value>noSessionCreation, authcBearer, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**/data/aaa*/**</pair-key>
-        <pair-value>noSessionCreation, oauth2ProxyTokenFilter, roles[admin]</pair-value>
+        <pair-value>noSessionCreation, authcBearer, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**</pair-key>
-        <pair-value>noSessionCreation, oauth2ProxyTokenFilter</pair-value>
+        <pair-value>noSessionCreation, authcBearer</pair-value>
     </urls>
 </shiro-configuration>
