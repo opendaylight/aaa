@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f8c8665_26f9a80f",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyToken.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-04-22T12:03:10Z",
+      "side": 1,
+      "message": "can\u0027t be null",
+      "revId": "dc011c4a33cb3c08d21823ba5b5cb2ca7457a5ab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
