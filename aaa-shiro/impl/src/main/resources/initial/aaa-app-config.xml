@@ -184,6 +184,25 @@
 
     <!--
       ===================================================================================
+      ================================== BearerJwtRealm =================================
+      ===================================================================================
+      =                                                                                 =
+      = Description:  A Realm implementation authenticating requests that carry an      =
+      =               HTTP "Authorization: Bearer <JWT>" header issued by an external   =
+      =               identity provider (e.g. Keycloak). Full JWT verification          =
+      =               (signature, issuer, audience, expiry) is performed when a JWKS    =
+      =               URI is configured in                                               =
+      =               etc/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg; without it     =
+      =               the realm accepts any well-formed JWT (dev/test mode only).        =
+      ===================================================================================
+    -->
+    <main>
+        <pair-key>bearerJwtRealm</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.realm.BearerJwtRealm</pair-value>
+    </main>
+
+    <!--
+      ===================================================================================
       =================================== MdsalRealm ====================================
       ===================================================================================
       =                                                                                 =
@@ -244,12 +263,9 @@
     </main>
     -->
 
-    <!--
-    Add tokenAuthRealm as the only realm.  To enable mdsalRealm, add it to the list to he right of tokenAuthRealm.
-    -->
     <main>
         <pair-key>securityManager.realms</pair-key>
-        <pair-value>$tokenAuthRealm</pair-value>
+        <pair-value>$bearerJwtRealm</pair-value>
     </main>
 
     <!-- Start moonAuthRealm commented out
@@ -323,18 +339,18 @@
     End moonAuthRealm commented out-->
     <urls>
         <pair-key>/**/operations/cluster-admin**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
+        <pair-value>noSessionCreation, authcBearer, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**/v1/**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
+        <pair-value>noSessionCreation, authcBearer, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**/data/aaa*/**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
+        <pair-value>noSessionCreation, authcBearer, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**</pair-key>
-        <pair-value>authcBasic</pair-value>
+        <pair-value>noSessionCreation, authcBearer</pair-value>
     </urls>
 </shiro-configuration>
