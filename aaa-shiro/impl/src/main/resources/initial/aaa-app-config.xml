@@ -184,6 +184,25 @@
 
     <!--
       ===================================================================================
+      ============================== Oauth2ProxyHeaderRealm ==============================
+      ===================================================================================
+      =                                                                                 =
+      = Description:  A Realm implementation that delegates authentication to an        =
+      =               OAuth2 Proxy, reading the forwarded user identity from the        =
+      =               X-Forwarded-User HTTP header.                                     =
+      ===================================================================================
+    -->
+    <main>
+        <pair-key>oauth2ProxyHeaderRealm</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.realm.Oauth2ProxyHeaderRealm</pair-value>
+    </main>
+    <main>
+        <pair-key>oauth2ProxyHeaderFilter</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.filters.Oauth2ProxyHeaderFilter</pair-value>
+    </main>
+
+    <!--
+      ===================================================================================
       =================================== MdsalRealm ====================================
       ===================================================================================
       =                                                                                 =
@@ -245,11 +264,11 @@
     -->
 
     <!--
-    Add tokenAuthRealm as the only realm.  To enable mdsalRealm, add it to the list to he right of tokenAuthRealm.
+    Add oauth2ProxyHeaderRealm as the only realm.  To enable mdsalRealm, add it to the list to the right of oauth2ProxyHeaderRealm.
     -->
     <main>
         <pair-key>securityManager.realms</pair-key>
-        <pair-value>$tokenAuthRealm</pair-value>
+        <pair-value>$oauth2ProxyHeaderRealm</pair-value>
     </main>
 
     <!-- Start moonAuthRealm commented out
@@ -323,18 +342,18 @@
     End moonAuthRealm commented out-->
     <urls>
         <pair-key>/**/operations/cluster-admin**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
+        <pair-value>noSessionCreation, oauth2ProxyHeaderFilter, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**/v1/**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
+        <pair-value>noSessionCreation, oauth2ProxyHeaderFilter, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**/data/aaa*/**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
+        <pair-value>noSessionCreation, oauth2ProxyHeaderFilter, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**</pair-key>
-        <pair-value>authcBasic</pair-value>
+        <pair-value>noSessionCreation, oauth2ProxyHeaderFilter</pair-value>
     </urls>
 </shiro-configuration>
