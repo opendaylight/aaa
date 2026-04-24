@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.crypto.RSASSASigner;
@@ -46,6 +47,18 @@ class BearerJwtRealmTest {
     private static final String ROLE_CLAIM = "groups";
     private static final String USER = "user";
 
+    // Shared key for unverified-mode tests: the realm accepts signed JWTs without
+    // verifying the signature, so any key works — we just need a non-plain JWT.
+    private static final RSAKey UNVERIFIED_KEY;
+
+    static {
+        try {
+            UNVERIFIED_KEY = new RSAKeyGenerator(2048).keyID("unverified-test-key").generate();
+        } catch (JOSEException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
     private final BearerJwtRealm realm = new BearerJwtRealm();
 
     /**
@@ -53,8 +66,7 @@ class BearerJwtRealmTest {
      */
     @Test
     void testSupportsBearer() {
-        final var jwt = buildPlainJwt(new JWTClaimsSet.Builder().claim(USER_CLAIM, USER).build());
-        assertTrue(realm.supports(new BearerToken(jwt)));
+        assertTrue(realm.supports(new BearerToken("any-bearer-string")));
     }
 
     /**
@@ -73,8 +85,8 @@ class BearerJwtRealmTest {
      * Tests that fully valid token is parsed correctly (no verification configured).
      */
     @Test
-    void testAuthenticationValid() {
-        final var jwt = buildPlainJwt(new JWTClaimsSet.Builder()
+    void testAuthenticationValid() throws Exception {
+        final var jwt = buildUnverifiedJwt(new JWTClaimsSet.Builder()
             .claim(USER_CLAIM, USER)
             .claim(ROLE_CLAIM, List.of("admin", "global-admin"))
             .build());
@@ -91,8 +103,8 @@ class BearerJwtRealmTest {
      * Test that missing roles claims in JWT result in no roles in application.
      */
     @Test
-    void testAuthenticationNoRoles() {
-        final var jwt = buildPlainJwt(new JWTClaimsSet.Builder()
+    void testAuthenticationNoRoles() throws Exception {
+        final var jwt = buildUnverifiedJwt(new JWTClaimsSet.Builder()
             .claim(USER_CLAIM, USER)
             .build());
         final var info = realm.doGetAuthenticationInfo(new BearerToken(jwt));
@@ -105,8 +117,8 @@ class BearerJwtRealmTest {
      * Tests that missing user claim results in error.
      */
     @Test
-    void testAuthenticationMissingUsername() {
-        final var jwt = buildPlainJwt(new JWTClaimsSet.Builder().build());
+    void testAuthenticationMissingUsername() throws Exception {
+        final var jwt = buildUnverifiedJwt(new JWTClaimsSet.Builder().build());
         assertThrows(AuthenticationException.class,
             () -> realm.doGetAuthenticationInfo(new BearerToken(jwt)));
     }
@@ -115,8 +127,8 @@ class BearerJwtRealmTest {
      * Tests that blank user claim results in error.
      */
     @Test
-    void testAuthenticationBlankUsername() {
-        final var jwt = buildPlainJwt(new JWTClaimsSet.Builder()
+    void testAuthenticationBlankUsername() throws Exception {
+        final var jwt = buildUnverifiedJwt(new JWTClaimsSet.Builder()
             .claim(USER_CLAIM, "")
             .build());
         assertThrows(AuthenticationException.class,
@@ -130,6 +142,18 @@ class BearerJwtRealmTest {
     void testAuthenticationMalformedJwt() {
         assertThrows(AuthenticationException.class,
             () -> realm.doGetAuthenticationInfo(new BearerToken("not.a.valid.jwt.string")));
+    }
+
+    /**
+     * Tests that an unsigned (alg=none) JWT is rejected even in unverified mode (RFC 8725 §3.2).
+     */
+    @Test
+    void testUnverifiedPlainJwtRejected() {
+        final var jwt = buildPlainJwt(new JWTClaimsSet.Builder()
+            .claim(USER_CLAIM, "aadmin")
+            .build());
+        assertThrows(AuthenticationException.class,
+            () -> realm.doGetAuthenticationInfo(new BearerToken(jwt)));
     }
 
     /**
@@ -161,11 +185,11 @@ class BearerJwtRealmTest {
      * Tests that custom user and role claim names are honored when configured.
      */
     @Test
-    void testCustomClaimNames() {
+    void testCustomClaimNames() throws Exception {
         final var config = new BearerJwtRealmConfig(null, "sub", "groups");
         try (var ignored = BearerJwtRealm.prepareForLoad(config)) {
             final var customRealm = new BearerJwtRealm();
-            final var jwt = buildPlainJwt(new JWTClaimsSet.Builder()
+            final var jwt = buildUnverifiedJwt(new JWTClaimsSet.Builder()
                 .claim("sub", "custom-user")
                 .claim("groups", List.of("admin", "viewer"))
                 .build());
@@ -374,6 +398,13 @@ class BearerJwtRealmTest {
 
     private static String buildPlainJwt(final JWTClaimsSet claims) {
         return new PlainJWT(claims).serialize();
+    }
+
+    /**
+     * Builds a signed JWT using the shared {@link #UNVERIFIED_KEY} for unverified-mode tests.
+     */
+    private static String buildUnverifiedJwt(final JWTClaimsSet claims) throws Exception {
+        return buildSignedJwt(UNVERIFIED_KEY, claims);
     }
 
     private static RSAKey newRsaKey() throws Exception {
