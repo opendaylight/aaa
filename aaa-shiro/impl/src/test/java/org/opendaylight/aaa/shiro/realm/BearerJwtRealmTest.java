@@ -321,10 +321,11 @@ public class BearerJwtRealmTest {
     public void testVerifiedAuthenticationMultipleAlgorithmsValid() throws Exception {
         final var rsaKey = newRsaKey();
         try (var ignored = BearerJwtRealm.prepareForLoad(
-                buildConfig(rsaKey, null, null, Set.of(JWSAlgorithm.RS256, JWSAlgorithm.RS384)))) {
+                buildConfig(rsaKey, "test-issuer", null, Set.of(JWSAlgorithm.RS256, JWSAlgorithm.RS384)))) {
             final var verifiedRealm = new BearerJwtRealm();
             final var jwt = buildSignedJwt(rsaKey, JWSAlgorithm.RS384, new JWTClaimsSet.Builder()
                 .claim(USER_CLAIM, "aadmin")
+                .issuer("test-issuer")
                 .expirationTime(futureDate())
                 .build());
             final var info = verifiedRealm.doGetAuthenticationInfo(new BearerToken(jwt));
@@ -358,10 +359,11 @@ public class BearerJwtRealmTest {
     public void testVerifiedAuthenticationMultipleAudienceValid() throws Exception {
         final var rsaKey = newRsaKey();
         try (var ignored = BearerJwtRealm.prepareForLoad(
-                buildConfig(rsaKey, null, Set.of("service-a", "service-b"), Set.of(JWSAlgorithm.RS256)))) {
+                buildConfig(rsaKey, "test-issuer", Set.of("service-a", "service-b"), Set.of(JWSAlgorithm.RS256)))) {
             final var verifiedRealm = new BearerJwtRealm();
             final var jwt = buildSignedJwt(rsaKey, new JWTClaimsSet.Builder()
                 .claim(USER_CLAIM, "aadmin")
+                .issuer("test-issuer")
                 .audience("service-a")
                 .expirationTime(futureDate())
                 .build());
@@ -380,6 +382,36 @@ public class BearerJwtRealmTest {
         final var rsaKey = newRsaKey();
         try (var ignored = BearerJwtRealm.prepareForLoad(
                 buildConfig(rsaKey, null, Set.of("my-service"), Set.of(JWSAlgorithm.RS256)))) {
+            final var verifiedRealm = new BearerJwtRealm();
+            final var jwt = buildSignedJwt(rsaKey, new JWTClaimsSet.Builder()
+                .claim(USER_CLAIM, "aadmin")
+                .expirationTime(futureDate())
+                .build());
+            assertThrows(AuthenticationException.class,
+                () -> verifiedRealm.doGetAuthenticationInfo(new BearerToken(jwt)));
+        }
+    }
+
+    /**
+     * Tests that the production constructor rejects a blank issuer when JWKS is configured
+     * (RFC 8725 §3.8 — issuer validation is mandatory).
+     */
+    @Test
+    public void testProductionConfigRequiresIssuer() {
+        assertThrows(IllegalArgumentException.class,
+            () -> new BearerJwtRealmConfig(
+                "http://localhost:8080/certs", "", "", "RS256",
+                "preferred_username", "groups", 300, 15, false));
+    }
+
+    /**
+     * Tests that a JWT without an iss claim is rejected when issuer verification is configured
+     * (RFC 8725 §3.8).
+     */
+    @Test
+    public void testVerifiedAuthenticationMissingIssuerClaim() throws Exception {
+        final var rsaKey = newRsaKey();
+        try (var ignored = BearerJwtRealm.prepareForLoad(buildConfig(rsaKey, "test-issuer", null))) {
             final var verifiedRealm = new BearerJwtRealm();
             final var jwt = buildSignedJwt(rsaKey, new JWTClaimsSet.Builder()
                 .claim(USER_CLAIM, "aadmin")
