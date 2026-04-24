@@ -167,7 +167,7 @@ class BearerJwtRealmTest {
     void testAuthenticationMalformedJwt() {
         final var ex = assertThrows(AuthenticationException.class,
             () -> realm.doGetAuthenticationInfo(new BearerToken("not.a.valid.jwt.string")));
-        assertEquals("Failed to parse provided JWT claims", ex.getMessage());
+        assertEquals("Failed to parse JWT", ex.getMessage());
     }
 
     /**
@@ -313,7 +313,22 @@ class BearerJwtRealmTest {
                 .build());
             final var ex = assertThrows(AuthenticationException.class,
                 () -> verifiedRealm.doGetAuthenticationInfo(new BearerToken(jwt)));
-            assertTrue(ex.getMessage().startsWith("JWT verification failed:"));
+            assertTrue(ex.getMessage().startsWith("Unsigned JWT (alg=none) is not accepted"));
+        }
+    }
+
+    /**
+     * Tests that an encrypted JWT (JWE) is rejected in verified mode with a clean exception
+     * before the token reaches the JWTProcessor.
+     */
+    @Test
+    void testVerifiedEncryptedJwtRejected() throws Exception {
+        final var rsaKey = newRsaKey();
+        try (var ignored = BearerJwtRealm.prepareForLoad(buildConfig(rsaKey, "test-issuer", null))) {
+            final var verifiedRealm = new BearerJwtRealm();
+            final var ex = assertThrows(AuthenticationException.class,
+                () -> verifiedRealm.doGetAuthenticationInfo(new BearerToken(buildEncryptedJwt())));
+            assertEquals("Encrypted JWTs (JWE) are not supported", ex.getMessage());
         }
     }
 

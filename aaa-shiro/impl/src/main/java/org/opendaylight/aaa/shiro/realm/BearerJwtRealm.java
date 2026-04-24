@@ -11,6 +11,7 @@ import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.proc.BadJOSEException;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jwt.EncryptedJWT;
+import com.nimbusds.jwt.JWT;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.JWTParser;
 import com.nimbusds.jwt.PlainJWT;
@@ -130,20 +131,9 @@ public final class BearerJwtRealm extends AuthorizingRealm {
     }
 
     private JWTClaimsSet parseClaims(final String token) {
-        if (jwtProcessor != null) {
-            try {
-                return jwtProcessor.process(JWTParser.parse(token), null);
-            } catch (ParseException e) {
-                throw new AuthenticationException("Failed to parse JWT", e);
-            } catch (BadJOSEException e) {
-                throw new AuthenticationException("JWT verification failed: " + e.getMessage(), e);
-            } catch (JOSEException e) {
-                throw new AuthenticationException("JWT processing error", e);
-            }
-        }
-
+        final JWT jwt;
         try {
-            final var jwt = switch (JWTParser.parse(token)) {
+            jwt = switch (JWTParser.parse(token)) {
                 case SignedJWT signedJWT -> signedJWT;
                 // RFC 8725 §3.2: unsigned tokens MUST be rejected even in unverified mode
                 case PlainJWT ignored -> throw new AuthenticationException("Unsigned JWT (alg=none) is not accepted");
@@ -154,15 +144,28 @@ public final class BearerJwtRealm extends AuthorizingRealm {
                     throw new AuthenticationException("Encrypted JWTs (JWE) are not supported");
                 default -> throw new AuthenticationException("Unexpected JWT value while parsing:" + token);
             };
+        } catch (ParseException e) {
+            throw new AuthenticationException("Failed to parse JWT", e);
+        }
 
-            // RFC 8725 §3.11: reject tokens whose typ header does not match the expected type
-            if (expectedType != null && !expectedType.isBlank()) {
-                final var typ = jwt.getHeader().getType();
-                if (typ == null || !expectedType.equalsIgnoreCase(typ.getType())) {
-                    throw new AuthenticationException("JWT typ header mismatch: expected '"
-                        + expectedType + "' but was " + (typ == null ? "absent" : "'" + typ.getType() + "'"));
-                }
+        if (jwtProcessor != null) {
+            try {
+                return jwtProcessor.process(jwt, null);
+            } catch (BadJOSEException e) {
+                throw new AuthenticationException("JWT verification failed: " + e.getMessage(), e);
+            } catch (JOSEException e) {
+                throw new AuthenticationException("JWT processing error", e);
             }
+        }
+        // RFC 8725 §3.11: reject tokens whose typ header does not match the expected type
+        if (expectedType != null && !expectedType.isBlank()) {
+            final var typ = jwt.getHeader().getType();
+            if (typ == null || !expectedType.equalsIgnoreCase(typ.getType())) {
+                throw new AuthenticationException("JWT typ header mismatch: expected '"
+                    + expectedType + "' but was " + (typ == null ? "absent" : "'" + typ.getType() + "'"));
+            }
+        }
+        try {
             return jwt.getJWTClaimsSet();
         } catch (ParseException e) {
             throw new AuthenticationException("Failed to parse provided JWT claims", e);
