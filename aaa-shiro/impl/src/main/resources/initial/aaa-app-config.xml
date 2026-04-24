@@ -303,6 +303,15 @@
     </main>
 
     <!--
+      Overrides Shiro's built-in roles filter to return 403 Forbidden instead of 401 Unauthorized
+      when an authenticated user lacks the required role.
+    -->
+    <main>
+        <pair-key>roles</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.filters.ODLRolesAuthorizationFilter</pair-value>
+    </main>
+
+    <!--
         Disable parts of invalidRequest filter, as these are blocking valid RESTCONF requests.
 
         RESTCONF routinely transmits data in URLs.
