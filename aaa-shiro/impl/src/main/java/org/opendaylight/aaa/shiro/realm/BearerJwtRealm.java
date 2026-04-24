@@ -59,6 +59,7 @@ public final class BearerJwtRealm extends AuthorizingRealm {
     private final @Nullable JWTProcessor<SecurityContext> jwtProcessor;
     private final @NonNull String userClaim;
     private final @NonNull String roleClaim;
+    private final @Nullable String expectedType;
 
     public BearerJwtRealm() {
         setAuthenticationTokenClass(BearerToken.class);
@@ -66,6 +67,7 @@ public final class BearerJwtRealm extends AuthorizingRealm {
         jwtProcessor = config != null ? config.jwtProcessor() : null;
         userClaim = config != null ? config.userClaim() : DEFAULT_USER_CLAIM;
         roleClaim = config != null ? config.roleClaim() : DEFAULT_ROLE_CLAIM;
+        this.expectedType = config != null ? config.expectedType() : null;
         if (jwtProcessor == null) {
             LOG.warn("No JWT verification configured — BearerJwtRealm accepting unverified Bearer tokens");
         }
@@ -143,6 +145,14 @@ public final class BearerJwtRealm extends AuthorizingRealm {
             // RFC 8725 §3.2: unsigned tokens MUST be rejected even in unverified mode
             if (jwt instanceof PlainJWT) {
                 throw new AuthenticationException("Unsigned JWT (alg=none) is not accepted");
+            }
+            // RFC 8725 §3.11: reject tokens whose typ header does not match the expected type
+            if (expectedType != null && !expectedType.isBlank()) {
+                final var typ = jwt.getHeader().getType();
+                if (typ == null || !expectedType.equalsIgnoreCase(typ.getType())) {
+                    throw new AuthenticationException("JWT typ header mismatch: expected '"
+                        + expectedType + "' but was " + (typ == null ? "absent" : "'" + typ.getType() + "'"));
+                }
             }
             return jwt.getJWTClaimsSet();
         } catch (ParseException e) {
