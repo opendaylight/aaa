@@ -129,7 +129,11 @@ public final class BearerJwtRealm extends AuthorizingRealm {
     private JWTClaimsSet parseClaims(final String token) {
         if (jwtProcessor != null) {
             try {
-                return jwtProcessor.process(JWTParser.parse(token), null);
+                final var jwt = JWTParser.parse(token);
+                if (jwt instanceof EncryptedJWT) {
+                    throw new AuthenticationException("Encrypted JWTs (JWE) are not supported");
+                }
+                return jwtProcessor.process(jwt, null);
             } catch (ParseException e) {
                 throw new AuthenticationException("Failed to parse JWT", e);
             } catch (BadJOSEException e) {
