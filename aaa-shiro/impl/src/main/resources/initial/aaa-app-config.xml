@@ -273,11 +273,60 @@
     </main>
     -->
 
-    <!--  Enable $bearerJwtRealm as teh only one realm used  -->
+    <!--
+      ===================================================================================
+      ============================= BearerOrBasicHttpAuthenticationFilter ================
+      ===================================================================================
+      =                                                                                 =
+      = Description:  A combined authentication filter that accepts both                =
+      =               "Authorization: Bearer <JWT>" and "Authorization: Basic ..."      =
+      =               headers in a single Shiro filter-chain step.  When a             =
+      =               filterchain.cfg filter has already authenticated the subject,     =
+      =               this filter passes the request through without processing the     =
+      =               Authorization header.  On unauthenticated requests it sends a    =
+      =               401 response with both "WWW-Authenticate: Bearer" and             =
+      =               "WWW-Authenticate: Basic" challenges.                             =
+      =                                                                                 =
+      = Use authcBearerOrBasic in <urls> to allow both token and password clients to   =
+      = authenticate against the same endpoint.                                         =
+      ===================================================================================
+    -->
+    <main>
+        <pair-key>authcBearerOrBasic</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.filters.BearerOrBasicHttpAuthenticationFilter</pair-value>
+    </main>
+
+    <!--  Enable $bearerJwtRealm as the only realm used  -->
     <main>
         <pair-key>securityManager.realms</pair-key>
         <pair-value>$bearerJwtRealm</pair-value>
     </main>
+
+    <!--
+      To accept both JWT Bearer tokens (from an IdP such as Keycloak) and HTTP Basic
+      credentials (from local tokenAuthRealm users) simultaneously, replace the
+      securityManager.realms entry above with:
+
+    <main>
+        <pair-key>securityManager.realms</pair-key>
+        <pair-value>$bearerJwtRealm, $tokenAuthRealm</pair-value>
+    </main>
+
+      Then switch the URL patterns from authcBearer to authcBearerOrBasic, e.g.:
+
+    <urls>
+        <pair-key>/**/operations/cluster-admin**</pair-key>
+        <pair-value>noSessionCreation, authcBearerOrBasic, roles[admin]</pair-value>
+    </urls>
+    <urls>
+        <pair-key>/**/v1/**</pair-key>
+        <pair-value>noSessionCreation, authcBearerOrBasic, roles[admin]</pair-value>
+    </urls>
+    <urls>
+        <pair-key>/**/data/aaa*/**</pair-key>
+        <pair-value>anon</pair-value>
+    </urls>
+    -->
 
     <!-- Start moonAuthRealm commented out
     <main>
@@ -367,10 +416,7 @@
     </urls>
     <urls>
         <pair-key>/**/data/aaa*/**</pair-key>
-        <pair-value>noSessionCreation, authcBearer, roles[admin]</pair-value>
+        <pair-value>anon</pair-value>
     </urls>
-    <urls>
-        <pair-key>/**</pair-key>
-        <pair-value>noSessionCreation, authcBearer</pair-value>
-    </urls>
+
 </shiro-configuration>

@@ -962,6 +962,92 @@ Bearer tokens:
     ``authcBearer`` is the Shiro filter that extracts the ``Authorization:
     Bearer`` header and delegates it to the configured realms.
 
+BearerOrBasicHttpAuthenticationFilter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+How it works
+~~~~~~~~~~~~
+
+``BearerOrBasicHttpAuthenticationFilter`` is a single Shiro authentication
+filter that handles both ``Authorization: Bearer <JWT>`` and
+``Authorization: Basic <credentials>`` headers in one filter-chain step. It
+allows endpoints to serve both token-based OAuth 2.0 clients and traditional
+HTTP Basic clients simultaneously.
+
+Request processing order within a single request:
+
+1. If a ``filterchain.cfg`` filter that runs *before* the Shiro
+   ``AAAShiroFilter`` has already authenticated the request and bound a
+   subject to the thread, ``isAccessAllowed`` returns ``true`` and this
+   filter passes the request through without inspecting the
+   ``Authorization`` header.
+2. If the request carries ``Authorization: Bearer …``, the filter extracts
+   the raw JWT string and creates a ``BearerToken``. Shiro routes the token
+   to ``BearerJwtRealm`` for JWT signature and claims verification.
+3. If the request carries ``Authorization: Basic …``, the filter
+   Base64-decodes the credentials and creates a ``UsernamePasswordToken``.
+   Shiro routes the token to ``TokenAuthRealm`` (or any other realm that
+   supports username/password credentials).
+4. If neither header is present, or authentication fails, the filter sends a
+   ``401 Unauthorized`` response with two ``WWW-Authenticate`` challenges::
+
+       WWW-Authenticate: Bearer realm="application"
+       WWW-Authenticate: Basic realm="application"
+
+How to enable BearerOrBasicHttpAuthenticationFilter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**1. Register both realms**
+
+Add ``tokenAuthRealm`` alongside ``bearerJwtRealm`` so that the security
+manager can route both token types:
+
+.. code-block:: xml
+
+    <main>
+        <pair-key>securityManager.realms</pair-key>
+        <pair-value>$bearerJwtRealm, $tokenAuthRealm</pair-value>
+    </main>
+
+**2. Register the filter**
+
+Declare the combined filter under the name ``authcBearerOrBasic``:
+
+.. code-block:: xml
+
+    <main>
+        <pair-key>authcBearerOrBasic</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.filters.BearerOrBasicHttpAuthenticationFilter</pair-value>
+    </main>
+
+**3. Switch URL patterns**
+
+Replace ``authcBearer`` (or ``authcBasic``) with ``authcBearerOrBasic`` in the
+``<urls>`` section:
+
+.. code-block:: xml
+
+    <urls>
+        <pair-key>/**/operations/cluster-admin**</pair-key>
+        <pair-value>noSessionCreation, authcBearerOrBasic, roles[admin]</pair-value>
+    </urls>
+    <urls>
+        <pair-key>/**/v1/**</pair-key>
+        <pair-value>noSessionCreation, authcBearerOrBasic, roles[admin]</pair-value>
+    </urls>
+    <urls>
+        <pair-key>/**/data/aaa*/**</pair-key>
+        <pair-value>anon</pair-value>
+    </urls>
+
+.. note::
+
+    ``noSessionCreation`` is recommended for stateless REST endpoints. The
+    filter inspects the ``Authorization`` header scheme and creates the
+    appropriate token type. There is no performance overhead when only one
+    scheme is used: once the first realm succeeds, Shiro stops consulting
+    further realms.
+
 Authorization Configuration
 ---------------------------
 
