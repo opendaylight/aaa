@@ -144,6 +144,11 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
             return;
         }
 
+        // RFC 8725 §3.8: issuer validation is mandatory when JWT verification is active
+        if (configuration.expected$_$issuer().isBlank()) {
+            throw new IllegalArgumentException("expected-issuer must be configured when jwks-uri is set");
+        }
+
         final var timeToLiveMillis = configuration.cache$_$timetolive$_$seconds() * 1000;
         final var cacheRefreshTimeoutMillis = configuration.cache$_$refreshtimeout$_$seconds() * 1000;
         final var rateLimitMillis = configuration.rate$_$limit$_$min$_$interval$_$seconds() * 1000;
