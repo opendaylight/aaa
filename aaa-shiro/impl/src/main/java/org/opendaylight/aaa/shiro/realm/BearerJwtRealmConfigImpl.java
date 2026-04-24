@@ -10,9 +10,11 @@ package org.opendaylight.aaa.shiro.realm;
 import static java.util.Objects.requireNonNull;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.jwk.source.JWKSourceBuilder;
+import com.nimbusds.jose.proc.DefaultJOSEObjectTypeVerifier;
 import com.nimbusds.jose.proc.JWSVerificationKeySelector;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jwt.JWTClaimsSet;
@@ -54,6 +56,7 @@ import org.slf4j.LoggerFactory;
  * cache-refreshtimeout-seconds=l"15"
  * rate-limit-min-interval-seconds=l"30"
  * retry-jwks-retrieval=b"false"
+ * expected-type="JWT"
  * }</pre>
  */
 @Component(service = BearerJwtRealmConfig.class, configurationPid = "org.opendaylight.aaa.shiro.bearerjwtrealm")
@@ -92,6 +95,11 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
         String role$_$claim() default BearerJwtRealm.DEFAULT_ROLE_CLAIM;
 
         @AttributeDefinition(description = """
+            Expected value of the JOSE typ header (e.g. at+jwt for OAuth 2.0 access tokens per RFC 9068).
+            Leave blank to skip typ header validation.""")
+        String expected$_$type() default "at+jwt";
+
+        @AttributeDefinition(description = """
             How long the fetched JWK set is considered valid (seconds).
             Must be more than both cache-refreshtimeout-seconds and rate-limit-min-interval-seconds""", min = "1")
         long cache$_$timetolive$_$seconds() default 300L;
@@ -116,16 +124,29 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
     private final @Nullable JWTProcessor<SecurityContext> jwtProcessor;
     private final @NonNull String userClaim;
     private final @NonNull String roleClaim;
+    private final @NonNull String expectedType;
 
     /**
      * Package-private constructor for use in unit tests, accepting a pre-built processor.
+     * Type checking is enabled with default value "at+jwt".
      */
     @VisibleForTesting
     BearerJwtRealmConfigImpl(final @Nullable JWTProcessor<SecurityContext> jwtProcessor,
             final @NonNull String userClaim, final @NonNull String roleClaim) {
+        this(jwtProcessor, userClaim, roleClaim, "at+jwt");
+    }
+
+    /**
+     * Package-private constructor for use in unit tests, accepting a pre-built processor, custom claim names
+     * and an expected {@code typ} header value.
+     */
+    @VisibleForTesting
+    BearerJwtRealmConfigImpl(final @Nullable JWTProcessor<SecurityContext> jwtProcessor,
+            final @NonNull String userClaim, final @NonNull String roleClaim, final @NonNull String expectedType) {
         this.jwtProcessor = jwtProcessor;
         this.userClaim = requireNonNull(userClaim);
         this.roleClaim = requireNonNull(roleClaim);
+        this.expectedType = expectedType;
     }
 
     /**
@@ -139,6 +160,8 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
     public BearerJwtRealmConfigImpl(final Configuration configuration) {
         userClaim = configuration.user$_$claim();
         roleClaim = configuration.role$_$claim();
+        expectedType = configuration.expected$_$type();
+
         if (configuration.jwks$_$uri().isBlank()) {
             jwtProcessor = null;
             return;
@@ -182,6 +205,10 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
         processor.setJWSKeySelector(keySelector);
         processor.setJWTClaimsSetVerifier(verifier(configuration.expected$_$issuer(),
             configuration.expected$_$audience()));
+        // RFC 8725 §3.11: validate the typ header to prevent token type confusion
+        if (!expectedType.isBlank()) {
+            processor.setJWSTypeVerifier(new DefaultJOSEObjectTypeVerifier<>(new JOSEObjectType(this.expectedType)));
+        }
         jwtProcessor = processor;
     }
 
@@ -225,5 +252,10 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
     @Override
     public String roleClaim() {
         return roleClaim;
+    }
+
+    @Override
+    public String expectedType() {
+        return expectedType;
     }
 }
