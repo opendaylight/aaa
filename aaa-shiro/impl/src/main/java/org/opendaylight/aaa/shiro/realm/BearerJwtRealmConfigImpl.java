@@ -201,7 +201,10 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
             }
         }
 
-        return new DefaultJWTClaimsVerifier<>(audience, exactMatchBuilder.build(), Set.of(), null);
+        // RFC 8725 §3.9: when audience verification is disabled, prohibit tokens that carry an
+        // aud claim — they are scoped to a specific recipient and should not be accepted here.
+        final Set<String> prohibitedClaims = audience == null ? Set.of("aud") : Set.of();
+        return new DefaultJWTClaimsVerifier<>(audience, exactMatchBuilder.build(), Set.of(), prohibitedClaims);
     }
 
     @Override
