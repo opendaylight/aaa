@@ -1025,7 +1025,9 @@ is restarted.
 ``expected-issuer``
     Expected value of the ``iss`` JWT claim. When set, tokens whose ``iss``
     does not match exactly are rejected. Leave empty (the default) to skip
-    issuer verification.
+    issuer verification. Issuer is required when ``jwks-uri`` is set and
+    JWT verification is enabled. Leave blank when ``jwks-uri`` is empty and
+    JWT verification is disabled.
 
     Example: ``"https://keycloak.local:8080/realms/odl-"realm"``
 
