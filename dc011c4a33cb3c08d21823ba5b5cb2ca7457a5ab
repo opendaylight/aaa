@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89be97eb_ceabdcea",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyToken.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-04-24T13:10:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f8c8665_26f9a80f",
+      "revId": "dc011c4a33cb3c08d21823ba5b5cb2ca7457a5ab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c0fa105a_336fe986",
