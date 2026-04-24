@@ -10,9 +10,11 @@ package org.opendaylight.aaa.shiro.realm;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.proc.BadJOSEException;
 import com.nimbusds.jose.proc.SecurityContext;
+import com.nimbusds.jwt.EncryptedJWT;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.JWTParser;
 import com.nimbusds.jwt.PlainJWT;
+import com.nimbusds.jwt.SignedJWT;
 import com.nimbusds.jwt.proc.JWTProcessor;
 import java.text.ParseException;
 import java.util.Objects;
@@ -141,11 +143,18 @@ public final class BearerJwtRealm extends AuthorizingRealm {
         }
 
         try {
-            final var jwt = JWTParser.parse(token);
-            // RFC 8725 §3.2: unsigned tokens MUST be rejected even in unverified mode
-            if (jwt instanceof PlainJWT) {
-                throw new AuthenticationException("Unsigned JWT (alg=none) is not accepted");
-            }
+            final var jwt = switch (JWTParser.parse(token)) {
+                case SignedJWT signedJWT -> signedJWT;
+                // RFC 8725 §3.2: unsigned tokens MUST be rejected even in unverified mode
+                case PlainJWT ignored -> throw new AuthenticationException("Unsigned JWT (alg=none) is not accepted");
+                // JWE tokens are not supported; reject explicitly to avoid NullPointerException
+                // on unencrypted payload and to prevent any future JWE decryption path from
+                // being inadvertently enabled (decompression bomb risk).
+                case EncryptedJWT ignored ->
+                    throw new AuthenticationException("Encrypted JWTs (JWE) are not supported");
+                default -> throw new AuthenticationException("Unexpected JWT value while parsing:" + token);
+            };
+
             // RFC 8725 §3.11: reject tokens whose typ header does not match the expected type
             if (expectedType != null && !expectedType.isBlank()) {
                 final var typ = jwt.getHeader().getType();
