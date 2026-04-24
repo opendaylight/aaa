@@ -390,6 +390,26 @@ public class BearerJwtRealmTest {
         }
     }
 
+    /**
+     * Tests that a JWT carrying an aud claim is rejected when audience verification is not
+     * configured (RFC 8725 §3.9 — prevents confused-deputy attacks).
+     */
+    @Test
+    public void testVerifiedAuthenticationAudPresentWhenNotConfigured() throws Exception {
+        final var rsaKey = newRsaKey();
+        try (var ignored = BearerJwtRealm.prepareForLoad(
+                buildConfig(rsaKey, null, null, Set.of(JWSAlgorithm.RS256)))) {
+            final var verifiedRealm = new BearerJwtRealm();
+            final var jwt = buildSignedJwt(rsaKey, new JWTClaimsSet.Builder()
+                .claim(USER_CLAIM, "aadmin")
+                .audience("some-service")
+                .expirationTime(futureDate())
+                .build());
+            assertThrows(AuthenticationException.class,
+                () -> verifiedRealm.doGetAuthenticationInfo(new BearerToken(jwt)));
+        }
+    }
+
     // -------------------------------------------------------------------------
     // Helpers
     // -------------------------------------------------------------------------
@@ -443,8 +463,9 @@ public class BearerJwtRealmTest {
         if (issuer != null) {
             exactMatchBuilder.issuer(issuer);
         }
+        final var prohibitedClaims = audiences == null ? Set.of("aud") : Set.of();
         final var claimsVerifier = new DefaultJWTClaimsVerifier<>(
-            audiences, exactMatchBuilder.build(), Set.of(), null);
+            audiences, exactMatchBuilder.build(), Set.of(), (Set<String>) prohibitedClaims);
         final var processor = new DefaultJWTProcessor<>();
         processor.setJWSKeySelector(keySelector);
         processor.setJWTClaimsSetVerifier(claimsVerifier);
