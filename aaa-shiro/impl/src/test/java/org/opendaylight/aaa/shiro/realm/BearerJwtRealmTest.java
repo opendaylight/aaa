@@ -17,6 +17,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.crypto.RSASSASigner;
@@ -24,6 +25,7 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
+import com.nimbusds.jose.proc.DefaultJOSEObjectTypeVerifier;
 import com.nimbusds.jose.proc.JWSVerificationKeySelector;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.PlainJWT;
@@ -189,7 +191,7 @@ class BearerJwtRealmTest {
         final var config = new BearerJwtRealmConfig(null, "sub", "groups");
         try (var ignored = BearerJwtRealm.prepareForLoad(config)) {
             final var customRealm = new BearerJwtRealm();
-            final var jwt = buildUnverifiedJwt(new JWTClaimsSet.Builder()
+            final var jwt = buildSignedJwtWithType(UNVERIFIED_KEY, "at+jwt", new JWTClaimsSet.Builder()
                 .claim("sub", "custom-user")
                 .claim("groups", List.of("admin", "viewer"))
                 .build());
@@ -400,10 +402,9 @@ class BearerJwtRealmTest {
      */
     @Test
     void testProductionConfigRequiresIssuer() {
-        assertThrows(IllegalArgumentException.class,
-            () -> new BearerJwtRealmConfig(
-                "http://localhost:8080/certs", "", "", "RS256",
-                "preferred_username", "groups", 300, 15, false));
+        assertThrows(IllegalArgumentException.class, () -> new BearerJwtRealmConfig(
+            "http://localhost:8080/certs", "", "", "RS256",
+            "preferred_username", "groups", "JWT", 300, 15, false));
     }
 
     /**
@@ -441,6 +442,81 @@ class BearerJwtRealmTest {
                 .build());
             assertThrows(AuthenticationException.class,
                 () -> verifiedRealm.doGetAuthenticationInfo(new BearerToken(jwt)));
+        }
+    }
+
+    /**
+     * Tests that a JWT with the correct typ header is accepted (RFC 8725 §3.11).
+     */
+    @Test
+    void testVerifiedAuthenticationTypeValid() throws Exception {
+        final var rsaKey = newRsaKey();
+        try (var ignored = BearerJwtRealm.prepareForLoad(
+                buildConfigWithType(rsaKey, "test-issuer", "JWT"))) {
+            final var verifiedRealm = new BearerJwtRealm();
+            final var jwt = buildSignedJwtWithType(rsaKey, "JWT", new JWTClaimsSet.Builder()
+                .claim(USER_CLAIM, "aadmin")
+                .issuer("test-issuer")
+                .expirationTime(futureDate())
+                .build());
+            final var info = verifiedRealm.doGetAuthenticationInfo(new BearerToken(jwt));
+            assertNotNull(info);
+            assertEquals("aadmin",
+                ((ODLPrincipal) info.getPrincipals().getPrimaryPrincipal()).getUsername());
+        }
+    }
+
+    /**
+     * Tests that a JWT with a mismatched typ header is rejected (RFC 8725 §3.11).
+     */
+    @Test
+    void testVerifiedAuthenticationTypeMismatch() throws Exception {
+        final var rsaKey = newRsaKey();
+        try (var ignored = BearerJwtRealm.prepareForLoad(
+                buildConfigWithType(rsaKey, "test-issuer", "JWT"))) {
+            final var verifiedRealm = new BearerJwtRealm();
+            final var jwt = buildSignedJwtWithType(rsaKey, "WrongType", new JWTClaimsSet.Builder()
+                .claim(USER_CLAIM, "aadmin")
+                .issuer("test-issuer")
+                .expirationTime(futureDate())
+                .build());
+            assertThrows(AuthenticationException.class,
+                () -> verifiedRealm.doGetAuthenticationInfo(new BearerToken(jwt)));
+        }
+    }
+
+    /**
+     * Tests that a JWT with no typ header is rejected when type checking is configured (RFC 8725 §3.11).
+     */
+    @Test
+    void testVerifiedAuthenticationTypeMissing() throws Exception {
+        final var rsaKey = newRsaKey();
+        try (var ignored = BearerJwtRealm.prepareForLoad(
+                buildConfigWithType(rsaKey, "test-issuer", "JWT"))) {
+            final var verifiedRealm = new BearerJwtRealm();
+            final var jwt = buildSignedJwt(rsaKey, new JWTClaimsSet.Builder()
+                .claim(USER_CLAIM, "aadmin")
+                .issuer("test-issuer")
+                .expirationTime(futureDate())
+                .build());
+            assertThrows(AuthenticationException.class,
+                () -> verifiedRealm.doGetAuthenticationInfo(new BearerToken(jwt)));
+        }
+    }
+
+    /**
+     * Tests that a JWT with a mismatched typ header is rejected in unverified mode (RFC 8725 §3.11).
+     */
+    @Test
+    void testUnverifiedAuthenticationTypeMismatch() throws Exception {
+        final var config = new BearerJwtRealmConfig(null, USER_CLAIM, ROLE_CLAIM, "JWT");
+        try (var ignored = BearerJwtRealm.prepareForLoad(config)) {
+            final var typedRealm = new BearerJwtRealm();
+            final var jwt = buildSignedJwtWithType(UNVERIFIED_KEY, "WrongType", new JWTClaimsSet.Builder()
+                .claim(USER_CLAIM, "aadmin")
+                .build());
+            assertThrows(AuthenticationException.class,
+                () -> typedRealm.doGetAuthenticationInfo(new BearerToken(jwt)));
         }
     }
 
@@ -504,6 +580,36 @@ class BearerJwtRealmTest {
         processor.setJWSKeySelector(keySelector);
         processor.setJWTClaimsSetVerifier(claimsVerifier);
         return new BearerJwtRealmConfig(processor, USER_CLAIM, ROLE_CLAIM);
+    }
+
+    private static String buildSignedJwtWithType(final RSAKey rsaKey, final String typ,
+            final JWTClaimsSet claims) throws Exception {
+        final var header = new JWSHeader.Builder(JWSAlgorithm.RS256)
+            .type(new JOSEObjectType(typ)).build();
+        final var signedJwt = new SignedJWT(header, claims);
+        signedJwt.sign(new RSASSASigner(rsaKey));
+        return signedJwt.serialize();
+    }
+
+    /**
+     * Builds a {@link BearerJwtRealmConfig} with type checking enabled, backed by a local JWK set.
+     */
+    private static BearerJwtRealmConfig buildConfigWithType(final RSAKey rsaKey, final String issuer,
+            final String expectedType) {
+        final var jwkSource = new ImmutableJWKSet<>(new JWKSet(rsaKey.toPublicJWK()));
+        final var keySelector = new JWSVerificationKeySelector<>(Set.of(JWSAlgorithm.RS256), jwkSource);
+        final var exactMatchBuilder = new JWTClaimsSet.Builder();
+        if (issuer != null) {
+            exactMatchBuilder.issuer(issuer);
+        }
+        final var prohibitedClaims = Set.of("aud");
+        final var claimsVerifier = new DefaultJWTClaimsVerifier<>(
+            null, exactMatchBuilder.build(), Set.of(), prohibitedClaims);
+        final var processor = new DefaultJWTProcessor<>();
+        processor.setJWSKeySelector(keySelector);
+        processor.setJWTClaimsSetVerifier(claimsVerifier);
+        processor.setJWSTypeVerifier(new DefaultJOSEObjectTypeVerifier<>(new JOSEObjectType(expectedType)));
+        return new BearerJwtRealmConfig(processor, USER_CLAIM, ROLE_CLAIM, expectedType);
     }
 
     private static Date futureDate() {
