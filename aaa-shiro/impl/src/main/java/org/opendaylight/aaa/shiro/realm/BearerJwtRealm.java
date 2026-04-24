@@ -12,6 +12,7 @@ import com.nimbusds.jose.proc.BadJOSEException;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.JWTParser;
+import com.nimbusds.jwt.EncryptedJWT;
 import com.nimbusds.jwt.PlainJWT;
 import com.nimbusds.jwt.proc.JWTProcessor;
 import java.text.ParseException;
@@ -140,6 +141,12 @@ public final class BearerJwtRealm extends AuthorizingRealm {
             // RFC 8725 §3.2: unsigned tokens MUST be rejected even in unverified mode
             if (jwt instanceof PlainJWT) {
                 throw new AuthenticationException("Unsigned JWT (alg=none) is not accepted");
+            }
+            // JWE tokens are not supported; reject explicitly to avoid NullPointerException
+            // on undecrypted payload and to prevent any future JWE decryption path from
+            // being inadvertently enabled (decompression bomb risk).
+            if (jwt instanceof EncryptedJWT) {
+                throw new AuthenticationException("Encrypted JWTs (JWE) are not supported");
             }
             // RFC 8725 §3.11: reject tokens whose typ header does not match the expected type
             if (expectedType != null && !expectedType.isBlank()) {

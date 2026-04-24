@@ -16,10 +16,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.nimbusds.jose.EncryptionMethod;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JOSEObjectType;
+import com.nimbusds.jose.JWEAlgorithm;
+import com.nimbusds.jose.JWEHeader;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
+import com.nimbusds.jose.crypto.RSAEncrypter;
 import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -27,6 +31,7 @@ import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.proc.DefaultJOSEObjectTypeVerifier;
 import com.nimbusds.jose.proc.JWSVerificationKeySelector;
+import com.nimbusds.jwt.EncryptedJWT;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.PlainJWT;
 import com.nimbusds.jwt.SignedJWT;
@@ -155,6 +160,16 @@ class BearerJwtRealmTest {
             .build());
         assertThrows(AuthenticationException.class,
             () -> realm.doGetAuthenticationInfo(new BearerToken(jwt)));
+    }
+
+    /**
+     * Tests that an encrypted JWT (JWE) is rejected in unverified mode with a clean exception
+     * rather than a NullPointerException on the undecrypted payload.
+     */
+    @Test
+    void testUnverifiedEncryptedJwtRejected() {
+        assertThrows(AuthenticationException.class,
+            () -> realm.doGetAuthenticationInfo(new BearerToken(buildEncryptedJwt())));
     }
 
     /**
@@ -525,6 +540,17 @@ class BearerJwtRealmTest {
 
     private static String buildPlainJwt(final JWTClaimsSet claims) {
         return new PlainJWT(claims).serialize();
+    }
+
+    /**
+     * Builds a JWE-encrypted JWT using RSA-OAEP-256 + AES-128-GCM with {@link #UNVERIFIED_KEY}.
+     */
+    private static String buildEncryptedJwt() throws Exception {
+        final var jwt = new EncryptedJWT(
+            new JWEHeader(JWEAlgorithm.RSA_OAEP_256, EncryptionMethod.A128GCM),
+            new JWTClaimsSet.Builder().claim(USER_CLAIM, "aadmin").build());
+        jwt.encrypt(new RSAEncrypter(UNVERIFIED_KEY.toPublicJWK()));
+        return jwt.serialize();
     }
 
     /**
