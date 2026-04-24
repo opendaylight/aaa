@@ -1053,6 +1053,11 @@ is restarted.
     claim value must be a JSON array of strings. Default: ``"groups"``.
     Common alternatives: ``roles``, ``realm_access.roles``.
 
+``expected-type``
+    Expected value of the JOSE typ header (e.g. JWT as generic JSON Web Token
+    header or at+jwt for OAuth 2.0 access tokens per RFC 9068).
+    Leave blank to skip typ header validation. Default: ``"JWT"``
+
 ``cache-timetolive-seconds``
     How long (in seconds) the fetched JWK set is considered valid before a
     refresh is needed. Must be less than cache-timetolive-seconds.
