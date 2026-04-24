@@ -10,8 +10,10 @@ package org.opendaylight.aaa.shiro.realm;
 import static java.util.Objects.requireNonNull;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.jwk.source.JWKSourceBuilder;
+import com.nimbusds.jose.proc.DefaultJOSEObjectTypeVerifier;
 import com.nimbusds.jose.proc.JWSVerificationKeySelector;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jwt.JWTClaimsSet;
@@ -41,22 +43,36 @@ import org.eclipse.jdt.annotation.Nullable;
  * allowed.algorithms=RS256
  * user.claim=preferred_username
  * role.claim=roles
+ * expected.type=JWT
  * }</pre>
  */
 public final class BearerJwtRealmConfig {
     private final @Nullable JWTProcessor<SecurityContext> jwtProcessor;
     private final @NonNull String userClaim;
     private final @NonNull String roleClaim;
+    private final @NonNull String expectedType;
 
     /**
      * Package-private constructor for use in unit tests, accepting a pre-built processor and custom claim names.
+     * Type checking is disabled (no {@code typ} header validation).
      */
     @VisibleForTesting
     BearerJwtRealmConfig(final @Nullable JWTProcessor<SecurityContext> jwtProcessor, final @NonNull String userClaim,
             final @NonNull String roleClaim) {
+        this(jwtProcessor, userClaim, roleClaim, "at+jwt");
+    }
+
+    /**
+     * Package-private constructor for use in unit tests, accepting a pre-built processor, custom claim names
+     * and an expected {@code typ} header value.
+     */
+    @VisibleForTesting
+    BearerJwtRealmConfig(final @Nullable JWTProcessor<SecurityContext> jwtProcessor, final @NonNull String userClaim,
+            final @NonNull String roleClaim, final @NonNull String expectedType) {
         this.jwtProcessor = jwtProcessor;
         this.userClaim = requireNonNull(userClaim);
         this.roleClaim = requireNonNull(roleClaim);
+        this.expectedType = expectedType;
     }
 
     /**
@@ -67,11 +83,12 @@ public final class BearerJwtRealmConfig {
      * verification.
      *
      * @param jwksUri URL of the JWKS endpoint; blank disables verification
-     * @param expectedIssuer expected {@code iss} claim value; blank skips issuer check
+     * @param expectedIssuer expected {@code iss} claim value; required when JWKS is active
      * @param expectedAudience comma-separated expected {@code aud} values; blank skips audience check
      * @param allowedAlgorithms comma-separated JWS algorithm names (e.g. {@code RS256,RS384})
      * @param userClaim JWT claim name used to extract the username
      * @param roleClaim JWT claim name used to extract the list of roles
+     * @param expectedType expected {@code typ} JOSE header value (e.g. {@code at+jwt}); blank disables check
      * @param timeToLive how long the fetched JWK set is considered valid in seconds
      * @param cacheRefreshTimeout how early before expiry a background refresh is triggered in seconds
      * @param retrying retry (just once) to overcome network error
@@ -79,7 +96,8 @@ public final class BearerJwtRealmConfig {
     @NonNullByDefault
     public BearerJwtRealmConfig(final String jwksUri, final String expectedIssuer, final String expectedAudience,
             final String allowedAlgorithms, final String userClaim, final String roleClaim,
-            final long timeToLive, final long cacheRefreshTimeout, final boolean retrying) throws Exception {
+            final String expectedType, final long timeToLive, final long cacheRefreshTimeout,
+            final boolean retrying) throws Exception {
         requireNonNull(jwksUri);
         requireNonNull(expectedIssuer);
         requireNonNull(expectedAudience);
@@ -87,6 +105,7 @@ public final class BearerJwtRealmConfig {
 
         this.userClaim = requireNonNull(userClaim);
         this.roleClaim = requireNonNull(roleClaim);
+        this.expectedType = requireNonNull(expectedType);
 
         if (jwksUri.isBlank()) {
             jwtProcessor = null;
@@ -113,6 +132,10 @@ public final class BearerJwtRealmConfig {
         final var processor = new DefaultJWTProcessor<>();
         processor.setJWSKeySelector(keySelector);
         processor.setJWTClaimsSetVerifier(verifier(expectedIssuer, expectedAudience));
+        // RFC 8725 §3.11: validate the typ header to prevent token type confusion
+        if (this.expectedType != null && !expectedType.isBlank()) {
+            processor.setJWSTypeVerifier(new DefaultJOSEObjectTypeVerifier<>(new JOSEObjectType(this.expectedType)));
+        }
         jwtProcessor = processor;
     }
 
@@ -149,5 +172,9 @@ public final class BearerJwtRealmConfig {
 
     @NonNull String roleClaim() {
         return roleClaim;
+    }
+
+    @NonNull String expectedType() {
+        return expectedType;
     }
 }
