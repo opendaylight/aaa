@@ -16,6 +16,40 @@
       "message": "can\u0027t be null",
       "revId": "dc011c4a33cb3c08d21823ba5b5cb2ca7457a5ab",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0fa105a_336fe986",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyTokenFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-24T07:53:06Z",
+      "side": 1,
+      "message": "what\u0027s the response status when user is not logged in?",
+      "revId": "dc011c4a33cb3c08d21823ba5b5cb2ca7457a5ab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6024934b_39c3ea46",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyTokenFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-24T07:53:06Z",
+      "side": 1,
+      "message": "this should be for extends RolesAuthorizationFilter",
+      "revId": "dc011c4a33cb3c08d21823ba5b5cb2ca7457a5ab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
