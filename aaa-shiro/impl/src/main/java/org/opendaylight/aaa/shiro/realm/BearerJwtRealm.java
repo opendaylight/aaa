@@ -12,6 +12,7 @@ import com.nimbusds.jose.proc.BadJOSEException;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.JWTParser;
+import com.nimbusds.jwt.PlainJWT;
 import com.nimbusds.jwt.proc.JWTProcessor;
 import java.text.ParseException;
 import java.util.Set;
@@ -132,7 +133,12 @@ public final class BearerJwtRealm extends AuthorizingRealm {
 
         LOG.warn("No JWT verification configured — accepting unverified Bearer token");
         try {
-            return JWTParser.parse(token).getJWTClaimsSet();
+            final var jwt = JWTParser.parse(token);
+            // RFC 8725 §3.2: unsigned tokens MUST be rejected even in unverified mode
+            if (jwt instanceof PlainJWT) {
+                throw new AuthenticationException("Unsigned JWT (alg=none) is not accepted");
+            }
+            return jwt.getJWTClaimsSet();
         } catch (ParseException e) {
             throw new AuthenticationException("Failed to parse provided JWT claims", e);
         }
