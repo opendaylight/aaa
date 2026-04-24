@@ -28,4 +28,9 @@ public interface BearerJwtRealmConfig {
      * {@return configured claim name used to extract the list of roles}
      */
     @NonNull String roleClaim();
+
+    /**
+     * {@return configured expected value of the JOSE typ header}
+     */
+    @NonNull String expectedType();
 }
