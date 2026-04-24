@@ -273,11 +273,57 @@
     </main>
     -->
 
-    <!--  Enable $bearerJwtRealm as teh only one realm used  -->
+    <!--
+      ===================================================================================
+      ====================== BearerOrOauth2ProxyAuthenticationFilter ====================
+      ===================================================================================
+      =                                                                                 =
+      = Description:  A combined authentication filter that accepts both                =
+      =               "Authorization: Bearer <JWT>" and OAuth2 Proxy forwarded-user    =
+      =               headers in a single Shiro filter-chain step.  When a             =
+      =               filterchain.cfg filter has already authenticated the subject,     =
+      =               this filter passes the request through.  On unauthenticated       =
+      =               requests it sends a 401 response with a Bearer challenge.         =
+      =                                                                                 =
+      = Use authcBearerOrProxy in <urls> to allow both direct JWT clients and          =
+      = OAuth2-Proxy-authenticated clients on the same endpoint.                        =
+      ===================================================================================
+    -->
+    <main>
+        <pair-key>authcBearerOrProxy</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.filters.BearerOrOauth2ProxyAuthenticationFilter</pair-value>
+    </main>
+
+    <!--  Enable $bearerJwtRealm as the only realm used  -->
     <main>
         <pair-key>securityManager.realms</pair-key>
         <pair-value>$bearerJwtRealm</pair-value>
     </main>
+
+    <!--
+      To accept both JWT Bearer tokens and OAuth2-Proxy-forwarded identities
+      simultaneously, replace the securityManager.realms entry above with:
+
+    <main>
+        <pair-key>securityManager.realms</pair-key>
+        <pair-value>$bearerJwtRealm, $oauth2ProxyTokenRealm</pair-value>
+    </main>
+
+      Then switch the URL patterns from authcBearer to authcBearerOrProxy, e.g.:
+
+    <urls>
+        <pair-key>/**/operations/cluster-admin**</pair-key>
+        <pair-value>noSessionCreation, authcBearerOrProxy, roles[admin]</pair-value>
+    </urls>
+    <urls>
+        <pair-key>/**/v1/**</pair-key>
+        <pair-value>noSessionCreation, authcBearerOrProxy, roles[admin]</pair-value>
+    </urls>
+    <urls>
+        <pair-key>/**/data/aaa*/**</pair-key>
+        <pair-value>anon</pair-value>
+    </urls>
+    -->
 
     <!-- Start moonAuthRealm commented out
     <main>
@@ -367,10 +413,7 @@
     </urls>
     <urls>
         <pair-key>/**/data/aaa*/**</pair-key>
-        <pair-value>noSessionCreation, authcBearer, roles[admin]</pair-value>
+        <pair-value>anon</pair-value>
     </urls>
-    <urls>
-        <pair-key>/**</pair-key>
-        <pair-value>noSessionCreation, authcBearer</pair-value>
-    </urls>
+
 </shiro-configuration>

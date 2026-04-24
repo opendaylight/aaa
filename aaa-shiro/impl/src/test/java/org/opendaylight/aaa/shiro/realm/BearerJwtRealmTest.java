@@ -56,6 +56,7 @@ public class BearerJwtRealmTest {
     // Shared key for unverified-mode tests: the realm accepts signed JWTs without
     // verifying the signature, so any key works — we just need a non-plain JWT.
     private static final RSAKey UNVERIFIED_KEY;
+
     static {
         try {
             UNVERIFIED_KEY = new RSAKeyGenerator(2048).keyID("unverified-test-key").generate();
