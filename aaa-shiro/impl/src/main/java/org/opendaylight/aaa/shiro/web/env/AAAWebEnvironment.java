@@ -13,6 +13,7 @@ import org.apache.shiro.web.env.IniWebEnvironment;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
+import org.opendaylight.aaa.shiro.filters.CombinedOauth2AuthenticationFilter;
 import org.opendaylight.aaa.shiro.filters.Oauth2ProxyHeaderFilter;
 import org.opendaylight.aaa.shiro.filters.Oauth2ProxyHeaderFilterConfig;
 import org.opendaylight.aaa.shiro.realm.BearerJwtRealm;
@@ -69,7 +70,8 @@ public final class AAAWebEnvironment extends IniWebEnvironment implements AAAShi
                  var moonLoad = MoonRealm.prepareForLoad(servletSupport);
                  var tokenAuthLoad = TokenAuthRealm.prepareForLoad(authenticationService, realmAuthProvider);
                  var oauth2Load = Oauth2ProxyHeaderFilter.prepareForLoad(oauth2Config);
-                 var jwtLoad = BearerJwtRealm.prepareForLoad(bearerJwtRealmConfig)) {
+                 var jwtLoad = BearerJwtRealm.prepareForLoad(bearerJwtRealmConfig);
+                 var combinedLoad = CombinedOauth2AuthenticationFilter.prepareForLoad(oauth2Config)) {
                 configure();
             }
         });
