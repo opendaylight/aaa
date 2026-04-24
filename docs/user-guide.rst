@@ -189,6 +189,20 @@ OpenDaylight contains six implementations:
 
    - Disabled out of the box. See :ref:`configuring-oauth2-proxy-header-realm`.
 
+-  BearerJwtRealm
+
+   - An AuthorizingRealm that authenticates requests carrying an HTTP
+     ``Authorization: Bearer <JWT>`` header issued by an external identity
+     provider (IdP) such as Keycloak.
+
+   - When a JWKS URI is configured it performs full JWT verification:
+     signature, issuer, audience, expiration and not-before. Without a
+     JWKS URI it falls back to accepting any well-formed JWT without
+     verification (development / integration-test mode only).
+
+   - Disabled out of the box. See `How to enable BearerJwtRealm`_ for
+     activation steps.
+
 .. note::
 
     More than one Realm implementation can be specified. Realms are attempted
@@ -919,6 +933,194 @@ administrator access:
     request is independently authenticated from the forwarded headers, which
     is the correct behavior when session lifecycle is managed by OAuth2 Proxy.
 
+BearerJwtRealm
+^^^^^^^^^^^^^^
+
+How it works
+~~~~~~~~~~~~
+
+``BearerJwtRealm`` authenticates requests that carry an HTTP
+``Authorization: Bearer <JWT>`` header. It is designed to work with external
+identity providers (IdPs) such as Keycloak that issue JSON Web Tokens (JWTs)
+to clients.
+
+On each request the realm:
+
+1. Extracts the raw JWT string from the ``Authorization: Bearer`` header.
+2. When JWT verification is configured (see `Configuring BearerJwtRealm`_),
+   processes the token through a Nimbus ``JWTProcessor`` that:
+
+   - Fetches the IdP's public keys from the configured JWKS endpoint and
+     caches them locally using Nimbus ``DefaultJWKSetCache``.
+   - Verifies the token signature against the cached keys, enforcing that the
+     signing algorithm is in the allowed set.
+   - Verifies the ``exp`` (expiration) and ``nbf`` (not-before) claims.
+   - Optionally verifies the ``iss`` (issuer) and ``aud`` (audience) claims
+     when those properties are set in the configuration file.
+
+3. Extracts the username from the JWT claim named by ``user-claim``
+   (default: ``preferred_username``) and the role list from the claim named
+   by ``role-claim`` (default: ``groups``).
+4. Returns an ``ODLPrincipal`` carrying the username and roles, which is then
+   subject to OpenDaylight's MDSAL-based authorization rules.
+
+When no JWKS URI is configured (``jwks-uri`` is blank), the realm falls back
+to accepting any structurally valid JWT without signature or claims
+verification. A ``WARN``-level log entry is emitted for every token accepted
+in this mode.
+
+.. warning::
+
+   The no-verification fallback is intended only for development and
+   integration testing. Always configure a JWKS URI in production
+   deployments.
+
+Configuring BearerJwtRealm
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Configuration is loaded from
+``etc/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg``. The file is deployed
+automatically when the ``odl-aaa-shiro`` feature is installed. Edit it to
+match your IdP; changes take effect after the bundle (or full distribution)
+is restarted.
+
+``jwks-uri``
+    URL of the JSON Web Key Set endpoint exposed by the IdP. Public keys
+    fetched from this endpoint are used to verify JWT signatures and are
+    cached locally; see ``cache-timetolive-seconds`` below. Leave blank
+    (the default) to disable signature verification.
+
+    Example: ``https://keycloak.local:8080/realms/odl-realm/protocol/openid-connect/certs``
+
+``expected-issuer``
+    Expected value of the ``iss`` JWT claim. When set, tokens whose ``iss``
+    does not match exactly are rejected. Leave empty (the default) to skip
+    issuer verification.
+
+    Example: ``https://keycloak.local:8080/realms/odl-realm``
+
+``expected-audience``
+    Comma-separated list of expected ``aud`` claim values. When set, a token
+    must contain at least one of the listed values in its ``aud`` claim.
+    Leave empty (the default) to skip audience verification.
+
+    Example: ``odl-application``
+
+``allowed-algorithms``
+    Comma-separated list of permitted JWS signing algorithm identifiers.
+    Default: ``RS256``. Supported values include ``RS256``, ``RS384``,
+    ``RS512``, ``ES256``, ``ES384``, ``ES512``.
+
+``user-claim``
+    Name of the JWT claim from which the username is extracted. Default:
+    ``preferred_username``. Use ``sub`` for IdPs that place the username in
+    the subject claim.
+
+``role-claim``
+    Name of the JWT claim from which the list of roles is extracted. The
+    claim value must be a JSON array of strings. Default: ``groups``.
+    Common alternatives: ``roles``, ``realm_access.roles``.
+
+``cache-timetolive-seconds``
+    How long (in seconds) the fetched JWK set is considered valid before a
+    refresh is needed. Default: ``300`` (5 minutes). Reduce this value when
+    the IdP rotates signing keys frequently.
+
+``cache-refreshtimeout-seconds``
+    How early (in seconds) before cache expiry a background refresh of the
+    JWK set is triggered. Default: ``15``. The background refresh prevents
+    authentication failures at the exact moment a cache entry expires.
+
+``network-retrying``
+    When ``true``, a single automatic retry is attempted if the initial JWKS
+    fetch fails due to a transient network error. Default: ``false``.
+
+How to enable BearerJwtRealm
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``BearerJwtRealm`` is activated through changes in
+``etc/opendaylight/datastore/initial/config/aaa-app-config.xml``. The
+modifications below are already applied in the default file shipped with the
+``odl-aaa-shiro`` feature. If you are upgrading from a release that used
+``authcBasic``, apply the following diff to your existing configuration file.
+
+**1. Register the realm instance**
+
+Add the following ``<main>`` entry to declare the realm under the name
+``oauth2ProxyRealm``:
+
+.. code-block:: xml
+
+    <main>
+        <pair-key>oauth2ProxyRealm</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.realm.BearerJwtRealm</pair-value>
+    </main>
+
+**2. Add the realm to the security manager**
+
+Register ``oauth2ProxyRealm`` with the Shiro security manager alongside the
+existing realms:
+
+.. code-block:: xml
+
+    <main>
+        <pair-key>securityManager.realms</pair-key>
+        <pair-value>$oauth2ProxyRealm</pair-value>
+    </main>
+
+**3. Override the** ``roles`` **filter to return 403 Forbidden**
+
+Add the following ``<main>`` entry to replace Shiro's built-in ``roles``
+filter with ``ODLRolesAuthorizationFilter``:
+
+.. code-block:: xml
+
+    <main>
+        <pair-key>roles</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.filters.ODLRolesAuthorizationFilter</pair-value>
+    </main>
+
+Shiro's default ``RolesAuthorizationFilter`` returns HTTP 401 Unauthorized
+when an authenticated user lacks the required role. This is semantically
+incorrect: 401 signals that authentication is missing or invalid and invites
+the client to re-authenticate, whereas 403 Forbidden correctly communicates
+that the identity is known but the permission is not granted. Declaring
+``roles`` in ``<main>`` overrides the built-in filter for all URL patterns
+that reference ``roles[<role>]``, so no changes to the ``<urls>`` section
+are needed.
+
+**4. Switch URL filters to Bearer authentication**
+
+Replace all ``authcBasic`` filter references with
+``noSessionCreation, authcBearer`` so that the Shiro filter chain accepts
+Bearer tokens:
+
+.. code-block:: xml
+
+    <urls>
+        <pair-key>/**/operations/cluster-admin**</pair-key>
+        <pair-value>noSessionCreation, authcBearer, roles[admin]</pair-value>
+    </urls>
+    <urls>
+        <pair-key>/**/v1/**</pair-key>
+        <pair-value>noSessionCreation, authcBearer, roles[admin]</pair-value>
+    </urls>
+    <urls>
+        <pair-key>/**/data/aaa*/**</pair-key>
+        <pair-value>noSessionCreation, authcBearer, roles[admin]</pair-value>
+    </urls>
+    <urls>
+        <pair-key>/**</pair-key>
+        <pair-value>noSessionCreation, authcBearer</pair-value>
+    </urls>
+
+.. note::
+
+    ``noSessionCreation`` prevents Shiro from creating an HTTP session per
+    request, which is correct for stateless REST clients using Bearer tokens.
+    ``authcBearer`` is the Shiro filter that extracts the ``Authorization:
+    Bearer`` header and delegates it to the configured realms.
+
 Authorization Configuration
 ---------------------------
 
@@ -1043,7 +1245,7 @@ This an example on how to limit access to the modules endpoint:
 The above example locks down access to the modules endpoint (and any URLS
 available past modules) to the "admin" role. Thus, an attempt from the OOB
 *admin* user will succeed with 2XX HTTP status code, while an attempt from the
-OOB *user* user will fail with HTTP status code 401, as the user *user* is not
+OOB *user* user will fail with HTTP status code 403, as the user *user* is not
 granted the "admin" role.
 
 Accounting Configuration
