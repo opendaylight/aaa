@@ -296,6 +296,20 @@ public class BearerJwtRealmTest {
     }
 
     /**
+     * Tests that an encrypted JWT (JWE) is rejected in verified mode with a clean exception
+     * before the token reaches the JWTProcessor.
+     */
+    @Test
+    public void testVerifiedEncryptedJwtRejected() throws Exception {
+        final var rsaKey = newRsaKey();
+        try (var ignored = BearerJwtRealm.prepareForLoad(buildConfig(rsaKey, "test-issuer", null))) {
+            final var verifiedRealm = new BearerJwtRealm();
+            assertThrows(AuthenticationException.class,
+                () -> verifiedRealm.doGetAuthenticationInfo(new BearerToken(buildEncryptedJwt())));
+        }
+    }
+
+    /**
      * Tests that a JWT signed with a different key (unknown key) is rejected.
      */
     @Test
