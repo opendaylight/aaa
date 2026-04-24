@@ -7,7 +7,6 @@
  */
 package org.opendaylight.aaa.shiro.filters;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.CharMatcher;
 import java.util.Collections;
 import java.util.List;
@@ -32,9 +31,7 @@ import org.apache.shiro.web.util.WebUtils;
  */
 public final class Oauth2ProxyHeaderFilter extends AuthenticatingFilter {
     // ODL is set as upstream of OAuth2-Proxy thus X-Forwarded instead of X-Auth-Request headers
-    @VisibleForTesting
     static final String PROXY_HEADER_USER = "X-Forwarded-User";
-    @VisibleForTesting
     static final String PROXY_HEADER_GROUPS = "X-Forwarded-Groups";
 
     @Override
@@ -47,18 +44,18 @@ public final class Oauth2ProxyHeaderFilter extends AuthenticatingFilter {
 
     @Override
     protected boolean onAccessDenied(final ServletRequest request, final ServletResponse response) throws Exception {
-        final var user = WebUtils.toHttp(request).getHeader(PROXY_HEADER_USER);
+        final var user = extractUser(request);
         // check if user is valid
-        if (user != null && !CharMatcher.javaIsoControl().removeFrom(user).isBlank()) {
+        if (user != null && !user.isBlank()) {
             return executeLogin(request, response);
         }
         WebUtils.toHttp(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         return false;
     }
 
-    private static String extractUser(final ServletRequest request) {
+    static String extractUser(final ServletRequest request) {
         final var user = WebUtils.toHttp(request).getHeader(PROXY_HEADER_USER);
         // return sanitized username
-        return CharMatcher.javaIsoControl().removeFrom(user).strip();
+        return user == null ? null : CharMatcher.javaIsoControl().removeFrom(user).strip();
     }
 }
