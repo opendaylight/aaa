@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a4d2f83_10176505",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-27T07:37:04Z",
+      "side": 1,
+      "message": "Explicitly reject ...",
+      "revId": "bb8cf023c9d5f4ee4c9e8bb6dd2c991f20b4a617",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
