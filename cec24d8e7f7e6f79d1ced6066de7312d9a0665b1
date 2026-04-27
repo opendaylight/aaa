@@ -33,6 +33,24 @@
       "message": "Oauth2ProxyHeaderFilter, similar for realm, adapt docs",
       "revId": "cec24d8e7f7e6f79d1ced6066de7312d9a0665b1",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6637c571_e310580e",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyTokenFilter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-04-27T07:57:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dab725f3_4fe43163",
+      "revId": "cec24d8e7f7e6f79d1ced6066de7312d9a0665b1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
