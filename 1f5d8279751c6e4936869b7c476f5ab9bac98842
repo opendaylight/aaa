@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c85237cc_dbc97d38",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-27T06:53:56Z",
+      "side": 1,
+      "message": "One minor inconsistency\n\n  In verified mode (BearerJwtRealmConfig.java:136):\n  if (this.expectedType !\u003d null) {  // always true — requireNonNull was called on line 108\n\n  In unverified mode (BearerJwtRealm.java:160):\n  if (expectedType !\u003d null \u0026\u0026 !expectedType.isBlank()) {  // blank guard present\n\n  If expected.type is configured as an empty string, verified mode would install a DefaultJOSEObjectTypeVerifier with an empty JOSEObjectType (undefined Nimbus behavior), while unverified mode would skip the check entirely. The fix is to add \u0026\u0026 !expectedType.isBlank() to the check at BearerJwtRealmConfig.java:136. In practice this is only\n   a risk if the config value is explicitly blanked out while JWKS is active — still worth tightening.",
+      "revId": "1f5d8279751c6e4936869b7c476f5ab9bac98842",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
