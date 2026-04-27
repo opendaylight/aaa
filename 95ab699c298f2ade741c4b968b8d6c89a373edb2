@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9904e4a_0b4ef31f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-27T06:52:40Z",
+      "side": 1,
+      "message": "this should be part of commit chain in a \"normal\" commit",
+      "revId": "95ab699c298f2ade741c4b968b8d6c89a373edb2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
