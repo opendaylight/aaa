@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5221ff4b_1fd39a3b",
+        "filename": "aaa-shiro/impl/src/main/resources/initial/aaa-app-config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-04-28T10:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b96a81ea_d7e13f32",
+      "revId": "c3a58b555876032b0ab1b2efa9ec910f54159721",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a8b7c62a_feb699a8",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-04-24T08:02:55Z",
       "side": 1,
       "message": "you need also:\n      309      \u003cmain\u003e\n      310        \u003cpair-key\u003eroles\u003c/pair-key\u003e\n      311          \u003cpair-value\u003eYour filter returning 403\u003c/pair-value\u003e\n      312      \u003c/main\u003e",
+      "revId": "c3a58b555876032b0ab1b2efa9ec910f54159721",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a22c8ed3_3b7a723a",
+        "filename": "aaa-shiro/impl/src/main/resources/initial/aaa-app-config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-04-28T10:23:57Z",
+      "side": 1,
+      "message": "oauth2ProxyTokenFilter should correctly respond 403",
+      "parentUuid": "a8b7c62a_feb699a8",
       "revId": "c3a58b555876032b0ab1b2efa9ec910f54159721",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
