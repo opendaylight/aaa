@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9fb29241_c02acb23",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-04-28T10:41:05Z",
+      "side": 1,
+      "message": "1. I fixed the test to work correctly. The problem is Shiro fails with NullPointerException when Oauth2ProxyHeaderToken.getCredentials() returns null.\nMy solution is to return user, as we don\u0027t have anything else. Or other solution could be empty string or some dummy string like \"TRUSTED_PROXY\".\n\n2. DONE\n\n3. DONE\n\n4. This is expected behavior.\n\n5. DONE\n\n6. DONE\n\n7. DONE",
+      "parentUuid": "37cd26da_064adc7d",
+      "revId": "cec24d8e7f7e6f79d1ced6066de7312d9a0665b1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dab725f3_4fe43163",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyTokenFilter.java",
         "patchSetId": 11
