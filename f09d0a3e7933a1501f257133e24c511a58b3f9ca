@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65b42834_971f0fde",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-29T15:52:39Z",
+      "side": 1,
+      "message": "Override getCredentialsMatcher() in the realm to return AllowAllCredentialsMatcher (or a\n    no-op), and have getCredentials() return null or an empty byte[] to make the no-credential intent explicit.",
+      "revId": "f09d0a3e7933a1501f257133e24c511a58b3f9ca",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
