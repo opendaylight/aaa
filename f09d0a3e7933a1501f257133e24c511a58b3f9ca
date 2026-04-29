@@ -33,6 +33,23 @@
       "message": "var e \u003d httpRequest.getHeaders(PROXY_HEADER_GROUPS); var groups \u003d e !\u003d null ?\n    Collections.list(e) : List.of();",
       "revId": "f09d0a3e7933a1501f257133e24c511a58b3f9ca",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b65d750_3c198388",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-29T15:56:07Z",
+      "side": 1,
+      "message": "The current code strips namespaces and maps every *:admin to \"admin\", which is a privilege escalation — a\n  user with only odl-application:admin gets the same \"admin\"  role as someone with global:admin.\n\n  The fix is to keep the full qualified name as the role string and let the Shiro policy configuration match on\n   specific namespace-qualified roles:\n\n  private static Set\u003cString\u003e parseRoles(final List\u003cString\u003e groups) {\n      return groups.stream()\n          .flatMap(s -\u003e Arrays.stream(s.split(\",\")))\n          .map(String::strip)\n          .filter(Predicate.not(String::isBlank))\n          .collect(Collectors.toUnmodifiableSet());\n  }\n\n  global:admin and odl-application:admin remain distinct roles. The Shiro aaa-app-config.xml (or\n  MDSALDynamicAuthorizationFilter policy) then needs to reference the exact qualified name:\n\n  /rests/** \u003d authcBasic, roles[global:admin]\n\n  This is the standard approach used by oauth2-proxy consumers — the namespace is meaningful and should be\n  preserved, not discarded.",
+      "revId": "f09d0a3e7933a1501f257133e24c511a58b3f9ca",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
