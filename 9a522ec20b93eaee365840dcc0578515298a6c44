@@ -16,6 +16,24 @@
       "message": "NPE: authenticationToken.getClass()",
       "revId": "9a522ec20b93eaee365840dcc0578515298a6c44",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c6755d0_543968ec",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/MdsalRealm.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-29T14:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af1bcbb8_b112d7f1",
+      "revId": "9a522ec20b93eaee365840dcc0578515298a6c44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
