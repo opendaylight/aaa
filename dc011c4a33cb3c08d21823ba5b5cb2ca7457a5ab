@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dfa0f3c7_23fa08d4",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyTokenFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-30T12:37:30Z",
+      "side": 1,
+      "message": "Its should be 401",
+      "parentUuid": "116d292f_5486f73d",
+      "revId": "dc011c4a33cb3c08d21823ba5b5cb2ca7457a5ab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6024934b_39c3ea46",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyTokenFilter.java",
         "patchSetId": 9
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "As I understand RolesAuthorizationFilter is to verify if the user have given role not to assignee roles to user.\n\nThe RolesAuthorizationFilter is used like this \"roles[admin]\":\n\u003curls\u003e\n        \u003cpair-key\u003e/**/operations/cluster-admin**\u003c/pair-key\u003e\n        \u003cpair-value\u003eauthcBasic, roles[admin]\u003c/pair-value\u003e\n\u003c/urls\u003e\n\nso it tries to verify if used have role admin in this case. Not sure if this is something we want.",
       "parentUuid": "6024934b_39c3ea46",
+      "revId": "dc011c4a33cb3c08d21823ba5b5cb2ca7457a5ab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df4ce3f3_11911443",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyTokenFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-30T12:37:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9fa9c11a_7b6a0240",
       "revId": "dc011c4a33cb3c08d21823ba5b5cb2ca7457a5ab",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }

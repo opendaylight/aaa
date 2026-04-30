@@ -54,6 +54,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8233787_460dd3e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-30T12:37:30Z",
+      "side": 1,
+      "message": "Fixed. Now we can pass null credentials because we trust the proxy.",
+      "parentUuid": "b06f6b3b_6c902ca6",
+      "revId": "cec24d8e7f7e6f79d1ced6066de7312d9a0665b1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dab725f3_4fe43163",
