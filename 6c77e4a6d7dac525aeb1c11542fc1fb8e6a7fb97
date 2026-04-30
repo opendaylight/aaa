@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ecf414a_4da72d43",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-04-30T14:00:08Z",
+      "side": 1,
+      "message": "jira id",
+      "revId": "6c77e4a6d7dac525aeb1c11542fc1fb8e6a7fb97",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
