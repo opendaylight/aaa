@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cde7e437_a2f84f4c",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyTokenFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-04-30T14:14:06Z",
+      "side": 1,
+      "message": "Yes this should really be 401. If we want to receive 403 on !isAuthorized we rather need https://git.opendaylight.org/gerrit/c/aaa/+/122539",
+      "parentUuid": "b1d02fc4_7d95a5e8",
+      "revId": "dc011c4a33cb3c08d21823ba5b5cb2ca7457a5ab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6024934b_39c3ea46",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyTokenFilter.java",
         "patchSetId": 9
