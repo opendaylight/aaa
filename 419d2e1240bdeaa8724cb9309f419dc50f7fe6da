@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de3de118_25736de6",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderToken.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-04T12:41:59Z",
+      "side": 1,
+      "message": "nonnullbydefault",
+      "revId": "419d2e1240bdeaa8724cb9309f419dc50f7fe6da",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "158e4620_16cd77de",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderToken.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-04T12:41:59Z",
+      "side": 1,
+      "message": "requirenonnull",
+      "revId": "419d2e1240bdeaa8724cb9309f419dc50f7fe6da",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
