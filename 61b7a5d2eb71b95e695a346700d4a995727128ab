@@ -16,6 +16,24 @@
       "message": "Please resolve:https://git.opendaylight.org/gerrit/c/aaa/+/122369/comment/c0fa105a_336fe986/",
       "revId": "61b7a5d2eb71b95e695a346700d4a995727128ab",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09ea9d00_7d1df698",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-04T10:03:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eacb5eb7_138b09b3",
+      "revId": "61b7a5d2eb71b95e695a346700d4a995727128ab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
