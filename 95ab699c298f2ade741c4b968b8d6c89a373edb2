@@ -16,6 +16,24 @@
       "message": "this should be part of commit chain in a \"normal\" commit",
       "revId": "95ab699c298f2ade741c4b968b8d6c89a373edb2",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfa849e3_0dea51e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-05T16:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9904e4a_0b4ef31f",
+      "revId": "95ab699c298f2ade741c4b968b8d6c89a373edb2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
