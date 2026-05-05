@@ -16,6 +16,24 @@
       "message": "AAA-303",
       "revId": "36005ea03763f91077cd1ae33e5ae291dd154c78",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d06db6ec_fa784a3e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-05T16:30:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a8dd271_fd624799",
+      "revId": "36005ea03763f91077cd1ae33e5ae291dd154c78",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
