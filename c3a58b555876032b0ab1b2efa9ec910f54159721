@@ -69,6 +69,24 @@
       "parentUuid": "a8b7c62a_feb699a8",
       "revId": "c3a58b555876032b0ab1b2efa9ec910f54159721",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5345abd3_91941d44",
+        "filename": "aaa-shiro/impl/src/main/resources/initial/aaa-app-config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-05T12:08:39Z",
+      "side": 1,
+      "message": "OK, done in documentation",
+      "parentUuid": "a22c8ed3_3b7a723a",
+      "revId": "c3a58b555876032b0ab1b2efa9ec910f54159721",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
