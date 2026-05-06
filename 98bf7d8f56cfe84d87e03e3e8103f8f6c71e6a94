@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2d299c1_cdaed502",
+        "filename": "aaa-shiro/impl/src/main/resources/OSGI-INF/blueprint/impl-blueprint.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2026-05-06T10:33:08Z",
+      "side": 1,
+      "message": "please do not bring this atrocity to life.\n\nwhat is the technical reason for not using SCR?",
+      "range": {
+        "startLine": 12,
+        "startChar": 21,
+        "endLine": 12,
+        "endChar": 80
+      },
+      "revId": "98bf7d8f56cfe84d87e03e3e8103f8f6c71e6a94",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
