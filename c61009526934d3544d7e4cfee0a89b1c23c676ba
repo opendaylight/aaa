@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "81560ad3_ee337617",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-06T16:02:43Z",
+      "side": 1,
+      "message": "jar",
+      "parentUuid": "b6d7a666_378ebce9",
+      "range": {
+        "startLine": 62,
+        "startChar": 24,
+        "endLine": 62,
+        "endChar": 39
+      },
+      "revId": "c61009526934d3544d7e4cfee0a89b1c23c676ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bf6e1757_4034f836",
         "filename": "parent/pom.xml",
         "patchSetId": 28
@@ -54,6 +78,30 @@
       "writtenOn": "2026-05-06T10:42:45Z",
       "side": 1,
       "message": "alpha-sort",
+      "range": {
+        "startLine": 54,
+        "startChar": 17,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "c61009526934d3544d7e4cfee0a89b1c23c676ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38e4665e_20712415",
+        "filename": "parent/pom.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-06T16:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf6e1757_4034f836",
       "range": {
         "startLine": 54,
         "startChar": 17,
