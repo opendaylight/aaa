@@ -22,6 +22,30 @@
       },
       "revId": "98bf7d8f56cfe84d87e03e3e8103f8f6c71e6a94",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f36d9ea_984498fa",
+        "filename": "aaa-shiro/impl/src/main/resources/OSGI-INF/blueprint/impl-blueprint.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2026-05-06T10:36:08Z",
+      "side": 1,
+      "message": "this particular line was already removed here: https://git.opendaylight.org/gerrit/c/aaa/+/101682",
+      "parentUuid": "c2d299c1_cdaed502",
+      "range": {
+        "startLine": 12,
+        "startChar": 21,
+        "endLine": 12,
+        "endChar": 80
+      },
+      "revId": "98bf7d8f56cfe84d87e03e3e8103f8f6c71e6a94",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
