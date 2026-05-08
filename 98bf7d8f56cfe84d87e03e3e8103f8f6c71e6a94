@@ -48,6 +48,30 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "987ca07e_1ffe5fbc",
+        "filename": "aaa-shiro/impl/src/main/resources/OSGI-INF/blueprint/impl-blueprint.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-08T14:06:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f36d9ea_984498fa",
+      "range": {
+        "startLine": 12,
+        "startChar": 21,
+        "endLine": 12,
+        "endChar": 80
+      },
+      "revId": "98bf7d8f56cfe84d87e03e3e8103f8f6c71e6a94",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "190621bb_30c20657",
@@ -61,6 +85,30 @@
       "writtenOn": "2026-05-06T10:40:10Z",
       "side": 1,
       "message": "any reason for not allowing the stronger RS variants by default?\nany reason for not allowing any of the ES variants?",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "98bf7d8f56cfe84d87e03e3e8103f8f6c71e6a94",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b70a38f_bd2b0074",
+        "filename": "aaa-shiro/impl/src/main/resources/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg",
+        "patchSetId": 18
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-08T14:06:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "190621bb_30c20657",
       "range": {
         "startLine": 15,
         "startChar": 19,
