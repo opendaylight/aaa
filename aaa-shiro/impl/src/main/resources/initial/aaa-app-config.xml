@@ -182,6 +182,15 @@
         <pair-value>org.opendaylight.aaa.shiro.realm.TokenAuthRealm</pair-value>
     </main>
 
+    <main>
+        <pair-key>bearerJwtRealm</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.realm.BearerJwtRealm</pair-value>
+    </main>
+    <main>
+        <pair-key>oauth2ProxyHeaderRealm</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.realm.Oauth2ProxyHeaderRealm</pair-value>
+    </main>
+
     <!--
       ===================================================================================
       =================================== MdsalRealm ====================================
@@ -247,9 +256,26 @@
     <!--
     Add tokenAuthRealm as the only realm.  To enable mdsalRealm, add it to the list to he right of tokenAuthRealm.
     -->
+    <!--
     <main>
         <pair-key>securityManager.realms</pair-key>
         <pair-value>$tokenAuthRealm</pair-value>
+    </main>
+    -->
+
+    <main>
+        <pair-key>securityManager.realms</pair-key>
+        <pair-value>$bearerJwtRealm, $oauth2ProxyHeaderRealm</pair-value>
+    </main>
+
+    <main>
+        <pair-key>authcBearerOrProxy</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.filters.BearerOrOauth2ProxyAuthenticationFilter</pair-value>
+    </main>
+
+    <main>
+        <pair-key>roles</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.filters.ODLRolesAuthorizationFilter</pair-value>
     </main>
 
     <!-- Start moonAuthRealm commented out
@@ -332,18 +358,18 @@
     End moonAuthRealm commented out-->
     <urls>
         <pair-key>/**/operations/cluster-admin**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
+        <pair-value>noSessionCreation, authcBearerOrProxy, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**/v1/**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
+        <pair-value>noSessionCreation, authcBearerOrProxy, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**/data/aaa*/**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
+        <pair-value>noSessionCreation, authcBearerOrProxy, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**</pair-key>
-        <pair-value>authcBasic</pair-value>
+        <pair-value>noSessionCreation, authcBearerOrProxy</pair-value>
     </urls>
 </shiro-configuration>
