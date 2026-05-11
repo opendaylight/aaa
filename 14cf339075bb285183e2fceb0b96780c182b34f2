@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a86c583b_631cd44e",
+        "filename": "aaa-shiro/impl/src/main/resources/initial/aaa-app-config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-11T12:10:25Z",
+      "side": 1,
+      "message": "this should be documented for very usecase, but not here",
+      "revId": "14cf339075bb285183e2fceb0b96780c182b34f2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
