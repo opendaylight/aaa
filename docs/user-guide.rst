@@ -1121,6 +1121,128 @@ Bearer tokens:
     ``authcBearer`` is the Shiro filter that extracts the ``Authorization:
     Bearer`` header and delegates it to the configured realms.
 
+BearerOrOauth2ProxyAuthenticationFilter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+How it works
+~~~~~~~~~~~~
+
+``BearerOrOauth2ProxyAuthenticationFilter`` is a single Shiro authentication
+filter that handles both OAuth2 Proxy forwarded-user headers and
+``Authorization: Bearer <JWT>`` in one filter-chain step. It allows endpoints
+to serve both direct JWT clients and clients authenticated through an
+`OAuth2 Proxy <https://oauth2-proxy.github.io/oauth2-proxy/>`_ simultaneously.
+
+Request processing order within a single request:
+
+1. If a ``filterchain.cfg`` filter that runs *before* the Shiro
+   ``AAAShiroFilter`` has already authenticated the request and bound a
+   subject to the thread, ``isAccessAllowed`` returns ``true`` and this
+   filter passes the request through without inspecting any header.
+2. If the request carries an ``X-Forwarded-User`` header (set by OAuth2 Proxy
+   after the user has been authenticated at the IdP), the filter creates an
+   ``Oauth2ProxyToken`` from the forwarded user and groups. Shiro routes the
+   token to ``Oauth2ProxyHeaderTokenRealm``.
+3. If the request carries ``Authorization: Bearer …``, the filter extracts
+   the raw JWT string and creates a ``BearerToken``. Shiro routes the token
+   to ``BearerJwtRealm`` for JWT signature and claims verification.
+4. If neither credential is present, or authentication fails, the filter sends
+   a ``401 Unauthorized`` response with a ``WWW-Authenticate: Bearer``
+   challenge.
+
+.. warning::
+
+    When using the OAuth2 Proxy path, OpenDaylight must only be reachable
+    through the proxy. Direct access to the ODL HTTP port must be blocked at
+    the network level; otherwise a client can forge the ``X-Forwarded-User``
+    header and gain unauthenticated access.
+
+How to enable BearerOrOauth2ProxyAuthenticationFilter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**1. Register both realms**
+
+Add ``oauth2ProxyTokenRealm`` alongside ``bearerJwtRealm`` so that the
+security manager can route both credential types:
+
+.. code-block:: xml
+
+    <main>
+        <pair-key>bearerJwtRealm</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.realm.BearerJwtRealm</pair-value>
+    </main>
+    <main>
+        <pair-key>oauth2ProxyHeaderRealm</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.realm.Oauth2ProxyHeaderRealm</pair-value>
+    </main>
+
+    <main>
+        <pair-key>securityManager.realms</pair-key>
+        <pair-value>$bearerJwtRealm, $oauth2ProxyHeaderRealm</pair-value>
+    </main>
+
+**2. Register the filter**
+
+Declare the combined filter under the name ``authcBearerOrProxy``:
+
+.. code-block:: xml
+
+    <main>
+        <pair-key>authcBearerOrProxy</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.filters.BearerOrOauth2ProxyAuthenticationFilter</pair-value>
+    </main>
+
+**3. Override the** ``roles`` **filter to return 403 Forbidden**
+
+Add the following ``<main>`` entry to replace Shiro's built-in ``roles``
+filter with ``ODLRolesAuthorizationFilter``:
+
+.. code-block:: xml
+
+    <main>
+        <pair-key>roles</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.filters.ODLRolesAuthorizationFilter</pair-value>
+    </main>
+
+Shiro's default ``RolesAuthorizationFilter`` returns HTTP 401 Unauthorized
+when an authenticated user lacks the required role. This is semantically
+incorrect: 401 signals that authentication is missing or invalid and invites
+the client to re-authenticate, whereas 403 Forbidden correctly communicates
+that the identity is known but the permission is not granted. Declaring
+``roles`` in ``<main>`` overrides the built-in filter for all URL patterns
+that reference ``roles[<role>]``, so no changes to the ``<urls>`` section
+are needed.
+
+**4. Switch URL patterns**
+
+Replace ``authcBearer`` with ``authcBearerOrProxy`` in the ``<urls>`` section:
+
+.. code-block:: xml
+
+    <urls>
+        <pair-key>/**/operations/cluster-admin**</pair-key>
+        <pair-value>noSessionCreation, authcBearerOrProxy, roles[admin]</pair-value>
+    </urls>
+    <urls>
+        <pair-key>/**/v1/**</pair-key>
+        <pair-value>noSessionCreation, authcBearerOrProxy, roles[admin]</pair-value>
+    </urls>
+    <urls>
+        <pair-key>/**/data/aaa*/**</pair-key>
+        <pair-value>noSessionCreation, authcBearerOrProxy, roles[admin]</pair-value>
+    </urls>
+    <urls>
+        <pair-key>/**</pair-key>
+        <pair-value>noSessionCreation, authcBearerOrProxy</pair-value>
+    </urls>
+
+.. note::
+
+    ``noSessionCreation`` is recommended for stateless REST endpoints. The
+    filter inspects the available credential and creates the appropriate token
+    type. There is no performance overhead when only one realm is active: once
+    the first realm succeeds, Shiro stops consulting further realms.
+
 Authorization Configuration
 ---------------------------
 
