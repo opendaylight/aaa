@@ -16,6 +16,24 @@
       "message": "\u003curls\u003e\n\u003cpair-key\u003e/**/openapi/explorer/**\u003c/pair-key\u003e\n\u003cpair-value\u003eanon\u003c/pair-value\u003e\n\u003c/urls\u003e",
       "revId": "d651572556e43e907614875d656ae2155670f467",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2bf8e03_af58f710",
+        "filename": "aaa-shiro/impl/src/main/resources/initial/aaa-app-config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-12T11:29:02Z",
+      "side": 1,
+      "message": "and ... :8181/openapi/api/v3/",
+      "parentUuid": "72c26118_d7b0155c",
+      "revId": "d651572556e43e907614875d656ae2155670f467",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
