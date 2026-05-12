@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "324bb916_f6b2ff32",
+        "filename": "docs/user-guide.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-12T13:59:24Z",
+      "side": 1,
+      "message": "what\u0027s default now?",
+      "revId": "5366c33b70117c77ef5ef8afe66309c26fafa79c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19fcdfe9_51c39bf7",
+        "filename": "docs/user-guide.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-12T13:59:24Z",
+      "side": 1,
+      "message": "\u003cpair-key\u003ebearerJwtRealm\u003c/pair-key\u003e",
+      "revId": "5366c33b70117c77ef5ef8afe66309c26fafa79c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a25c41f0_c6ef955c",
+        "filename": "docs/user-guide.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-12T13:59:24Z",
+      "side": 1,
+      "message": "bearerJwtRealm",
+      "revId": "5366c33b70117c77ef5ef8afe66309c26fafa79c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "252e75ca_50b635c3",
+        "filename": "docs/user-guide.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-12T13:59:24Z",
+      "side": 1,
+      "message": "$bearerJwtRealm",
+      "revId": "5366c33b70117c77ef5ef8afe66309c26fafa79c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
