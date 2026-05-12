@@ -22,6 +22,29 @@
       },
       "revId": "83b11cef94971516eb0929be97815acbd1d4a408",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fb3ae6c_5f7cc80e",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2026-05-12T08:36:26Z",
+      "side": 1,
+      "message": "okay, so this is quite arcane, deals with user input and is untested.\n\nmake this @VisibleForTesting, explain what exactly the algorithm is and how it deals with malformed (and malicious!) inputs.",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 70
+      },
+      "revId": "83b11cef94971516eb0929be97815acbd1d4a408",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
