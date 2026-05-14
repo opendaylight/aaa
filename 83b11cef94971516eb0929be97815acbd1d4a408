@@ -104,6 +104,30 @@
       },
       "revId": "83b11cef94971516eb0929be97815acbd1d4a408",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb18e764_7e7121e0",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-14T08:00:45Z",
+      "side": 1,
+      "message": "no, we do not deal with user input, users are advised to use proxy and to block other ways to speak to ODL\n\nsee: https://git.opendaylight.org/gerrit/c/aaa/+/122518/17/docs/user-guide.rst#820",
+      "parentUuid": "1fb3ae6c_5f7cc80e",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 70
+      },
+      "revId": "83b11cef94971516eb0929be97815acbd1d4a408",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
