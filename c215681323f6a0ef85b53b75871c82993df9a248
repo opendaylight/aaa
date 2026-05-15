@@ -24,6 +24,30 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "93f01639_9a3df9bc",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-15T15:09:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48482358_921d2174",
+      "range": {
+        "startLine": 94,
+        "startChar": 21,
+        "endLine": 94,
+        "endChar": 44
+      },
+      "revId": "c215681323f6a0ef85b53b75871c82993df9a248",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1abff862_25c00d32",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-05-12T08:39:42Z",
       "side": 1,
       "message": "assertInstanceOf()",
+      "range": {
+        "startLine": 128,
+        "startChar": 25,
+        "endLine": 128,
+        "endChar": 50
+      },
+      "revId": "c215681323f6a0ef85b53b75871c82993df9a248",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4debd89_15d3f7b9",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-15T15:09:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1abff862_25c00d32",
       "range": {
         "startLine": 128,
         "startChar": 25,

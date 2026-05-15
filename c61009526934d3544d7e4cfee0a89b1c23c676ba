@@ -91,6 +91,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8b5fee75_ebca52bc",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 28
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-15T15:09:46Z",
+      "side": 1,
+      "message": "I see, now it should explicitly be part of odl-aaa-shiro",
+      "parentUuid": "4c4c6af1_620a0628",
+      "range": {
+        "startLine": 62,
+        "startChar": 24,
+        "endLine": 62,
+        "endChar": 39
+      },
+      "revId": "c61009526934d3544d7e4cfee0a89b1c23c676ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bf6e1757_4034f836",
         "filename": "parent/pom.xml",
         "patchSetId": 28
