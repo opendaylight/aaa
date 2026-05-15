@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c918742e_7114fb7b",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-15T15:09:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27de4fe3_a517d11e",
+      "revId": "50cde0e9356e3895dc69a3883f1a660ca24877fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84ffa0cf_be597729",
@@ -35,6 +53,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6a5829c_5b06241c",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealmTest.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-15T15:09:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84ffa0cf_be597729",
+      "revId": "50cde0e9356e3895dc69a3883f1a660ca24877fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dfc58e53_0f567d89",
@@ -48,6 +84,24 @@
       "writtenOn": "2026-05-15T09:44:45Z",
       "side": 1,
       "message": "final",
+      "revId": "50cde0e9356e3895dc69a3883f1a660ca24877fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "789d75dc_ed9c38b0",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealmTest.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-15T15:09:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfc58e53_0f567d89",
       "revId": "50cde0e9356e3895dc69a3883f1a660ca24877fb",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
