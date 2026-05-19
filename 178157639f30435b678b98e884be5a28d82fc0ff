@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "79c36a0a_870ce8b9",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-19T08:28:40Z",
+      "side": 1,
+      "message": "we are not processing user input, we have values passed by keycloak and oauth2 proxy",
+      "parentUuid": "0258c137_568b6c5c",
+      "revId": "178157639f30435b678b98e884be5a28d82fc0ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "abf2fa7b_24c0a880",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
         "patchSetId": 27
