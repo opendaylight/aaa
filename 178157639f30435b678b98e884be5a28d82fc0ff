@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7004cbf5_da05ac97",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-19T07:26:35Z",
+      "side": 1,
+      "message": "We should sanitize the user as well.. in case it\u0027s forged to contain null byte, newline, etc.. Right now these would reach the Principal unfiltered",
+      "revId": "178157639f30435b678b98e884be5a28d82fc0ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fc63b8a_57efc211",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-19T07:26:35Z",
+      "side": 1,
+      "message": "use headerValue.isBlank() instead",
+      "revId": "178157639f30435b678b98e884be5a28d82fc0ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c9a76d2_84130ed3",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-19T07:26:35Z",
+      "side": 1,
+      "message": "Don\u0027t override the iteration-variable. Introduce new final variable for the sanitized header.",
+      "revId": "178157639f30435b678b98e884be5a28d82fc0ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8d005f8_2f982a16",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilterTest.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-19T07:26:35Z",
+      "side": 1,
+      "message": "These constants don\u0027t need to be redefined here. Just set the ones in Oauth2ProxyHeaderFilter to package-private and use those.",
+      "revId": "178157639f30435b678b98e884be5a28d82fc0ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5dfb7b6_29337fa0",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilterTest.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-19T07:26:35Z",
+      "side": 1,
+      "message": "Replace Stream.of().toList() with List.of()",
+      "revId": "178157639f30435b678b98e884be5a28d82fc0ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
