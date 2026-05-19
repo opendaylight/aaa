@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e75d3a6_44ea4135",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-19T09:11:53Z",
+      "side": 1,
+      "message": "Can be null, right? @Nullable",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7c5abad_6a152680",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-19T09:11:53Z",
+      "side": 1,
+      "message": "Move this to constructor. Here it will flood logs on every authentication.",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c74ed3e1_b106965a",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-19T09:11:53Z",
+      "side": 1,
+      "message": "Is the @singleton needed here?",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f16070c2_d1624de5",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-19T09:11:53Z",
+      "side": 1,
+      "message": "A malformed URL in bearerjwtrealm.cfg may produce URISyntaxException. Make sure to handle the exception, log failure and fail gracefully.",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f284d029_c3e348dc",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-19T09:11:53Z",
+      "side": 1,
+      "message": "This can end-up rejecting all valid tokens, if the expectedAudience is non-null, but every segment is a whitespace. That produces empty Set and DefaultJWTClaimsVerifier interprets it as \"no token can match\". Add a test for this edge case as well, so we know we\u0027re covered.",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdef1159_6c34d233",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-19T09:11:53Z",
+      "side": 1,
+      "message": "Make sure to keep the section dividers consistent with the rest of the codebase. I haven\u0027t seen this style anywhere else.",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34d5e7d2_a6e801d6",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-19T09:11:53Z",
+      "side": 1,
+      "message": "2048-bit key generation takes a while. 1024 should be sufficient for unit-tests. Also the System.nanoTime suffix unnecessary - keys are per-test locals and don\u0027t need unique ID\u0027s",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
