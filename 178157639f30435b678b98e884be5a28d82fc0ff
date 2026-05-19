@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a3116aec_7ac60561",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2026-05-19T12:16:05Z",
+      "side": 1,
+      "message": "\"user input\" \u003d\u003d anything coming from outside of the JVM.\n\nsee https://www.wiz.io/blog/github-rce-vulnerability-cve-2026-3854#the-vulnerability-x-stat-field-injection-26 for an example how trusting HTTP headers can lead to a complete system compromise",
+      "parentUuid": "79c36a0a_870ce8b9",
+      "revId": "178157639f30435b678b98e884be5a28d82fc0ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "abf2fa7b_24c0a880",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
         "patchSetId": 27
