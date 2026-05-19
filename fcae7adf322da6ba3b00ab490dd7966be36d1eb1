@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46cdefc2_24c99f11",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-19T08:04:44Z",
+      "side": 1,
+      "message": "No need to set the CredentialMatcher? This defaults to SimpleCredentialMatcher. Is it sufficient? Please investigate and if it is harmless, add a comment about it - why it is harmless.",
+      "revId": "fcae7adf322da6ba3b00ab490dd7966be36d1eb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38b0d1cd_14f6f720",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-19T08:04:44Z",
+      "side": 1,
+      "message": "The JSON array from JWTClaimsSet.getStringListClaim() can contain null elements. Is such case Set.copyOf() will throw NPE. Filter out nulls before returning.",
+      "revId": "fcae7adf322da6ba3b00ab490dd7966be36d1eb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdf8c022_cdbfd7e0",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-19T08:04:44Z",
+      "side": 1,
+      "message": "Add test case for the null element in JWTClaimsSet.getStringListClaim(). Just so we can be sure the case is covered.",
+      "revId": "fcae7adf322da6ba3b00ab490dd7966be36d1eb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
