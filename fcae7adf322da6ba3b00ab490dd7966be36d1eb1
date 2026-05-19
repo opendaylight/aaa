@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "874bd873_8af956b4",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-19T11:39:38Z",
+      "side": 1,
+      "message": "For JWT SimpleCredentialMatcheris sufficient as there are no real credentials to match and we use the token as credentials.\n\nWhole authorization and authentication of user is done based on the token. No matching with stored credentials is done.",
+      "parentUuid": "54acdbfd_ad17ca53",
+      "revId": "fcae7adf322da6ba3b00ab490dd7966be36d1eb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "38b0d1cd_14f6f720",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
         "patchSetId": 31
@@ -49,6 +67,24 @@
       "writtenOn": "2026-05-19T08:04:44Z",
       "side": 1,
       "message": "The JSON array from JWTClaimsSet.getStringListClaim() can contain null elements. Is such case Set.copyOf() will throw NPE. Filter out nulls before returning.",
+      "revId": "fcae7adf322da6ba3b00ab490dd7966be36d1eb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e8cbd74_17304abd",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-19T11:39:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38b0d1cd_14f6f720",
       "revId": "fcae7adf322da6ba3b00ab490dd7966be36d1eb1",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
@@ -66,6 +102,24 @@
       "writtenOn": "2026-05-19T08:04:44Z",
       "side": 1,
       "message": "Add test case for the null element in JWTClaimsSet.getStringListClaim(). Just so we can be sure the case is covered.",
+      "revId": "fcae7adf322da6ba3b00ab490dd7966be36d1eb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d05a26d1_d1148f03",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-19T11:39:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdf8c022_cdbfd7e0",
       "revId": "fcae7adf322da6ba3b00ab490dd7966be36d1eb1",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
