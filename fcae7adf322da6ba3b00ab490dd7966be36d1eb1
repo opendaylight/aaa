@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "54acdbfd_ad17ca53",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-19T08:27:01Z",
+      "side": 1,
+      "message": "what\u0027s the purpose of credential matcher? we are using JWT which is signed..",
+      "parentUuid": "46cdefc2_24c99f11",
+      "revId": "fcae7adf322da6ba3b00ab490dd7966be36d1eb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "38b0d1cd_14f6f720",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
         "patchSetId": 31
