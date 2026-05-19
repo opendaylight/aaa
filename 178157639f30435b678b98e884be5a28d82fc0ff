@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "abf2fa7b_24c0a880",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-19T07:59:13Z",
+      "side": 1,
+      "message": "Add log.error about the unsupported principal",
+      "revId": "178157639f30435b678b98e884be5a28d82fc0ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7fc63b8a_57efc211",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
         "patchSetId": 27
