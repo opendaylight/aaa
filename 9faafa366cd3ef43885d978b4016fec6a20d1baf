@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d5b62ee_8104ab22",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-19T17:08:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e75d3a6_44ea4135",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e7c5abad_6a152680",
@@ -35,6 +53,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ceb70291_6661d334",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-19T17:08:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7c5abad_6a152680",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c74ed3e1_b106965a",
@@ -48,6 +84,24 @@
       "writtenOn": "2026-05-19T09:11:53Z",
       "side": 1,
       "message": "Is the @singleton needed here?",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "363a19c2_932a7644",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-19T17:08:50Z",
+      "side": 1,
+      "message": "I expect we want only one instance of configuration to exist",
+      "parentUuid": "c74ed3e1_b106965a",
       "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
@@ -116,6 +170,24 @@
       "writtenOn": "2026-05-19T09:11:53Z",
       "side": 1,
       "message": "2048-bit key generation takes a while. 1024 should be sufficient for unit-tests. Also the System.nanoTime suffix unnecessary - keys are per-test locals and don\u0027t need unique ID\u0027s",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a5c4489_2ee5887a",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-19T17:08:50Z",
+      "side": 1,
+      "message": "this would require using deprecated constructor for RSASSASigner",
+      "parentUuid": "34d5e7d2_a6e801d6",
       "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
