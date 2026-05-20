@@ -161,6 +161,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "16092ccf_c898036f",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-20T08:57:32Z",
+      "side": 1,
+      "message": "no config, no JWT verification, then ok you can have a log in realm constructor that its being used without configuration/JWT verification",
+      "parentUuid": "f5954645_514cbc61",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f284d029_c3e348dc",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
         "patchSetId": 24
