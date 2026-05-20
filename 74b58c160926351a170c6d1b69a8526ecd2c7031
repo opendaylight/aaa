@@ -16,6 +16,24 @@
       "message": "This could return already sanitized user - then just use it in createToken and onAccessDenied. With that the realm doesn\u0027t need to sanitize anything.",
       "revId": "74b58c160926351a170c6d1b69a8526ecd2c7031",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9c5e9e6_83c23f84",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilter.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-20T10:01:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72731d72_0f5ad67d",
+      "revId": "74b58c160926351a170c6d1b69a8526ecd2c7031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
