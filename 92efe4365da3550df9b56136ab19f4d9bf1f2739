@@ -33,6 +33,24 @@
       "message": "wrong copy-paste description",
       "revId": "92efe4365da3550df9b56136ab19f4d9bf1f2739",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51d28f4b_c8cd424b",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-20T15:37:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a590259_92471c1d",
+      "revId": "92efe4365da3550df9b56136ab19f4d9bf1f2739",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
