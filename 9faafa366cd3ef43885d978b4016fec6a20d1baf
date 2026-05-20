@@ -143,6 +143,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f5954645_514cbc61",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-20T08:42:53Z",
+      "side": 1,
+      "message": "right, but I\u0027m not sure how this can be handled gracefully\n\nI went with throwing IllegalArgumentException and logging the error.\nI expect we don\u0027t want to create BearerJwtRealmConfigImpl with jwtProcessor \u003d null\nin such case",
+      "parentUuid": "f16070c2_d1624de5",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f284d029_c3e348dc",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
         "patchSetId": 24
@@ -154,6 +172,24 @@
       "writtenOn": "2026-05-19T09:11:53Z",
       "side": 1,
       "message": "This can end-up rejecting all valid tokens, if the expectedAudience is non-null, but every segment is a whitespace. That produces empty Set and DefaultJWTClaimsVerifier interprets it as \"no token can match\". Add a test for this edge case as well, so we know we\u0027re covered.",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "373cccea_807bc115",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-20T08:42:53Z",
+      "side": 1,
+      "message": "here the question is what\u0027s the desired outcome\n\nshould config like this result in audience \u003d null?\nIs some WARN log enough in this case?\n\nagain I went with throwing exception as IMO this would count as some malformed configuration",
+      "parentUuid": "f284d029_c3e348dc",
       "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
