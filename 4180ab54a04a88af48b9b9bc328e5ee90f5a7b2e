@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a45115dc_da8cce35",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/ODLRolesAuthorizationFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-20T11:53:42Z",
+      "side": 1,
+      "message": "can be final",
+      "revId": "4180ab54a04a88af48b9b9bc328e5ee90f5a7b2e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "483143ba_a639a470",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/filters/ODLRolesAuthorizationFilterTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-20T11:53:42Z",
+      "side": 1,
+      "message": "Add test for unauthenticated path - where getPrincipal() returns null and the filter delegates to super.onAccessDenied()",
+      "revId": "4180ab54a04a88af48b9b9bc328e5ee90f5a7b2e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
