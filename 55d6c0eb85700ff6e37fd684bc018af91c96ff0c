@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccac55ee_9d67cd87",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-20T16:37:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a626309_c538baaf",
+      "revId": "55d6c0eb85700ff6e37fd684bc018af91c96ff0c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "90aa2071_7d3afe48",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-20T12:33:46Z",
       "side": 1,
       "message": "Is it disabled? \"at+jwt\" is used as the expectedType. Also why does it defaults to at+jwt, if the Configuration above defaults to JWT only?",
+      "revId": "55d6c0eb85700ff6e37fd684bc018af91c96ff0c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b74feb79_835161f7",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-20T16:37:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90aa2071_7d3afe48",
       "revId": "55d6c0eb85700ff6e37fd684bc018af91c96ff0c",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
