@@ -16,6 +16,23 @@
       "message": "Is it possible to add a test for the retry functionality? - simulate the \"network issues\" and have the retry fire.",
       "revId": "38121a4d9952b92ee23527f2d2f6b36f08043138",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "745e8459_f89d3f0b",
+        "filename": "aaa-shiro/impl/src/main/resources/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg",
+        "patchSetId": 17
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-20T06:56:31Z",
+      "side": 1,
+      "message": "Retrival isn\u0027t a word. Make sure to fix it in the code and docs as well.",
+      "revId": "38121a4d9952b92ee23527f2d2f6b36f08043138",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
