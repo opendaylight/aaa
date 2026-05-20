@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9b6e75d_7f8f6f7b",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-20T06:34:52Z",
+      "side": 1,
+      "message": "These default constants are also defined in BearerJwtRealmConfigImpl.Configuration (and even the .cfg file). Can we keep just one source?",
+      "revId": "4963b7dfc0cd8c900c5481274790f03afffebd6b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd8280be_5cf6b9b2",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-20T06:34:52Z",
+      "side": 1,
+      "message": "The claim name may not be \"groups\" here anymore. making the logging misleading",
+      "revId": "4963b7dfc0cd8c900c5481274790f03afffebd6b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d97cc12_27587d37",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-20T06:34:52Z",
+      "side": 1,
+      "message": "the default role-claim name is \"groups\" not \"roles\"",
+      "revId": "4963b7dfc0cd8c900c5481274790f03afffebd6b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "924924ab_7d1c6f82",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-20T06:34:52Z",
+      "side": 1,
+      "message": "Please test with custom role-claim name as well.",
+      "revId": "4963b7dfc0cd8c900c5481274790f03afffebd6b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
