@@ -36,6 +36,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ad07a62_ecce93f8",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-20T15:37:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "502a9699_3518a34f",
+      "revId": "4963b7dfc0cd8c900c5481274790f03afffebd6b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd8280be_5cf6b9b2",
@@ -53,6 +71,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae1439a3_f271ec6a",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-20T15:37:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd8280be_5cf6b9b2",
+      "revId": "4963b7dfc0cd8c900c5481274790f03afffebd6b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d97cc12_27587d37",
@@ -66,6 +102,24 @@
       "writtenOn": "2026-05-20T06:34:52Z",
       "side": 1,
       "message": "the default role-claim name is \"groups\" not \"roles\"",
+      "revId": "4963b7dfc0cd8c900c5481274790f03afffebd6b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0eeca8cd_fd396391",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-20T15:37:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d97cc12_27587d37",
       "revId": "4963b7dfc0cd8c900c5481274790f03afffebd6b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
@@ -101,6 +155,24 @@
       "side": 1,
       "message": "aha, yes, that means change groups to something else",
       "parentUuid": "924924ab_7d1c6f82",
+      "revId": "4963b7dfc0cd8c900c5481274790f03afffebd6b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12205fde_4ec0c1d0",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-20T15:37:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76e63584_68309011",
       "revId": "4963b7dfc0cd8c900c5481274790f03afffebd6b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
