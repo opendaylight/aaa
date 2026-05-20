@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "502a9699_3518a34f",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-20T09:04:05Z",
+      "side": 1,
+      "message": "No, default config is declared in Java and in .cfg file as ussuall.",
+      "parentUuid": "c9b6e75d_7f8f6f7b",
+      "revId": "4963b7dfc0cd8c900c5481274790f03afffebd6b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fd8280be_5cf6b9b2",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
         "patchSetId": 21
