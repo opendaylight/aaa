@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b88cc98_af9da651",
+        "filename": "docs/user-guide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-20T12:44:19Z",
+      "side": 1,
+      "message": "Should be Oauth2ProxyHeaderRealm",
+      "revId": "6c7fca3ff6ce84db9f9cfb177cf7980476f37b2b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
