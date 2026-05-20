@@ -33,6 +33,24 @@
       "message": "Pretty sure this should be \"bearerJwtRealm\", not \"oauth2ProxyRealm\"",
       "revId": "8d6d7ab30c3ce8e7cd2f03f35232447aa73137e9",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74099276_415467b4",
+        "filename": "docs/user-guide.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-20T09:08:12Z",
+      "side": 1,
+      "message": "yes, https://git.opendaylight.org/gerrit/c/aaa/+/122821/5/docs/user-guide.rst, but its better to apply it alrady here",
+      "parentUuid": "ef168ad3_225e571a",
+      "revId": "8d6d7ab30c3ce8e7cd2f03f35232447aa73137e9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
