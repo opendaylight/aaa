@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c8cac3a_32026a1d",
+        "filename": "docs/user-guide.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-20T15:38:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85da93b3_a0e42a90",
+      "revId": "8d6d7ab30c3ce8e7cd2f03f35232447aa73137e9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef168ad3_225e571a",
@@ -49,6 +67,24 @@
       "side": 1,
       "message": "yes, https://git.opendaylight.org/gerrit/c/aaa/+/122821/5/docs/user-guide.rst, but its better to apply it alrady here",
       "parentUuid": "ef168ad3_225e571a",
+      "revId": "8d6d7ab30c3ce8e7cd2f03f35232447aa73137e9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88c8702d_0b773911",
+        "filename": "docs/user-guide.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-20T15:38:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74099276_415467b4",
       "revId": "8d6d7ab30c3ce8e7cd2f03f35232447aa73137e9",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
