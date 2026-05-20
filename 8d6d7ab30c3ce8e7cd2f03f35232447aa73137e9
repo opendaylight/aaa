@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85da93b3_a0e42a90",
+        "filename": "docs/user-guide.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-20T07:02:31Z",
+      "side": 1,
+      "message": "The \"DefaultJWKSetCache\" is incorrect - should be CachingJWKSetSource. But it\u0027s best to drop the name altogether here. It\u0027s not necessary.",
+      "revId": "8d6d7ab30c3ce8e7cd2f03f35232447aa73137e9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef168ad3_225e571a",
+        "filename": "docs/user-guide.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-20T07:02:31Z",
+      "side": 1,
+      "message": "Pretty sure this should be \"bearerJwtRealm\", not \"oauth2ProxyRealm\"",
+      "revId": "8d6d7ab30c3ce8e7cd2f03f35232447aa73137e9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
