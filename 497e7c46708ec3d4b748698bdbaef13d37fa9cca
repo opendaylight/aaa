@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "884bedde_8eafabf2",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-20T07:59:02Z",
+      "side": 1,
+      "message": "DONE\nbut I done it inside filter so we can return 401 in case of such user",
+      "parentUuid": "2a737361_b4f50c81",
+      "revId": "497e7c46708ec3d4b748698bdbaef13d37fa9cca",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9bb994f2_7a0806b1",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-20T07:18:29Z",
       "side": 1,
       "message": "Please use the sanitizedUser as both \"username\" and \"userID\". No reason to use the raw user since we don\u0027t trust it.",
+      "revId": "497e7c46708ec3d4b748698bdbaef13d37fa9cca",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa8a29af_feab370f",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-20T07:59:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bb994f2_7a0806b1",
       "revId": "497e7c46708ec3d4b748698bdbaef13d37fa9cca",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
