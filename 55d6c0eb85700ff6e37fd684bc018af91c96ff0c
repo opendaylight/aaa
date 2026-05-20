@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a626309_c538baaf",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-20T12:33:46Z",
+      "side": 1,
+      "message": "The attributeDefinition is misleading - mixing together OAUTH 2.0 access tokens (\"at+jwt\") and the generic JOSE type headers (\"JWT\"). Please pick one and clarify the attributeDefinition.",
+      "revId": "55d6c0eb85700ff6e37fd684bc018af91c96ff0c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90aa2071_7d3afe48",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-20T12:33:46Z",
+      "side": 1,
+      "message": "Is it disabled? \"at+jwt\" is used as the expectedType. Also why does it defaults to at+jwt, if the Configuration above defaults to JWT only?",
+      "revId": "55d6c0eb85700ff6e37fd684bc018af91c96ff0c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
