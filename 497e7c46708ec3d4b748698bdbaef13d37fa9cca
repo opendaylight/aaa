@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a737361_b4f50c81",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-20T07:18:29Z",
+      "side": 1,
+      "message": "sanitizedUser needs to be checked for blankness. If the user consisted entirely of control characters, stripping it like this would end up with empty string. If possible add a test to cover this edge-case as well.",
+      "revId": "497e7c46708ec3d4b748698bdbaef13d37fa9cca",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bb994f2_7a0806b1",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-20T07:18:29Z",
+      "side": 1,
+      "message": "Please use the sanitizedUser as both \"username\" and \"userID\". No reason to use the raw user since we don\u0027t trust it.",
+      "revId": "497e7c46708ec3d4b748698bdbaef13d37fa9cca",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
