@@ -208,6 +208,24 @@
       "parentUuid": "34d5e7d2_a6e801d6",
       "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79ad8a0e_fc4ab278",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-20T06:05:13Z",
+      "side": 1,
+      "message": "y, use \"secure\" standard in test, IMO",
+      "parentUuid": "2a5c4489_2ee5887a",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
