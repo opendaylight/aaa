@@ -54,6 +54,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b87f8fb0_135aa240",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-22T12:43:21Z",
+      "side": 1,
+      "message": "make it nullable and check in realm",
+      "parentUuid": "62a5c5ec_9096c36f",
+      "revId": "497e7c46708ec3d4b748698bdbaef13d37fa9cca",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9bb994f2_7a0806b1",
