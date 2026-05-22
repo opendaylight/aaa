@@ -72,6 +72,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2940844b_311ec355",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/Oauth2ProxyHeaderRealm.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-05-22T08:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3116aec_7ac60561",
+      "revId": "178157639f30435b678b98e884be5a28d82fc0ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "abf2fa7b_24c0a880",
