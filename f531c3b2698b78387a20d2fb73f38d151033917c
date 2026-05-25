@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "396de519_c142e86f",
+        "filename": "features/odl-aaa-shiro/pom.xml",
+        "patchSetId": 30
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-25T08:05:17Z",
+      "side": 1,
+      "message": "is this done also for proxy header configuration?",
+      "revId": "f531c3b2698b78387a20d2fb73f38d151033917c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
