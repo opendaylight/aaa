@@ -7,8 +7,11 @@
  */
 package org.opendaylight.aaa.shiro.filters;
 
+import java.util.regex.Pattern;
+import org.eclipse.jdt.annotation.NonNull;
+
 /**
- * Configuration for {@link Oauth2ProxyHeaderFilter}. Exposed as an OSGi service and populated from
+ * Configuration for Oauth2 Proxy Header authentication. Exposed as an OSGi service and populated from
  * {@code org.opendaylight.aaa.shiro.oauth2proxy.cfg} via OSGi Configuration Admin.
  */
 public interface Oauth2ProxyHeaderFilterConfig {
@@ -56,9 +59,19 @@ public interface Oauth2ProxyHeaderFilterConfig {
     int maxRolesPerUser();
 
     /**
-     * Returns the regex character class expression used to whitelist characters in usernames and role names.
+     * Returns the compiled pattern used to whitelist characters in a single username or role name.
      *
-     * <p>Must be a valid regex character class expression (e.g. {@code [a-zA-Z0-9_.:\\-@]}).
+     * <p>Anchored so the entire value must consist of one or more characters from the configured
+     * character class (e.g. {@code [a-zA-Z0-9_.:\-@]}).
      */
-    String allowedChars();
+    @NonNull Pattern allowedCharactersPattern();
+
+    /**
+     * Returns the compiled pattern used to validate an entire {@code X-Forwarded-Groups} header value.
+     *
+     * <p>Matches a comma-separated list of one or more roles, where each role may optionally carry a
+     * {@code role:} prefix and is built from the character class of {@link #allowedCharactersPattern()}.
+     * Whitespace is permitted around individual roles and around the header as a whole.
+     */
+    @NonNull Pattern headerPattern();
 }
