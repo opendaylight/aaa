@@ -7,9 +7,16 @@
  */
 package org.opendaylight.aaa.shiro.filters;
 
+import com.google.common.annotations.VisibleForTesting;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import javax.inject.Singleton;
+import javax.servlet.ServletRequest;
+import org.apache.shiro.web.util.WebUtils;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.metatype.annotations.AttributeDefinition;
@@ -66,7 +73,8 @@ public final class Oauth2ProxyHeaderFilterConfigImpl implements Oauth2ProxyHeade
     private final int maxRoleLength;
     private final int maxUserLength;
     private final int maxRolesPerUser;
-    private final String allowedChars;
+    private final Pattern allowedCharactersPattern;
+    private final Pattern headerPattern;
 
     @Activate
     public Oauth2ProxyHeaderFilterConfigImpl(final Configuration configuration) {
@@ -74,9 +82,26 @@ public final class Oauth2ProxyHeaderFilterConfigImpl implements Oauth2ProxyHeade
         maxRoleLength = configuration.max$_$role$_$length();
         maxUserLength = configuration.max$_$user$_$length();
         maxRolesPerUser = configuration.max$_$roles$_$per$_$user();
-        allowedChars = validatePattern(configuration.allowed$_$chars());
+        String allowedChars = validatePattern(configuration.allowed$_$chars());
+        allowedCharactersPattern = Pattern.compile("^" + allowedChars + "+$");
+        headerPattern = Pattern.compile(
+            "^\\s*(role:)?" + allowedChars + "+(\\s*,\\s*(role:)?" + allowedChars + "+)*\\s*$");
         LOG.debug("Oauth2ProxyHeaderFilter configuration: maxHeaderLength={}, maxRoleLength={}, "
             + "maxUserLength={}, maxRolesPerUser={}, allowedChars={}",
+            maxHeaderLength, maxRoleLength, maxUserLength, maxRolesPerUser, allowedChars);
+    }
+
+    public Oauth2ProxyHeaderFilterConfigImpl() {
+        maxHeaderLength = MAX_HEADER_LENGTH_DEFAULT;
+        maxRoleLength = MAX_ROLE_LENGTH_DEFAULT;
+        maxUserLength = MAX_USER_LENGTH_DEFAULT;
+        maxRolesPerUser = MAX_ROLES_PER_USER_DEFAULT;
+        String allowedChars = validatePattern(ALLOWED_CHARS_DEFAULT);
+        allowedCharactersPattern = Pattern.compile("^" + allowedChars + "+$");
+        headerPattern = Pattern.compile(
+            "^\\s*(role:)?" + allowedChars + "+(\\s*,\\s*(role:)?" + allowedChars + "+)*\\s*$");
+        LOG.debug("Oauth2ProxyHeaderFilter configuration: maxHeaderLength={}, maxRoleLength={}, "
+                + "maxUserLength={}, maxRolesPerUser={}, allowedChars={}",
             maxHeaderLength, maxRoleLength, maxUserLength, maxRolesPerUser, allowedChars);
     }
 
@@ -101,8 +126,13 @@ public final class Oauth2ProxyHeaderFilterConfigImpl implements Oauth2ProxyHeade
     }
 
     @Override
-    public String allowedChars() {
-        return allowedChars;
+    public Pattern allowedCharactersPattern() {
+        return allowedCharactersPattern;
+    }
+
+    @Override
+    public Pattern headerPattern() {
+        return headerPattern;
     }
 
     private static String validatePattern(final String value) {
