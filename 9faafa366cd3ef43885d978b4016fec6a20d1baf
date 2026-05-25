@@ -231,6 +231,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6e7419ad_a4488e9f",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-25T09:03:29Z",
+      "side": 1,
+      "message": "How you should distinguish test blocks according to Google Style:\nInstead of using Javadoc dividers, the style guide relies on a combination of two things:\n\nMethod Naming Convention (Section 5.2.3): Google Style notes that \"Underscores may appear in JUnit test method names to separate logical components of the name\". You can use prefixes or strict naming structures to tie a block of tests together conceptually (e.g., userLogin_success, userLogin_wrongPassword).\n\nImplementation of Nested Test Classes: If a group of tests has separate setup logic or belongs strictly to a specific slice of functionality, modern JUnit practice (which integrates with Google\u0027s layout expectations) encourages using nested helper classes (like JUnit 5\u0027s @Nested) to naturally and cleanly divide blocks of tests into structural hierarchies.",
+      "parentUuid": "cdef1159_6c34d233",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "34d5e7d2_a6e801d6",
         "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
         "patchSetId": 24
