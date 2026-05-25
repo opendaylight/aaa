@@ -95,37 +95,37 @@ class Oauth2ProxyHeaderFilterTest {
     void testNoUserHeaderReturnsNull() {
         doReturn(Collections.enumeration(List.of()))
             .when(request).getHeaders(Oauth2ProxyHeaderFilter.PROXY_HEADER_USER);
-        assertNull(Oauth2ProxyHeaderFilter.parseUser(request));
+        assertNull(filter.parseUser(request));
     }
 
     @Test
     void testBlankUserHeaderReturnsNull() {
         doReturn(Collections.enumeration(List.of("")))
             .when(request).getHeaders(Oauth2ProxyHeaderFilter.PROXY_HEADER_USER);
-        assertNull(Oauth2ProxyHeaderFilter.parseUser(request));
+        assertNull(filter.parseUser(request));
 
         doReturn(Collections.enumeration(List.of("   ")))
             .when(request).getHeaders(Oauth2ProxyHeaderFilter.PROXY_HEADER_USER);
-        assertNull(Oauth2ProxyHeaderFilter.parseUser(request));
+        assertNull(filter.parseUser(request));
     }
 
     @Test
     void testMultipleUserHeadersReturnsNull() {
         doReturn(Collections.enumeration(List.of("user1", "user2")))
             .when(request).getHeaders(Oauth2ProxyHeaderFilter.PROXY_HEADER_USER);
-        assertNull(Oauth2ProxyHeaderFilter.parseUser(request));
+        assertNull(filter.parseUser(request));
     }
 
     @Test
     void testValidUserIsReturned() {
         doReturn(Collections.enumeration(List.of("  user.name@org  ")))
             .when(request).getHeaders(Oauth2ProxyHeaderFilter.PROXY_HEADER_USER);
-        assertEquals("user.name@org", Oauth2ProxyHeaderFilter.parseUser(request));
+        assertEquals("user.name@org", filter.parseUser(request));
 
         // boundary: exactly MAX_USER_LENGTH (128) is accepted
         doReturn(Collections.enumeration(List.of("a".repeat(128))))
             .when(request).getHeaders(Oauth2ProxyHeaderFilter.PROXY_HEADER_USER);
-        assertEquals("a".repeat(128), Oauth2ProxyHeaderFilter.parseUser(request));
+        assertEquals("a".repeat(128), filter.parseUser(request));
     }
 
     @Test
@@ -137,7 +137,7 @@ class Oauth2ProxyHeaderFilterTest {
                 "user;injected", "user,second")) {
             doReturn(Collections.enumeration(List.of(bad)))
                 .when(request).getHeaders(Oauth2ProxyHeaderFilter.PROXY_HEADER_USER);
-            assertNull(Oauth2ProxyHeaderFilter.parseUser(request));
+            assertNull(filter.parseUser(request));
         }
     }
 
@@ -146,27 +146,27 @@ class Oauth2ProxyHeaderFilterTest {
         // MAX_USER_LENGTH is 128
         doReturn(Collections.enumeration(List.of("a".repeat(129))))
             .when(request).getHeaders(Oauth2ProxyHeaderFilter.PROXY_HEADER_USER);
-        assertNull(Oauth2ProxyHeaderFilter.parseUser(request));
+        assertNull(filter.parseUser(request));
     }
 
     // Role parsing tests
     @Test
     void testNullOrEmptyRolesReturnsEmptySet() {
-        assertTrue(Oauth2ProxyHeaderFilter.parseRoles(null).isEmpty());
-        assertTrue(Oauth2ProxyHeaderFilter.parseRoles(Collections.enumeration(List.of())).isEmpty());
+        assertTrue(filter.parseRoles(null).isEmpty());
+        assertTrue(filter.parseRoles(Collections.enumeration(List.of())).isEmpty());
     }
 
     @Test
     void testNullOrEmptyHeadersAreIgnored() {
         final var headers = Collections.enumeration(Arrays.asList((String) null, "", "   ", "admin"));
-        assertEquals(Set.of("admin"), Oauth2ProxyHeaderFilter.parseRoles(headers));
+        assertEquals(Set.of("admin"), filter.parseRoles(headers));
     }
 
     @Test
     void testSingleHeaderMultipleRoles() {
         final var headers = Collections.enumeration(List.of("admin, role:odl:user, role:moderator",
             "   role:admin   ,   user   ,role:org:odl:spaced-role  "));
-        final var roles = Oauth2ProxyHeaderFilter.parseRoles(headers);
+        final var roles = filter.parseRoles(headers);
         assertEquals(Set.of("admin", "odl:user", "moderator", "user", "org:odl:spaced-role"), roles);
     }
 
@@ -181,7 +181,7 @@ class Oauth2ProxyHeaderFilterTest {
         final var maliciousRole5 = "{moderator}";
         // delimiter injection semicolons must not survive role parsing
         final var maliciousRole6 = "admin;injected";
-        final var roles = Oauth2ProxyHeaderFilter.parseRoles(Collections.enumeration(List.of(maliciousRole1,
+        final var roles = filter.parseRoles(Collections.enumeration(List.of(maliciousRole1,
             maliciousRole2, maliciousRole3, maliciousRole4, maliciousRole5, maliciousRole6)));
         assertEquals(Set.of(), roles);
     }
@@ -190,7 +190,7 @@ class Oauth2ProxyHeaderFilterTest {
     void testMalformedRoleHeaderIsSkipped() {
         // Headers with invalid structure are rejected wholesale; valid sibling headers still processed
         final var headers = List.of("admin", "admin;injected", "user");
-        assertEquals(Set.of("admin", "user"), Oauth2ProxyHeaderFilter.parseRoles(Collections.enumeration(headers)));
+        assertEquals(Set.of("admin", "user"), filter.parseRoles(Collections.enumeration(headers)));
     }
 
     @Test
@@ -198,7 +198,7 @@ class Oauth2ProxyHeaderFilterTest {
         // MAX_HEADER_LENGTH is 4096
 
         final var headers = List.of("admin", "a".repeat(4097), "user");
-        final var roles = Oauth2ProxyHeaderFilter.parseRoles(Collections.enumeration(headers));
+        final var roles = filter.parseRoles(Collections.enumeration(headers));
 
         // The massive header should be skipped, but the others processed
         assertEquals(Set.of("admin", "user"), roles);
@@ -209,7 +209,7 @@ class Oauth2ProxyHeaderFilterTest {
         // MAX_ROLE_LENGTH is 128
 
         final var headers = List.of("admin, " + "a".repeat(129), "user");
-        final var roles = Oauth2ProxyHeaderFilter.parseRoles(Collections.enumeration(headers));
+        final var roles = filter.parseRoles(Collections.enumeration(headers));
 
         // The massive header should be skipped, but the others processed
         assertEquals(Set.of("admin", "user"), roles);
@@ -224,7 +224,7 @@ class Oauth2ProxyHeaderFilterTest {
         }
         manyRolesHeader.append("role");
 
-        final var roles = Oauth2ProxyHeaderFilter
+        final var roles = filter
             .parseRoles(Collections.enumeration(List.of(manyRolesHeader.toString())));
 
         // It should truncate exactly at the 200 limit
@@ -233,4 +233,5 @@ class Oauth2ProxyHeaderFilterTest {
         assertTrue(roles.contains("role199"));
         assertFalse(roles.contains("role200"));
     }
+
 }

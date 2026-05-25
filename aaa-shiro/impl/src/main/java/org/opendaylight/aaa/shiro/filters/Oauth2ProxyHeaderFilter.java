@@ -7,6 +7,8 @@
  */
 package org.opendaylight.aaa.shiro.filters;
 
+import static java.util.Objects.requireNonNull;
+
 import com.google.common.annotations.VisibleForTesting;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -20,6 +22,7 @@ import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
+import org.opendaylight.yangtools.concepts.Registration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +33,9 @@ import org.slf4j.LoggerFactory;
  * the user against an external identity provider, it injects {@code X-Forwarded-User} and
  * {@code X-Forwarded-Groups} headers into the proxied request. This filter reads those headers
  * and creates an {@link Oauth2ProxyHeaderToken} for the configured realm to process.
+ *
+ * <p>Security limits (max lengths, max roles, allowed characters) are configurable via
+ * {@link Oauth2ProxyHeaderFilterConfig} ({@code org.opendaylight.aaa.shiro.oauth2proxy.cfg}).
  *
  * <p><strong>Security prerequisite:</strong> direct HTTP access to ODL that bypasses the proxy
  * must be blocked at the network level. Failure to do so allows any caller to forge these headers
@@ -44,66 +50,77 @@ public final class Oauth2ProxyHeaderFilter extends AuthenticatingFilter {
     @VisibleForTesting
     static final String PROXY_HEADER_GROUPS = "X-Forwarded-Groups";
 
-    /**
-     * Maximum allowed length for a single header value in bytes.
-     *
-     * <p>Aligns with the de-facto industry default of 4–8 KB per header used by nginx and Apache
-     * HTTP Server. RFC 7230 §3.2.5 requires servers to respond with an appropriate 4xx when a
-     * received header field exceeds the size they are willing to process.
-     *
-     * @see <a href="https://www.rfc-editor.org/rfc/rfc7230#section-3.2.5">RFC 7230 §3.2.5</a>
-     * @see <a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html">OWASP Input Validation Cheat Sheet</a>
-     */
-    private static final int MAX_HEADER_LENGTH = 4096;
-    /**
-     * Maximum allowed length for a single role name.
-     *
-     * <p>Chosen conservatively to cover LDAP/OIDC group names in practice (LDAP {@code cn}
-     * attributes are typically ≤64 chars; OIDC group claim values have no mandated upper bound).
-     * Enforced per OWASP input validation guidance on bounding string length.
-     *
-     * @see <a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html">OWASP Input Validation Cheat Sheet</a>
-     */
-    private static final int MAX_ROLE_LENGTH = 128;
-    /**
-     * Maximum allowed length for a username.
-     *
-     * <p>Chosen conservatively to cover email-style usernames forwarded by OAuth2-Proxy. RFC 5321
-     * caps the local part of an email address at 64 characters; the full address including domain
-     * comfortably fits within 128 characters in practice.
-     *
-     * @see <a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html">OWASP Input Validation Cheat Sheet</a>
-     */
-    private static final int MAX_USER_LENGTH = 128;
-    /**
-     * Maximum number of roles a single user may carry.
-     *
-     * <p>A hard cap on the number of roles processed per request. This is a DoS safeguard: without
-     * it, a crafted or misbehaving proxy header could cause unbounded memory allocation. The value
-     * is a conservative heuristic; no RFC or OIDC specification mandates a specific limit.
-     *
-     * @see <a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html">OWASP Input Validation Cheat Sheet</a>
-     */
-    private static final int MAX_ROLES_PER_USER = 200;
-    /**
-     * Whitelist of characters permitted in usernames and role names: alphanumeric, {@code .},
-     * {@code _}, {@code :}, {@code -}, {@code @}.
-     *
-     * <p>Whitelist-based character validation is the recommended first line of defence against
-     * injection attacks. The set covers email-style usernames and namespaced role identifiers
-     * (e.g. {@code namespace:role}) as emitted by OAuth2-Proxy.
-     *
-     * @see <a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html">OWASP Input Validation Cheat Sheet</a>
-     */
-    private static final String ALLOWED_CHARS = "[a-zA-Z0-9_.:\\-@]";
-    private static final Pattern ALLOWED_CHARACTERS_PATTERN = Pattern.compile("^" + ALLOWED_CHARS + "+$");
     private static final Pattern ROLE_REGEX = Pattern.compile("^role:");
+    private static final ThreadLocal<Oauth2ProxyHeaderFilterConfig> CONFIG_TL = new ThreadLocal<>();
+
+    private final int maxHeaderLength;
+    private final int maxRoleLength;
+    private final int maxUserLength;
+    private final int maxRolesPerUser;
+    private final Pattern allowedCharactersPattern;
+    private final Pattern headerPattern;
+
+    public Oauth2ProxyHeaderFilter() {
+        this(configFromThreadLocal());
+    }
+
+    @VisibleForTesting
+    Oauth2ProxyHeaderFilter(final Oauth2ProxyHeaderFilterConfig config) {
+        requireNonNull(config);
+        maxHeaderLength = config.maxHeaderLength();
+        maxRoleLength = config.maxRoleLength();
+        maxUserLength = config.maxUserLength();
+        maxRolesPerUser = config.maxRolesPerUser();
+        final var allowedChars = config.allowedChars();
+        allowedCharactersPattern = Pattern.compile("^(?:" + allowedChars + ")+$");
+        headerPattern = Pattern.compile(
+            "^\\s*(?:role:)?(?:" + allowedChars + ")+(?:\\s*,\\s*(?:role:)?(?:" + allowedChars + ")+)*\\s*$");
+    }
+
+    private static Oauth2ProxyHeaderFilterConfig configFromThreadLocal() {
+        final var config = CONFIG_TL.get();
+        if (config != null) {
+            return config;
+        }
+        return new Oauth2ProxyHeaderFilterConfig() {
+            @Override
+            public int maxHeaderLength() {
+                return Oauth2ProxyHeaderFilterConfig.MAX_HEADER_LENGTH_DEFAULT;
+            }
+
+            @Override
+            public int maxRoleLength() {
+                return Oauth2ProxyHeaderFilterConfig.MAX_ROLE_LENGTH_DEFAULT;
+            }
+
+            @Override
+            public int maxUserLength() {
+                return Oauth2ProxyHeaderFilterConfig.MAX_USER_LENGTH_DEFAULT;
+            }
+
+            @Override
+            public int maxRolesPerUser() {
+                return Oauth2ProxyHeaderFilterConfig.MAX_ROLES_PER_USER_DEFAULT;
+            }
+
+            @Override
+            public String allowedChars() {
+                return Oauth2ProxyHeaderFilterConfig.ALLOWED_CHARS_DEFAULT;
+            }
+        };
+    }
+
     /**
-     * Validates a full role header value: a comma-separated list of tokens, each token optionally
-     * prefixed with {@code role:} and composed entirely of {@link #ALLOWED_CHARS}.
+     * Prepares this class for loading by Shiro's reflection-based instantiation. Must be called
+     * (and the returned {@link Registration} kept open) before Shiro calls the no-arg constructor.
+     *
+     * @param config the configuration to inject
+     * @return a {@link Registration} that clears the thread-local when closed
      */
-    private static final Pattern HEADER_PATTERN = Pattern.compile(
-        "^\\s*(role:)?" + ALLOWED_CHARS + "+(\\s*,\\s*(role:)?" + ALLOWED_CHARS + "+)*\\s*$");
+    public static Registration prepareForLoad(final Oauth2ProxyHeaderFilterConfig config) {
+        CONFIG_TL.set(requireNonNull(config));
+        return CONFIG_TL::remove;
+    }
 
     @Override
     protected AuthenticationToken createToken(final ServletRequest request, final ServletResponse response) {
@@ -129,7 +146,7 @@ public final class Oauth2ProxyHeaderFilter extends AuthenticatingFilter {
      * @return A single sanitized user
      */
     @VisibleForTesting
-    static @Nullable String parseUser(final ServletRequest request) {
+    @Nullable String parseUser(final ServletRequest request) {
         final var users = WebUtils.toHttp(request).getHeaders(PROXY_HEADER_USER).asIterator();
         if (!users.hasNext()) {
             LOG.warn("Expected at least one user.");
@@ -146,11 +163,11 @@ public final class Oauth2ProxyHeaderFilter extends AuthenticatingFilter {
         }
 
         final var sanitized = user.strip();
-        if (sanitized.length() > MAX_USER_LENGTH) {
+        if (sanitized.length() > maxUserLength) {
             LOG.warn("Rejected user, exceeds maximum allowed length.");
             return null;
         }
-        if (!ALLOWED_CHARACTERS_PATTERN.matcher(sanitized).matches()) {
+        if (!allowedCharactersPattern.matcher(sanitized).matches()) {
             LOG.warn("Rejected malformed user during parsing.");
             return null;
         }
@@ -168,7 +185,7 @@ public final class Oauth2ProxyHeaderFilter extends AuthenticatingFilter {
      * @return Set of parsed roles
      */
     @VisibleForTesting
-    static Set<String> parseRoles(final @Nullable Enumeration<@Nullable String> headers) {
+    Set<String> parseRoles(final @Nullable Enumeration<@Nullable String> headers) {
         // Check if the headers list itself is null or empty
         if (headers == null || !headers.hasMoreElements()) {
             LOG.warn("Rejected empty role headers.");
@@ -185,19 +202,19 @@ public final class Oauth2ProxyHeaderFilter extends AuthenticatingFilter {
             }
 
             // Enforce maximum acceptable header length
-            if (header.length() > MAX_HEADER_LENGTH) {
+            if (header.length() > maxHeaderLength) {
                 LOG.warn("A role header exceeds maximum allowed length. Skipping this specific header.");
                 continue;
             }
-            if (!HEADER_PATTERN.matcher(header).matches()) {
+            if (!headerPattern.matcher(header).matches()) {
                 LOG.warn("Rejected malformed role header during parsing.");
                 continue;
             }
 
             final var headerValues = header.split(",");
             for (final var value : headerValues) {
-                if (parsedRoles.size() >= MAX_ROLES_PER_USER) {
-                    LOG.warn("Maximum role limit reached {}. Truncating remaining headerValues.", MAX_ROLES_PER_USER);
+                if (parsedRoles.size() >= maxRolesPerUser) {
+                    LOG.warn("Maximum role limit reached {}. Truncating remaining headerValues.", maxRolesPerUser);
                     return Set.copyOf(parsedRoles);
                 }
                 // strip from leading and trailing whitespaces and optional role pattern
@@ -207,12 +224,12 @@ public final class Oauth2ProxyHeaderFilter extends AuthenticatingFilter {
                     continue;
                 }
                 // enforce maximum acceptable length of role
-                if (role.length() > MAX_ROLE_LENGTH) {
+                if (role.length() > maxRoleLength) {
                     LOG.warn("A role exceeds maximum allowed length. Skipping this specific role.");
                     continue;
                 }
                 // strict Validation against allowed characters
-                if (!ALLOWED_CHARACTERS_PATTERN.matcher(role).matches()) {
+                if (!allowedCharactersPattern.matcher(role).matches()) {
                     LOG.warn("Rejected malformed role token during parsing.");
                     continue;
                 }
