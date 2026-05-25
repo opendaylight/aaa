@@ -7,9 +7,16 @@
  */
 package org.opendaylight.aaa.shiro.filters;
 
+import com.google.common.annotations.VisibleForTesting;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import javax.inject.Singleton;
+import javax.servlet.ServletRequest;
+import org.apache.shiro.web.util.WebUtils;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.metatype.annotations.AttributeDefinition;
@@ -62,11 +69,14 @@ public final class Oauth2ProxyHeaderFilterConfigImpl implements Oauth2ProxyHeade
         String allowed$_$chars() default ALLOWED_CHARS_DEFAULT;
     }
 
+    private static final Pattern ROLE_REGEX = Pattern.compile("^role:");
+
     private final int maxHeaderLength;
     private final int maxRoleLength;
     private final int maxUserLength;
     private final int maxRolesPerUser;
-    private final String allowedChars;
+    private final Pattern allowedCharactersPattern;
+    private final Pattern headerPattern;
 
     @Activate
     public Oauth2ProxyHeaderFilterConfigImpl(final Configuration configuration) {
@@ -74,35 +84,132 @@ public final class Oauth2ProxyHeaderFilterConfigImpl implements Oauth2ProxyHeade
         maxRoleLength = configuration.max$_$role$_$length();
         maxUserLength = configuration.max$_$user$_$length();
         maxRolesPerUser = configuration.max$_$roles$_$per$_$user();
-        allowedChars = validatePattern(configuration.allowed$_$chars());
+        String allowedChars = validatePattern(configuration.allowed$_$chars());
+        allowedCharactersPattern = Pattern.compile("^" + allowedChars + "+$");
+        headerPattern = Pattern.compile(
+            "^\\s*(role:)?" + allowedChars + "+(\\s*,\\s*(role:)?" + allowedChars + "+)*\\s*$");
         LOG.debug("Oauth2ProxyHeaderFilter configuration: maxHeaderLength={}, maxRoleLength={}, "
             + "maxUserLength={}, maxRolesPerUser={}, allowedChars={}",
             maxHeaderLength, maxRoleLength, maxUserLength, maxRolesPerUser, allowedChars);
     }
 
-    @Override
-    public int maxHeaderLength() {
-        return maxHeaderLength;
+    public Oauth2ProxyHeaderFilterConfigImpl() {
+        maxHeaderLength = MAX_HEADER_LENGTH_DEFAULT;
+        maxRoleLength = MAX_ROLE_LENGTH_DEFAULT;
+        maxUserLength = MAX_USER_LENGTH_DEFAULT;
+        maxRolesPerUser = MAX_ROLES_PER_USER_DEFAULT;
+        String allowedChars = validatePattern(ALLOWED_CHARS_DEFAULT);
+        allowedCharactersPattern = Pattern.compile("^" + allowedChars + "+$");
+        headerPattern = Pattern.compile(
+            "^\\s*(role:)?" + allowedChars + "+(\\s*,\\s*(role:)?" + allowedChars + "+)*\\s*$");
+        LOG.debug("Oauth2ProxyHeaderFilter configuration: maxHeaderLength={}, maxRoleLength={}, "
+                + "maxUserLength={}, maxRolesPerUser={}, allowedChars={}",
+            maxHeaderLength, maxRoleLength, maxUserLength, maxRolesPerUser, allowedChars);
     }
 
     @Override
-    public int maxRoleLength() {
-        return maxRoleLength;
+    public String parseUser(final ServletRequest request) {
+        final var users = WebUtils.toHttp(request).getHeaders(PROXY_HEADER_USER);
+        if (users == null) {
+            LOG.warn("Expected at least one user.");
+            return null;
+        }
+        if (!users.hasMoreElements()) {
+            LOG.warn("Expected at least one user.");
+            return null;
+        }
+        final var user = users.nextElement();
+
+        if (users.hasMoreElements()) {
+            LOG.warn("Expected at most one user.");
+            return null;
+        }
+        if (user == null || user.isBlank()) {
+            LOG.warn("Rejected empty user.");
+            return null;
+        }
+
+        final var sanitized = user.strip();
+        if (sanitized.length() > maxUserLength) {
+            LOG.warn("Rejected user, exceeds maximum allowed length.");
+            return null;
+        }
+        if (!allowedCharactersPattern.matcher(sanitized).matches()) {
+            LOG.warn("Rejected malformed user during parsing.");
+            return null;
+        }
+        return sanitized;
     }
 
     @Override
-    public int maxUserLength() {
-        return maxUserLength;
+    public Set<String> parseRolesHeader(ServletRequest request) {
+        final var roles = WebUtils.toHttp(request).getHeaders(PROXY_HEADER_GROUPS);
+        return parseRoles(roles);
     }
 
-    @Override
-    public int maxRolesPerUser() {
-        return maxRolesPerUser;
-    }
+    /**
+     * Parses roles from X-Forwarded-Groups header.
+     *
+     * <p>Example: role:global-admin,role:odl-application:admin
+     * roles are separated by "," and each role can have namespace with ":" as separator
+     * we want to get role with its namespace but without "role:" at the beginning.
+     *
+     * @param headers A List of header strings
+     * @return Set of parsed roles
+     */
+    @VisibleForTesting
+    Set<String> parseRoles(final @Nullable Enumeration<@Nullable String> headers) {
+        // Check if the headers list itself is null or empty
+        if (headers == null || !headers.hasMoreElements()) {
+            LOG.warn("Rejected empty role headers.");
+            return Set.of();
+        }
 
-    @Override
-    public String allowedChars() {
-        return allowedChars;
+        final var parsedRoles = new HashSet<String>();
+        while (headers.hasMoreElements()) {
+            final var header = headers.nextElement();
+            // Skip null or entirely empty headers
+            if (header == null || header.isBlank()) {
+                LOG.warn("Rejected empty role header during parsing.");
+                continue;
+            }
+
+            // Enforce maximum acceptable header length
+            if (header.length() > maxHeaderLength) {
+                LOG.warn("A role header exceeds maximum allowed length. Skipping this specific header.");
+                continue;
+            }
+            if (!headerPattern.matcher(header).matches()) {
+                LOG.warn("Rejected malformed role header during parsing.");
+                continue;
+            }
+
+            final var headerValues = header.split(",");
+            for (final var value : headerValues) {
+                if (parsedRoles.size() >= maxRolesPerUser) {
+                    LOG.warn("Maximum role limit reached {}. Truncating remaining headerValues.", maxRolesPerUser);
+                    return Set.copyOf(parsedRoles);
+                }
+                // strip from leading and trailing whitespaces and optional role pattern
+                final var role = ROLE_REGEX.matcher(value.strip()).replaceFirst("");
+                if (role.isBlank()) {
+                    LOG.warn("Rejected empty role during parsing.");
+                    continue;
+                }
+                // enforce maximum acceptable length of role
+                if (role.length() > maxRoleLength) {
+                    LOG.warn("A role exceeds maximum allowed length. Skipping this specific role.");
+                    continue;
+                }
+                // strict Validation against allowed characters
+                if (!allowedCharactersPattern.matcher(role).matches()) {
+                    LOG.warn("Rejected malformed role token during parsing.");
+                    continue;
+                }
+                parsedRoles.add(role);
+            }
+        }
+        return Set.copyOf(parsedRoles);
     }
 
     private static String validatePattern(final String value) {
