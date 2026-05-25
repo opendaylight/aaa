@@ -16,6 +16,24 @@
       "message": "Add a note about default used to prevent header injection",
       "revId": "fd1817734c18cbcbc2ee9d2ce68f8b4035bd76bf",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea3a562e_53bdfe86",
+        "filename": "docs/user-guide.rst",
+        "patchSetId": 26
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-25T08:02:54Z",
+      "side": 1,
+      "message": "Done in https://git.opendaylight.org/gerrit/c/aaa/+/122977/1?usp\u003drelated-change",
+      "parentUuid": "04151ca6_bde4b614",
+      "revId": "fd1817734c18cbcbc2ee9d2ce68f8b4035bd76bf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
