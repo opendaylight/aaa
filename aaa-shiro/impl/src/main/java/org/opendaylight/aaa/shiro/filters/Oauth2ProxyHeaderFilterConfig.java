@@ -7,8 +7,11 @@
  */
 package org.opendaylight.aaa.shiro.filters;
 
+import java.util.Set;
+import javax.servlet.ServletRequest;
+
 /**
- * Configuration for {@link Oauth2ProxyHeaderFilter}. Exposed as an OSGi service and populated from
+ * Configuration for Oauth2 Proxy Header authentication. Exposed as an OSGi service and populated from
  * {@code org.opendaylight.aaa.shiro.oauth2proxy.cfg} via OSGi Configuration Admin.
  */
 public interface Oauth2ProxyHeaderFilterConfig {
@@ -35,30 +38,23 @@ public interface Oauth2ProxyHeaderFilterConfig {
      */
     String ALLOWED_CHARS_DEFAULT = "[a-zA-Z0-9_.:\\-@]";
 
-    /**
-     * Returns the maximum allowed length for a single forwarded header value in bytes.
-     */
-    int maxHeaderLength();
+    String PROXY_HEADER_USER = "X-Forwarded-User";
+
+    String PROXY_HEADER_GROUPS = "X-Forwarded-Groups";
 
     /**
-     * Returns the maximum allowed length for a single role name in characters.
-     */
-    int maxRoleLength();
-
-    /**
-     * Returns the maximum allowed length for a username in characters.
-     */
-    int maxUserLength();
-
-    /**
-     * Returns the maximum number of roles a single user may carry.
-     */
-    int maxRolesPerUser();
-
-    /**
-     * Returns the regex character class expression used to whitelist characters in usernames and role names.
+     * Parses user from {@code PROXY_HEADER_USER} header.
      *
-     * <p>Must be a valid regex character class expression (e.g. {@code [a-zA-Z0-9_.:\\-@]}).
+     * @param request A {@link ServletRequest} request we are processing
+     * @return A single sanitized user
      */
-    String allowedChars();
+    String parseUser(ServletRequest request);
+
+    /**
+     * Parses user from {@code PROXY_HEADER_GROUPS} header.
+     *
+     * @param request A {@link ServletRequest} request we are processing
+     * @return Set of parsed roles
+     */
+    Set<String> parseRolesHeader(ServletRequest request);
 }
