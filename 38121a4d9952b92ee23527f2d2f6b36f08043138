@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "365d68f7_72297aa8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-25T13:03:20Z",
+      "side": 1,
+      "message": "I would say, No GO.",
+      "parentUuid": "d9d9fe33_411b48c9",
+      "revId": "38121a4d9952b92ee23527f2d2f6b36f08043138",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "745e8459_f89d3f0b",
         "filename": "aaa-shiro/impl/src/main/resources/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg",
         "patchSetId": 17
