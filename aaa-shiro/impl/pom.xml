@@ -77,6 +77,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         </dependency>
         <dependency>
             <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.metatype.annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
             <artifactId>org.osgi.service.http.whiteboard</artifactId>
         </dependency>
         <dependency>
@@ -199,6 +203,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                                     <file>${project.build.directory}/classes/initial/aaa-datastore-config.xml</file>
                                     <type>xml</type>
                                     <classifier>aaa-datastore-config</classifier>
+                                </artifact>
+                                <artifact>
+                                    <file>${project.build.directory}/classes/org.opendaylight.aaa.shiro.oauth2proxyheaderfilter.cfg</file>
+                                    <type>cfg</type>
+                                    <classifier>oauth2proxyheaderfilter-config</classifier>
                                 </artifact>
                             </artifacts>
                         </configuration>
