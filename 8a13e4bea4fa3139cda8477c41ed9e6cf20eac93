@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "055e4398_d7d856ce",
+        "filename": "aaa-shiro/impl/pom.xml",
+        "patchSetId": 27
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-25T07:04:30Z",
+      "side": 1,
+      "message": "This means Java 8? Remove it.",
+      "revId": "8a13e4bea4fa3139cda8477c41ed9e6cf20eac93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
