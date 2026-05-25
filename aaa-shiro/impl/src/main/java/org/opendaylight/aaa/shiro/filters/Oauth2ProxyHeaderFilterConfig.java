@@ -7,8 +7,10 @@
  */
 package org.opendaylight.aaa.shiro.filters;
 
+import java.util.regex.Pattern;
+
 /**
- * Configuration for {@link Oauth2ProxyHeaderFilter}. Exposed as an OSGi service and populated from
+ * Configuration for Oauth2 Proxy Header authentication. Exposed as an OSGi service and populated from
  * {@code org.opendaylight.aaa.shiro.oauth2proxy.cfg} via OSGi Configuration Admin.
  */
 public interface Oauth2ProxyHeaderFilterConfig {
@@ -60,5 +62,12 @@ public interface Oauth2ProxyHeaderFilterConfig {
      *
      * <p>Must be a valid regex character class expression (e.g. {@code [a-zA-Z0-9_.:\\-@]}).
      */
-    String allowedChars();
+    Pattern allowedCharactersPattern();
+
+    /**
+     * Returns the regex character class expression used to whitelist characters in usernames and role names.
+     *
+     * <p>Must be a valid regex character class expression (e.g. {@code [a-zA-Z0-9_.:\\-@]}).
+     */
+    Pattern headerPattern();
 }
