@@ -919,6 +919,36 @@ administrator access:
     request is independently authenticated from the forwarded headers, which
     is the correct behavior when session lifecycle is managed by OAuth2 Proxy.
 
+Oauth2ProxyHeaderFilter settings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``Oauth2ProxyHeaderFilter`` enforces input-validation limits on the forwarded
+headers to guard against oversized or malformed values. All limits are
+configurable via
+``etc/org.opendaylight.aaa.shiro.oauth2proxyheaderfilter.cfg``.
+
++------------------------+-------------------------+----------------------------+
+| Property               | Default                 | Description                |
++========================+=========================+============================+
+| ``max-header-length``  | ``4096``                | Maximum length of a single |
+|                        |                         | ``X-Forwarded-*`` header   |
+|                        |                         | value in bytes.            |
++------------------------+-------------------------+----------------------------+
+| ``max-role-length``    | ``128``                 | Maximum length of a single |
+|                        |                         | role name in characters.   |
++------------------------+-------------------------+----------------------------+
+| ``max-user-length``    | ``128``                 | Maximum length of a        |
+|                        |                         | username in characters.    |
++------------------------+-------------------------+----------------------------+
+| ``max-roles-per-user`` | ``200``                 | Maximum number of roles    |
+|                        |                         | extracted per request.     |
++------------------------+-------------------------+----------------------------+
+| ``allowed-chars``      | ``[a-zA-Z0-9_.:\-@]``   | Regex character class      |
+|                        |                         | whitelisting permitted     |
+|                        |                         | characters in usernames    |
+|                        |                         | and role names.            |
++------------------------+-------------------------+----------------------------+
+
 Authorization Configuration
 ---------------------------
 
