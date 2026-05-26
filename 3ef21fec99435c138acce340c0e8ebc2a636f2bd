@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fada1016_21d2b8c2",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfig.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-26T11:46:50Z",
+      "side": 1,
+      "message": "missing dot at the end",
+      "revId": "3ef21fec99435c138acce340c0e8ebc2a636f2bd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
