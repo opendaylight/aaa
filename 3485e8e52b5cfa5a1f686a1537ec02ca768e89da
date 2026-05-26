@@ -3,6 +3,108 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2695746f_d8488c15",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilterConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-26T10:28:24Z",
+      "side": 1,
+      "message": "The stated goal is reuse across filters without code duplication. The cleanest design for that goal is a dedicated parser class:\n\n  Oauth2ProxyHeaderFilterConfig   ← pure scalar data (max lengths, regex)\n  Oauth2HeaderParser              ← stateless parsing logic, takes a Config\n  Oauth2ProxyHeaderFilter         ← delegates to parser\n  CombinedOauth2AuthenticationFilter ← also delegates to same parser",
+      "revId": "3485e8e52b5cfa5a1f686a1537ec02ca768e89da",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "490d49ac_3e6152c3",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilterConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-26T10:28:24Z",
+      "side": 1,
+      "message": "no javadoc",
+      "revId": "3485e8e52b5cfa5a1f686a1537ec02ca768e89da",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c8ffcc1_13e7d61c",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilterConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-26T10:28:24Z",
+      "side": 1,
+      "message": "@Nullable",
+      "revId": "3485e8e52b5cfa5a1f686a1537ec02ca768e89da",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a1ae312_c074daf6",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilterConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-26T10:28:24Z",
+      "side": 1,
+      "message": "Parses user or group?",
+      "revId": "3485e8e52b5cfa5a1f686a1537ec02ca768e89da",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b83026c_072888d1",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilterConfigImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-26T10:28:24Z",
+      "side": 1,
+      "message": "doe we need two public constructors?",
+      "revId": "3485e8e52b5cfa5a1f686a1537ec02ca768e89da",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6c0bb26_fbd0d609",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilterConfigImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-26T10:28:24Z",
+      "side": 1,
+      "message": "final",
+      "revId": "3485e8e52b5cfa5a1f686a1537ec02ca768e89da",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5efbe662_6eb2bfac",
         "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilterTest.java",
         "patchSetId": 3
