@@ -20,6 +20,9 @@ import org.eclipse.jdt.annotation.Nullable;
  * @param user user identifier
  */
 public record Oauth2ProxyHeaderToken(Set<String> groups, @Nullable String user) implements AuthenticationToken {
+    @java.io.Serial
+    private static final long serialVersionUID = 1L;
+
     public Oauth2ProxyHeaderToken {
         groups = Set.copyOf(groups);
     }
