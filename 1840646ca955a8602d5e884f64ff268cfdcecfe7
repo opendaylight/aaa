@@ -51,6 +51,24 @@
       "message": "rather revoke access when empty?",
       "revId": "1840646ca955a8602d5e884f64ff268cfdcecfe7",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15434fab_e83c2b43",
+        "filename": "docs/user-guide.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-26T10:02:43Z",
+      "side": 1,
+      "message": "see: https://git.opendaylight.org/gerrit/c/aaa/+/122546",
+      "parentUuid": "e26bdc66_9414bc40",
+      "revId": "1840646ca955a8602d5e884f64ff268cfdcecfe7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
