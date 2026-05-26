@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09222627_f0894a11",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/CombinedOauth2AuthenticationFilter.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-26T12:47:00Z",
+      "side": 1,
+      "message": "@NonNullByDefault",
+      "revId": "2babd2d393d8b271138ec94216b3e2a9ff4071c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa476782_6da03c6f",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/CombinedOauth2AuthenticationFilter.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-26T12:47:00Z",
+      "side": 1,
+      "message": "private, visible for testing",
+      "revId": "2babd2d393d8b271138ec94216b3e2a9ff4071c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c44b465_4b15f48e",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/CombinedOauth2AuthenticationFilter.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-26T12:47:00Z",
+      "side": 1,
+      "message": "add the log to onAccessDenied instead?",
+      "revId": "2babd2d393d8b271138ec94216b3e2a9ff4071c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7646264a_f1ce219a",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/CombinedOauth2AuthenticationFilter.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-05-26T12:47:00Z",
+      "side": 1,
+      "message": "File: CombinedOauth2AuthenticationFilter.java:91,101\n  Issue: config.parseUser(request) is called twice per proxy-auth request — once in isLoginAttempt() and again in createToken(). Shiro\u0027s onAccessDenied calls them\n    sequentially on the same request. The full header parsing + validation runs twice needlessly. If X-Forwarded-User validation is expensive or produces side-effects\n    (logging warnings), this matters.\n  Severity: Major\n  Recommendation: Cache the result as a request attribute (e.g. request.setAttribute(PARSED_USER_KEY, user)) in isLoginAttempt, read it back in createToken.",
+      "revId": "2babd2d393d8b271138ec94216b3e2a9ff4071c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
