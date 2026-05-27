@@ -24,6 +24,30 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2836eb08_012c49f4",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-27T08:10:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acf01277_182e89be",
+      "range": {
+        "startLine": 75,
+        "startChar": 57,
+        "endLine": 75,
+        "endChar": 69
+      },
+      "revId": "9b025d84dd01a5c273f268504cc48e0f120d8e1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62276761_f9c39e0b",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-05-26T08:55:37Z",
       "side": 1,
       "message": "\u0027Regular expression\u0027, it would be nice to point to https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/regex/Pattern.html#cc ?",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 7
+      },
+      "revId": "9b025d84dd01a5c273f268504cc48e0f120d8e1f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "043bac26_abc8a1ba",
+        "filename": "aaa-shiro/impl/src/main/resources/org.opendaylight.aaa.shiro.oauth2proxyheaderfilter.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-27T08:10:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62276761_f9c39e0b",
       "range": {
         "startLine": 9,
         "startChar": 2,
