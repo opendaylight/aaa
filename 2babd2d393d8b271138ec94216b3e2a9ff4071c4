@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "16acbe83_174c14d5",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/CombinedOauth2AuthenticationFilter.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-27T11:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09222627_f0894a11",
+      "revId": "2babd2d393d8b271138ec94216b3e2a9ff4071c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fa476782_6da03c6f",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-26T12:47:00Z",
       "side": 1,
       "message": "private, visible for testing",
+      "revId": "2babd2d393d8b271138ec94216b3e2a9ff4071c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e65c9b7_42357b7c",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/CombinedOauth2AuthenticationFilter.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-27T11:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa476782_6da03c6f",
       "revId": "2babd2d393d8b271138ec94216b3e2a9ff4071c4",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
