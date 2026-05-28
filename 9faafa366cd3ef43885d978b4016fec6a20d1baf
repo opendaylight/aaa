@@ -124,6 +124,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f027e30_33fb7405",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-28T15:59:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "363a19c2_932a7644",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f16070c2_d1624de5",
@@ -296,6 +314,24 @@
       "side": 1,
       "message": "y, use \"secure\" standard in test, IMO",
       "parentUuid": "2a5c4489_2ee5887a",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a156292b_3e976750",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-28T15:59:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79ad8a0e_fc4ab278",
       "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }

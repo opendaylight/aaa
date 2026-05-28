@@ -16,6 +16,24 @@
       "message": "missing dot at the end",
       "revId": "3ef21fec99435c138acce340c0e8ebc2a636f2bd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ad2ef0d_6270d45b",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfig.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-28T15:59:14Z",
+      "side": 1,
+      "message": "inline tags do not need to have dots at the and. Seem to be same for rest of the projects",
+      "parentUuid": "fada1016_21d2b8c2",
+      "revId": "3ef21fec99435c138acce340c0e8ebc2a636f2bd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }

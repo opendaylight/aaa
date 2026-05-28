@@ -16,6 +16,24 @@
       "message": "is this done also for proxy header configuration?",
       "revId": "f531c3b2698b78387a20d2fb73f38d151033917c",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19961ad0_962e57ff",
+        "filename": "features/odl-aaa-shiro/pom.xml",
+        "patchSetId": 30
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-28T15:59:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "396de519_c142e86f",
+      "revId": "f531c3b2698b78387a20d2fb73f38d151033917c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
