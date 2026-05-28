@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7d42ea7a_8240bad0",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/CombinedOauth2AuthenticationFilter.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-28T16:00:03Z",
+      "side": 1,
+      "message": "documentation of onAccessDenied():\nfrom HttpAuthenticationFilter: \"Processes unauthenticated requests ...\"\nhttps://javadoc.io/doc/org.apache.shiro/shiro-web/latest/org/apache/shiro/web/filter/authc/BasicHttpAuthenticationFilter.html#onAccessDenied(jakarta.servlet.ServletRequest,jakarta.servlet.ServletResponse)\nfrom AccessControlFilter : \"Processes requests where the subject was denied access as determined by the isAccessAllowed ... \"\nhttps://javadoc.io/static/org.apache.shiro/shiro-web/3.0.0-alpha-1/org/apache/shiro/web/filter/AccessControlFilter.html#onAccessDenied(jakarta.servlet.ServletRequest,jakarta.servlet.ServletResponse,java.lang.Object)\n\nI don\u0027t think this log belongs there.\n\nIMO makes most sense to keep it as is, Or be removed. \nIf super.isAccessAllowed() returns it can mean user is already authenticated, but can also mean authentication is not needed for some reason.\nhttps://javadoc.io/static/org.apache.shiro/shiro-web/3.0.0-alpha-1/org/apache/shiro/web/filter/authc/AuthenticatingFilter.html#isAccessAllowed(jakarta.servlet.ServletRequest,jakarta.servlet.ServletResponse,java.lang.Object)\n\nor \n\nhttps://javadoc.io/static/org.apache.shiro/shiro-web/3.0.0-alpha-1/org/apache/shiro/web/filter/authc/BasicHttpAuthenticationFilter.html#isAccessAllowed(jakarta.servlet.ServletRequest,jakarta.servlet.ServletResponse,java.lang.Object)",
+      "parentUuid": "7c44b465_4b15f48e",
+      "revId": "2babd2d393d8b271138ec94216b3e2a9ff4071c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7646264a_f1ce219a",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/CombinedOauth2AuthenticationFilter.java",
         "patchSetId": 18
@@ -101,6 +119,24 @@
       "writtenOn": "2026-05-26T12:47:00Z",
       "side": 1,
       "message": "File: CombinedOauth2AuthenticationFilter.java:91,101\n  Issue: config.parseUser(request) is called twice per proxy-auth request — once in isLoginAttempt() and again in createToken(). Shiro\u0027s onAccessDenied calls them\n    sequentially on the same request. The full header parsing + validation runs twice needlessly. If X-Forwarded-User validation is expensive or produces side-effects\n    (logging warnings), this matters.\n  Severity: Major\n  Recommendation: Cache the result as a request attribute (e.g. request.setAttribute(PARSED_USER_KEY, user)) in isLoginAttempt, read it back in createToken.",
+      "revId": "2babd2d393d8b271138ec94216b3e2a9ff4071c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d07a48b_fe0764f3",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/CombinedOauth2AuthenticationFilter.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-28T16:00:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7646264a_f1ce219a",
       "revId": "2babd2d393d8b271138ec94216b3e2a9ff4071c4",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }

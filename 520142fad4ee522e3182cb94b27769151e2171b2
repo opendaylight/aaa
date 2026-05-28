@@ -86,6 +86,24 @@
       "message": "This test does not invoke the filter at all..",
       "revId": "520142fad4ee522e3182cb94b27769151e2171b2",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d4194dc_952290b3",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/filters/CombinedOauth2AuthenticationFilterTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-28T16:00:03Z",
+      "side": 1,
+      "message": "true, the test doesn\u0027t seem test any actual logic.",
+      "parentUuid": "74c25c4f_43d3bb26",
+      "revId": "520142fad4ee522e3182cb94b27769151e2171b2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
