@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b010394f_47dbde24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-28T15:59:23Z",
+      "side": 1,
+      "message": "same as here https://git.opendaylight.org/gerrit/c/aaa/+/122477/comments/76c393c4_f8a3ef05",
+      "parentUuid": "bf08e08d_3cc03ca8",
+      "revId": "92efe4365da3550df9b56136ab19f4d9bf1f2739",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a590259_92471c1d",
