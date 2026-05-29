@@ -70,6 +70,30 @@
       },
       "revId": "af2c27207cb8bbdd9b889e56c46237b54a261618",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb3fd131_a2e978b3",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-29T16:01:42Z",
+      "side": 1,
+      "message": "In the end I wasn\u0027t able to find how exactly can List\u003cString\u003e or String[]\nbe implemented here.\n\nList\u003cString\u003e doesn\u0027t seem to be supported by @AttributeDefinition\n\nString[] doesn\u0027t seem to work with .cfg configuration. I couldn\u0027t find any documentation how exactly the configuration should be formatted for it to work, I tried multiple ways but always end up with only one string value inside String[].",
+      "parentUuid": "d60eccd7_742f9583",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "af2c27207cb8bbdd9b889e56c46237b54a261618",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
