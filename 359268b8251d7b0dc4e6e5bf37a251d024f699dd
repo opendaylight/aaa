@@ -16,6 +16,24 @@
       "message": "needs to be \"\\\" need to be escaped as in java string\n\ncorrect should be: \"[a-zA-Z0-9_.:\\\\\\\\-@]\"",
       "revId": "359268b8251d7b0dc4e6e5bf37a251d024f699dd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "554ddd58_3193459d",
+        "filename": "aaa-shiro/impl/src/main/resources/org.opendaylight.aaa.shiro.oauth2proxyheaderfilter.cfg",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-29T16:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2376b68a_e480d746",
+      "revId": "359268b8251d7b0dc4e6e5bf37a251d024f699dd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
