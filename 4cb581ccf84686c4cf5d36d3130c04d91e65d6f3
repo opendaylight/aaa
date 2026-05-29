@@ -22,6 +22,30 @@
       },
       "revId": "4cb581ccf84686c4cf5d36d3130c04d91e65d6f3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04df7c54_1ef28a73",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/CombinedOauth2AuthenticationFilter.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-05-29T16:01:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f84a29e_93e1d934",
+      "range": {
+        "startLine": 132,
+        "startChar": 50,
+        "endLine": 132,
+        "endChar": 59
+      },
+      "revId": "4cb581ccf84686c4cf5d36d3130c04d91e65d6f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
