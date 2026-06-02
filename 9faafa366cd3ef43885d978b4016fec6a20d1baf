@@ -89,6 +89,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bf1c295_2b6d5ed9",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-06-02T16:55:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4ab7bb5_a4d7c205",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c74ed3e1_b106965a",
@@ -261,6 +279,24 @@
       "side": 1,
       "message": "How you should distinguish test blocks according to Google Style:\nInstead of using Javadoc dividers, the style guide relies on a combination of two things:\n\nMethod Naming Convention (Section 5.2.3): Google Style notes that \"Underscores may appear in JUnit test method names to separate logical components of the name\". You can use prefixes or strict naming structures to tie a block of tests together conceptually (e.g., userLogin_success, userLogin_wrongPassword).\n\nImplementation of Nested Test Classes: If a group of tests has separate setup logic or belongs strictly to a specific slice of functionality, modern JUnit practice (which integrates with Google\u0027s layout expectations) encourages using nested helper classes (like JUnit 5\u0027s @Nested) to naturally and cleanly divide blocks of tests into structural hierarchies.",
       "parentUuid": "cdef1159_6c34d233",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f41185b_32d45a12",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-06-02T16:55:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e7419ad_a4488e9f",
       "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
