@@ -124,7 +124,7 @@ jobs:
           path: "${{ github.workspace }}/m2repo"
       - name: Publish to Nexus
         # yamllint disable-line rule:line-length
-        uses: lfreleng-actions/nexus-publish-action@616cd76f432d9aafbf47a62ee640c009a600c41b # v0.2.0
+        uses: lfreleng-actions/nexus-publish-action@55d3b697d3ca1c0f28f574ea5dc7daa6f460deaa # v0.2.1
         with:
           nexus_server: ${{ vars.NEXUS_SERVER }}
           nexus_username: ${{ secrets.NEXUS_USERNAME }}
