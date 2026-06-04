@@ -16,6 +16,29 @@
       "message": "recheck",
       "revId": "894117d94b86a114e0a7654c24f4231c89772ced",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec45110d_19dc276b",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2026-06-04T18:15:51Z",
+      "side": 1,
+      "message": "I guess \"absent\" is not a valid token type, but we should quote types to prevent confusion e.g.:\n\n   \": expected \u0027expectedType\u0027 but was absent\"\n\nand\n\n   \": expected \u0027expectedType\u0027 but was \u0027unexpectedType\u0027\"",
+      "range": {
+        "startLine": 154,
+        "startChar": 71,
+        "endLine": 154,
+        "endChar": 77
+      },
+      "revId": "894117d94b86a114e0a7654c24f4231c89772ced",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
