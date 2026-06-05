@@ -198,6 +198,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3ee56d8f_0138a568",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2026-06-05T15:04:18Z",
+      "side": 1,
+      "message": "right... @Singleton is only for Guice really. There are a number of @Singletons in the project, but those are bound to disappear as we move to Dagger (where we do not use @Singleton on implementations but on factory methods)",
+      "parentUuid": "f3bb3f24_028975ba",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f16070c2_d1624de5",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
         "patchSetId": 24
