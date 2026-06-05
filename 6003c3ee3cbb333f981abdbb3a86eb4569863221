@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8067f96d_eaca4293",
+        "filename": "aaa-shiro/impl/src/main/resources/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-06-05T09:09:00Z",
+      "side": 1,
+      "message": "The comments here are weird. Replace with something clearer like \"Required when jwks-uri is set; leave empty only when jwks-uri is also empty (verification disabled).\"",
+      "revId": "6003c3ee3cbb333f981abdbb3a86eb4569863221",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "750612f5_166212aa",
+        "filename": "docs/user-guide.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-06-05T09:09:00Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "6003c3ee3cbb333f981abdbb3a86eb4569863221",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
