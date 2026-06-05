@@ -107,6 +107,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3623791_e8ff8a9e",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-06-05T09:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4ab7bb5_a4d7c205",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c74ed3e1_b106965a",
@@ -155,6 +173,24 @@
       "writtenOn": "2026-05-28T15:59:14Z",
       "side": 1,
       "message": "Done",
+      "parentUuid": "363a19c2_932a7644",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3bb3f24_028975ba",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-06-05T09:07:00Z",
+      "side": 1,
+      "message": "The @singleton annotation adds nothing here. The @Component is the OSGi DS annotation. OSGi DS manages the lifecycle. The default service scope is ServiceScope.SINGLETON. The SCR reads the @Component and creates exactly one instance and hands it to every consumer. That guarantee comes entirely from @Component, not from @Singleton.",
       "parentUuid": "363a19c2_932a7644",
       "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
@@ -401,6 +437,24 @@
         "id": 9074
       },
       "writtenOn": "2026-05-28T15:59:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79ad8a0e_fc4ab278",
+      "revId": "9faafa366cd3ef43885d978b4016fec6a20d1baf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2df01dc9_e6d06ff2",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 8324
+      },
+      "writtenOn": "2026-06-05T09:07:00Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "79ad8a0e_fc4ab278",
