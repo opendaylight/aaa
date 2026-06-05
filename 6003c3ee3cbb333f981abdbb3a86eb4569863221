@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcfe61b0_2d0f7940",
+        "filename": "aaa-shiro/impl/src/main/resources/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-06-05T15:56:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8067f96d_eaca4293",
+      "revId": "6003c3ee3cbb333f981abdbb3a86eb4569863221",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "750612f5_166212aa",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-06-05T09:09:00Z",
       "side": 1,
       "message": "same here",
+      "revId": "6003c3ee3cbb333f981abdbb3a86eb4569863221",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c16c68f_5b478685",
+        "filename": "docs/user-guide.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-06-05T15:56:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "750612f5_166212aa",
       "revId": "6003c3ee3cbb333f981abdbb3a86eb4569863221",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
