@@ -39,6 +39,30 @@
       },
       "revId": "894117d94b86a114e0a7654c24f4231c89772ced",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "accfa4b2_ad3f715e",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-06-05T15:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec45110d_19dc276b",
+      "range": {
+        "startLine": 154,
+        "startChar": 71,
+        "endLine": 154,
+        "endChar": 77
+      },
+      "revId": "894117d94b86a114e0a7654c24f4231c89772ced",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
