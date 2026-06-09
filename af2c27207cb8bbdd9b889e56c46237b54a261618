@@ -118,6 +118,30 @@
       },
       "revId": "af2c27207cb8bbdd9b889e56c46237b54a261618",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a81cffcd_67d1903d",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2026-06-09T09:02:45Z",
+      "side": 1,
+      "message": "see \u0027cardinality\u0027 in https://docs.osgi.org/specification/osgi.cmpn/7.0.0/service.metatype.html#org.osgi.service.metatype.annotations.AttributeDefinition",
+      "parentUuid": "7db93c0e_ae00fb26",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "af2c27207cb8bbdd9b889e56c46237b54a261618",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
