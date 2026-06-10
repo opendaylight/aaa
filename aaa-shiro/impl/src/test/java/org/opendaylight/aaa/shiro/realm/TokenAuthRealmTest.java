@@ -7,29 +7,31 @@
  */
 package org.opendaylight.aaa.shiro.realm;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 import java.util.Map;
-import org.junit.Test;
+import org.apache.shiro.authc.AuthenticationException;
+import org.junit.jupiter.api.Test;
 import org.opendaylight.aaa.shiro.realm.util.http.header.HeaderUtils;
 import org.opendaylight.aaa.tokenauthrealm.auth.AuthenticationManager;
 
-public class TokenAuthRealmTest {
+class TokenAuthRealmTest {
     private final TokenAuthRealm testRealm = new TokenAuthRealm(new AuthenticationManager(), List::of);
 
     @Test
-    public void testTokenAuthRealm() {
+    void testTokenAuthRealm() {
         assertEquals("TokenAuthRealm", testRealm.getName());
     }
 
-    @Test(expected = NullPointerException.class)
-    public void testDoGetAuthorizationInfoPrincipalCollectionNullCacheToken() {
-        testRealm.doGetAuthorizationInfo(null);
+    @Test
+    void testDoGetAuthorizationInfoPrincipalCollectionNullCacheToken() {
+        assertThrows(NullPointerException.class, () -> testRealm.doGetAuthorizationInfo(null));
     }
 
     @Test
-    public void testGetUsernamePasswordDomainString() {
+    void testGetUsernamePasswordDomainString() {
         final String username = "user";
         final String password = "password";
         final String domain = "domain";
@@ -39,7 +41,7 @@ public class TokenAuthRealmTest {
     }
 
     @Test
-    public void testGetEncodedToken() {
+    void testGetEncodedToken() {
         final String stringToEncode = "admin1:admin1";
         final byte[] bytesToEncode = stringToEncode.getBytes();
         final String expectedToken = org.apache.shiro.codec.Base64.encodeToString(bytesToEncode);
@@ -47,7 +49,7 @@ public class TokenAuthRealmTest {
     }
 
     @Test
-    public void testGetTokenAuthHeader() {
+    void testGetTokenAuthHeader() {
         final String encodedCredentials = HeaderUtils.getEncodedToken(HeaderUtils.getUsernamePasswordDomainString(
                 "user1", "password", "sdn"));
         final String expectedTokenAuthHeader = "Basic " + encodedCredentials;
@@ -55,7 +57,7 @@ public class TokenAuthRealmTest {
     }
 
     @Test
-    public void testFormHeadersWithToken() {
+    void testFormHeadersWithToken() {
         final String authHeader = HeaderUtils.getEncodedToken(
                 HeaderUtils.getTokenAuthHeader(
                         HeaderUtils.getUsernamePasswordDomainString(
@@ -65,7 +67,7 @@ public class TokenAuthRealmTest {
     }
 
     @Test
-    public void testFormHeaders() {
+    void testFormHeaders() {
         final String username = "basicUser";
         final String password = "basicPassword";
         final String domain = "basicDomain";
@@ -77,8 +79,8 @@ public class TokenAuthRealmTest {
         assertEquals(List.of(authHeader), actualHeaders.get("Authorization"));
     }
 
-    @Test(expected = org.apache.shiro.authc.AuthenticationException.class)
-    public void testDoGetAuthenticationInfoAuthenticationToken() {
-        testRealm.doGetAuthenticationInfo(null);
+    @Test
+    void testDoGetAuthenticationInfoAuthenticationToken() {
+        assertThrows(AuthenticationException.class, () -> testRealm.doGetAuthenticationInfo(null));
     }
 }
