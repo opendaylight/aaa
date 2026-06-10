@@ -5,14 +5,10 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-
 package org.opendaylight.aaa.shiro.realm;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-import com.google.common.collect.Lists;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.Test;
@@ -64,14 +60,8 @@ public class TokenAuthRealmTest {
                 HeaderUtils.getTokenAuthHeader(
                         HeaderUtils.getUsernamePasswordDomainString(
                                 "user1", "password", "sdn")));
-        final Map<String, List<String>> expectedHeaders = new HashMap<>();
-        expectedHeaders.put("Authorization", Lists.newArrayList(authHeader));
         final Map<String, List<String>> actualHeaders = HeaderUtils.formHeadersWithToken(authHeader);
-        List<String> value;
-        for (String key : expectedHeaders.keySet()) {
-            value = expectedHeaders.get(key);
-            assertTrue(actualHeaders.get(key).equals(value));
-        }
+        assertEquals(List.of(authHeader), actualHeaders.get("Authorization"));
     }
 
     @Test
@@ -82,14 +72,9 @@ public class TokenAuthRealmTest {
         final String authHeader = HeaderUtils.getTokenAuthHeader(HeaderUtils.getEncodedToken(
                 HeaderUtils.getUsernamePasswordDomainString(
                         username, password, domain)));
-        final Map<String, List<String>> expectedHeaders = new HashMap<>();
-        expectedHeaders.put("Authorization", Lists.newArrayList(authHeader));
         final Map<String, List<String>> actualHeaders = HeaderUtils.formHeaders(username, password, domain);
-        List<String> value;
-        for (String key : expectedHeaders.keySet()) {
-            value = expectedHeaders.get(key);
-            assertTrue(actualHeaders.get(key).equals(value));
-        }
+
+        assertEquals(List.of(authHeader), actualHeaders.get("Authorization"));
     }
 
     @Test(expected = org.apache.shiro.authc.AuthenticationException.class)
