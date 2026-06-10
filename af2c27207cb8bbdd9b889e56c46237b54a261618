@@ -142,6 +142,30 @@
       },
       "revId": "af2c27207cb8bbdd9b889e56c46237b54a261618",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20eb5cc3_1c7b8f67",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-06-10T09:13:11Z",
+      "side": 1,
+      "message": "Main problem with using String[] is formatting org.opendaylight.aaa.shiro.bearerjwtrealm.cfg\n\nThe only way I found for this to work is to format it as typed config\nthe result would look like this:\nhttps://git.opendaylight.org/gerrit/c/aaa/+/122818/16/aaa-shiro/impl/src/main/resources/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg\n\nThis was not working for me otherwise if not whole config was formatted like this.\n\nnote: I didn\u0027t updated other patches which extend this config just the end version to show how it should look like. Have to be done with update do docs if this solution is accepted.",
+      "parentUuid": "a81cffcd_67d1903d",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "af2c27207cb8bbdd9b889e56c46237b54a261618",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
