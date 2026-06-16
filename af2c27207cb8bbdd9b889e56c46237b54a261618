@@ -166,6 +166,30 @@
       },
       "revId": "af2c27207cb8bbdd9b889e56c46237b54a261618",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e87bbd3a_003ca211",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-06-16T16:06:58Z",
+      "side": 1,
+      "message": "I couldn\u0027t find any relevant documentation for this ...\n\nthe above solution is only one I find from investigating this.\n\nThis should be handled by felix fileinstall\nhttps://github.com/apache/felix-dev/blob/master/fileinstall/src/main/java/org/apache/felix/fileinstall/internal/ConfigInstaller.java\n\nWhich end up using \nhttps://github.com/apache/felix-dev/blob/master/utils/src/main/java/org/apache/felix/utils/properties/TypedProperties.java\n\nThis should then decide by using regex if the properties are typed or not\nhttps://github.com/apache/felix-dev/blame/a39d14a9734f9d4733286cc41cab8ea29ccad383/utils/src/main/java/org/apache/felix/utils/properties/Properties.java#L958",
+      "parentUuid": "20eb5cc3_1c7b8f67",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "af2c27207cb8bbdd9b889e56c46237b54a261618",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
