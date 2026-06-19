@@ -70,8 +70,8 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
             Leave empty to skip audience verification.""")
         String expected$_$audience() default "";
 
-        @AttributeDefinition(description = """
-            Allowed JWS signing algorithms (comma-separated, e.g. RS256, RS384, RS512, ES256).""")
+        @AttributeDefinition(cardinality = Integer.MIN_VALUE, description = """
+            Allowed JWS signing algorithms (e.g. RS256, RS384, RS512, ES256).""")
         String[] allowed$_$algorithms() default {"RS256", "RS384", "RS512", "ES256"};
     }
 
