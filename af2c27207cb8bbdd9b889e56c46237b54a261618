@@ -190,6 +190,30 @@
       },
       "revId": "af2c27207cb8bbdd9b889e56c46237b54a261618",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66049325_1194f950",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-06-19T07:45:29Z",
+      "side": 1,
+      "message": "Let\u0027s skip enumeration:\n  4. Nimbus already validates — JWSAlgorithm::parse handles unknown/invalid strings, and the JWSVerificationKeySelector will simply reject tokens signed with an\n  algorithm not in the allowed set. The library is already the authority on what\u0027s parseable.",
+      "parentUuid": "e87bbd3a_003ca211",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "af2c27207cb8bbdd9b889e56c46237b54a261618",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
