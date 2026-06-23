@@ -77,7 +77,7 @@ jobs:
     steps:
       - name: Checkout
         # yamllint disable-line rule:line-length
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: ${{ inputs.GERRIT_BRANCH }}
           submodules: "true"
@@ -88,7 +88,7 @@ jobs:
           python-version: "3.10"
       - name: Run Maven
         # yamllint disable-line rule:line-length
-        uses: lfreleng-actions/maven-build-action@3e8765bbc2685951fb7c2be03964304179106b70 # v0.2.1
+        uses: lfreleng-actions/maven-build-action@c2ded37cb11ff1c2bb1eb7df7011906ddf97bd58 # v0.2.2
         with:
           java-version: "21"
           mvn-version: "3.9.5"
@@ -140,7 +140,7 @@ jobs:
     steps:
       - name: Get conclusion
         # yamllint disable-line rule:line-length
-        uses: im-open/workflow-conclusion@7b146947e59eaf7fc3328822357861ab1758c088 # v2.2.5
+        uses: im-open/workflow-conclusion@8eac7f17381a6917bc04fec3e2c92e70ebc37526 # v3.0.0
       - name: Set vote
         # yamllint disable-line rule:line-length
         uses: lfit/gerrit-review-action@a5de1d5bf17c2603ae81544dc2a455017b454ec8 # v1.1.1
