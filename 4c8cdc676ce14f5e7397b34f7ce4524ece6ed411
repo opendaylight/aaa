@@ -16,6 +16,24 @@
       "message": "please apply https://git.opendaylight.org/gerrit/c/aaa/+/123645",
       "revId": "4c8cdc676ce14f5e7397b34f7ce4524ece6ed411",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "594ada65_6bd5429f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-06-23T07:43:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1a4e3bf3_d318502f",
+      "revId": "4c8cdc676ce14f5e7397b34f7ce4524ece6ed411",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
