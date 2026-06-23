@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "553e6b83_f1a03492",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-06-23T07:49:20Z",
+      "side": 1,
+      "message": "this change don\u0027t result in correct default array with length 4.\nresult is array with length 1 an only value being the whole set value.\n\ncardinality do not seem to help resolve this problem",
+      "revId": "1927ea676aff653f28083302772017c479140e6a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
