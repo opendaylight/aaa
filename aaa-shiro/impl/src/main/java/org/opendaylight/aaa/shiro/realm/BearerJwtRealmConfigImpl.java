@@ -43,8 +43,8 @@ import org.slf4j.LoggerFactory;
  * <pre>{@code
  * jwks-uri=http(s)://keycloak.local:8080/realms/odl-realm/protocol/openid-connect/certs
  * expected-issuer=http(s)://keycloak.local:8080/realms/odl-realm
- * expected-audience=odl-application
- * allowed-algorithms=RS256
+ * expected-audience=["odl-application"]
+ * allowed-algorithms=["RS256","RS384","RS512","ES256"]
  * }</pre>
  */
 @Component(service = BearerJwtRealmConfig.class, configurationPid = "org.opendaylight.aaa.shiro.bearerjwtrealm")
@@ -66,12 +66,14 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
         String expected$_$issuer() default "";
 
         @AttributeDefinition(description = """
-            Expected value(s) of the 'aud' JWT claim (comma-separated).
-            Leave empty to skip audience verification.""")
-        String expected$_$audience() default "";
+            Expected value(s) of the 'aud' JWT claim. In the .cfg file use JSON-array notation
+            for multiple values, e.g. expected-audience=["aud1","aud2"]. A single value can be
+            given without brackets. Leave empty to skip audience verification.""")
+        String[] expected$_$audience() default {};
 
-        @AttributeDefinition(cardinality = Integer.MIN_VALUE, description = """
-            Allowed JWS signing algorithms (e.g. RS256, RS384, RS512, ES256).""")
+        @AttributeDefinition(description = """
+            Allowed JWS signing algorithms. In the .cfg file use JSON-array notation,
+            e.g. allowed-algorithms=["RS256","RS384","RS512","ES256"].""")
         String[] allowed$_$algorithms() default {"RS256", "RS384", "RS512", "ES256"};
     }
 
@@ -120,27 +122,19 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
     }
 
     private static DefaultJWTClaimsVerifier<SecurityContext> verifier(
-            final String expectedIssuer, final String expectedAudience) {
+            final String expectedIssuer, final String[] expectedAudience) {
         final var exactMatchBuilder = new JWTClaimsSet.Builder();
         if (!expectedIssuer.isBlank()) {
             exactMatchBuilder.issuer(expectedIssuer);
         }
 
-        final Set<String> audience;
-        if (expectedAudience.isBlank()) {
-            audience = null;
-        } else {
-            audience = Arrays.stream(expectedAudience.split(","))
-                .map(String::strip)
-                .filter(s -> !s.isEmpty())
-                .collect(Collectors.toUnmodifiableSet());
-            if (audience.isEmpty()) {
-                LOG.error("Malformed expected-audience {} , blank audience is not valid", expectedAudience);
-                throw new IllegalArgumentException("Malformed expected-audience, blank audience is not valid");
-            }
-        }
+        final var audience = Arrays.stream(expectedAudience)
+            .map(String::strip)
+            .filter(s -> !s.isEmpty())
+            .collect(Collectors.toUnmodifiableSet());
 
-        return new DefaultJWTClaimsVerifier<>(audience, exactMatchBuilder.build(), Set.of(), null);
+        return new DefaultJWTClaimsVerifier<>(audience.isEmpty() ? null : audience,
+            exactMatchBuilder.build(), Set.of(), null);
     }
 
     @Override
