@@ -17,6 +17,7 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.proc.DefaultJWTClaimsVerifier;
 import com.nimbusds.jwt.proc.DefaultJWTProcessor;
 import com.nimbusds.jwt.proc.JWTProcessor;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -43,8 +44,8 @@ import org.slf4j.LoggerFactory;
  * <pre>{@code
  * jwks-uri=http(s)://keycloak.local:8080/realms/odl-realm/protocol/openid-connect/certs
  * expected-issuer=http(s)://keycloak.local:8080/realms/odl-realm
- * expected-audience=["odl-application"]
- * allowed-algorithms=["RS256","RS384","RS512","ES256"]
+ * expected-audience=odl-application
+ * allowed-algorithms=RS256,RS384,RS512,ES256
  * }</pre>
  */
 @Component(service = BearerJwtRealmConfig.class, configurationPid = "org.opendaylight.aaa.shiro.bearerjwtrealm")
@@ -65,15 +66,14 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
             Expected value of the 'iss' JWT claim. Leave empty to skip issuer verification.""")
         String expected$_$issuer() default "";
 
-        @AttributeDefinition(description = """
-            Expected value(s) of the 'aud' JWT claim. In the .cfg file use JSON-array notation
-            for multiple values, e.g. expected-audience=["aud1","aud2"]. A single value can be
-            given without brackets. Leave empty to skip audience verification.""")
+        @AttributeDefinition(cardinality = Integer.MIN_VALUE, description = """
+            Expected value(s) of the 'aud' JWT claim. Use a comma-separated list for multiple
+            values, e.g. expected-audience=aud1,aud2. Leave empty to skip audience verification.""")
         String[] expected$_$audience() default {};
 
-        @AttributeDefinition(description = """
-            Allowed JWS signing algorithms. In the .cfg file use JSON-array notation,
-            e.g. allowed-algorithms=["RS256","RS384","RS512","ES256"].""")
+        @AttributeDefinition(cardinality = Integer.MIN_VALUE, description = """
+            Allowed JWS signing algorithms. Use a comma-separated list,
+            e.g. allowed-algorithms=RS256,RS384,RS512,ES256.""")
         String[] allowed$_$algorithms() default {"RS256", "RS384", "RS512", "ES256"};
     }
 
@@ -95,6 +95,9 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
      * verification.
      */
     @Activate
+    @SuppressFBWarnings(value = "SLF4J_PLACE_HOLDER_MISMATCH",
+        justification = "SLF4J treats a trailing Throwable as a stack-trace argument, not a {} placeholder; "
+            + "SpotBugs does not account for this convention")
     public BearerJwtRealmConfigImpl(final Configuration configuration) {
         if (configuration.jwks$_$uri().isBlank()) {
             jwtProcessor = null;
