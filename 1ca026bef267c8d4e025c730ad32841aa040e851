@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "645cc72c_4e12219f",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-06-25T10:33:18Z",
+      "side": 1,
+      "message": "when I try to run karaf and debug loaded configuration, the values are not split like this.",
+      "revId": "1ca026bef267c8d4e025c730ad32841aa040e851",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
