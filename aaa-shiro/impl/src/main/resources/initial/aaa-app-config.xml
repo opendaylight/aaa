@@ -368,6 +368,18 @@
         <pair-value>noSessionCreation, authcCombinedOauth2, roles[admin]</pair-value>
     </urls>
     <urls>
+        <pair-key>/explorer/**</pair-key>
+        <pair-value>anon</pair-value>
+    </urls>
+    <urls>
+        <pair-key>/api/**</pair-key>
+        <pair-value>anon</pair-value>
+    </urls>
+    <urls>
+        <pair-key>/openapi/**</pair-key>
+        <pair-value>anon</pair-value>
+    </urls>
+    <urls>
         <pair-key>/**</pair-key>
         <pair-value>noSessionCreation, authcCombinedOauth2</pair-value>
     </urls>
