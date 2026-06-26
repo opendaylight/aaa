@@ -45,19 +45,21 @@ import org.slf4j.LoggerFactory;
  * full JWT verification: signature, issuer, audience, expiration and not-before. Without a
  * configured JWKS URI the realm falls back to accepting any well-formed JWT without verification.
  *
- * <p>Configuration is supplied via {@code etc/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg}:
+ * <p>Configuration is supplied via {@code etc/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg.json}:
  * <pre>{@code
- * jwks-uri="http(s)://keycloak.local:8080/realms/odl-realm/protocol/openid-connect/certs"
- * expected-issuer="http(s)://keycloak.local:8080/realms/odl-realm"
- * expected-audience="odl-application"
- * allowed-algorithms=["RS256", "RS384", "RS512", "ES256"]
- * user-claim="preferred_username"
- * role-claim="groups"
- * cache-timetolive-seconds=l"300"
- * cache-refreshtimeout-seconds=l"15"
- * rate-limit-min-interval-seconds=l"30"
- * retry-jwks-retrieval=b"false"
- * expected-type="JWT"
+ * {
+ *   "jwks-uri": "http(s)://keycloak.local:8080/realms/odl-realm/protocol/openid-connect/certs",
+ *   "expected-issuer": "http(s)://keycloak.local:8080/realms/odl-realm",
+ *   "expected-audience": "odl-application",
+ *   "allowed-algorithms": ["RS256", "RS384", "RS512", "ES256"],
+ *   "user-claim": "preferred_username",
+ *   "role-claim": "groups",
+ *   "expected-type": "JWT",
+ *   "cache-timetolive-seconds": 300,
+ *   "cache-refreshtimeout-seconds": 15,
+ *   "rate-limit-min-interval-seconds": 30,
+ *   "retry-jwks-retrieval": false
+ * }
  * }</pre>
  */
 @Component(service = BearerJwtRealmConfig.class, configurationPid = "org.opendaylight.aaa.shiro.bearerjwtrealm")
@@ -85,7 +87,7 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
         String expected$_$audience() default "";
 
         @AttributeDefinition(description = """
-            Allowed JWS signing algorithms (comma-separated, e.g. RS256, RS384, RS512, ES256).""")
+            List of allowed JWS signing algorithms (e.g. RS256, RS384, RS512, ES256).""")
         String[] allowed$_$algorithms() default {"RS256", "RS384", "RS512", "ES256"};
 
         @AttributeDefinition(description = """
