@@ -1,0 +1,17 @@
+{
+  "jwks-uri": "",
+  "expected-issuer": "",
+  "expected-audience": "",
+  "allowed-algorithms": [
+    "RS256",
+    "RS384",
+    "RS512",
+    "ES256"
+  ],
+  "user-claim": "preferred_username",
+  "role-claim": "groups",
+  "expected-type": "JWT",
+  "cache-timetolive-seconds": 300,
+  "cache-refreshtimeout-seconds": 15,
+  "retry-jwks-retrieval": false
+}
