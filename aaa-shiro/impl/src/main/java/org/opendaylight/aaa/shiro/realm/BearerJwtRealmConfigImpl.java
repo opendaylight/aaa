@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * full JWT verification: signature, issuer, audience, expiration and not-before. Without a
  * configured JWKS URI the realm falls back to accepting any well-formed JWT without verification.
  *
- * <p>Configuration is supplied via {@code etc/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg}:
+ * <p>Configuration is supplied via {@code etc/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg.json}:
  * <pre>{@code
  * jwks-uri=http(s)://keycloak.local:8080/realms/odl-realm/protocol/openid-connect/certs
  * expected-issuer=http(s)://keycloak.local:8080/realms/odl-realm
