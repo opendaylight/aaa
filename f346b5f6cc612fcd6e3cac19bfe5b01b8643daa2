@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9fd9355_f05e4918",
+        "filename": "aaa-shiro/impl/src/main/resources/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg",
+        "patchSetId": 31
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 8907
+      },
+      "writtenOn": "2026-06-26T11:39:08Z",
+      "side": 1,
+      "message": "Is this correct? At least for me it is giving me in netconf project \n\n\n`[org.opendaylight.aaa.shiro.realm.BearerJwtRealmConfigImpl(14)] : Error during instantiation of the implementation object`\n`...`\n`java.lang.NumberFormatException: For input string: \"l\"300\"\"`\n\nWhen used as `cache-timetolive-seconds\u003d300` then it does not throw this exception",
+      "revId": "f346b5f6cc612fcd6e3cac19bfe5b01b8643daa2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
