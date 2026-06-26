@@ -26,8 +26,8 @@
         <configfile finalname="/etc/org.opendaylight.aaa.shiro.oauth2proxyheaderfilter.cfg">
             mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/cfg/oauth2proxyheaderfilter-config
         </configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg">
-            mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/cfg/bearerjwtrealm-config
+        <configfile finalname="/etc/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg.json">
+            mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/json/bearerjwtrealm-config
         </configfile>
         <feature version="[14,15)">odl-karaf-feat-jdbc</feature>
         <feature version="[14,15)">odl-karaf-feat-jetty</feature>

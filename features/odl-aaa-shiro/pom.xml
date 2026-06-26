@@ -140,10 +140,10 @@
         </dependency>
 
         <dependency>
-            <!-- finalname="/etc/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg" -->
+            <!-- finalname="/etc/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg.json" -->
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-shiro</artifactId>
-            <type>cfg</type>
+            <type>json</type>
             <classifier>bearerjwtrealm-config</classifier>
         </dependency>
 
