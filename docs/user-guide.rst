@@ -1009,7 +1009,7 @@ Configuring BearerJwtRealm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Configuration is loaded from
-``etc/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg``. The file is deployed
+``etc/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg.json``. The file is deployed
 automatically when the ``odl-aaa-shiro`` feature is installed. Edit it to
 match your IdP; changes take effect after the bundle (or full distribution)
 is restarted.
@@ -1029,7 +1029,7 @@ is restarted.
     JWT verification is enabled. Leave blank when ``jwks-uri`` is empty and
     JWT verification is disabled.
 
-    Example: ``"https://keycloak.local:8080/realms/odl-"realm"``
+    Example: ``"https://keycloak.local:8080/realms/odl-realm"``
 
 ``expected-audience``
     Comma-separated list of expected ``aud`` claim values. When set, a token
@@ -1039,7 +1039,7 @@ is restarted.
     Example: ``"odl-application"``
 
 ``allowed-algorithms``
-    Comma-separated list of permitted JWS signing algorithm identifiers.
+    List of permitted JWS signing algorithm identifiers.
     Default: ``["RS256", "RS384", "RS512", "ES256"]``. Supported values include ``RS256``, ``RS384``,
     ``RS512``, ``ES256``, ``ES384``, ``ES512``.
 
@@ -1061,22 +1061,22 @@ is restarted.
 ``cache-timetolive-seconds``
     How long (in seconds) the fetched JWK set is considered valid before a
     refresh is needed. Must be less than cache-timetolive-seconds.
-    Default: ``l"300"`` (5 minutes). Reduce this value when the IdP rotates
+    Default: ``300`` (5 minutes). Reduce this value when the IdP rotates
     signing keys frequently.
 
 ``cache-refreshtimeout-seconds``
     How early (in seconds) before cache expiry a background refresh of the
     JWK set is triggered. Must be more than both rate-limit-min-interval-seconds
-    and cache-timetolive-seconds. Default: ``l"15"``. The background
+    and cache-timetolive-seconds. Default: ``15``. The background
     refresh prevents authentication failures at the exact moment a cache entry expires.
 
 ``rate-limit-min-interval-seconds``
     Minimum time between two upstream JWKS fetches, in seconds (rate limiting). Must be
-    less than cache-timetolive-seconds. Default: ``l"30"``.
+    less than cache-timetolive-seconds. Default: ``30``.
 
 ``retry-jwks-retrieval``
     When ``true``, a single automatic retry is attempted if the initial JWKS
-    fetch fails due to a transient network error. Default: ``b"false"``.
+    fetch fails due to a transient network error. Default: ``false``.
 
 .. note::
 
@@ -1092,10 +1092,7 @@ is restarted.
 
 .. note::
 
-    For this configuration specifically it is important to use the format of
-    the `Apache Felix ConfigAdmin implementation <https://github.com/apache/felix-dev/blob/master/utils/src/main/java/org/apache/felix/utils/properties/ConfigurationHandler.java>`_.
-    So keep strings inside ``"`` and keep type codes, ``b`` for boolean and
-    ``l`` for long.
+    The configuration is plain JSON using native JSON syntax.
 
 How to enable BearerJwtRealm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
