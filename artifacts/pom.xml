@@ -126,7 +126,7 @@
                 <groupId>org.opendaylight.aaa</groupId>
                 <artifactId>aaa-shiro</artifactId>
                 <version>${project.version}</version>
-                <type>cfg</type>
+                <type>json</type>
                 <classifier>bearerjwtrealm-config</classifier>
             </dependency>
             <dependency>
