@@ -214,8 +214,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                                     <classifier>oauth2proxyheaderfilter-config</classifier>
                                 </artifact>
                                 <artifact>
-                                    <file>${project.build.directory}/classes/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg</file>
-                                    <type>cfg</type>
+                                    <file>${project.build.directory}/classes/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg.json</file>
+                                    <type>json</type>
                                     <classifier>bearerjwtrealm-config</classifier>
                                 </artifact>
                             </artifacts>
