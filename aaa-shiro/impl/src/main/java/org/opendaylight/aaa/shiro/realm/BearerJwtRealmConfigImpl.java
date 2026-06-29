@@ -56,6 +56,7 @@ import org.slf4j.LoggerFactory;
  * cache-refreshtimeout-seconds=15
  * retry-jwks-retrieval=false
  * expected-type=JWT
+ * max-clock-skew-seconds=60
  * }</pre>
  */
 @Component(service = BearerJwtRealmConfig.class, configurationPid = "org.opendaylight.aaa.shiro.bearerjwtrealm")
@@ -111,6 +112,14 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
             When enabled, a single automatic retry is attempted if the initial JWKS
             fetch fails due to a transient network error.""")
         boolean retry$_$jwks$_$retrieval() default false;
+
+        @AttributeDefinition(description = """
+            Maximum clock skew (AAA-303) to tolerate when verifying the exp and nbf JWT claims,
+            in seconds. A non-zero value absorbs minor drift between the token issuer's clock and
+            this host. Per RFC 8725 best-current-practice this should be kept as small as
+            possible to minimise the replay window; set to 0 to enforce strict time checking.""",
+            min = "0")
+        int max$_$clock$_$skew$_$seconds() default 60;
     }
 
     private final @Nullable JWTProcessor<SecurityContext> jwtProcessor;
@@ -185,7 +194,7 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
         final var processor = new DefaultJWTProcessor<>();
         processor.setJWSKeySelector(keySelector);
         processor.setJWTClaimsSetVerifier(verifier(configuration.expected$_$issuer(),
-            configuration.expected$_$audience()));
+            configuration.expected$_$audience(), configuration.max$_$clock$_$skew$_$seconds()));
         // RFC 8725 §3.11: validate the typ header to prevent token type confusion
         if (!expectedType.isBlank()) {
             processor.setJWSTypeVerifier(new DefaultJOSEObjectTypeVerifier<>(new JOSEObjectType(this.expectedType)));
@@ -194,7 +203,7 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
     }
 
     private static DefaultJWTClaimsVerifier<SecurityContext> verifier(
-            final String expectedIssuer, final String expectedAudience) {
+            final String expectedIssuer, final String expectedAudience, final int maxClockSkewSeconds) {
         final var exactMatchBuilder = new JWTClaimsSet.Builder();
         if (!expectedIssuer.isBlank()) {
             exactMatchBuilder.issuer(expectedIssuer);
@@ -217,7 +226,11 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
         // RFC 8725 §3.9: when audience verification is disabled, prohibit tokens that carry an
         // aud claim — they are scoped to a specific recipient and should not be accepted here.
         final Set<String> prohibitedClaims = audience == null ? Set.of("aud") : Set.of();
-        return new DefaultJWTClaimsVerifier<>(audience, exactMatchBuilder.build(), Set.of(), prohibitedClaims);
+        final var claimsVerifier = new DefaultJWTClaimsVerifier<>(
+            audience, exactMatchBuilder.build(), Set.of(), prohibitedClaims);
+        // AAA-303 / RFC 8725: minimise clock skew tolerance to reduce the token replay window.
+        claimsVerifier.setMaxClockSkew(maxClockSkewSeconds);
+        return claimsVerifier;
     }
 
     @Override
