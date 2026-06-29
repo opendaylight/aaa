@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e72fff75_464f82cb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 33
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-06-29T14:05:18Z",
+      "side": 1,
+      "message": "In the end to make assumption on config correctness, we can add:\n\n```\nif (timeToLiveMillis \u003c\u003d rateLimitMillis) {\n    throw new IllegalArgumentException(\n        \"cache-timetolive-seconds must be greater than rate-limit-min-interval-seconds\");\n}\nif (cacheRefreshTimeoutMillis \u003e\u003d timeToLiveMillis) {\n    throw new IllegalArgumentException(\n        \"cache-refreshtimeout-seconds must be less than cache-timetolive-seconds\");\n}\n```",
+      "revId": "5919488e67c04739c03120f02f9116c6bdbf5824",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e1d01141_4c26fa61",
         "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
         "patchSetId": 33
