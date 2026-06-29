@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18dcdb2c_97e98008",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-06-29T13:03:33Z",
+      "side": 1,
+      "message": "probably, we do not want to give hints to anybody about the format of the token, more generic error should be enough",
+      "revId": "2b2cc6909de9654172500a2c1fc2afe5b278c715",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
