@@ -281,6 +281,43 @@ class BearerJwtRealmTest {
     }
 
     /**
+     * Tests that a recently-expired JWT is rejected when clock skew tolerance is zero.
+     */
+    @Test
+    void testClockSkewZeroRejectsExpiredToken() throws Exception {
+        final var rsaKey = newRsaKey();
+        try (var ignored = BearerJwtRealm.prepareForLoad(buildConfig(rsaKey, "test-issuer", null, 0))) {
+            final var verifiedRealm = new BearerJwtRealm();
+            final var jwt = buildSignedJwt(rsaKey, new JWTClaimsSet.Builder()
+                .claim(USER_CLAIM, USER)
+                .issuer("test-issuer")
+                .expirationTime(new Date(System.currentTimeMillis() - 30_000))
+                .build());
+            final var ex = assertThrows(AuthenticationException.class,
+                () -> verifiedRealm.doGetAuthenticationInfo(new BearerToken(jwt)));
+            assertTrue(ex.getMessage().startsWith("JWT verification failed:"));
+        }
+    }
+
+    /**
+     * Tests that a recently-expired JWT is accepted when the configured clock skew covers the gap.
+     */
+    @Test
+    void testClockSkewToleratesRecentlyExpiredToken() throws Exception {
+        final var rsaKey = newRsaKey();
+        try (var ignored = BearerJwtRealm.prepareForLoad(buildConfig(rsaKey, "test-issuer", null, 120))) {
+            final var verifiedRealm = new BearerJwtRealm();
+            final var jwt = buildSignedJwt(rsaKey, new JWTClaimsSet.Builder()
+                .claim(USER_CLAIM, USER)
+                .issuer("test-issuer")
+                .expirationTime(new Date(System.currentTimeMillis() - 30_000))
+                .build());
+            final var info = verifiedRealm.doGetAuthenticationInfo(new BearerToken(jwt));
+            assertNotNull(info);
+        }
+    }
+
+    /**
      * Tests that a JWT with the wrong issuer is rejected.
      */
     @Test
@@ -617,11 +654,26 @@ class BearerJwtRealmTest {
             audience != null ? Set.of(audience) : null, Set.of(JWSAlgorithm.RS256));
     }
 
+    private static BearerJwtRealmConfigImpl buildConfig(final RSAKey rsaKey, final String issuer,
+            final String audience, final int maxClockSkewSeconds) {
+        return buildConfig(rsaKey, issuer,
+            audience != null ? Set.of(audience) : null, Set.of(JWSAlgorithm.RS256), maxClockSkewSeconds);
+    }
+
     /**
      * Builds a {@link BearerJwtRealmConfigImpl} with configurable allowed algorithms and audience set.
      */
     private static BearerJwtRealmConfigImpl buildConfig(final RSAKey rsaKey, final String issuer,
             final Set<String> audiences, final Set<JWSAlgorithm> algorithms) {
+        return buildConfig(rsaKey, issuer, audiences, algorithms,
+            DefaultJWTClaimsVerifier.DEFAULT_MAX_CLOCK_SKEW_SECONDS);
+    }
+
+    /**
+     * Builds a {@link BearerJwtRealmConfigImpl} with configurable algorithms, audience set, and clock skew.
+     */
+    private static BearerJwtRealmConfigImpl buildConfig(final RSAKey rsaKey, final String issuer,
+            final Set<String> audiences, final Set<JWSAlgorithm> algorithms, final int maxClockSkewSeconds) {
         final var jwkSource = new ImmutableJWKSet<>(new JWKSet(rsaKey.toPublicJWK()));
         final var keySelector = new JWSVerificationKeySelector<>(algorithms, jwkSource);
         final var exactMatchBuilder = new JWTClaimsSet.Builder();
@@ -631,6 +683,7 @@ class BearerJwtRealmTest {
         final var prohibitedClaims = audiences == null ? Set.of("aud") : Set.of();
         final var claimsVerifier = new DefaultJWTClaimsVerifier<>(
             audiences, exactMatchBuilder.build(), Set.of(), (Set<String>) prohibitedClaims);
+        claimsVerifier.setMaxClockSkew(maxClockSkewSeconds);
         final var processor = new DefaultJWTProcessor<>();
         processor.setJWSKeySelector(keySelector);
         processor.setJWTClaimsSetVerifier(claimsVerifier);
