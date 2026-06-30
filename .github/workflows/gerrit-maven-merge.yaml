@@ -57,7 +57,7 @@ jobs:
     steps:
       - name: Clear votes
         # yamllint disable-line rule:line-length
-        uses: lfit/gerrit-review-action@a5de1d5bf17c2603ae81544dc2a455017b454ec8 # v1.1.1
+        uses: lfit/gerrit-review-action@a1c036a59b94c8ab89de26d378f6a28cc7378b13 # v1.1.2
         with:
           host: ${{ vars.GERRIT_SERVER }}
           username: ${{ vars.GERRIT_SSH_USER }}
@@ -82,7 +82,7 @@ jobs:
           ref: ${{ inputs.GERRIT_BRANCH }}
           submodules: "true"
       # yamllint disable-line rule:line-length
-      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
         id: setup-python
         with:
           python-version: "3.10"
@@ -124,7 +124,7 @@ jobs:
           path: "${{ github.workspace }}/m2repo"
       - name: Publish to Nexus
         # yamllint disable-line rule:line-length
-        uses: lfreleng-actions/nexus-publish-action@55d3b697d3ca1c0f28f574ea5dc7daa6f460deaa # v0.2.1
+        uses: lfreleng-actions/nexus-publish-action@749030f756e5625d1efff260f731dbba92b1f347 # v1.1.2
         with:
           nexus_server: ${{ vars.NEXUS_SERVER }}
           nexus_username: ${{ secrets.NEXUS_USERNAME }}
@@ -143,7 +143,7 @@ jobs:
         uses: im-open/workflow-conclusion@8eac7f17381a6917bc04fec3e2c92e70ebc37526 # v3.0.0
       - name: Set vote
         # yamllint disable-line rule:line-length
-        uses: lfit/gerrit-review-action@a5de1d5bf17c2603ae81544dc2a455017b454ec8 # v1.1.1
+        uses: lfit/gerrit-review-action@a1c036a59b94c8ab89de26d378f6a28cc7378b13 # v1.1.2
         with:
           host: ${{ vars.GERRIT_SERVER }}
           username: ${{ vars.GERRIT_SSH_USER }}
