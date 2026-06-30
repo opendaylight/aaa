@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94d9c6b4_0336f315",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-06-30T06:47:46Z",
+      "side": 1,
+      "message": "ATM we are good with documenting what\u0027s the current behavior, in the future we can continue with additional tasks.\n\nSee also: https://git.opendaylight.org/gerrit/c/aaa/+/123797",
+      "revId": "9104436892b165626166d069e89c139d34f459d5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
