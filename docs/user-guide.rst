@@ -1079,6 +1079,14 @@ is restarted.
 
 .. note::
 
+   A fixed clock-skew tolerance of 60 seconds is applied when validating the ``exp``
+   (expiration) and ``nbf`` (not-before) claims (RFC 7519 §4.1.4 / §4.1.5). This absorbs
+   minor time-of-day drift between the IdP and the ODL host. With NTP-synchronised
+   infrastructure, actual clock drift is typically well below 1 second, so the 60-second
+   window is safe for production use.
+
+.. note::
+
     For this configuration specifically it is important to use the format of
     the `Apache Felix ConfigAdmin implementation <https://github.com/apache/felix-dev/blob/master/utils/src/main/java/org/apache/felix/utils/properties/ConfigurationHandler.java>`_.
     So keep strings inside ``"`` and keep type codes, ``b`` for boolean and
