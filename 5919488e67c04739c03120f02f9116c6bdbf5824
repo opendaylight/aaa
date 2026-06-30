@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31ebd154_6661b5da",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 33
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-06-30T07:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e72fff75_464f82cb",
+      "revId": "5919488e67c04739c03120f02f9116c6bdbf5824",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1d01141_4c26fa61",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-06-29T14:01:47Z",
       "side": 1,
       "message": "To make it logical, we can document here and add check below, for:\n\nif (cacheRefreshTimeoutMillis \u003e\u003d timeToLiveMillis) {\n    throw new IllegalArgumentException(\n        \"cache-refreshtimeout-seconds must be less than cache-timetolive-seconds\");\n}",
+      "revId": "5919488e67c04739c03120f02f9116c6bdbf5824",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1672b36c_f28b2b0b",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-06-30T07:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1d01141_4c26fa61",
       "revId": "5919488e67c04739c03120f02f9116c6bdbf5824",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
