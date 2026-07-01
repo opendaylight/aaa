@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b78d95a3_9e8fa450",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/filters/ODLRolesAuthorizationFilterTest.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2026-07-01T09:13:13Z",
+      "side": 1,
+      "message": "use @ExtendWith(MockitoExtension.class) and @Mock instead of direct use of Mockito.mock()",
+      "range": {
+        "startLine": 33,
+        "startChar": 28,
+        "endLine": 33,
+        "endChar": 48
+      },
+      "revId": "c862d0ceaed7fac1b745e7e8a57ccbb57b673efc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
