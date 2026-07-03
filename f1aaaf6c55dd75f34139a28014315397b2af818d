@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08a85562_e521c37c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-07-03T08:43:22Z",
+      "side": 1,
+      "message": "IMO this can be abandoned. As duplicate of https://git.opendaylight.org/gerrit/c/aaa/+/122553",
+      "revId": "f1aaaf6c55dd75f34139a28014315397b2af818d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
