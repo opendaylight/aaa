@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80b0d22c_6daef4c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 37
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-03T06:15:53Z",
+      "side": 1,
+      "message": "This filter will be reimplemented as a result of feedback from end users.",
+      "revId": "a13a76426a93d22e950f5dee235abc69abc6fe39",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
