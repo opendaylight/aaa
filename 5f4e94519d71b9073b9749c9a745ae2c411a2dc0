@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4e29e8a_c9ed6252",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-07T07:59:29Z",
+      "side": 1,
+      "message": "Maybe we can move the logic before both verified and unverified modes and have the same errors, that also means squashing these two changes into one.",
+      "revId": "5f4e94519d71b9073b9749c9a745ae2c411a2dc0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
