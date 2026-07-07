@@ -16,6 +16,23 @@
       "message": "Squash into previous one?",
       "revId": "bd9d7f9b8cac7f303d78276c980fc0ab65e5bc00",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bc541a9_e1a28f00",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-07T08:00:01Z",
+      "side": 1,
+      "message": "What happens with plain?",
+      "revId": "bd9d7f9b8cac7f303d78276c980fc0ab65e5bc00",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
