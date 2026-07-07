@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "78335d29_ae1dedd6",
+        "filename": "aaa-shiro/impl/src/main/resources/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg",
+        "patchSetId": 29
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-07T07:51:51Z",
+      "side": 1,
+      "message": "JWT is just generic, not rfc 9068, document it, user can configure rfc 9068 at+jwt if he wish so",
+      "revId": "cc580be7a30fa1b4771dd31b2159c9361217e3e3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b15673bc_e3b7a0b0",
         "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
         "patchSetId": 29
