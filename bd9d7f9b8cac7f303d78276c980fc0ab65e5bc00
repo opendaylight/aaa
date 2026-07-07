@@ -33,6 +33,24 @@
       "message": "What happens with plain?",
       "revId": "bd9d7f9b8cac7f303d78276c980fc0ab65e5bc00",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "143ec739_5839760f",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealm.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-07-07T10:09:58Z",
+      "side": 1,
+      "message": "jwtProcessor rejects process(PlainJWT, null) with BadJOSEException\n\nhttps://www.javadoc.io/doc/com.nimbusds/nimbus-jose-jwt/latest/com/nimbusds/jwt/proc/DefaultJWTProcessor.html\n\"Note that for security reasons this processor is hardwired to reject unsecured (plain) JWTs. Override the process(PlainJWT, SecurityContext) if you need to handle plain JWTs.\"\n\nI think we can reject it explicitly to stay consistent with unverified mode",
+      "parentUuid": "6bc541a9_e1a28f00",
+      "revId": "bd9d7f9b8cac7f303d78276c980fc0ab65e5bc00",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
