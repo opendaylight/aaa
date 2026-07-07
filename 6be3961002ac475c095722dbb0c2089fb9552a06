@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "febee28f_7dda1d0c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-07T08:06:14Z",
+      "side": 1,
+      "message": "aha, this is mean to allow use the same config in \"combined\" filter, document it..",
+      "revId": "6be3961002ac475c095722dbb0c2089fb9552a06",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
