@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "540c49f9_99f78789",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-07-07T12:24:05Z",
+      "side": 1,
+      "message": "I moved this logic before both verified and unverified modes to have the same errors, but I think it\u0027s more clear to keep both patches as IMO we should also handle PlainJWT the same way as EncryptedJWT",
+      "parentUuid": "290d74d3_1034b606",
+      "revId": "bd9d7f9b8cac7f303d78276c980fc0ab65e5bc00",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6bc541a9_e1a28f00",
