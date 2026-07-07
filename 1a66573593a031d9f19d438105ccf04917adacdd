@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4006f2c7_16b9da69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 38
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-07T14:13:15Z",
+      "side": 1,
+      "message": "The integration process with 3rd party filter has been re-analyzed, this can be abandoned.",
+      "revId": "1a66573593a031d9f19d438105ccf04917adacdd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
