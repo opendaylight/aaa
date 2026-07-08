@@ -53,6 +53,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60964b55_8181650c",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilterConfig.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-08T14:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5748d41f_7e068b15",
+      "revId": "248f1fd6932d1610a7b9104bc880d267429c714a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d603d2ca_2f603209",
@@ -66,6 +84,24 @@
       "writtenOn": "2026-07-08T13:43:48Z",
       "side": 1,
       "message": "we can move PROXY_HEADER_USER here",
+      "revId": "248f1fd6932d1610a7b9104bc880d267429c714a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c29d2bd_88d9f172",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderParser.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-08T14:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d603d2ca_2f603209",
       "revId": "248f1fd6932d1610a7b9104bc880d267429c714a",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
