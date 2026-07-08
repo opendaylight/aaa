@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4527f61_6803a9ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-08T11:49:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "961a1119_b96d91ee",
+      "revId": "c6cc2e837e01887bc905d23c86f920e7cb32e260",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0d16d152_78b27e01",
@@ -52,6 +70,42 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5ea18c0_252803e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-08T11:49:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b283bf0_f6d54e97",
+      "revId": "c6cc2e837e01887bc905d23c86f920e7cb32e260",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9613921_1db1e6e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-08T11:49:39Z",
+      "side": 1,
+      "message": "It can be useful for integration: with this refactor we make easier 3rd party code to construct OAuth2 token with configuration (re)used to validate headers - maximum number of roles, atc.",
+      "parentUuid": "0d16d152_78b27e01",
+      "revId": "c6cc2e837e01887bc905d23c86f920e7cb32e260",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e52580e5_609699bb",
@@ -65,6 +119,24 @@
       "writtenOn": "2026-07-08T11:08:15Z",
       "side": 1,
       "message": "one line?",
+      "revId": "c6cc2e837e01887bc905d23c86f920e7cb32e260",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac41f735_50851b7c",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilter.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-08T11:49:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e52580e5_609699bb",
       "revId": "c6cc2e837e01887bc905d23c86f920e7cb32e260",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
@@ -86,6 +158,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "97fc9e4f_ca74a023",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderParser.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-08T11:49:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83b91104_ed9c4b49",
+      "revId": "c6cc2e837e01887bc905d23c86f920e7cb32e260",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5341dd5b_12d2bca6",
@@ -99,6 +189,24 @@
       "writtenOn": "2026-07-08T11:14:31Z",
       "side": 1,
       "message": "would be better to pass here config - thus having easier call for parseUser and parseRoles",
+      "revId": "c6cc2e837e01887bc905d23c86f920e7cb32e260",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5166157_9957ec04",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderParser.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-08T11:49:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5341dd5b_12d2bca6",
       "revId": "c6cc2e837e01887bc905d23c86f920e7cb32e260",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
