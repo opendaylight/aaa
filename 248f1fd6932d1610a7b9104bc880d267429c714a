@@ -18,6 +18,41 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c9cfc7b_402090d6",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilterConfig.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-08T13:56:36Z",
+      "side": 1,
+      "message": "3rd parties consume the OSGi-registered Oauth2ProxyHeaderFilterConfigImpl singleton rather than writing their own implementation, there\u0027s only one place that ever compiles those patterns, so exposing precompiled Patterns is actually the right call",
+      "parentUuid": "b26826d4_24cd5856",
+      "revId": "248f1fd6932d1610a7b9104bc880d267429c714a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5748d41f_7e068b15",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilterConfig.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-08T13:56:36Z",
+      "side": 1,
+      "message": "wrong javadoc",
+      "revId": "248f1fd6932d1610a7b9104bc880d267429c714a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d603d2ca_2f603209",
