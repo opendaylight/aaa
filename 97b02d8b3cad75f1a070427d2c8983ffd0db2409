@@ -16,6 +16,24 @@
       "message": "can we reuse #buildEncryptedJwt?",
       "revId": "97b02d8b3cad75f1a070427d2c8983ffd0db2409",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d46085e5_5893672d",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-07-08T11:15:45Z",
+      "side": 1,
+      "message": "this test already uses #buildEncryptedJwt\n\nI don\u0027t see how it could be used again",
+      "parentUuid": "d0f22755_625e80bf",
+      "revId": "97b02d8b3cad75f1a070427d2c8983ffd0db2409",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
