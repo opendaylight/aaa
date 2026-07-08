@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0f22755_625e80bf",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmTest.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-08T10:52:02Z",
+      "side": 1,
+      "message": "can we reuse #buildEncryptedJwt?",
+      "revId": "97b02d8b3cad75f1a070427d2c8983ffd0db2409",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
