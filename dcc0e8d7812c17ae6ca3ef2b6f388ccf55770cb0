@@ -18,6 +18,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3febdc2e_30c21eeb",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilterConfig.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-09T06:40:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef72f113_e2d67dcb",
+      "revId": "dcc0e8d7812c17ae6ca3ef2b6f388ccf55770cb0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e359757_4e4ee574",
@@ -35,6 +53,24 @@
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e073a89f_9bf654e6",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilterConfig.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-09T06:40:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e359757_4e4ee574",
+      "revId": "dcc0e8d7812c17ae6ca3ef2b6f388ccf55770cb0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0d8a2865_0477ee14",
@@ -48,6 +84,24 @@
       "writtenOn": "2026-07-08T14:17:57Z",
       "side": 1,
       "message": "logger is usually first attribute",
+      "revId": "dcc0e8d7812c17ae6ca3ef2b6f388ccf55770cb0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bafe3000_85df53ef",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderParser.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-09T06:40:23Z",
+      "side": 1,
+      "message": "IMO its not a (strict) rule, here HEADERs have wider visibility",
+      "parentUuid": "0d8a2865_0477ee14",
       "revId": "dcc0e8d7812c17ae6ca3ef2b6f388ccf55770cb0",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
