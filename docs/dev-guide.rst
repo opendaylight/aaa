@@ -154,6 +154,53 @@ Previously the servlet's web.xml was edited to add the AAAShiroFilter. This has 
 
 The Neutron project uses this new style the Neutron `blueprint.xml <https://git.opendaylight.org/gerrit/gitweb?p=neutron.git;a=blob;f=northbound-api/src/main/resources/OSGI-INF/blueprint/blueprint.xml;h=a9dc57a97091d6c90da3e216a13523adbe698887;hb=refs/heads/master>`_ and Neutron `WebInitializer.java <https://git.opendaylight.org/gerrit/gitweb?p=neutron.git;a=blob;f=northbound-api/src/main/java/org/opendaylight/neutron/northbound/api/WebInitializer.java;h=a615d02343505cef0d4cdd54b2f07f2a9fee9b75;hb=refs/heads/master>`_ are helpful references.
 
+Pluggable third-party filters and realms
+----------------------------------------
+
+Third-party applications can plug their own Shiro authentication filters and realms into ODL AAA
+without modifying AAA code, and can reuse ODL's OAuth2-Proxy forwarded-header validation instead of
+duplicating it (`AAA-307 <https://lf-opendaylight.atlassian.net/browse/AAA-307>`_, part of the
+OIDC/OAuth2-via-proxy work in AAA-294). This is particularly useful for deployments transitioning
+from a legacy authentication system to OAuth2: the external filter can keep accepting the legacy
+credentials while requests forwarded by an OAuth2-Proxy instance fall back to the standard
+``Oauth2ProxyHeaderToken`` handling.
+
+How it works
+~~~~~~~~~~~~
+
+-  External filter and realm classes are declared by fully-qualified class name in the
+   ``shiro-configuration`` datastore (seeded from ``aaa-shiro``'s ``initial/aaa-app-config.xml``,
+   see the ``<main>`` and ``<urls>`` sections) and are instantiated by Shiro reflection under the
+   ``org.opendaylight.aaa.shiro`` bundle's classloader.
+
+-  For the classes to be visible to that classloader, the third-party bundle is typically built as
+   an OSGi fragment with ``Fragment-Host: org.opendaylight.aaa.shiro``. Note that SCR does not
+   process Declarative Services components in fragments, so any OSGi-managed configuration has to
+   live in a separate ordinary bundle.
+
+Public integration API
+~~~~~~~~~~~~~~~~~~~~~~
+
+AAA exposes three public classes/interfaces that let third parties construct and consume
+OAuth2-Proxy tokens:
+
+-  ``Oauth2ProxyHeaderFilterConfig`` — a singleton OSGi service managing the configuration
+   supplied via a ``.cfg`` file.
+
+-  ``Oauth2ProxyHeaderParser`` — a helper that parses the incoming ``X-Forwarded-User`` and
+   ``X-Forwarded-Groups`` headers.
+
+-  ``Oauth2ProxyHeaderToken`` — a record carrying the forwarded user and groups; tokens of this
+   type are processed by ``Oauth2ProxyHeaderRealm``.
+
+Both OSGi Declarative Services and Blueprint XML integration styles are supported.
+
+.. important::
+
+    The forwarded headers are trusted as-is, so they must originate from a trusted OAuth2-Proxy
+    instance: direct HTTP access to ODL that bypasses the proxy must be blocked at the network
+    level, otherwise any caller can forge the headers and authenticate as an arbitrary user.
+
 AAA Realms
 ----------
 
