@@ -10,6 +10,7 @@ package org.opendaylight.aaa.shiro.filters;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
@@ -88,6 +89,66 @@ class Oauth2ProxyHeaderFilterTest {
             .when(request).getHeaders(Oauth2ProxyHeaderFilter.PROXY_HEADER_USER);
         assertFalse(filter.onAccessDenied(request, response));
         verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+    }
+
+    /**
+     * Test that {@code prepareForLoad(null)} falls back to the {@link Oauth2ProxyHeaderFilterConfig#DEFAULTS}
+     * instance as-is, so a filter instantiated within the registration scope carries the default limits.
+     */
+    @Test
+    void testPrepareForLoadNullUsesDefaults() {
+        try (var load = Oauth2ProxyHeaderFilter.prepareForLoad(null)) {
+            assertSame(Oauth2ProxyHeaderFilterConfig.DEFAULTS, Oauth2ProxyHeaderFilter.configFromThreadLocal());
+
+            // boundary smoke check: exactly MAX_USER_LENGTH_DEFAULT (128) is accepted, 129 is rejected
+            final var defaultFilter = new Oauth2ProxyHeaderFilter();
+            doReturn(Collections.enumeration(List.of("a".repeat(128))))
+                .when(request).getHeaders(Oauth2ProxyHeaderFilter.PROXY_HEADER_USER);
+            assertEquals("a".repeat(128), defaultFilter.parseUser(request));
+
+            doReturn(Collections.enumeration(List.of("a".repeat(129))))
+                .when(request).getHeaders(Oauth2ProxyHeaderFilter.PROXY_HEADER_USER);
+            assertNull(defaultFilter.parseUser(request));
+        }
+    }
+
+    /**
+     * Test that {@code prepareForLoad()} injects the given configuration as-is and that closing the returned
+     * registration restores the {@link Oauth2ProxyHeaderFilterConfig#DEFAULTS} fallback.
+     */
+    @Test
+    void testPrepareForLoadInjectsConfigAndCleansUp() {
+        final var config = new Oauth2ProxyHeaderFilterConfig() {
+            @Override
+            public int maxHeaderLength() {
+                return 1;
+            }
+
+            @Override
+            public int maxRoleLength() {
+                return 2;
+            }
+
+            @Override
+            public int maxUserLength() {
+                return 3;
+            }
+
+            @Override
+            public int maxRolesPerUser() {
+                return 4;
+            }
+
+            @Override
+            public String allowedChars() {
+                return "[a-z]";
+            }
+        };
+
+        try (var load = Oauth2ProxyHeaderFilter.prepareForLoad(config)) {
+            assertSame(config, Oauth2ProxyHeaderFilter.configFromThreadLocal());
+        }
+        assertSame(Oauth2ProxyHeaderFilterConfig.DEFAULTS, Oauth2ProxyHeaderFilter.configFromThreadLocal());
     }
 
     // User parsing tests

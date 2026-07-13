@@ -85,7 +85,7 @@ public final class BearerJwtRealm extends AuthorizingRealm {
      * @param config optional JWT verification configuration; {@code null} disables verification
      * @return a {@link Registration} that cleans up the thread-local when closed
      */
-    public static Registration prepareForLoad(final BearerJwtRealmConfig config) {
+    public static Registration prepareForLoad(final @Nullable BearerJwtRealmConfig config) {
         CONFIG_TL.set(config);
         return CONFIG_TL::remove;
     }
