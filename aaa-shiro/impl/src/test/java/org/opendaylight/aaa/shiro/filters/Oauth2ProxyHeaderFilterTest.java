@@ -10,8 +10,10 @@ package org.opendaylight.aaa.shiro.filters;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
@@ -88,6 +90,39 @@ class Oauth2ProxyHeaderFilterTest {
             .when(request).getHeaders(Oauth2ProxyHeaderFilter.PROXY_HEADER_USER);
         assertFalse(filter.onAccessDenied(request, response));
         verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+    }
+
+    /**
+     * Test that {@code prepareForLoad(null)} falls back to the {@link Oauth2ProxyHeaderFilterConfig#DEFAULTS}
+     * instance as-is, so a filter instantiated within the registration scope carries the default limits.
+     */
+    @Test
+    void testPrepareForLoadNullUsesDefaults() {
+        try (var load = Oauth2ProxyHeaderFilter.prepareForLoad(null)) {
+            assertSame(Oauth2ProxyHeaderFilterConfig.DEFAULTS, Oauth2ProxyHeaderFilter.configFromThreadLocal());
+
+            // boundary smoke check: exactly MAX_USER_LENGTH_DEFAULT (128) is accepted, 129 is rejected
+            final var defaultFilter = new Oauth2ProxyHeaderFilter();
+            doReturn(Collections.enumeration(List.of("a".repeat(128))))
+                .when(request).getHeaders(Oauth2ProxyHeaderFilter.PROXY_HEADER_USER);
+            assertEquals("a".repeat(128), defaultFilter.parseUser(request));
+
+            doReturn(Collections.enumeration(List.of("a".repeat(129))))
+                .when(request).getHeaders(Oauth2ProxyHeaderFilter.PROXY_HEADER_USER);
+            assertNull(defaultFilter.parseUser(request));
+        }
+    }
+
+    /**
+     * Test that a config injected via {@code prepareForLoad(config)} is returned by
+     * {@code configFromThreadLocal()} untouched.
+     */
+    @Test
+    void testPrepareForLoadReturnsInjectedConfig() {
+        final var config = mock(Oauth2ProxyHeaderFilterConfig.class);
+        try (var load = Oauth2ProxyHeaderFilter.prepareForLoad(config)) {
+            assertSame(config, Oauth2ProxyHeaderFilter.configFromThreadLocal());
+        }
     }
 
     // User parsing tests

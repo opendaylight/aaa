@@ -54,7 +54,7 @@ import org.slf4j.LoggerFactory;
  */
 public final class BearerJwtRealm extends AuthorizingRealm {
     private static final Logger LOG = LoggerFactory.getLogger(BearerJwtRealm.class);
-    private static final ThreadLocal<BearerJwtRealmConfig> CONFIG_TL = new ThreadLocal<>();
+    private static final ThreadLocal<@Nullable BearerJwtRealmConfig> CONFIG_TL = new ThreadLocal<>();
 
     static final String DEFAULT_USER_CLAIM = "preferred_username";
     static final String DEFAULT_ROLE_CLAIM = "groups";
@@ -85,7 +85,7 @@ public final class BearerJwtRealm extends AuthorizingRealm {
      * @param config optional JWT verification configuration; {@code null} disables verification
      * @return a {@link Registration} that cleans up the thread-local when closed
      */
-    public static Registration prepareForLoad(final BearerJwtRealmConfig config) {
+    public static Registration prepareForLoad(final @Nullable BearerJwtRealmConfig config) {
         CONFIG_TL.set(config);
         return CONFIG_TL::remove;
     }
