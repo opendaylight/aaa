@@ -77,48 +77,21 @@ public final class Oauth2ProxyHeaderFilter extends AuthenticatingFilter {
             "^\\s*(?:role:)?(?:" + allowedChars + ")+(?:\\s*,\\s*(?:role:)?(?:" + allowedChars + ")+)*\\s*$");
     }
 
-    private static Oauth2ProxyHeaderFilterConfig configFromThreadLocal() {
+    @VisibleForTesting
+    static Oauth2ProxyHeaderFilterConfig configFromThreadLocal() {
         final var config = CONFIG_TL.get();
-        if (config != null) {
-            return config;
-        }
-        return new Oauth2ProxyHeaderFilterConfig() {
-            @Override
-            public int maxHeaderLength() {
-                return Oauth2ProxyHeaderFilterConfig.MAX_HEADER_LENGTH_DEFAULT;
-            }
-
-            @Override
-            public int maxRoleLength() {
-                return Oauth2ProxyHeaderFilterConfig.MAX_ROLE_LENGTH_DEFAULT;
-            }
-
-            @Override
-            public int maxUserLength() {
-                return Oauth2ProxyHeaderFilterConfig.MAX_USER_LENGTH_DEFAULT;
-            }
-
-            @Override
-            public int maxRolesPerUser() {
-                return Oauth2ProxyHeaderFilterConfig.MAX_ROLES_PER_USER_DEFAULT;
-            }
-
-            @Override
-            public String allowedChars() {
-                return Oauth2ProxyHeaderFilterConfig.ALLOWED_CHARS_DEFAULT;
-            }
-        };
+        return config != null ? config : Oauth2ProxyHeaderFilterConfig.DEFAULTS;
     }
 
     /**
      * Prepares this class for loading by Shiro's reflection-based instantiation. Must be called
      * (and the returned {@link Registration} kept open) before Shiro calls the no-arg constructor.
      *
-     * @param config the configuration to inject
+     * @param config the configuration to inject, or {@code null} to use default values
      * @return a {@link Registration} that clears the thread-local when closed
      */
-    public static Registration prepareForLoad(final Oauth2ProxyHeaderFilterConfig config) {
-        CONFIG_TL.set(requireNonNull(config));
+    public static Registration prepareForLoad(final @Nullable Oauth2ProxyHeaderFilterConfig config) {
+        CONFIG_TL.set(config);
         return CONFIG_TL::remove;
     }
 
