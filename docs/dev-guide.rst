@@ -154,6 +154,77 @@ Previously the servlet's web.xml was edited to add the AAAShiroFilter. This has 
 
 The Neutron project uses this new style the Neutron `blueprint.xml <https://git.opendaylight.org/gerrit/gitweb?p=neutron.git;a=blob;f=northbound-api/src/main/resources/OSGI-INF/blueprint/blueprint.xml;h=a9dc57a97091d6c90da3e216a13523adbe698887;hb=refs/heads/master>`_ and Neutron `WebInitializer.java <https://git.opendaylight.org/gerrit/gitweb?p=neutron.git;a=blob;f=northbound-api/src/main/java/org/opendaylight/neutron/northbound/api/WebInitializer.java;h=a615d02343505cef0d4cdd54b2f07f2a9fee9b75;hb=refs/heads/master>`_ are helpful references.
 
+Pluggable third-party filters and realms
+----------------------------------------
+
+Third-party applications can plug their own Shiro authentication filters and realms into ODL AAA
+without modifying AAA code, and can reuse ODL's OAuth2-Proxy forwarded-header validation instead of
+duplicating it (`AAA-307 <https://lf-opendaylight.atlassian.net/browse/AAA-307>`_, part of the
+OIDC/OAuth2-via-proxy work in AAA-294). This is particularly useful for deployments transitioning
+from a legacy authentication system to OAuth2: the external filter can keep accepting the legacy
+credentials while requests forwarded by an OAuth2-Proxy instance fall back to the standard
+``Oauth2ProxyHeaderToken`` handling.
+
+How it works
+~~~~~~~~~~~~
+
+-  External filter and realm classes are declared by fully-qualified class name in the
+   ``shiro-configuration`` datastore (seeded from ``aaa-shiro``'s ``initial/aaa-app-config.xml``,
+   see the ``<main>`` and ``<urls>`` sections) and are instantiated by Shiro reflection under the
+   ``org.opendaylight.aaa.shiro`` bundle's classloader.
+
+-  For the classes to be visible to that classloader, the third-party bundle is typically built as
+   an OSGi fragment with ``Fragment-Host: org.opendaylight.aaa.shiro``. Note that SCR does not
+   process Declarative Services components in fragments, so any OSGi-managed configuration has to
+   live in a separate ordinary bundle.
+
+Public integration API
+~~~~~~~~~~~~~~~~~~~~~~
+
+AAA exposes three public classes/interfaces that let third parties construct and consume
+OAuth2-Proxy tokens:
+
+-  ``Oauth2ProxyHeaderParserConfig`` — a singleton OSGi service managing the configuration
+   supplied via a ``.cfg`` file. Named after its sole consumer, ``Oauth2ProxyHeaderParser``: the
+   filter never reads it directly, it only ever goes through the parser.
+
+-  ``Oauth2ProxyHeaderParser`` — a helper that parses the incoming ``X-Forwarded-User`` and
+   ``X-Forwarded-Groups`` headers, applying the limits and character whitelist from
+   ``Oauth2ProxyHeaderParserConfig``.
+
+-  ``Oauth2ProxyHeaderToken`` — a record carrying the forwarded user and groups; tokens of this
+   type are processed by ``Oauth2ProxyHeaderRealm``.
+
+Both OSGi Declarative Services and Blueprint XML integration styles are supported for consuming
+``Oauth2ProxyHeaderParser``. Third-party consumers should look the parser service up rather than
+constructing their own, so their limits stay consistent with what is actually configured — but how
+"up to date" is maintained differs by injection style:
+
+-  **Blueprint** ``<reference>`` injects a damped proxy. A single field captured once, e.g. in a
+   constructor, is safe to keep for the life of the bean: every call through it is dispatched to
+   whatever ``Oauth2ProxyHeaderParser`` implementation is currently registered, with no restart
+   involved. This is how ``Oauth2ProxyHeaderFilter`` itself consumes the parser (see
+   ``impl-blueprint.xml`` and ``Oauth2ProxyHeaderFilter.prepareForLoad``).
+
+-  **Declarative Services** ``@Reference`` used for constructor injection must use DS's *static*
+   reference policy (an OSGi binding-policy concept, unrelated to the Java ``static`` keyword) —
+   it is the only policy constructor injection supports. A plain static reference binds directly
+   to a service instance, so when a configuration change causes the parser service to be
+   re-registered, the consuming component is itself deactivated and reactivated to rebind: its
+   field does end up current, but the component briefly restarts along with it. DS consumers who
+   want Blueprint-style, restart-free freshness instead can inject a reference proxy of their own
+   — e.g. a ``ComponentServiceObjects<Oauth2ProxyHeaderParser>`` or a ``ServiceTracker`` — and call
+   ``getService()`` per use, which resolves to the live implementation on every call.
+
+Either way, consumers should not look the parser service up on every request: it is enough to
+obtain it once, through whichever mechanism above matches how their component is built.
+
+.. important::
+
+    The forwarded headers are trusted as-is, so they must originate from a trusted OAuth2-Proxy
+    instance: direct HTTP access to ODL that bypasses the proxy must be blocked at the network
+    level, otherwise any caller can forge the headers and authenticate as an arbitrary user.
+
 AAA Realms
 ----------
 
