@@ -36,6 +36,36 @@ public interface Oauth2ProxyHeaderFilterConfig {
     String ALLOWED_CHARS_DEFAULT = "[a-zA-Z0-9_.:\\-@]";
 
     /**
+     * Configuration instance using all default values.
+     */
+    Oauth2ProxyHeaderFilterConfig DEFAULTS = new Oauth2ProxyHeaderFilterConfig() {
+        @Override
+        public int maxHeaderLength() {
+            return MAX_HEADER_LENGTH_DEFAULT;
+        }
+
+        @Override
+        public int maxRoleLength() {
+            return MAX_ROLE_LENGTH_DEFAULT;
+        }
+
+        @Override
+        public int maxUserLength() {
+            return MAX_USER_LENGTH_DEFAULT;
+        }
+
+        @Override
+        public int maxRolesPerUser() {
+            return MAX_ROLES_PER_USER_DEFAULT;
+        }
+
+        @Override
+        public String allowedChars() {
+            return ALLOWED_CHARS_DEFAULT;
+        }
+    };
+
+    /**
      * Returns the maximum allowed length for a single forwarded header value in bytes.
      */
     int maxHeaderLength();
