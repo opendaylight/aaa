@@ -68,8 +68,7 @@ public final class Oauth2ProxyHeaderParserConfigImpl implements Oauth2ProxyHeade
     private final int maxRoleLength;
     private final int maxUserLength;
     private final int maxRolesPerUser;
-    private final Pattern allowedCharactersPattern;
-    private final Pattern headerPattern;
+    private final String allowedChars;
 
     @Activate
     public Oauth2ProxyHeaderParserConfigImpl(final Configuration config) {
@@ -88,12 +87,10 @@ public final class Oauth2ProxyHeaderParserConfigImpl implements Oauth2ProxyHeade
         this.maxRoleLength = maxRoleLength;
         this.maxUserLength = maxUserLength;
         this.maxRolesPerUser = maxRolesPerUser;
-        allowedCharactersPattern = Pattern.compile("^(?:" + allowedChars + ")+$");
-        headerPattern = Pattern.compile(
-            "^\\s*(?:role:)?(?:" + allowedChars + ")+(?:\\s*,\\s*(?:role:)?(?:" + allowedChars + ")+)*\\s*$");
+        this.allowedChars = validatePattern(allowedChars);
         LOG.debug("Oauth2ProxyHeaderFilter configuration: maxHeaderLength={}, maxRoleLength={}, "
                 + "maxUserLength={}, maxRolesPerUser={}, allowedChars={}",
-            maxHeaderLength, maxRoleLength, maxUserLength, maxRolesPerUser, allowedChars);
+            maxHeaderLength, maxRoleLength, maxUserLength, maxRolesPerUser, this.allowedChars);
     }
 
     @Override
@@ -117,13 +114,8 @@ public final class Oauth2ProxyHeaderParserConfigImpl implements Oauth2ProxyHeade
     }
 
     @Override
-    public Pattern allowedCharactersPattern() {
-        return allowedCharactersPattern;
-    }
-
-    @Override
-    public Pattern headerPattern() {
-        return headerPattern;
+    public String allowedChars() {
+        return allowedChars;
     }
 
     private static String validatePattern(final String value) {
