@@ -8,6 +8,7 @@
 package org.opendaylight.aaa.shiro.filters;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.Objects.requireNonNullElseGet;
 
 import com.google.common.annotations.VisibleForTesting;
 import javax.servlet.ServletRequest;
@@ -17,6 +18,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.eclipse.jdt.annotation.Nullable;
 import org.opendaylight.yangtools.concepts.Registration;
 
 /**
@@ -45,36 +47,30 @@ import org.opendaylight.yangtools.concepts.Registration;
  */
 @NonNullByDefault
 public final class Oauth2ProxyHeaderFilter extends AuthenticatingFilter {
-    private static final ThreadLocal<Oauth2ProxyHeaderParser> PARSER_TL = new ThreadLocal<>();
+    private static final ThreadLocal<@Nullable Oauth2ProxyHeaderParser> PARSER_TL = new ThreadLocal<>();
 
     private final Oauth2ProxyHeaderParser parser;
 
     public Oauth2ProxyHeaderFilter() {
-        this(parserFromThreadLocal());
+        this(requireNonNull(PARSER_TL.get()));
     }
 
     @VisibleForTesting
-    Oauth2ProxyHeaderFilter(final Oauth2ProxyHeaderParser parser) {
+    public Oauth2ProxyHeaderFilter(final Oauth2ProxyHeaderParser parser) {
         this.parser = requireNonNull(parser);
-    }
-
-    private static Oauth2ProxyHeaderParser parserFromThreadLocal() {
-        final var parser = PARSER_TL.get();
-        if (parser != null) {
-            return parser;
-        }
-        return new Oauth2ProxyHeaderParserImpl(new Oauth2ProxyHeaderParserConfigImpl());
     }
 
     /**
      * Prepares this class for loading by Shiro's reflection-based instantiation. Must be called
      * (and the returned {@link Registration} kept open) before Shiro calls the no-arg constructor.
      *
-     * @param parser the parser to inject
+     * @param parser the parser to inject, if provided value is {@code null} a new parser with default configuration
+     *               is set instead
      * @return a {@link Registration} that clears the thread-local when closed
      */
-    public static Registration prepareForLoad(final Oauth2ProxyHeaderParser parser) {
-        PARSER_TL.set(requireNonNull(parser));
+    public static Registration prepareForLoad(final @Nullable Oauth2ProxyHeaderParser parser) {
+        PARSER_TL.set(requireNonNullElseGet(parser,
+            () -> new Oauth2ProxyHeaderParserImpl(new Oauth2ProxyHeaderParserConfigImpl())));
         return PARSER_TL::remove;
     }
 

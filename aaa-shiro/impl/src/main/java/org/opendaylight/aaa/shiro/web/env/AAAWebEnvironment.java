@@ -10,6 +10,7 @@ package org.opendaylight.aaa.shiro.web.env;
 
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.web.env.IniWebEnvironment;
+import org.eclipse.jdt.annotation.Nullable;
 import org.opendaylight.aaa.api.AuthenticationService;
 import org.opendaylight.aaa.api.password.service.PasswordHashService;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
@@ -38,11 +39,56 @@ import org.slf4j.LoggerFactory;
 public final class AAAWebEnvironment extends IniWebEnvironment implements AAAShiroWebEnvironment {
     private static final Logger LOG = LoggerFactory.getLogger(AAAWebEnvironment.class);
 
+    /**
+     * Convenience equivalent of the full constructor for deployments not using the OAuth2.
+     *
+     * <p>Proxy header filter or bearer JWT verification: {@link Oauth2ProxyHeaderFilter} falls back to
+     * {@code Oauth2ProxyHeaderParser} using default limits and {@link BearerJwtRealm} runs in unverified mode.
+     *
+     * <p><b>Warning:</b> if the Shiro configuration references {@link BearerJwtRealm}, tokens are accepted
+     * <em>without signature, issuer, audience or expiration verification</em> (a WARN is logged). Deployments
+     * relying on bearer JWT authentication must use the full constructor and provide a
+     * {@link BearerJwtRealmConfig} with a configured JWT processor.
+     */
     public AAAWebEnvironment(final ShiroIni shiroConfiguration, final DataBroker dataBroker,
             final ICertificateManager certificateManager, final AuthenticationService authenticationService,
             final RealmAuthProvider realmAuthProvider, final PasswordHashService passwordHashService,
-            final ServletSupport servletSupport, final Oauth2ProxyHeaderParser oauth2Parser,
-            final BearerJwtRealmConfig bearerJwtRealmConfig) {
+            final ServletSupport servletSupport) {
+        this(shiroConfiguration, dataBroker, certificateManager, authenticationService, realmAuthProvider,
+            passwordHashService, servletSupport, null, null);
+    }
+
+    /**
+     * Full constructor including OAuth2 support.
+     *
+     * <p>Translates {@code shiroConfiguration} into Shiro's {@link Ini} representation and
+     * configures this environment from it. Configuration runs on this class's class loader, with all known custom
+     * realms and filters prepared for Shiro's reflection-based instantiation through their thread-locals, which
+     * are cleaned up again before this constructor returns.
+     *
+     * <p><b>Warning:</b> if {@code bearerJwtRealmConfig} is {@code null} and the Shiro configuration references
+     * {@link BearerJwtRealm}, tokens are accepted <em>without signature, issuer, audience or expiration
+     * verification</em> (a WARN is logged). Deployments relying on bearer JWT authentication must provide a
+     * {@link BearerJwtRealmConfig} with a configured JWT processor.
+     *
+     * @param shiroConfiguration Shiro INI configuration ({@code main} and {@code urls} sections) from the
+     *        clustered application config
+     * @param dataBroker data broker used by {@link MDSALDynamicAuthorizationFilter} and {@link MdsalRealm}
+     * @param certificateManager certificate manager used by {@link KeystoneAuthRealm}
+     * @param authenticationService authentication service used by {@link TokenAuthRealm}
+     * @param realmAuthProvider authentication provider used by {@link TokenAuthRealm}
+     * @param passwordHashService password hashing service used by {@link MdsalRealm}
+     * @param servletSupport servlet support used by {@link KeystoneAuthRealm} and {@link MoonRealm}
+     * @param oauth2Parser parser for {@link Oauth2ProxyHeaderFilter}, or {@code null} to use
+     *        {@code Oauth2ProxyHeaderParser} with default limits
+     * @param bearerJwtRealmConfig JWT verification configuration for {@link BearerJwtRealm}, or {@code null} to
+     *        disable verification
+     */
+    public AAAWebEnvironment(final ShiroIni shiroConfiguration, final DataBroker dataBroker,
+            final ICertificateManager certificateManager, final AuthenticationService authenticationService,
+            final RealmAuthProvider realmAuthProvider, final PasswordHashService passwordHashService,
+            final ServletSupport servletSupport, final @Nullable Oauth2ProxyHeaderParser oauth2Parser,
+            final @Nullable BearerJwtRealmConfig bearerJwtRealmConfig) {
         // Turn ShiroConfiguration into an Ini
         final var ini = new Ini();
 
