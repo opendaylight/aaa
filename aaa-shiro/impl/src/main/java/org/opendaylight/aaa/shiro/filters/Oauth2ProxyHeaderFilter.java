@@ -17,6 +17,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.eclipse.jdt.annotation.Nullable;
 import org.opendaylight.yangtools.concepts.Registration;
 
 /**
@@ -45,7 +46,7 @@ import org.opendaylight.yangtools.concepts.Registration;
  */
 @NonNullByDefault
 public final class Oauth2ProxyHeaderFilter extends AuthenticatingFilter {
-    private static final ThreadLocal<Oauth2ProxyHeaderParser> PARSER_TL = new ThreadLocal<>();
+    private static final ThreadLocal<@Nullable Oauth2ProxyHeaderParser> PARSER_TL = new ThreadLocal<>();
 
     private final Oauth2ProxyHeaderParser parser;
 
@@ -73,7 +74,7 @@ public final class Oauth2ProxyHeaderFilter extends AuthenticatingFilter {
      * @param parser the parser to inject
      * @return a {@link Registration} that clears the thread-local when closed
      */
-    public static Registration prepareForLoad(final Oauth2ProxyHeaderParser parser) {
+    public static Registration prepareForLoad(final @Nullable Oauth2ProxyHeaderParser parser) {
         PARSER_TL.set(requireNonNull(parser));
         return PARSER_TL::remove;
     }
