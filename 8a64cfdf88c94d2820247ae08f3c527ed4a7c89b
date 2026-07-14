@@ -16,6 +16,24 @@
       "message": "now, you can complete audience in follow up patch",
       "revId": "8a64cfdf88c94d2820247ae08f3c527ed4a7c89b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4b83abe_8ee1e85d",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-14T08:48:49Z",
+      "side": 1,
+      "message": "done in https://git.opendaylight.org/gerrit/c/aaa/+/123957",
+      "parentUuid": "8917d0ad_fec9e160",
+      "revId": "8a64cfdf88c94d2820247ae08f3c527ed4a7c89b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
