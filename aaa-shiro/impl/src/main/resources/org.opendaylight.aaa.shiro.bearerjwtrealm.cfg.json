@@ -1,7 +1,7 @@
 {
   "jwks-uri": "",
   "expected-issuer": "",
-  "expected-audience": "",
+  "expected-audience": [],
   "allowed-algorithms": [
     "RS256",
     "RS384",
