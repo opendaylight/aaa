@@ -16,6 +16,57 @@
       "message": "recheck",
       "revId": "47ac827e9f80685bb502fa6b9447d47d21b063ef",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b8d692f_575374cf",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-14T08:54:58Z",
+      "side": 1,
+      "message": "Array",
+      "revId": "47ac827e9f80685bb502fa6b9447d47d21b063ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5d31246_d0354925",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-14T08:54:58Z",
+      "side": 1,
+      "message": "can be one line?",
+      "revId": "47ac827e9f80685bb502fa6b9447d47d21b063ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0504ec5e_5a8739cb",
+        "filename": "docs/user-guide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-14T08:54:58Z",
+      "side": 1,
+      "message": "Array",
+      "revId": "47ac827e9f80685bb502fa6b9447d47d21b063ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
