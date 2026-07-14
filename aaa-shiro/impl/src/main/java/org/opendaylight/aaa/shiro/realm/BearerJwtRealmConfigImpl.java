@@ -50,7 +50,7 @@ import org.slf4j.LoggerFactory;
  * {
  *   "jwks-uri": "http(s)://keycloak.local:8080/realms/odl-realm/protocol/openid-connect/certs",
  *   "expected-issuer": "http(s)://keycloak.local:8080/realms/odl-realm",
- *   "expected-audience": "odl-application",
+ *   "expected-audience": ["odl-application"],
  *   "allowed-algorithms": ["RS256", "RS384", "RS512", "ES256"],
  *   "user-claim": "preferred_username",
  *   "role-claim": "groups",
@@ -81,10 +81,9 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
         String expected$_$issuer() default "";
 
         @AttributeDefinition(description = """
-            Expected value(s) of the 'aud' JWT claim (comma-separated).
+            List of expected 'aud' JWT claim values.
             Leave empty to skip audience verification.""")
-        // TODO: String[], just as we have for allowed-algorithms
-        String expected$_$audience() default "";
+        String[] expected$_$audience() default {};
 
         @AttributeDefinition(description = """
             List of allowed JWS signing algorithms (e.g. RS256, RS384, RS512, ES256).""")
@@ -218,22 +217,23 @@ public final class BearerJwtRealmConfigImpl implements BearerJwtRealmConfig {
     }
 
     private static DefaultJWTClaimsVerifier<SecurityContext> verifier(
-            final String expectedIssuer, final String expectedAudience) {
+            final String expectedIssuer, final String[] expectedAudience) {
         final var exactMatchBuilder = new JWTClaimsSet.Builder();
         if (!expectedIssuer.isBlank()) {
             exactMatchBuilder.issuer(expectedIssuer);
         }
 
         final Set<String> audience;
-        if (expectedAudience.isBlank()) {
+        if (expectedAudience.length == 0) {
             audience = null;
         } else {
-            audience = Arrays.stream(expectedAudience.split(","))
+            audience = Arrays.stream(expectedAudience)
                 .map(String::strip)
                 .filter(s -> !s.isEmpty())
                 .collect(Collectors.toUnmodifiableSet());
             if (audience.isEmpty()) {
-                LOG.error("Malformed expected-audience {} , blank audience is not valid", expectedAudience);
+                LOG.error("Malformed expected-audience {} , blank audience is not valid",
+                    Arrays.toString(expectedAudience));
                 throw new IllegalArgumentException("Malformed expected-audience, blank audience is not valid");
             }
         }

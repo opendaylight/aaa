@@ -1032,11 +1032,11 @@ is restarted.
     Example: ``"https://keycloak.local:8080/realms/odl-realm"``
 
 ``expected-audience``
-    Comma-separated list of expected ``aud`` claim values. When set, a token
+    List of expected ``aud`` claim values. When set, a token
     must contain at least one of the listed values in its ``aud`` claim.
     Leave empty (the default) to skip audience verification.
 
-    Example: ``"odl-application"``
+    Example: ``["odl-application"]``
 
 ``allowed-algorithms``
     List of permitted JWS signing algorithm identifiers.
