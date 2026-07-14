@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a0215bb_155b51fa",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/realm/BearerJwtRealmConfigImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-14T08:51:31Z",
+      "side": 1,
+      "message": "In JSON we have array: https://www.rfc-editor.org/info/rfc8259/#section-5",
+      "revId": "b9549e5138a9724fedd374b9739243921fa9b013",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e45013a1_d59ba36c",
+        "filename": "docs/user-guide.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-14T08:51:31Z",
+      "side": 1,
+      "message": "Array",
+      "revId": "b9549e5138a9724fedd374b9739243921fa9b013",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
