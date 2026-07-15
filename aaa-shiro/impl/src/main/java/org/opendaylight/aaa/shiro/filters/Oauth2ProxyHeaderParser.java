@@ -17,6 +17,9 @@ import javax.servlet.ServletRequest;
 import org.apache.shiro.web.util.WebUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,10 +30,14 @@ import org.slf4j.LoggerFactory;
  *
  * <p>Used by {@link Oauth2ProxyHeaderFilter}, and safe for other consumers of the same proxy headers
  * (e.g. other filters, or other Karaf features fronted by the same OAuth2-Proxy) to reuse instead of
- * duplicating the validation/sanitization logic. Callers should build this from the
- * {@link Oauth2ProxyHeaderFilterConfig} OSGi service so limits stay consistent with what is actually
- * configured, rather than constructing their own.
+ * duplicating the validation/sanitization logic.
+ *
+ * <p>Also registered as an OSGi service, built from the {@link Oauth2ProxyHeaderFilterConfig} service so its
+ * limits stay consistent with what is actually configured: external consumers should look the parser service
+ * up instead of constructing their own. The static reference means a configuration change re-registers this
+ * service with the new limits, so per-request lookups always observe the current configuration.
  */
+@Component(service = Oauth2ProxyHeaderParser.class)
 @NonNullByDefault
 public final class Oauth2ProxyHeaderParser {
     /**
@@ -58,7 +65,8 @@ public final class Oauth2ProxyHeaderParser {
     private final Pattern allowedCharactersPattern;
     private final Pattern headerPattern;
 
-    public Oauth2ProxyHeaderParser(final Oauth2ProxyHeaderFilterConfig config) {
+    @Activate
+    public Oauth2ProxyHeaderParser(@Reference final Oauth2ProxyHeaderFilterConfig config) {
         requireNonNull(config);
         maxHeaderLength = config.maxHeaderLength();
         maxRoleLength = config.maxRoleLength();
