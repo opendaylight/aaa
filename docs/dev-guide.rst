@@ -187,8 +187,10 @@ OAuth2-Proxy tokens:
 -  ``Oauth2ProxyHeaderFilterConfig`` — a singleton OSGi service managing the configuration
    supplied via a ``.cfg`` file.
 
--  ``Oauth2ProxyHeaderParser`` — a helper that parses the incoming ``X-Forwarded-User`` and
-   ``X-Forwarded-Groups`` headers.
+-  ``Oauth2ProxyHeaderParser`` — an OSGi service that parses the incoming ``X-Forwarded-User`` and
+   ``X-Forwarded-Groups`` headers. The default implementation is built from
+   ``Oauth2ProxyHeaderFilterConfig``; a configuration change re-registers the service with the new
+   limits, which are observed live by service-lookup consumers as well as ``Oauth2ProxyHeaderFilter``.
 
 -  ``Oauth2ProxyHeaderToken`` — a record carrying the forwarded user and groups; tokens of this
    type are processed by ``Oauth2ProxyHeaderRealm``.
