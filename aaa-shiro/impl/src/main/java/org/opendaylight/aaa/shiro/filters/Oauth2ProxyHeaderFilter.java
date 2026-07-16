@@ -28,7 +28,9 @@ import org.opendaylight.yangtools.concepts.Registration;
  * and creates an {@link Oauth2ProxyHeaderToken} for the configured realm to process.
  *
  * <p>Security limits (max lengths, max roles, allowed characters) are configurable via
- * {@link Oauth2ProxyHeaderFilterConfig} ({@code org.opendaylight.aaa.shiro.oauth2proxy.cfg}).
+ * {@link Oauth2ProxyHeaderFilterConfig} ({@code org.opendaylight.aaa.shiro.oauth2proxyheaderfilter.cfg}).
+ * The injected {@link Oauth2ProxyHeaderParser} is the live OSGi service (accessed through the damped
+ * Blueprint reference proxy), so configuration changes apply to new requests without a restart.
  *
  * <p><strong>Security prerequisite:</strong> direct HTTP access to ODL that bypasses the proxy
  * must be blocked at the network level. Failure to do so allows any caller to forge these headers
@@ -36,37 +38,37 @@ import org.opendaylight.yangtools.concepts.Registration;
  */
 @NonNullByDefault
 public final class Oauth2ProxyHeaderFilter extends AuthenticatingFilter {
-    private static final ThreadLocal<Oauth2ProxyHeaderFilterConfig> CONFIG_TL = new ThreadLocal<>();
+    private static final ThreadLocal<Oauth2ProxyHeaderParser> PARSER_TL = new ThreadLocal<>();
 
     private final Oauth2ProxyHeaderParser parser;
 
     public Oauth2ProxyHeaderFilter() {
-        this(configFromThreadLocal());
+        this(parserFromThreadLocal());
     }
 
     @VisibleForTesting
-    Oauth2ProxyHeaderFilter(final Oauth2ProxyHeaderFilterConfig config) {
-        parser = new Oauth2ProxyHeaderParser(requireNonNull(config));
+    Oauth2ProxyHeaderFilter(final Oauth2ProxyHeaderParser parser) {
+        this.parser = requireNonNull(parser);
     }
 
-    private static Oauth2ProxyHeaderFilterConfig configFromThreadLocal() {
-        final var config = CONFIG_TL.get();
-        if (config != null) {
-            return config;
+    private static Oauth2ProxyHeaderParser parserFromThreadLocal() {
+        final var parser = PARSER_TL.get();
+        if (parser != null) {
+            return parser;
         }
-        return new Oauth2ProxyHeaderFilterConfigImpl();
+        return new Oauth2ProxyHeaderParserImpl(new Oauth2ProxyHeaderFilterConfigImpl());
     }
 
     /**
      * Prepares this class for loading by Shiro's reflection-based instantiation. Must be called
      * (and the returned {@link Registration} kept open) before Shiro calls the no-arg constructor.
      *
-     * @param config the configuration to inject
+     * @param parser the parser to inject
      * @return a {@link Registration} that clears the thread-local when closed
      */
-    public static Registration prepareForLoad(final Oauth2ProxyHeaderFilterConfig config) {
-        CONFIG_TL.set(requireNonNull(config));
-        return CONFIG_TL::remove;
+    public static Registration prepareForLoad(final Oauth2ProxyHeaderParser parser) {
+        PARSER_TL.set(requireNonNull(parser));
+        return PARSER_TL::remove;
     }
 
     @Override
