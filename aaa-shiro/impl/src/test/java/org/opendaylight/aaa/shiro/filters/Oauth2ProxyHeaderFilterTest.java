@@ -9,7 +9,9 @@ package org.opendaylight.aaa.shiro.filters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.opendaylight.aaa.shiro.filters.Oauth2ProxyHeaderParser.PROXY_HEADER_GROUPS;
 import static org.opendaylight.aaa.shiro.filters.Oauth2ProxyHeaderParser.PROXY_HEADER_USER;
@@ -87,5 +89,23 @@ class Oauth2ProxyHeaderFilterTest {
             .when(request).getHeaders(PROXY_HEADER_USER);
         assertFalse(filter.onAccessDenied(request, response));
         verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+    }
+
+    /**
+     * Test that token creation is delegated to the injected parser, so a filter loaded via
+     * {@link Oauth2ProxyHeaderFilter#prepareForLoad(Oauth2ProxyHeaderParser)} observes whatever the
+     * injected parser (i.e. the live service) currently produces.
+     */
+    @Test
+    void testCreateTokenDelegatesToInjectedParser() {
+        final var mockParser = mock(Oauth2ProxyHeaderParser.class);
+        final var token = new Oauth2ProxyHeaderToken(Set.of("admin"), USER);
+        doReturn(token).when(mockParser).parseToken(request);
+
+        try (var load = Oauth2ProxyHeaderFilter.prepareForLoad(mockParser)) {
+            final var injected = new Oauth2ProxyHeaderFilter();
+            assertSame(token, injected.createToken(request, response));
+        }
+        verify(mockParser).parseToken(request);
     }
 }

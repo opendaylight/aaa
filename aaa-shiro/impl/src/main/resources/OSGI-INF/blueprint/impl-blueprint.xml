@@ -27,7 +27,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <reference id="certManager" interface="org.opendaylight.aaa.cert.api.ICertificateManager"/>
   <reference id="passwordService" interface="org.opendaylight.aaa.api.password.service.PasswordHashService"/>
   <reference id="servletSupport" interface="org.opendaylight.aaa.web.servlet.ServletSupport"/>
-  <reference id="oauth2ProxyFilterConfig" interface="org.opendaylight.aaa.shiro.filters.Oauth2ProxyHeaderFilterConfig"/>
+  <reference id="oauth2ProxyHeaderParser" interface="org.opendaylight.aaa.shiro.filters.Oauth2ProxyHeaderParser"/>
   <reference id="bearerJwtRealmConfig" interface="org.opendaylight.aaa.shiro.realm.BearerJwtRealmConfig"/>
 
   <odl:clustered-app-config id="shiroConfiguration"
@@ -42,7 +42,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <argument ref="provider"/>
     <argument ref="passwordService"/>
     <argument ref="servletSupport"/>
-    <argument ref="oauth2ProxyFilterConfig"/>
+    <argument ref="oauth2ProxyHeaderParser"/>
     <argument ref="bearerJwtRealmConfig"/>
   </bean>
   <service ref="webEnvironment" interface="org.opendaylight.aaa.shiro.web.env.AAAShiroWebEnvironment"/>

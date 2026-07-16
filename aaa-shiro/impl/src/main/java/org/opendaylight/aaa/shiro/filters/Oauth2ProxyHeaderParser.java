@@ -7,21 +7,10 @@
  */
 package org.opendaylight.aaa.shiro.filters;
 
-import static java.util.Objects.requireNonNull;
-
-import com.google.common.annotations.VisibleForTesting;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Pattern;
 import javax.servlet.ServletRequest;
-import org.apache.shiro.web.util.WebUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Parses {@code X-Forwarded-User}/{@code X-Forwarded-Groups} proxy headers into an
@@ -32,49 +21,41 @@ import org.slf4j.LoggerFactory;
  * (e.g. other filters, or other Karaf features fronted by the same OAuth2-Proxy) to reuse instead of
  * duplicating the validation/sanitization logic.
  *
- * <p>Also registered as an OSGi service, built from the {@link Oauth2ProxyHeaderFilterConfig} service so its
- * limits stay consistent with what is actually configured: external consumers should look the parser service
- * up instead of constructing their own. The static reference means a configuration change re-registers this
- * service with the new limits, so per-request lookups always observe the current configuration.
+ * <p>The default implementation is registered as an OSGi service, built from the
+ * {@link Oauth2ProxyHeaderFilterConfig} service so its limits stay consistent with what is actually
+ * configured: external consumers should look the parser service up instead of constructing their own.
+ * A configuration change re-registers this service with the new limits, so per-request lookups always
+ * observe the current configuration. Blueprint consumers get the same freshness through the damped
+ * {@code <reference>} proxy, which transparently re-binds to the replacement service.
+ *
+ * <p>How "current" is maintained differs by injection style, though, and it is worth knowing which one
+ * applies. A Blueprint {@code <reference>} injects a damped proxy: a single field captured once, e.g. in
+ * a constructor, is safe to keep for the life of the bean, since every call through it is dispatched to
+ * whatever implementation is currently registered — no restart involved. A plain Declarative Services
+ * {@literal @Reference} (the only option available for constructor injection, since a reference used that
+ * way must use DS's static reference policy — an OSGi binding-policy concept, unrelated to the Java
+ * {@code static} keyword) instead binds directly to a service instance: when a configuration change
+ * re-registers this service, the consuming component is deactivated and reactivated to rebind, so its
+ * field does end up current, but the component itself briefly restarts along with it. DS consumers who
+ * want the same restart-free, always-current access that Blueprint gives can inject a reference proxy
+ * instead of the service directly — e.g. a {@code ComponentServiceObjects}
+ * for this interface, or a {@code ServiceTracker} — and call {@code getService()} per use; that resolves
+ * to the live implementation on every call, the same way the Blueprint proxy does.
  */
-@Component(service = Oauth2ProxyHeaderParser.class)
 @NonNullByDefault
-public final class Oauth2ProxyHeaderParser {
+public interface Oauth2ProxyHeaderParser {
     /**
      * Proxy header containing username.
      *
      * <p>ODL is set as upstream of OAuth2-Proxy thus X-Forwarded-User instead of X-Auth-Request-User header
      */
-    @VisibleForTesting
-    static final String PROXY_HEADER_USER = "X-Forwarded-User";
+    String PROXY_HEADER_USER = "X-Forwarded-User";
     /**
      * Proxy header containing user roles.
      *
      * <p>ODL is set as upstream of OAuth2-Proxy thus X-Forwarded-Groups instead of X-Auth-Request-Groups header
      */
-    @VisibleForTesting
-    static final String PROXY_HEADER_GROUPS = "X-Forwarded-Groups";
-
-    private static final Logger LOG = LoggerFactory.getLogger(Oauth2ProxyHeaderParser.class);
-    private static final Pattern ROLE_REGEX = Pattern.compile("^role:");
-
-    private final int maxHeaderLength;
-    private final int maxRoleLength;
-    private final int maxUserLength;
-    private final int maxRolesPerUser;
-    private final Pattern allowedCharactersPattern;
-    private final Pattern headerPattern;
-
-    @Activate
-    public Oauth2ProxyHeaderParser(@Reference final Oauth2ProxyHeaderFilterConfig config) {
-        requireNonNull(config);
-        maxHeaderLength = config.maxHeaderLength();
-        maxRoleLength = config.maxRoleLength();
-        maxUserLength = config.maxUserLength();
-        maxRolesPerUser = config.maxRolesPerUser();
-        allowedCharactersPattern = config.allowedCharactersPattern();
-        headerPattern = config.headerPattern();
-    }
+    String PROXY_HEADER_GROUPS = "X-Forwarded-Groups";
 
     /**
      * Parses both proxy headers of the given request into a single token.
@@ -82,9 +63,7 @@ public final class Oauth2ProxyHeaderParser {
      * @param request A {@link ServletRequest} request we are processing
      * @return An {@link Oauth2ProxyHeaderToken} built from the request's proxy headers
      */
-    public Oauth2ProxyHeaderToken parseToken(final ServletRequest request) {
-        return new Oauth2ProxyHeaderToken(parseRolesHeader(request), parseUser(request));
-    }
+    Oauth2ProxyHeaderToken parseToken(ServletRequest request);
 
     /**
      * Parses user from {@code PROXY_HEADER_USER} header.
@@ -92,38 +71,7 @@ public final class Oauth2ProxyHeaderParser {
      * @param request A {@link ServletRequest} request we are processing
      * @return A single sanitized user
      */
-    public @Nullable String parseUser(final ServletRequest request) {
-        final var users = WebUtils.toHttp(request).getHeaders(PROXY_HEADER_USER);
-        if (users == null) {
-            LOG.warn("Expected at least one user.");
-            return null;
-        }
-        if (!users.hasMoreElements()) {
-            LOG.warn("Expected at least one user.");
-            return null;
-        }
-        final var user = users.nextElement();
-
-        if (users.hasMoreElements()) {
-            LOG.warn("Expected at most one user.");
-            return null;
-        }
-        if (user == null || user.isBlank()) {
-            LOG.warn("Rejected empty user.");
-            return null;
-        }
-
-        final var sanitized = user.strip();
-        if (sanitized.length() > maxUserLength) {
-            LOG.warn("Rejected user, exceeds maximum allowed length.");
-            return null;
-        }
-        if (!allowedCharactersPattern.matcher(sanitized).matches()) {
-            LOG.warn("Rejected malformed user during parsing.");
-            return null;
-        }
-        return sanitized;
-    }
+    @Nullable String parseUser(ServletRequest request);
 
     /**
      * Parses roles from {@code PROXY_HEADER_GROUPS} header.
@@ -135,59 +83,5 @@ public final class Oauth2ProxyHeaderParser {
      * @param request A {@link ServletRequest} request we are processing
      * @return Set of parsed roles
      */
-    public Set<String> parseRolesHeader(final ServletRequest request) {
-        // Extract headers from request
-        final var headers = WebUtils.toHttp(request).getHeaders(PROXY_HEADER_GROUPS);
-        // Check if the headers list itself is null or empty
-        if (headers == null || !headers.hasMoreElements()) {
-            LOG.warn("Rejected empty role headers.");
-            return Set.of();
-        }
-
-        final var parsedRoles = new HashSet<String>();
-        while (headers.hasMoreElements()) {
-            final var header = headers.nextElement();
-            // Skip null or entirely empty headers
-            if (header == null || header.isBlank()) {
-                LOG.warn("Rejected empty role header during parsing.");
-                continue;
-            }
-
-            // Enforce maximum acceptable header length
-            if (header.length() > maxHeaderLength) {
-                LOG.warn("A role header exceeds maximum allowed length. Skipping this specific header.");
-                continue;
-            }
-            if (!headerPattern.matcher(header).matches()) {
-                LOG.warn("Rejected malformed role header during parsing.");
-                continue;
-            }
-
-            final var headerValues = header.split(",");
-            for (final var value : headerValues) {
-                if (parsedRoles.size() >= maxRolesPerUser) {
-                    LOG.warn("Maximum role limit reached {}. Truncating remaining headerValues.", maxRolesPerUser);
-                    return Set.copyOf(parsedRoles);
-                }
-                // strip from leading and trailing whitespaces and optional role pattern
-                final var role = ROLE_REGEX.matcher(value.strip()).replaceFirst("");
-                if (role.isBlank()) {
-                    LOG.warn("Rejected empty role during parsing.");
-                    continue;
-                }
-                // enforce maximum acceptable length of role
-                if (role.length() > maxRoleLength) {
-                    LOG.warn("A role exceeds maximum allowed length. Skipping this specific role.");
-                    continue;
-                }
-                // strict Validation against allowed characters
-                if (!allowedCharactersPattern.matcher(role).matches()) {
-                    LOG.warn("Rejected malformed role token during parsing.");
-                    continue;
-                }
-                parsedRoles.add(role);
-            }
-        }
-        return Set.copyOf(parsedRoles);
-    }
+    Set<String> parseRolesHeader(ServletRequest request);
 }
