@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2875dd9e_ffda1378",
+        "filename": "aaa-shiro/impl/src/main/resources/initial/aaa-app-config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 9074
+      },
+      "writtenOn": "2026-07-17T17:15:23Z",
+      "side": 1,
+      "message": "this really should be part of some do not merge patch for testing purposes\n-makes the patch not buildable without https://github.com/PANTHEONtech/opendaylight-examples/pull/13",
+      "revId": "7e6c6d9bcd24559b058acd5f001d7daed282aaf5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
