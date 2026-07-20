@@ -245,11 +245,50 @@
     -->
 
     <!--
-    Add tokenAuthRealm as the only realm.  To enable mdsalRealm, add it to the list to he right of tokenAuthRealm.
+      ===================================================================================
+      ============================== TestFilter / TestRealm =============================
+      ===================================================================================
+      =                                                                                 =
+      = Description:  Filter and realm contributed by the external testfilter-fragment  =
+      =               bundle (AAA-307 pluggable mechanism). TestRealm consumes Basic    =
+      =               Authorization headers; the allow-all/reject-all decision mode is  =
+      =               configured in etc/tech.pantheon.testfilter.cfg. Requests          =
+      =               forwarded by OAuth2-Proxy (X-Forwarded-User/X-Forwarded-Groups)   =
+      =               fall back to oauth2ProxyHeaderRealm.                              =
+      ===================================================================================
+    -->
+    <main>
+        <pair-key>testFilter</pair-key>
+        <pair-value>tech.pantheon.testfilter.TestFilter</pair-value>
+    </main>
+    <main>
+        <pair-key>testRealm</pair-key>
+        <pair-value>tech.pantheon.testfilter.TestRealm</pair-value>
+    </main>
+    <main>
+        <pair-key>oauth2ProxyHeaderRealm</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.realm.Oauth2ProxyHeaderRealm</pair-value>
+    </main>
+
+    <!--
+    Add testRealm and oauth2ProxyHeaderRealm as the realms. tokenAuthRealm is intentionally not listed:
+    it also consumes UsernamePasswordToken and would bypass testRealm's reject-all mode.
     -->
     <main>
         <pair-key>securityManager.realms</pair-key>
-        <pair-value>$tokenAuthRealm</pair-value>
+        <pair-value>$testRealm, $oauth2ProxyHeaderRealm</pair-value>
+    </main>
+
+    <!--
+    Override the roles filter to return 403 Forbidden: Shiro's default RolesAuthorizationFilter returns
+    HTTP 401 Unauthorized when an authenticated user lacks the required role. This is semantically
+    incorrect: 401 signals that authentication is missing or invalid and invites the client to
+    re-authenticate, whereas 403 Forbidden correctly communicates that the identity is known but the
+    permission is not granted. Declaring "roles" here applies to all urls entries using roles[<role>].
+    -->
+    <main>
+        <pair-key>roles</pair-key>
+        <pair-value>org.opendaylight.aaa.shiro.filters.ODLRolesAuthorizationFilter</pair-value>
     </main>
 
     <!-- Start moonAuthRealm commented out
@@ -323,18 +362,18 @@
     End moonAuthRealm commented out-->
     <urls>
         <pair-key>/**/operations/cluster-admin**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
+        <pair-value>testFilter, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**/v1/**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
+        <pair-value>testFilter, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**/data/aaa*/**</pair-key>
-        <pair-value>authcBasic, roles[admin]</pair-value>
+        <pair-value>testFilter, roles[admin]</pair-value>
     </urls>
     <urls>
         <pair-key>/**</pair-key>
-        <pair-value>authcBasic</pair-value>
+        <pair-value>testFilter</pair-value>
     </urls>
 </shiro-configuration>
