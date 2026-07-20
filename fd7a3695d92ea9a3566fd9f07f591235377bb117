@@ -16,6 +16,24 @@
       "message": "move just before signoff by",
       "revId": "fd7a3695d92ea9a3566fd9f07f591235377bb117",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "577a15a3_391be8f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-20T12:42:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e371620_33791e20",
+      "revId": "fd7a3695d92ea9a3566fd9f07f591235377bb117",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
