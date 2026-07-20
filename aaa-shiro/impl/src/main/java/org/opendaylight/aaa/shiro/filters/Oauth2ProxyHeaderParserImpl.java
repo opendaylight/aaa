@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Default implementation of {@link Oauth2ProxyHeaderParser}.
  *
- * <p>Immutable: the limits and patterns are captured from the {@link Oauth2ProxyHeaderFilterConfig}
+ * <p>Immutable: the limits and patterns are captured from the {@link Oauth2ProxyHeaderParserConfig}
  * service at construction. The static reference means a configuration change reconstructs this
  * component and re-registers the {@link Oauth2ProxyHeaderParser} service with the new limits.
  */
@@ -43,7 +43,7 @@ public final class Oauth2ProxyHeaderParserImpl implements Oauth2ProxyHeaderParse
     private final Pattern headerPattern;
 
     @Activate
-    public Oauth2ProxyHeaderParserImpl(@Reference final Oauth2ProxyHeaderFilterConfig config) {
+    public Oauth2ProxyHeaderParserImpl(@Reference final Oauth2ProxyHeaderParserConfig config) {
         requireNonNull(config);
         maxHeaderLength = config.maxHeaderLength();
         maxRoleLength = config.maxRoleLength();

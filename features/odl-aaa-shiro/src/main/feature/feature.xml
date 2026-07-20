@@ -23,8 +23,8 @@
         <configfile finalname="/etc/org.opendaylight.aaa.filterchain.cfg">
             mvn:org.opendaylight.aaa/aaa-filterchain/${project.version}/cfg/config
         </configfile>
-        <configfile finalname="/etc/org.opendaylight.aaa.shiro.oauth2proxyheaderfilter.cfg">
-            mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/cfg/oauth2proxyheaderfilter-config
+        <configfile finalname="/etc/org.opendaylight.aaa.shiro.oauth2proxyheaderparser.cfg">
+            mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/cfg/oauth2proxyheaderparser-config
         </configfile>
         <configfile finalname="/etc/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg">
             mvn:org.opendaylight.aaa/aaa-shiro/${project.version}/cfg/bearerjwtrealm-config

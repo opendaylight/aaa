@@ -28,7 +28,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class Oauth2ProxyHeaderParserTest {
     private final Oauth2ProxyHeaderParser parser =
-        new Oauth2ProxyHeaderParserImpl(new Oauth2ProxyHeaderFilterConfigImpl());
+        new Oauth2ProxyHeaderParserImpl(new Oauth2ProxyHeaderParserConfigImpl());
 
     @Mock
     private HttpServletRequest request;

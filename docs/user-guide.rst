@@ -939,7 +939,7 @@ Oauth2ProxyHeaderFilter settings
 ``Oauth2ProxyHeaderFilter`` enforces input-validation limits on the forwarded
 headers to guard against oversized or malformed values. All limits are
 configurable via
-``etc/org.opendaylight.aaa.shiro.oauth2proxyheaderfilter.cfg``.
+``etc/org.opendaylight.aaa.shiro.oauth2proxyheaderparser.cfg``.
 
 +------------------------+-------------------------+----------------------------+
 | Property               | Default                 | Description                |

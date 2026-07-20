@@ -209,9 +209,9 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                                     <classifier>aaa-datastore-config</classifier>
                                 </artifact>
                                 <artifact>
-                                    <file>${project.build.directory}/classes/org.opendaylight.aaa.shiro.oauth2proxyheaderfilter.cfg</file>
+                                    <file>${project.build.directory}/classes/org.opendaylight.aaa.shiro.oauth2proxyheaderparser.cfg</file>
                                     <type>cfg</type>
-                                    <classifier>oauth2proxyheaderfilter-config</classifier>
+                                    <classifier>oauth2proxyheaderparser-config</classifier>
                                 </artifact>
                                 <artifact>
                                     <file>${project.build.directory}/classes/org.opendaylight.aaa.shiro.bearerjwtrealm.cfg</file>

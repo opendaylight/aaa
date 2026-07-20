@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * Configuration for Oauth2 Proxy Header authentication. Exposed as an OSGi service and populated from
  * {@code org.opendaylight.aaa.shiro.oauth2proxy.cfg} via OSGi Configuration Admin.
  */
-public interface Oauth2ProxyHeaderFilterConfig {
+public interface Oauth2ProxyHeaderParserConfig {
     /**
      * Default maximum allowed length for a single header value in bytes.
      *

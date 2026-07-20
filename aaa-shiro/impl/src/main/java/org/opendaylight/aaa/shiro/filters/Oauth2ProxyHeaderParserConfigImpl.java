@@ -20,10 +20,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Default implementation of {@link Oauth2ProxyHeaderFilterConfig}.
+ * Default implementation of {@link Oauth2ProxyHeaderParserConfig}.
  *
  * <p>Configuration is supplied via
- * {@code etc/org.opendaylight.aaa.shiro.oauth2proxyheaderfilter.cfg}:
+ * {@code etc/org.opendaylight.aaa.shiro.oauth2proxyheaderparser.cfg}:
  * <pre>{@code
  * max-header-length = 4096
  * max-role-length = 128
@@ -33,12 +33,12 @@ import org.slf4j.LoggerFactory;
  * }</pre>
  */
 @Singleton
-@Component(service = Oauth2ProxyHeaderFilterConfig.class,
-           configurationPid = "org.opendaylight.aaa.shiro.oauth2proxyheaderfilter")
-@Designate(ocd = Oauth2ProxyHeaderFilterConfigImpl.Configuration.class)
+@Component(service = Oauth2ProxyHeaderParserConfig.class,
+           configurationPid = "org.opendaylight.aaa.shiro.oauth2proxyheaderparser")
+@Designate(ocd = Oauth2ProxyHeaderParserConfigImpl.Configuration.class)
 @NonNullByDefault
-public final class Oauth2ProxyHeaderFilterConfigImpl implements Oauth2ProxyHeaderFilterConfig {
-    private static final Logger LOG = LoggerFactory.getLogger(Oauth2ProxyHeaderFilterConfigImpl.class);
+public final class Oauth2ProxyHeaderParserConfigImpl implements Oauth2ProxyHeaderParserConfig {
+    private static final Logger LOG = LoggerFactory.getLogger(Oauth2ProxyHeaderParserConfigImpl.class);
 
     @ObjectClassDefinition
     public @interface Configuration {
@@ -72,17 +72,17 @@ public final class Oauth2ProxyHeaderFilterConfigImpl implements Oauth2ProxyHeade
     private final Pattern headerPattern;
 
     @Activate
-    public Oauth2ProxyHeaderFilterConfigImpl(final Configuration config) {
+    public Oauth2ProxyHeaderParserConfigImpl(final Configuration config) {
         this(config.max$_$header$_$length(), config.max$_$role$_$length(), config.max$_$user$_$length(),
             config.max$_$roles$_$per$_$user(), validatePattern(config.allowed$_$chars()));
     }
 
-    Oauth2ProxyHeaderFilterConfigImpl() {
+    Oauth2ProxyHeaderParserConfigImpl() {
         this(MAX_HEADER_LENGTH_DEFAULT, MAX_ROLE_LENGTH_DEFAULT, MAX_USER_LENGTH_DEFAULT, MAX_ROLES_PER_USER_DEFAULT,
             ALLOWED_CHARS_DEFAULT);
     }
 
-    private Oauth2ProxyHeaderFilterConfigImpl(final int maxHeaderLength, final int maxRoleLength,
+    private Oauth2ProxyHeaderParserConfigImpl(final int maxHeaderLength, final int maxRoleLength,
             final int maxUserLength, final int maxRolesPerUser, final String allowedChars) {
         this.maxHeaderLength = maxHeaderLength;
         this.maxRoleLength = maxRoleLength;

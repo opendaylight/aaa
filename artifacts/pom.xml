@@ -134,7 +134,7 @@
                 <artifactId>aaa-shiro</artifactId>
                 <version>${project.version}</version>
                 <type>cfg</type>
-                <classifier>oauth2proxyheaderfilter-config</classifier>
+                <classifier>oauth2proxyheaderparser-config</classifier>
             </dependency>
 
             <dependency>

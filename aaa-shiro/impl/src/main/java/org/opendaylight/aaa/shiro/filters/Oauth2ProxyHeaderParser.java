@@ -15,14 +15,14 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * Parses {@code X-Forwarded-User}/{@code X-Forwarded-Groups} proxy headers into an
  * {@link Oauth2ProxyHeaderToken}, applying the limits and character whitelist from a given
- * {@link Oauth2ProxyHeaderFilterConfig}.
+ * {@link Oauth2ProxyHeaderParserConfig}.
  *
  * <p>Used by {@link Oauth2ProxyHeaderFilter}, and safe for other consumers of the same proxy headers
  * (e.g. other filters, or other Karaf features fronted by the same OAuth2-Proxy) to reuse instead of
  * duplicating the validation/sanitization logic.
  *
  * <p>The default implementation is registered as an OSGi service, built from the
- * {@link Oauth2ProxyHeaderFilterConfig} service so its limits stay consistent with what is actually
+ * {@link Oauth2ProxyHeaderParserConfig} service so its limits stay consistent with what is actually
  * configured: external consumers should look the parser service up instead of constructing their own.
  * A configuration change re-registers this service with the new limits, so per-request lookups always
  * observe the current configuration. Blueprint consumers get the same freshness through the damped

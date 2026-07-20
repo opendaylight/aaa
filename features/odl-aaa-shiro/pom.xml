@@ -148,11 +148,11 @@
         </dependency>
 
         <dependency>
-            <!-- finalname="/etc/org.opendaylight.aaa.shiro.oauth2proxyheaderfilter.cfg" -->
+            <!-- finalname="/etc/org.opendaylight.aaa.shiro.oauth2proxyheaderparser.cfg" -->
             <groupId>org.opendaylight.aaa</groupId>
             <artifactId>aaa-shiro</artifactId>
             <type>cfg</type>
-            <classifier>oauth2proxyheaderfilter-config</classifier>
+            <classifier>oauth2proxyheaderparser-config</classifier>
         </dependency>
 
         <!-- Third-party -->

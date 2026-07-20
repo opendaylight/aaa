@@ -28,7 +28,7 @@ import org.opendaylight.yangtools.concepts.Registration;
  * and creates an {@link Oauth2ProxyHeaderToken} for the configured realm to process.
  *
  * <p>Security limits (max lengths, max roles, allowed characters) are configurable via
- * {@link Oauth2ProxyHeaderFilterConfig} ({@code org.opendaylight.aaa.shiro.oauth2proxyheaderfilter.cfg}).
+ * {@link Oauth2ProxyHeaderParserConfig} ({@code org.opendaylight.aaa.shiro.oauth2proxyheaderparser.cfg}).
  * The injected {@link Oauth2ProxyHeaderParser} is the live OSGi service (accessed through the damped
  * Blueprint reference proxy), so configuration changes apply to new requests without a restart.
  *
@@ -63,7 +63,7 @@ public final class Oauth2ProxyHeaderFilter extends AuthenticatingFilter {
         if (parser != null) {
             return parser;
         }
-        return new Oauth2ProxyHeaderParserImpl(new Oauth2ProxyHeaderFilterConfigImpl());
+        return new Oauth2ProxyHeaderParserImpl(new Oauth2ProxyHeaderParserConfigImpl());
     }
 
     /**
