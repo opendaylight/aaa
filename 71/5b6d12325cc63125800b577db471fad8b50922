@@ -1,0 +1,9 @@
+Verified+1: ODL Required.GHA <releng+odl.required.gha@linuxfoundation.org>
+Code-Review+2: Robert Varga <nite@hq.sk>
+Verified+1: ODL GitHub Actions <releng+odl-github-actions@linuxfoundation.org>
+Code-Review+1: Samuel Schneider <samuel.schneider@pantheon.tech>
+Submitted-by: Robert Varga <nite@hq.sk>
+Submitted-at: Mon, 20 Jul 2026 13:25:17 +0000
+Reviewed-on: https://git.opendaylight.org/gerrit/c/aaa/+/123005
+Project: aaa
+Branch: refs/heads/master
