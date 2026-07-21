@@ -16,6 +16,24 @@
       "message": "document also this change",
       "revId": "7b393d634f15841a10e676919fe54f59819d9573",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1391116_15eb73a3",
+        "filename": "aaa-shiro/impl/src/main/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderParserConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-21T12:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca9fe341_13c76a96",
+      "revId": "7b393d634f15841a10e676919fe54f59819d9573",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
     }
   ]
 }
