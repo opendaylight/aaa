@@ -7,7 +7,6 @@
  */
 package org.opendaylight.aaa.shiro.filters;
 
-import java.util.regex.Pattern;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
@@ -39,39 +38,59 @@ public interface Oauth2ProxyHeaderParserConfig {
     String ALLOWED_CHARS_DEFAULT = "[a-zA-Z0-9_.:\\-@]";
 
     /**
-     * Returns the maximum allowed length for a single forwarded header value in bytes.
+     * {@return the maximum allowed length for a single forwarded header value in bytes}
      */
     int maxHeaderLength();
 
     /**
-     * Returns the maximum allowed length for a single role name in characters.
+     * {@return the maximum allowed length for a single role name in characters}
      */
     int maxRoleLength();
 
     /**
-     * Returns the maximum allowed length for a username in characters.
+     * {@return the maximum allowed length for a username in characters}
      */
     int maxUserLength();
 
     /**
-     * Returns the maximum number of roles a single user may carry.
+     * {@return the maximum number of roles a single user may carry}
      */
     int maxRolesPerUser();
 
     /**
-     * Returns the compiled pattern used to whitelist characters in a single username or role name.
+     * {@return configured character class (e.g. {@code [a-zA-Z0-9_.:\-@]})}
+     */
+    @NonNull String allowedChars();
+
+    /**
+     * Returns the regular expression used to whitelist characters in a single username or role name.
      *
      * <p>Anchored so the entire value must consist of one or more characters from the configured
      * character class (e.g. {@code [a-zA-Z0-9_.:\-@]}).
+     *
+     * <p>Callers matching this repeatedly should compile it once via {@link java.util.regex.Pattern}
+     * and cache the result, rather than compiling it on every use.
+     *
+     * @return the regular expression
      */
-    @NonNull Pattern allowedCharactersPattern();
+    default @NonNull String allowedCharactersRegex() {
+        return "^(?:" + allowedChars() + ")+$";
+    }
 
     /**
-     * Returns the compiled pattern used to validate an entire {@code X-Forwarded-Groups} header value.
+     * Returns the regular expression used to validate an entire {@code X-Forwarded-Groups} header value.
      *
      * <p>Matches a comma-separated list of one or more roles, where each role may optionally carry a
-     * {@code role:} prefix and is built from the character class of {@link #allowedCharactersPattern()}.
+     * {@code role:} prefix and is built from the character class of {@link #allowedCharactersRegex()}.
      * Whitespace is permitted around individual roles and around the header as a whole.
+     *
+     * <p>Callers matching this repeatedly should compile it once via {@link java.util.regex.Pattern}
+     * and cache the result, rather than compiling it on every use.
+     *
+     * @return the regular expression
      */
-    @NonNull Pattern headerPattern();
+    default @NonNull String headerRegex() {
+        return "^\\s*(?:role:)?(?:" + allowedChars() + ")+(?:\\s*,\\s*(?:role:)?(?:"
+            + allowedChars() + ")+)*\\s*$";
+    }
 }
