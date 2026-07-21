@@ -49,8 +49,8 @@ public final class Oauth2ProxyHeaderParserImpl implements Oauth2ProxyHeaderParse
         maxRoleLength = config.maxRoleLength();
         maxUserLength = config.maxUserLength();
         maxRolesPerUser = config.maxRolesPerUser();
-        allowedCharactersPattern = config.allowedCharactersPattern();
-        headerPattern = config.headerPattern();
+        allowedCharactersPattern = Pattern.compile(config.allowedCharactersRegex());
+        headerPattern = Pattern.compile(config.headerRegex());
     }
 
     @Override
