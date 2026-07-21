@@ -30,7 +30,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class Oauth2ProxyHeaderFilterTest {
     private static final String USER = "user";
 
-    private final Oauth2ProxyHeaderFilter filter = new Oauth2ProxyHeaderFilter();
+    private final Oauth2ProxyHeaderFilter filter =
+        new Oauth2ProxyHeaderFilter(new Oauth2ProxyHeaderParserImpl(new Oauth2ProxyHeaderParserConfigImpl()));
 
     @Mock
     private HttpServletRequest request;
