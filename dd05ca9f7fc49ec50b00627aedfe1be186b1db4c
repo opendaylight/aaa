@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ced40099_e8c9f4a1",
+        "filename": "aaa-shiro/impl/src/test/java/org/opendaylight/aaa/shiro/filters/Oauth2ProxyHeaderFilterTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 8144
+      },
+      "writtenOn": "2026-07-21T11:01:42Z",
+      "side": 1,
+      "message": "not needed...",
+      "revId": "dd05ca9f7fc49ec50b00627aedfe1be186b1db4c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81"
+    }
+  ]
+}
