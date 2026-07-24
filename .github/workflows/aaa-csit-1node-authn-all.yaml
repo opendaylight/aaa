@@ -5,6 +5,9 @@ on:
     branches:
       - "*"
 
+permissions:
+  contents: read
+
 jobs:
   composite-csit-1-node:
     runs-on: ubuntu-latest
