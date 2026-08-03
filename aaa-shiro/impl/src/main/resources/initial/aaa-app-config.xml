@@ -334,6 +334,10 @@
         <pair-value>authcBasic, roles[admin]</pair-value>
     </urls>
     <urls>
+        <pair-key>/**/operations/aaa**</pair-key>
+        <pair-value>authcBasic, roles[admin]</pair-value>
+    </urls>
+    <urls>
         <pair-key>/**</pair-key>
         <pair-value>authcBasic</pair-value>
     </urls>
