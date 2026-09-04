@@ -13,13 +13,12 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.MoreExecutors;
+import com.google.errorprone.annotations.concurrent.GuardedBy;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.checkerframework.checker.lock.qual.GuardedBy;
-import org.checkerframework.checker.lock.qual.Holding;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.opendaylight.mdsal.binding.api.DataBroker;
@@ -69,9 +68,12 @@ public final class OSGiEncryptionServiceConfigurator implements DataListener<Aaa
     private final ComponentFactory<AAAEncryptionServiceImpl> factory;
     private final DataBroker dataBroker;
 
-    private @GuardedBy("this") Registration reg;
-    private @GuardedBy("this") ComponentInstance<AAAEncryptionServiceImpl> instance;
-    private @GuardedBy("this") AaaEncryptServiceConfig current;
+    @GuardedBy("this")
+    private Registration reg;
+    @GuardedBy("this")
+    private ComponentInstance<AAAEncryptionServiceImpl> instance;
+    @GuardedBy("this")
+    private AaaEncryptServiceConfig current;
 
     @Activate
     public OSGiEncryptionServiceConfigurator(@Reference final DataBroker dataBroker,
@@ -171,7 +173,7 @@ public final class OSGiEncryptionServiceConfigurator implements DataListener<Aaa
         }, MoreExecutors.directExecutor());
     }
 
-    @Holding("this")
+    @GuardedBy("this")
     private void disableInstance() {
         if (instance != null) {
             instance.dispose();
