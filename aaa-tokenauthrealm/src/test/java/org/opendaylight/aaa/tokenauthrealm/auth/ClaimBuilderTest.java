@@ -20,8 +20,8 @@ import org.opendaylight.aaa.api.Claim;
 
 /**
  * ClaimBuilder test suite.
- * @author liemmn
  *
+ * @author liemmn
  */
 public class ClaimBuilderTest {
     @Test

@@ -33,8 +33,8 @@ import org.opendaylight.aaa.cli.utils.DataStoreUtils;
 
 /**
  * Test Suite for the DataStore Utils.
- * @author mserngawy
  *
+ * @author mserngawy
  */
 @RunWith(MockitoJUnitRunner.class)
 public class DataStoreUtilsTest {

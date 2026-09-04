@@ -14,7 +14,6 @@ import com.google.common.annotations.Beta;
  */
 @Beta
 public interface PasswordHashService {
-
     /**
      * Extract a hashed password using a randomly generated salt.
      *
@@ -35,7 +34,7 @@ public interface PasswordHashService {
     /**
      * Password comparison.
      *
-     * @param plaintext the &quot;input&quot; password in plaintext
+     * @param plaintext the input password in plaintext
      * @param stored the Base64-encoded stored password
      * @param salt the salt used to originally encode <code>stored</code>
      * @return whether or not the passwords match
