@@ -64,10 +64,10 @@ public final class FilterChainMockUtils {
     static List<String> formExpectedCallStack(final int size) {
         final List<String> expected = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            expected.add(String.format("filter%d ingress", i));
+            expected.add("filter%d ingress".formatted(i));
         }
         for (int i = size - 1; i >= 0; i--) {
-            expected.add(String.format("filter%d egress", i));
+            expected.add("filter%d egress".formatted(i));
         }
         return expected;
     }
@@ -83,7 +83,7 @@ public final class FilterChainMockUtils {
         final List<Filter> filters = new ArrayList<>();
         final List<String> callBack = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            final Filter filter = createMockFilter(String.format("filter%d", i), callBack);
+            final Filter filter = createMockFilter("filter" + i, callBack);
             filters.add(filter);
         }
 
