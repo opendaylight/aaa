@@ -34,7 +34,7 @@ public final class OSGiPasswordServiceConfig extends ForwardingObject implements
     private PasswordServiceConfig delegate;
 
     @Override
-    public Map<Class<? extends Augmentation<PasswordServiceConfig>>, Augmentation<PasswordServiceConfig>>
+    public Map<Class<? extends Augmentation<PasswordServiceConfig, ?>>, Augmentation<PasswordServiceConfig, ?>>
             augmentations() {
         return delegate().augmentations();
     }
