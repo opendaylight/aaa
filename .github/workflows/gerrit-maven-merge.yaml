@@ -6,6 +6,12 @@ name: Gerrit Composed Maven Merge
 
 # yamllint disable-line rule:truthy
 on:
+  # Daily SNAPSHOT rebuild. The Jenkins job this replaces runs @daily,
+  # which keeps SNAPSHOTs fresh against upstream dependency updates even
+  # when nothing merges here. Offset from the infrautils rebuild so the
+  # two do not start together.
+  schedule:
+    - cron: "19 3 * * *"
   workflow_dispatch:
     inputs:
       GERRIT_BRANCH:
@@ -46,8 +52,11 @@ on:
         type: string
 
 concurrency:
+  # Scheduled runs carry no inputs, so they must fall back to the same
+  # key a master merge uses, or the two triggers land in different
+  # groups and publish to Nexus concurrently.
   # yamllint disable-line rule:line-length
-  group: gerrit-maven-merge-${{ github.workflow }}-${{ github.event.inputs.GERRIT_BRANCH }}-${{ github.event.inputs.GERRIT_CHANGE_ID || github.run_id }}
+  group: gerrit-maven-merge-${{ github.workflow }}-${{ github.event.inputs.GERRIT_BRANCH || 'master' }}
   cancel-in-progress: true
 
 permissions:
@@ -59,6 +68,10 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Clear votes
+        # A scheduled rebuild has no change to clear votes on. Guarding
+        # the step rather than the job keeps this job succeeding, so the
+        # needs: chain below is unaffected.
+        if: github.event_name != 'schedule'
         # yamllint disable-line rule:line-length
         uses: lfit/gerrit-review-action@1e3eae766b3de755a2e87aa216cedebbaf9c8292 # v1.1.3
         with:
@@ -77,13 +90,15 @@ jobs:
     needs: prepare
     # yamllint disable-line rule:line-length
     uses: lfit/releng-reusable-workflows/.github/workflows/compose-maven-merge.yaml@main
-    # "secrets: inherit" does not cross organisations, and the called
-    # workflow lives in the lfit org, so secrets are passed by name.
+    # "secrets: inherit" does not cross organisations, and this workflow
+    # lives in the lfit org, so the secrets have to be passed by name.
     secrets:
       NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
       NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
     with:
-      GERRIT_BRANCH: ${{ inputs.GERRIT_BRANCH }}
+      # Empty on a scheduled run, where master is the only branch a
+      # schedule can fire on.
+      GERRIT_BRANCH: ${{ inputs.GERRIT_BRANCH || 'master' }}
       JDK_VERSION: "21"
       MVN_VERSION: "3.9.5"
       MVN_PHASES: "clean deploy"
@@ -103,7 +118,8 @@ jobs:
       PUSH_NEXUS: true
 
   vote:
-    if: ${{ always() }}
+    # A scheduled rebuild has no change to vote on.
+    if: ${{ always() && github.event_name != 'schedule' }}
     needs: [prepare, maven-merge]
     runs-on: ubuntu-latest
     timeout-minutes: 5
