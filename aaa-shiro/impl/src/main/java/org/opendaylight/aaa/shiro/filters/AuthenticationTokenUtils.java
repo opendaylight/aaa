@@ -90,7 +90,7 @@ public final class AuthenticationTokenUtils {
     public static String generateUnsuccessfulAuthenticationMessage(final AuthenticationToken token) {
         final String username = extractUsername(token);
         final String remoteHostname = extractHostname(token);
-        return String.format("Unsuccessful authentication attempt by %s from %s", username, remoteHostname);
+        return "Unsuccessful authentication attempt by %s from %s".formatted(username, remoteHostname);
     }
 
     /**
@@ -102,7 +102,7 @@ public final class AuthenticationTokenUtils {
     public static String generateSuccessfulAuthenticationMessage(final AuthenticationToken token) {
         final String username = extractUsername(token);
         final String remoteHostname = extractHostname(token);
-        return String.format("Successful authentication attempt by %s from %s", username, remoteHostname);
+        return "Successful authentication attempt by %s from %s".formatted(username, remoteHostname);
     }
 
     /**

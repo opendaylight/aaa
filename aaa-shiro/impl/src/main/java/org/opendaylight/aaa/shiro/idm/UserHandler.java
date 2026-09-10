@@ -254,7 +254,7 @@ public class UserHandler {
         }
 
         if (newUser == null) {
-            return new IDMError(404, String.format("User not found for id %s", id), "").response();
+            return new IDMError(404, "User not found for id " + id, "").response();
         }
 
         claimCache.clear();
@@ -305,7 +305,7 @@ public class UserHandler {
      */
     private static Response internalError(final String verbal, final Exception ex) {
         LOG.error("There was an internal error {} the user", verbal, ex);
-        return new IDMError(500, String.format("There was an internal error %s the user", verbal)).response();
+        return new IDMError(500, "There was an internal error %s the user".formatted(verbal)).response();
     }
 
     /**
@@ -317,9 +317,9 @@ public class UserHandler {
      * @return A response explaining that the request is missing a field
      */
     private static Response missingRequiredField(final String fieldName) {
-        return new IDMError(400, String.format(
-            "%s is required to create the user account.  Please provide a %s in your payload.", fieldName, fieldName),
-            "").response();
+        return new IDMError(400,
+            "%s is required to create the user account.  Please provide a %s in your payload.".formatted(
+                fieldName, fieldName), "").response();
     }
 
     /**
@@ -347,7 +347,7 @@ public class UserHandler {
      * @return a response containing the too long field and its length
      */
     private static String getProvidedFieldTooLongMessage(final String fieldName, final int maxFieldLength) {
-        return String.format("The provided %s field is too long.  The max length is %s.", fieldName, maxFieldLength);
+        return "The provided %s field is too long.  The max length is %s.".formatted(fieldName, maxFieldLength);
     }
 
     /**

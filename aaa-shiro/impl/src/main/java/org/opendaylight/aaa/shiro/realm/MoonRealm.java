@@ -149,7 +149,7 @@ public class MoonRealm extends AuthorizingRealm {
         final var port = Integer.toString(uriPort);
         // FIXME: allow HTTPS!
         // FIXME: allow authentication: and that really means configuring a Client!
-        final var server = String.format("http://%s:%s/moon/auth/tokens", uriHost, port);
+        final var server = "http://%s:%s/moon/auth/tokens".formatted(uriHost, port);
         LOG.debug("Moon server is at: {}:{} and will be accessed through {}", uriHost, port, server);
         moonServer = servletSupport.newClientBuilder().build().target(server);
     }

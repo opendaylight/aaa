@@ -138,7 +138,7 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
             for (var u : users.nonnullUsers().values()) {
                 final String inputUsername = HeaderUtils.extractUsername(username);
                 final String domainId = HeaderUtils.extractDomain(username);
-                final String inputUserId = String.format("%s@%s", inputUsername, domainId);
+                final String inputUserId = inputUsername + "@" + domainId;
                 final boolean userEnabled = u.getEnabled();
                 if (!userEnabled) {
                     LOG.trace("userId={} is skipped because it is disabled", u.getUserid());
@@ -154,7 +154,7 @@ public class MdsalRealm extends AuthorizingRealm implements Destroyable {
             }
         }
         LOG.debug("Couldn't access the authentication container");
-        throw new AuthenticationException(String.format("Couldn't authenticate %s", username));
+        throw new AuthenticationException("Couldn't authenticate " + username);
     }
 
     @Override

@@ -237,7 +237,7 @@ public class ODLJndiLdapRealm extends DefaultLdapRealm {
                           + "searchBase=\"{}\" ldapAttributeForComparison=\"{}\"", username, searchBase,
                   ldapAttributeForComparison);
         final NamingEnumeration<SearchResult> answer = ldapContext
-                .search(searchBase, String.format("%s=%s", UID, username), searchControls);
+                .search(searchBase, UID + "=" + username, searchControls);
 
         while (answer.hasMoreElements()) {
             final SearchResult searchResult = answer.next();
