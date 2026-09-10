@@ -11,6 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.spy;
@@ -18,8 +19,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -93,7 +94,7 @@ public class KeystoneAuthRealmTest {
         when(clientBuilder.sslContext(any())).thenReturn(clientBuilder);
         when(clientBuilder.hostnameVerifier(any())).thenReturn(clientBuilder);
         when(clientBuilder.build()).thenReturn(client);
-        when(requestBuilder.uri(new URL(testUrl).toURI())).thenReturn(requestBuilder);
+        when(requestBuilder.uri(new URI(testUrl).toURL().toURI())).thenReturn(requestBuilder);
         when(requestBuilder.path("v3/auth/tokens")).thenReturn(requestBuilder);
         when(requestBuilder.method(HttpMethod.POST)).thenReturn(requestBuilder);
         when(requestBuilder.mediaType(MediaType.APPLICATION_JSON_TYPE)).thenReturn(requestBuilder);
@@ -181,22 +182,19 @@ public class KeystoneAuthRealmTest {
         assertThat(principal.getDomain(), is("sdn"));
     }
 
-    @Test(expected = AuthenticationException.class)
+    @Test
     public void doGetAuthenticationInfoNullSslContext() throws Exception {
         final UsernamePasswordToken token = new UsernamePasswordToken("user", "password");
         when(certificateManager.getServerContext()).thenReturn(null);
-        keystoneAuthRealm.doGetAuthenticationInfo(token);
+        assertThrows(AuthenticationException.class, () -> keystoneAuthRealm.doGetAuthenticationInfo(token));
     }
 
-    @Test(expected = AuthenticationException.class)
+    @Test
     public void doGetAuthenticationInfoInvalidURL() throws Exception {
-        UsernamePasswordToken token = new UsernamePasswordToken("user@sdn", "password");
-        final String invalidUrl = "not_an_url";
-        keystoneAuthRealm.setUrl(invalidUrl);
-        keystoneAuthRealm.doGetAuthenticationInfo(token, client);
+        assertThrows(IllegalArgumentException.class, () -> keystoneAuthRealm.setUrl("not_an_url"));
     }
 
-    @Test(expected = AuthenticationException.class)
+    @Test
     public void doGetAuthenticationInfoUnknownTokenType() throws Exception {
         AuthenticationToken token = new AuthenticationToken() {
             private static final long serialVersionUID = 1L;
@@ -211,12 +209,12 @@ public class KeystoneAuthRealmTest {
                 return null;
             }
         };
-        keystoneAuthRealm.doGetAuthenticationInfo(token, client);
+        assertThrows(AuthenticationException.class, () -> keystoneAuthRealm.doGetAuthenticationInfo(token, client));
     }
 
-    @Test(expected = AuthenticationException.class)
+    @Test
     public void doGetAuthenticationInfoNullToken() throws Exception {
-        keystoneAuthRealm.doGetAuthenticationInfo(null, client);
+        assertThrows(AuthenticationException.class, () -> keystoneAuthRealm.doGetAuthenticationInfo(null, client));
     }
 
     @Test
