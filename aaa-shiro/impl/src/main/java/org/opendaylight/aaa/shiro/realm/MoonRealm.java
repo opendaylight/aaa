@@ -14,6 +14,8 @@ import static java.util.Objects.requireNonNull;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonParser;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -136,8 +138,8 @@ public class MoonRealm extends AuthorizingRealm {
     public void setMoonServerURL(final String moonServerURL) {
         final URL url;
         try {
-            url = new URL(moonServerURL);
-        } catch (MalformedURLException e) {
+            url = new URI(moonServerURL).toURL();
+        } catch (MalformedURLException | URISyntaxException e) {
             throw new IllegalArgumentException(e);
         }
 

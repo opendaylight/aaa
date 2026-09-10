@@ -18,7 +18,6 @@ import com.google.common.util.concurrent.UncheckedExecutionException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
@@ -273,8 +272,8 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
      */
     public void setUrl(final String url) {
         try {
-            serverUri = new URL(url).toURI();
-        } catch (final MalformedURLException | URISyntaxException e) {
+            serverUri = new URI(url).toURL().toURI();
+        } catch (MalformedURLException | URISyntaxException e) {
             LOG.error("The keystone server URL {} could not be correctly parsed", url, e);
             serverUri = null;
         }
