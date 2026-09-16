@@ -7,96 +7,96 @@ terms of the Eclipse Public License v1.0 which accompanies this distribution,
 and is available at http://www.eclipse.org/legal/epl-v10.html
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.opendaylight.aaa</groupId>
+        <artifactId>aaa-parent</artifactId>
+        <version>0.24.0-SNAPSHOT</version>
+        <relativePath>../../parent/pom.xml</relativePath>
+    </parent>
 
-  <parent>
-    <groupId>org.opendaylight.aaa</groupId>
-    <artifactId>aaa-parent</artifactId>
-    <version>0.24.0-SNAPSHOT</version>
-    <relativePath>../../parent/pom.xml</relativePath>
-  </parent>
+    <artifactId>aaa-password-service-impl</artifactId>
+    <name>ODL :: aaa :: ${project.artifactId}</name>
+    <packaging>bundle</packaging>
 
-  <artifactId>aaa-password-service-impl</artifactId>
-  <name>ODL :: aaa :: ${project.artifactId}</name>
-  <packaging>bundle</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-password-service-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>repackaged-shiro</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.yangtools</groupId>
+            <artifactId>binding-spec</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.mdsal</groupId>
+            <artifactId>mdsal-binding-api</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.framework</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.component</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.component.annotations</artifactId>
+        </dependency>
+    </dependencies>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.opendaylight.aaa</groupId>
-      <artifactId>aaa-password-service-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.aaa</groupId>
-      <artifactId>repackaged-shiro</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.yangtools</groupId>
-      <artifactId>binding-spec</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.mdsal</groupId>
-      <artifactId>mdsal-binding-api</artifactId>
-      <scope>provided</scope>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.framework</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.service.component</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.service.component.annotations</artifactId>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <!--
-            DefaultPasswordHashService is intentionally exported here for internal use by aaa-cli-jar.  In general,
-            it is bad SOA practice to export implementation bundles.  This was done in order to fulfill a specific
-            non-OSGi requirement that uses this implementation directly.  Outside consumers should consider
-            getting the Service through querying the OSGi registry for
-            org.opendaylight.aaa.api.password.service.PasswordHashService implementations instead.
-            -->
-            <Export-Package>
-              org.opendaylight.aaa.impl.password.service.DefaultPasswordHashService
-            </Export-Package>
-            <_dsannotations-options>norequirements</_dsannotations-options>
-          </instructions>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>build-helper-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-artifacts</id>
-            <phase>package</phase>
-            <goals>
-              <goal>attach-artifact</goal>
-            </goals>
-            <configuration>
-              <artifacts>
-                <artifact>
-                  <file>${project.build.directory}/classes/initial/aaa-password-service-config.xml</file>
-                  <type>xml</type>
-                  <classifier>aaa-password-service-config</classifier>
-                </artifact>
-              </artifacts>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Automatic-Module-Name>org.opendaylight.aaa.password.service.impl</Automatic-Module-Name>
+                        <!--
+                            DefaultPasswordHashService is intentionally exported here for internal use by aaa-cli-jar.
+                            In general, it is bad SOA practice to export implementation bundles.  This was done in order
+                            to fulfill a specific non-OSGi requirement that uses this implementation directly.
+                            Outside consumers should consider getting the Service through querying the OSGi registry
+                            for org.opendaylight.aaa.api.password.service.PasswordHashService implementations instead.
+                        -->
+                        <Export-Package>
+                            org.opendaylight.aaa.impl.password.service.DefaultPasswordHashService
+                        </Export-Package>
+                        <_dsannotations-options>norequirements</_dsannotations-options>
+                    </instructions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>${project.build.directory}/classes/initial/aaa-password-service-config.xml</file>
+                                    <type>xml</type>
+                                    <classifier>aaa-password-service-config</classifier>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
