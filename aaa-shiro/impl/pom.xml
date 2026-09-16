@@ -151,6 +151,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
+                        <Automatic-Module-Name>org.opendaylight.aaa.shiro.impl</Automatic-Module-Name>
                         <Bundle-Name>${project.groupId}.${project.artifactId}</Bundle-Name>
                         <Export-Package>
                             org.opendaylight.aaa,
