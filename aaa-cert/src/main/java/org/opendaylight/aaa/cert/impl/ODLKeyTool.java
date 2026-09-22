@@ -86,12 +86,11 @@ public class ODLKeyTool {
             if (keyStore.isCertificateEntry(alias) && deleteOld) {
                 keyStore.deleteEntry(alias);
             }
-            if (newCert != null) {
-                keyStore.setCertificateEntry(alias, newCert);
-            } else {
+            if (newCert == null) {
                 LOG.warn("{} Not a valid certificate {}", alias, certificate);
                 return null;
             }
+            keyStore.setCertificateEntry(alias, newCert);
             return keyStore;
         } catch (final KeyStoreException e) {
             LOG.error("failed to add certificate", e);
