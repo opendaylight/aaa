@@ -71,8 +71,9 @@ public class CertificateManagerService implements ICertificateManager, AutoClose
                     && aaaCertServiceConfig.getCtlKeystore().getStorePassword() != null
                     && aaaCertServiceConfig.getCtlKeystore().getStorePassword().isEmpty()) {
                 LOG.debug("Set keystores password");
-                final String ctlPwd = RandomStringUtils.random(PWD_LENGTH, true, true);
-                final String trustPwd = RandomStringUtils.random(PWD_LENGTH, true, true);
+                final var utils = RandomStringUtils.secure();
+                final String ctlPwd = utils.next(PWD_LENGTH, true, true);
+                final String trustPwd = utils.next(PWD_LENGTH, true, true);
                 updateCertManagerSrvConfig(ctlPwd, trustPwd);
                 final CtlKeystore ctlKeystore = new CtlKeystoreBuilder(aaaCertServiceConfig.getCtlKeystore())
                         .setStorePassword(ctlPwd).build();
