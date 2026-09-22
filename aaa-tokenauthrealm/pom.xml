@@ -10,26 +10,33 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.opendaylight.aaa</groupId>
-        <artifactId>aaa-parent</artifactId>
+        <artifactId>bundle-parent</artifactId>
         <version>0.24.0-SNAPSHOT</version>
-        <relativePath>../parent/pom.xml</relativePath>
+        <relativePath>../bundle-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>aaa-tokenauthrealm</artifactId>
     <name>ODL :: aaa :: ${project.artifactId}</name>
     <packaging>bundle</packaging>
 
-    <dependencies>
-        <!-- Internal aaa dependencies -->
-        <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>aaa-authn-api</artifactId>
-        </dependency>
+    <properties>
+        <!-- FIXME: fix these up and set maven.javadoc.failOnWarnings=true -->
+        <doclint>all,-missing</doclint>
+    </properties>
 
-        <!-- External dependencies -->
+    <dependencies>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.guicedee.services</groupId>
+            <artifactId>javax.inject</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-authn-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.osgi</groupId>
@@ -38,11 +45,6 @@
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.service.metatype.annotations</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.guicedee.services</groupId>
-            <artifactId>javax.inject</artifactId>
-            <optional>true</optional>
         </dependency>
     </dependencies>
 
