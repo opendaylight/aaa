@@ -13,8 +13,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.opendaylight.yangtools.util.concurrent.FluentFutures.immediateFailedFluentFuture;
-import static org.opendaylight.yangtools.util.concurrent.FluentFutures.immediateFluentFuture;
+import static org.opendaylight.mdsal.common.api.FluentFutures.immediateFailedFluentFuture;
+import static org.opendaylight.mdsal.common.api.FluentFutures.immediateFluentFuture;
 
 import java.util.List;
 import java.util.Optional;
