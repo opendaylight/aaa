@@ -18,8 +18,8 @@ import com.google.common.util.concurrent.UncheckedExecutionException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Duration;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import javax.net.ssl.HostnameVerifier;
@@ -80,8 +80,8 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     private final Supplier<ClientBuilder> clientBuilderFactory;
     private final ICertificateManager certManager;
     private final LoadingCache<Boolean, SimpleHttpClient> clientCache = CacheBuilder.newBuilder()
-        .expireAfterAccess(CLIENT_EXPIRE_AFTER_ACCESS, TimeUnit.SECONDS)
-        .expireAfterWrite(CLIENT_EXPIRE_AFTER_WRITE, TimeUnit.SECONDS)
+        .expireAfterAccess(Duration.ofSeconds(CLIENT_EXPIRE_AFTER_ACCESS))
+        .expireAfterWrite(Duration.ofSeconds(CLIENT_EXPIRE_AFTER_WRITE))
         .build(new CacheLoader<>() {
             @Override
             public SimpleHttpClient load(final Boolean withSslVerification) {
@@ -298,5 +298,4 @@ public class KeystoneAuthRealm extends AuthorizingRealm {
     public void setDefaultDomain(final String defaultDomain) {
         this.defaultDomain = defaultDomain;
     }
-
 }
