@@ -259,7 +259,7 @@ public class ODLKeyTool {
                 final X509Certificate odlCert = (X509Certificate) keyStore.getCertificate(keyAlias);
                 final PublicKey pubKey = odlCert.getPublicKey();
                 final PrivateKey privKey = (PrivateKey) keyStore.getKey(keyAlias, keystorePassword.toCharArray());
-                final String subject = odlCert.getSubjectDN().getName();
+                final String subject = odlCert.getSubjectX500Principal().getName();
                 final X500Name xName = new X500Name(subject);
                 final SubjectPublicKeyInfo subPubKeyInfo = SubjectPublicKeyInfo.getInstance(pubKey.getEncoded());
                 final PKCS10CertificationRequestBuilder csrb = new PKCS10CertificationRequestBuilder(xName,
