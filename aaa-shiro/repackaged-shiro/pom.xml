@@ -9,12 +9,11 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>org.opendaylight.aaa</groupId>
-        <artifactId>aaa-parent</artifactId>
+        <artifactId>bundle-parent</artifactId>
         <version>0.24.0-SNAPSHOT</version>
-        <relativePath>../../parent/pom.xml</relativePath>
+        <relativePath>../../bundle-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>repackaged-shiro</artifactId>
@@ -32,10 +31,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.opendaylight.aaa</groupId>
-            <artifactId>repackaged-shiro-jar</artifactId>
-            <version>${project.version}</version>
-            <scope>provided</scope>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -43,8 +40,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>repackaged-shiro-jar</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.owasp.encoder</groupId>
