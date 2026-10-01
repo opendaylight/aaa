@@ -84,14 +84,62 @@ OpenDaylight Karaf home directory.
 How to enable AAA
 -----------------
 
-AAA is enabled through installing the odl-aaa-shiro feature. The vast majority
-of OpenDaylight's northbound APIs (and all RESTCONF APIs) are protected by AAA
-by default when installing the +odl-restconf+ feature, since the odl-aaa-shiro
-is automatically installed as part of them. In the cases that APIs are *not*
-protected by AAA, this will be noted in the per-project release notes.
+AAA is enabled through installing the ``odl-aaa-shiro`` feature. AAA protects
+OpenDaylight's northbound APIs, including authenticated RESTCONF access. In the
+cases that APIs are *not* protected by AAA, this will be noted in the per-project
+release notes.
+
+Earlier RESTCONF feature layouts automatically installed ``odl-aaa-shiro`` as
+part of ``odl-restconf``. For deployments using Netconf 12.0.0, select the
+RESTCONF implementation explicitly as described below.
+
+For the default Netty-based RESTCONF endpoint, install:
+
+.. code-block:: text
+
+    feature:install odl-aaa-shiro odl-restconf-nb
+
+The default RESTCONF URLs are:
+
+.. code-block:: text
+
+    http://<controller-ip>:8182/restconf/data/...
+    http://<controller-ip>:8182/restconf/operations/...
+
+The JAX-RS-based RESTCONF endpoint is **deprecated but remains functional and
+available**. Existing deployments can continue using it, including the servlet
+filter and session-cookie configuration documented below. To install AAA with
+the JAX-RS endpoint, use:
+
+.. code-block:: text
+
+    feature:install odl-aaa-shiro odl-restconf-nb-jaxrs
+
+Its default URLs are:
+
+.. code-block:: text
+
+    http://<controller-ip>:8181/rests/data/...
+    http://<controller-ip>:8181/rests/operations/...
+
+``odl-restconf-openapi`` adds OpenAPI support and installs the Netty northbound;
+``odl-restconf-openapi-jaxrs`` does the same for the deprecated JAX-RS northbound.
+``odl-restconf-all`` installs both stacks and should only be used when both are
+required. The removed ``odl-restconf`` alias is replaced by ``odl-restconf-nb``.
+See the `NETCONF RESTCONF feature layout
+<https://docs.opendaylight.org/projects/netconf/en/latest/user-guide.html#restconf-feature-layout>`_
+for details.
+
+The servlet filter and session-cookie configuration described below applies to
+servlet-based applications, including legacy JAX-RS RESTCONF. It does not
+configure the Netty HTTP endpoint. AAA identity-management URLs under
+``http://localhost:8181/auth/v1/`` are separate from the RESTCONF endpoint.
 
 How to disable AAA
 ------------------
+
+These instructions apply to servlet-based applications, including the deprecated
+JAX-RS RESTCONF endpoint.
 
 Edit the “etc/opendaylight/datastore/initial/config/aaa-app-config.xml” file and replace the following:
 
@@ -224,6 +272,10 @@ picture:
    :alt: TokenAuthRealm direct authentication mechanism
 
    TokenAuthRealm direct authentication mechanism
+
+The following session behavior applies to servlet-based applications, including
+the deprecated JAX-RS RESTCONF endpoint. The default Netty RESTCONF endpoint
+accepts credentials with each request.
 
 A user presents some credentials (e.g., username/password) directly to the
 OpenDaylight controller and receives a session cookie, which can be then
@@ -1183,6 +1235,10 @@ Bearer tokens:
 Authorization Configuration
 ---------------------------
 
+The authorization filters in this section apply to servlet-based applications,
+including deprecated JAX-RS RESTCONF. Their servlet URL policies do not configure
+the default Netty endpoint.
+
 OpenDaylight supports two authorization engines at present, both of which are
 roughly similar in behavior:
 
@@ -1268,12 +1324,16 @@ resource. The following describes the various elements of a policy:
   + **Actions list**: a leaf-list of HTTP permissions that are allowed for a
     Subject possessing the required role.
 
-This an example on how to limit access to the modules endpoint:
+The following servlet-filter example targets the deprecated JAX-RS RESTCONF
+endpoint on port 8181. These ``/rests`` policy patterns apply to that legacy
+endpoint.
+
+This is an example on how to limit access to the modules endpoint:
 
 ::
 
     HTTP Operation:
-    put URL: /rests/data/aaa:http-authorization/policies
+    put URL: http://<controller-ip>:8181/rests/data/aaa:http-authorization/policies
 
     headers: Content-Type: application/json Accept: application/json
 

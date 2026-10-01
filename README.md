@@ -55,7 +55,28 @@ Build it:
 
 ### Installing
 
-AAA is automatically installed upon installation of odl-restconf-noauth and enabled through aaa-shiro-act.
+Earlier installation guidance described AAA as automatically installed with `odl-restconf-noauth` and enabled
+through `aaa-shiro-act`. That guidance belongs to the older feature layout. For deployments using Netconf 12.0.0,
+install AAA and select the RESTCONF implementation as follows.
+
+For the default Netty-based RESTCONF endpoint:
+
+    karaf> feature:install odl-aaa-shiro odl-restconf-nb
+
+| Endpoint                   | Feature                 | Data URL                                        | Operations URL                                        |
+| -------------------------- | ----------------------- | ----------------------------------------------- | ----------------------------------------------------- |
+| Netty (default)            | `odl-restconf-nb`       | `http://<controller-ip>:8182/restconf/data/...` | `http://<controller-ip>:8182/restconf/operations/...` |
+| JAX-RS (deprecated/legacy) | `odl-restconf-nb-jaxrs` | `http://<controller-ip>:8181/rests/data/...`    | `http://<controller-ip>:8181/rests/operations/...`    |
+
+JAX-RS is deprecated but remains functional and available. Existing deployments can continue using it,
+including the servlet filters and session cookies documented below. To install AAA with the JAX-RS endpoint:
+
+    karaf> feature:install odl-aaa-shiro odl-restconf-nb-jaxrs
+
+Use `odl-restconf-openapi` for Netty with OpenAPI, or `odl-restconf-openapi-jaxrs` for legacy JAX-RS with OpenAPI.
+`odl-restconf-all` installs both stacks; use it only when both are required. The removed `odl-restconf` alias is
+replaced by `odl-restconf-nb`. See the
+[NETCONF RESTCONF feature layout](https://docs.opendaylight.org/projects/netconf/en/latest/user-guide.html#restconf-feature-layout).
 
 If you are using AAA from a non-RESTCONF context, you can install the necessary javax.servlet.Filter(s) through the
 following command:
@@ -69,14 +90,17 @@ to access protected resources.
 Example:
 
     curl -s -H 'Authorization: Basic YWRtaW46YWRtaW4=' \
-    http://<controller>:<port>/rests/data/...?content=config
+    'http://<controller-ip>:8182/restconf/data/...?content=config'
 
+Send credentials with each request to the Netty endpoint.
+
+The following session-cookie example applies only to the deprecated JAX-RS servlet endpoint on port 8181.
 Upon successful authentication, session cookie will be created, which can be then used to access protected resources
 during session, instead of providing username/password.
 Example:
 
     curl -s -H 'Cookie: JSESSIONID=node0x12lwsvqbaxx15981soehtqed1.node0' \
-    http://<controller>:<port>/rests/data/...?content=config
+    'http://<controller-ip>:8181/rests/data/...?content=config'
 
 ### Defaults
 
@@ -108,6 +132,9 @@ the simpler to deploy (i.e., no external system dependency) and hence being the 
 
 #### Direct
 
+The following session behavior applies to servlet-based applications, including deprecated JAX-RS RESTCONF.
+The default Netty RESTCONF endpoint accepts credentials with each request.
+
 In this use-case, a user presents some credentials (e.g., username/password) directly to the Opendaylight (ODL)
 controller and receives a session cookie, which can be then used to access protected resources on the controller,
 similar to the example we saw in the Quickstart section.
@@ -120,6 +147,10 @@ enterprise-level IdP).
 For more information, consult ODLJndiLdapRealm and ODLJndiLdapRealmAuthNOnly documentation.
 
 ### Authorization & Access Control
+
+The following authorization filters apply to servlet-based applications, including deprecated JAX-RS RESTCONF.
+Their servlet URL policies do not configure the default Netty endpoint. AAA identity-management URLs under
+`http://localhost:8181/auth/v1/` are separate from RESTCONF.
 
 ODL supports two authorization engines at present, both of which are roughly similar in behavior. Namely, the two
 authorization engines are the MDSALDynamicAuthorizationFilter(1) and the RolesAuthorizationFilter(2). For several
@@ -151,10 +182,12 @@ actions list: A leaf-list of HTTP permissions that are allowed for a Subject pos
 
 Example:
 
+This servlet-filter example applies to the deprecated JAX-RS endpoint on port 8181.
+
 To limit access to the modules endpoint, issue the following:
 
 HTTP Operation: put
-URL: /rests/data/aaa:http-authorization/policies
+URL: http://<controller-ip>:8181/rests/data/aaa:http-authorization/policies
 Headers:
 Content-Tye: application/json
 Accept: application/json
