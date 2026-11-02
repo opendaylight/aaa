@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   composite-csit-1-node:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # Run the job on an Ubuntu latest runner
 
     services:
